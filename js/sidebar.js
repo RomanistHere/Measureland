@@ -9,7 +9,7 @@ const myRatingsBtn = $('.myRatings')
 
 const changeLang = lang => {
     state.flow.push('cl')
-    
+
     console.log(window.location)
     console.log(state.lang)
     console.log(lang)
@@ -17,6 +17,7 @@ const changeLang = lang => {
     if (state.lang === lang)
         return
 
+    // TODO: fix when blog created
     if (lang === 'en') {
         window.location.pathname = '/'
     } else {

@@ -21,7 +21,9 @@ exports.user_register = async (req, res) => {
     const token = v4().toString().replace(/-/g, '')
     // TODO: change
     const domain = process.env.SITE_URL || 'http://localhost:8080'
-    const verificationUrl = `${domain}?token=${token}&lang=${lang}`
+    const verificationUrl = lang === 'en'
+        ? `${domain}?token=${token}`
+        : `${domain}/${lang}/?token=${token}`
 
     const user = new User({
         email,
@@ -184,7 +186,10 @@ exports.user_reverify = async (req, res) => {
             const token = v4().toString().replace(/-/g, '')
             // TODO: change
             const domain = process.env.SITE_URL || 'http://localhost:8080'
-            const verificationUrl = `${domain}?token=${token}`
+            const { lang } = user.properties
+            const verificationUrl = lang === 'en'
+                ? `${domain}?token=${token}`
+                : `${domain}/${lang}/?token=${token}`
 
             await UserVerification.updateOne({
                 user: user._id
@@ -290,7 +295,10 @@ exports.user_reset_password = async (req, res, next) => {
         const token = v4().toString().replace(/-/g, '')
         // TODO: change
         const domain = process.env.SITE_URL || 'http://localhost:8080'
-        const verificationUrl = `${domain}?reset_pass_token=${token}`
+        const { lang } = user.properties
+        const verificationUrl = lang === 'en'
+            ? `${domain}?reset_pass_token=${token}`
+            : `${domain}/${lang}/?reset_pass_token=${token}`
 
         await PasswordReset.updateOne({
             user: user._id
