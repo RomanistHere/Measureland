@@ -1,0 +1,11 @@
+{
+  "name": "Measureland",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=8080 --host=localhost"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,607 @@
+html,
+body {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    font-family: Verdana, Arial, sans-serif;
+
+    /* main color sheme */
+    --sug-color: #31493c;
+    --non-active-color: #31493c54;
+    --active-color: #ffa500;
+    --bg-color: #d4eff5;
+    --bg-color-add: #d4eff554;
+    --bg-color-add-non-transparent: #f1fafc;
+    --text-color: #001A23;
+    --suc-color: #00CC66;
+    --dark-green: #329C00;
+    /* additional colors */
+
+    --side-bg-color: #fff;
+    --text-color-btn: var(--side-bg-color);
+
+    --col1: #96ADC8;
+    --col2: #42B0CF;
+    /* greens */
+    --col3: #00bb02;
+    --col4: #00CC66;
+    /* blacks */
+    --col5: #222222;
+    --col6: #000;
+    --col7: #312838;
+}
+
+#map {
+    z-index: 1;
+
+    height: 100%;
+}
+
+.overlay__btn {
+    position: absolute;
+    z-index: 3;
+}
+
+.open_settings {
+    width: 40px;
+    height: 40px;
+    right: 10px;
+    top: 10px;
+
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.open_settings::before,
+.open_settings::after {
+    content: '';
+}
+
+.open_settings::before,
+.open_settings::after,
+.menu_btn {
+    position: absolute;
+
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 8px;
+    border: 2px solid var(--text-color);
+
+    box-sizing: border-box;
+
+    background-color: var(--bg-color);
+    box-shadow: 0 0 1px var(--text-color);
+    transition: transform .2s;
+}
+
+.menu_btn {
+    top: 14px;
+}
+
+.open_settings::after {
+    top: 27px;
+}
+
+.open_settings:hover::before,
+.open_settings:hover::after {
+    transform: translateX(-2px);
+}
+
+.open_settings:hover .menu_btn {
+    transform: translateX(2px);
+}
+
+/* // leaflet // */
+
+.leaflet-touch .leaflet-control-geocoder-icon {
+    width: 36px;
+    height: 36px;
+    box-sizing: border-box;
+    background-color: var(--bg-color);
+}
+
+.leaflet-touch .leaflet-control-geocoder {
+    border-radius: 0;
+    border: 2px solid var(--text-color);
+    box-sizing: border-box;
+    background-color: var(--bg-color-add-non-transparent);
+    box-shadow: 0 0 1px var(--text-color);
+}
+
+.leaflet-control-geocoder-alternatives {
+    width: 100%;
+    border-top: 1px solid var(--text-color);
+    background-color: var(--side-bg-color);
+}
+
+.leaflet-control-geocoder-alternatives li {
+    padding: 10px;
+    border-bottom-color: var(--text-color);
+}
+
+.leaflet-control-geocoder-alternatives li:hover {
+    background-color: var(--bg-color);
+}
+
+.leaflet-control-zoom.leaflet-bar a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: var(--bg-color);
+}
+
+.leaflet-control-zoom.leaflet-bar a:hover {
+    background-color: var(--bg-color-add-non-transparent);
+}
+
+.leaflet-left .leaflet-control {
+    border-radius: 0;
+    border: 2px solid var(--text-color);
+    box-shadow: 0 0 1px var(--text-color);
+}
+
+.leaflet-bar a {
+    border-bottom: 1px solid var(--text-color);
+}
+
+/* // spinner // */
+
+.spinner__wrap {
+    position: absolute;
+    display: none;
+
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--side-bg-color);
+    transition: opacity .4s;
+}
+
+.spinner__wrap-fade {
+    opacity: 0;
+    z-index: -1;
+}
+
+.spinner__wrap-active {
+    display: flex;
+}
+
+.spinner__centr {
+    position: relative;
+
+    padding: 60px;
+}
+
+.spinner {
+    width: 0px;
+    height: 0px;
+    width: 40px;
+    height: 40px;
+
+    border: 20px solid var(--bg-color);
+
+    animation: spinner 2s linear infinite;
+}
+
+.spinner__main {
+    position: fixed;
+    display: flex;
+    z-index: 3;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.spinner__text {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    opacity: 0;
+
+    text-align: center;
+    font-style: italic;
+}
+
+.spinner__text-active {
+    opacity: 1;
+}
+
+@keyframes spinner {
+    0%, 100% {
+        border-top-color: rgba(212, 239, 245, 1);
+        border-right-color: rgba(212, 239, 245, .66);
+        border-bottom-color: rgba(212, 239, 245, .33);
+        border-left-color: rgba(212, 239, 245, 0);
+    }
+    24,9% {
+        border-top-color: rgba(212, 239, 245, .61);
+        border-right-color: rgba(212, 239, 245, .27);
+        border-bottom-color: rgba(212, 239, 245, 0.05);
+        border-left-color: rgba(212, 239, 245, 0);
+    }
+    25% {
+        border-top-color: rgba(212, 239, 245, .66);
+        border-right-color: rgba(212, 239, 245, .33);
+        border-bottom-color: rgba(212, 239, 245, 0);
+        border-left-color: rgba(212, 239, 245, 1);
+    }
+    49,9% {
+        border-top-color: rgba(212, 239, 245, .27);
+        border-right-color: rgba(212, 239, 245, 0.05);
+        border-bottom-color: rgba(212, 239, 245, 0);
+        border-left-color: rgba(212, 239, 245, .61);
+    }
+    50% {
+        border-top-color: rgba(212, 239, 245, .33);
+        border-right-color: rgba(212, 239, 245, 0);
+        border-bottom-color: rgba(212, 239, 245, 1);
+        border-left-color: rgba(212, 239, 245, .66);
+    }
+    74,9% {
+        border-top-color: rgba(212, 239, 245, 0.05);
+        border-right-color: rgba(212, 239, 245, 0);
+        border-bottom-color: rgba(212, 239, 245, .61);
+        border-left-color: rgba(212, 239, 245, .27);
+    }
+    75% {
+        border-top-color: rgba(212, 239, 245, 0);
+        border-right-color: rgba(212, 239, 245, 1);
+        border-bottom-color: rgba(212, 239, 245, .66);
+        border-left-color: rgba(212, 239, 245, .33);
+    }
+    99,9% {
+        border-top-color: rgba(212, 239, 245, 0);
+        border-right-color: rgba(212, 239, 245, .61);
+        border-bottom-color: rgba(212, 239, 245, .27);
+        border-left-color: rgba(212, 239, 245, 0.05);
+    }
+}
+
+.loggedInShow,
+.loggedOutShow {
+    display: none;
+}
+
+.loggedInShow-show,
+.loggedOutShow-show {
+    display: block;
+}
+
+.loggedInShow-list.loggedInShow-show,
+.loggedOutShow-list.loggedOutShow-show {
+    display: list-item;
+}
+
+/* // start screen // */
+
+.start {
+    position: fixed;
+    display: none;
+    z-index: 4;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.start-anim {
+    animation: startAnim 2.05s ease-in;
+}
+
+@keyframes startAnim {
+    70% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.start-anim .start__landscape {
+    animation: startAnim2 2s ease-in;
+}
+
+@keyframes startAnim2 {
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+.start-anim .start__road_sign {
+    animation: startAnim3 2s ease-in;
+}
+
+@keyframes startAnim3 {
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+.start-show {
+    display: block;
+}
+
+.start::-webkit-scrollbar {
+    display: none;
+}
+
+.start__image {
+    position: absolute;
+
+    width: 100%;
+    height: auto;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.start__building {
+    transition: transform .5s .1s, filter .2s .1s;
+    transform-origin: center center;
+}
+
+.start__building:hover {
+    filter: drop-shadow(0 0 20px green);
+    transform: scale(1.02) translateY(-12px);
+}
+
+/* .start__building rect[fill='#001A23'],
+.start__building path[fill='#001A23'] {
+    transition: fill .3s, filter .3s;
+}
+
+.start__building:hover rect[fill='#001A23'],
+.start__building:hover path[fill='#001A23'] {
+    fill: var(--active-color);
+    filter: drop-shadow(0 0 5px var(--active-color));
+} */
+
+.start__shadow {
+    transition: transform 1s .2s;
+    transform-origin: center center;
+}
+
+.start__shadow:hover {
+    transform: scale(1.02) translateY(-12px);
+}
+
+.start__road,
+.start__grass,
+.start__house {
+    transition: filter .3s;
+}
+
+.start__road:hover {
+    filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 5px var(--dark-green));
+}
+
+.start__grass:hover {
+    filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 5px var(--dark-green));
+}
+
+.start__house:hover {
+    filter: drop-shadow(0 0 10px green);
+}
+
+.start__house-off .house__window {
+    fill: var(--non-active-color);
+}
+
+.start__btn {
+    cursor: pointer;
+    transition: filter .5s;
+}
+
+.start__btn:hover {
+    filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 2px var(--text-color)) drop-shadow(0 0 10px var(--dark-green));
+}
+
+.start__btn:focus {
+    outline: 0;
+}
+
+.start__btn:focus rect {
+    stroke: var(--active-color);
+}
+
+.start__btn:focus path {
+    fill: var(--active-color);
+}
+
+.start__lang_btn {
+    position: fixed;
+
+    top: 10px;
+    right: 10px;
+    width: 50px;
+    height: 31px;
+
+    filter: blur(.8px);
+    transition: filter .2s;
+}
+
+.start__lang_btn:hover {
+    filter: none;
+}
+
+.start__lang_btn:focus {
+    outline-color: var(--active-color);
+    outline-offset: 5px;
+}
+
+.start__lang_icon {
+    width: 100%;
+    height: 100%;
+}
+
+.start__rus_lang {
+    right: 70px;
+}
+
+.eng,
+.rus {
+    display: none;
+}
+
+.lang-show {
+    display: inline-block;
+}
+
+.chebox__wrap {
+    position: fixed;
+
+    bottom: 10px;
+    right: 10px;
+}
+
+.checkbox__container {
+    position: relative;
+    display: block;
+
+    padding-left: 35px;
+    margin-bottom: 12px;
+
+    font-size: 22px;
+    color: var(--side-bg-color);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.checkbox__container:focus,
+.checkbox__link:focus {
+    outline-color: var(--active-color);
+    outline-offset: 8px;
+}
+
+.checkbox__link:focus {
+    outline-offset: 2px;
+}
+
+.checkbox__container:hover .checkbox__checkmark {
+    box-shadow: 0 0 15px var(--dark-green);
+}
+
+.checkbox__link {
+    color: var(--side-bg-color);
+}
+
+.checkbox__container input {
+    position: absolute;
+
+    opacity: 0;
+    height: 0;
+    width: 0;
+
+    cursor: pointer;
+}
+
+.checkbox__checkmark {
+    position: absolute;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+
+    background-color: var(--bg-color);
+    transition: box-shadow .15s;
+}
+
+.checkbox__checkmark::after {
+    position: absolute;
+    content: "";
+
+    width: 60%;
+    height: 60%;
+
+    background: var(--non-active-color);
+}
+
+input:checked ~ .checkbox__checkmark::after {
+    background: var(--active-color);
+}
+
+/* // error screen // */
+
+.error_screen {
+    position: absolute;
+    display: none;
+    z-index: 4;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    justify-content: center;
+    align-items: center;
+
+    background: var(--bg-color-add);
+}
+
+.error_screen-show {
+    display: flex;
+}
+
+.error_screen__text {
+    display: block;
+
+    width: 430px;
+    padding-top: 180px;
+}
+
+.limit_error {
+    display: none;
+    position: absolute;
+    z-index: 5;
+
+    top: 50px;
+    left: 50%;
+    width: 480px;
+    height: 200px;
+    transform: translateX(-50%);
+    padding: 20px;
+    border: 20px solid var(--bg-color);
+
+    background: var(--bg-color-add-non-transparent);
+
+    font-size: 18px;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.limit_error-show {
+    display: block;
+}

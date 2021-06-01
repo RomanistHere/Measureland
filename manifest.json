@@ -1,0 +1,23 @@
+{
+    "name": "Welcome to Measureland",
+    "short_name": "Measureland",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#d4eff5",
+    "theme_color": "#d4eff5",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "/images/PWA-icon-192x192.png",
+            "type": "image/png", "sizes": "192x192"
+        },
+        {
+            "src": "/images/PWA-icon-512x512.png",
+            "type": "image/png", "sizes": "512x512"
+        },
+        {
+            "src": "icons/favicon.svg",
+            "sizes": "513x513"
+        }
+    ]
+}
