@@ -150,7 +150,8 @@ ul {
     transition: color .2s;
 }
 
-.article__link:hover {
+.article__link:hover,
+.article__link:focus {
     color: var(--active-color);
 }
 
