@@ -159,6 +159,18 @@ ul {
     color: var(--bg-color);
 }
 
+.article__hr {
+    width: 40px;
+    margin-left: 0;
+}
+
+.article__highl-1 {
+    font-weight: normal;
+    font-style: italic;
+    opacity: .8;
+    font-size: 90%;
+}
+
 p, ul {
     font-style: italic;
 }
