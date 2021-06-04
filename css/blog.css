@@ -46,7 +46,7 @@ body {
     --suc-color: #00CC66;
     --dark-green: #329C00;
 
-    background: linear-gradient(to right, var(--bg-color) 0%, var(--bg-color-add) 20%, var(--bg-color-add) 80%, var(--bg-color) 100%);
+    background: linear-gradient(to right, var(--bg-color) 0%, var(--bg-color-add-non-transparent) 20%, var(--bg-color-add-non-transparent) 80%, var(--bg-color) 100%);
     color: var(--text-color);
 
     /* // dark sheme // */
@@ -197,6 +197,20 @@ ul {
     font-style: italic;
     opacity: .8;
     font-size: 90%;
+}
+
+.article__highlight_wrap {
+    background-color: #a3ffd1;
+}
+
+.article__heading-low {
+    font-size: 100%;
+}
+
+.note .article__heading-low {
+    margin-top: 0;
+
+    font-size: 100%;
 }
 
 p, ul {

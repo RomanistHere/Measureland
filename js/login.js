@@ -534,13 +534,15 @@ const initLoginBtns = () => {
         runSpinner('.login__spinner')
 
         const { error, data } = await login(loginState.email, loginState.pass)
+        console.warn('logged in')
         console.log(error)
         console.log(data)
         hideSpinner('.login__spinner')
 
         if (error === null) {
-            console.log('Logged in')
             state = { ...state, userID: data.userID }
+            $('.ratingAvailableNumber').textContent = data.activeRatings
+            $('.ratingUserName').textContent = data.userName
             clearLoginFields()
             userLoggedIn()
             changeLoginScreen('loggedIn')

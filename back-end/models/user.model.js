@@ -56,7 +56,7 @@ const UserSchema = new Schema({
         },
         lang: {
             type: String,
-            default: 'eng'
+            default: 'en'
         }
     }
 }).index({ 'email': 1 });

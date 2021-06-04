@@ -69,7 +69,7 @@ exports.user_register = async (req, res) => {
 exports.user_login = async (req, res) => {
     console.log('user_login')
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email: req.body.email }, '-properties.ratedLocations -properties.ratings');
 
         if (!user)
             return res.status(400).json({ error: "Email is wrong" });
@@ -92,7 +92,9 @@ exports.user_login = async (req, res) => {
             data: {
                 message: "Login successful",
                 userID: user.email,
-                dateCreated: user.dateCreated
+                dateCreated: user.dateCreated,
+                activeRatings: user.usergroup === 0 ? 999 : user.properties.activeRatings,
+                userName: user.username
             },
         });
     } catch (error) {
