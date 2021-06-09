@@ -2,7 +2,8 @@
 
 @font-face {
     font-family: 'Nunito';
-    src: url('../fonts/Nunito-Regular.woff2') format('woff');
+    src: url('../fonts/Nunito-Regular.woff2') format('woff'),
+        url('../fonts/Nunito-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -10,7 +11,8 @@
 
 @font-face {
     font-family: 'Nunito';
-    src: url('../fonts/Nunito-Italic.woff2') format('woff');
+    src: url('../fonts/Nunito-Italic.woff2') format('woff'),
+        url('../fonts/Nunito-Italic.ttf') format('truetype');
     font-weight: normal;
     font-style: italic;
     font-display: block;
@@ -18,7 +20,8 @@
 
 @font-face {
     font-family: 'Nunito';
-    src: url('../fonts/Nunito-Bold.woff2') format('woff');
+    src: url('../fonts/Nunito-ExtraBold.woff2') format('woff'),
+        url('../fonts/Nunito-ExtraBold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
     font-display: block;
