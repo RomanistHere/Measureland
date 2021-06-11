@@ -57,6 +57,10 @@ const UserSchema = new Schema({
         lang: {
             type: String,
             default: 'en'
+        },
+        balance: {
+            type: Number,
+            default: 0
         }
     }
 }).index({ 'email': 1 });
