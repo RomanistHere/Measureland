@@ -453,6 +453,17 @@ body {
     text-align: center;
 }
 
+.rating__count_wrap {
+    position: relative;
+}
+
+.rating__count {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+}
+
 @keyframes dots {
     0% {
         width: 0;

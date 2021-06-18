@@ -23,6 +23,7 @@ const isPersExpBtn = $('.btnPersExp')
 const isNotPersExpBtn = $('.btnNotPersExp')
 const saveBtn = $('.btnSave')
 const ratingComment = $('.ratingComment')
+const ratingCount = $('.rating__count')
 const closeBtn = $('.ratingShowClose')
 const ratingProgr = $('.rating__progr')
 const setRatingButtons = $All('.setRating')
@@ -43,6 +44,7 @@ const resetQuiz = () => {
     $All('.star-active').forEach(item => removeClass(item, 'star-active'))
     showQuiz()
     ratingComment.value = ''
+    ratingCount.textContent = '330'
 }
 
 const setProgrBar = stageNumb => {
@@ -127,7 +129,7 @@ const handleQuizBtns = () => {
         isSaving = true
         const { isDataValid, averageRating } = checkAndGetData(quizRating)
         if (!isDataValid) {
-            // alert('Нужно оценить больше 5 пунктов')
+            isSaving = false
             addClass(saveStatus, 'rating__status-more')
             return
         }
@@ -187,7 +189,11 @@ const handleQuizBtns = () => {
     })
 
     ratingComment.addEventListener('input', e => {
-        quizState = { ...quizState, comment: e.target.value }
+        const value = e.target.value
+        const remainingCount = 330 - value.length
+
+        ratingCount.textContent = remainingCount
+        quizState = { ...quizState, comment: value }
     })
 }
 
