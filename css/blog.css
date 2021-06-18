@@ -210,6 +210,10 @@ ul {
     font-size: 90%;
 }
 
+.article__highl-2 {
+    display: block;
+}
+
 .article__highlight_wrap {
     background-color: var(--gentle-color);
 }
