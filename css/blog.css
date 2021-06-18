@@ -497,3 +497,24 @@ ul.blog__list {
         font-size: 20px;
     }
 }
+
+@media screen and (max-width: 375px) {
+    .blog__link {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .blog__link {
+        font-size: 18px;
+        padding: 1px 20px;
+    }
+
+    .article__date {
+        font-size: 16px;
+    }
+
+    .article__nav {
+        font-size: 16px;
+    }
+}
