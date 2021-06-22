@@ -47,10 +47,10 @@ exports.user_register = async (req, res) => {
         })
 
         await sendEmail({
-            from: 'welcometomeasureland@gmail.com',
-            to: email,
-            subject: 'Verify your email address',
-            html: `Here's your email verification link: <a href="${verificationUrl}" target="_blank">${verificationUrl}</a>`
+            email,
+            lang,
+            verificationUrl,
+            reason: 'Verify'
         })
 
         res.json({
@@ -157,10 +157,9 @@ exports.user_verify = async (req, res) => {
         req.session.dateCreated = user.dateCreated
 
         await sendEmail({
-            from: 'welcometomeasureland@gmail.com',
-            to: user.email,
-            subject: 'Welcome to Measureland',
-            text: `Congratulations, your account is now verified!`
+            email: user.email,
+            lang: user.properties.lang,
+            reason: 'Verified'
         })
 
         res.json({
@@ -203,10 +202,10 @@ exports.user_reverify = async (req, res) => {
             })
 
             await sendEmail({
-                from: 'welcometomeasureland@gmail.com',
-                to: req.body.email,
-                subject: 'Verify your email address',
-                html: `Here's your email verification link: <a href="${verificationUrl}" target="_blank">${verificationUrl}</a>`
+                email: req.body.email,
+                lang,
+                verificationUrl,
+                reason: 'Verify'
             })
 
             res.json({
@@ -312,10 +311,10 @@ exports.user_reset_password = async (req, res, next) => {
         })
 
         await sendEmail({
-            from: 'welcometomeasureland@gmail.com',
-            to: userEmail,
-            subject: 'Reset password',
-            html: `Here's your link for password changing: <a href="${verificationUrl}" target="_blank">${verificationUrl}</a>`
+            email: userEmail,
+            lang,
+            verificationUrl,
+            reason: 'Reset'
         })
 
         res.json({

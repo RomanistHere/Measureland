@@ -1249,3 +1249,12 @@ div.rate__wrap .btn-hide {
 .text_link:focus {
     color: var(--active-color);
 }
+
+*::selection {
+    color: var(--active-color);
+    background-color: var(--text-color);
+}
+
+a::selection {
+    color: var(--bg-color);
+}
