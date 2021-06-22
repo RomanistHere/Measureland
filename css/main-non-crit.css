@@ -380,12 +380,8 @@ body {
     height: 350px;
 }
 
-.rating__img {
-    margin-top: -10px;
-}
-
 .rating__img_wrap {
-    height: 130px;
+    height: 180px;
 
     overflow: hidden;
 }
@@ -1242,4 +1238,14 @@ div.rate__wrap .btn-hide {
 .overlay__loading-show {
     opacity: 1;
     transition: opacity .3s;
+}
+
+.text_link {
+    color: var(--text-color);
+    transition: color .2s;
+}
+
+.text_link:hover,
+.text_link:focus {
+    color: var(--active-color);
 }
