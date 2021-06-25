@@ -92,6 +92,81 @@ const verifiedTemplate =
     </p>
 </div>`
 
+const verifiedTemplateRus =
+`<div>
+    <style>
+        div {
+            font-family: Verdana, sans-serif;
+            color: #001A23;
+        }
+        a {
+            display: block;
+            margin: 10px 0;
+            padding: 5px 0;
+            color: #001A23;
+            transition: color .2s;
+        }
+        a:hover {
+            color: #ffa500;
+        }
+        h1 {
+            font-size: 20px;
+        }
+        ul {
+            list-style: square;
+        }
+    </style>
+    <h1>
+        Поздравляем, аккаунт подтверждён!
+    </h1>
+    <p>
+        Узнать больше про Измерию:
+    </p>
+    <ul>
+        <li>
+            <a target="_blank" href="http://localhost:8080/ru/blog/about-us/">О нас. Наши цели и миссия.</a>
+        </li>
+        <li>
+            <a target="_blank" href="http://localhost:8080/ru/blog/tutorial/">Путеводитель по Измерии (туториал).</a>
+        </li>
+        <li>
+            <a target="_blank" href="http://localhost:8080/ru/blog/terms-of-use/">Конституция Измерии. Условия использования.</a>
+        </li>
+        <li>
+            <a target="_blank" href="http://localhost:8080/ru/blog/policy/">Конституция Измерии. Конфиденциальность.</a>
+        </li>
+        <li>
+            <a target="_blank" href="http://localhost:8080/ru/blog/paid-options/">Конституция Измерии. Платные опции.</a>
+        </li>
+    </ul>
+    <p>
+        Другие полезные ссылки:
+    </p>
+    <ul>
+        <li>
+            <a target="_blank" href="mailto:RomanistHere@pm.me">Поддержка, вопросы, обратная связь: RomanistHere@pm.me</a>
+        </li>
+        <li>
+            <a target="_blank" href="http://localhost:8080/ru/">Измерия</a>
+        </li>
+        <li>
+            <a target="_blank" href="https://github.com/RomanistHere/Measureland">GitHub</a>
+        </li>
+        <li>
+            <a target="_blank" href="http://localhost:8080/blog/policy/">Twitter</a>
+        </li>
+        <li>
+            <a target="_blank" href="http://localhost:8080/blog/paid-options/">Telegram</a>
+        </li>
+        <li>
+            <a target="_blank" href="https://www.donationalerts.com/r/romanisthere">Донат</a>
+        </li>
+    </ul>
+    <p>
+        От этой рассылки нельзя отписаться (unsubscribe), потому что это не рассылка, а единичное письмо. Мы не будем ничего больше посылать, только если что-то супер-пупер важное. Хорошего дня и увидимся в Измерии!
+    </p>
+</div>`
+
 const getHTML = (key, url, lang) => {
     const templatesHTML = {
         'en': {
@@ -102,18 +177,23 @@ const getHTML = (key, url, lang) => {
         'ru': {
             'Verify': `Ссылка для верификации: <a href="${url}" target="_blank">${url}</a> - нажми или скопируй и вставь в адресную строку.`,
             'Reset': `Here's your link for password changing: <a href="${url}" target="_blank">${url}</a>`,
-            'Verified': `Поздравляем, аккаунт подтверждён!`,
+            'Verified': verifiedTemplateRus,
         }
     }
 
     return templatesHTML[lang][key]
 }
 
+const templateFrom = {
+    'en': 'Measureland mail service',
+    'ru': 'Почтовая служба Измерии',
+}
+
 exports.sendEmail = async (data) => {
     const { email, lang, verificationUrl, reason } = data
     const mail = {
         to: email,
-        from: 'Measureland-kingdom-mail-service@mail.com',
+        from: templateFrom[lang],
         html: getHTML(reason, verificationUrl, lang),
         subject: templatesSubject[lang][reason]
     }
