@@ -1,10 +1,11 @@
+require('dotenv').config()
 const router = require("express").Router();
 const MongoLimitStore = require('rate-limit-mongo');
 const rateLimit = require("express-rate-limit");
 
 const user_controller = require('../controllers/user.controller');
 
-const dev_db_url = 'mongodb://127.0.0.1/geo';
+const dev_db_url = `${process.env.MONGODB_URI}`;
 
 const mediumLimiter = rateLimit({
     store: new MongoLimitStore({
@@ -28,7 +29,7 @@ const hardLimiter = rateLimit({
         errorHandler: console.error.bind(null, 'rate-limit-mongo')
     }),
     windowMs: 20 * 60 * 1000,
-    max: 10,
+    max: 20,
     // skipFailedRequests: true,
     handler: (req, res) => {
         res.status(429).json({ error: 'Too many requests, please try again later' });

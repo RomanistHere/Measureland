@@ -42,26 +42,26 @@ const verifiedTemplate =
         }
     </style>
     <h1>
-        Congratulations, your account is now verified!
+        Congratulations, your account is verified, go and rate now!
     </h1>
     <p>
         Learn more about Measureland in our blog:
     </p>
     <ul>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/about-us/">About us. Our goals and mission.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/about-us/">About us. Our goals and mission.</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/tutorial/">Measureland guide book (tutorial).</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/tutorial/">Measureland guide book (tutorial).</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/terms-of-use/">Measureland Constitution. Part I. Terms of use.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/terms-of-use/">Measureland Constitution. Part I. Terms of use.</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/policy/">Measureland Constitution. Part II. Privacy policy.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/policy/">Measureland Constitution. Part II. Privacy policy.</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/paid-options/">Measureland Constitution. Part III. Paid options.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/paid-options/">Measureland Constitution. Part III. Paid options.</a>
         </li>
     </ul>
     <p>
@@ -72,16 +72,16 @@ const verifiedTemplate =
             <a target="_blank" href="mailto:RomanistHere@pm.me">Support, questions, feedback: RomanistHere@pm.me</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/">Measureland</a>
+            <a target="_blank" href="${process.env.SITE_URL}/">Measureland</a>
         </li>
         <li>
             <a target="_blank" href="https://github.com/RomanistHere/Measureland">GitHub</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/policy/">Twitter</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/policy/">Twitter</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/paid-options/">Telegram</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/paid-options/">Telegram</a>
         </li>
         <li>
             <a target="_blank" href="https://www.donationalerts.com/r/romanisthere">Donate</a>
@@ -117,26 +117,26 @@ const verifiedTemplateRus =
         }
     </style>
     <h1>
-        Поздравляем, аккаунт подтверждён!
+        Поздравляем, аккаунт подтверждён, пять Измеринок из пяти!
     </h1>
     <p>
         Узнать больше про Измерию:
     </p>
     <ul>
         <li>
-            <a target="_blank" href="http://localhost:8080/ru/blog/about-us/">О нас. Наши цели и миссия.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/about-us/">О нас. Наши цели и миссия.</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/ru/blog/tutorial/">Путеводитель по Измерии (туториал).</a>
+            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/tutorial/">Путеводитель по Измерии (туториал).</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/ru/blog/terms-of-use/">Конституция Измерии. Условия использования.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/terms-of-use/">Конституция Измерии. Условия использования.</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/ru/blog/policy/">Конституция Измерии. Конфиденциальность.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/policy/">Конституция Измерии. Конфиденциальность.</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/ru/blog/paid-options/">Конституция Измерии. Платные опции.</a>
+            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/paid-options/">Конституция Измерии. Платные опции.</a>
         </li>
     </ul>
     <p>
@@ -147,16 +147,16 @@ const verifiedTemplateRus =
             <a target="_blank" href="mailto:RomanistHere@pm.me">Поддержка, вопросы, обратная связь: RomanistHere@pm.me</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/ru/">Измерия</a>
+            <a target="_blank" href="${process.env.SITE_URL}/ru/">Измерия</a>
         </li>
         <li>
             <a target="_blank" href="https://github.com/RomanistHere/Measureland">GitHub</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/policy/">Twitter</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/policy/">Twitter</a>
         </li>
         <li>
-            <a target="_blank" href="http://localhost:8080/blog/paid-options/">Telegram</a>
+            <a target="_blank" href="${process.env.SITE_URL}/blog/paid-options/">Telegram</a>
         </li>
         <li>
             <a target="_blank" href="https://www.donationalerts.com/r/romanisthere">Донат</a>
@@ -185,8 +185,8 @@ const getHTML = (key, url, lang) => {
 }
 
 const templateFrom = {
-    'en': 'Measureland mail service',
-    'ru': 'Почтовая служба Измерии',
+    'en': 'Measureland-mail-service@measureland.online',
+    'ru': 'Measureland-mail-service@measureland.online',
 }
 
 exports.sendEmail = async (data) => {

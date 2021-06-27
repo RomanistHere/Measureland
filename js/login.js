@@ -277,6 +277,7 @@ const userInit = async () => {
             dateCreated,
             lang
         }
+        console.log(state.lang)
         userLoggedIn()
         console.log('days since register: ', dateDiffInDays(Date.now(), dateCreated))
         // fillDB(20000)
@@ -630,6 +631,14 @@ const initLoginBtns = () => {
                 ? 'Anonym'
                 : 'Аноним'
             : name
+
+        if (userName === 'Anonym' && ageGrp === 1 && moneyGrp === 1) {
+            closeLoginForm()
+            onboardingState = { ...onboardingStateDef }
+            showSuccessNotification()
+            userLoggedIn()
+            return
+        }
 
         const { error } = await onboard(userName, ageGrp, moneyGrp, state.userID)
         console.log(error)
