@@ -66,6 +66,35 @@ exports.user_register = async (req, res) => {
     }
 };
 
+const dateDiffInDays = (date1, date2) => {
+    const msPerDay = 1000 * 60 * 60 * 24
+    const a = new Date(date1)
+    const b = new Date(date2)
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
+
+    return Math.floor(Math.abs(utc2 - utc1) / msPerDay)
+}
+
+const isRatingActive = (user) => {
+    if (user.usergroup === 0)
+        return { canUserAdd: true, activeRatings: 3 }
+
+    if (user.properties.activeRatings > 0)
+        return { canUserAdd: true, activeRatings: user.properties.activeRatings - 1 }
+
+    const dayDifference = dateDiffInDays(Date.now(), user.properties.lastRated)
+
+    if (dayDifference > 5 && dayDifference <= 10)
+        return { canUserAdd: true, activeRatings: 0 }
+    else if (dayDifference > 10 && dayDifference <= 15)
+        return { canUserAdd: true, activeRatings: 1 }
+    else if (dayDifference > 15)
+        return { canUserAdd: true, activeRatings: 2 }
+
+    return { canUserAdd: false, activeRatings: null }
+}
+
 exports.user_login = async (req, res) => {
     console.log('user_login')
     try {
@@ -87,13 +116,15 @@ exports.user_login = async (req, res) => {
         req.session.lang = user.properties.lang
         req.session.dateCreated = user.dateCreated
 
+        const { activeRatings } = isRatingActive(user)
+
         res.json({
             error: null,
             data: {
                 message: "Login successful",
                 userID: user.email,
                 dateCreated: user.dateCreated,
-                activeRatings: user.usergroup === 0 ? 999 : user.properties.activeRatings,
+                activeRatings: user.usergroup === 0 ? 999 : activeRatings,
                 userName: user.username
             },
         });

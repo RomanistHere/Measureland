@@ -161,7 +161,8 @@ const addGeoToUser = async (userID, geoID, activeRatings, rating, commentID) => 
                 'properties.ratings': ratings
             },
             $set: {
-                'properties.activeRatings': activeRatings
+                'properties.activeRatings': activeRatings,
+                'properties.lastRated': Date.now(),
             }
         }, {
             new: true
