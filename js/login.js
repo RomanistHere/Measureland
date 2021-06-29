@@ -262,7 +262,8 @@ const userInit = async () => {
         showLimitError()
         return
     } else if (error) {
-        $('.start').remove()
+        if ($('.start'))
+            $('.start').remove()
         showErrorScreen()
         return
     }
