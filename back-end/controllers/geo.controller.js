@@ -147,11 +147,13 @@ const addGeoToUser = async (userID, geoID, activeRatings, rating, commentID) => 
             ? {
                 geoID,
                 rating,
-                commentID
+                commentID,
+                dateRated: Date.now()
             }
             : {
                 geoID,
                 rating,
+                dateRated: Date.now()
             }
         const result = await User.findOneAndUpdate(
         { email: userID },

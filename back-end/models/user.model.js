@@ -36,7 +36,10 @@ const UserSchema = new Schema({
             commentID: { type: Schema.Types.ObjectId, ref: 'Comment' },
             rating: {
                 type: Object
-            }
+            },
+            dateRated: {
+                type: Date
+            },
         }],
         ageGrp: {
             type: Number,
