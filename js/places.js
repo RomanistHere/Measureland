@@ -7,7 +7,11 @@ const initPlaces = async () => {
     const { error, data } = await fetchRatedPlace()
     console.log(error)
 
-    if (error) {
+    if (error === `Couldn't find the user`) {
+        window.location.reload()
+        return
+    } else if (error) {
+        // TODO: notify error
         hideSpinner('.places__spinner')
         return
     }

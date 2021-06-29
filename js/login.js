@@ -290,9 +290,6 @@ const userInit = async () => {
         }
     }
 
-    if (prevLang !== state.lang || state.lang === 'en')
-        changeLang(state.lang)
-
     document.querySelector('.spinner__main').remove()
     console.log(state)
 }

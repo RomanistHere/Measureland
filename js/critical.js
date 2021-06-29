@@ -11,8 +11,8 @@ const addClass = (elem, className) =>
 const sleep = milliseconds =>
     new Promise(resolve => setTimeout(resolve, milliseconds))
 
-const removeClass = (elem, className1, className2 = null, className3 = null) =>
-    elem.classList.remove(className1, className2, className3)
+const removeClass = (elem, cl1, cl2 = null, cl3 = null, cl4 = null, cl5 = null, cl6 = null) =>
+    elem.classList.remove(cl1, cl2, cl3, cl4, cl5, cl6)
 
 const handleClick = (elem, callback) =>
     elem.addEventListener('click', e => callback(e))

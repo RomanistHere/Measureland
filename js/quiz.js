@@ -40,7 +40,7 @@ const resetQuiz = () => {
 
     // reset DOM
     removeClass(ratingPopup, 'rating-active')
-    removeClass(saveStatus, 'rating__status-progress', 'rating__status-error', 'rating__status-rated', 'rating__status-limit')
+    removeClass(saveStatus, 'rating__status-progress', 'rating__status-error', 'rating__status-rated', 'rating__status-limit', 'rating__status-logout')
     $All('.star-active').forEach(item => removeClass(item, 'star-active'))
     showQuiz()
     ratingComment.value = ''
@@ -142,6 +142,7 @@ const handleQuizBtns = () => {
 
         try {
             const { error, data } = await saveToDB(actualCoords, quizRating, averageRating, quizState.comment, quizState.isPersonalExperience)
+            console.log(error)
             if (error === 'Nearby place is already rated') {
                 removeClass(saveStatus, 'rating__status-progress')
                 addClass(saveStatus, 'rating__status-rated')
@@ -150,6 +151,13 @@ const handleQuizBtns = () => {
             } else if (error === 'No active ratings') {
                 removeClass(saveStatus, 'rating__status-progress')
                 addClass(saveStatus, 'rating__status-limit')
+                isSaving = false
+                return
+            } else if (error === 'User is not logged in') {
+                userLoggedOut()
+                state = { ...state, userID: null }
+                removeClass(saveStatus, 'rating__status-progress')
+                addClass(saveStatus, 'rating__status-logout')
                 isSaving = false
                 return
             } else if (error) {

@@ -43,9 +43,12 @@ const initRatingPopup = async ({ latlng }) => {
     $('.rate__popup').focus()
 
     const { error, data } = await getSinglePointData([ latlng.lat, latlng.lng ])
+    const isLoggedIn = data.userID
+    if (!isLoggedIn)
+        userLoggedOut()
 
+    console.log(error)
     if (error === 'Location not found') {
-        console.log(error)
         resetRate()
         closeSideBar()
         return

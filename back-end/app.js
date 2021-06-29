@@ -46,7 +46,8 @@ app.use(session({
         secure: false,
         // TODO: change before production
         sameSite: 'Lax',
-        maxAge: 1209600000 // two weeks
+        // maxAge: 1209600000 // two weeks
+        maxAge: 20000
     }
 }));
 app.use(cors({

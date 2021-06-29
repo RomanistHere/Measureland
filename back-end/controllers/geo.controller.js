@@ -339,12 +339,12 @@ exports.geo_location = async (req, res, next) => {
             res.status(400).json({ error: 'Location not found' })
 
         const geoID = result._id
-        const user = await User.findOne({ $and: [
+        const user = userID ? await User.findOne({ $and: [
             { email: userID },
             { 'properties.ratedLocations': {
                 $in: [geoID]
             }}
-        ]});
+        ]}) : null
 
         const { properties } = result
         console.log(result)
@@ -358,7 +358,7 @@ exports.geo_location = async (req, res, next) => {
             error: null,
             data: {
                 message: "Geolocation found",
-                userID,
+                userID: userID ? userID : null,
                 properties: props
             },
         })

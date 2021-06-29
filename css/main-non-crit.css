@@ -401,6 +401,7 @@ body {
 .rating__status-progress,
 .rating__status-rated,
 .rating__status-limit,
+.rating__status-logout,
 .rating__status-more,
 .rating__status-error {
     opacity: 1;
@@ -430,6 +431,7 @@ body {
 }
 
 .rating__status-limit .rating__status_text,
+.rating__status-logout .rating__status_text,
 .rating__status-rated .rating__status_text,
 .rating__status-error .rating__status_text,
 .rating__status-more .rating__status_text {
@@ -438,6 +440,7 @@ body {
 
 .rating__status-rated .rating__status_text-rated,
 .rating__status-limit .rating__status_text-limit,
+.rating__status-logout .rating__status_text-logout,
 .rating__status-error .rating__status_text-err,
 .rating__status-more .rating__status_text-more {
     display: block;
