@@ -212,7 +212,6 @@ exports.geo_add = async (req, res, next) => {
     console.log(req.session)
 
     if (!req.session.userID) {
-        // TODO: make user login
         return res.status(400).json({ error: "User is not logged in" })
     }
 
@@ -395,37 +394,44 @@ exports.geo_comments = async (req, res, next) => {
             }
         })
 
-        res.send(arrayToSend)
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({ error })
-    }
-};
-
-exports.geo_same_location = async (req, res, next) => {
-    const urlParams = new URLSearchParams(req.params.coords)
-    const nearCoords = Object.fromEntries(urlParams)
-    const arr = nearCoords.latlng.split(',').map(Number)
-
-    try {
-        const result = await Geo.findOne({
-            "location": {
-                $near: {
-                    $geometry: {
-                        type: "Point" ,
-                        coordinates: [ ...arr ]
-                    },
-                    $maxDistance: 250
-                }
-            }
+        res.json({
+            error: null,
+            data: {
+                message: "Comments fetched",
+                userID: userID ? userID : null,
+                array: arrayToSend
+            },
         })
-
-        res.send(result ? true : false)
     } catch (error) {
         console.log(error)
         res.status(400).json({ error })
     }
 };
+
+// exports.geo_same_location = async (req, res, next) => {
+//     const urlParams = new URLSearchParams(req.params.coords)
+//     const nearCoords = Object.fromEntries(urlParams)
+//     const arr = nearCoords.latlng.split(',').map(Number)
+//
+//     try {
+//         const result = await Geo.findOne({
+//             "location": {
+//                 $near: {
+//                     $geometry: {
+//                         type: "Point" ,
+//                         coordinates: [ ...arr ]
+//                     },
+//                     $maxDistance: 250
+//                 }
+//             }
+//         })
+//
+//         res.send(result ? true : false)
+//     } catch (error) {
+//         console.log(error)
+//         res.status(400).json({ error })
+//     }
+// };
 
 exports.geo_location_by_bounds = async (req, res, next) => {
     const urlParams = new URLSearchParams(req.params.coords)
@@ -454,15 +460,15 @@ exports.geo_location_by_bounds = async (req, res, next) => {
     }
 };
 
-exports.geo_all = async (req, res, next) => {
-    try {
-        const result = await Geo.find({}, 'location.coordinates properties.averageRating')
-        res.send(result)
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({ error })
-    }
-};
+// exports.geo_all = async (req, res, next) => {
+//     try {
+//         const result = await Geo.find({}, 'location.coordinates properties.averageRating')
+//         res.send(result)
+//     } catch (error) {
+//         console.log(error)
+//         res.status(400).json({ error })
+//     }
+// };
 
 // not used
 

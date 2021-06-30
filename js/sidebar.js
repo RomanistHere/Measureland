@@ -123,8 +123,11 @@ const appendComments = array => {
         target.dataset.disabled = true
         const numberElem = target.querySelector('.comment__btn-numb')
         numberElem.textContent = Number(numberElem.textContent) + 1
-        const result = await reactOnComment(goal, key)
-        console.log(result)
+        const { error, data } = await reactOnComment(goal, key)
+        if (error) {
+            showError('unrecognizedError', error)
+            return
+        }
     }))
 }
 
@@ -132,9 +135,14 @@ const showComments = async ({ geoID }) => {
     runSpinner('.sidebar__spinner')
     openSideBar('comments')
 
-    const data = await fetchComments(geoID)
-    console.log(data)
+    const { error, data } = await fetchComments(geoID)
 
-    appendComments(data)
+    if (error) {
+        hideSpinner('.sidebar__spinner')
+        showError('unrecognizedError', error)
+        return
+    }
+
+    appendComments(data.array)
     hideSpinner('.sidebar__spinner')
 }

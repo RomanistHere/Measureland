@@ -245,3 +245,24 @@ const openRatingAndZoom = (lat, lng, zoom = 12) => {
 
     tryZoom([lat, lng])
 }
+
+const showError = (key, error = null) => {
+    const errorObj = {
+        ru: {
+            userNotFound: `У нас не получается распознать тебя, пожалуйста, залогинься ещё раз.`,
+            unrecognizedError: `Какая-то ошибка. Открой консоль для дополнительной информации.`,
+            locationNotFound: `Какие-то проблемы с данным местом. Попробуй позже.`,
+        },
+        en: {
+            userNotFound: `We have troubles recognizing you, please, relogin.`,
+            unrecognizedError: `Error happened. Open console for additional info.`,
+            locationNotFound: `There are some troubles with this location or our server. Try later.`,
+        }
+    }
+    const lang = state.lang === 'ru' ? 'ru' : 'en'
+    const message = errorObj[lang][key]
+
+    if (error)
+        console.warn(error)
+    return alert(message)
+}

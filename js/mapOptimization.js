@@ -210,8 +210,7 @@ const getNewData = async () => {
         showLimitError()
         return
     } else if (error) {
-        // TODO: change
-        alert('Smething went wrong')
+        showError('unrecognizedError', error)
         return
     }
 

@@ -221,8 +221,8 @@ const verificationInit = async () => {
             openLoginForm()
             changeLoginScreen('onboarding')
         } else {
-            // TODO: notificate user
-            console.warn('Token is expired')
+            console.warn('Token might be expired')
+            showError('unrecognizedError', error)
         }
 
         // if (state.lang !== lang) {
@@ -262,6 +262,7 @@ const userInit = async () => {
         showLimitError()
         return
     } else if (error) {
+        console.warn(error)
         if ($('.start'))
             $('.start').remove()
         showErrorScreen()
@@ -305,12 +306,14 @@ const initLoginBtns = () => {
     handleClickPrevDef(loginCloseBtn, closeLoginForm)
     handleClickPrevDef(logoutBtn, async () => {
         const { error, data } = await logout()
-        console.log(error, data)
+
         if (!error) {
             state.flow.push('lo')
             userLoggedOut()
             state = { ...state, userID: null }
             showSuccessNotification()
+        } else {
+            showError('unrecognizedError', error)
         }
     })
 
@@ -641,7 +644,8 @@ const initLoginBtns = () => {
         const { error } = await onboard(userName, ageGrp, moneyGrp, state.userID)
         console.log(error)
 
-        if (error !== null) {
+        if (error) {
+            showError('unrecognizedError', error)
             return
         }
 

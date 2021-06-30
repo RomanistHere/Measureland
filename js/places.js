@@ -8,11 +8,12 @@ const initPlaces = async () => {
     console.log(error)
 
     if (error === `Couldn't find the user`) {
+        showError('userNotFound')
         window.location.reload()
         return
     } else if (error) {
-        // TODO: notify error
         hideSpinner('.places__spinner')
+        showError('unrecognizedError', error)
         return
     }
 

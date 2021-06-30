@@ -47,14 +47,13 @@ const initRatingPopup = async ({ latlng }) => {
     if (!isLoggedIn)
         userLoggedOut()
 
-    console.log(error)
     if (error === 'Location not found') {
+        showError('locationNotFound')
         resetRate()
         closeSideBar()
         return
     } else if (error) {
-        // TODO: handle other errors
-        console.log(error)
+        showError('unrecognizedError', error)
         return
     }
 
