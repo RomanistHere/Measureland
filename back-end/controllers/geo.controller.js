@@ -434,6 +434,7 @@ exports.geo_comments = async (req, res, next) => {
 // };
 
 exports.geo_location_by_bounds = async (req, res, next) => {
+    const { userID } = req.session
     const urlParams = new URLSearchParams(req.params.coords)
     const { bounds, zoom } = Object.fromEntries(urlParams)
     const polygon = JSON.parse(bounds)
@@ -452,7 +453,11 @@ exports.geo_location_by_bounds = async (req, res, next) => {
 
         res.json({
             error: null,
-            data: result,
+            data: {
+                message: "Location fetched",
+                userID: userID ? userID : null,
+                result
+            },
         });
     } catch (error) {
         console.log(error)

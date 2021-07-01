@@ -1422,10 +1422,35 @@ a::selection {
     .rating__status_text {
         white-space: normal;
     }
+
+    .start__image {
+        right: auto;
+        left: 0;
+        /* right: -58%; */
+    }
+
+    .checkbox__container {
+        padding-left: 30px;
+
+        font-size: 16px;
+    }
+
+    .checkbox__checkmark {
+        width: 20px;
+        height: 20px;
+    }
+
+    .plane__wrap {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 320px) {
     .btn {
         font-size: 12px;
+    }
+
+    .checkbox__container {
+        font-size: 14px;
     }
 }

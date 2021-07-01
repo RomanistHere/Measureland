@@ -133,7 +133,12 @@ const positionStartScreen = () => {
         if (windowHeight > startHeight) {
             startImage.style.height = '100%'
             startImage.style.width = 'auto'
-            imageCont.scrollLeft = 2000
+            if (windowWidth > 1024) {
+                imageCont.scrollLeft = 2000
+            } else {
+                const imageWidth = startImage.getBoundingClientRect().width
+                imageCont.scrollLeft = imageWidth / 2
+            }
         }
         if (windowWidth > startWidth) {
             startImage.style.width = '100%'

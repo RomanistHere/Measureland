@@ -227,6 +227,8 @@ const showErrorScreen = () =>
     addClass($('.error_screen'), 'error_screen-show')
 
 const showLimitError = () => {
+    if ($('.start'))
+        $('.start').remove()
     showErrorScreen()
     addClass($('.limit_error'), 'limit_error-show')
 }
