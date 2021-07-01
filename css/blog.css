@@ -189,7 +189,6 @@ ul {
     transition: color .2s;
 }
 
-.article__link:hover,
 .article__link:focus {
     color: var(--active-color);
 }
@@ -324,10 +323,6 @@ ul.blog__list {
     transition: background-color .4s;
 }
 
-.blog__link:hover {
-    background-color: transparent;
-}
-
 .blog__show_more {
     display: block;
 
@@ -354,11 +349,24 @@ ul.blog__list {
     transition: color .2s;
 }
 
-.blog__title_link:hover,
 .blog__title_link:focus,
 .blog__link:focus,
 .blog__show_more:focus {
     color: var(--active-color)
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .article__link:hover {
+        color: var(--active-color);
+    }
+
+    .blog__title_link:hover {
+        color: var(--active-color)
+    }
+
+    .blog__link:hover {
+        background-color: transparent;
+    }
 }
 
 @media screen and (max-width: 766px) {

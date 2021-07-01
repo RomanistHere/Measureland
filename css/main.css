@@ -90,15 +90,6 @@ body {
     top: 27px;
 }
 
-.open_settings:hover::before,
-.open_settings:hover::after {
-    transform: translateX(-2px);
-}
-
-.open_settings:hover .menu_btn {
-    transform: translateX(2px);
-}
-
 /* // leaflet // */
 
 .leaflet-touch .leaflet-control-geocoder-icon {
@@ -127,19 +118,11 @@ body {
     border-bottom-color: var(--text-color);
 }
 
-.leaflet-control-geocoder-alternatives li:hover {
-    background-color: var(--bg-color);
-}
-
 .leaflet-control-zoom.leaflet-bar a {
     width: 40px;
     height: 40px;
     line-height: 40px;
     background-color: var(--bg-color);
-}
-
-.leaflet-control-zoom.leaflet-bar a:hover {
-    background-color: var(--bg-color-add-non-transparent);
 }
 
 .leaflet-left .leaflet-control {
@@ -364,47 +347,15 @@ body {
     transform-origin: center center;
 }
 
-.start__building:hover {
-    filter: drop-shadow(0 0 20px green);
-    transform: scale(1.02) translateY(-12px);
-}
-
-/* .start__building rect[fill='#001A23'],
-.start__building path[fill='#001A23'] {
-    transition: fill .3s, filter .3s;
-}
-
-.start__building:hover rect[fill='#001A23'],
-.start__building:hover path[fill='#001A23'] {
-    fill: var(--active-color);
-    filter: drop-shadow(0 0 5px var(--active-color));
-} */
-
 .start__shadow {
     transition: transform 1s .2s;
     transform-origin: center center;
-}
-
-.start__shadow:hover {
-    transform: scale(1.02) translateY(-12px);
 }
 
 .start__road,
 .start__grass,
 .start__house {
     transition: filter .3s;
-}
-
-.start__road:hover {
-    filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 5px var(--dark-green));
-}
-
-.start__grass:hover {
-    filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 5px var(--dark-green));
-}
-
-.start__house:hover {
-    filter: drop-shadow(0 0 10px green);
 }
 
 .start__house-off .house__window {
@@ -414,10 +365,6 @@ body {
 .start__btn {
     cursor: pointer;
     transition: filter .5s;
-}
-
-.start__btn:hover {
-    filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 2px var(--text-color)) drop-shadow(0 0 10px var(--dark-green));
 }
 
 .start__btn:focus {
@@ -442,10 +389,6 @@ body {
 
     filter: blur(.8px);
     transition: filter .2s;
-}
-
-.start__lang_btn:hover {
-    filter: none;
 }
 
 .start__lang_btn:focus {
@@ -503,10 +446,6 @@ body {
 
 .checkbox__link:focus {
     outline-offset: 2px;
-}
-
-.checkbox__container:hover .checkbox__checkmark {
-    box-shadow: 0 0 15px var(--dark-green);
 }
 
 .checkbox__link {
@@ -604,4 +543,56 @@ input:checked ~ .checkbox__checkmark::after {
 
 .limit_error-show {
     display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .open_settings:hover::before,
+    .open_settings:hover::after {
+        transform: translateX(-2px);
+    }
+
+    .open_settings:hover .menu_btn {
+        transform: translateX(2px);
+    }
+
+    .leaflet-control-geocoder-alternatives li:hover {
+        background-color: var(--bg-color);
+    }
+
+    .leaflet-control-zoom.leaflet-bar a:hover {
+        background-color: var(--bg-color-add-non-transparent);
+    }
+
+    .start__building:hover {
+        filter: drop-shadow(0 0 20px green);
+        transform: scale(1.02) translateY(-12px);
+    }
+
+    .start__shadow:hover {
+        transform: scale(1.02) translateY(-12px);
+    }
+
+    .start__road:hover {
+        filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 5px var(--dark-green));
+    }
+
+    .start__grass:hover {
+        filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 5px var(--dark-green));
+    }
+
+    .start__house:hover {
+        filter: drop-shadow(0 0 10px green);
+    }
+
+    .start__btn:hover {
+        filter: drop-shadow(0 0 5px var(--dark-green)) drop-shadow(0 0 2px var(--text-color)) drop-shadow(0 0 10px var(--dark-green));
+    }
+
+    .start__lang_btn:hover {
+        filter: none;
+    }
+
+    .checkbox__container:hover .checkbox__checkmark {
+        box-shadow: 0 0 15px var(--dark-green);
+    }
 }
