@@ -854,9 +854,10 @@ body {
 
 .sidebar__section {
     display: none;
+    position: relative;
 
     min-height: 100%;
-    padding: 20px 30px;
+    padding: 20px 30px 60px;
 
     border: 20px solid var(--bg-color);
     border-bottom: none;
@@ -972,6 +973,10 @@ body {
     letter-spacing: -.2px;
 
     transition: color .3s;
+}
+
+.settings__block {
+    margin-bottom: 50px;
 }
 
 /* // places // */
@@ -1291,7 +1296,7 @@ a::selection {
     }
 
     .sidebar__section {
-        padding: 20px;
+        padding: 20px 20px 90px;
     }
 
     .sidebar-open {
@@ -1305,7 +1310,7 @@ a::selection {
     }
 
     .sidebar__section {
-        padding: 20px 30px;
+        padding: 20px 30px 60px;
     }
 
     .sidebar-open {

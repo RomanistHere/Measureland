@@ -901,27 +901,64 @@
             </div>
 
             <div class="settings sidebar__section sidebar__section-show">
-                <h2 class="rating__title title rating__item_text settings__title sidebar__title">Settings</h2>
-                <hr>
-                <nav>
+                <div class="settings__block">
+                    <h2 class="rating__title title rating__item_text settings__title sidebar__title">Account</h2>
+                    <hr>
+                    <nav>
+                        <ul class="settings__list">
+                            <li class="setting__item loggedOutShow loggedOutShow-list loggedOutShow-show">
+                                <a href="#" class="settings__link rating__title loginBtn">Login/Register</a>
+                            </li>
+                            <li class="setting__item loggedInShow loggedInShow-list">
+                                <a href="#" class="settings__link rating__title logoutBtn">Log out</a>
+                            </li>
+                            <li class="setting__item loggedInShow loggedInShow-list">
+                                <a href="#" class="settings__link rating__title myRatings">My ratings</a>
+                            </li>
+                            <li class="setting__item loggedInShow loggedInShow-list">
+                                <a href="#" class="settings__link rating__title changePass">Change the password</a>
+                            </li>
+                            <li class="setting__item">
+                                <a href="#" class="settings__link rating__title changeLangBtn">Change language (язык)</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="settings__block">
+                    <h2 class="rating__title title rating__item_text settings__title sidebar__title">Features</h2>
+                    <hr>
                     <ul class="settings__list">
-                        <li class="setting__item loggedOutShow loggedOutShow-list loggedOutShow-show">
-                            <a href="#" class="settings__link rating__title loginBtn">Login/Register</a>
-                        </li>
-                        <li class="setting__item loggedInShow loggedInShow-list">
-                            <a href="#" class="settings__link rating__title logoutBtn">Log out</a>
-                        </li>
-                        <li class="setting__item loggedInShow loggedInShow-list">
-                            <a href="#" class="settings__link rating__title myRatings">My ratings</a>
-                        </li>
-                        <li class="setting__item loggedInShow loggedInShow-list">
-                            <a href="#" class="settings__link rating__title changePass">Change the password</a>
+                        <li class="setting__item">
+                            <a href="#" class="settings__link rating__title vizualizeLoadingBtn">Vizualize loading</a>
                         </li>
                         <li class="setting__item">
-                            <a href="#" class="settings__link rating__title changeLangBtn">Change language (язык)</a>
+                            <a href="#" class="settings__link rating__title refreshPageBtn">Refresh page</a>
                         </li>
                     </ul>
-                </nav>
+                </div>
+
+                <div class="settings__block">
+                    <h2 class="rating__title title rating__item_text settings__title sidebar__title">Related</h2>
+                    <hr>
+                    <ul class="settings__list">
+                        <li class="setting__item">
+                            <a href="blog/tutorial/" target="_blank" class="settings__link rating__title">Our guide book (Tutorial)</a>
+                        </li>
+                        <li class="setting__item">
+                            <a href="blog/paid-options/" target="_blank" class="settings__link rating__title">Paid options</a>
+                        </li>
+                        <li class="setting__item">
+                            <a href="blog/support/" target="_blank" class="settings__link rating__title">Support</a>
+                        </li>
+                        <li class="setting__item">
+                            <a href="blog/about-us/" target="_blank" class="settings__link rating__title">About us</a>
+                        </li>
+                        <li class="setting__item">
+                            <a href="blog/" target="_blank" class="settings__link rating__title">Blog</a>
+                        </li>
+                    </ul>
+                </div>
 
                 <footer class="footer">
                     <div>

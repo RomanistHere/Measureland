@@ -196,10 +196,12 @@ const getNewData = async () => {
 	addClass($('.overlay__loading'), 'overlay__loading-show')
 
 	const query = getQuery(queryPolygon)
-	L.polygon(query, {
-		fillOpacity: 0.05,
-		weight: 2
-	}).addTo(map)
+	if (state.shouldShowLoading) {
+		L.polygon(query, {
+			fillOpacity: 0.05,
+			weight: 2
+		}).addTo(map)
+	}
 	console.timeEnd('preparations')
 	console.time('fetch new data')
     const { error, data } = await fetchBoundsData(query, zoom)

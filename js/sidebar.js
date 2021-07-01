@@ -2,6 +2,8 @@ const closeSideBarBtn = $('.sidebarClose')
 const commentsWrap = $('.comments__wrap')
 const openSettingsBtn = $('.open_settings')
 const changeLangBtn = $('.changeLangBtn')
+const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
+const refreshPageBtn = $('.refreshPageBtn')
 const textAreaComment = $('.ratingComment')
 const openLoginBtn = $('.loginBtn')
 const changePassBtn = $('.changePass')
@@ -41,6 +43,18 @@ const closeSideBar = () => {
 
 const initSideBar = () => {
     handleClickPrevDef(closeSideBarBtn, closeSideBar)
+
+    // features
+    handleClickPrevDef(refreshPageBtn, () => {
+        window.location.reload(true)
+    })
+
+    handleClickPrevDef(vizualizeLoadingBtn, () => {
+        state = {
+            ...state,
+            shouldShowLoading: true
+        }
+    })
 
     handleClickPrevDef(openLoginBtn, () => {
         hideAllSides()

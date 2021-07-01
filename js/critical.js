@@ -101,7 +101,8 @@ let state = {
     lang: detectPrefLang(),
     center: [53.901, 27.546],
     zoom: 12,
-    flow: []
+    flow: [],
+    shouldShowLoading: false,
 }
 
 let startScreenState = {
