@@ -52,8 +52,11 @@ const initSideBar = () => {
     handleClickPrevDef(vizualizeLoadingBtn, () => {
         state = {
             ...state,
-            shouldShowLoading: true
+            shouldShowLoading: !state.shouldShowLoading
         }
+        vizualizeLoadingBtn.classList.toggle('settings__link-on')
+        usedBounds.map(poly =>
+            state.shouldShowLoading ? poly.addTo(map) : poly.removeFrom(map))
     })
 
     handleClickPrevDef(openLoginBtn, () => {

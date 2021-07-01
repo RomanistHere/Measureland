@@ -883,7 +883,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 20px 50px;
+    padding: 20px 30px;
 
     font-size: 90%;
     text-align: center;
@@ -977,6 +977,18 @@ body {
 
 .settings__block {
     margin-bottom: 50px;
+}
+
+.settings__on {
+    display: none;
+}
+
+.settings__link-on .settings__on {
+    display: inline;
+}
+
+.settings__link-on .settings__off {
+    display: none;
 }
 
 /* // places // */
