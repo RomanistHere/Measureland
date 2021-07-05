@@ -128,7 +128,7 @@ const appendComments = array => {
         if (disabled !== 'false') {
             return
         }
-        // TODO: check if user is logged in, if no tell him to do so
+
         const anotherBtnQuery = goal === 'like' ? 'dislike' : 'like'
         const anotherBtn = target.parentNode.querySelector(`.comment__btn[data-goal=${anotherBtnQuery}]`)
         if (anotherBtn.dataset.disabled === 'true') {

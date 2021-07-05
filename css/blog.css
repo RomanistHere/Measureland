@@ -72,9 +72,9 @@ ul {
 /* // golden type ratio // */
 
 .grt {
-	max-width: 680px;
+	max-width: 690px;
 	font-size: 20px;
-	line-height: 33px;
+	line-height: 34px;
 	padding: 20px;
 }
 .grt h1 {
@@ -195,6 +195,17 @@ ul {
 
 .article__link::selection {
     color: var(--bg-color);
+}
+
+p.article__copyright {
+    position: absolute;
+
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 5px;
+    margin: 0;
+
+    font-size: 80%;
 }
 
 .article__hr {
