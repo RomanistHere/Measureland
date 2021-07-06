@@ -22,8 +22,8 @@ We can think of 3 ways we'd like to see contributions about:
 
 ## Contact, feedback, suggestions
 
-You can leave it here, in the repository or send via email: 
+You can leave it here, in the repository or send via email:
 - support@measureland.org - for queries and questions
-- RomanistHere@pm.me - for business ideas, partnership and so one
+- RomanistHere@pm.me - for business ideas, partnership and so on
 
 **[Donate us money](https://www.donationalerts.com/r/romanisthere)**
