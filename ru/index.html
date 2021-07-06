@@ -35,27 +35,22 @@
 
     <link href="../fonts/star__icon.woff" as="font" type="font/woff" crossorigin>
 
-    <!-- // map // -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
-
-    <!-- // geocoder // -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js" defer></script>
-
-    <!-- <script src="https://unpkg.com/supercluster@7.1.2/dist/supercluster.min.js"></script> -->
-
-
+    <!-- critical -->
     <link rel="stylesheet" href="../css/main.css">
-	<!-- <style type="text/css">
-		/* inline minified main css here */
-	</style> -->
+    <!-- libs -->
+    <link rel="stylesheet" href="../css/libs/leaflet.css">
+    <link rel="stylesheet" href="../css/libs/control.geocoder.css">
+    <!-- common -->
 	<link rel="stylesheet" href="../css/main-non-crit.css" media="print" onload="this.media='all'">
-    <!-- critical.js inline -->
+
+    <!-- critical -->
     <script defer src="../js/critical.js"></script>
-    <!-- critical.js inline -->
-    <script defer src="../js/polybool.js"></script>
-    <script defer src="../js/supercluster.js"></script>
+    <!-- libs -->
+    <script defer src="../js/libs/leaflet.js"></script>
+    <script defer src="../js/libs/control.geocoder.js"></script>
+    <script defer src="../js/libs/polybool.js"></script>
+    <script defer src="../js/libs/supercluster.js"></script>
+    <!-- common -->
     <script defer src="../js/helpers.js"></script>
     <script defer src="../js/db.js"></script>
 	<script defer src="../js/showRatings.js"></script>
@@ -735,7 +730,7 @@
                         </button>
                     </div>
                 </form>
-                <!-- TODO:  -->
+
                 <div class="rating__popup login__popup loginPopup4 loginPopup">
                     <div class="rating__content login__content">
                         <p class="rating__text">
@@ -760,6 +755,10 @@
 
                         <p class="rating__text">
                             <a href="blog/about-us/" target="_blank" class="text_link">Наши цели</a>
+                        </p>
+
+                        <p class="rating__text">
+                            <a href="blog/support/" target="_blank" class="text_link">Поддержка</a>
                         </p>
                     </div>
                 </div>
