@@ -38,7 +38,7 @@
     // comments__title: 'Comments',
     // settings__title: 'Settings',
     // spinner__text: 'Loading',
-    // error_screen__text: 'Unfortunately, there is no response from the server. Try later or contact us: RomanistHere@pm.me',
+    // error_screen__text: 'Unfortunately, there is no response from the server. Try later or contact us: support@measureland.org',
 
     // rateText1: 'Av. rating: ',
     // rateText2: 'Users rated: ',
@@ -155,7 +155,7 @@
 //     comments__title: 'Комментарии',
 //     settings__title: 'Настройки',
 //     spinner__text: 'Загружаем',
-//     error_screen__text: 'К сожалению, похоже что сервер не работает. Попробуй позже или пиши: RomanistHere@pm.me',
+//     error_screen__text: 'К сожалению, похоже что сервер не работает. Попробуй позже или пиши: support@measureland.org',
 //
 //     rateText1: 'Ср. рейтинг: ',
 //     rateText2: 'Кол-во оценивших: ',

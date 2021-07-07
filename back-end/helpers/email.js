@@ -69,7 +69,7 @@ const verifiedTemplate =
     </p>
     <ul>
         <li>
-            <a target="_blank" href="mailto:RomanistHere@pm.me">Support, questions, feedback: RomanistHere@pm.me</a>
+            <a target="_blank" href="mailto:support@measureland.org">Support, questions, feedback: support@measureland.org</a>
         </li>
         <li>
             <a target="_blank" href="${process.env.SITE_URL}/">Measureland</a>
@@ -144,7 +144,7 @@ const verifiedTemplateRus =
     </p>
     <ul>
         <li>
-            <a target="_blank" href="mailto:RomanistHere@pm.me">Поддержка, вопросы, обратная связь: RomanistHere@pm.me</a>
+            <a target="_blank" href="mailto:support@measureland.org">Поддержка, вопросы, обратная связь: support@measureland.org</a>
         </li>
         <li>
             <a target="_blank" href="${process.env.SITE_URL}/ru/">Измерия</a>

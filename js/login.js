@@ -532,7 +532,6 @@ const initLoginBtns = () => {
             }, logTimeout)
         }
 
-        // TODO: disable other actions
         runSpinner('.login__spinner')
 
         const { error, data } = await login(loginState.email, loginState.pass)
@@ -566,7 +565,6 @@ const initLoginBtns = () => {
     let registerTimeoutBool = false
 
     registerForm.addEventListener('submit', async (e) => {
-        // TODO: disable other actions
         const notification = $('.register__notifications_wrap')
         console.log(loginState)
 
@@ -601,7 +599,6 @@ const initLoginBtns = () => {
             }, regTimeout)
         }
 
-        // TODO: disable other actions
         runSpinner('.register__spinner')
 
         const { error, data } = await register(loginState.email, loginState.pass, state.lang)
@@ -674,7 +671,6 @@ const initLoginBtns = () => {
 
             return
         }
-        // TODO: disable other actions
         runSpinner('.reset__spinner')
 
         const { error, data } = await reset(loginState.pass, state.passToken)
@@ -732,7 +728,6 @@ const initLoginBtns = () => {
             }, forgTimeout)
         }
 
-        // TODO: disable other actions
         runSpinner('.forgot__spinner')
 
         const { error, data } = await sendResetPass(loginState.email)

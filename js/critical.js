@@ -316,15 +316,23 @@ const positionStartScreen = () => {
 const checkIsLaunchFirst = () => {
     const isVisited = getCookie('visited')
     const shouldDetectLoc = getCookie('detectLoc')
+    const urlParams = new URLSearchParams(window.location.search)
+    const showRating = urlParams.get('showRating')
+    const startScreen = $('.start')
+
+    if (showRating) {
+        state.flow.push('srv')
+        startScreen.remove()
+    }
 
     if (!isVisited) {
         state.flow.push('ftv')
-        console.log('first-time visitor')
-        positionStartScreen()
+        if (!showRating)
+            positionStartScreen()
     } else {
         state.flow.push('rv')
-        console.log('returning visitor')
-        $('.start').remove()
+        if (startScreen)
+            startScreen.remove()
     }
 
     if (shouldDetectLoc === '1') {

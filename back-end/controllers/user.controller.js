@@ -19,7 +19,6 @@ exports.user_register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(req.body.password, salt);
     const token = v4().toString().replace(/-/g, '')
-    // TODO: change
     const domain = process.env.SITE_URL || 'http://localhost:8080'
     const verificationUrl = lang === 'en'
         ? `${domain}?token=${token}`
@@ -216,7 +215,6 @@ exports.user_reverify = async (req, res) => {
             return res.status(400).json({ error: "Already verified" });
         } else {
             const token = v4().toString().replace(/-/g, '')
-            // TODO: change
             const domain = process.env.SITE_URL || 'http://localhost:8080'
             const { lang } = user.properties
             const verificationUrl = lang === 'en'
@@ -325,7 +323,6 @@ exports.user_reset_password = async (req, res, next) => {
             return res.status(400).json({ error: "Email is wrong" });
 
         const token = v4().toString().replace(/-/g, '')
-        // TODO: change
         const domain = process.env.SITE_URL || 'http://localhost:8080'
         const { lang } = user.properties
         const verificationUrl = lang === 'en'
@@ -414,7 +411,6 @@ exports.user_change_password = async (req, res) => {
 exports.user_language = async (req, res) => {
     console.log('user_language')
     if (!req.session.userID) {
-        // TODO: make user login
         return res.status(400).json({ error: "User is not logged in" })
     }
 
