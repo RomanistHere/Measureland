@@ -18,6 +18,17 @@ const debounce = (func, wait, immediate) => {
 	}
 }
 
+const clusterCaption = {
+	en: {
+		titleSingle: `This place's average rating's about`,
+		titleGrp: `This group of places average rating's about`,
+	},
+	ru: {
+		titleSingle: `Средний рейтинг в данном месте примерно`,
+		titleGrp: `Средний рейтинг в данной группе примерно`,
+	}
+}
+
 const createClusterIcon = (feature, latlng) => {
     if (!feature.properties.cluster) {
 		// single point
@@ -25,7 +36,7 @@ const createClusterIcon = (feature, latlng) => {
 	    const icon = getIcon(Math.floor(rating))
 	    const marker = L.marker(latlng, {
 	        icon: icon,
-	        title: `Rating: ${rating}`,
+	        title: `${clusterCaption[state.lang]['titleSingle']} ${rating}`,
 	        riseOnHover: true,
 	        rating: rating,
 	    })
@@ -37,7 +48,7 @@ const createClusterIcon = (feature, latlng) => {
 		const grpIcon = getGrpIcon(Math.floor(rating))
 		const marker = L.marker(latlng, {
 			icon: grpIcon,
-			title: `Rating: ${rating}`,
+			title: `${clusterCaption[state.lang]['titleGrp']} ${rating}`,
 			riseOnHover: true,
 			rating: rating,
 		})
@@ -204,7 +215,7 @@ const getNewData = async () => {
 	usedBounds.push(poly)
 	if (state.shouldShowLoading)
 		poly.addTo(map)
-		
+
 	console.timeEnd('preparations')
 	console.time('fetch new data')
     const { error, data } = await fetchBoundsData(query, zoom)
