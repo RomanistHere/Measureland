@@ -12,13 +12,6 @@ const myRatingsBtn = $('.myRatings')
 const changeLang = lang => {
     state.flow.push('cl')
 
-    console.log(window.location)
-    console.log(state.lang)
-    console.log(lang)
-
-    if (state.lang === lang)
-        return
-
     if (lang === 'en') {
         window.location.pathname = '/'
     } else {
@@ -80,9 +73,13 @@ const initSideBar = () => {
 
     handleClickPrevDef(changeLangBtn, async () => {
         const newLang = state.lang === 'en' ? 'ru' : 'en'
+        const urlLang = detectPrefLang()
 
         if (!state.userID) {
             changeLang(newLang)
+        } else if (state.lang !== urlLang) {
+            // fix for wrong url
+            changeLang(state.lang)
         } else {
             const result = await saveLang(newLang)
             changeLang(newLang)
