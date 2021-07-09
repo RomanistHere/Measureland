@@ -421,7 +421,8 @@ body {
 .rating__status_text-err,
 .rating__status_text-more,
 .rating__status_text-rated,
-.rating__status_text-limit {
+.rating__status_text-limit,
+.rating__status_text-logout {
     display: none;
 }
 

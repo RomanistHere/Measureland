@@ -6,7 +6,6 @@ const roundToTen = number =>
     Math.round(10 * number) / 10
 
 const getNewRating = (rating, numberOfUsers, quizRating) => {
-    console.log(quizRating)
     const newKeys = Object.keys(quizRating)
 
     return newKeys.reduce((acc, key) => {
@@ -64,11 +63,9 @@ const getFinalRating = (obj) => {
 }
 
 exports.geo_react_comment = async (req, res) => {
-    console.log('geo_react_comment')
-    if (!req.session.userID) {
-        // TODO: make user login
+    if (!req.session.userID)
         return res.status(400).json({ error: "User is not logged in" })
-    }
+
     const email = req.session.userID
     const { key, goal } = req.body
     const property = goal === 'like' ? 'likes' : 'dislikes'
@@ -81,8 +78,6 @@ exports.geo_react_comment = async (req, res) => {
             return res.status(400).json({ error: "User not found" });
 
         const userID = user._id
-        console.log(userID)
-
         const result = await Comment.findOneAndUpdate(
         {
             _id: key
@@ -93,8 +88,6 @@ exports.geo_react_comment = async (req, res) => {
         }, {
             new: true
         })
-
-        console.log(result)
 
         const resultRemove = await Comment.findOneAndUpdate(
         {
@@ -107,9 +100,7 @@ exports.geo_react_comment = async (req, res) => {
             new: true
         })
 
-        console.log(resultRemove)
-
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Login successful",
@@ -117,8 +108,7 @@ exports.geo_react_comment = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };
 
@@ -133,10 +123,8 @@ const saveComment = async (comment, userID, geoID, username, rating) => {
     });
     try {
         const result = await newComment.save()
-        console.log(result)
         return result
     } catch (e) {
-        console.log(e)
         return e
     }
 }
@@ -171,7 +159,6 @@ const addGeoToUser = async (userID, geoID, activeRatings, rating, commentID) => 
         })
         return result
     } catch (e) {
-        console.log(e)
         return e
     }
 }
@@ -206,17 +193,12 @@ const isRatingActive = (user) => {
 }
 
 exports.geo_add = async (req, res, next) => {
-    console.log('geo_add')
     const { body } = req
 
-    console.log(req.session)
-
-    if (!req.session.userID) {
+    if (!req.session.userID)
         return res.status(400).json({ error: "User is not logged in" })
-    }
 
     const userID = req.session.userID
-    console.log(userID)
 
     try {
         const user = await User.findOne({ email: userID })
@@ -234,18 +216,16 @@ exports.geo_add = async (req, res, next) => {
                         type: "Point" ,
                         coordinates: [ ...body.location.coordinates ]
                     },
-                    $maxDistance: 250
+                    $maxDistance: 700
                 }
             }
         })
 
         const { properties } = body
         const { rating, averageRating, comment, isPersonalExperience } = properties
-        console.log(geo)
         if (geo) {
             // check if user rated it already
             const id = geo._id
-            console.log(user.properties.ratedLocations)
             const exists = user.properties.ratedLocations.some(val => val.equals(id))
             if (exists)
                 return res.status(400).json({ error: "Nearby place is already rated" });
@@ -278,8 +258,7 @@ exports.geo_add = async (req, res, next) => {
                 const commentID = commentSaved ? commentSaved._id : null
                 const userResult = await addGeoToUser(userID, result._id, activeRatings, rating, commentID)
 
-                console.log(result)
-                res.json({
+                return res.json({
                     error: null,
                     data: {
                         message: "Rating updated",
@@ -288,7 +267,6 @@ exports.geo_add = async (req, res, next) => {
                     }
                 });
             } catch (e) {
-                console.log(e)
                 return res.status(400).json({ error: "Could not save your rating" })
             }
         } else {
@@ -309,7 +287,7 @@ exports.geo_add = async (req, res, next) => {
                 const commentID = commentSaved ? commentSaved._id : null
                 const userResult = await addGeoToUser(userID, result._id, activeRatings, rating, commentID)
 
-                res.json({
+                return res.json({
                     error: null,
                     data: {
                         message: "Rating added",
@@ -320,14 +298,12 @@ exports.geo_add = async (req, res, next) => {
             }
         }
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error })
+        return res.status(400).json({ error })
     }
 };
 
 exports.geo_location = async (req, res, next) => {
     const userID = req.session.userID
-    console.log(userID)
 
     const urlParams = new URLSearchParams(req.params.coords)
     const nearCoords = Object.fromEntries(urlParams)
@@ -346,14 +322,13 @@ exports.geo_location = async (req, res, next) => {
         ]}) : null
 
         const { properties } = result
-        console.log(result)
         const props = {
             ...properties,
             isRated: user ? true : false,
             geoID
         }
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Geolocation found",
@@ -362,13 +337,11 @@ exports.geo_location = async (req, res, next) => {
             },
         })
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error })
+        return res.status(400).json({ error })
     }
 };
 
 exports.geo_comments = async (req, res, next) => {
-    console.log('geo_comments')
     const userEmail = req.session.userID
 
     const urlParams = new URLSearchParams(req.params.geoID)
@@ -376,7 +349,6 @@ exports.geo_comments = async (req, res, next) => {
 
     try {
         const result = await Comment.find({ "geo": geoID })
-        console.log(result)
         const user = await User.findOne({ email: userEmail })
         const userID = user ? user._id : 'anon'
 
@@ -394,7 +366,7 @@ exports.geo_comments = async (req, res, next) => {
             }
         })
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Comments fetched",
@@ -403,8 +375,7 @@ exports.geo_comments = async (req, res, next) => {
             },
         })
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error })
+        return res.status(400).json({ error })
     }
 };
 
@@ -428,7 +399,6 @@ exports.geo_comments = async (req, res, next) => {
 //
 //         res.send(result ? true : false)
 //     } catch (error) {
-//         console.log(error)
 //         res.status(400).json({ error })
 //     }
 // };
@@ -451,7 +421,7 @@ exports.geo_location_by_bounds = async (req, res, next) => {
             'location.coordinates properties.averageRating',
         )
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Location fetched",
@@ -460,8 +430,7 @@ exports.geo_location_by_bounds = async (req, res, next) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error })
+        return res.status(400).json({ error })
     }
 };
 
@@ -470,7 +439,6 @@ exports.geo_location_by_bounds = async (req, res, next) => {
 //         const result = await Geo.find({}, 'location.coordinates properties.averageRating')
 //         res.send(result)
 //     } catch (error) {
-//         console.log(error)
 //         res.status(400).json({ error })
 //     }
 // };

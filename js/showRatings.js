@@ -43,9 +43,6 @@ const initRatingPopup = async ({ latlng }) => {
     $('.rate__popup').focus()
 
     const { error, data } = await getSinglePointData([ latlng.lat, latlng.lng ])
-    const isLoggedIn = data.userID
-    if (!isLoggedIn)
-        userLoggedOut()
 
     if (error === 'Location not found') {
         showError('locationNotFound')
@@ -54,8 +51,14 @@ const initRatingPopup = async ({ latlng }) => {
         return
     } else if (error) {
         showError('unrecognizedError', error)
+        resetRate()
+        closeSideBar()
         return
     }
+
+    const isLoggedIn = data.userID
+    if (!isLoggedIn)
+        userLoggedOut()
 
     const markerUrl = setMarkerUrl(latlng)
     const markerUrlBtn = $('.rate__link_btn')

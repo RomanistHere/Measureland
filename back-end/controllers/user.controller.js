@@ -9,7 +9,6 @@ const PasswordReset = require('../models/password-reset.model');
 const { sendEmail } = require('../helpers/email');
 
 exports.user_register = async (req, res) => {
-    console.log('user_register')
     const { email, lang } = req.body;
     const isEmailExist = await User.findOne({ email: email });
 
@@ -34,7 +33,6 @@ exports.user_register = async (req, res) => {
 
     try {
         const savedUser = await user.save();
-        console.log(savedUser)
 
         await UserVerification.updateOne({
             user: savedUser._id
@@ -52,7 +50,7 @@ exports.user_register = async (req, res) => {
             reason: 'Verify'
         })
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Register successful",
@@ -60,8 +58,7 @@ exports.user_register = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };
 
@@ -95,7 +92,6 @@ const isRatingActive = (user) => {
 }
 
 exports.user_login = async (req, res) => {
-    console.log('user_login')
     try {
         const user = await User.findOne({ email: req.body.email }, '-properties.ratedLocations -properties.ratings');
 
@@ -117,7 +113,7 @@ exports.user_login = async (req, res) => {
 
         const { activeRatings } = isRatingActive(user)
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Login successful",
@@ -128,13 +124,11 @@ exports.user_login = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };
 
 exports.user_onboard = async (req, res) => {
-    console.log('user_onboard')
     const { userName, ageGrp, moneyGrp, userID } = req.body
     try {
         const update = await User.updateOne(
@@ -152,7 +146,7 @@ exports.user_onboard = async (req, res) => {
         if (update.nModified == 0)
             return res.status(400).json({ error: 'User does not exists' });
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Onboarding successful",
@@ -160,13 +154,11 @@ exports.user_onboard = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };
 
 exports.user_verify = async (req, res) => {
-    console.log('user_verify')
     const urlParams = new URLSearchParams(req.params.token)
     const { token } = Object.fromEntries(urlParams)
     const userVerification = await UserVerification.findOne({ token: token })
@@ -192,7 +184,7 @@ exports.user_verify = async (req, res) => {
             reason: 'Verified'
         })
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Verification is successful",
@@ -205,7 +197,6 @@ exports.user_verify = async (req, res) => {
 };
 
 exports.user_reverify = async (req, res) => {
-    console.log('user_reverify')
     try {
         const user = await User.findOne({ email: req.body.email });
 
@@ -237,7 +228,7 @@ exports.user_reverify = async (req, res) => {
                 reason: 'Verify'
             })
 
-            res.json({
+            return res.json({
                 error: null,
                 data: {
                     message: "Verification email sent",
@@ -246,16 +237,13 @@ exports.user_reverify = async (req, res) => {
             });
         }
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };
 
 exports.user_check = async (req, res) => {
-    console.log('user_check')
-    console.log(req.session)
     const { userID, userName, lang, dateCreated } = req.session
-    res.json({
+    return res.json({
         error: null,
         data: {
             message: "Check user",
@@ -268,8 +256,6 @@ exports.user_check = async (req, res) => {
 };
 
 exports.user_places = async (req, res) => {
-    console.log('user_places')
-    console.log(req.session)
     const { userID } = req.session
 
     const user = await User.findOne({ email: userID }, 'properties.ratedLocations');
@@ -286,7 +272,7 @@ exports.user_places = async (req, res) => {
         'location.coordinates -_id'
     )
 
-    res.json({
+    return res.json({
         error: null,
         data: {
             message: "Rated places",
@@ -301,7 +287,7 @@ exports.user_logout = async (req, res, next) => {
             if (err) {
                 return res.status(400).json({ error: "Logout unsuccessful" });
             } else {
-                res.json({
+                return res.json({
                     error: null,
                     data: {
                         message: "Logout is successful"
@@ -345,7 +331,7 @@ exports.user_reset_password = async (req, res, next) => {
             reason: 'Reset'
         })
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Email sent",
@@ -353,13 +339,11 @@ exports.user_reset_password = async (req, res, next) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };
 
 exports.user_change_password = async (req, res) => {
-    console.log('user_change_password')
     const { password, token } = req.body
     if (!token || token.length < 10)
         return res.status(400).json({ error: 'Password link is invalid or expired' });
@@ -377,7 +361,6 @@ exports.user_change_password = async (req, res) => {
         if (validPassword)
             return res.status(400).json({ error: "Matches old password" });
 
-        console.log(passwordReset)
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -395,7 +378,7 @@ exports.user_change_password = async (req, res) => {
 
         await PasswordReset.deleteOne({ _id: passwordReset._id })
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Password changed",
@@ -403,13 +386,11 @@ exports.user_change_password = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };
 
 exports.user_language = async (req, res) => {
-    console.log('user_language')
     if (!req.session.userID) {
         return res.status(400).json({ error: "User is not logged in" })
     }
@@ -430,7 +411,7 @@ exports.user_language = async (req, res) => {
 
         req.session.lang = lang
 
-        res.json({
+        return res.json({
             error: null,
             data: {
                 message: "Language settings updated",
@@ -438,7 +419,6 @@ exports.user_language = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ error });
+        return res.status(400).json({ error });
     }
 };

@@ -542,7 +542,7 @@ const initLoginBtns = () => {
 
         if (error === null) {
             state = { ...state, userID: data.userID }
-            $('.ratingAvailableNumber').textContent = data.activeRatings
+            $('.ratingAvailableNumber').textContent = data.activeRatings != null ? data.activeRatings + 1 : 0
             $('.ratingUserName').textContent = data.userName
             clearLoginFields()
             userLoggedIn()

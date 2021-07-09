@@ -29,7 +29,7 @@ const hardLimiter = rateLimit({
         errorHandler: console.error.bind(null, 'rate-limit-mongo')
     }),
     windowMs: 20 * 60 * 1000,
-    max: 20,
+    max: 30,
     // skipFailedRequests: true,
     handler: (req, res) => {
         res.status(429).json({ error: 'Too many requests, please try again later' });
