@@ -35,9 +35,12 @@ os - open sidebar
 
 pr - password reset
 
+rp - refresh page btn
 rqs - rating quiz success
 
 srp - show rating popup
 sru - show rating from url
 ssl - start screen login
 ssr - start screen register
+
+vl - visualize loading btn

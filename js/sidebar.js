@@ -39,10 +39,12 @@ const initSideBar = () => {
 
     // features
     handleClickPrevDef(refreshPageBtn, () => {
+        state.flow.push('rp')
         window.location.reload(true)
     })
 
     handleClickPrevDef(vizualizeLoadingBtn, () => {
+        state.flow.push('vl')
         state = {
             ...state,
             shouldShowLoading: !state.shouldShowLoading
