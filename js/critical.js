@@ -70,7 +70,6 @@ const detectLocation = () => {
         return
 
     navigator.geolocation.getCurrentPosition(({ coords }) => {
-        console.log(coords)
         const { latitude, longitude } = coords
         state = {
             ...state,
@@ -202,7 +201,6 @@ const positionStartScreen = () => {
             ...startScreenState,
             [goal]: isEnabled
         }
-        console.log(startScreenState)
 
         if (isEnabled) {
             const houses = $All('.start__house-off')

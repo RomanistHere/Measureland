@@ -104,7 +104,6 @@ const handleQuizBtns = () => {
         const parent = target.parentNode
         const ratingName = parent.getAttribute('data-name')
         const rating = Number(target.getAttribute('data-rating'))
-        // console.log(ratingName, ': ', rating)
 
         quizRating = { ...quizRating, [ratingName]: rating }
 
@@ -142,7 +141,6 @@ const handleQuizBtns = () => {
 
         try {
             const { error, data } = await saveToDB(actualCoords, quizRating, averageRating, quizState.comment, quizState.isPersonalExperience)
-            console.log(error)
             if (error === 'Nearby place is already rated') {
                 removeClass(saveStatus, 'rating__status-progress')
                 addClass(saveStatus, 'rating__status-rated')

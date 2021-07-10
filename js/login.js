@@ -213,7 +213,6 @@ const verificationInit = async () => {
 
     if (token) {
         const { error, data } = await verifyUser(token)
-        console.log(error, data)
 
         if (!error) {
             const { userID } = data
@@ -224,11 +223,6 @@ const verificationInit = async () => {
             console.warn('Token might be expired')
             showError('unrecognizedError', error)
         }
-
-        // if (state.lang !== lang) {
-        //     state = { ...state, lang }
-        //     changeLang(state.lang)
-        // }
 
         clearURLParams()
     } else if (passToken && passToken.length >= 25) {
@@ -255,8 +249,6 @@ const userLoggedOut = () => {
 
 const userInit = async () => {
     const { error, data } = await checkUser()
-    console.warn('__________init_user________')
-    console.log(data)
     if (error === 'Too many requests, please try again later') {
         blockMap()
         showLimitError()
@@ -279,9 +271,7 @@ const userInit = async () => {
             dateCreated,
             lang
         }
-        console.log(state.lang)
         userLoggedIn()
-        console.log('days since register: ', dateDiffInDays(Date.now(), dateCreated))
         // fillDB(20000)
     } else {
         userLoggedOut()
@@ -292,7 +282,6 @@ const userInit = async () => {
     }
 
     document.querySelector('.spinner__main').remove()
-    console.log(state)
 }
 
 const initLoginBtns = () => {
@@ -479,9 +468,7 @@ const initLoginBtns = () => {
         }
         runSpinner('.login__spinner')
         removeLoginErrors()
-        console.log(loginState.email)
         const { error, data } = await reverify(loginState.email)
-        console.log(error, data)
         hideSpinner('.login__spinner')
 
         if (error === null) {
@@ -501,7 +488,6 @@ const initLoginBtns = () => {
 
     signInForm.addEventListener('submit', async (e) => {
         const notification = $('.login__notifications_wrap')
-        console.log(loginState)
 
         e.preventDefault()
         removeLoginErrors()
@@ -535,9 +521,6 @@ const initLoginBtns = () => {
         runSpinner('.login__spinner')
 
         const { error, data } = await login(loginState.email, loginState.pass)
-        console.warn('logged in')
-        console.log(error)
-        console.log(data)
         hideSpinner('.login__spinner')
 
         if (error === null) {
@@ -602,13 +585,9 @@ const initLoginBtns = () => {
         runSpinner('.register__spinner')
 
         const { error, data } = await register(loginState.email, loginState.pass, state.lang)
-        console.log(error)
-        console.log(data)
         hideSpinner('.register__spinner')
 
         if (error === null) {
-            console.log('Registered')
-            // state = { ...state, userID: data.userID }
             clearLoginFields()
             changeLoginScreen('check')
             showSuccessNotification()
@@ -639,7 +618,6 @@ const initLoginBtns = () => {
         }
 
         const { error } = await onboard(userName, ageGrp, moneyGrp, state.userID)
-        console.log(error)
 
         if (error) {
             showError('unrecognizedError', error)
@@ -654,8 +632,6 @@ const initLoginBtns = () => {
 
     resetPasswordForm.addEventListener('submit', async (e) => {
         e.preventDefault()
-        console.log(state)
-        console.log(loginState)
 
         const notification = $('.reset__notifications_wrap')
         removeLoginErrors()
@@ -674,14 +650,10 @@ const initLoginBtns = () => {
         runSpinner('.reset__spinner')
 
         const { error, data } = await reset(loginState.pass, state.passToken)
-        console.log(error)
-        console.log(data)
         hideSpinner('.reset__spinner')
 
         if (error === null) {
             state.flow.push('pr')
-            console.log('Password reset')
-            // state = { ...state, userID: data.userID }
             closeLoginForm()
             clearLoginFields()
             clearURLParams()
@@ -700,8 +672,6 @@ const initLoginBtns = () => {
 
     forgotPassForm.addEventListener('submit', async (e) => {
         e.preventDefault()
-        console.log(state)
-        console.log(loginState)
 
         const notification = $('.forgot__notifications_wrap')
         removeLoginErrors()
@@ -731,14 +701,10 @@ const initLoginBtns = () => {
         runSpinner('.forgot__spinner')
 
         const { error, data } = await sendResetPass(loginState.email)
-        console.log(error)
-        console.log(data)
         hideSpinner('.forgot__spinner')
 
         if (error === null) {
-            console.log('Password reset')
             state.flow.push('fp')
-            // state = { ...state, userID: data.userID }
             clearLoginFields()
             clearURLParams()
             changeLoginScreen('confirmForgotPassword')

@@ -30,14 +30,10 @@ const initQuizPopup = (latlng) => {
     $('.ratingPopup1').focus()
 
     state = { ...state, corrdsToSave: [roundToFifthDecimal(latlng.lat), roundToFifthDecimal(latlng.lng)] }
-    // console.log(state)
-    // console.log(state.corrdsToSave)
 }
 
 const onMapClick = e => {
     state.flow.push('cm')
-    // console.log(e)
-    // console.log("You clicked the map at " + e.latlng)
     initQuizPopup(e.latlng)
 
     // geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), resp => {

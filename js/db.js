@@ -38,11 +38,6 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 
 const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperience) => {
     const url = `${path}/geo/add`
-    console.log('coords:', coords)
-    console.log('rating:', rating)
-    console.log('averageRating:', averageRating)
-    console.log('comment:', comment)
-    console.log('isPersonalExperience:', isPersonalExperience)
 
     return await fetchFunction({
         url,
@@ -77,7 +72,6 @@ const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperi
 //
 //         return await resp.json()
 //     } catch (e) {
-//         console.log(e)
 //         return null
 //     }
 // }

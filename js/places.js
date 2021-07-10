@@ -5,7 +5,6 @@ const placesClose = $('.places__close')
 const initPlaces = async () => {
     runSpinner('.places__spinner')
     const { error, data } = await fetchRatedPlace()
-    console.log(error)
 
     if (error === `Couldn't find the user`) {
         showError('userNotFound')

@@ -195,7 +195,6 @@ const fillDB = async (number) => {
         }
 
         const response = await saveToDB(actualCoords, quizRating, averageRating, 'test comment auto fill', true)
-        console.log(response)
     }
 }
 

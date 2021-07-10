@@ -8,7 +8,6 @@ showMoreBtn.forEach(elem => {
         list.classList.remove('blog__list-reduced')
         parent.remove()
         list.querySelectorAll('.blog__item-reduced').forEach(elem => {
-            console.log(elem.querySelector('.blog__link'))
             elem.querySelector('.blog__link').tabIndex = 0
         })
     })
