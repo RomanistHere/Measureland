@@ -42,17 +42,14 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: mongoDB,
-        // TODO: check what is it
         // touchAfter: 12 * 3600 // twice a day
     }),
     cookie: {
-        // TODO: change
+        // TODO: make it work
         secure: false,
-        // TODO: change before production
-        sameSite: 'Lax',
+        httpOnly: true,
+        sameSite: true,
         maxAge: 1209600000 // two weeks
-        // TODO: change
-        // maxAge: 20000
     }
 }));
 app.use(cors({

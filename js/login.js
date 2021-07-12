@@ -403,7 +403,6 @@ const initLoginBtns = () => {
                     return
                 }
 
-                // TODO: change
                 const inp1 = loginState.stage === 'register' ? $('#new-password') : $('#new-password-reset')
                 const inp2 = loginState.stage === 'register' ? $('#repeat-new-password') : $('#repeat-new-password-reset')
                 const anotherInp = target === inp1 ? inp2 : inp1
