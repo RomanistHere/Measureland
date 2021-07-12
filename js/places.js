@@ -41,7 +41,7 @@ const initPlaces = async () => {
 
         const newItem = document.createElement('li')
         newItem.classList.add('places__item')
-        const newLink = `<a class="places__link" href="http://localhost:8080/?lat=${lat}&lng=${lng}">${state.lang === 'en' ? 'My rating' : 'Моя оценка'} ${places.length - i}</a>`
+        const newLink = `<a class="places__link" href="https://measureland.org/?lat=${lat}&lng=${lng}">${state.lang === 'en' ? 'My rating' : 'Моя оценка'} ${places.length - i}</a>`
 
         newItem.insertAdjacentHTML('beforeend', newLink)
         placesList.insertBefore(newItem, placesList.childNodes[0])

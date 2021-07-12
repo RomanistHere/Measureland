@@ -1,7 +1,8 @@
 require('dotenv').config()
 const mailgun = require("mailgun-js")({
     apiKey: process.env.MAILGUN_API,
-    domain: process.env.MAILGUN_DOMAIN
+    domain: process.env.MAILGUN_DOMAIN,
+    host: "api.eu.mailgun.net",
 });
 
 const templatesSubject = {
@@ -185,14 +186,14 @@ const getHTML = (key, url, lang) => {
 }
 
 const templateFrom = {
-    'en': 'Measureland-mail-service@measureland.online',
-    'ru': 'Measureland-mail-service@measureland.online',
+    'en': `Measureland-mail-service@${process.env.MAILGUN_DOMAIN}`,
+    'ru': `Measureland-mail-service@${process.env.MAILGUN_DOMAIN}`,
 }
 
 exports.sendEmail = async (data) => {
     const { email, lang, verificationUrl, reason } = data
     const mail = {
-        to: email,
+        to: `${email}`,
         from: templateFrom[lang],
         html: getHTML(reason, verificationUrl, lang),
         subject: templatesSubject[lang][reason]

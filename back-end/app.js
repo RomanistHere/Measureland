@@ -19,7 +19,11 @@ const app = express();
 const dev_db_url = process.env.DEV_DB_PATH;
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(mongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -83,10 +87,10 @@ const flowLimiter = rateLimit({
 });
 
 // routes
-app.use('/geo', geoLimiter, geoRouter);
+app.use('/api/geo', geoLimiter, geoRouter);
 // user api limited in user.route.js
-app.use('/user', userRouter);
-app.use('/flow', flowLimiter, flowRouter);
+app.use('/api/user', userRouter);
+app.use('/api/flow', flowLimiter, flowRouter);
 
 mongoose.Model.on('index', err => {
     if (err)

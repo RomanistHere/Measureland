@@ -7,7 +7,7 @@ const splitString = (str, key) =>
     str.split(key)
 
 const roundToFifthDecimal = number =>
-    Math.round(1000 * number) / 1000
+    Math.round(10000 * number) / 10000
 
 const roundToTen = number =>
     Math.round(10 * number) / 10

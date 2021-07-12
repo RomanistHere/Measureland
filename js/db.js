@@ -1,4 +1,5 @@
-const path = 'http://localhost:3000'
+const path = 'https://measureland.org/api'
+// const path = 'http://localhost:3000/api'
 
 const sendFeedback = () =>
     state.flow.length > 6 && navigator.sendBeacon(`${path}/flow/add`, new URLSearchParams({ flow: state.flow }))
