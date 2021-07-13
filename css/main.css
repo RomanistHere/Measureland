@@ -596,3 +596,9 @@ input:checked ~ .checkbox__checkmark::after {
         box-shadow: 0 0 15px var(--dark-green);
     }
 }
+
+@media screen and (max-width: 1023px) {
+    .start__lang_btn {
+        filter: none;
+    }
+}

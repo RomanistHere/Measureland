@@ -1413,7 +1413,7 @@ a::selection {
     .rating__item_text {
         padding-right: 5px;
 
-        font-size: 16px;
+        font-size: 22px;
         font-weight: normal;
     }
 
@@ -1424,6 +1424,21 @@ a::selection {
 
     .rate__container_item {
         width: 100%;
+        padding: 6px 0;
+    }
+
+    .rating__close {
+        padding: 10px;
+    }
+
+    .close {
+        width: 25px;
+        height: 25px;
+    }
+
+    .sidebar__close {
+        right: 38px;
+        top: 10px;
     }
 
     .rate__evaluate {
@@ -1437,7 +1452,7 @@ a::selection {
     .rating {
         background-color: var(--side-bg-color);
         overflow: auto;
-        font-size: 14px;
+        font-size: 18px;
     }
 
     .rating__wrap {
@@ -1502,7 +1517,6 @@ a::selection {
     .start__image {
         right: auto;
         left: 0;
-        /* right: -58%; */
     }
 
     .checkbox__container {
@@ -1519,6 +1533,21 @@ a::selection {
     .plane__wrap {
         display: none;
     }
+
+    .leaflet-touch .leaflet-control-geocoder-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .leaflet-touch .leaflet-bar a {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .form__error {
+        font-size: 70%;
+    }
 }
 
 @media screen and (max-width: 320px) {
@@ -1527,6 +1556,27 @@ a::selection {
     }
 
     .checkbox__container {
+        font-size: 14px;
+    }
+
+    .settings__link {
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+    .rating__item_text {
+        font-size: 18px;
+    }
+
+    .sidebar__section {
+        padding: 20px 20px 60px;
+    }
+
+    .sidebar__close {
+        right: 28px;
+    }
+
+    .rating {
         font-size: 14px;
     }
 }

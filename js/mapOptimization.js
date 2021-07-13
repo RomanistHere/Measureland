@@ -219,20 +219,20 @@ const getNewData = async () => {
 	console.timeEnd('preparations')
 	console.time('fetch new data')
     const { error, data } = await fetchBoundsData(query, zoom)
-	const { result, userID } = data
 	console.timeEnd('fetch new data')
-
-    if (!userID)
-        userLoggedOut()
 
 	if (error === 'Too many requests, please try again later') {
 		blockMap()
-        showLimitError()
-        return
-    } else if (error) {
-        showError('unrecognizedError', error)
-        return
-    }
+		showLimitError()
+		return
+	} else if (error) {
+		showError('unrecognizedError', error)
+		return
+	}
+
+	const { result, userID } = data
+    if (!userID)
+        userLoggedOut()
 
     console.log('number of downloaded points: ', result.length)
 

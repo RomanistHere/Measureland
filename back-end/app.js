@@ -33,6 +33,7 @@ app.disable('x-powered-by');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.set('trust proxy', 1);
 
 // sessions
 app.use(cookieParser());
@@ -42,11 +43,11 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: mongoDB,
-        // touchAfter: 12 * 3600 // twice a day
+        touchAfter: 12 * 3600 // twice a day
     }),
+    proxy: true,
     cookie: {
-        // TODO: make it work
-        secure: false,
+        secure: true,
         httpOnly: true,
         sameSite: true,
         maxAge: 1209600000 // two weeks
@@ -84,7 +85,8 @@ const flowLimiter = rateLimit({
 });
 
 // routes
-app.use('/api/geo', geoLimiter, geoRouter);
+// app.use('/api/geo', geoLimiter, geoRouter);
+app.use('/api/geo', geoRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);
 app.use('/api/flow', flowLimiter, flowRouter);

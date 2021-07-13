@@ -120,6 +120,10 @@ const positionStartScreen = () => {
     addClass(imageCont, 'start-show')
 
     const setStartScreen = () => {
+        console.log(document.readyState)
+        if (document.readyState !== 'complete')
+            return
+
         const startRect = startImage.getBoundingClientRect()
         const startWidth = startRect.width
         const startHeight = startRect.height
@@ -147,9 +151,9 @@ const positionStartScreen = () => {
     }
 
     setStartScreen()
-    // TODO: test timeout
-    setTimeout(setStartScreen, 100)
-    setTimeout(setStartScreen, 300)
+    window.addEventListener('load', setStartScreen, false)
+    // setTimeout(setStartScreen, 100)
+    // setTimeout(setStartScreen, 300)
     window.addEventListener('resize', setStartScreen)
 
     const startScrenWheel = (e) => {

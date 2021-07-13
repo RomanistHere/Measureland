@@ -7,6 +7,10 @@ const sendFeedback = () =>
 const fetchFunction = async ({ url, method, credentials, headers, body }) => {
     if (!url)
         return ({ error: 'Not valid URL' })
+
+    if (!startScreenState.terms)
+        return ({ error: 'Not agreed to the terms of use' })
+
     // default values
     method = method ? method : 'GET'
     credentials = credentials ? credentials : 'include'
