@@ -42,7 +42,7 @@
             rel="alternate"
             hreflang="en"
             href="https://measureland.org/blog/" />
-        <priority>1.00</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://measureland.org/ru/blog/</loc>
@@ -54,7 +54,7 @@
             rel="alternate"
             hreflang="en"
             href="https://measureland.org/blog/" />
-        <priority>1.00</priority>
+        <priority>0.6</priority>
     </url>
 
     <url>
@@ -67,7 +67,7 @@
             rel="alternate"
             hreflang="en"
             href="https://measureland.org/blog/about-us/" />
-        <priority>1.00</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://measureland.org/ru/blog/about-us/</loc>
@@ -79,210 +79,211 @@
             rel="alternate"
             hreflang="en"
             href="https://measureland.org/blog/about-us/" />
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://measureland.org/blog/how-to-become-citizen/</loc>
+        <xhtml:link
+            rel="alternate"
+            hreflang="ru"
+            href="https://measureland.org/ru/blog/how-to-become-citizen/" />
+        <xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://measureland.org/blog/how-to-become-citizen/" />
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://measureland.org/ru/blog/how-to-become-citizen/</loc>
+        <xhtml:link
+            rel="alternate"
+            hreflang="ru"
+            href="https://measureland.org/ru/blog/how-to-become-citizen/" />
+        <xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://measureland.org/blog/how-to-become-citizen/" />
+        <priority>0.3</priority>
+    </url>
+
+    <url>
+        <loc>https://measureland.org/blog/minsk-belarus/</loc>
+        <xhtml:link
+            rel="alternate"
+            hreflang="ru"
+            href="https://measureland.org/ru/blog/minsk-belarus/" />
+        <xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://measureland.org/blog/minsk-belarus/" />
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://measureland.org/ru/blog/minsk-belarus/</loc>
+        <xhtml:link
+            rel="alternate"
+            hreflang="ru"
+            href="https://measureland.org/ru/blog/minsk-belarus/" />
+        <xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://measureland.org/blog/minsk-belarus/" />
         <priority>1.00</priority>
     </url>
 
     <url>
-        <loc>https://measureland.org/how-to-become-citizen/</loc>
+        <loc>https://measureland.org/blog/paid-options/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/how-to-become-citizen/" />
+            href="https://measureland.org/ru/blog/paid-options/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/how-to-become-citizen/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/paid-options/" />
+        <priority>0.1</priority>
     </url>
     <url>
-        <loc>https://measureland.org/ru/how-to-become-citizen/</loc>
+        <loc>https://measureland.org/ru/blog/paid-options/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/how-to-become-citizen/" />
+            href="https://measureland.org/ru/blog/paid-options/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/how-to-become-citizen/" />
-        <priority>1.00</priority>
-    </url>
-
-    <url>
-        <loc>https://measureland.org/minsk-belarus/</loc>
-        <xhtml:link
-            rel="alternate"
-            hreflang="ru"
-            href="https://measureland.org/ru/minsk-belarus/" />
-        <xhtml:link
-            rel="alternate"
-            hreflang="en"
-            href="https://measureland.org/minsk-belarus/" />
-        <priority>1.00</priority>
-    </url>
-    <url>
-        <loc>https://measureland.org/ru/minsk-belarus/</loc>
-        <xhtml:link
-            rel="alternate"
-            hreflang="ru"
-            href="https://measureland.org/ru/minsk-belarus/" />
-        <xhtml:link
-            rel="alternate"
-            hreflang="en"
-            href="https://measureland.org/minsk-belarus/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/paid-options/" />
+        <priority>0.1</priority>
     </url>
 
     <url>
-        <loc>https://measureland.org/paid-options/</loc>
+        <loc>https://measureland.org/blog/policy/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/paid-options/" />
+            href="https://measureland.org/ru/blog/policy/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/paid-options/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/policy/" />
+        <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://measureland.org/ru/paid-options/</loc>
+        <loc>https://measureland.org/ru/blog/policy/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/paid-options/" />
+            href="https://measureland.org/ru/blog/policy/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/paid-options/" />
-        <priority>1.00</priority>
-    </url>
-
-    <url>
-        <loc>https://measureland.org/policy/</loc>
-        <xhtml:link
-            rel="alternate"
-            hreflang="ru"
-            href="https://measureland.org/ru/policy/" />
-        <xhtml:link
-            rel="alternate"
-            hreflang="en"
-            href="https://measureland.org/policy/" />
-        <priority>1.00</priority>
-    </url>
-    <url>
-        <loc>https://measureland.org/ru/policy/</loc>
-        <xhtml:link
-            rel="alternate"
-            hreflang="ru"
-            href="https://measureland.org/ru/policy/" />
-        <xhtml:link
-            rel="alternate"
-            hreflang="en"
-            href="https://measureland.org/policy/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/policy/" />
+        <priority>0.5</priority>
     </url>
 
     <url>
-        <loc>https://measureland.org/support/</loc>
+        <loc>https://measureland.org/blog/support/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/support/" />
+            href="https://measureland.org/ru/blog/support/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/support/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/support/" />
+        <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://measureland.org/ru/support/</loc>
+        <loc>https://measureland.org/ru/blog/support/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/support/" />
+            href="https://measureland.org/ru/blog/support/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/support/" />
-        <priority>1.00</priority>
-    </url>
-
-    <url>
-        <loc>https://measureland.org/terms-of-use/</loc>
-        <xhtml:link
-            rel="alternate"
-            hreflang="ru"
-            href="https://measureland.org/ru/terms-of-use/" />
-        <xhtml:link
-            rel="alternate"
-            hreflang="en"
-            href="https://measureland.org/terms-of-use/" />
-        <priority>1.00</priority>
-    </url>
-    <url>
-        <loc>https://measureland.org/ru/terms-of-use/</loc>
-        <xhtml:link
-            rel="alternate"
-            hreflang="ru"
-            href="https://measureland.org/ru/terms-of-use/" />
-        <xhtml:link
-            rel="alternate"
-            hreflang="en"
-            href="https://measureland.org/terms-of-use/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/support/" />
+        <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://measureland.org/tutorial/</loc>
+        <loc>https://measureland.org/blog/terms-of-use/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/tutorial/" />
+            href="https://measureland.org/ru/blog/terms-of-use/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/tutorial/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/terms-of-use/" />
+        <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://measureland.org/ru/tutorial/</loc>
+        <loc>https://measureland.org/ru/blog/terms-of-use/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/tutorial/" />
+            href="https://measureland.org/ru/blog/terms-of-use/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/tutorial/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/terms-of-use/" />
+        <priority>0.5</priority>
     </url>
 
     <url>
-        <loc>https://measureland.org/write-a-guide/</loc>
+        <loc>https://measureland.org/blog/tutorial/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/write-a-guide/" />
+            href="https://measureland.org/ru/blog/tutorial/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/write-a-guide/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/tutorial/" />
+        <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://measureland.org/ru/write-a-guide/</loc>
+        <loc>https://measureland.org/ru/blog/tutorial/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
-            href="https://measureland.org/ru/write-a-guide/" />
+            href="https://measureland.org/ru/blog/tutorial/" />
         <xhtml:link
             rel="alternate"
             hreflang="en"
-            href="https://measureland.org/write-a-guide/" />
-        <priority>1.00</priority>
+            href="https://measureland.org/blog/tutorial/" />
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>https://measureland.org/blog/write-a-guide/</loc>
+        <xhtml:link
+            rel="alternate"
+            hreflang="ru"
+            href="https://measureland.org/ru/blog/write-a-guide/" />
+        <xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://measureland.org/blog/write-a-guide/" />
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://measureland.org/ru/blog/write-a-guide/</loc>
+        <xhtml:link
+            rel="alternate"
+            hreflang="ru"
+            href="https://measureland.org/ru/blog/write-a-guide/" />
+        <xhtml:link
+            rel="alternate"
+            hreflang="en"
+            href="https://measureland.org/blog/write-a-guide/" />
+        <priority>0.7</priority>
     </url>
 
     <url>
         <loc>https://measureland.org/ru/universal-guide/</loc>
+        <priority>0.9</priority>
     </url>
 </urlset>
