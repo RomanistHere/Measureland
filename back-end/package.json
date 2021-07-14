@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -22,10 +23,12 @@
     "express-slow-down": "^1.4.0",
     "mailgun-js": "^0.22.0",
     "mongoose": "^5.12.3",
+    "morgan": "^1.10.0",
     "nodemailer": "^6.5.0",
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
     "rate-limit-mongo": "^2.3.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
   }
 }

@@ -66,6 +66,9 @@ const initRatingPopup = async ({ latlng }) => {
     const ratingObj = properties.rating
     const props = Object.keys(ratingObj)
     const { finalRating } = getFinalRating(ratingObj)
+    const zoom = state.zoom <= 12 ? 13 : state.zoom
+
+    map.setView(latlng, zoom)
 
     showRatingState = { ...showRatingState, latlng: latlng, geoID: properties.geoID }
 
@@ -121,7 +124,8 @@ const initMarkerFromURL = () => {
     const urlParams = new URLSearchParams(window.location.search)
     const lat = urlParams.get('lat')
     const lng = urlParams.get('lng')
-    const zoom = urlParams.get('zoom') || 12
+    const urlZoom = urlParams.get('zoom') || 13
+    const zoom = urlZoom <= 12 ? 13 : urlZoom
     const showRating = urlParams.get('showRating')
 
     if (!showRating || !lat || !lng)

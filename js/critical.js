@@ -100,7 +100,7 @@ let state = {
     corrdsToSave: null,
     userName: 'Аноним',
     lang: detectPrefLang(),
-    center: [53.901, 27.546],
+    center: [53.9015, 27.5465],
     zoom: 12,
     flow: [],
     shouldShowLoading: false,
@@ -122,6 +122,7 @@ const positionStartScreen = () => {
     let isStartShown = true
 
     addClass(imageCont, 'start-show')
+    setTimeout(() => { addClass(imageCont, 'start-opacity') }, 100)
 
     const setStartScreen = () => {
         console.log(document.readyState)
@@ -247,7 +248,8 @@ const positionStartScreen = () => {
     const startRegister = $('.start__register')
 
     const hideStartScreen = () => {
-        if (!startScreenState.terms) {
+        const { terms, noCoords, detectLoc } = startScreenState
+        if (!terms) {
             alert(
                 state.lang === 'en'
                     ? `We can't let you in without agreeing to our terms of use, sorry`
@@ -261,8 +263,11 @@ const positionStartScreen = () => {
         setTimeout(() => { removeClass(imageCont, 'start-show') }, 2000)
         setTimeout(() => { $('.start').remove() }, 4000)
 
-        if (startScreenState.detectLoc)
-            detectLocation()
+        if (detectLoc) {
+            setCookie('detectLoc', 1, 365)
+            if (noCoords)
+                detectLocation()
+        }
 
         // check if user cleared start-screen cookie, but still logged in
         if (state.userID)
@@ -352,11 +357,6 @@ const checkIsLaunchFirst = () => {
     //     detectLocation()
     // }
 
-    console.log('isVisited: ', isVisited)
-    console.log('noCoords: ', startScreenState.noCoords)
-    console.log('shouldDetectLoc: ', shouldDetectLoc === '1')
-    console.log('showRating: ', showRating)
-
     // start setup
     if (isVisited) {
         if (startScreenState.noCoords && shouldDetectLoc === '1')
@@ -366,9 +366,8 @@ const checkIsLaunchFirst = () => {
             startScreen.remove()
 
     } else if (showRating) {
-        // show rating with cookie consent
+        setTimeout(positionStartScreen, 3000)
     } else {
-        // show login screen
         positionStartScreen()
     }
 }

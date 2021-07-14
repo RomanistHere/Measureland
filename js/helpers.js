@@ -232,7 +232,7 @@ const showLimitError = () => {
     addClass($('.limit_error'), 'limit_error-show')
 }
 
-const openRatingAndZoom = (lat, lng, zoom = 12) => {
+const openRatingAndZoom = (lat, lng, zoom = 13) => {
     const latlng = { lat, lng }
     initRatingPopup({ latlng })
 
@@ -252,12 +252,12 @@ const showError = (key, error = null) => {
         ru: {
             userNotFound: `У нас не получается распознать тебя, пожалуйста, залогинься ещё раз.`,
             unrecognizedError: `Какая-то ошибка. Открой консоль для дополнительной информации.`,
-            locationNotFound: `Какие-то проблемы с данным местом. Попробуй позже.`,
+            locationNotFound: `Какие-то проблемы с данным местом. Попробуй обновить страницу и открыть его вручную (кликнув на него).`,
         },
         en: {
             userNotFound: `We have troubles recognizing you, please, relogin.`,
             unrecognizedError: `Error happened. Open console for additional info.`,
-            locationNotFound: `There are some troubles with this location or our server. Try later.`,
+            locationNotFound: `There are some troubles with this location or our server. Try to refresh page and open it manually (by clicking it).`,
         }
     }
     const lang = state.lang === 'ru' ? 'ru' : 'en'

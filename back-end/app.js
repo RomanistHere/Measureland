@@ -9,10 +9,12 @@ const cors = require('cors')
 const MongoStore = require('connect-mongo');
 const MongoLimitStore = require('rate-limit-mongo');
 const rateLimit = require("express-rate-limit");
+const morgan = require('morgan');
 
 const geoRouter = require('./routes/geo.route');
 const userRouter = require('./routes/user.route');
 const flowRouter = require('./routes/flow.route');
+const winston = require('./helpers/winston');
 
 const app = express();
 
@@ -30,6 +32,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.collections.geos.createIndex({ location : "2dsphere" })
 
 app.disable('x-powered-by');
+
+app.use(morgan('combined', { stream: winston.stream }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

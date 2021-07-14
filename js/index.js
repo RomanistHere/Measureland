@@ -63,6 +63,7 @@ const initMap = () => {
         zoom: state.zoom,
         preferCanvas: true,
         worldCopyJump: true,
+        bounceAtZoomLimits: false,
     })
 
     L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

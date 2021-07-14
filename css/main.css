@@ -339,6 +339,13 @@ body {
 
 .start-show {
     display: block;
+
+    transition: opacity .8s;
+    opacity: 0;
+}
+
+.start-opacity {
+    opacity: 1;
 }
 
 .start::-webkit-scrollbar {
@@ -347,7 +354,7 @@ body {
 
 .start__image {
     position: absolute;
-    
+
     bottom: 0;
     left: 0;
     width: 100%;
@@ -513,11 +520,11 @@ input:checked ~ .checkbox__checkmark::after {
     align-items: center;
 
     top: 60px;
-    left: -900px;
+    left: -1000px;
 
     cursor: pointer;
 
-    animation: fly_plane 13s linear 1s;
+    animation: fly_plane 15s linear 1s;
 }
 
 @keyframes fly_plane {

@@ -309,9 +309,20 @@ exports.geo_location = async (req, res, next) => {
     const nearCoords = Object.fromEntries(urlParams)
     const arr = nearCoords.latlng.split(',').map(Number)
     try {
-        const result = await Geo.findOne({ "location.coordinates": [ ...arr] }, '-location')
+        const result = await Geo.findOne({
+            "location": {
+                $near: {
+                    $geometry: {
+                        type: "Point" ,
+                        coordinates: [ ...arr]
+                    },
+                    $maxDistance: 50
+                }
+            }
+        }, '-location')
+
         if (!result)
-            res.status(400).json({ error: 'Location not found' })
+            return res.status(400).json({ error: 'Location not found' })
 
         const geoID = result._id
         const user = userID ? await User.findOne({ $and: [
