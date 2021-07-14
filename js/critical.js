@@ -62,12 +62,14 @@ const detectLocation = () => {
     if (!navigator.geolocation)
         return
 
-    const urlParams = new URLSearchParams(window.location.search)
-    const lat = urlParams.get('lat')
-    const lng = urlParams.get('lng')
-
-    if (lat && lng)
-        return
+    // const urlParams = new URLSearchParams(window.location.search)
+    // const lat = urlParams.get('lat')
+    // const lng = urlParams.get('lng')
+    //
+    // console.log(lat, lng)
+    //
+    // if (lat && lng)
+    //     return
 
     navigator.geolocation.getCurrentPosition(({ coords }) => {
         const { latitude, longitude } = coords
@@ -106,7 +108,8 @@ let state = {
 
 let startScreenState = {
     terms: true,
-    detectLoc: true
+    detectLoc: true,
+    noCoords: true,
 }
 
 // START SCREEN FUNCTION
@@ -114,6 +117,7 @@ let startScreenState = {
 const positionStartScreen = () => {
     const startImage = $('.start__image')
     const imageCont = $('.start')
+    const imageOverflow = $('.start__overflow')
 
     let isStartShown = true
 
@@ -138,11 +142,14 @@ const positionStartScreen = () => {
             startImage.style.height = '100%'
             startImage.style.width = 'auto'
             if (windowWidth > 1024) {
-                imageCont.scrollLeft = 2000
+                imageOverflow.scrollLeft = 2000
             } else {
                 const imageWidth = startImage.getBoundingClientRect().width
-                imageCont.scrollLeft = imageWidth / 2
+                imageOverflow.scrollLeft = imageWidth / 2
             }
+        } else if (windowWidth <= 1024) {
+            const imageWidth = startImage.getBoundingClientRect().width
+            imageOverflow.scrollLeft = imageWidth / 2
         }
         if (windowWidth > startWidth) {
             startImage.style.width = '100%'
@@ -152,16 +159,14 @@ const positionStartScreen = () => {
 
     setStartScreen()
     window.addEventListener('load', setStartScreen, false)
-    // setTimeout(setStartScreen, 100)
-    // setTimeout(setStartScreen, 300)
     window.addEventListener('resize', setStartScreen)
 
     const startScrenWheel = (e) => {
         if (isStartShown) {
             if (e.deltaY > 0)
-                imageCont.scrollLeft += 50
+                imageOverflow.scrollLeft += 50
             else
-                imageCont.scrollLeft -= 50
+                imageOverflow.scrollLeft -= 50
         }
     }
 
@@ -316,29 +321,55 @@ const positionStartScreen = () => {
 }
 
 const checkIsLaunchFirst = () => {
-    const isVisited = getCookie('visited')
-    const shouldDetectLoc = getCookie('detectLoc')
-    const urlParams = new URLSearchParams(window.location.search)
-    const showRating = urlParams.get('showRating')
     const startScreen = $('.start')
 
-    if (showRating) {
-        state.flow.push('srv')
-        startScreen.remove()
-    }
+    const isVisited = getCookie('visited')
+    const shouldDetectLoc = getCookie('detectLoc')
 
-    if (!isVisited) {
-        state.flow.push('ftv')
-        if (!showRating)
-            positionStartScreen()
-    } else {
-        state.flow.push('rv')
+    const urlParams = new URLSearchParams(window.location.search)
+    const showRating = urlParams.get('showRating')
+    const lat = urlParams.get('lat')
+    const lng = urlParams.get('lng')
+
+    startScreenState = { ... startScreenState, noCoords: !lat || !lng }
+
+    // if (showRating) {
+    //     state.flow.push('srv')
+    //     startScreen.remove()
+    // }
+    //
+    // if (!isVisited) {
+    //     state.flow.push('ftv')
+    //     if (!showRating)
+    //         positionStartScreen()
+    // } else {
+    //     state.flow.push('rv')
+    //     if (startScreen)
+    //         startScreen.remove()
+    // }
+    //
+    // if (shouldDetectLoc === '1') {
+    //     detectLocation()
+    // }
+
+    console.log('isVisited: ', isVisited)
+    console.log('noCoords: ', startScreenState.noCoords)
+    console.log('shouldDetectLoc: ', shouldDetectLoc === '1')
+    console.log('showRating: ', showRating)
+
+    // start setup
+    if (isVisited) {
+        if (startScreenState.noCoords && shouldDetectLoc === '1')
+            detectLocation()
+
         if (startScreen)
             startScreen.remove()
-    }
 
-    if (shouldDetectLoc === '1') {
-        detectLocation()
+    } else if (showRating) {
+        // show rating with cookie consent
+    } else {
+        // show login screen
+        positionStartScreen()
     }
 }
 

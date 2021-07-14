@@ -85,8 +85,7 @@ const flowLimiter = rateLimit({
 });
 
 // routes
-// app.use('/api/geo', geoLimiter, geoRouter);
-app.use('/api/geo', geoRouter);
+app.use('/api/geo', geoLimiter, geoRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);
 app.use('/api/flow', flowLimiter, flowRouter);

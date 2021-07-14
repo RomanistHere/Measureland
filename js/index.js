@@ -63,8 +63,6 @@ const initMap = () => {
         zoom: state.zoom,
         preferCanvas: true,
         worldCopyJump: true,
-        // maxBounds: maxBounds
-        // maxBoundsViscosity: 1.0
     })
 
     L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -103,8 +101,6 @@ const initMap = () => {
     //         console.warn('Unsupported geocoder', geocoderString)
     //     }
     // }
-
-    // initMarkers(map)
 
     map.on('click', onMapClick)
 

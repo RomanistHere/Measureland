@@ -7,83 +7,6 @@ body {
     --sidebar-width: 400px;
 }
 
-/* // plane // */
-
-.plane__wrap {
-    position: absolute;
-    display: flex;
-
-    align-items: center;
-
-    top: 60px;
-    left: -700px;
-
-    cursor: pointer;
-
-    animation: fly_plane 13s linear 5s;
-}
-
-@keyframes fly_plane {
-    0% {
-        transform: none;
-    }
-    18%, 72% {
-        top: 70px;
-    }
-    20%, 40%, 60% {
-        top: 80px;
-    }
-    30%, 50%, 70% {
-        top: 60px;
-    }
-    100% {
-        transform: translateX(3000px);
-    }
-}
-
-.plane__text_wrap {
-    padding: 10px 20px;
-    margin: 0;
-
-    color: var(--side-bg-color);
-    font-size: 24px;
-    background: linear-gradient(180deg, #1A7E3E 0%, #018F73 100%);
-    clip-path: polygon(0% 0%, 6% 5%, 13% 0, 19% 7%, 27% 0, 34% 6%, 42% 8%, 48% 0, 55% 4%, 59% 1%, 68% 4%, 83% 1%, 93% 5%, 100% 23%, 99% 50%, 100% 78%, 93% 97%, 81% 96%, 67% 100%, 58% 95%, 50% 99%, 41% 100%, 27% 96%, 19% 100%, 13% 95%, 6% 100%, 0% 87%);
-    animation: fly_plane__text 13s 5s;
-}
-
-@keyframes fly_plane__text {
-    0%, 20%, 78%, 100% {
-        transform: none;
-    }
-    25%, 45%, 65% {
-        transform: translateY(3px);
-    }
-    35%, 55%, 75% {
-        transform: translateY(-3px);
-    }
-}
-
-.plane {
-    transition: filter .1s;
-}
-
-.plane__wrap-clicked_1 .plane {
-    filter: hue-rotate(192deg);
-}
-
-.plane__wrap-clicked_2 .plane {
-    filter: hue-rotate(250deg);
-}
-
-.plane__wrap-clicked_3 .plane {
-    filter: hue-rotate(310deg);
-}
-
-.plane__wrap-clicked_4 .plane {
-    filter: grayscale(1);
-}
-
 /* // form // */
 
 .form__btn {
@@ -1528,10 +1451,6 @@ a::selection {
     .checkbox__checkmark {
         width: 20px;
         height: 20px;
-    }
-
-    .plane__wrap {
-        display: none;
     }
 
     .leaflet-touch .leaflet-control-geocoder-icon {
