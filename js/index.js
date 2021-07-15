@@ -1,3 +1,10 @@
+Sentry.init({
+    dsn: "https://d1ec799287aa499da5b59c4ee096878a@o920493.ingest.sentry.io/5866120",
+    integrations: [new Sentry.Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
+    release: "Measureland@1.0.0",
+})
+
 // icon documentation
 // https://leafletjs.com/reference-1.7.1.html#icon
 const getIcon = rating =>
@@ -113,8 +120,6 @@ const initMap = () => {
 
 const { map, geocoder } = initMap()
 
-// TODO: UNCOMMENT IN PRODUCTION
-//
 // if ("serviceWorker" in navigator) {
 //     window.addEventListener("load", function() {
 //         navigator.serviceWorker
@@ -123,7 +128,7 @@ const { map, geocoder } = initMap()
 //         .catch(err => console.log("service worker not registered", err))
 //     })
 // }
-
+//
 // document.addEventListener('visibilitychange', () => {
 //     if (document.visibilityState === 'hidden') {
 //         sendFeedback()
