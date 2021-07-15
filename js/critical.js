@@ -104,6 +104,7 @@ let state = {
     zoom: 12,
     flow: [],
     shouldShowLoading: false,
+    shouldSendEvent: getCookie('sentryOn') !== '0' ? true : false
 }
 
 let startScreenState = {

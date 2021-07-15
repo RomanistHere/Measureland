@@ -58,11 +58,10 @@ const initSideBar = () => {
     handleClickPrevDef(crashReportsBtn, () => {
         state.flow.push('cr')
 
-        const newSentryVal = getCookie('sentryOn') === '0' ? '1' : '0'
-        setCookie('sentryOn', newSentryVal, 365)
+        state = { ...state, shouldSendEvent: !state.shouldSendEvent }
+        setCookie('sentryOn', state.shouldSendEvent === false ? '0' : '1', 365)
 
         crashReportsBtn.classList.toggle('settings__link-on')
-        window.location.reload()
     })
 
     handleClickPrevDef(openLoginBtn, () => {
