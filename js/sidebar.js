@@ -3,6 +3,7 @@ const commentsWrap = $('.comments__wrap')
 const openSettingsBtn = $('.open_settings')
 const changeLangBtn = $('.changeLangBtn')
 const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
+const crashReportsBtn = $('.crashReportsBtn')
 const refreshPageBtn = $('.refreshPageBtn')
 const textAreaComment = $('.ratingComment')
 const openLoginBtn = $('.loginBtn')
@@ -52,6 +53,16 @@ const initSideBar = () => {
         vizualizeLoadingBtn.classList.toggle('settings__link-on')
         usedBounds.map(poly =>
             state.shouldShowLoading ? poly.addTo(map) : poly.removeFrom(map))
+    })
+
+    handleClickPrevDef(crashReportsBtn, () => {
+        state.flow.push('cr')
+
+        const newSentryVal = getCookie('sentryOn') === '0' ? '1' : '0'
+        setCookie('sentryOn', newSentryVal, 365)
+
+        crashReportsBtn.classList.toggle('settings__link-on')
+        window.location.reload()
     })
 
     handleClickPrevDef(openLoginBtn, () => {

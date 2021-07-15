@@ -338,27 +338,9 @@ const checkIsLaunchFirst = () => {
 
     startScreenState = { ... startScreenState, noCoords: !lat || !lng }
 
-    // if (showRating) {
-    //     state.flow.push('srv')
-    //     startScreen.remove()
-    // }
-    //
-    // if (!isVisited) {
-    //     state.flow.push('ftv')
-    //     if (!showRating)
-    //         positionStartScreen()
-    // } else {
-    //     state.flow.push('rv')
-    //     if (startScreen)
-    //         startScreen.remove()
-    // }
-    //
-    // if (shouldDetectLoc === '1') {
-    //     detectLocation()
-    // }
-
     // start setup
     if (isVisited) {
+        state.flow.push('rv')
         if (startScreenState.noCoords && shouldDetectLoc === '1')
             detectLocation()
 
@@ -366,8 +348,10 @@ const checkIsLaunchFirst = () => {
             startScreen.remove()
 
     } else if (showRating) {
+        state.flow.push('srv')
         setTimeout(positionStartScreen, 3000)
     } else {
+        state.flow.push('ftv')
         positionStartScreen()
     }
 }

@@ -1,9 +1,21 @@
-Sentry.init({
-    dsn: "https://d1ec799287aa499da5b59c4ee096878a@o920493.ingest.sentry.io/5866120",
-    integrations: [new Sentry.Integrations.BrowserTracing()],
-    tracesSampleRate: 1.0,
-    release: "Measureland@1.0.0",
-})
+const initSentry = () => {
+    const sentryOn = getCookie('sentryOn')
+    if (sentryOn === '0') {
+        $('.crashReportsBtn').classList.remove('settings__link-on')
+        return
+    }
+
+    console.log('init sentry')
+
+    Sentry.init({
+        dsn: "https://d1ec799287aa499da5b59c4ee096878a@o920493.ingest.sentry.io/5866120",
+        integrations: [new Sentry.Integrations.BrowserTracing()],
+        tracesSampleRate: 1.0,
+        release: "Measureland@1.0.0",
+    })
+}
+
+initSentry()
 
 // icon documentation
 // https://leafletjs.com/reference-1.7.1.html#icon

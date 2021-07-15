@@ -13,6 +13,7 @@ ccu - click copy url (share place)
 cl - change language
 cm - click map
 cmp - click one of my places
+cr - crash reports button
 cs - close sidebar
 
 dl - detect location
