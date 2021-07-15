@@ -1,3 +1,5 @@
+const Sentry = require('@sentry/node');
+
 const UserFlow = require('../models/user-flow.model');
 const AnonymFlow = require('../models/anonym-flow.model');
 
@@ -18,7 +20,7 @@ exports.flow_add = async (req, res, next) => {
     try {
         const result = await newFlow.save()
     } catch (e) {
-        console.log(e)
+        Sentry.captureException(e);
         // no point sending back anything
     }
 }

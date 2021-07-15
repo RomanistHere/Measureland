@@ -10,6 +10,8 @@ const MongoStore = require('connect-mongo');
 const MongoLimitStore = require('rate-limit-mongo');
 const rateLimit = require("express-rate-limit");
 const morgan = require('morgan');
+const Sentry = require('@sentry/node');
+const Tracing = require("@sentry/tracing");
 
 const geoRouter = require('./routes/geo.route');
 const userRouter = require('./routes/user.route');
@@ -17,6 +19,15 @@ const flowRouter = require('./routes/flow.route');
 const winston = require('./helpers/winston');
 
 const app = express();
+
+Sentry.init({
+  dsn: "https://f93dacf437a74bd79d5eead86a2c470c@o920493.ingest.sentry.io/5866699",
+  integrations: [
+    new Sentry.Integrations.Http({ tracing: true }),
+    new Tracing.Integrations.Express({ app }),
+  ],
+  tracesSampleRate: 1.0,
+});
 
 const dev_db_url = process.env.DEV_DB_PATH;
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
@@ -33,7 +44,8 @@ db.collections.geos.createIndex({ location : "2dsphere" })
 
 app.disable('x-powered-by');
 
-app.use(morgan('combined', { stream: winston.stream }));
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -94,9 +106,15 @@ app.use('/api/geo', geoLimiter, geoRouter);
 app.use('/api/user', userRouter);
 app.use('/api/flow', flowLimiter, flowRouter);
 
+// logging and errors
+app.use(Sentry.Handlers.errorHandler());
+app.use(morgan('combined', { stream: winston.stream }));
+
 mongoose.Model.on('index', err => {
-    if (err)
-        console.log(err);
+    if (err) {
+        Sentry.captureException(err);
+        console.error(err);
+    }
 });
 
 const port = process.env.SERVER_PORT || 3000;

@@ -121,7 +121,7 @@ const removePointer = (coords) => {
 }
 
 const addDataAndDisplay = data => {
-	console.time('fix geojson')
+	// console.time('fix geojson')
 	const geoData = Object.values(data).map(item => {
         const newObj = {
             ...item,
@@ -137,9 +137,9 @@ const addDataAndDisplay = data => {
     })
 
 	cachedData = [ ...cachedData, ...geoData ]
-	console.log('total number of points in cache: ', cachedData.length)
+	// console.log('total number of points in cache: ', cachedData.length)
 
-	console.timeEnd('fix geojson')
+	// console.timeEnd('fix geojson')
 
 	clusterData()
 }
@@ -157,8 +157,8 @@ const updateUrl = (coords, zoom) => {
 
 const getNewData = async () => {
 	state.flow.push('me')
-	console.warn('____________new_try____________')
-	console.time('preparations')
+	// console.warn('____________new_try____________')
+	// console.time('preparations')
     const bounds = map.getBounds()
     const zoom = map.getZoom()
     const northEast = bounds.getNorthEast()
@@ -216,10 +216,10 @@ const getNewData = async () => {
 	if (state.shouldShowLoading)
 		poly.addTo(map)
 
-	console.timeEnd('preparations')
-	console.time('fetch new data')
+	// console.timeEnd('preparations')
+	// console.time('fetch new data')
     const { error, data } = await fetchBoundsData(query, zoom)
-	console.timeEnd('fetch new data')
+	// console.timeEnd('fetch new data')
 
 	if (error === 'Too many requests, please try again later') {
 		blockMap()
@@ -234,14 +234,13 @@ const getNewData = async () => {
     if (!userID)
         userLoggedOut()
 
-    console.log('number of downloaded points: ', result.length)
+    // console.log('number of downloaded points: ', result.length)
 
 	visitedPoly = visitedPoly !== null
 		? PolyBool.union(visitedPoly, queryPolygon)
 		: currentScreenPoly
 
-    // TODO: remove
-    checkSize(result)
+    // checkSize(result)
 
 	removeClass($('.overlay__loading'), 'overlay__loading-show')
 	addDataAndDisplay(result)

@@ -183,7 +183,7 @@ const handleQuizBtns = () => {
             hideAllSides()
             showSuccessNotification()
         } catch (e) {
-            console.log(e)
+            console.warn(e)
             removeClass(saveStatus, 'rating__status-progress')
             addClass(saveStatus, 'rating__status-error')
         }

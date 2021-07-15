@@ -100,7 +100,7 @@ const initRatingPopup = async ({ latlng }) => {
             addClass(markerUrlBtn, 'rate__link_btn-success')
             setTimeout(() => { removeClass(markerUrlBtn, 'rate__link_btn-success') }, 1000)
         } catch (e) {
-            console.log(e)
+            console.warn(e)
             alert(
                 state.lang === 'en'
                     ? `Your browser couldn't copy address. Copy URL manually.`

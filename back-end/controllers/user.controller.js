@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
-const { v4 } = require('uuid')
+const { v4 } = require('uuid');
+const Sentry = require('@sentry/node');
 
 const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
@@ -32,6 +33,13 @@ exports.user_register = async (req, res) => {
     });
 
     try {
+        await sendEmail({
+            email,
+            lang,
+            verificationUrl,
+            reason: 'Verify'
+        })
+
         const savedUser = await user.save();
 
         await UserVerification.updateOne({
@@ -43,13 +51,6 @@ exports.user_register = async (req, res) => {
             upsert: true
         })
 
-        await sendEmail({
-            email,
-            lang,
-            verificationUrl,
-            reason: 'Verify'
-        })
-
         return res.json({
             error: null,
             data: {
@@ -58,6 +59,7 @@ exports.user_register = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
@@ -124,6 +126,7 @@ exports.user_login = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
@@ -154,6 +157,7 @@ exports.user_onboard = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
@@ -237,6 +241,7 @@ exports.user_reverify = async (req, res) => {
             });
         }
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
@@ -339,6 +344,7 @@ exports.user_reset_password = async (req, res, next) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
@@ -386,6 +392,7 @@ exports.user_change_password = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
@@ -419,6 +426,7 @@ exports.user_language = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };

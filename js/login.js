@@ -196,7 +196,7 @@ const clearURLParams = () => {
         url.searchParams.delete('lang')
         window.history.replaceState(null, null, url)
     } catch (e) {
-        console.log(e)
+        console.warn(e)
     }
 
     state = {
@@ -548,7 +548,6 @@ const initLoginBtns = () => {
 
     registerForm.addEventListener('submit', async (e) => {
         const notification = $('.register__notifications_wrap')
-        console.log(loginState)
 
         e.preventDefault()
         removeLoginErrors()

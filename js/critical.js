@@ -31,7 +31,6 @@ const detectPrefLang = () => {
     //     return 'ru'
     // else
     //     return 'en'
-    console.log(window.location.pathname.includes('/ru/') ? 'ru' : 'en')
     return window.location.pathname.includes('/ru/') ? 'ru' : 'en'
 }
 
@@ -61,15 +60,6 @@ const detectLocation = () => {
     state.flow.push('dl')
     if (!navigator.geolocation)
         return
-
-    // const urlParams = new URLSearchParams(window.location.search)
-    // const lat = urlParams.get('lat')
-    // const lng = urlParams.get('lng')
-    //
-    // console.log(lat, lng)
-    //
-    // if (lat && lng)
-    //     return
 
     navigator.geolocation.getCurrentPosition(({ coords }) => {
         const { latitude, longitude } = coords
@@ -126,7 +116,6 @@ const positionStartScreen = () => {
     setTimeout(() => { addClass(imageCont, 'start-opacity') }, 100)
 
     const setStartScreen = () => {
-        console.log(document.readyState)
         if (document.readyState !== 'complete')
             return
 

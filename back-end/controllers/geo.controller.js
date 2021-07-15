@@ -1,3 +1,5 @@
+const Sentry = require('@sentry/node');
+
 const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
 const Comment = require('../models/comment.model');
@@ -108,6 +110,7 @@ exports.geo_react_comment = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
@@ -125,6 +128,7 @@ const saveComment = async (comment, userID, geoID, username, rating) => {
         const result = await newComment.save()
         return result
     } catch (e) {
+        Sentry.captureException(e);
         return e
     }
 }
@@ -159,6 +163,7 @@ const addGeoToUser = async (userID, geoID, activeRatings, rating, commentID) => 
         })
         return result
     } catch (e) {
+        Sentry.captureException(e);
         return e
     }
 }
@@ -267,6 +272,7 @@ exports.geo_add = async (req, res, next) => {
                     }
                 });
             } catch (e) {
+                Sentry.captureException(e);
                 return res.status(400).json({ error: "Could not save your rating" })
             }
         } else {
@@ -294,10 +300,12 @@ exports.geo_add = async (req, res, next) => {
                     },
                 });
             } catch (e) {
+                Sentry.captureException(e);
                 return res.status(400).json({ error: "Could not save your rating" })
             }
         }
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error })
     }
 };
@@ -348,6 +356,7 @@ exports.geo_location = async (req, res, next) => {
             },
         })
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error })
     }
 };
@@ -386,6 +395,7 @@ exports.geo_comments = async (req, res, next) => {
             },
         })
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error })
     }
 };
@@ -441,6 +451,7 @@ exports.geo_location_by_bounds = async (req, res, next) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
         return res.status(400).json({ error })
     }
 };
