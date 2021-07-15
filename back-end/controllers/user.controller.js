@@ -59,6 +59,7 @@ exports.user_register = async (req, res) => {
             },
         });
     } catch (error) {
+        console.log(error)
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }

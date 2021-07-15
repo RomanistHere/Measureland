@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sentry/node": "^6.9.0",
+    "@sentry/tracing": "^6.9.0",
     "app-root-path": "^3.0.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",

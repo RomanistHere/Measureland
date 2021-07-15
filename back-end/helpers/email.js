@@ -186,8 +186,8 @@ const getHTML = (key, url, lang) => {
 }
 
 const templateFrom = {
-    'en': `Measureland-mail-service@${process.env.MAILGUN_DOMAIN}`,
-    'ru': `Measureland-mail-service@${process.env.MAILGUN_DOMAIN}`,
+    'en': `Measureland mail service support@${process.env.MAILGUN_DOMAIN}`,
+    'ru': `Measureland mail service support@${process.env.MAILGUN_DOMAIN}`,
 }
 
 exports.sendEmail = async (data) => {
