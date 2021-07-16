@@ -141,8 +141,8 @@ if ("serviceWorker" in navigator) {
     })
 }
 
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
-        sendFeedback()
-    }
-})
+// document.addEventListener('visibilitychange', () => {
+//     if (document.visibilityState === 'hidden') {
+//         sendFeedback()
+//     }
+// })

@@ -151,6 +151,7 @@ const updateUrl = (coords, zoom) => {
     url.searchParams.set('lat', roundToFifthDecimal(lat))
 	url.searchParams.set('lng', roundToFifthDecimal(lng))
     url.searchParams.set('zoom', zoom)
+	state = { ...state, zoom }
 
 	window.history.replaceState(null, null, url)
 }
