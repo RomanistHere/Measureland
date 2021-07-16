@@ -53,6 +53,7 @@ const initPlaces = async () => {
         })
     }
 
+    addToUrlOpenModalFlag()
     hideSpinner('.places__spinner')
 }
 

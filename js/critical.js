@@ -344,6 +344,10 @@ const checkIsLaunchFirst = () => {
         state.flow.push('ftv')
         positionStartScreen()
     }
+
+    const url = new URL(window.location.href)
+    url.searchParams.delete('openModal')
+    window.history.replaceState(null, null, url)
 }
 
 checkIsLaunchFirst()

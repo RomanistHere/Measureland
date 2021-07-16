@@ -49,6 +49,7 @@ const initQuizPopup = (latlng) => {
     $('.ratingPopup1').focus()
 
     state = { ...state, corrdsToSave: [roundToFifthDecimal(latlng.lat), roundToFifthDecimal(latlng.lng)] }
+    addToUrlOpenModalFlag()
 }
 
 const onMapClick = e => {
@@ -132,14 +133,14 @@ const initMap = () => {
 
 const { map, geocoder } = initMap()
 
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-        navigator.serviceWorker
-        .register("/service-worker.js")
-        .then()
-        .catch(err => console.warn("service worker not registered", err))
-    })
-}
+// if ("serviceWorker" in navigator) {
+//     window.addEventListener("load", function() {
+//         navigator.serviceWorker
+//         .register("/service-worker.js")
+//         .then()
+//         .catch(err => console.warn("service worker not registered", err))
+//     })
+// }
 
 // document.addEventListener('visibilitychange', () => {
 //     if (document.visibilityState === 'hidden') {

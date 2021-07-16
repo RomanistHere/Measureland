@@ -5,11 +5,12 @@ const rateLimit = require("express-rate-limit");
 
 const user_controller = require('../controllers/user.controller');
 
-const dev_db_url = `${process.env.MONGODB_URI}`;
+const dev_db_url = process.env.DEV_DB_PATH;
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 const mediumLimiter = rateLimit({
     store: new MongoLimitStore({
-        uri: dev_db_url,
+        uri: mongoDB,
         expireTimeMs: 20 * 60 * 1000,
         collectionName: 'expressRateUser',
         errorHandler: console.error.bind(null, 'rate-limit-mongo')
@@ -23,7 +24,7 @@ const mediumLimiter = rateLimit({
 
 const hardLimiter = rateLimit({
     store: new MongoLimitStore({
-        uri: dev_db_url,
+        uri: mongoDB,
         expireTimeMs: 20 * 60 * 1000,
         collectionName: 'expressRateUser',
         errorHandler: console.error.bind(null, 'rate-limit-mongo')

@@ -117,6 +117,7 @@ const initRatingPopup = async ({ latlng }) => {
         addClass($('.rate__rated_btn'), 'btn-hide')
     }
 
+    addToUrlOpenModalFlag()
     hideSpinner('.rate__spinner')
 }
 

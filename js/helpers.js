@@ -267,3 +267,10 @@ const showError = (key, error = null) => {
         console.warn(error)
     return alert(message)
 }
+
+const addToUrlOpenModalFlag = () => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('openModal', true)
+
+    window.history.pushState(null, null, url)
+}

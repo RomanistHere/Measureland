@@ -26,6 +26,7 @@ const openSideBar = (className = 'settings') => {
 
     addClass(document.body, 'sidebar-open')
     state.flow.push('os')
+    addToUrlOpenModalFlag()
 }
 
 const closeSideBar = () => {

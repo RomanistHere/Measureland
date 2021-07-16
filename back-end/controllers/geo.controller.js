@@ -221,7 +221,7 @@ exports.geo_add = async (req, res, next) => {
                         type: "Point" ,
                         coordinates: [ ...body.location.coordinates ]
                     },
-                    $maxDistance: 700
+                    $maxDistance: 400
                 }
             }
         })

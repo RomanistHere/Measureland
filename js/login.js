@@ -99,6 +99,7 @@ const changeLoginScreen = (stage = 'login') => {
 const openLoginForm = stage => {
     changeLoginScreen(stage)
     addClass(loginForm, 'rating-active')
+    addToUrlOpenModalFlag()
 }
 
 const closeLoginForm = () => {
