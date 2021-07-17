@@ -1,4 +1,4 @@
-const CACHE_NAME = "dev-measureland-1.0.0"
+const CACHE_NAME = "dev-measureland-1.0.1"
 const CACHED_URLS = [
     "/",
     "/index.html",

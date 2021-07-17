@@ -1,3 +1,33 @@
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: local(''),
+       url('../fonts/nunito-v16-latin_cyrillic-regular.woff2') format('woff2'),
+       url('../fonts/nunito-v16-latin_cyrillic-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: italic;
+  font-weight: normal;
+  font-display: swap;
+  src: local(''),
+       url('../fonts/nunito-v16-latin_cyrillic-italic.woff2') format('woff2'),
+       url('../fonts/nunito-v16-latin_cyrillic-italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: local(''),
+       url('../fonts/nunito-v16-latin_cyrillic-800.woff2') format('woff2'),
+       url('../fonts/nunito-v16-latin_cyrillic-800.woff') format('woff');
+}
+
 html,
 body {
     position: relative;
@@ -10,7 +40,8 @@ body {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 
-    font-family: Verdana, Arial, sans-serif;
+    /* font-family: Verdana, Arial, sans-serif; */
+    font-family: "Nunito", sans-serif;
 
     /* main color sheme */
     --sug-color: #31493c;
@@ -488,7 +519,7 @@ body {
     justify-content: center;
     align-items: center;
 
-    top: 0;
+    top: 2px;
     left: 0;
     height: 25px;
     width: 25px;

@@ -6,7 +6,7 @@ const initSentry = () => {
         dsn: "https://d1ec799287aa499da5b59c4ee096878a@o920493.ingest.sentry.io/5866120",
         integrations: [new Sentry.Integrations.BrowserTracing()],
         tracesSampleRate: 1.0,
-        release: "Measureland@1.0.0",
+        release: "Measureland@1.0.1",
         beforeSend(event) {
             if (state.shouldSendEvent)
                 return event
