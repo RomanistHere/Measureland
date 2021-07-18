@@ -91,7 +91,12 @@ const changeLoginScreen = (stage = 'login') => {
     if (stage === 'loggedIn' || stage === 'onboarding' || stage === 'check' || stage === 'confirmForgotPassword')
         return
 
-    activeLoginScren.querySelector('input').focus()
+    const windowWidth = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth
+
+    if (windowWidth > 1024)
+        activeLoginScren.querySelector('input').focus()
 
     loginState = { ...loginState, stage: stage }
 }
