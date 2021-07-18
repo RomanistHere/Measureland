@@ -45,8 +45,53 @@ const localizeDrawBar = () => {
     L.drawLocal.edit.toolbar.buttons.removeDisabled = 'Не можем найти фигуры для удаления'
 }
 
+const initStateOfShapes = {
+    "type" : "FeatureCollection",
+    "features" : null
+}
+
+let shapesGeoJSON = { ...initStateOfShapes }
+
+const concatGeoJSON = (g1, g2) => {
+    return {
+        "type" : "FeatureCollection",
+        "features": [...g1.features, g2]
+    }
+}
+
+const addToCommongGeoJSON = shape => {
+    if (shape.geometry.type !== 'Point') {
+        try {
+            shape.geometry.coordinates[0] = shape.geometry.coordinates[0].map(coordsArr => {
+                const [lat, lng] = coordsArr
+                return [roundToFifthDecimal(lat), roundToFifthDecimal(lng)]
+            })
+            delete shape['properties']
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    if (shapesGeoJSON['features'] === null)
+        shapesGeoJSON['features'] = [shape]
+    else
+        shapesGeoJSON = concatGeoJSON(shapesGeoJSON, shape)
+
+    const string = JSON.stringify(shapesGeoJSON)
+    const toURL = encodeURIComponent(string)
+
+    if (toURL.length >= 2000) {
+        showError('LengthOfShapes')
+        return
+    }
+
+    const url = new URL(window.location.href)
+    url.searchParams.set('shades', toURL)
+
+    window.history.pushState(null, null, url)
+}
+
 const initDrawFeature = () => {
-    // add a custom one
     const drawnItems = new L.FeatureGroup()
     map.addLayer(drawnItems)
     const drawOptions = {
@@ -68,13 +113,38 @@ const initDrawFeature = () => {
     map.on(L.Draw.Event.CREATED, e => {
         const type = e.layerType
         const layer = e.layer
+        drawnItems.addLayer(layer)
+        const shape = layer.toGeoJSON()
 
-        if (type === 'marker') {
-            layer.bindPopup('A popup!')
+        if (type === 'circle') {
+            const radius = layer.getRadius()
+            shape.properties.radius = roundToTen(radius)
         }
 
-        drawnItems.addLayer(layer)
+        addToCommongGeoJSON(shape)
     })
+
+    const takeAllShapesToURL = () => {
+        // reset previous changes
+        const url = new URL(window.location.href)
+        url.searchParams.delete('shades')
+        window.history.pushState(null, null, url)
+        shapesGeoJSON = { ...initStateOfShapes }
+        // get all drawn items
+        drawnItems.eachLayer((layer) => {
+            const shape = layer.toGeoJSON()
+
+            if (layer instanceof L.Circle) {
+                const radius = layer.getRadius()
+                shape.properties.radius = roundToTen(radius)
+            }
+
+            addToCommongGeoJSON(shape)
+        })
+    }
+
+    map.on(L.Draw.Event.EDITED, takeAllShapesToURL)
+    map.on(L.Draw.Event.DELETED, takeAllShapesToURL)
 
     // editing ON
     map.on(L.Draw.Event.DRAWSTART, () => {
@@ -101,6 +171,31 @@ const initDrawFeature = () => {
     map.on(L.Draw.Event.DELETESTOP, () => {
         setTimeout(() => { map.on('click', onMapClick) }, 100)
     })
+
+    // draw from url if any
+    const drawFromURL = () => {
+        const url = new URL(window.location.href)
+        const shades = url.searchParams.get('shades')
+
+        if (!shades)
+            return
+
+        const string = decodeURIComponent(shades)
+        shapesGeoJSON = JSON.parse(string)
+
+        L.geoJson(shapesGeoJSON, {
+            pointToLayer: (feature, latlng) => {
+                if (feature.properties.radius) {
+                    return new L.Circle(latlng, feature.properties.radius)
+                }
+                return
+            }
+        }).eachLayer((layer) => {
+            layer.addTo(drawnItems)
+        })
+    }
+
+    drawFromURL()
 }
 
 initDrawFeature()

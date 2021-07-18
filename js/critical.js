@@ -323,6 +323,7 @@ const checkIsLaunchFirst = () => {
 
     const urlParams = new URLSearchParams(window.location.search)
     const showRating = urlParams.get('showRating')
+    const showShades = urlParams.get('shades')
     const lat = urlParams.get('lat')
     const lng = urlParams.get('lng')
 
@@ -339,6 +340,9 @@ const checkIsLaunchFirst = () => {
 
     } else if (showRating) {
         state.flow.push('srv')
+        setTimeout(positionStartScreen, 3000)
+    } else if (showShades) {
+        state.flow.push('ssv')
         setTimeout(positionStartScreen, 3000)
     } else {
         state.flow.push('ftv')

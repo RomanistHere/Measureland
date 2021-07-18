@@ -253,11 +253,13 @@ const showError = (key, error = null) => {
             userNotFound: `У нас не получается распознать тебя, пожалуйста, залогинься ещё раз.`,
             unrecognizedError: `Какая-то ошибка. Открой консоль для дополнительной информации.`,
             locationNotFound: `Какие-то проблемы с данным местом. Попробуй обновить страницу и открыть его вручную (кликнув на него).`,
+            LengthOfShapes: `Слишком много фигур. Чтобы иметь возможность поделиться нарисованными фигурами нужно удалить часть из них.`,
         },
         en: {
             userNotFound: `We have troubles recognizing you, please, relogin.`,
             unrecognizedError: `Error happened. Open console for additional info.`,
             locationNotFound: `There are some troubles with this location or our server. Try to refresh page and open it manually (by clicking it).`,
+            LengthOfShapes: `Too many shapes. You need to remove some of the shapes if you want to share it.`,
         }
     }
     const lang = state.lang === 'ru' ? 'ru' : 'en'

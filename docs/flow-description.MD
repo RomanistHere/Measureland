@@ -5,6 +5,7 @@
 ftv - first time visitor
 rv - returning visitor
 srv - show rating visitor (from share place)
+ssv - show shades visitor
 
 ##STAGE II
 
