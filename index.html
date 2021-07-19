@@ -39,12 +39,12 @@
     <link rel="preload" href="/fonts/nunito-v16-latin_cyrillic-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/star__icon.woff" as="font" type="font/woff" crossorigin>
 
+    <!-- libs -->
+    <link rel="stylesheet" href="css/libs/esri-leaflet-geocoder.css">
+    <link rel="stylesheet" href="css/libs/leaflet.css">
+    <link rel="stylesheet" href="css/libs/leaflet.draw.css">
     <!-- critical -->
     <link rel="stylesheet" href="css/main.css">
-    <!-- libs -->
-    <link rel="stylesheet" href="css/libs/leaflet.css">
-    <link rel="stylesheet" href="css/libs/control.geocoder.css">
-    <link rel="stylesheet" href="css/libs/leaflet.draw.css">
     <!-- common -->
 	<link rel="stylesheet" href="css/main-non-crit.css" media="print" onload="this.media='all'">
 
@@ -52,7 +52,9 @@
     <script defer src="js/critical.js"></script>
     <!-- libs -->
     <script defer src="js/libs/leaflet.js"></script>
-    <script defer src="js/libs/control.geocoder.js"></script>
+    <!-- <script defer src="js/libs/control.geocoder.js"></script> -->
+    <script defer src="js/libs/esri-leaflet.js"></script>
+    <script defer src="js/libs/esri-leaflet-geocoder.js"></script>
     <script defer src="js/libs/polybool.js"></script>
     <script defer src="js/libs/supercluster.js"></script>
     <script defer src="js/libs/sentry.min.js"></script>
@@ -121,6 +123,9 @@
         <div class="rating rate">
             <div class="rating__wrap rate__wrap">
                 <div class="rating__popup rating__popup-active rate__popup" tabindex="0">
+                    <div class="adress_bar">
+                        Approximate address: <span class="adress_bar__string">calculating...</span>
+                    </div>
                     <ul class="rating__list">
                         <li class="rating__stars rating__item">
                             <h2 class="rating__title title rating__item_text">Air quality</h2>
@@ -983,7 +988,7 @@
 
                 <footer class="footer">
                     <div>
-                        <span class="footer__version">Version: 1.0.1</span>.
+                        <span class="footer__version">Version: 1.1.0</span>.
                         <a class="footer__link" target="_blank" href="blog/terms-of-use/">Terms of use</a>
                     </div>
                     <div>

@@ -55,10 +55,7 @@ const initQuizPopup = (latlng) => {
 const onMapClick = e => {
     state.flow.push('cm')
     initQuizPopup(e.latlng)
-
-    // geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), resp => {
-    //     console.log(resp[0])
-    // })
+    fillAdress(e.latlng)
 }
 
 const initMap = () => {
@@ -72,10 +69,6 @@ const initMap = () => {
 
     if (zoom)
         state = { ...state, zoom }
-
-    // const southWest = L.latLng(-89.98155760646617, -180)
-    // const northEast = L.latLng(89.99346179538875, 180)
-    // const maxBounds = L.latLngBounds(southWest, northEast)
 
     const map = L.map('map', {
         center: state.center,
@@ -93,45 +86,33 @@ const initMap = () => {
 
     map.zoomControl.setPosition('bottomleft')
 
-    // make screen after search without marker
-    const geocoder = L.Control.Geocoder.nominatim()
-    L.Control.geocoder({
-        defaultMarkGeocode: false
-    })
-    .setPosition('topleft')
-    .on('markgeocode', e => {
-        var bbox = e.geocode.bbox;
-        var poly = L.polygon([
-            bbox.getSouthEast(),
-            bbox.getNorthEast(),
-            bbox.getNorthWest(),
-            bbox.getSouthWest()
-        ])
-        map.fitBounds(poly.getBounds())
-    })
-    .addTo(map)
-
-    // if (typeof URLSearchParams !== 'undefined' && location.search) {
-    //     // parse /?geocoder=nominatim from URL
-    //     const params = new URLSearchParams(location.search)
-    //     const geocoderString = params.get('geocoder')
-    //     if (geocoderString && L.Control.Geocoder[geocoderString]) {
-    //         console.log('Using geocoder', geocoderString)
-    //         geocoder = L.Control.Geocoder[geocoderString]()
-    //     } else if (geocoderString) {
-    //         console.warn('Unsupported geocoder', geocoderString)
-    //     }
-    // }
-
     map.on('click', onMapClick)
 
     return {
-        map,
-        geocoder
+        map
     }
 }
 
-const { map, geocoder } = initMap()
+const { map } = initMap()
+
+const addGeoSearch = () => {
+    const searchControl = L.esri.Geocoding.geosearch({
+        providers: [
+            L.esri.Geocoding.arcgisOnlineProvider({
+                apikey: esriApiKey
+            })
+        ],
+        placeholder: state.lang === 'en' ? 'Search for places or addresses' : 'Поиск по местам и адресам',
+        useMapBounds: false,
+    }).addTo(map)
+
+    searchControl.on("results", function (data) {
+        console.log(data)
+        map.setView(data.results[0].latlng, 17)
+    })
+}
+
+addGeoSearch()
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", function() {

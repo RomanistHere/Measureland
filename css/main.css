@@ -123,47 +123,33 @@ body {
 
 /* // leaflet // */
 
-.leaflet-touch .leaflet-control-geocoder-icon {
-    width: 36px;
-    height: 36px;
-    box-sizing: border-box;
+.geocoder-control .geocoder-control-input,
+.leaflet-control-zoom {
+    background-color: var(--bg-color);
+    border: 2px solid var(--text-color);
+    box-shadow: 0 0 1px var(--text-color);
+}
+
+.leaflet-touch .leaflet-bar a {
     background-color: var(--bg-color);
 }
 
-.leaflet-touch .leaflet-control-geocoder {
-    border-radius: 0;
-    border: 2px solid var(--text-color);
-    box-sizing: border-box;
+.leaflet-touch .leaflet-draw-toolbar a,
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    border-color: var(--text-color);
+}
+
+.leaflet-touch .leaflet-draw-toolbar .leaflet-disabled {
     background-color: var(--bg-color-add-non-transparent);
-    box-shadow: 0 0 1px var(--text-color);
 }
 
-.leaflet-control-geocoder-alternatives {
-    width: 100%;
-    border-top: 1px solid var(--text-color);
-    background-color: var(--side-bg-color);
+.leaflet-touch .geocoder-control-suggestion {
+    background-color: var(--bg-color-add-non-transparent);
 }
 
-.leaflet-control-geocoder-alternatives li {
-    padding: 10px;
-    border-bottom-color: var(--text-color);
-}
-
-.leaflet-control-zoom.leaflet-bar a {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+.leaflet-touch .geocoder-control-suggestion:hover {
     background-color: var(--bg-color);
-}
-
-.leaflet-left .leaflet-control {
-    border-radius: 0;
-    border: 2px solid var(--text-color);
-    box-shadow: 0 0 1px var(--text-color);
-}
-
-.leaflet-bar a {
-    border-bottom: 1px solid var(--text-color);
+    border-color: var(--bg-color);
 }
 
 /* // spinner // */
@@ -689,7 +675,10 @@ input:checked ~ .checkbox__checkmark::after {
         background-color: var(--bg-color);
     }
 
-    .leaflet-control-zoom.leaflet-bar a:hover {
+    .leaflet-control-zoom.leaflet-bar a:hover,
+    .leaflet-touch .leaflet-draw-toolbar a:not(.leaflet-disabled):hover,
+    .geocoder-control .geocoder-control-input:hover,
+    .leaflet-control-zoom:hover {
         background-color: var(--bg-color-add-non-transparent);
     }
 

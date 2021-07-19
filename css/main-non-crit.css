@@ -560,7 +560,7 @@ textarea {
 }
 
 .login__wrap-check {
-    height: 270px;
+    height: 320px;
 }
 
 .login__wrap-register {
@@ -572,7 +572,7 @@ textarea {
 }
 
 .login__wrap-onboarding {
-    height: 610px;
+    height: 660px;
 }
 
 .login__wrap-reset {
@@ -586,7 +586,7 @@ textarea {
 }
 
 .login__content-check {
-    height: 140px;
+    height: 190px;
 }
 
 .login__recover {
@@ -1133,6 +1133,19 @@ textarea {
 
 /* // additional styles // */
 
+.onboarding__content .rating__text {
+    margin-bottom: 0;
+}
+
+.adress_bar {
+    margin-bottom: 5px;
+
+    text-align: center;
+    font-style: italic;
+    font-size: 90%;
+    font-weight: bold;
+}
+
 div.rate__wrap .btn-hide {
     display: none;
 }
@@ -1300,6 +1313,21 @@ a::selection {
 
     .footer {
         font-size: 80%;
+    }
+
+    .login__wrap-onboarding {
+        width: 500px;
+        height: 560px;
+    }
+
+    .onboarding__content .rating__text {
+        margin-top: 10px;
+    }
+
+    .form__select {
+        margin-top: 10px;
+        border: 2px solid var(--bg-color-inp);
+        font-size: 16px;
     }
 }
 

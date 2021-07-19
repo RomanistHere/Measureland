@@ -38,6 +38,7 @@ const resetMarkerUrl = () => {
 
 const initRatingPopup = async ({ latlng }) => {
     state.flow.push('srp')
+    fillAdress(latlng)
     runSpinner('.rate__spinner')
     addClass(ratePopup, 'rating-active')
     $('.rate__popup').focus()

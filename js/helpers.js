@@ -276,3 +276,24 @@ const addToUrlOpenModalFlag = () => {
 
     window.history.pushState(null, null, url)
 }
+
+// geocoding //
+
+const esriApiKey = 'AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q'
+const geocodeService = L.esri.Geocoding.geocodeService({ apikey: esriApiKey })
+
+const fillAdress = latlng => {
+    geocodeService.reverse().latlng(latlng).language(state.lang).run((error, result) => {
+        if (error) {
+            console.log(error)
+            return
+        }
+        const adress = result.address.LongLabel
+        $All('.adress_bar__string').forEach(elem => elem.textContent = adress)
+    })
+}
+
+const resetAdress = () => {
+    const adressPlaceHolder = state.lang === 'en' ? 'calculating...' : 'высчитываем...'
+    $All('.adress_bar__string').forEach(elem => elem.textContent = adressPlaceHolder)
+}
