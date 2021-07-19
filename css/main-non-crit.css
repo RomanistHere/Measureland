@@ -512,7 +512,7 @@ textarea {
     margin: 10px 0 -20px;
 
     font-style: italic;
-    font-size: 14px;
+    font-size: 16px;
     text-align: left;
     font-weight: bold;
 }
@@ -1138,7 +1138,7 @@ textarea {
 }
 
 .adress_bar {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 
     text-align: center;
     font-style: italic;
@@ -1311,6 +1311,14 @@ a::selection {
         font-size: 12px;
     }
 
+    .adress_bar {
+        margin-bottom: 5px;
+    }
+
+    .btn {
+        font-size: 16px;
+    }
+
     .footer {
         font-size: 80%;
     }
@@ -1329,13 +1337,13 @@ a::selection {
         border: 2px solid var(--bg-color-inp);
         font-size: 16px;
     }
+
+    .rate__evaluate {
+        margin: 10px 30px;
+    }
 }
 
 @media screen and (max-width: 1023px) {
-    /* .settings__link {
-        font-size: 16px;
-    } */
-
     .sidebar__section {
         padding: 20px 20px 90px;
     }
@@ -1499,6 +1507,8 @@ a::selection {
 
     .rate__caption {
         margin: 10px 0 -30px;
+
+        font-size: 14px;
     }
 
     .form__error {
@@ -1549,5 +1559,9 @@ a::selection {
         width: 15px;
         height: 15px;
         top: 2px;
+    }
+
+    .rate__caption {
+        font-size: 12px;
     }
 }
