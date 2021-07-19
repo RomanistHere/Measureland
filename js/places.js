@@ -51,6 +51,15 @@ const initPlaces = async () => {
             closePlaces()
             openRatingAndZoom(lat, lng, 12)
         })
+
+        geocodeService.reverse().latlng({ lat, lng }).language(state.lang).run((error, result) => {
+            if (error) {
+                console.log(error)
+                return
+            }
+            const adress = result.address.LongLabel
+            newItem.querySelector('.places__link').textContent = adress
+        })
     }
 
     addToUrlOpenModalFlag()
