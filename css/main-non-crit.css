@@ -1487,7 +1487,7 @@ a::selection {
         height: 40px;
     }
 
-    .leaflet-touch .leaflet-bar a {
+    .leaflet-touch .leaflet-bar:not(.leaflet-draw-toolbar) a {
         width: 40px;
         height: 40px;
         line-height: 40px;
