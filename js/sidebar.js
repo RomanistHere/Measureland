@@ -123,7 +123,8 @@ const getCommentHtml = ({ isYours, isLiked, isDisliked, rating, comment, usernam
 }
 
 const appendComments = array => {
-    const list = array.map(item => getCommentHtml(item))
+    const sortedArray = array.sort((a, b) => b.liked - a.liked)
+    const list = sortedArray.map(item => getCommentHtml(item))
     commentsWrap.insertAdjacentHTML("afterbegin", list.join(''))
 
     commentsWrap.querySelectorAll('.comment__btn').forEach(item => handleClickPrevDef(item, async (e) => {
