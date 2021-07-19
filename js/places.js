@@ -48,8 +48,9 @@ const initPlaces = async () => {
 
         handleClickPrevDef(newItem.querySelector('.places__link'), () => {
             state.flow.push('cmp')
+            const zoom = state.zoom <= 12 ? 13 : state.zoom
             closePlaces()
-            openRatingAndZoom(lat, lng, 12)
+            openRatingAndZoom(lat, lng, zoom)
         })
 
         geocodeService.reverse().latlng({ lat, lng }).language(state.lang).run((error, result) => {
