@@ -114,14 +114,14 @@ const addGeoSearch = () => {
 
 addGeoSearch()
 
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-        navigator.serviceWorker
-        .register("/service-worker.js")
-        .then()
-        .catch(err => console.warn("service worker not registered", err))
-    })
-}
+// if ("serviceWorker" in navigator) {
+//     window.addEventListener("load", function() {
+//         navigator.serviceWorker
+//         .register("/service-worker.js")
+//         .then()
+//         .catch(err => console.warn("service worker not registered", err))
+//     })
+// }
 
 // document.addEventListener('visibilitychange', () => {
 //     if (document.visibilityState === 'hidden') {
