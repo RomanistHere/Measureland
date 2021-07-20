@@ -251,7 +251,11 @@ const positionStartScreen = () => {
         addClass(imageCont, 'start-anim')
         setCookie('visited', 1, 365)
         setTimeout(() => { removeClass(imageCont, 'start-show') }, 2000)
-        setTimeout(() => { $('.start').remove() }, 4000)
+        setTimeout(() => {
+            const startScreen = $('.start')
+            if (startScreen)
+                startScreen.remove()
+        }, 4000)
 
         if (detectLoc) {
             setCookie('detectLoc', 1, 365)
