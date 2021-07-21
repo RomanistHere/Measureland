@@ -6,7 +6,7 @@ const mailgun = require("mailgun-js")({
 });
 
 const isProd = process.env.IS_PROD === '1';
-const siteURL = isProd ? process.env.SITE_URL || process.env.SITE_URL_DEV
+const siteURL = isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV
 
 const templatesSubject = {
     'en': {

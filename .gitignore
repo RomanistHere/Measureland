@@ -2,5 +2,7 @@ back-end/node_modules
 node_modules
 node_modules/
 
+logs/
+
 *.crt
 .env
