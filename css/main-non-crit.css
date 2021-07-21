@@ -1341,6 +1341,11 @@ a::selection {
     .rate__evaluate {
         margin: 10px 30px;
     }
+
+    body {
+        --normal-fz: 16px;
+        --bigger-fz: 18px;
+    }
 }
 
 @media screen and (max-width: 1023px) {

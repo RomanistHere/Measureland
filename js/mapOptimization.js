@@ -83,7 +83,7 @@ clusterMarkers.on('click', e => {
 const clusterData = () => {
 	index = new Supercluster({
         // log: true,
-        radius: 180,
+        radius: 150,
         minPoints: 2,
         minZoom: 4
     }).load(cachedData)
