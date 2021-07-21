@@ -20,6 +20,8 @@ We can think of 3 ways we'd like to see contributions about:
 - **How-to-rent-in-your-city guide.** If you have this experience, it'd be extremely useful for everyone if you shared it. Check out the [existing guides](https://measureland.org/blog) and use the [template](blog/minsk-belarus)
 - **Design and images.** We want to improve our visual thing as well, so your ideas/designs/images are welcome
 
+There is a guide on how to start back-end server inside back-end folder README.
+
 ## Contact, feedback, suggestions
 
 You can leave it here, in the repository or send via email:

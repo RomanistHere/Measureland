@@ -20,17 +20,21 @@ const winston = require('./helpers/winston');
 
 const app = express();
 
-Sentry.init({
-  dsn: "https://f93dacf437a74bd79d5eead86a2c470c@o920493.ingest.sentry.io/5866699",
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-    new Tracing.Integrations.Express({ app }),
-  ],
-  tracesSampleRate: 1.0,
-});
+const isProd = process.env.IS_PROD === '1';
+
+if (isProd) {
+    Sentry.init({
+      dsn: "https://f93dacf437a74bd79d5eead86a2c470c@o920493.ingest.sentry.io/5866699",
+      integrations: [
+        new Sentry.Integrations.Http({ tracing: true }),
+        new Tracing.Integrations.Express({ app }),
+      ],
+      tracesSampleRate: 1.0,
+    });
+}
 
 const dev_db_url = process.env.DEV_DB_PATH;
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = isProd && process.env.MONGODB_URI ? process.env.MONGODB_URI : dev_db_url;
 
 mongoose.connect(mongoDB, {
     useNewUrlParser: true,
@@ -44,12 +48,14 @@ db.collections.geos.createIndex({ location : "2dsphere" })
 
 app.disable('x-powered-by');
 
-app.use(Sentry.Handlers.requestHandler());
-app.use(Sentry.Handlers.tracingHandler());
+if (isProd) {
+    app.use(Sentry.Handlers.requestHandler());
+    app.use(Sentry.Handlers.tracingHandler());
+    app.set('trust proxy', 1);
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('trust proxy', 1);
 
 // sessions
 app.use(cookieParser());
@@ -61,16 +67,16 @@ app.use(session({
         mongoUrl: mongoDB,
         touchAfter: 12 * 3600 // twice a day
     }),
-    proxy: true,
+    proxy: isProd ? true : false,
     cookie: {
-        secure: true,
-        httpOnly: true,
+        secure: isProd ? true : false,
+        httpOnly: isProd ? true : true,
         sameSite: true,
         maxAge: 1209600000 // two weeks
     }
 }));
 app.use(cors({
-    origin: process.env.CORS_PATH,
+    origin: isProd ? process.env.CORS_PATH : process.env.CORS_PATH_DEV,
     methods: ['GET', 'POST', 'DELETE'],
     credentials: true // enable set cookie
 }));
@@ -107,8 +113,10 @@ app.use('/api/user', userRouter);
 app.use('/api/flow', flowLimiter, flowRouter);
 
 // logging and errors
-app.use(Sentry.Handlers.errorHandler());
-app.use(morgan('combined', { stream: winston.stream }));
+if (isProd) {
+    app.use(Sentry.Handlers.errorHandler());
+    app.use(morgan('combined', { stream: winston.stream }));
+}
 
 mongoose.Model.on('index', err => {
     if (err) {

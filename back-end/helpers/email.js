@@ -5,6 +5,9 @@ const mailgun = require("mailgun-js")({
     host: "api.eu.mailgun.net",
 });
 
+const isProd = process.env.IS_PROD === '1';
+const siteURL = isProd ? process.env.SITE_URL || process.env.SITE_URL_DEV
+
 const templatesSubject = {
     'en': {
         'Verify': `Verify your email address`,
@@ -50,19 +53,19 @@ const verifiedTemplate =
     </p>
     <ul>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/about-us/">About us. Our goals and mission.</a>
+            <a target="_blank" href="${siteURL}/blog/about-us/">About us. Our goals and mission.</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/tutorial/">Measureland guide book (tutorial).</a>
+            <a target="_blank" href="${siteURL}/blog/tutorial/">Measureland guide book (tutorial).</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/terms-of-use/">Measureland Constitution. Part I. Terms of use.</a>
+            <a target="_blank" href="${siteURL}/blog/terms-of-use/">Measureland Constitution. Part I. Terms of use.</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/policy/">Measureland Constitution. Part II. Privacy policy.</a>
+            <a target="_blank" href="${siteURL}/blog/policy/">Measureland Constitution. Part II. Privacy policy.</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/paid-options/">Measureland Constitution. Part III. Paid options.</a>
+            <a target="_blank" href="${siteURL}/blog/paid-options/">Measureland Constitution. Part III. Paid options.</a>
         </li>
     </ul>
     <p>
@@ -73,16 +76,16 @@ const verifiedTemplate =
             <a target="_blank" href="mailto:support@measureland.org">Support, questions, feedback: support@measureland.org</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/">Measureland</a>
+            <a target="_blank" href="${siteURL}/">Measureland</a>
         </li>
         <li>
             <a target="_blank" href="https://github.com/RomanistHere/Measureland">GitHub</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/policy/">Twitter</a>
+            <a target="_blank" href="${siteURL}/blog/policy/">Twitter</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/paid-options/">Telegram</a>
+            <a target="_blank" href="${siteURL}/blog/paid-options/">Telegram</a>
         </li>
         <li>
             <a target="_blank" href="https://www.donationalerts.com/r/romanisthere">Donate</a>
@@ -125,19 +128,19 @@ const verifiedTemplateRus =
     </p>
     <ul>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/about-us/">О нас. Наши цели и миссия.</a>
+            <a target="_blank" href="${siteURL}/ru/blog/about-us/">О нас. Наши цели и миссия.</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/tutorial/">Путеводитель по Измерии (туториал).</a>
+            <a target="_blank" href="${siteURL}/ru/blog/tutorial/">Путеводитель по Измерии (туториал).</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/terms-of-use/">Конституция Измерии. Условия использования.</a>
+            <a target="_blank" href="${siteURL}/ru/blog/terms-of-use/">Конституция Измерии. Условия использования.</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/policy/">Конституция Измерии. Конфиденциальность.</a>
+            <a target="_blank" href="${siteURL}/ru/blog/policy/">Конституция Измерии. Конфиденциальность.</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/ru/blog/paid-options/">Конституция Измерии. Платные опции.</a>
+            <a target="_blank" href="${siteURL}/ru/blog/paid-options/">Конституция Измерии. Платные опции.</a>
         </li>
     </ul>
     <p>
@@ -148,16 +151,16 @@ const verifiedTemplateRus =
             <a target="_blank" href="mailto:support@measureland.org">Поддержка, вопросы, обратная связь: support@measureland.org</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/ru/">Измерия</a>
+            <a target="_blank" href="${siteURL}/ru/">Измерия</a>
         </li>
         <li>
             <a target="_blank" href="https://github.com/RomanistHere/Measureland">GitHub</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/policy/">Twitter</a>
+            <a target="_blank" href="${siteURL}/blog/policy/">Twitter</a>
         </li>
         <li>
-            <a target="_blank" href="${process.env.SITE_URL}/blog/paid-options/">Telegram</a>
+            <a target="_blank" href="${siteURL}/blog/paid-options/">Telegram</a>
         </li>
         <li>
             <a target="_blank" href="https://www.donationalerts.com/r/romanisthere">Донат</a>

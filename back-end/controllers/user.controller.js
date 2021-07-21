@@ -8,6 +8,7 @@ const UserVerification = require('../models/token.model');
 const PasswordReset = require('../models/password-reset.model');
 
 const { sendEmail } = require('../helpers/email');
+const isProd = process.env.IS_PROD === '1';
 
 exports.user_register = async (req, res) => {
     const { email, lang } = req.body;
@@ -19,7 +20,7 @@ exports.user_register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(req.body.password, salt);
     const token = v4().toString().replace(/-/g, '')
-    const domain = process.env.SITE_URL || 'http://localhost:8080'
+    const domain = isProd ? process.env.SITE_URL || process.env.SITE_URL_DEV
     const verificationUrl = lang === 'en'
         ? `${domain}?token=${token}`
         : `${domain}/${lang}/?token=${token}`
@@ -211,7 +212,7 @@ exports.user_reverify = async (req, res) => {
             return res.status(400).json({ error: "Already verified" });
         } else {
             const token = v4().toString().replace(/-/g, '')
-            const domain = process.env.SITE_URL || 'http://localhost:8080'
+            const domain = isProd ? process.env.SITE_URL || process.env.SITE_URL_DEV
             const { lang } = user.properties
             const verificationUrl = lang === 'en'
                 ? `${domain}?token=${token}`
@@ -315,7 +316,7 @@ exports.user_reset_password = async (req, res, next) => {
             return res.status(400).json({ error: "Email is wrong" });
 
         const token = v4().toString().replace(/-/g, '')
-        const domain = process.env.SITE_URL || 'http://localhost:8080'
+        const domain = isProd ? process.env.SITE_URL || process.env.SITE_URL_DEV
         const { lang } = user.properties
         const verificationUrl = lang === 'en'
             ? `${domain}?reset_pass_token=${token}`
