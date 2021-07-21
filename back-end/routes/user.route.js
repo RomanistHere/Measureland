@@ -5,8 +5,9 @@ const rateLimit = require("express-rate-limit");
 
 const user_controller = require('../controllers/user.controller');
 
+const isProd = process.env.IS_PROD === '1';
 const dev_db_url = process.env.DEV_DB_PATH;
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = isProd && process.env.MONGODB_URI ? process.env.MONGODB_URI : dev_db_url;
 
 const mediumLimiter = rateLimit({
     store: new MongoLimitStore({
