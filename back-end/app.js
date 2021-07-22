@@ -16,6 +16,7 @@ const Tracing = require("@sentry/tracing");
 const geoRouter = require('./routes/geo.route');
 const userRouter = require('./routes/user.route');
 const flowRouter = require('./routes/flow.route');
+const adminRouter = require('./routes/admin.route');
 const winston = require('./helpers/winston');
 
 const app = express();
@@ -111,6 +112,7 @@ app.use('/api/geo', geoLimiter, geoRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);
 app.use('/api/flow', flowLimiter, flowRouter);
+app.use('/api/admin', adminRouter);
 
 // logging and errors
 if (isProd) {
