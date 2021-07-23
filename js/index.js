@@ -6,7 +6,7 @@ const initSentry = () => {
         dsn: "https://d1ec799287aa499da5b59c4ee096878a@o920493.ingest.sentry.io/5866120",
         integrations: [new Sentry.Integrations.BrowserTracing()],
         tracesSampleRate: 0.1,
-        release: "Measureland@1.1.1",
+        release: "Measureland@1.1.2",
         beforeSend(event) {
             if (state.shouldSendEvent)
                 return event
@@ -114,6 +114,7 @@ const addGeoSearch = () => {
 
 addGeoSearch()
 
+// pwa
 // if ("serviceWorker" in navigator) {
 //     window.addEventListener("load", function() {
 //         navigator.serviceWorker
@@ -123,6 +124,7 @@ addGeoSearch()
 //     })
 // }
 
+// analycits
 // document.addEventListener('visibilitychange', () => {
 //     if (document.visibilityState === 'hidden') {
 //         sendFeedback()

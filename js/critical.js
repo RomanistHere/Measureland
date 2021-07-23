@@ -317,6 +317,14 @@ const positionStartScreen = () => {
     handleClickPrevDef(planeWrap, () => {
         addClass(planeWrap, `plane__wrap-clicked_${colorCounter++}`)
     })
+
+    const quizBtns = $All('.bubble__btn')
+    quizBtns.forEach(elem => handleClickPrevDef(elem, () => {
+        const number = elem.getAttribute('data-number')
+        const bubbleWrap = $('.bubble')
+        removeClass(bubbleWrap, 'bubble1', 'bubble2', 'bubble3')
+        addClass(bubbleWrap, `bubble${number}`)
+    }))
 }
 
 const checkIsLaunchFirst = () => {
