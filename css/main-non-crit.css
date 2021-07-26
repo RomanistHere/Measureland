@@ -960,6 +960,20 @@ textarea {
     top: 50px;
 }
 
+/* // filters // */
+
+.noUi-tooltip {
+    display: none;
+}
+
+.noUi-active .noUi-tooltip {
+    display: block;
+}
+
+.connect-colored {
+    background-color: var(--bg-color);
+}
+
 /* // buttons // */
 
 .btns_wrap {

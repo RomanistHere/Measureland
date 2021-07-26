@@ -28,6 +28,7 @@ exports.user_register = async (req, res) => {
     const user = new User({
         email,
         password,
+        dateCreated: new Date(),
         properties: {
             lang
         }

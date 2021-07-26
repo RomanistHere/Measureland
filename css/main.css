@@ -872,12 +872,12 @@ input:checked ~ .checkbox__checkmark::after {
 @media screen and (max-width: 766px) {
     .man__wrap {
         height: 60vh;
-        left: 46vh;
+        left: 38vh;
     }
 
     .bubble {
-        left: 42vh;
-        bottom: 55vh;
+        left: 38vh;
+        bottom: 52vh;
         padding: 15px;
         width: 272px;
 

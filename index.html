@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="css/libs/esri-leaflet-geocoder.css">
     <link rel="stylesheet" href="css/libs/leaflet.css">
     <link rel="stylesheet" href="css/libs/leaflet.draw.css">
+    <link rel="stylesheet" href="css/libs/nouislider.css">
     <!-- critical -->
     <link rel="stylesheet" href="css/main.css">
     <!-- common -->
@@ -60,6 +61,7 @@
     <script defer src="js/libs/supercluster.js"></script>
     <script defer src="js/libs/sentry.min.js"></script>
     <script defer src="js/libs/leaflet.draw.js"></script>
+    <script defer src="js/libs/nouislider.js"></script>
     <!-- common -->
     <script defer src="js/helpers.js"></script>
     <script defer src="js/db.js"></script>
@@ -71,6 +73,7 @@
     <script defer src="js/draw.js"></script>
     <script defer src="js/sidebar.js"></script>
     <script defer src="js/quiz.js"></script>
+    <script defer src="js/filters.js"></script>
     <script defer src="js/afterLoad.js"></script>
 
 	<script defer data-domain="measureland.org" src="https://plausible.io/js/plausible.js"></script>
@@ -905,6 +908,41 @@
             </div>
         </div>
 
+        <div class="rating rating-active filters">
+            <div class="rating__wrap filters__wrap">
+                <div class="rating__popup rating__popup-active">
+                    <h2 class="rating__title title rating__item_text sidebar__title">Set up filters</h2>
+                    <hr>
+                    <ul class="filters__list">
+                        <li class="filters__item">
+                            <span class="filters__label">Air</span>
+                            <div data-key='air' class="filter__slider"></div>
+                        </li>
+                        <li class="filters__item">
+                            <span class="filters__label">Water</span>
+                            <div data-key='water' class="filter__slider"></div>
+                        </li>
+                        <li class="filters__item">
+                            <span class="filters__label">logistic</span>
+                            <div data-key='logistic' class="filter__slider"></div>
+                        </li>
+                        <li class="filters__item">
+                            <span class="filters__label">transport</span>
+                            <div data-key='transport' class="filter__slider"></div>
+                        </li>
+                        <li class="filters__item">
+                            <span class="filters__label">noize</span>
+                            <div data-key='noize' class="filter__slider"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <a href="#" class="rating__close filters__close">
+                    <span class="close"></span>
+                </a>
+            </div>
+        </div>
+
         <aside class="sidebar">
             <a href="#" class="rating__close sidebar__close sidebarClose">
                 <span class="close"></span>
@@ -1235,19 +1273,6 @@
                     </defs>
                 </svg>
             </a>
-            <div class="chebox__wrap">
-                <label class="checkbox__container start__terms" tabindex="0">
-                    <span>I agree with</span>
-                    <a class="checkbox__link" target="_blank" href="blog/terms-of-use/">terms of use</a>
-                    <input type="checkbox" class="checkbox" id="terms" checked="checked" tabindex="-1">
-                    <span class="checkbox__checkmark"></span>
-                </label>
-                <label class="checkbox__container start__detect_loc" tabindex="0">
-                    <span>Use my location</span>
-                    <input type="checkbox" class="checkbox" id="detectLoc" checked="checked" tabindex="-1">
-                    <span class="checkbox__checkmark"></span>
-                </label>
-            </div>
             <div class="man__wrap">
                 <img src="images/start_man.png" alt="image of Roman Smunyov greeting you" class="man">
                 <div class="bubble">
@@ -1261,6 +1286,19 @@
                         <a href="#" data-number="3" class="bubble__btn bubble__question3">Is it free?</a>
                     </div>
                 </div>
+            </div>
+            <div class="chebox__wrap">
+                <label class="checkbox__container start__terms" tabindex="0">
+                    <span>I agree with</span>
+                    <a class="checkbox__link" target="_blank" href="blog/terms-of-use/">terms of use</a>
+                    <input type="checkbox" class="checkbox" id="terms" checked="checked" tabindex="-1">
+                    <span class="checkbox__checkmark"></span>
+                </label>
+                <label class="checkbox__container start__detect_loc" tabindex="0">
+                    <span>Use my location</span>
+                    <input type="checkbox" class="checkbox" id="detectLoc" checked="checked" tabindex="-1">
+                    <span class="checkbox__checkmark"></span>
+                </label>
             </div>
         </div>
         <div class="plane__wrap desktop">
