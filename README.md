@@ -22,6 +22,8 @@ We can think of 3 ways we'd like to see contributions about:
 
 There is a guide on how to start back-end server inside back-end folder README.
 
+We suggest to name branches this way: **fix/something-bad** - for bug fixes, **feat/something-good** - for new features, **chore/update-something** - for refactorings. All branches go to/from master and applied by pull requests with reviews.
+
 ## Contact, feedback, suggestions
 
 You can leave it here, in the repository or send via email:
