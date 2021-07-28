@@ -80,13 +80,14 @@ clusterMarkers.on('click', e => {
 	}
 })
 
-const clusterData = () => {
+const clusterData = (geoData = null) => {
+	data = geoData || cachedData
 	index = new Supercluster({
         // log: true,
         radius: 150,
         minPoints: 2,
         minZoom: 4
-    }).load(cachedData)
+    }).load(data)
 
 	updateClusters()
 }
@@ -136,12 +137,16 @@ const addDataAndDisplay = data => {
         return newObj
     })
 
-	cachedData = [ ...cachedData, ...geoData ]
-	// console.log('total number of points in cache: ', cachedData.length)
+	if (!state.isFiltersOn) {
+		cachedData = [ ...cachedData, ...geoData ]
+		// console.log('total number of points in cache: ', cachedData.length)
 
-	// console.timeEnd('fix geojson')
+		// console.timeEnd('fix geojson')
 
-	clusterData()
+		clusterData()
+	} else {
+		clusterData(geoData)
+	}
 }
 
 const updateUrl = (coords, zoom) => {
@@ -152,6 +157,10 @@ const updateUrl = (coords, zoom) => {
 	url.searchParams.set('lng', roundToFifthDecimal(lng))
     url.searchParams.set('zoom', zoom)
 	state = { ...state, zoom }
+
+	if (state.filters && state.isFiltersOn) {
+		url.searchParams.set('fi', objToString(state.filters))
+	}
 
 	window.history.replaceState(null, null, url)
 }
@@ -183,13 +192,13 @@ const getNewData = async () => {
 		inverted: false
 	}
 
-	const queryPolygon = visitedPoly !== null
+	const queryPolygon = visitedPoly !== null && !state.isFiltersOn
 		? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
 		: currentScreenPoly
 
 	// use data from cache
 	if (!queryPolygon.regions[0])
-		return updateClusters()
+		return clusterData()
 
 	const getQuery = queryPolygon => {
 		if (queryPolygon.regions[2]) {
@@ -213,13 +222,15 @@ const getNewData = async () => {
 		fillOpacity: 0.05,
 		weight: 2
 	})
-	usedBounds.push(poly)
-	if (state.shouldShowLoading)
+	if (!state.isFiltersOn)
+		usedBounds.push(poly)
+	if (state.shouldShowLoading && !state.isFiltersOn)
 		poly.addTo(map)
 
+	const filters = state.isFiltersOn ? state.filters : null
 	// console.timeEnd('preparations')
 	// console.time('fetch new data')
-    const { error, data } = await fetchBoundsData(query, zoom)
+    const { error, data } = await fetchBoundsData(query, zoom, filters)
 	// console.timeEnd('fetch new data')
 
 	if (error === 'Too many requests, please try again later') {
@@ -237,9 +248,11 @@ const getNewData = async () => {
 
     // console.log('number of downloaded points: ', result.length)
 
-	visitedPoly = visitedPoly !== null
-		? PolyBool.union(visitedPoly, queryPolygon)
-		: currentScreenPoly
+	if (!state.isFiltersOn) {
+		visitedPoly = visitedPoly !== null
+			? PolyBool.union(visitedPoly, queryPolygon)
+			: currentScreenPoly
+	}
 
     // checkSize(result)
 
@@ -247,5 +260,5 @@ const getNewData = async () => {
 	addDataAndDisplay(result)
 }
 
-map.on('moveend', debounce(getNewData, 1000))
+map.on('moveend', debounce(getNewData, 500))
 getNewData()

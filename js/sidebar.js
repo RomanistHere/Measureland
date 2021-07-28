@@ -3,6 +3,7 @@ const commentsWrap = $('.comments__wrap')
 const openSettingsBtn = $('.open_settings')
 const changeLangBtn = $('.changeLangBtn')
 const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
+const openFiltersBtn = $('.openFiltersBtn')
 const crashReportsBtn = $('.crashReportsBtn')
 const refreshPageBtn = $('.refreshPageBtn')
 const textAreaComment = $('.ratingComment')
@@ -63,6 +64,10 @@ const initSideBar = () => {
         setCookie('sentryOn', state.shouldSendEvent === false ? '0' : '1', 365)
 
         crashReportsBtn.classList.toggle('settings__link-on')
+    })
+
+    handleClickPrevDef(openFiltersBtn, () => {
+        openSideBar('filters')
     })
 
     handleClickPrevDef(openLoginBtn, () => {

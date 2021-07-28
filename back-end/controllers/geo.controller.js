@@ -204,6 +204,7 @@ exports.geo_add = async (req, res, next) => {
         return res.status(400).json({ error: "User is not logged in" })
 
     const userID = req.session.userID
+    // body.location.coordinates = [body.location.coordinates[1], body.location.coordinates[0]]
 
     try {
         const user = await User.findOne({ email: userID })
@@ -272,7 +273,8 @@ exports.geo_add = async (req, res, next) => {
                     }
                 });
             } catch (e) {
-                Sentry.captureException(e);
+                // Sentry.captureException(e);
+                console.log(e)
                 return res.status(400).json({ error: "Could not save your rating" })
             }
         } else {
@@ -301,10 +303,12 @@ exports.geo_add = async (req, res, next) => {
                 });
             } catch (e) {
                 Sentry.captureException(e);
+                console.log(e)
                 return res.status(400).json({ error: "Could not save your rating" })
             }
         }
     } catch (error) {
+        console.log(error)
         Sentry.captureException(error);
         return res.status(400).json({ error })
     }
@@ -427,20 +431,39 @@ exports.geo_comments = async (req, res, next) => {
 exports.geo_location_by_bounds = async (req, res, next) => {
     const { userID } = req.session
     const urlParams = new URLSearchParams(req.params.coords)
-    const { bounds, zoom } = Object.fromEntries(urlParams)
+    const { bounds, zoom, filters } = Object.fromEntries(urlParams)
     const polygon = JSON.parse(bounds)
+    const filtersObj = filters ? JSON.parse(filters) : null
+
+    const arrOfFilters = filtersObj ? Object.entries(filtersObj).map(([key, value]) => {
+        const [gte, lte] = value.split('-')
+        const keyName = `properties.rating.${key}`
+        return { [keyName]: { $gte : Number(gte), $lte : Number(lte) } }
+    }) : null
 
     try {
-        const result = await Geo.find(
-            {
-                "location": {
-                    $geoWithin: {
-                        $polygon: polygon
+        const result = filtersObj
+            ? await Geo.find(
+                {
+                    "location": {
+                        $geoWithin: {
+                            $polygon: polygon
+                        }
+                    },
+                    $and: arrOfFilters
+                },
+                'location.coordinates properties.averageRating',
+            )
+            : await Geo.find(
+                {
+                    "location": {
+                        $geoWithin: {
+                            $polygon: polygon
+                        }
                     }
-                }
-            },
-            'location.coordinates properties.averageRating',
-        )
+                },
+                'location.coordinates properties.averageRating',
+            )
 
         return res.json({
             error: null,

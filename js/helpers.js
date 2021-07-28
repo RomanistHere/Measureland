@@ -277,6 +277,16 @@ const addToUrlOpenModalFlag = () => {
     window.history.pushState(null, null, url)
 }
 
+const objToString = (object) => {
+    let str = ''
+    for (let k in object) {
+        if (object.hasOwnProperty(k)) {
+            str += k + ':' + object[k] + ','
+        }
+    }
+    return str.slice(0, -1)
+}
+
 // geocoding //
 
 const esriApiKey = 'AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q'

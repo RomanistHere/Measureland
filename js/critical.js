@@ -84,6 +84,7 @@ const detectLocation = () => {
 
 let state = {
     userID: null,
+    filters: null,
     passToken: null,
     dateCreated: null,
     ratingToSave: null,
@@ -93,6 +94,7 @@ let state = {
     center: [53.9015, 27.5465],
     zoom: 12,
     flow: [],
+    isFiltersOn: false,
     shouldShowLoading: false,
     shouldSendEvent: getCookie('sentryOn') !== '0' ? true : false
 }

@@ -15,7 +15,7 @@ const initSentry = () => {
     })
 }
 
-initSentry()
+// initSentry()
 
 // icon documentation
 // https://leafletjs.com/reference-1.7.1.html#icon
