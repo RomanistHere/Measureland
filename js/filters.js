@@ -15,6 +15,9 @@ const initSlider = (slider) => {
 
         if (Object.keys(state.filters).length === 0)
             state = { ...state, filters: null }
+
+        const presetElems = $All('.filter__preset')
+        presetElems.forEach(elem => { removeClass(elem, 'filter__preset-active') })
     }
     const setFilterText = (values, handle, unencoded) => {
         const [leftVal, rightVal] = unencoded
@@ -48,6 +51,7 @@ const applyFilters = () => {
 	}
     window.history.replaceState(null, null, url)
     getNewData()
+    showNotification('.filters_notification')
 }
 
 const resetSlider = slider => {
@@ -75,6 +79,8 @@ const resetFilters = shouldGetNewData => {
 
     if (shouldGetNewData !== false)
         getNewData()
+
+    hideNotification('.filters_notification')
 }
 
 const fillFiltersFromArrOfStrings = arrOfStrings => {
@@ -112,10 +118,10 @@ const openFiltersFromUrl = () => {
         return
 
     const arrOfStrings = filtersParam.split(',')
-    console.log(arrOfStrings)
 
     fillFiltersFromArrOfStrings(arrOfStrings)
-    openSideBar('filters')
+    // openSideBar('filters')
+    showNotification('.filters_notification')
 }
 
 const presets = {
@@ -133,6 +139,7 @@ const handlePresetClick = e => {
     resetFilters(false)
     fillFiltersFromArrOfStrings(preset)
     addClass(target, 'filter__preset-active')
+    showNotification('.filters_notification')
 }
 
 const initSliders = () => {
@@ -144,6 +151,7 @@ const initSliders = () => {
 
     handleClickPrevDef($('.filters__apply'), applyFilters)
     handleClickPrevDef($('.filters__reset'), resetFilters)
+    handleClickPrevDef($('.filters_notification__reset'), resetFilters)
 
     const presets = $All('.filter__preset')
     presets.forEach(elem => { handleClickPrevDef(elem, handlePresetClick) })

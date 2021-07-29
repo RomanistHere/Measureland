@@ -247,6 +247,12 @@ const openRatingAndZoom = (lat, lng, zoom = 13) => {
     tryZoom([lat, lng])
 }
 
+const showNotification = query =>
+    addClass($(query), 'notification-show')
+
+const hideNotification = query =>
+    removeClass($(query), 'notification-show')
+
 const showError = (key, error = null) => {
     const errorObj = {
         ru: {

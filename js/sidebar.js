@@ -3,6 +3,7 @@ const commentsWrap = $('.comments__wrap')
 const openSettingsBtn = $('.open_settings')
 const changeLangBtn = $('.changeLangBtn')
 const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
+const openFiltersFromNotifBtn = $('.openFiltersFromNotifBtn')
 const openFiltersBtn = $('.openFiltersBtn')
 const crashReportsBtn = $('.crashReportsBtn')
 const refreshPageBtn = $('.refreshPageBtn')
@@ -67,6 +68,10 @@ const initSideBar = () => {
     })
 
     handleClickPrevDef(openFiltersBtn, () => {
+        openSideBar('filters')
+    })
+
+    handleClickPrevDef(openFiltersFromNotifBtn, () => {
         openSideBar('filters')
     })
 

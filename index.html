@@ -908,6 +908,12 @@
             </div>
         </div>
 
+        <div class="notification filters_notification">
+            <div class="notification__text">
+                <a href="#" class="footer__link openFiltersFromNotifBtn">Filters</a> active. <a href="#" class="footer__link filters_notification__reset">Reset</a>
+            </div>
+        </div>
+
         <aside class="sidebar">
             <a href="#" class="rating__close sidebar__close sidebarClose">
                 <span class="close"></span>
@@ -924,60 +930,128 @@
             <div class="filters sidebar__section">
                 <h2 class="rating__title title rating__item_text comments__title sidebar__title">Set up filters</h2>
                 <hr>
+                <h4 class="fiters__subtitle">Try our filter presets:</h4>
+                <ul class="settings__list filters__top_block">
+                    <li class="setting__item">
+                        <a href="#" data-preset="quiet" class="settings__link rating__title filter__preset">Quiet</a>
+                    </li>
+                    <li class="setting__item">
+                        <a href="#" data-preset="center" class="settings__link rating__title filter__preset">Stir</a>
+                    </li>
+                    <li class="setting__item">
+                        <a href="#" data-preset="nature" class="settings__link rating__title filter__preset">Nature</a>
+                    </li>
+                    <li class="setting__item">
+                        <a href="#" data-preset="perfect" class="settings__link rating__title filter__preset">The perfect place</a>
+                    </li>
+                </ul>
+                <hr>
                 <ul class="filters__list">
                     <li class="filters__item">
-                        <span class="filters__label">Air quality</span>
+                        <span class="filters__label">
+                            Air quality
+                            <div class="filter__value_wrap">
+                                (current value: <span data-key='air' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='air' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Water quality</span>
+                        <span class="filters__label">
+                            Water quality
+                            <div class="filter__value_wrap">
+                                (<span data-key='water' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='water' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Basic and social infrastructure</span>
+                        <span class="filters__label">
+                            Basic and social infrastructure
+                            <div class="filter__value_wrap">
+                                (<span data-key='logistic' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='logistic' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Transport and location conditions</span>
+                        <span class="filters__label">
+                            Transport and location conditions
+                            <div class="filter__value_wrap">
+                                (<span data-key='transport' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='transport' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Light and noise pollution</span>
+                        <span class="filters__label">
+                            Light and noise pollution
+                            <div class="filter__value_wrap">
+                                (<span data-key='noize' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='noize' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Cleanliness and tidiness</span>
+                        <span class="filters__label">
+                            Cleanliness and tidiness
+                            <div class="filter__value_wrap">
+                                (<span data-key='clean' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='clean' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Outdoor activities and walks</span>
+                        <span class="filters__label">
+                            Outdoor activities and walks
+                            <div class="filter__value_wrap">
+                                (<span data-key='chill' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='chill' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Safety</span>
+                        <span class="filters__label">
+                            Safety
+                            <div class="filter__value_wrap">
+                                (<span data-key='safety' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='safety' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Life with pets</span>
+                        <span class="filters__label">
+                            Life with pets
+                            <div class="filter__value_wrap">
+                                (<span data-key='pets' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='pets' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label">Life with kids</span>
+                        <span class="filters__label">
+                            Life with kids
+                            <div class="filter__value_wrap">
+                                (<span data-key='kids' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
                         <div data-key='kids' class="filter__slider"></div>
                     </li>
                     <li class="filters__item">
-                        <span class="filters__label info">
+                        <span class="filters__label">
                             Parking places
-                            <span class="info__tooltip info__tooltip-top">
-                                How often and how much places there are.</br>
-                                1 is bad situation, 5 is great.
-                            </span>
+                            <div class="filter__value_wrap">
+                                (<span data-key='parking' class="filter__value">1-5</span>)
+                            </div>
                         </span>
                         <div data-key='parking' class="filter__slider"></div>
                     </li>
                 </ul>
                 <a href="#" class="filters__apply btn">Apply</a>
                 <a href="#" class="filters__reset">Reset</a>
+                <div class="filters__bot">
+                    Do you like our free features without any ads? <a href="https://www.donationalerts.com/r/romanisthere" rel="noopener" target="_blank" class="footer__link">Support Measureland</a>, so we can keep it that way!
+                </div>
             </div>
 
             <div class="settings sidebar__section sidebar__section-show">
