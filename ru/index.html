@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="../css/libs/leaflet.css">
     <link rel="stylesheet" href="../css/libs/esri-leaflet-geocoder.css">
     <link rel="stylesheet" href="../css/libs/leaflet.draw.css">
+    <link rel="stylesheet" href="../css/libs/nouislider.css">
     <!-- critical -->
     <link rel="stylesheet" href="../css/main.css">
     <!-- common -->
@@ -61,6 +62,7 @@
     <script defer src="../js/libs/supercluster.js"></script>
     <script defer src="../js/libs/sentry.min.js"></script>
     <script defer src="../js/libs/leaflet.draw.js"></script>
+    <script defer src="../js/libs/nouislider.js"></script>
     <!-- common -->
     <script defer src="../js/helpers.js"></script>
     <script defer src="../js/db.js"></script>
@@ -72,6 +74,7 @@
     <script defer src="../js/draw.js"></script>
     <script defer src="../js/sidebar.js"></script>
     <script defer src="../js/quiz.js"></script>
+    <script defer src="../js/filters.js"></script>
     <script defer src="../js/afterLoad.js"></script>
 
 	<script defer data-domain="measureland.org" src="https://plausible.io/js/plausible.js"></script>
@@ -926,6 +929,198 @@
                 </ul>
             </div>
 
+            <div class="filters sidebar__section">
+                <h2 class="rating__title title rating__item_text comments__title sidebar__title">Фильтры</h2>
+                <hr>
+                <h4 class="fiters__subtitle">Попробуй готовый набор:</h4>
+                <ul class="settings__list filters__top_block">
+                    <li class="setting__item">
+                        <a href="#" data-preset="quiet" class="settings__link rating__title filter__preset">Тишина и уют</a>
+                    </li>
+                    <li class="setting__item">
+                        <a href="#" data-preset="center" class="settings__link rating__title filter__preset">Жизнь бьёт ключом</a>
+                    </li>
+                    <li class="setting__item">
+                        <a href="#" data-preset="nature" class="settings__link rating__title filter__preset">Природа!</a>
+                    </li>
+                    <li class="setting__item">
+                        <a href="#" data-preset="perfect" class="settings__link rating__title filter__preset">Идеальное место</a>
+                    </li>
+                </ul>
+                <hr>
+                <ul class="filters__list">
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Качество воздуха
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Часто ли есть посторонние запахи (с полей, заводов и т.д.)? Насколько неприятно дышат?
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (текущее значение: <span data-key='air' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='air' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Качество воды
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Есть ли проблемы с водой (запах, вкус, зуд), и насколько часто?
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='water' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='water' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Объекты социально-бытового назначения
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Количество и качество магазинов, кафе, развлекательных учереждений, парикмахерских, тренажёрных залов и т.д. неподалёку.
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='logistic' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='logistic' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Транспортное сообщение и расположение
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Насколько нравится расположение? Как легко добираться в нужные места на общественном или личном транспорте, велосипеде?
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='transport' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='transport' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Свето- и шумозагрязнение
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Насколько в среднем шумно? Стройки, трассы, стадионы поблизости. Мешает ли ночью освещённость?</br>
+                                    1 - сильно мешает, 5 - совсем не мешает
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='noize' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='noize' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Чистота и ухоженность
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Как много мусора? Заботятся ли о внешнем виде подъездов/газонов/площадок окружающие?
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='clean' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='clean' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Места для активного отдыха и прогулок
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Наличие парков, скамеек, водоёмов, пешеходных и велодорожек поблизости.
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='chill' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='chill' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Безопасность
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Насколько безопасно ощущается проживать в этом районе в сравнении с другими местами?
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='safety' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='safety' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Жизнь с домашними животными
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Насколько хорошо жильцы относятся к питомцам? Есть ли места для выгула и площадки для тренировок?
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='pets' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='pets' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Жизнь с детьми
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Есть ли детские сады и площадки, школы рядом? Огорожена ли территория? Как часто бродят незнакомцы?
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='kids' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='kids' class="filter__slider"></div>
+                    </li>
+                    <li class="filters__item">
+                        <span class="filters__label">
+                            Места для парковки
+                            <div class="info">
+                                ?
+                                <span class="info__tooltip info__tooltip-top">
+                                    Как часто можно без проблем припарковаться?</br>
+                                    1 - мест нет, 5 - без проблем.
+                                </span>
+                            </div>
+                            <div class="filter__value_wrap">
+                                (<span data-key='parking' class="filter__value">1-5</span>)
+                            </div>
+                        </span>
+                        <div data-key='parking' class="filter__slider"></div>
+                    </li>
+                </ul>
+                <a href="#" class="filters__apply btn">Применить</a>
+                <a href="#" class="filters__reset">Сбросить</a>
+            </div>
+
             <div class="settings sidebar__section sidebar__section-show">
                 <div class="settings__block">
                     <h2 class="rating__title title rating__item_text settings__title sidebar__title">Аккаунт</h2>
@@ -955,6 +1150,9 @@
                     <h2 class="rating__title title rating__item_text settings__title sidebar__title">Функции</h2>
                     <hr>
                     <ul class="settings__list">
+                        <li class="setting__item">
+                            <a href="#" class="settings__link rating__title openFiltersBtn">Фильтры</a>
+                        </li>
                         <li class="setting__item">
                             <a href="#" class="settings__link rating__title vizualizeLoadingBtn">
                                 Визуал загрузки:

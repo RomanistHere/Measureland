@@ -784,11 +784,11 @@ textarea {
     width: var(--sidebar-width);
 
     background-color: var(--side-bg-color);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .sidebar__close {
-    /* margin-right: 20px; */
     right: 47px;
     top: 23px;
 }
@@ -962,16 +962,50 @@ textarea {
 
 /* // filters // */
 
-.noUi-tooltip {
-    display: none;
+.noUi-horizontal {
+    height: 14px;
 }
 
-.noUi-active .noUi-tooltip {
+.noUi-horizontal .noUi-handle {
+    width: 26px;
+    height: 22px;
+    right: -17px;
+    top: -5px;
+}
+
+.noUi-handle::after, .noUi-handle::before {
+    content: "";
     display: block;
+    position: absolute;
+    height: 12px;
+    width: 1px;
+    background: #E8E7E6;
+    left: 10px;
+    top: 4px;
+}
+
+.noUi-handle::after {
+    left: 13px;
 }
 
 .connect-colored {
     background-color: var(--bg-color);
+}
+
+.fiters__subtitle {
+    margin: 20px 0 5px;
+}
+
+.filter__preset {
+    font-size: var(--normal-fz);
+}
+
+.filter__preset-active {
+    color: var(--suc-color);
+}
+
+.filters__top_block {
+    margin-top: 0;
 }
 
 .filters__list,
@@ -1017,14 +1051,19 @@ textarea {
     color: var(--active-color);
 }
 
+.filter__value_wrap {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.filter__value {
+    font-weight: bold;
+}
+
 /* // tooltip // */
 
 .info {
-    position: relative;
-}
-
-.info::after {
-    content: '?';
+    position: relative;;
     display: inline-block;
 
     font-family: sans-serif;
@@ -1036,7 +1075,6 @@ textarea {
     text-decoration: none;
 
     border-radius: 50%;
-    margin-left: 2px;
     padding: 0.13em 0.2em 0.09em 0.2em;
     border: 1px solid;
 }
@@ -1058,14 +1096,17 @@ textarea {
     color: var(--side-bg-color);
     text-align: center;
     font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
 
     transition: opacity .6s;
 }
 
 .info__tooltip-top {
-    bottom: 125%;
-    right: 0;
-    transform: translateX(46%);
+    bottom: 150%;
+    left: -124px;
+    /* right: 0;
+    transform: translateX(47%); */
 }
 
 .info__tooltip-top::after {

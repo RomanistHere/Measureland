@@ -16,11 +16,19 @@ const initSlider = (slider) => {
         if (Object.keys(state.filters).length === 0)
             state = { ...state, filters: null }
     }
+    const setFilterText = (values, handle, unencoded) => {
+        const [leftVal, rightVal] = unencoded
+        const text = leftVal !== rightVal
+            ? `${leftVal}-${rightVal}`
+            : leftVal
+
+        const sliderTextElem = $(`.filter__value[data-key="${key}"]`)
+        sliderTextElem.textContent = text
+    }
 
     noUiSlider.create(slider, {
         start: [1, 5],
         connect: true,
-        tooltips: true,
         step: 1,
         range: {
             'min': 1,
@@ -29,6 +37,7 @@ const initSlider = (slider) => {
     })
 
     slider.noUiSlider.on('end', setFilter)
+    slider.noUiSlider.on('slide', setFilterText)
 }
 
 const applyFilters = () => {
@@ -41,10 +50,13 @@ const applyFilters = () => {
     getNewData()
 }
 
-const resetSlider = slider =>
+const resetSlider = slider => {
     slider.noUiSlider.set([1, 5])
+    const sliderTextElems = $All(`.filter__value`)
+    sliderTextElems.forEach(elem => { elem.textContent = '1-5' })
+}
 
-const resetFilters = () => {
+const resetFilters = shouldGetNewData => {
     state = {
         ...state,
         isFiltersOn: false,
@@ -54,21 +66,18 @@ const resetFilters = () => {
     const sliders = $All('.filter__slider')
     sliders.forEach(resetSlider)
 
+    const presetElems = $All('.filter__preset')
+    presetElems.forEach(elem => { removeClass(elem, 'filter__preset-active') })
+
     const url = new URL(window.location.href)
 	url.searchParams.delete('fi')
     window.history.replaceState(null, null, url)
 
-    getNewData()
+    if (shouldGetNewData !== false)
+        getNewData()
 }
 
-const openFiltersFromUrl = () => {
-    const url = new URL(window.location.href)
-	const filtersParam = url.searchParams.get('fi')
-    if (!filtersParam)
-        return
-
-    const arrOfStrings = filtersParam.split(',')
-
+const fillFiltersFromArrOfStrings = arrOfStrings => {
     arrOfStrings.map(string => {
         const [key, valString] = string.split(':')
         const values = valString.split('-')
@@ -80,12 +89,50 @@ const openFiltersFromUrl = () => {
 
         const slider = $(`.filter__slider[data-key="${key}"]`)
         slider.noUiSlider.set(rangeArr)
+
+        // set text
+        const [leftVal, rightVal] = rangeArr
+        const text = leftVal !== rightVal
+            ? `${leftVal}-${rightVal}`
+            : leftVal
+
+        const sliderTextElem = $(`.filter__value[data-key="${key}"]`)
+        sliderTextElem.textContent = text
     })
 
     state = { ...state, isFiltersOn: true }
 
     getNewData()
+}
+
+const openFiltersFromUrl = () => {
+    const url = new URL(window.location.href)
+	const filtersParam = url.searchParams.get('fi')
+    if (!filtersParam)
+        return
+
+    const arrOfStrings = filtersParam.split(',')
+    console.log(arrOfStrings)
+
+    fillFiltersFromArrOfStrings(arrOfStrings)
     openSideBar('filters')
+}
+
+const presets = {
+    quiet: ["air:4-5", "water:4-5", "noize:4-5", "clean:4-5", "chill:4-5", "pets:4-5", "kids:4-5", "safety:4-5"],
+    center: ["clean:4-5", "safety:4-5", "logistic:4-5", "transport:4-5", "parking:3-5", "chill:3-5"],
+    nature: ["air:5-5", "water:5-5", "noize:5-5", "chill:5-5", "pets:5-5"],
+    perfect: ["air:4-5", "water:4-5", "noize:4-5", "chill:4-5", "pets:3-5", "logistic:4-5", "transport:4-5", "clean:4-5", "safety:4-5", "kids:3-5", "parking:3-5"],
+}
+
+const handlePresetClick = e => {
+    const target = e.currentTarget
+    const presetName = target.getAttribute('data-preset')
+    const preset = presets[presetName]
+
+    resetFilters(false)
+    fillFiltersFromArrOfStrings(preset)
+    addClass(target, 'filter__preset-active')
 }
 
 const initSliders = () => {
@@ -97,6 +144,9 @@ const initSliders = () => {
 
     handleClickPrevDef($('.filters__apply'), applyFilters)
     handleClickPrevDef($('.filters__reset'), resetFilters)
+
+    const presets = $All('.filter__preset')
+    presets.forEach(elem => { handleClickPrevDef(elem, handlePresetClick) })
 
     openFiltersFromUrl()
 }
