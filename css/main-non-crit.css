@@ -184,7 +184,7 @@ textarea {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 460px;
+    width: 470px;
     height: 490px;
 
     background-color: var(--side-bg-color);
@@ -209,7 +209,7 @@ textarea {
 }
 
 .rating__popup-active {
-    z-index: 1;
+    z-index: 2;
     opacity: 1;
 }
 
@@ -1473,7 +1473,7 @@ a::selection {
 @media (hover: hover) and (pointer: fine) {
     .rating__stars .star-wrapper:hover + .rating__caption {
         opacity: 1;
-        transition: opacity .4s .6s;
+        transition: opacity .4s .5s;
     }
 
     .close:hover::after,
@@ -1839,6 +1839,12 @@ a::selection {
 
     .desktop {
         display: none;
+    }
+
+    .notification {
+        bottom: 16px;
+
+        font-size: 12px;
     }
 }
 
