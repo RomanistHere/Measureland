@@ -14,6 +14,13 @@ textarea {
     font-size: 16px;
 }
 
+.overlay__seo_heading {
+    position: absolute;
+    opacity: 0;
+    top: -1000px;
+    pointer-events: none;
+}
+
 /* // form // */
 
 .form__btn {
@@ -406,7 +413,7 @@ textarea {
 /* // rate // */
 
 .rate__wrap {
-    width: 615px;
+    width: 630px;
     height: auto;
 
     font-size: var(--bigger-fz);
@@ -1522,18 +1529,49 @@ a::selection {
         font-size: 18px;
     }
 
-    .rate__wrap {
-        width: 500px;
+    .rating__wrap {
+        width: 400px;
+        height: 410px;
         font-size: 14px;
     }
 
-    .rate__highlight {
-        font-size: 16px;
+    .rating__content {
+        height: 320px;
+    }
+
+    .rating__img_wrap {
+        height: 150px;
+    }
+
+    .rating__img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .star {
+        font-size: 26px;
+    }
+
+    .rating__textarea {
+        height: 130px;
+        font-size: 12px;
     }
 
     .rating__title {
         margin-top: 15px;
-        font-size: 90%;
+    }
+
+    .rate__wrap {
+        width: 474px;
+        height: 544px;
+    }
+
+    .rate__wrap .rating__title {
+        margin-top: 2px;
+    }
+
+    .rate__highlight {
+        font-size: 16px;
     }
 
     .login__wrap-register {
@@ -1570,7 +1608,13 @@ a::selection {
     }
 
     .btn {
-        font-size: 16px;
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .rate__container,
+    .rate__link_btn {
+        font-size: 14px;
     }
 
     .footer {
@@ -1611,6 +1655,10 @@ a::selection {
 
     .filter__slider {
         margin: 5px 0;
+    }
+
+    .info {
+        padding-top: 0.14em;
     }
 
     .info__tooltip {
