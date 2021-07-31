@@ -1,6 +1,5 @@
 const Sentry = require('@sentry/node');
 
-const UserFlow = require('../models/user-flow.model');
 const AnonymFlow = require('../models/anonym-flow.model');
 const ErrorFlow = require('../models/error-flow.model');
 
@@ -8,15 +7,13 @@ exports.flow_add = async (req, res, next) => {
     const { flow, uniqID } = req.body
 
     try {
-        const newFlow = req.session.userID
-            ? await UserFlow.findOneAndUpdate({ uniqID: uniqID }, { flow: flow, uniqID: uniqID }, { new: true, upsert: true })
-            : await AnonymFlow.findOneAndUpdate({ uniqID: uniqID }, { flow: flow, uniqID: uniqID }, { new: true, upsert: true })
+        const newFlow = await AnonymFlow.findOneAndUpdate({ uniqID: uniqID }, { flow: flow, uniqID: uniqID }, { new: true, upsert: true })
 
         return res.json({
             error: null,
             data: {
-                message: "Saved",
-                userID: req.session.userID
+                message: "Flow saved",
+                // userID: req.session.userID
             },
         });
     } catch (e) {
