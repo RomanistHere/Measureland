@@ -62,6 +62,7 @@ const detectLocation = () => {
         return
 
     navigator.geolocation.getCurrentPosition(({ coords }) => {
+        state.flow.push('dls')
         const { latitude, longitude } = coords
         state = {
             ...state,
@@ -96,7 +97,8 @@ let state = {
     flow: [],
     isFiltersOn: false,
     shouldShowLoading: false,
-    shouldSendEvent: getCookie('sentryOn') !== '0' ? true : false
+    shouldSendEvent: getCookie('sentryOn') !== '0' ? true : false,
+    uniqID: Math.random().toString(16).slice(2)
 }
 
 let startScreenState = {
@@ -326,6 +328,7 @@ const positionStartScreen = () => {
         const bubbleWrap = $('.bubble')
         removeClass(bubbleWrap, 'bubble1', 'bubble2', 'bubble3')
         addClass(bubbleWrap, `bubble${number}`)
+        state.flow.push(`bb${number}`)
     }))
 }
 

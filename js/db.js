@@ -1,7 +1,36 @@
 const path = window.location.origin === 'http://localhost:8080' ? 'http://localhost:3000/api' : 'https://measureland.org/api'
 
-const sendFeedback = () =>
-    state.flow.length > 6 && navigator.sendBeacon(`${path}/flow/add`, new URLSearchParams({ flow: state.flow }))
+window.addEventListener('error', event => {
+    if (!state.shouldSendEvent)
+        return
+    const { message, filename, lineno, colno, error } = event
+    navigator.sendBeacon(`${path}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }))
+})
+
+const sendFeedback = () => {
+    const uniqID = state.uniqID
+    const length = state.flow.length
+    let flow = ''
+    let prevElem = state.flow[0]
+    let multiplier = 1
+    for (let i = 1; i < length; i++) {
+        const curElem = state.flow[i]
+        if (prevElem === curElem) {
+            multiplier++
+            if (length === i + 1) {
+                flow = multiplier > 1 ? `${flow}${prevElem}*${multiplier}` : `${flow}${prevElem}`
+            }
+        } else {
+            flow = multiplier > 1 ? `${flow}${prevElem}*${multiplier},` : `${flow}${prevElem},`
+            prevElem = curElem
+            multiplier = 1
+            if (length === i + 1) {
+                flow = `${flow}${curElem}`
+            }
+        }
+    }
+    flow.length > 10 && navigator.sendBeacon(`${path}/flow/add`, new URLSearchParams({ flow, uniqID }))
+}
 
 const fetchFunction = async ({ url, method, credentials, headers, body }) => {
     if (!url)

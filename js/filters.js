@@ -44,6 +44,7 @@ const initSlider = (slider) => {
 }
 
 const applyFilters = () => {
+    state.flow.push('fa')
     state = { ...state, isFiltersOn: true }
     const url = new URL(window.location.href)
     if (state.filters) {
@@ -61,6 +62,7 @@ const resetSlider = slider => {
 }
 
 const resetFilters = shouldGetNewData => {
+    state.flow.push('fr')
     state = {
         ...state,
         isFiltersOn: false,
@@ -112,6 +114,7 @@ const fillFiltersFromArrOfStrings = arrOfStrings => {
 }
 
 const openFiltersFromUrl = () => {
+    state.flow.push('sfv')
     const url = new URL(window.location.href)
 	const filtersParam = url.searchParams.get('fi')
     if (!filtersParam)
@@ -132,6 +135,7 @@ const presets = {
 }
 
 const handlePresetClick = e => {
+    state.flow.push('fpr')
     const target = e.currentTarget
     const presetName = target.getAttribute('data-preset')
     const preset = presets[presetName]

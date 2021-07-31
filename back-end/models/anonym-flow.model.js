@@ -2,8 +2,11 @@ const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
     flow: {
-        type: Array,
+        type: String,
         required: true
+    },
+    uniqID: {
+        type: String
     }
 }, {
     timestamps: true

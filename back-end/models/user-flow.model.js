@@ -5,8 +5,11 @@ const schema = new Schema({
         type: String,
         required: true
     },
+    uniqID: {
+        type: String,
+    },
     flow: {
-        type: Array,
+        type: String,
         required: true
     }
 }, {

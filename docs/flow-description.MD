@@ -4,10 +4,13 @@
 
 ftv - first time visitor
 rv - returning visitor
+sfv - show filters visitor
 srv - show rating visitor (from share place)
 ssv - show shades visitor
 
 ##STAGE II
+
+bb1, bb2, bb3 - bubble buttons (who are you, what is this place, is it free)
 
 cc - click cluster
 ccu - click copy url (share place)
@@ -18,8 +21,12 @@ cr - crash reports button
 cs - close sidebar
 
 dl - detect location
+dls - detect location success
 
+fa - filters apply
 fp - password reset from forgot password
+fpr - filters preset
+fr - filters reset
 
 hc - handle checkbox
 

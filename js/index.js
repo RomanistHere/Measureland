@@ -15,7 +15,7 @@ const initSentry = () => {
     })
 }
 
-// initSentry()
+initSentry()
 
 // icon documentation
 // https://leafletjs.com/reference-1.7.1.html#icon
@@ -125,8 +125,8 @@ addGeoSearch()
 // }
 
 // analycits
-// document.addEventListener('visibilitychange', () => {
-//     if (document.visibilityState === 'hidden') {
-//         sendFeedback()
-//     }
-// })
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+        sendFeedback()
+    }
+})
