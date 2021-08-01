@@ -127,7 +127,7 @@ const addDataAndDisplay = data => {
         const newObj = {
             ...item,
             geometry: {
-                coordinates: item['location']['coordinates'].reverse(),
+                coordinates: item['location']['coordinates'],
                 type: 'Point'
             },
             type: "Feature"

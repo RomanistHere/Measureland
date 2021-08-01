@@ -204,7 +204,7 @@ exports.geo_add = async (req, res, next) => {
         return res.status(400).json({ error: "User is not logged in" })
 
     const userID = req.session.userID
-    // body.location.coordinates = [body.location.coordinates[1], body.location.coordinates[0]]
+    body.location.coordinates = [body.location.coordinates[1], body.location.coordinates[0]]
 
     try {
         const user = await User.findOne({ email: userID })

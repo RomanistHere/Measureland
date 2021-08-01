@@ -37,7 +37,7 @@ const initPlaces = async () => {
 
     for (let i = 0; i < length; i++) {
         const { coordinates } = places[i].location
-        const [ lat, lng ] = coordinates
+        const [ lng, lat ] = coordinates
 
         const newItem = document.createElement('li')
         newItem.classList.add('places__item')

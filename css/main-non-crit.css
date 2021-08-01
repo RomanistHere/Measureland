@@ -935,6 +935,12 @@ textarea {
     list-style-type: square;
 }
 
+.settings__highlight {
+    font-weight: bold;
+    font-size: 80%;
+    font-style: italic;
+}
+
 .setting__item {
     width: 100%;
 }

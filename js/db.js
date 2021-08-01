@@ -123,8 +123,8 @@ const getSinglePointData = async (latlng) => {
 // }
 
 const fetchBoundsData = async (box, zoom, filtersObj = null) => {
-    // preparedBox = box.map(item => [item[1], item[0]])
-    const bounds = JSON.stringify(box)
+    preparedBox = box.map(item => [item[1], item[0]])
+    const bounds = JSON.stringify(preparedBox)
     const filters = JSON.stringify(filtersObj)
     const url = `${path}/geo/read_bounds/${new URLSearchParams({ bounds, zoom, filters })}`
 

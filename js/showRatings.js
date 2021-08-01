@@ -43,7 +43,7 @@ const initRatingPopup = async ({ latlng }) => {
     addClass(ratePopup, 'rating-active')
     $('.rate__popup').focus()
 
-    const { error, data } = await getSinglePointData([ latlng.lat, latlng.lng ])
+    const { error, data } = await getSinglePointData([ latlng.lng, latlng.lat, ])
 
     if (error === 'Location not found') {
         showError('locationNotFound')
