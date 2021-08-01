@@ -893,6 +893,29 @@ textarea {
     color: var(--active-color);
 }
 
+/* // partners // */
+
+.partners__list,
+.partners__item {
+    /* list-style: none; */
+    margin: 0;
+    padding: 0;
+}
+
+.partners__list {
+    display: flex;
+    margin: 20px 0 0 18px;
+
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    list-style-type: square;
+}
+
+.setting__item {
+    width: 100%;
+}
+
 /* // settings // */
 
 .settings__list,
@@ -1591,8 +1614,16 @@ a::selection {
         font-size: 16px;
     }
 
+    .settings__block {
+        margin-bottom: 20px;
+    }
+
+    .sidebar__section {
+        padding-bottom: 70px;
+    }
+
     .settings__list {
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     .sidebar-open {
@@ -1618,7 +1649,7 @@ a::selection {
     }
 
     .footer {
-        font-size: 80%;
+        font-size: 70%;
     }
 
     .login__wrap-onboarding {

@@ -1,7 +1,9 @@
 const closeSideBarBtn = $('.sidebarClose')
 const commentsWrap = $('.comments__wrap')
+const closePartnersBtn = $('.partners__close')
 const openSettingsBtn = $('.open_settings')
 const changeLangBtn = $('.changeLangBtn')
+const partnersBtn = $('.partnersBtn')
 const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
 const openFiltersFromNotifBtn = $('.openFiltersFromNotifBtn')
 const openFiltersBtn = $('.openFiltersBtn')
@@ -11,6 +13,7 @@ const textAreaComment = $('.ratingComment')
 const openLoginBtn = $('.loginBtn')
 const changePassBtn = $('.changePass')
 const myRatingsBtn = $('.myRatings')
+const partnersPopup = $('.partners')
 
 const changeLang = lang => {
     state.flow.push('cl')
@@ -36,6 +39,15 @@ const closeSideBar = () => {
     removeClass(document.body, 'sidebar-open')
     hideSpinner('.sidebar__spinner')
     commentsWrap.textContent = ''
+}
+
+const openPartners = () => {
+    state.flow.push('op')
+    addClass(partnersPopup, 'rating-active')
+}
+
+const closePartners = () => {
+    removeClass(partnersPopup, 'rating-active')
 }
 
 const initSideBar = () => {
@@ -92,6 +104,19 @@ const initSideBar = () => {
     handleClickPrevDef(myRatingsBtn, () => {
         hideAllSides()
         openMyPlaces()
+    })
+
+    handleClickPrevDef(partnersBtn, () => {
+        hideAllSides()
+        openPartners()
+    })
+
+    handleClickPrevDef(closePartnersBtn, closePartners)
+
+    handleClick(partnersPopup, e => {
+        if (e.target === e.currentTarget) {
+            hideAllSides()
+        }
     })
 
     handleClickPrevDef(changeLangBtn, async () => {
