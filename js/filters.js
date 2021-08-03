@@ -114,12 +114,12 @@ const fillFiltersFromArrOfStrings = arrOfStrings => {
 }
 
 const openFiltersFromUrl = () => {
-    state.flow.push('sfv')
     const url = new URL(window.location.href)
 	const filtersParam = url.searchParams.get('fi')
     if (!filtersParam)
         return
 
+    state.flow.push('sfv')
     const arrOfStrings = filtersParam.split(',')
 
     fillFiltersFromArrOfStrings(arrOfStrings)

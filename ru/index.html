@@ -158,6 +158,43 @@
             </div>
         </div>
 
+        <div class="rating rate_tutorial">
+            <div class="rating__wrap rate_tutorial__wrap">
+                <div class="rating__popup rating__popup-active">
+                    <h2 class="rating__title title rating__item_text sidebar__title">Как поставить отметку</h2>
+                    <hr>
+                    <img src="../images/tutorial_gif.gif" alt="tutorial gif" width="410">
+                    <ul class="rate_tutorial__list partners__list">
+                        <li class="rate_tutorial__item partners__item">
+                            <div class="loggedOutShow">
+                                Для начала нужно <a href="#" class="footer__link registerFromTutorialBtn">зарегистрироваться</a>
+                            </div>
+                            <div class="loggedInShow">
+                                Ищем нужный город (поиск слева вверху)
+                            </div>
+                        </li>
+                        <li class="rate_tutorial__item partners__item">
+                            Далее выбираем место на карте, где мы жили или живём
+                        </li>
+                        <li class="rate_tutorial__item partners__item">
+                            Нажимаем на него 1 раз
+                        </li>
+                        <li class="rate_tutorial__item partners__item">
+                            В появившемся окне оцениваем критерии
+                        </li>
+                        <li class="rate_tutorial__item partners__item">
+                            Оставляем комментарий и готово!
+                        </li>
+                    </ul>
+                    <a href="#" class="btn rate_tutorial__ok">Понятно, поехали!</a>
+                </div>
+
+                <a href="#" class="rating__close rate_tutorial__close">
+                    <span class="close"></span>
+                </a>
+            </div>
+        </div>
+
         <div class="rating rate">
             <div class="rating__wrap rate__wrap">
                 <div class="rating__popup rating__popup-active rate__popup" tabindex="0">
@@ -1039,21 +1076,21 @@
                 <div class="rating__popup login__popup loginPopup6 loginPopup">
                     <div class="rating__content login__content-check">
                         <p class="rating__text">
-                            <strong class="rating__text-highlight formText25">Проверь почту</strong>
+                            <strong class="rating__text-highlight">Проверь почту</strong>
                         </p>
 
-                        <p class="rating__text formText26">
-                            Один из этапов борьбы с накруткой - проверка соответствия зарегестрировавшегося и его почты. Поэтому мы отправили тебе письмо. Мы знаем что тебе не терпится, сразу после этого этапа сможешь начать. Проверяй почту :)
+                        <p class="rating__text">
+                            Один из этапов борьбы с накруткой - проверка соответствия зарегистрировавшегося и его почты. Поэтому мы отправили тебе письмо. Мы знаем что тебе не терпится, сразу после этого этапа сможешь начать. Проверяй почту :)
                         </p>
                     </div>
 
-                    <a href="#" class="btn login__recover formText27">Перейти ко "Входу"</a>
+                    <a href="#" class="btn login__recover">Перейти ко "Входу"</a>
                 </div>
 
                 <form class="rating__popup login__popup loginPopup7 loginPopup form" id="resetPasswordForm" action="#reset">
                     <div class="rating__content reset__content">
                         <p class="rating__text">
-                            <strong class="rating__text-highlight formText28">Изменение пароля</strong>
+                            <strong class="rating__text-highlight">Изменение пароля</strong>
                         </p>
 
                         <div class="container">
@@ -1367,6 +1404,9 @@
                     <hr>
                     <ul class="settings__list">
                         <li class="setting__item">
+                            <a href="#" class="settings__link rating__title openRateTutorialBtn">Поставить оценку</a>
+                        </li>
+                        <li class="setting__item">
                             <a href="#" class="settings__link rating__title openFiltersBtn">Фильтры <span class="settings__highlight">(new)</span></a>
                         </li>
                         <li class="setting__item">
@@ -1382,9 +1422,6 @@
                                 <span class="settings__off">Выкл</span>
                                 <span class="settings__on">Вкл</span>
                             </a>
-                        </li>
-                        <li class="setting__item">
-                            <a href="#" class="settings__link rating__title refreshPageBtn">Обновить страницу</a>
                         </li>
                     </ul>
                 </div>

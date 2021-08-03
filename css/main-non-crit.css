@@ -893,6 +893,18 @@ textarea {
     color: var(--active-color);
 }
 
+/* // tutorial popups // */
+
+.rate_tutorial__wrap {
+    height: 550px;
+}
+
+.rate_tutorial__ok {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+}
+
 /* // partners // */
 
 .partners__list,

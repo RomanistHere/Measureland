@@ -44,7 +44,7 @@ os - open sidebar
 
 pr - password reset
 
-rp - refresh page btn
+rt - rate tutorial btn
 rqs - rating quiz success
 
 srp - show rating popup

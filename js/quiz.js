@@ -59,6 +59,7 @@ const hideAllSides = () => {
     resetRate()
     closePlaces()
     closePartners()
+    closeRateTutorial()
 }
 
 const showQuiz = (stageNumb = 1) => {

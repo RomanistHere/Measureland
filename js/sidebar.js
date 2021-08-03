@@ -8,7 +8,7 @@ const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
 const openFiltersFromNotifBtn = $('.openFiltersFromNotifBtn')
 const openFiltersBtn = $('.openFiltersBtn')
 const crashReportsBtn = $('.crashReportsBtn')
-const refreshPageBtn = $('.refreshPageBtn')
+const openRateTutorialBtn = $('.openRateTutorialBtn')
 const textAreaComment = $('.ratingComment')
 const openLoginBtn = $('.loginBtn')
 const changePassBtn = $('.changePass')
@@ -50,14 +50,19 @@ const closePartners = () => {
     removeClass(partnersPopup, 'rating-active')
 }
 
+const openRateTutorial = () => {
+    state.flow.push('rt')
+    addClass($('.rate_tutorial'), 'rating-active')
+}
+
+const closeRateTutorial = () => {
+    removeClass($('.rate_tutorial'), 'rating-active')
+}
+
 const initSideBar = () => {
     handleClickPrevDef(closeSideBarBtn, closeSideBar)
 
     // features
-    handleClickPrevDef(refreshPageBtn, () => {
-        state.flow.push('rp')
-        window.location.reload(true)
-    })
 
     handleClickPrevDef(vizualizeLoadingBtn, () => {
         state.flow.push('vl')
@@ -105,6 +110,19 @@ const initSideBar = () => {
         hideAllSides()
         openMyPlaces()
     })
+
+    handleClickPrevDef($('.registerFromTutorialBtn'), () => {
+        hideAllSides()
+        openLoginForm('register')
+    })
+
+    handleClickPrevDef(openRateTutorialBtn, () => {
+        hideAllSides()
+        openRateTutorial()
+    })
+
+    handleClickPrevDef($('.rate_tutorial__ok'), closeRateTutorial)
+    handleClickPrevDef($('.rate_tutorial__close'), closeRateTutorial)
 
     handleClickPrevDef(partnersBtn, () => {
         hideAllSides()
