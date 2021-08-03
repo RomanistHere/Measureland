@@ -57,7 +57,6 @@ const getCookie = (cname) => {
 }
 
 const detectLocation = () => {
-    state.flow.push('dl')
     if (!navigator.geolocation)
         return
 

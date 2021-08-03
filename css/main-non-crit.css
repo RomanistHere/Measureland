@@ -905,6 +905,10 @@ textarea {
     text-align: center;
 }
 
+.rate_tutorial__image {
+    width: 100%;
+}
+
 /* // partners // */
 
 .partners__list,
@@ -1755,6 +1759,10 @@ a::selection {
 
     .filters__apply {
         padding: 8px 0;
+    }
+
+    .rate_tutorial__wrap {
+        height: 470px;
     }
 }
 

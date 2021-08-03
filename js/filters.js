@@ -123,7 +123,6 @@ const openFiltersFromUrl = () => {
     const arrOfStrings = filtersParam.split(',')
 
     fillFiltersFromArrOfStrings(arrOfStrings)
-    // openSideBar('filters')
     showNotification('.filters_notification')
 }
 
@@ -138,6 +137,7 @@ const handlePresetClick = e => {
     state.flow.push('fpr')
     const target = e.currentTarget
     const presetName = target.getAttribute('data-preset')
+    state.flow.push(presetName)
     const preset = presets[presetName]
 
     resetFilters(false)
