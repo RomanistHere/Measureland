@@ -1,4 +1,4 @@
-// const CACHE_NAME = "dev-measureland-1.2.0"
+// const CACHE_NAME = "dev-measureland-1.2.1"
 // const CACHED_URLS = [
 //     "/index.html",
 //     "/ru/",
