@@ -96,6 +96,7 @@ let state = {
     flow: [],
     isFiltersOn: false,
     shouldShowLoading: false,
+    wasMoreRatingsAsked: false,
     shouldSendEvent: getCookie('sentryOn') !== '0' ? true : false,
     uniqID: Math.random().toString(16).slice(2)
 }

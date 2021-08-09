@@ -4,7 +4,8 @@ const closePartnersBtn = $('.partners__close')
 const openSettingsBtn = $('.open_settings')
 const changeLangBtn = $('.changeLangBtn')
 const partnersBtn = $('.partnersBtn')
-const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
+const moreRatingsBtn = $('.moreRatingsBtn')
+// const vizualizeLoadingBtn = $('.vizualizeLoadingBtn')
 const openFiltersFromNotifBtn = $('.openFiltersFromNotifBtn')
 const openFiltersBtn = $('.openFiltersBtn')
 const crashReportsBtn = $('.crashReportsBtn')
@@ -64,15 +65,23 @@ const initSideBar = () => {
 
     // features
 
-    handleClickPrevDef(vizualizeLoadingBtn, () => {
-        state.flow.push('vl')
+    // handleClickPrevDef(vizualizeLoadingBtn, () => {
+    //     state.flow.push('vl')
+    //     state = {
+    //         ...state,
+    //         shouldShowLoading: !state.shouldShowLoading
+    //     }
+    //     vizualizeLoadingBtn.classList.toggle('settings__link-on')
+    //     usedBounds.map(poly =>
+    //         state.shouldShowLoading ? poly.addTo(map) : poly.removeFrom(map))
+    // })
+
+    handleClickPrevDef(moreRatingsBtn, () => {
+        state.flow.push('mr')
         state = {
             ...state,
-            shouldShowLoading: !state.shouldShowLoading
+            wasMoreRatingsAsked: true
         }
-        vizualizeLoadingBtn.classList.toggle('settings__link-on')
-        usedBounds.map(poly =>
-            state.shouldShowLoading ? poly.addTo(map) : poly.removeFrom(map))
     })
 
     handleClickPrevDef(crashReportsBtn, () => {
