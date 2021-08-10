@@ -1040,6 +1040,18 @@ textarea {
     display: none;
 }
 
+/* // ask for ratings popup // */
+
+.rate_ask_ratings__wrap {
+    height: 440px;
+}
+
+.rate_ask_ratings__ok {
+    display: block;
+
+    text-align: center;
+}
+
 /* // places // */
 
 .places__close {

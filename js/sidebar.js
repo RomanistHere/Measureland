@@ -60,6 +60,19 @@ const closeRateTutorial = () => {
     removeClass($('.rate_tutorial'), 'rating-active')
 }
 
+const openAskForRatings = () => {
+    state.flow.push('mr')
+    addClass($('.rate_ask_ratings'), 'rating-active')
+    state = {
+        ...state,
+        wasMoreRatingsAsked: true
+    }
+}
+
+const closeAskForRatings = () => {
+    removeClass($('.rate_ask_ratings'), 'rating-active')
+}
+
 const initSideBar = () => {
     handleClickPrevDef(closeSideBarBtn, closeSideBar)
 
@@ -77,12 +90,12 @@ const initSideBar = () => {
     // })
 
     handleClickPrevDef(moreRatingsBtn, () => {
-        state.flow.push('mr')
-        state = {
-            ...state,
-            wasMoreRatingsAsked: true
-        }
+        hideAllSides()
+        openAskForRatings()
     })
+    
+    handleClickPrevDef($('.rate_ask_ratings__ok'), closeAskForRatings)
+    handleClickPrevDef($('.rate_ask_ratings__close'), closeAskForRatings)
 
     handleClickPrevDef(crashReportsBtn, () => {
         state.flow.push('cr')
