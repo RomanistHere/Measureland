@@ -64,6 +64,10 @@ const UserSchema = new Schema({
         balance: {
             type: Number,
             default: 0
+        },
+        wantMoreRatings: {
+            type: Boolean,
+            default: false
         }
     }
 }).index({ 'email': 1 });

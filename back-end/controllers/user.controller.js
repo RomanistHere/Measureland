@@ -112,9 +112,6 @@ exports.user_login = async (req, res) => {
             return res.status(400).json({ error: "User is not verified" });
 
         req.session.userID = user.email
-        req.session.userName = user.username
-        req.session.lang = user.properties.lang
-        req.session.dateCreated = user.dateCreated
 
         const { activeRatings } = isRatingActive(user)
 
@@ -125,6 +122,7 @@ exports.user_login = async (req, res) => {
                 userID: user.email,
                 dateCreated: user.dateCreated,
                 activeRatings: user.usergroup === 0 ? 999 : activeRatings,
+                wantMoreRatings: user.properties.wantMoreRatings,
                 userName: user.username
             },
         });
@@ -181,9 +179,6 @@ exports.user_verify = async (req, res) => {
             return res.status(400).json({ error: "Email is wrong" });
 
         req.session.userID = user.email
-        req.session.userName = user.username
-        req.session.lang = user.properties.lang
-        req.session.dateCreated = user.dateCreated
 
         await sendEmail({
             email: user.email,
@@ -250,15 +245,20 @@ exports.user_reverify = async (req, res) => {
 };
 
 exports.user_check = async (req, res) => {
-    const { userID, userName, lang, dateCreated } = req.session
+    const { userID } = req.session
+
+    const user = await User.findOne({ email: userID }, '-properties.ratedLocations -properties.ratings');
+
     return res.json({
         error: null,
         data: {
             message: "Check user",
-            userID: userID ? userID : null,
-            userName: userName ? userName : null,
-            lang: lang ? lang : null,
-            dateCreated: dateCreated ? dateCreated : null,
+            userID: user ? user.email : null,
+            userName: user ? user.username : null,
+            lang: user ? user.properties.lang : null,
+            dateCreated: user ? user.dateCreated : null,
+            wantMoreRatings: user ? user.properties.wantMoreRatings : null,
+            activeRatings: user ? (user.usergroup === 0 ? 999 : activeRatings) : null,
         },
     });
 };
@@ -285,6 +285,22 @@ exports.user_places = async (req, res) => {
         data: {
             message: "Rated places",
             places: geo
+        },
+    });
+};
+
+exports.ask_more_ratings = async (req, res) => {
+    const { userID } = req.session
+
+    const user = await User.findOneAndUpdate({ email: userID }, { 'properties.wantMoreRatings': true })
+
+    if (!user)
+        return res.status(400).json({ error: "Couldn't find the user" });
+
+    return res.json({
+        error: null,
+        data: {
+            message: "Asked for ratings",
         },
     });
 };
@@ -418,8 +434,6 @@ exports.user_language = async (req, res) => {
 
         if (update.nModified == 0)
             return res.status(400).json({ error: 'Language settings are not updated' });
-
-        req.session.lang = lang
 
         return res.json({
             error: null,

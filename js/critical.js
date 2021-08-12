@@ -90,6 +90,7 @@ let state = {
     ratingToSave: null,
     corrdsToSave: null,
     userName: 'Аноним',
+    activeRatings: 2,
     lang: detectPrefLang(),
     center: [53.9015, 27.5465],
     zoom: 12,

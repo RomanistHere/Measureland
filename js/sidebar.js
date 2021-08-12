@@ -89,11 +89,16 @@ const initSideBar = () => {
     //         state.shouldShowLoading ? poly.addTo(map) : poly.removeFrom(map))
     // })
 
-    handleClickPrevDef(moreRatingsBtn, () => {
+    handleClickPrevDef(moreRatingsBtn, async () => {
+        const { error } = await askMoreRatings()
+        if (error)
+            showError('unrecognizedError', error)
+
+        disableMoreRatingsBtn()
         hideAllSides()
         openAskForRatings()
     })
-    
+
     handleClickPrevDef($('.rate_ask_ratings__ok'), closeAskForRatings)
     handleClickPrevDef($('.rate_ask_ratings__close'), closeAskForRatings)
 

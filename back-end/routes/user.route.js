@@ -49,6 +49,7 @@ router.post('/change_pass', mediumLimiter, user_controller.user_change_password)
 router.get('/verify/:token', mediumLimiter, user_controller.user_verify);
 router.get('/check_user', mediumLimiter, user_controller.user_check);
 router.get('/read_places', mediumLimiter, user_controller.user_places);
+router.get('/ask_more_ratings', mediumLimiter, user_controller.ask_more_ratings);
 
 router.delete('/logout', mediumLimiter, user_controller.user_logout);
 

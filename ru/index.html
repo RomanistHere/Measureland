@@ -1447,14 +1447,17 @@
                         <li class="setting__item">
                             <a href="#" class="settings__link rating__title openRateTutorialBtn">
                                 Добавить оценку
-                                <div class="settings__title-small">
+                                <div class="settings__title-small settings__available">
                                   (доступно:
-                                  <span class="settings__highlight settings__highlight-small">3</span>)
+                                  <span class="settings__highlight settings__highlight-small availRating">3</span>)
                                 </div>
                             </a>
                         </li>
                     </ul>
-                    <a href="#" class="btn moreRatingsBtn settings__btn">Хочу больше оценок!</a>
+                    <a href="#" class="btn moreRatingsBtn loggedInShow settings__btn">
+                        <span class="settings__showed_rating_text">Хочу больше оценок!</span>
+                        <span class="settings__hidden_ratings_text">Запрос в обработке</span>
+                    </a>
                 </div>
 
                 <div class="settings__block">

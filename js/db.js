@@ -214,6 +214,12 @@ const fetchRatedPlace = async () => {
     return await fetchFunction({ url })
 }
 
+const askMoreRatings = async () => {
+    const url = `${path}/user/ask_more_ratings`
+
+    return await fetchFunction({ url })
+}
+
 const logout = async () => {
     const url = `${path}/user/logout`
 

@@ -244,6 +244,10 @@ const userLoggedIn = () => {
     loggedInBtns.forEach(item => addClass(item, 'loggedInShow-show'))
     const loggedOutBtns = $All('.loggedOutShow')
     loggedOutBtns.forEach(item => removeClass(item, 'loggedOutShow-show'))
+    addClass($('.settings__available'), 'settings__available-show')
+    setActiveRatings(state.activeRatings)
+    if (state.activeRatings > 5 && $('.moreRatingsBtn'))
+        $('.moreRatingsBtn').remove()
 }
 
 const userLoggedOut = () => {
@@ -251,6 +255,7 @@ const userLoggedOut = () => {
     loggedInBtns.forEach(item => removeClass(item, 'loggedInShow-show'))
     const loggedOutBtns = $All('.loggedOutShow')
     loggedOutBtns.forEach(item => addClass(item, 'loggedOutShow-show'))
+    removeClass($('.settings__available'), 'settings__available-show')
 }
 
 const userInit = async () => {
@@ -266,8 +271,8 @@ const userInit = async () => {
         showErrorScreen()
         return
     }
-
-    const { userID, userName, lang, dateCreated } = data
+    console.log(data)
+    const { userID, userName, lang, dateCreated, activeRatings, wantMoreRatings } = data
     const prevLang = state.lang
     if (userID) {
         state = {
@@ -275,8 +280,11 @@ const userInit = async () => {
             userID,
             userName,
             dateCreated,
+            activeRatings,
             lang
         }
+        if (wantMoreRatings)
+            disableMoreRatingsBtn()
         userLoggedIn()
         // fillDB(20000)
     } else {
@@ -529,9 +537,15 @@ const initLoginBtns = () => {
         hideSpinner('.login__spinner')
 
         if (error === null) {
-            state = { ...state, userID: data.userID }
+            state = {
+                ...state,
+                userID: data.userID,
+                activeRatings: data.activeRatings + 1
+            }
             $('.ratingAvailableNumber').textContent = data.activeRatings != null ? data.activeRatings + 1 : 0
             $('.ratingUserName').textContent = data.userName
+            if (data.wantMoreRatings)
+                disableMoreRatingsBtn()
             clearLoginFields()
             userLoggedIn()
             changeLoginScreen('loggedIn')

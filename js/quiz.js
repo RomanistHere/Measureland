@@ -182,6 +182,7 @@ const handleQuizBtns = () => {
             state.flow.push('rqs')
             isSaving = false
 
+            setActiveRatings(state.activeRatings - 1)
             hideAllSides()
             showSuccessNotification()
         } catch (e) {

@@ -1427,10 +1427,19 @@
                             </a>
                         </li> -->
                         <li class="setting__item">
-                            <a href="#" class="settings__link rating__title openRateTutorialBtn">Rate a place</a>
+                            <a href="#" class="settings__link rating__title openRateTutorialBtn">
+                                Rate a place
+                                <div class="settings__title-small settings__available">
+                                  (available:
+                                  <span class="settings__highlight settings__highlight-small availRating">3</span>)
+                                </div>
+                            </a>
                         </li>
                     </ul>
-                    <a href="#" class="btn moreRatingsBtn settings__btn">I need more ratings!</a>
+                    <a href="#" class="btn moreRatingsBtn loggedInShow settings__btn">
+                        <span class="settings__showed_rating_text">I need more ratings!</span>
+                        <span class="settings__hidden_ratings_text">Request processing</span>
+                    </a>
                 </div>
 
                 <div class="settings__block">

@@ -995,6 +995,30 @@ textarea {
     text-align: center;
 }
 
+.settings__btn-show_text {
+    cursor: default;
+}
+
+.settings__hidden_ratings_text {
+    display: none;
+}
+
+.settings__btn-show_text .settings__showed_rating_text {
+    display: none;
+}
+
+.settings__btn-show_text .settings__hidden_ratings_text {
+    display: block;
+}
+
+.settings__available {
+    display: none;
+}
+
+.settings__available-show {
+    display: block;
+}
+
 .settings__highlight {
     font-weight: bold;
     font-size: 80%;
@@ -1165,10 +1189,6 @@ textarea {
     color: var(--text-color);
     font-size: var(--normal-fz);
     transition: color .2s;
-}
-
-.filters__reset:hover {
-    color: var(--active-color);
 }
 
 .filter__value_wrap {
@@ -1587,13 +1607,20 @@ a::selection {
     }
 
     .btn:hover {
-        background-color: #00bb02;
         background-color: var(--suc-color);
     }
 
     .btn-low:hover {
         background: none;
         border-color: var(--text-color);
+    }
+
+    .settings__btn-show_text:hover {
+        background-color: var(--active-color);
+    }
+
+    .filters__reset:hover {
+        color: var(--active-color);
     }
 }
 

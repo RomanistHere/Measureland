@@ -126,6 +126,12 @@ const hideSpinner = className => {
     removeClass(textNode, 'spinner__text-active')
 }
 
+const setActiveRatings = number =>
+    $('.availRating').textContent = number + 1
+
+const disableMoreRatingsBtn = () =>
+    addClass($('.moreRatingsBtn'), 'settings__btn-show_text')
+
 const showSuccessNotification = () => {
     const notification = $('.success_notif')
     if (notification.classList.contains('success_notif-show'))
