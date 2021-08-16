@@ -1011,14 +1011,6 @@ textarea {
     display: block;
 }
 
-.settings__available {
-    display: none;
-}
-
-.settings__available-show {
-    display: block;
-}
-
 .settings__highlight {
     font-weight: bold;
     font-size: 80%;
@@ -1030,6 +1022,14 @@ textarea {
 
     font-weight: normal;
     font-size: 14px;
+}
+
+.settings__available {
+    display: none;
+}
+
+.settings__available-show {
+    display: inline;
 }
 
 .settings__highlight-small {

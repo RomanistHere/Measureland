@@ -258,7 +258,7 @@ exports.user_check = async (req, res) => {
             lang: user ? user.properties.lang : null,
             dateCreated: user ? user.dateCreated : null,
             wantMoreRatings: user ? user.properties.wantMoreRatings : null,
-            activeRatings: user ? (user.usergroup === 0 ? 999 : activeRatings) : null,
+            activeRatings: user ? (user.usergroup === 0 ? 999 : user.properties.activeRatings) : null,
         },
     });
 };

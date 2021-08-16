@@ -127,7 +127,7 @@ const hideSpinner = className => {
 }
 
 const setActiveRatings = number =>
-    $('.availRating').textContent = number + 1
+    $('.availRating').textContent = number
 
 const disableMoreRatingsBtn = () =>
     addClass($('.moreRatingsBtn'), 'settings__btn-show_text')

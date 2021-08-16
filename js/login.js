@@ -540,9 +540,9 @@ const initLoginBtns = () => {
             state = {
                 ...state,
                 userID: data.userID,
-                activeRatings: data.activeRatings + 1
+                activeRatings: data.activeRatings
             }
-            $('.ratingAvailableNumber').textContent = data.activeRatings != null ? data.activeRatings + 1 : 0
+            $('.ratingAvailableNumber').textContent = data.activeRatings != null ? data.activeRatings : 0
             $('.ratingUserName').textContent = data.userName
             if (data.wantMoreRatings)
                 disableMoreRatingsBtn()
