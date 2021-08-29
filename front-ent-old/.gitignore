@@ -1,8 +1,6 @@
-.DS_Store
+back-end/node_modules
 node_modules
-/build
-/.svelte-kit
-/package
+node_modules/
 
 logs/
 
