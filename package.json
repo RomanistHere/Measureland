@@ -21,6 +21,7 @@
   "dependencies": {
     "esri-leaflet-geocoder": "^3.1.1",
     "leaflet": "^1.7.1",
-    "polybooljs": "^1.2.0"
+    "polybooljs": "^1.2.0",
+    "svelte-i18n": "^3.3.10"
   }
 }

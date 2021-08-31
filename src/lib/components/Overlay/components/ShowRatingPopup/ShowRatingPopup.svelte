@@ -2,19 +2,11 @@
     import PopupWrap from '../PopupWrap.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
 
-    let items = [
-        { title: 'title1', tooltip: 'tooltip1' },
-        { title: 'title2', tooltip: 'tooltip2' },
-        { title: 'title3', tooltip: 'tooltip3', side: 'left' },
-        { title: 'title4', tooltip: 'tooltip4' },
-        { title: 'title5', tooltip: 'tooltip5' },
-        { title: 'title6', tooltip: 'tooltip6' },
-        { title: 'title7', tooltip: 'tooltip7' },
-        { title: 'title8', tooltip: 'tooltip8' },
-        { title: 'title9', tooltip: 'tooltip9' },
-        { title: 'title10', tooltip: 'tooltip10' },
-        { title: 'title11', tooltip: 'tooltip11' },
-	];
+    import { criteria } from '../../../../constants/criteria.js';
+    import { _ } from 'svelte-i18n';
+    console.log($_)
+
+    const criteriaArray = Object.values(criteria).map(item => item);
 </script>
 
 <PopupWrap>
@@ -25,7 +17,7 @@
                     Approximate address: <span class="adress_bar__string">calculating...</span>
                 </div>
                 <ul class="rating__list">
-                    {#each items as item}
+                    {#each criteriaArray as item}
                         <ShowRatingPopupItem { ...item } />
                     {/each}
                 </ul>
