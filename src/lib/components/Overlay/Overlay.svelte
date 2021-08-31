@@ -1,7 +1,7 @@
 <script>
     import PopupLayer from './components/PopupLayer.svelte';
     // import SidebarLayer from './components/SidebarLayer.svelte';
-    const popupActive = false;
+    const popupActive = true;
 
 </script>
 

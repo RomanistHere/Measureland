@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import 'esri-leaflet-geocoder/dist/img/search.png'
 
 	import UrlUpdater from '../lib/components/UrlUpdater.svelte';
 	import Overlay from '../lib/components/Overlay/Overlay.svelte';

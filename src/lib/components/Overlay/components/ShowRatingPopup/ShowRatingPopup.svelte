@@ -30,7 +30,7 @@
                     {/each}
                 </ul>
 
-                <a href="#" class="rate__link_btn">
+                <a href={"#"} class="rate__link_btn">
                     <span class="rate__link_btn-copy">Share this rating</span>
                     <span class="rate__link_btn-copied">Copied</span>
                 </a>
@@ -39,7 +39,7 @@
                     <span class="ratePersonalExperience">100</span>% of the participants lived nearby
                 </div>
             </div>
-            <a href="#" class="rating__close rateClose">
+            <a href={"#"} class="rating__close rateClose">
                 <span class="close"></span>
             </a>
 
@@ -53,13 +53,13 @@
                     <span class="rate__highlight rateNumberOfUsers"> </span>
                 </div>
                 <div class="rate__container_item">
-                    <a href="#" class="rate__comments rateText3">Comments</a>:
+                    <a href={"#"} class="rate__comments rateText3">Comments</a>:
                     <span class="rate__highlight rateNumberOfComments"> </span>
                 </div>
             </div>
-            <a href="#" class="rate__evaluate btn loggedInShow addEvaluation">Add new rating</a>
-            <a href="#" class="rate__evaluate btn btn-hide rate__rated_btn">You have already rated this place</a>
-            <a href="#" class="rate__evaluate btn loggedOutShow loggedOutShow-show openLoginFromRatings">Login and rate</a>
+            <a href={"#"} class="rate__evaluate btn loggedInShow addEvaluation">Add new rating</a>
+            <a href={"#"} class="rate__evaluate btn btn-hide rate__rated_btn">You have already rated this place</a>
+            <a href={"#"} class="rate__evaluate btn loggedOutShow loggedOutShow-show openLoginFromRatings">Login and rate</a>
 
             <div class="spinner__wrap rate__spinner">
                 <div class="spinner__centr">

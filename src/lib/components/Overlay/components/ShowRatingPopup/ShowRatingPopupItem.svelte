@@ -14,39 +14,3 @@
     </h2>
     <ShowRatingPopupStars />
 </li>
-
-<style>
-    .rating__title {
-        width: 100%;
-        margin: 25px 0 0;
-
-        font-size: 100%;
-        color: var(--sug-color);
-    }
-
-    .rating__stars {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .rating__item {
-        display: flex;
-
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: nowrap;
-
-        margin: 0;
-        padding: 0;
-    }
-
-    .rating__item-hide {
-        display: none;
-    }
-
-    .rating__item_text {
-        margin: 0;
-        font-weight: normal;
-    }
-</style>
