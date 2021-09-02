@@ -25,7 +25,7 @@
 </script>
 
 <div class="rating rate">
-    <svelte:component this={Popup} {popupData}/>
+    <svelte:component this={Popup} { popupData }/>
 </div>
 
 <style>

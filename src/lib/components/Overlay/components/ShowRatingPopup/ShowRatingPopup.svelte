@@ -9,13 +9,14 @@
 
     export let popupData;
 
-    const criteriaArray = Object.values($_('criteria')).map(item => item);
+    let criteriaArray = Object.entries($_('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }));
+    console.log(criteriaArray)
 
     const sleep = milliseconds =>
         new Promise(resolve => setTimeout(resolve, milliseconds))
 
     const fetchData = async ({ lng, lat }) => {
-        await sleep(2000);
+        // await sleep(2000);
         // TODO:
         // fillAdress(latlng)
         // $('.rate__popup').focus()
@@ -23,6 +24,10 @@
         const { error, data } = await getSinglePointData([ lng, lat ]);
         console.log(error)
         console.log(data)
+        criteriaArray = Object.entries(data['properties']['rating']).map(([ key, value ]) => ({
+            ...$_('criteria')[key],
+            rating: value
+        }));
     }
 
     let promise = fetchData(popupData);

@@ -4,6 +4,8 @@
 
     export let title;
     export let tooltip;
+    export let rating;
+    export let key;
     export let side = 'top';
 </script>
 
@@ -12,5 +14,5 @@
         { title }
         <ToolTip { tooltip } { side } />
     </h2>
-    <ShowRatingPopupStars />
+    <ShowRatingPopupStars { rating } />
 </li>

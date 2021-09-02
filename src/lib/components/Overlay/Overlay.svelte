@@ -32,6 +32,6 @@
 </script>
 
 {#if popupActive}
-    <PopupLayer {popupName} {popupData} />
+    <PopupLayer { popupName } { popupData } />
 {/if}
 <!-- <SidebarLayer /> -->
