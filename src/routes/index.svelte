@@ -1,9 +1,18 @@
 <script>
 	import { onMount } from 'svelte';
+	import { addMessages, init } from "svelte-i18n";
 	import 'esri-leaflet-geocoder/dist/img/search.png'
 
 	import UrlUpdater from '../lib/components/UrlUpdater.svelte';
 	import Overlay from '../lib/components/Overlay/Overlay.svelte';
+
+	import en from "../lang/en.json";
+	import ru from "../lang/ru.json";
+
+	addMessages("en", en);
+	addMessages("ru", ru);
+
+	init({ initialLocale: "en", });
 
 	let Map;
 	let startScreen = false;

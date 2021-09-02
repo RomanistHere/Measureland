@@ -1,13 +1,35 @@
 <script>
+    import { onMount } from 'svelte';
+
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
+
+    export let popupName;
+    export let popupData;
+    let Popup;
+
+    const popupList = {
+        // loginPopup: PopupLayer,
+        // registerPopup: PopupLayer,
+        // forgotPasswordPopup: PopupLayer,
+        // changePasswordPopup: PopupLayer,
+        showRatingsPopup: ShowRatingPopup,
+        // quizPopup: PopupLayer,
+    };
+
+    onMount(() => {
+        // console.log(popupName, popupData);
+		Popup = popupList[popupName];
+
+        return () => Popup = null;
+	});
 </script>
 
-<div>
-    <ShowRatingPopup />
+<div class="rating rate">
+    <svelte:component this={Popup} {popupData}/>
 </div>
 
 <style>
-    div {
+    /* div {
         position: fixed;
         z-index: 1;
 
@@ -21,5 +43,9 @@
         transition: opacity .5s;
 
         font-size: var(--normal-fz);
+    } */
+    div {
+        opacity: 1;
+        z-index: 1;
     }
 </style>

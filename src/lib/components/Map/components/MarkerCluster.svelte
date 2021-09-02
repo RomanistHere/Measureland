@@ -7,7 +7,7 @@
     // Supercluster is changed
     import "../../../external/supercluster.js";
 
-    import { userStateStore, appStateStore } from "../../../../stores/state.js";
+    import { userStateStore, appStateStore, overlayStateStore } from "../../../../stores/state.js";
     import { roundToFifthDecimal, roundToInt } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
@@ -70,6 +70,11 @@
     	}
     }
 
+    const initShowRatingPopup = ({ latlng }) => {
+        overlayStateStore.update(state => ({ ...state, showRatingsPopup: { isOpen: true, data: latlng } }));
+        appStateStore.update(state => ({ ...state, openModal: true }));
+    }
+
     const createClusterIcon = (feature, latlng) => {
         if (!feature.properties.cluster) {
     		// single point
@@ -82,7 +87,7 @@
     	        rating: rating,
     	    })
             // TODO:
-    		// marker.on('click', initRatingPopup)
+    		marker.on('click', initShowRatingPopup)
     		return marker
     	} else {
     		// cluster

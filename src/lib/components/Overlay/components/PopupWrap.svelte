@@ -1,14 +1,16 @@
 <script>
+    import CloseBtn from '../../CloseBtn.svelte';
 
+    export let className;
 </script>
 
-<div>
-    <!-- <CloseBtn /> -->
+<div class="rating__wrap {className}">
     <slot></slot>
+    <CloseBtn />
 </div>
 
 <style>
-    div {
+    /* div {
         position: absolute;
 
         top: 50%;
@@ -21,5 +23,5 @@
         border: 20px solid var(--bg-color);
         border-bottom-color: var(--bg-color-add);
         border-top-color: var(--bg-color-add);
-    }
+    } */
 </style>

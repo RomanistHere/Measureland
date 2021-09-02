@@ -1,4 +1,5 @@
-import { writable } from 'svelte/store'
+import { writable } from 'svelte/store';
+import { overlayStateDefault } from '../lib/constants/overlayStateDefault.js';
 
 export const flowStore = writable([]);
 
@@ -28,11 +29,4 @@ export const appStateStore = writable({
     shouldShowLoading: false,
 });
 
-export const overlayStateStore = writable({
-    loginPopup: false,
-    registerPopup: false,
-    forgotPasswordPopup: false,
-    changePasswordPopup: false,
-    showRatingsPopup: false,
-    quizPopup: false,
-});
+export const overlayStateStore = writable(overlayStateDefault);
