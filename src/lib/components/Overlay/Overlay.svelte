@@ -1,5 +1,6 @@
 <script>
     import { overlayStateStore } from '../../../stores/state.js';
+    import { overlayStateDefault } from '../../constants/overlayStateDefault.js';
 
     import PopupLayer from './components/PopupLayer.svelte';
     // import SidebarLayer from './components/SidebarLayer.svelte';
@@ -29,9 +30,19 @@
     $: dataOpen = checkIsOpen($overlayStateStore);
     $: manageOverlays(dataOpen);
 
+    const handleKeydown = event => {
+        const key = event.key;
+        console.log(key);
+        if (popupActive && key === 'Escape') {
+            popupActive = false;
+            overlayStateStore.update(state => overlayStateDefault);
+        }
+    }
 </script>
 
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />
 {/if}
 <!-- <SidebarLayer /> -->
+
+<svelte:window on:keydown={handleKeydown}/>
