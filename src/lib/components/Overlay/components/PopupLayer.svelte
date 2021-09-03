@@ -1,6 +1,4 @@
 <script>
-    import { onMount } from 'svelte';
-
     import { closeOverlays } from '../../../utilities/helpers.js';
 
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
@@ -25,7 +23,7 @@
     $: Popup = popupList[overlayName];
 </script>
 
-<div class="rating login" on:click|preventDefault={closePopups}>
+<div class="rating rate" on:click|preventDefault={closePopups}>
     <svelte:component this={Popup} { overlayData }/>
 </div>
 

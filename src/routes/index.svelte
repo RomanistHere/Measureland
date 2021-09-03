@@ -38,10 +38,10 @@
 <Overlay />
 
 {#if startScreen}
-	<StartScreen />
+	<!-- <StartScreen /> -->
 {/if}
 
 {#if shouldSendEvent}
 	<!-- handle errors and sending -->
-	<ErrorLayer />
+	<!-- <ErrorLayer /> -->
 {/if}
