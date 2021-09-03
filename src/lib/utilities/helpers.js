@@ -1,3 +1,6 @@
+import { overlayStateStore, appStateStore } from '../../stores/state.js';
+import { overlayStateDefault } from '../constants/overlayStateDefault.js';
+
 const getAverageRating = array =>
     array.reduce((acc, c) => acc + c.options.rating, 0) / array.length
 
@@ -69,6 +72,17 @@ const getFinalRating = (obj) => {
     }
 }
 
+const openAnotherOverlay = (overlayName = null, data = {}) => {
+    if (overlayName) {
+        overlayStateStore.update(state => ({ ...overlayStateDefault, [overlayName]: { ...state[overlayName], isOpen: true, data } }));
+    } else {
+        overlayStateStore.update(state => overlayStateDefault);
+        appStateStore.update(state => ({ ...state, openModal: false }));
+    }
+}
+
+const closeOverlays = () => openAnotherOverlay();
+
 export {
     getAverageRating,
     splitString,
@@ -77,4 +91,6 @@ export {
     roundToInt,
     getColor,
     getFinalRating,
+    openAnotherOverlay,
+    closeOverlays,
 }

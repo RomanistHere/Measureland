@@ -7,8 +7,8 @@
     // Supercluster is changed
     import "../../../external/supercluster.js";
 
-    import { userStateStore, appStateStore, overlayStateStore } from "../../../../stores/state.js";
-    import { roundToFifthDecimal, roundToInt } from "../../../utilities/helpers.js";
+    import { userStateStore, appStateStore } from "../../../../stores/state.js";
+    import { roundToFifthDecimal, roundToInt, openAnotherOverlay } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
     const { getMap } = getContext('MEASURELAND_MAP');
@@ -71,7 +71,7 @@
     }
 
     const initShowRatingPopup = ({ latlng }) => {
-        overlayStateStore.update(state => ({ ...state, showRatingsPopup: { isOpen: true, data: latlng } }));
+        openAnotherOverlay('showRatingsPopup', latlng);
         appStateStore.update(state => ({ ...state, openModal: true }));
     }
 

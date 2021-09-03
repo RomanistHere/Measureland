@@ -21,7 +21,6 @@
     }
 
     const createMap = (node) => {
-        console.log($appStateStore)
         const { zoom, center } = $appStateStore;
 
         const map = L.map(node, {

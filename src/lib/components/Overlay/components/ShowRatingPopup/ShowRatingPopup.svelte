@@ -7,7 +7,7 @@
     import { criteria } from '../../../../constants/criteria.js';
     import { _ } from 'svelte-i18n';
 
-    export let popupData;
+    export let overlayData;
 
     let criteriaArray = Object.entries($_('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }));
     console.log(criteriaArray)
@@ -30,7 +30,7 @@
         }));
     }
 
-    let promise = fetchData(popupData);
+    let promise = fetchData(overlayData);
 </script>
 
 <PopupWrap className='rate__wrap'>

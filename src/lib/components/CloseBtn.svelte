@@ -1,11 +1,7 @@
 <script>
-    import { overlayStateStore } from '../../stores/state.js';
-    import { overlayStateDefault } from '../constants/overlayStateDefault.js';
-
-    const closePopup = () =>
-        overlayStateStore.update(state => overlayStateDefault);
+    import { closeOverlays } from '../utilities/helpers.js';
 </script>
 
-<a href={"#"} class="rating__close" on:click|preventDefault={closePopup}>
+<a href={"#"} class="rating__close" on:click|preventDefault={closeOverlays}>
     <span class="close"></span>
 </a>

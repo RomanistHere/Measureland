@@ -1,18 +1,18 @@
 <script>
     import { onMount } from 'svelte';
 
-    import { closeOverlays } from '../../../utilities/helpers.js';
+    import { overlayStateStore } from '../../../../stores/state.js';
+    import { overlayStateDefault } from '../../../constants/overlayStateDefault.js';
 
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
-    import LoginPopup from './LoginPopup.svelte';
-    import RegisterPopup from './RegisterPopup.svelte';
 
     export let overlayName;
     export let overlayData;
+    let Sidebar;
 
-    const popupList = {
-        loginPopup: LoginPopup,
-        registerPopup: RegisterPopup,
+    const sidebarList = {
+        // loginPopup: PopupLayer,
+        // registerPopup: PopupLayer,
         // forgotPasswordPopup: PopupLayer,
         // changePasswordPopup: PopupLayer,
         showRatingsPopup: ShowRatingPopup,
@@ -20,13 +20,18 @@
     };
 
     const closePopups = e =>
-        (e.target === e.currentTarget) ? closeOverlays() : false;
+        (e.target === e.currentTarget) ? overlayStateStore.update(state => overlayStateDefault) : false;
 
-    $: Popup = popupList[overlayName];
+    onMount(() => {
+        // console.log(overlayName, overlayData);
+		Sidebar = popupList[overlayName];
+
+        return () => Sidebar = null;
+	});
 </script>
 
-<div class="rating login" on:click|preventDefault={closePopups}>
-    <svelte:component this={Popup} { overlayData }/>
+<div class="rating rate" on:click|preventDefault={closePopups}>
+    <svelte:component this={Sidebar} { overlayData }/>
 </div>
 
 <style>

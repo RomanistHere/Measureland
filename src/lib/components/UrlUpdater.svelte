@@ -23,6 +23,8 @@
 
         if (openModal)
             url.searchParams.set('openModal', true);
+        else
+            url.searchParams.delete('openModal');
 
     	window.history.replaceState(null, null, url);
     };
