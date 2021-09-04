@@ -3,8 +3,8 @@
     // import FiltersSidebar from './FiltersSidebar.svelte';
     import MenuSidebar from './MenuSidebar.svelte';
 
-    export let overlayName;
-    export let overlayData;
+    export let sidebarName;
+    export let sidebarData;
 
     const sidebarList = {
         // commentsSidebar: CommentsSidebar,
@@ -12,11 +12,11 @@
         menuSidebar: MenuSidebar,
     };
 
-    $: Sidebar = sidebarList[overlayName];
+    $: Sidebar = sidebarList[sidebarName];
 </script>
 
 <aside class="sidebar">
-    <svelte:component this={Sidebar} { overlayData }/>
+    <svelte:component this={Sidebar} { sidebarData }/>
 </aside>
 
 <style>

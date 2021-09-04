@@ -5,8 +5,8 @@
     import LoginPopup from './LoginPopup.svelte';
     import RegisterPopup from './RegisterPopup.svelte';
 
-    export let overlayName;
-    export let overlayData;
+    export let popupName;
+    export let popupData;
 
     const popupList = {
         loginPopup: LoginPopup,
@@ -20,11 +20,11 @@
     const closePopups = e =>
         (e.target === e.currentTarget) ? closeOverlays() : false;
 
-    $: Popup = popupList[overlayName];
+    $: Popup = popupList[popupName];
 </script>
 
 <div class="rating rate" on:click|preventDefault={closePopups}>
-    <svelte:component this={Popup} { overlayData }/>
+    <svelte:component this={Popup} { popupData }/>
 </div>
 
 <style>

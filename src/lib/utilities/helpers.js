@@ -74,7 +74,8 @@ const getFinalRating = (obj) => {
 
 const openAnotherOverlay = (overlayName = null, data = {}) => {
     if (overlayName) {
-        overlayStateStore.update(state => ({ ...overlayStateDefault, [overlayName]: { ...state[overlayName], isOpen: true, data } }));
+        console.log(overlayStateStore)
+        overlayStateStore.update(state => ({ ...state, [overlayName]: { ...state[overlayName], isOpen: true, data } }));
     } else {
         overlayStateStore.update(state => overlayStateDefault);
         appStateStore.update(state => ({ ...state, openModal: false }));

@@ -7,43 +7,63 @@
     import PopupLayer from './components/PopupLayer.svelte';
     import SidebarLayer from './components/SidebarLayer.svelte';
 
-    let overlayActive = false;
-    let overlayName;
-    let overlayData;
+    let popupActive = false;
+    let popupName;
+    let popupData;
+    let sidebarActive = false;
+    let sidebarName;
+    let sidebarData;
 
     const handleKeydown = event => {
         const key = event.key;
         console.log(key);
-        if (overlayActive && key === 'Escape') {
-            overlayActive = false;
+        if ((popupActive || sidebarActive) && key === 'Escape')
             closeOverlays();
-        }
     }
 
     const checkIsOpen = state => {
+        let openOverlays = [];
         for (let [key, value] of Object.entries(state)) {
             const { isOpen, data, type } = value;
             if (isOpen)
-                return { isOpen: true, key, data, type };
+                openOverlays.push({ key, data, type });
         }
-        return { isOpen: false };
+
+        if (openOverlays.length >= 2 && openOverlays[0].type === openOverlays[1].type) {
+            throw new Error(`Can't open two or more modals at once`);
+        }
+
+        return openOverlays;
     }
 
-    const manageOverlays = ({ isOpen, key, data, type }) => {
+    const manageOverlay = ({ key, data, type }) => {
+        if (type === 'sidebar') {
+            sidebarName = key;
+            sidebarData = data;
+            sidebarActive = true;
+            if (browser)
+                document.body.classList.add('sidebar-open');
+        } else if (type === 'popup') {
+            popupName = key;
+            popupData = data;
+            popupActive = true;
+        }
+    }
+
+    const manageOverlays = openOverlays => {
         // TODO: change document.body.classList when resolved:
         // https://github.com/sveltejs/svelte/issues/3105#issuecomment-622437031
-        overlayActive = isOpen && type;
         if (browser)
             document.body.classList.remove('sidebar-open');
 
-        if (!isOpen)
+        sidebarActive = false;
+        popupActive = false;
+
+        if (openOverlays.length === 0)
             return;
 
-        overlayName = key;
-        overlayData = data;
-
-        if (type === 'sidebar' && browser)
-            document.body.classList.add('sidebar-open');
+        for (let i = 0; i < openOverlays.length; i++)
+            manageOverlay(openOverlays[i]);
     }
 
     const openSideBar = () => openAnotherOverlay('menuSidebar');
@@ -52,10 +72,12 @@
     $: manageOverlays(dataOpen);
 </script>
 
-{#if overlayActive === 'popup'}
-    <PopupLayer { overlayName } { overlayData } />
-{:else if overlayActive === 'sidebar'}
-    <SidebarLayer { overlayName } { overlayData } />
+{#if popupActive}
+    <PopupLayer { popupName } { popupData } />
+{/if}
+
+{#if sidebarActive}
+    <SidebarLayer { sidebarName } { sidebarData } />
 {/if}
 
 <a href={"#"} class="overlay__btn open_settings" on:click|preventDefault={openSideBar}>

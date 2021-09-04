@@ -80,24 +80,24 @@
         <hr>
         <ul class="settings__list">
             <li class="setting__item">
-                <a href="#" class="settings__link settings__link-on rating__title crashReportsBtn">
+                <a href={"#"} class="settings__link settings__link-on rating__title crashReportsBtn">
                     Send crash reports:
                     <span class="settings__off">OFF</span>
                     <span class="settings__on">ON</span>
                 </a>
             </li>
             <li class="setting__item">
-                <a href="#" class="settings__link rating__title openFiltersBtn">Filters <span class="settings__highlight">(new)</span></a>
+                <a href={"#"} class="settings__link rating__title openFiltersBtn">Filters <span class="settings__highlight">(new)</span></a>
             </li>
             <!-- <li class="setting__item">
-                <a href="#" class="settings__link rating__title vizualizeLoadingBtn">
+                <a href={"#"} class="settings__link rating__title vizualizeLoadingBtn">
                     Vizualize loading:
                     <span class="settings__off">OFF</span>
                     <span class="settings__on">ON</span>
                 </a>
             </li> -->
             <li class="setting__item">
-                <a href="#" class="settings__link rating__title openRateTutorialBtn">
+                <a href={"#"} class="settings__link rating__title openRateTutorialBtn">
                     Rate a place
                     <div class="settings__title-small settings__available">
                       (available:
@@ -106,7 +106,7 @@
                 </a>
             </li>
         </ul>
-        <a href="#" class="btn moreRatingsBtn loggedInShow settings__btn">
+        <a href={"#"} class="btn moreRatingsBtn loggedInShow settings__btn">
             <span class="settings__showed_rating_text">I need more ratings!</span>
             <span class="settings__hidden_ratings_text">Request processing</span>
         </a>
