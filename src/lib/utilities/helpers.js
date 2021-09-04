@@ -74,8 +74,19 @@ const getFinalRating = (obj) => {
 
 const openAnotherOverlay = (overlayName = null, data = {}) => {
     if (overlayName) {
-        console.log(overlayStateStore)
-        overlayStateStore.update(state => ({ ...state, [overlayName]: { ...state[overlayName], isOpen: true, data } }));
+        overlayStateStore.update(state => {
+            const openedOverlayType = state[overlayName]['type'];
+            const keysArray = Object.keys(state);
+            const length = keysArray.length;
+            for (let i = 0; i < length; i++) {
+                const { type, isOpen } = state[keysArray[i]];
+                if (openedOverlayType === type && isOpen) {
+                    // mutation here should be faster and has no consequences
+                    state[keysArray[i]].isOpen = false;
+                }
+            }
+            return ({ ...state, [overlayName]: { ...state[overlayName], isOpen: true, data } })
+        });
     } else {
         overlayStateStore.update(state => overlayStateDefault);
         appStateStore.update(state => ({ ...state, openModal: false }));
