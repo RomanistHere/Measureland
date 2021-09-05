@@ -1,4 +1,6 @@
 <script>
+    import { getContext } from 'svelte';
+
     import PopupWrap from '../PopupWrap.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
     import Spinner from '../../../Spinner.svelte';
@@ -7,7 +9,15 @@
     import { criteria } from '../../../../constants/criteria.js';
     import { _ } from 'svelte-i18n';
 
+    console.log(getContext('MEASURELAND_MAP'))
+    const { getMap } = getContext('MEASURELAND_MAP');
+	const map = getMap();
+
     export let popupData;
+    let averageRating = '';
+    let numberOfUsers = '';
+    let numberOfComments = '';
+    let personalExperiencePercent = 100;
 
     let criteriaArray = Object.entries($_('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }));
     console.log(criteriaArray)
@@ -21,13 +31,24 @@
         // fillAdress(latlng)
         // $('.rate__popup').focus()
 
+        // const zoom = state.zoom <= 12 ? 13 : state.zoom;
+        const zoom = map.getZoom();
+        console.log(zoom)
+        map.setView({ lng, lat }, zoom);
+
         const { error, data } = await getSinglePointData([ lng, lat ]);
         console.log(error)
         console.log(data)
-        criteriaArray = Object.entries(data['properties']['rating']).map(([ key, value ]) => ({
+        const { properties } = data;
+        criteriaArray = Object.entries(properties['rating']).map(([ key, value ]) => ({
             ...$_('criteria')[key],
             rating: value
         }));
+
+        // averageRating = roundToTen(finalRating)
+        numberOfUsers = properties.numberOfUsers;
+        numberOfComments = properties.numberOfComments;
+        personalExperiencePercent = Math.floor(properties.numberOfPersonalExperience / properties.numberOfUsers * 100);
     }
 
     let promise = fetchData(popupData);
@@ -50,22 +71,22 @@
         </a>
 
         <div class="rate__caption" title="How much people are actually lived here">
-            <span class="ratePersonalExperience">100</span>% of the participants lived nearby
+            {personalExperiencePercent} % of the participants lived nearby
         </div>
     </div>
 
     <div class="rate__container">
         <div class="rate__container_item">
             <span class="rateText1">Av. rating: </span>
-            <span class="rate__highlight rateAverageRating"> </span>
+            <span class="rate__highlight">{averageRating}</span>
         </div>
         <div class="rate__container_item">
             <span class="rateText2">Users rated: </span>
-            <span class="rate__highlight rateNumberOfUsers"> </span>
+            <span class="rate__highlight">{numberOfUsers}</span>
         </div>
         <div class="rate__container_item">
             <a href={"#"} class="rate__comments rateText3">Comments</a>:
-            <span class="rate__highlight rateNumberOfComments"> </span>
+            <span class="rate__highlight">{numberOfComments}</span>
         </div>
     </div>
     <a href={"#"} class="rate__evaluate btn loggedInShow addEvaluation">Add new rating</a>
