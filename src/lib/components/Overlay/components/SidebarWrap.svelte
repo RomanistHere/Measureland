@@ -2,11 +2,13 @@
     import CloseBtn from '../../CloseBtn.svelte';
 
     export let className;
+
+    const overlayType = 'sidebar';
 </script>
 
 <div class="settings sidebar__section sidebar__section-show">
     <slot></slot>
-    <CloseBtn />
+    <CloseBtn { overlayType } />
 </div>
 
 <style>

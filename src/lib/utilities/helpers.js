@@ -72,20 +72,47 @@ const getFinalRating = (obj) => {
     }
 }
 
+const closeOverlaysWithSameType = (overlayType, state) => {
+    let isModalOpen = false;
+
+    const keysArray = Object.keys(state);
+    const length = keysArray.length;
+
+    for (let i = 0; i < length; i++) {
+        const { type, isOpen } = state[keysArray[i]];
+        if (overlayType === type && isOpen) {
+            // mutation here should be faster and has no consequences
+            state[keysArray[i]].isOpen = false;
+        } else {
+            // check if any of other modals are open
+            if (isOpen)
+                isModalOpen = true;
+        }
+    }
+
+    return {
+        newState: state,
+        isModalOpen,
+    };
+}
+
 const openAnotherOverlay = (overlayName = null, data = {}) => {
-    if (overlayName) {
+    overlayStateStore.update(state => {
+        const overlayType = state[overlayName]['type'];
+        const { newState } = closeOverlaysWithSameType(overlayType, state);
+        return ({ ...newState, [overlayName]: { ...newState[overlayName], isOpen: true, data } });
+    });
+}
+
+const closeOverlay = (overlayType = null) => {
+    if (overlayType) {
         overlayStateStore.update(state => {
-            const openedOverlayType = state[overlayName]['type'];
-            const keysArray = Object.keys(state);
-            const length = keysArray.length;
-            for (let i = 0; i < length; i++) {
-                const { type, isOpen } = state[keysArray[i]];
-                if (openedOverlayType === type && isOpen) {
-                    // mutation here should be faster and has no consequences
-                    state[keysArray[i]].isOpen = false;
-                }
-            }
-            return ({ ...state, [overlayName]: { ...state[overlayName], isOpen: true, data } })
+            const { newState, isModalOpen } = closeOverlaysWithSameType(overlayType, state);
+
+            if (!isModalOpen)
+                appStateStore.update(state => ({ ...state, openModal: false }));
+
+            return ({ ...newState });
         });
     } else {
         overlayStateStore.update(state => overlayStateDefault);
@@ -93,7 +120,7 @@ const openAnotherOverlay = (overlayName = null, data = {}) => {
     }
 }
 
-const closeOverlays = () => openAnotherOverlay();
+const closeOverlays = () => closeOverlay();
 
 export {
     getAverageRating,
@@ -104,5 +131,6 @@ export {
     getColor,
     getFinalRating,
     openAnotherOverlay,
+    closeOverlay,
     closeOverlays,
 }

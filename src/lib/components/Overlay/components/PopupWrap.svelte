@@ -2,11 +2,13 @@
     import CloseBtn from '../../CloseBtn.svelte';
 
     export let className;
+
+    const overlayType = 'popup';
 </script>
 
 <div class="rating__wrap {className}">
     <slot></slot>
-    <CloseBtn />
+    <CloseBtn { overlayType } />
 </div>
 
 <style>
