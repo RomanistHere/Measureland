@@ -239,18 +239,18 @@ const appendComments = array => {
     }))
 }
 
-const showComments = async ({ geoID }) => {
-    runSpinner('.sidebar__spinner')
-    // openSideBar('comments')
-    //
-    // const { error, data } = await fetchComments(geoID)
-    //
-    // if (error) {
-    //     hideSpinner('.sidebar__spinner')
-    //     showError('unrecognizedError', error)
-    //     return
-    // }
-    //
-    // appendComments(data.array)
-    hideSpinner('.sidebar__spinner')
-}
+// const showComments = async ({ geoID }) => {
+//     runSpinner('.sidebar__spinner')
+//     openSideBar('comments')
+//
+//     const { error, data } = await fetchComments(geoID)
+//
+//     if (error) {
+//         hideSpinner('.sidebar__spinner')
+//         showError('unrecognizedError', error)
+//         return
+//     }
+//
+//     appendComments(data.array)
+//     hideSpinner('.sidebar__spinner')
+// }

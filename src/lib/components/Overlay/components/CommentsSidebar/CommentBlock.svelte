@@ -1,17 +1,28 @@
 <script>
+    import { userStateStore } from "../../../../../stores/state.js";
+    import { openAnotherOverlay } from "../../../../utilities/helpers.js";
+
     export let data;
 
     // TODO: language
     const lang = 'ru';
     const { isYours, isLiked, isDisliked, rating, comment, username, liked, disliked, id } = data;
 
+    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+
     // TODO: like/dislike comments
     const likeComment = () => {
-
+        if (!isUserLoggedIn) {
+            openAnotherOverlay('loginPopup');
+            return;
+        }
     }
 
     const dislikeComment = () => {
-
+        if (!isUserLoggedIn) {
+            openAnotherOverlay('loginPopup');
+            return;
+        }
     }
 </script>
 

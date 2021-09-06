@@ -35,6 +35,7 @@
         }
 
         if (openOverlays.length === 1 && openOverlays[0].key === 'commentsSidebar') {
+            // close sidebar if only comments is opened (expected behaviour: user closes rating)
             openOverlays = [];
             closeOverlays();
         }
