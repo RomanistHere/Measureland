@@ -2,7 +2,7 @@
     import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
 
-    import { openAnotherOverlay } from '../../../utilities/helpers.js';
+    import { openAnotherOverlay } from '../../../../utilities/helpers.js';
 
     const dataTopBlock = {
         title: 'Account',

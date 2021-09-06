@@ -1,5 +1,5 @@
 <script>
-    import { closeOverlays } from '../../../utilities/helpers.js';
+    import { closeOverlays } from '../../../../utilities/helpers.js';
 
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
     import LoginPopup from './LoginPopup.svelte';

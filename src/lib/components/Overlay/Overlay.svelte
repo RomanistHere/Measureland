@@ -4,8 +4,8 @@
     import { overlayStateStore } from '../../../stores/state.js';
     import { closeOverlays, openAnotherOverlay } from '../../utilities/helpers.js';
 
-    import PopupLayer from './components/PopupLayer.svelte';
-    import SidebarLayer from './components/SidebarLayer.svelte';
+    import PopupLayer from './components/popups/PopupLayer.svelte';
+    import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
 
     let popupActive = false;
     let popupName;

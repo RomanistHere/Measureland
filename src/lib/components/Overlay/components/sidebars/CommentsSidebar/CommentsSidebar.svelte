@@ -1,9 +1,9 @@
 <script>
     import SidebarWrap from '../SidebarWrap.svelte';
     import CommentBlock from './CommentBlock.svelte';
-    import Spinner from '../../../Spinner.svelte';
+    import Spinner from '../../../../Spinner.svelte';
 
-    import { fetchComments } from "../../../../utilities/api.js";
+    import { fetchComments } from "../../../../../utilities/api.js";
 
     export let sidebarData;
 

@@ -1,7 +1,7 @@
 <script>
     import PopupWrap from './PopupWrap.svelte';
 
-    import { openAnotherOverlay } from "../../../utilities/helpers.js";
+    import { openAnotherOverlay } from "../../../../utilities/helpers.js";
 
     const openLoginPopup = () => openAnotherOverlay('loginPopup')
 </script>

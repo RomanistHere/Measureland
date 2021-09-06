@@ -4,13 +4,14 @@
 
     import PopupWrap from '../PopupWrap.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
-    import Spinner from '../../../Spinner.svelte';
+    import Spinner from '../../../../Spinner.svelte';
+    import MainButton from '../../MainButton.svelte';
 
-    import { getSinglePointData } from "../../../../utilities/api.js";
-    import { mapReference } from "../../../../../stores/references.js";
-    import { appStateStore, userStateStore } from "../../../../../stores/state.js";
-    import { criteria } from '../../../../constants/criteria.js';
-    import { getFinalRating, roundToTen, openAnotherOverlay } from '../../../../utilities/helpers.js';
+    import { getSinglePointData } from "../../../../../utilities/api.js";
+    import { mapReference } from "../../../../../../stores/references.js";
+    import { appStateStore, userStateStore } from "../../../../../../stores/state.js";
+    import { criteria } from '../../../../../constants/criteria.js';
+    import { getFinalRating, roundToTen, openAnotherOverlay } from '../../../../../utilities/helpers.js';
     import { _ } from 'svelte-i18n';
 
     export let popupData;
@@ -133,11 +134,11 @@
     </div>
 
     {#if isUserLoggedIn && isAlreadyRatedByThisUser}
-        <a href={"#"} class="rate__evaluate btn btn-hide rate__rated_btn">You have already rated this place</a>
+        <div href={"#"} class="rate__evaluate btn rate__rated_btn">You have already rated this place</div>
     {:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
-        <a href={"#"} class="rate__evaluate btn loggedInShow addEvaluation">Add new rating</a>
+        <MainButton text='Add new rating' action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
     {:else}
-        <a href={"#"} class="rate__evaluate btn loggedOutShow loggedOutShow-show openLoginFromRatings">Login and rate</a>
+        <MainButton text='Login and rate' action={() => openAnotherOverlay('loginPopup')} />
     {/if}
 
     {#await promise}

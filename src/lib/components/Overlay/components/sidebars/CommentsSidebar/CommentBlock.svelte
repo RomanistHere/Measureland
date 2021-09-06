@@ -1,6 +1,6 @@
 <script>
-    import { userStateStore } from "../../../../../stores/state.js";
-    import { openAnotherOverlay } from "../../../../utilities/helpers.js";
+    import { userStateStore } from "../../../../../../stores/state.js";
+    import { openAnotherOverlay } from "../../../../../utilities/helpers.js";
 
     export let data;
 

@@ -1,12 +1,12 @@
 <script>
-    import CloseBtn from '../../CloseBtn.svelte';
+    import CloseBtn from '../../../CloseBtn.svelte';
 
     export let className;
 
-    const overlayType = 'popup';
+    const overlayType = 'sidebar';
 </script>
 
-<div class="rating__wrap {className}">
+<div class="settings sidebar__section sidebar__section-show">
     <slot></slot>
     <CloseBtn { overlayType } />
 </div>
