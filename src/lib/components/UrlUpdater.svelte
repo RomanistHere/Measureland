@@ -10,7 +10,7 @@
         updateURL($appStateStore);
     };
 
-    const updateURL = ({ center, zoom, filters, isFiltersOn, openModal }) => {
+    const updateURL = ({ center, zoom, filters, isFiltersOn, openModal, showRating }) => {
     	const [lat, lng] = center;
 
         const url = new URL(window.location.href);
@@ -26,6 +26,11 @@
         else
             url.searchParams.delete('openModal');
 
+        if (showRating)
+            url.searchParams.set('showRating', true);
+        else
+            url.searchParams.delete('showRating');
+
     	window.history.replaceState(null, null, url);
     };
 
@@ -34,6 +39,7 @@
         const lat = url.searchParams.get('lat');
         const lng = url.searchParams.get('lng');
         const zoom = url.searchParams.get('zoom');
+        const showRating = url.searchParams.get('showRating');
         // TODO: other params
         const center = [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
 
@@ -42,6 +48,9 @@
 
         if (zoom)
             appStateStore.update(state => ({ ...state, zoom }));
+
+        if (showRating)
+            appStateStore.update(state => ({ ...state, showRating: true }));
 
         url.searchParams.delete('openModal');
         window.history.replaceState(null, null, url);

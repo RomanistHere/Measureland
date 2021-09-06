@@ -1,17 +1,12 @@
 <script>
-    import { setContext } from 'svelte';
-
     import L from 'leaflet';
     import 'leaflet/dist/leaflet.css';
 
     import { appStateStore } from "../../../stores/state.js";
+    import { mapReference } from "../../../stores/references.js";
 
     import MarkerCluster from './components/MarkerCluster.svelte';
     import GeoSearch from './components/GeoSearch.svelte';
-
-    setContext('MEASURELAND_MAP', {
-		getMap: () => map
-	});
 
     let map;
 
@@ -46,6 +41,7 @@
 
     const mapAction = wrap => {
         map = createMap(wrap);
+        mapReference.set(map);
         return {
             destroy: () => {
                 map.remove();

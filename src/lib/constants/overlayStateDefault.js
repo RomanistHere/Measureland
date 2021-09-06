@@ -34,4 +34,14 @@ export const overlayStateDefault = {
         type: 'sidebar',
         data: {},
     },
+    commentsSidebar: {
+        isOpen: false,
+        type: 'sidebar',
+        data: {},
+    },
+    filtersSidebar: {
+        isOpen: false,
+        type: 'sidebar',
+        data: {},
+    },
 }

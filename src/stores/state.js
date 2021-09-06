@@ -22,6 +22,7 @@ export const appStateStore = writable({
     zoom: 12,
     filters: null,
     openModal: false,
+    showRating: false,
     isFiltersOn: false,
     ratingToSave: null,
     corrdsToSave: null,

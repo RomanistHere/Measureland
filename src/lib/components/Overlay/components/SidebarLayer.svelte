@@ -1,5 +1,5 @@
 <script>
-    // import CommentsSidebar from './CommentsSidebar.svelte';
+    import CommentsSidebar from './CommentsSidebar/CommentsSidebar.svelte';
     // import FiltersSidebar from './FiltersSidebar.svelte';
     import MenuSidebar from './MenuSidebar.svelte';
 
@@ -7,7 +7,7 @@
     export let sidebarData;
 
     const sidebarList = {
-        // commentsSidebar: CommentsSidebar,
+        commentsSidebar: CommentsSidebar,
         // filtersSidebar: FiltersSidebar,
         menuSidebar: MenuSidebar,
     };

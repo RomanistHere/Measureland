@@ -1,15 +1,13 @@
 <script>
-    import { getContext } from 'svelte';
-
     import L from 'leaflet';
     import * as ELG from 'esri-leaflet-geocoder';
     import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 
+    import { mapReference } from "../../../../stores/references.js";
+
     const esriApiKey = 'AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q';
     const geocodeService = new ELG.geocodeService({ apikey: esriApiKey });
-
-    const { getMap } = getContext('MEASURELAND_MAP');
-	const map = getMap();
+    const map = $mapReference;
 
     const searchControl = new ELG.geosearch({
         providers: [

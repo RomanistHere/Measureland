@@ -1,5 +1,5 @@
 <script>
-    import { getContext, onMount } from 'svelte';
+    import { onMount } from 'svelte';
     import { get } from 'svelte/store';
 
 	import L from 'leaflet';
@@ -8,14 +8,11 @@
     import "../../../external/supercluster.js";
 
     import { userStateStore, appStateStore } from "../../../../stores/state.js";
+    import { mapReference } from "../../../../stores/references.js";
     import { roundToFifthDecimal, roundToInt, openAnotherOverlay } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
-    const { getMap } = getContext('MEASURELAND_MAP');
-	const map = getMap();
-
-    let userState = get(userStateStore);
-    let appState = get(appStateStore);
+	const map = $mapReference;
 
     let visitedPoly = null
     let cachedData = []
@@ -82,7 +79,7 @@
     	    const icon = getIcon(Math.floor(rating))
     	    const marker = L.marker(latlng, {
     	        icon: icon,
-    	        title: `${clusterCaption[userState.lang]['titleSingle']} ${rating}`,
+    	        title: `${clusterCaption[$userStateStore.lang]['titleSingle']} ${rating}`,
     	        riseOnHover: true,
     	        rating: rating,
     	    })
@@ -95,7 +92,7 @@
     		const grpIcon = getGrpIcon(Math.floor(rating))
     		const marker = L.marker(latlng, {
     			icon: grpIcon,
-    			title: `${clusterCaption[userState.lang]['titleGrp']} ${rating}`,
+    			title: `${clusterCaption[$userStateStore.lang]['titleGrp']} ${rating}`,
     			riseOnHover: true,
     			rating: rating,
     		})
@@ -183,7 +180,7 @@
             return newObj
         })
 
-    	if (!appState.isFiltersOn) {
+    	if (!$appStateStore.isFiltersOn) {
     		cachedData = [ ...cachedData, ...geoData ]
     		// console.log('total number of points in cache: ', cachedData.length)
 
@@ -224,7 +221,7 @@
     		inverted: false
     	}
 
-    	const queryPolygon = visitedPoly !== null && !appState.isFiltersOn
+    	const queryPolygon = visitedPoly !== null && !$appStateStore.isFiltersOn
     		? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
     		: currentScreenPoly
 
@@ -255,12 +252,12 @@
     		fillOpacity: 0.05,
     		weight: 2
     	})
-    	if (!appState.isFiltersOn)
+    	if (!$appStateStore.isFiltersOn)
     		usedBounds.push(poly)
-    	if (appState.shouldShowLoading && !appState.isFiltersOn)
+    	if ($appStateStore.shouldShowLoading && !$appStateStore.isFiltersOn)
     		poly.addTo(map)
 
-    	const filters = appState.isFiltersOn ? appState.filters : null
+    	const filters = $appStateStore.isFiltersOn ? $appStateStore.filters : null
     	// console.timeEnd('preparations')
     	// console.time('fetch new data')
         const { error, data } = await fetchBoundsData(query, zoom, filters)
@@ -283,7 +280,7 @@
         // TODO:
         // console.log('number of downloaded points: ', result.length)
 
-    	if (!appState.isFiltersOn) {
+    	if (!$appStateStore.isFiltersOn) {
     		visitedPoly = visitedPoly !== null
     			? PolyBool.union(visitedPoly, queryPolygon)
     			: currentScreenPoly

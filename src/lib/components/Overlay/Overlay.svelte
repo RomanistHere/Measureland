@@ -22,6 +22,7 @@
     }
 
     const checkIsOpen = state => {
+        console.log(state);
         let openOverlays = [];
         for (let [key, value] of Object.entries(state)) {
             const { isOpen, data, type } = value;
@@ -31,6 +32,11 @@
 
         if (openOverlays.length >= 2 && openOverlays[0].type === openOverlays[1].type) {
             throw new Error(`Can't open two or more modals at once`);
+        }
+
+        if (openOverlays.length === 1 && openOverlays[0].key === 'commentsSidebar') {
+            openOverlays = [];
+            closeOverlays();
         }
 
         return openOverlays;

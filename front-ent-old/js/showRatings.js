@@ -14,36 +14,36 @@ let showRatingState = {
 
 const getStarsTitle = (key, val) =>
     state.lang === 'ru' ? `Средняя оценка за ${rusRating[key]} ${val}` : `Average ${engRating[key]} rating is ${val}`
-
-const setMarkerUrl = (coords) => {
-    const { lat, lng } = coords
-
-    const url = new URL(window.location.href)
-    url.searchParams.set('lat', lat)
-    url.searchParams.set('lng', lng)
-    url.searchParams.set('showRating', true)
-
-    window.history.replaceState(null, null, url)
-
-    return url.toString()
-}
-
-const resetMarkerUrl = () => {
-    const url = new URL(window.location.href)
-
-    url.searchParams.delete('showRating')
-
-    window.history.replaceState(null, null, url)
-}
+//
+// const setMarkerUrl = (coords) => {
+//     const { lat, lng } = coords
+//
+//     const url = new URL(window.location.href)
+//     url.searchParams.set('lat', lat)
+//     url.searchParams.set('lng', lng)
+//     url.searchParams.set('showRating', true)
+//
+//     window.history.replaceState(null, null, url)
+//
+//     return url.toString()
+// }
+//
+// const resetMarkerUrl = () => {
+//     const url = new URL(window.location.href)
+//
+//     url.searchParams.delete('showRating')
+//
+//     window.history.replaceState(null, null, url)
+// }
 
 const initRatingPopup = async ({ latlng }) => {
     state.flow.push('srp')
     fillAdress(latlng)
-    runSpinner('.rate__spinner')
-    addClass(ratePopup, 'rating-active')
+    // runSpinner('.rate__spinner')
+    // addClass(ratePopup, 'rating-active')
     $('.rate__popup').focus()
 
-    const { error, data } = await getSinglePointData([ latlng.lng, latlng.lat, ])
+    // const { error, data } = await getSinglePointData([ latlng.lng, latlng.lat, ])
 
     if (error === 'Location not found') {
         showError('locationNotFound')
@@ -61,65 +61,65 @@ const initRatingPopup = async ({ latlng }) => {
     if (!isLoggedIn)
         userLoggedOut()
 
-    const markerUrl = setMarkerUrl(latlng)
+    // const markerUrl = setMarkerUrl(latlng)
     const markerUrlBtn = $('.rate__link_btn')
-    const { properties } = data
-    const ratingObj = properties.rating
-    const props = Object.keys(ratingObj)
-    const { finalRating } = getFinalRating(ratingObj)
-    const zoom = state.zoom <= 12 ? 13 : state.zoom
+    // const { properties } = data
+    // const ratingObj = properties.rating
+    // const props = Object.keys(ratingObj)
+    // const { finalRating } = getFinalRating(ratingObj)
+    // const zoom = state.zoom <= 12 ? 13 : state.zoom
 
-    map.setView(latlng, zoom)
+    // map.setView(latlng, zoom)
 
-    showRatingState = { ...showRatingState, latlng: latlng, geoID: properties.geoID }
-
-    for (let i = 0; i < props.length; i++) {
-        const key = props[i]
-        const val = ratingObj[key]
-
-        if (val === null)
-            continue
-
-        const number = roundToInt(val)
-        const starsWrap = ratePopup.querySelector(`.star-wrapper[data-name="${key}"]`)
-        const star = starsWrap.querySelector(`.star[data-rating="${number}"]`)
-
-        addClass(star, 'star-active')
+    // showRatingState = { ...showRatingState, latlng: latlng, geoID: properties.geoID }
+    //
+    // for (let i = 0; i < props.length; i++) {
+    //     const key = props[i]
+    //     const val = ratingObj[key]
+    //
+    //     if (val === null)
+    //         continue
+    //
+    //     const number = roundToInt(val)
+    //     const starsWrap = ratePopup.querySelector(`.star-wrapper[data-name="${key}"]`)
+    //     const star = starsWrap.querySelector(`.star[data-rating="${number}"]`)
+    //
+    //     addClass(star, 'star-active')
         starsWrap.title = getStarsTitle(key, val)
-    }
+    // }
+    //
+    // rateAverageRating.textContent = roundToTen(finalRating)
+    // rateNumberOfUsers.textContent = properties.numberOfUsers
+    // rateNumberOfComments.textContent = properties.numberOfComments
+    // ratePersonalExperience.textContent = Math.floor(properties.numberOfPersonalExperience / properties.numberOfUsers * 100)
 
-    rateAverageRating.textContent = roundToTen(finalRating)
-    rateNumberOfUsers.textContent = properties.numberOfUsers
-    rateNumberOfComments.textContent = properties.numberOfComments
-    ratePersonalExperience.textContent = Math.floor(properties.numberOfPersonalExperience / properties.numberOfUsers * 100)
+    // markerUrlBtn.setAttribute('data-url', markerUrl)
+    // handleClickPrevDef(markerUrlBtn, () => {
+    //     state.flow.push('ccu')
+    //     try {
+    //         navigator.clipboard.writeText(markerUrlBtn.getAttribute('data-url'))
+    //         addClass(markerUrlBtn, 'rate__link_btn-success')
+    //         setTimeout(() => { removeClass(markerUrlBtn, 'rate__link_btn-success') }, 1000)
+    //     } catch (e) {
+    //         console.warn(e)
+    //         alert(
+    //             state.lang === 'en'
+    //                 ? `Your browser couldn't copy address. Copy URL manually.`
+    //                 : `Браузер не смог скопировать адрес. Скопируй URL вручную.`
+    //         )
+    //     }
+    // })
 
-    markerUrlBtn.setAttribute('data-url', markerUrl)
-    handleClickPrevDef(markerUrlBtn, () => {
-        state.flow.push('ccu')
-        try {
-            navigator.clipboard.writeText(markerUrlBtn.getAttribute('data-url'))
-            addClass(markerUrlBtn, 'rate__link_btn-success')
-            setTimeout(() => { removeClass(markerUrlBtn, 'rate__link_btn-success') }, 1000)
-        } catch (e) {
-            console.warn(e)
-            alert(
-                state.lang === 'en'
-                    ? `Your browser couldn't copy address. Copy URL manually.`
-                    : `Браузер не смог скопировать адрес. Скопируй URL вручную.`
-            )
-        }
-    })
+    // if (properties.isRated) {
+    //     addClass(addEvaluation, 'btn-hide')
+    //     removeClass($('.rate__rated_btn'), 'btn-hide')
+    // } else {
+    //     removeClass(addEvaluation, 'btn-hide')
+    //     addClass($('.rate__rated_btn'), 'btn-hide')
+    // }
 
-    if (properties.isRated) {
-        addClass(addEvaluation, 'btn-hide')
-        removeClass($('.rate__rated_btn'), 'btn-hide')
-    } else {
-        removeClass(addEvaluation, 'btn-hide')
-        addClass($('.rate__rated_btn'), 'btn-hide')
-    }
-
-    addToUrlOpenModalFlag()
-    hideSpinner('.rate__spinner')
+    // addToUrlOpenModalFlag()
+    // hideSpinner('.rate__spinner')
 }
 
 const initMarkerFromURL = () => {
@@ -151,23 +151,23 @@ const resetRate = () => {
 }
 
 const handleRatingsBtns = () => {
-    handleClickPrevDef(rateCloseBtn, () => {
-        resetRate()
-        closeSideBar()
-    })
+    // handleClickPrevDef(rateCloseBtn, () => {
+    //     resetRate()
+    //     closeSideBar()
+    // })
 
-    handleClickPrevDef(ratePopup, e => {
-        if (e.target !== e.currentTarget)
-            return
+    // handleClickPrevDef(ratePopup, e => {
+    //     if (e.target !== e.currentTarget)
+    //         return
+    //
+    //     resetRate()
+    //     closeSideBar()
+    // })
 
-        resetRate()
-        closeSideBar()
-    })
-
-    handleClickPrevDef(openCommentsBtn, () => {
-        state.flow.push('oc')
-        showComments(showRatingState)
-    })
+    // handleClickPrevDef(openCommentsBtn, () => {
+    //     state.flow.push('oc')
+    //     showComments(showRatingState)
+    // })
 
     handleClickPrevDef(addEvaluation, () => {
         state.flow.push('iqr')
