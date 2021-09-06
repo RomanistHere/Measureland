@@ -52,6 +52,7 @@
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
+                openAnotherOverlay('partnersPopup');
             }
         }, {
             text: 'Our guide book (Tutorial)',
@@ -97,7 +98,7 @@
                 </a>
             </li> -->
             <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title openRateTutorialBtn">
+                <a href={"#"} class="settings__link rating__title" on:click|preventDefault={() => openAnotherOverlay('howToRatePopup')}>
                     Rate a place
                     <div class="settings__title-small settings__available">
                       (available:

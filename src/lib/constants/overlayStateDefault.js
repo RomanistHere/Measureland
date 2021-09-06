@@ -29,6 +29,16 @@ export const overlayStateDefault = {
         type: 'popup',
         data: {},
     },
+    howToRatePopup: {
+        isOpen: false,
+        type: 'popup',
+        data: {},
+    },
+    partnersPopup: {
+        isOpen: false,
+        type: 'popup',
+        data: {},
+    },
     menuSidebar: {
         isOpen: false,
         type: 'sidebar',

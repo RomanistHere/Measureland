@@ -4,17 +4,21 @@
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
     import LoginPopup from './LoginPopup.svelte';
     import RegisterPopup from './RegisterPopup.svelte';
+    import PartnersPopup from './PartnersPopup.svelte';
+    import HowToRatePopup from './HowToRatePopup.svelte';
 
     export let popupName;
     export let popupData;
 
     const popupList = {
-        loginPopup: LoginPopup,
-        registerPopup: RegisterPopup,
-        // forgotPasswordPopup: PopupLayer,
         // changePasswordPopup: PopupLayer,
-        showRatingsPopup: ShowRatingPopup,
+        // forgotPasswordPopup: PopupLayer,
+        howToRatePopup: HowToRatePopup,
+        loginPopup: LoginPopup,
+        partnersPopup: PartnersPopup,
         // quizPopup: PopupLayer,
+        registerPopup: RegisterPopup,
+        showRatingsPopup: ShowRatingPopup,
     };
 
     const closePopups = e =>

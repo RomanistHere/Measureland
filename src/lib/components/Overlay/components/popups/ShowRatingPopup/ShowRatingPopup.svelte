@@ -128,7 +128,7 @@
             <span class="rate__highlight">{numberOfUsers}</span>
         </div>
         <div class="rate__container_item">
-            <a href={"#"} on:click|preventDefault={openCommentsSidebar}>Comments</a>:
+            <a href={"#"} class="rate__comments" on:click|preventDefault={openCommentsSidebar}>Comments</a>:
             <span class="rate__highlight">{numberOfComments}</span>
         </div>
     </div>
