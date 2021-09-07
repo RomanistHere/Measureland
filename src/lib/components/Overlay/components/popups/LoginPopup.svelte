@@ -1,5 +1,6 @@
 <script>
     import PopupWrap from './PopupWrap.svelte';
+    import Input from '../../../Input.svelte';
 
     import { openAnotherOverlay } from "../../../../utilities/helpers.js";
 
@@ -14,20 +15,17 @@
             </p>
 
             <div class="container">
-                <div class="rating__stars form__grp">
-                    <label for="current-email" class="rating__title title form__label">Email</label>
-                    <input class="form__input inputEmail" type="email" id="current-email">
-                    <span class="form__error">Wrong email format! Example: yournick@mail.com</span>
-                </div>
+                <Input
+                    title='Email'
+                    type='email'
+                    id='current-email'
+                />
 
-                <div class="rating__stars form__grp">
-                    <label for="current-password" class="rating__title title form__label">
-                        <span class="loginText3">Password</span>
-                        <a href="#" class="form__label_help togglePass">Show/hide</a>
-                    </label>
-                    <input class="form__input inputPass" type="password" id="current-password" autocomplete="current-password">
-                    <span class="form__error">Password should be longer than 6 characters!</span>
-                </div>
+                <Input
+                    title='Password'
+                    type='password'
+                    id='current-password'
+                />
             </div>
 
             <div class="spinner__wrap login__spinner">
