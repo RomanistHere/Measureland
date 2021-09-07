@@ -1,4 +1,6 @@
 <script>
+    import { locale } from 'svelte-i18n';
+
     import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
 
@@ -44,9 +46,14 @@
         }, {
             text: 'Change language (язык)',
             shouldShow: true,
-            href: '#',
+            href: `#`,
             onClick: (e) => {
                 e.preventDefault();
+                const nextLang = $locale === 'ru' ? 'en' : 'ru';
+                // locale.set(nextLang);
+                if (typeof window !== 'undefined') {
+                    window.location.pathname = `/${nextLang}`;
+                };
             }
         },]
     };

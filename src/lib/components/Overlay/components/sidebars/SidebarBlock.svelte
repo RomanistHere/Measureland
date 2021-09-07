@@ -5,7 +5,7 @@
     $: list = list.map(item => ({
         ...item,
         shouldShow: item.shouldShow === undefined || item.shouldShow === true ? true : false,
-        target: item.href !== '#' ? '_blank' : null,
+        target: item.targetBlank === false || item.href === '#' ? null : '_blank',
     }))
 </script>
 

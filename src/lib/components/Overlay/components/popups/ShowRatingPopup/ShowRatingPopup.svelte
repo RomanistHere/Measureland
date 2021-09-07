@@ -29,12 +29,12 @@
     let approximateAdress = 'calculating...';
     let commentGeoID = null;
     let currentLatLng = null;
+    let loadedRating = null;
 
-    let criteriaArray = Object.entries($_('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }));
-    console.log(criteriaArray)
-
-    const sleep = milliseconds =>
-        new Promise(resolve => setTimeout(resolve, milliseconds));
+    // complexity because of translation
+    $: criteriaArray = loadedRating === null
+        ? Object.entries($_('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
+        : Object.entries(loadedRating).map(([ key, value ]) => ({ ...$_('criteria')[key], rating: value }));
 
     const copyShareRatingURL = () => {
         if (browser) {
@@ -53,7 +53,6 @@
         openAnotherOverlay('commentsSidebar', commentGeoID);
 
     const fetchData = async ({ lng, lat }) => {
-        // await sleep(2000);
         // TODO:
         // fillAdress(latlng)
         // $('.rate__popup').focus()
@@ -66,10 +65,7 @@
         console.log(error)
         console.log(data)
         const { properties } = data;
-        criteriaArray = Object.entries(properties['rating']).map(([ key, value ]) => ({
-            ...$_('criteria')[key],
-            rating: value
-        }));
+        loadedRating = properties['rating'];
 
         const ratingObj = properties.rating;
         const { finalRating } = getFinalRating(ratingObj);

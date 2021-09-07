@@ -1,6 +1,9 @@
 import { overlayStateStore, appStateStore } from '../../stores/state.js';
 import { overlayStateDefault } from '../constants/overlayStateDefault.js';
 
+const sleep = milliseconds =>
+    new Promise(resolve => setTimeout(resolve, milliseconds));
+
 const getAverageRating = array =>
     array.reduce((acc, c) => acc + c.options.rating, 0) / array.length
 
