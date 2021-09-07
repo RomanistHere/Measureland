@@ -3,6 +3,12 @@
     import SidebarBlock from './SidebarBlock.svelte';
 
     import { openAnotherOverlay } from '../../../../utilities/helpers.js';
+    import { userStateStore } from "../../../../../stores/state.js";
+
+    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+
+    // TODO: get for user
+    let numberOfAvailableRatings = 3;
 
     const dataTopBlock = {
         title: 'Account',
@@ -100,10 +106,12 @@
             <li class="setting__item">
                 <a href={"#"} class="settings__link rating__title" on:click|preventDefault={() => openAnotherOverlay('howToRatePopup')}>
                     Rate a place
-                    <div class="settings__title-small settings__available">
-                      (available:
-                      <span class="settings__highlight settings__highlight-small availRating">3</span>)
-                    </div>
+                    {#if isUserLoggedIn}
+                        <div class="settings__title-small settings__available">
+                          (available:
+                          <span class="settings__highlight settings__highlight-small">{numberOfAvailableRatings}</span>)
+                        </div>
+                    {/if}
                 </a>
             </li>
         </ul>
