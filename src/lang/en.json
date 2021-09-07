@@ -44,5 +44,38 @@
             "title": "Parking places",
             "tooltip": "Parking space problems. 1 - no places, 5 - no problem."
         }
+    },
+    "menuSidebar": {
+        "titleTop": "Account",
+        "loginOrRegister": "Login/Register",
+        "logout": "Log out",
+        "myRatings": "My ratings",
+        "changePassword": "Change password",
+        "changeLanguage": "Change language (язык)",
+        "titleMid": "Features",
+        "sendCrashReports": "Send crash reports",
+        "toggleOn": "ON",
+        "toggleOff": "OFF",
+        "filters": "Filters",
+        "ratePlace": "Rate a place",
+        "ratePlaceAvailable": "available",
+        "needMoreRatings": "I need more ratings!",
+        "requestProcessing": "Request processing",
+        "filters": "Filters",
+        "titleBot": "Related",
+        "ourPartners": "Our partners",
+        "ourGuideBook": "Our guide book (Tutorial)",
+        "paidOptions": "Paid options",
+        "aboutUs": "About us",
+        "support": "Support",
+        "blog": "Blog"
+    },
+    "footer": {
+        "version": "Version",
+        "termsOfUse": "Terms of use",
+        "credits": "by Roman Smunyov",
+        "creditsLink": "RomanistHere",
+        "allRightsReserved": "All rights reserved",
+        "rightsYear": "© 2021"
     }
 }

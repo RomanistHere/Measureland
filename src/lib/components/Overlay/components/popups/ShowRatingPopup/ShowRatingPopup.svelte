@@ -12,7 +12,7 @@
     import { appStateStore, userStateStore } from "../../../../../../stores/state.js";
     import { criteria } from '../../../../../constants/criteria.js';
     import { getFinalRating, roundToTen, openAnotherOverlay } from '../../../../../utilities/helpers.js';
-    import { _ } from 'svelte-i18n';
+    import { json } from 'svelte-i18n';
 
     export let popupData;
 
@@ -33,8 +33,8 @@
 
     // complexity because of translation
     $: criteriaArray = loadedRating === null
-        ? Object.entries($_('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
-        : Object.entries(loadedRating).map(([ key, value ]) => ({ ...$_('criteria')[key], rating: value }));
+        ? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
+        : Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
 
     const copyShareRatingURL = () => {
         if (browser) {

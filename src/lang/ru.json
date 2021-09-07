@@ -44,5 +44,37 @@
             "title": "Места для парковки",
             "tooltip": "Проблемы с местами для парковки. 1 - мест нет, 5 - без проблем."
         }
+    },
+    "menuSidebar": {
+        "titleTop": "Аккаунт",
+        "loginOrRegister": "Войти/Зарегистрироваться",
+        "logout": "Выйти из профиля",
+        "myRatings": "Мои оценки",
+        "changePassword": "Изменить пароль",
+        "changeLanguage": "Сменить язык (language)",
+        "titleMid": "Функции",
+        "sendCrashReports": "Отчёты об ошибках:",
+        "toggleOn": "Вкл",
+        "toggleOff": "Выкл",
+        "filters": "Фильтры",
+        "ratePlace": "Добавить оценку",
+        "ratePlaceAvailable": "доступно",
+        "needMoreRatings": "Хочу больше оценок!",
+        "requestProcessing": "Запрос обрабатывается",
+        "titleBot": "Полезные ссылки",
+        "ourPartners": "Наши партнёры",
+        "ourGuideBook": "Путеводитель по Измерии",
+        "paidOptions": "Paid options",
+        "aboutUs": "О нас",
+        "support": "Поддержка",
+        "blog": "Блог"
+    },
+    "footer": {
+        "version": "Версия",
+        "termsOfUse": "Условия использования",
+        "credits": "Роман Смунёв",
+        "creditsLink": "RomanistHere",
+        "allRightsReserved": "Все права защищены",
+        "rightsYear": "© 2021"
     }
 }

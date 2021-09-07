@@ -1,5 +1,5 @@
 <script>
-    import { locale } from 'svelte-i18n';
+    import { _, locale } from 'svelte-i18n';
 
     import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
@@ -8,14 +8,15 @@
     import { userStateStore } from "../../../../../stores/state.js";
 
     const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    const currentVersion = '1.2.1';
 
     // TODO: get for user
     let numberOfAvailableRatings = 3;
 
-    const dataTopBlock = {
-        title: 'Account',
+    $: dataTopBlock = {
+        title: $_('menuSidebar.titleTop'),
         list: [{
-            text: 'Login/Register',
+            text: $_('menuSidebar.loginOrRegister'),
             shouldShow: true,
             href: '#',
             onClick: (e) => {
@@ -23,64 +24,66 @@
                 openAnotherOverlay('loginPopup');
             }
         }, {
-            text: 'Log out',
+            text: $_('menuSidebar.logout'),
             shouldShow: false,
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
             }
         }, {
-            text: 'My ratings',
+            text: $_('menuSidebar.myRatings'),
             shouldShow: false,
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
             }
         }, {
-            text: 'Change the password',
+            text: $_('menuSidebar.changePassword'),
             shouldShow: false,
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
             }
         }, {
-            text: 'Change language (язык)',
+            text: $_('menuSidebar.changeLanguage'),
             shouldShow: true,
             href: `#`,
             onClick: (e) => {
                 e.preventDefault();
                 const nextLang = $locale === 'ru' ? 'en' : 'ru';
-                // locale.set(nextLang);
+                locale.set(nextLang);
                 if (typeof window !== 'undefined') {
-                    window.location.pathname = `/${nextLang}`;
+                    const url = new URL(window.location.href);
+                    url.pathname = `/${nextLang}`;
+                    window.history.replaceState(null, null, url);
                 };
             }
         },]
     };
 
-    const dataBottomBlock = {
-        title: 'Related',
+    $: dataBottomBlock = {
+        title: $_('menuSidebar.titleBot'),
         list: [{
-            text: 'Our partners',
+            text: $_('menuSidebar.ourPartners'),
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
                 openAnotherOverlay('partnersPopup');
             }
         }, {
-            text: 'Our guide book (Tutorial)',
+            text: $_('menuSidebar.ourGuideBook'),
             href: 'blog/tutorial/',
         }, {
-            text: 'Paid options',
+            text: $_('menuSidebar.paidOptions'),
             href: 'blog/paid-options/',
         }, {
-            text: 'About us',
+            text: $_('menuSidebar.aboutUs'),
             href: 'blog/about-us/',
         }, {
-            text: 'Support',
+            text: $_('menuSidebar.support'),
             href: 'blog/support/',
         }, {
-            text: 'Blog',
+            text: $_('menuSidebar.blog'),
             href: 'blog/',
         }]
     };
@@ -90,18 +93,18 @@
     <SidebarBlock { ...dataTopBlock }/>
 
     <div class="settings__block">
-        <h2 class="rating__title title rating__item_text settings__title sidebar__title">Features</h2>
+        <h2 class="rating__title title rating__item_text settings__title sidebar__title">{$_('menuSidebar.titleMid')}</h2>
         <hr>
         <ul class="settings__list">
             <li class="setting__item">
                 <a href={"#"} class="settings__link settings__link-on rating__title crashReportsBtn">
-                    Send crash reports:
-                    <span class="settings__off">OFF</span>
-                    <span class="settings__on">ON</span>
+                    {$_('menuSidebar.sendCrashReports')}:
+                    <span class="settings__off">{$_('menuSidebar.toggleOff')}</span>
+                    <span class="settings__on">{$_('menuSidebar.toggleOn')}</span>
                 </a>
             </li>
             <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title openFiltersBtn">Filters <span class="settings__highlight">(new)</span></a>
+                <a href={"#"} class="settings__link rating__title openFiltersBtn">{$_('menuSidebar.filters')}</a>
             </li>
             <!-- <li class="setting__item">
                 <a href={"#"} class="settings__link rating__title vizualizeLoadingBtn">
@@ -112,10 +115,10 @@
             </li> -->
             <li class="setting__item">
                 <a href={"#"} class="settings__link rating__title" on:click|preventDefault={() => openAnotherOverlay('howToRatePopup')}>
-                    Rate a place
+                    {$_('menuSidebar.ratePlace')}
                     {#if isUserLoggedIn}
                         <div class="settings__title-small settings__available">
-                          (available:
+                          ({$_('menuSidebar.ratePlaceAvailable')}:
                           <span class="settings__highlight settings__highlight-small">{numberOfAvailableRatings}</span>)
                         </div>
                     {/if}
@@ -123,8 +126,8 @@
             </li>
         </ul>
         <a href={"#"} class="btn moreRatingsBtn loggedInShow settings__btn">
-            <span class="settings__showed_rating_text">I need more ratings!</span>
-            <span class="settings__hidden_ratings_text">Request processing</span>
+            <span class="settings__showed_rating_text">{$_('menuSidebar.needMoreRatings')}</span>
+            <span class="settings__hidden_ratings_text">{$_('menuSidebar.requestProcessing')}</span>
         </a>
     </div>
 
@@ -132,13 +135,13 @@
 
     <footer class="footer">
         <div>
-            <span class="footer__version">Version: 1.2.1</span>.
-            <a class="footer__link" target="_blank" href="blog/terms-of-use/">Terms of use</a>
+            <span class="footer__version">{$_('footer.version')}: {currentVersion}</span>.
+            <a class="footer__link" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
         </div>
         <div>
-            by Roman Smunyov (<a class="footer__link" target="_blank" rel="noopener" href="https://romanisthere.github.io/">RomanistHere</a>).
+            {$_('footer.credits')} (<a class="footer__link" target="_blank" rel="noopener" href="https://romanisthere.github.io/">{$_('footer.creditsLink')}</a>).
             <br/>
-            <a class="footer__link" target="_blank" rel="noopener" href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p">All rights reserved</a>. © 2021.
+            <a class="footer__link" target="_blank" rel="noopener" href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p">{$_('footer.allRightsReserved')}</a>. {$_('footer.rightsYear')}.
         </div>
     </footer>
 </SidebarWrap>

@@ -10,10 +10,7 @@
 	import en from '../../lang/en.json';
 	import ru from '../../lang/ru.json';
 
-	console.warn('reload')
-	console.log($page)
 	const lang = $page.params.lang;
-	console.log(lang)
 
 	addMessages('en', en);
 	addMessages('ru', ru);
