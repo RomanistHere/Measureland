@@ -8,6 +8,7 @@
     import { userStateStore } from "../../../../../stores/state.js";
 
     const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    // TODO: get real version
     const currentVersion = '1.2.1';
 
     // TODO: get for user

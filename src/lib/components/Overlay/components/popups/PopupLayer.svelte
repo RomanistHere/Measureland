@@ -13,21 +13,37 @@
     const popupList = {
         // changePasswordPopup: PopupLayer,
         // forgotPasswordPopup: PopupLayer,
-        howToRatePopup: HowToRatePopup,
-        loginPopup: LoginPopup,
-        partnersPopup: PartnersPopup,
+        howToRatePopup: {
+            className: 'rate_tutorial',
+            component: HowToRatePopup
+        },
+        loginPopup: {
+            className: 'login',
+            component: LoginPopup
+        },
+        partnersPopup: {
+            className: 'partners',
+            component: PartnersPopup
+        },
         // quizPopup: PopupLayer,
-        registerPopup: RegisterPopup,
-        showRatingsPopup: ShowRatingPopup,
+        registerPopup: {
+            className: 'register',
+            component: RegisterPopup
+        },
+        showRatingsPopup: {
+            className: 'rate',
+            component: ShowRatingPopup
+        },
     };
 
     const closePopups = e =>
         (e.target === e.currentTarget) ? closeOverlays() : false;
 
-    $: Popup = popupList[popupName];
+    $: Popup = popupList[popupName]['component'];
+    $: popupParentClass = popupList[popupName]['className']
 </script>
 
-<div class="rating rate" on:click|preventDefault={closePopups}>
+<div class="rating {popupParentClass}" on:click|preventDefault={closePopups}>
     <svelte:component this={Popup} { popupData }/>
 </div>
 

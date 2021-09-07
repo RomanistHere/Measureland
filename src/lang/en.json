@@ -93,5 +93,24 @@
         "youHaveAlreadyRated": "You have already rated this place",
         "addNewRating": "Add new rating",
         "loginAndRate": "Login and rate"
+    },
+    "howToRatePopup": {
+        "soYouWantTo": "So you want to measure land",
+        "gifAltText": "tutorial gif",
+        "findNeededTown": "Find a needed town (search at the top left)",
+        "youNeedTo": "You need to",
+        "register": "register",
+        "first": "first",
+        "lookForPlace": "Look for a place where you have experience of living",
+        "clickIt": "Click it! Or touch the screen",
+        "rateAllCriteria": "Rate all criteria in the appeared modal",
+        "leaveTheComment": "Leave the comment and save",
+        "submit": "Got ya, let's go!"
+    },
+    "partnersPopup": {
+        "ourFriendsAndPartners": "Our friends and partners",
+        "list": [
+            "None so far. Be first!"
+        ]
     }
 }

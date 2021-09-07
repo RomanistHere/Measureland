@@ -1,6 +1,7 @@
 <script>
     import PopupWrap from './PopupWrap.svelte';
     import MainButton from '../MainButton.svelte';
+    import { _ } from 'svelte-i18n';
 
     import { closeOverlay, openAnotherOverlay } from "../../../../utilities/helpers.js";
     import { userStateStore } from "../../../../../stores/state.js";
@@ -10,32 +11,33 @@
     const openLoginPopup = () => openAnotherOverlay('loginPopup');
 </script>
 
-<PopupWrap className='login__wrap'>
+<PopupWrap className='rate_tutorial__wrap'>
     <div class="rating__popup rating__popup-active">
-        <h2 class="rating__title title rating__item_text sidebar__title">So you want to measure land</h2>
+        <h2 class="rating__title title rating__item_text sidebar__title">{$_('howToRatePopup.soYouWantTo')}</h2>
         <hr>
-        <img src="../images/tutorial_gif.gif" alt="tutorial gif" class="rate_tutorial__image" width="410">
+        <img src="../images/tutorial_gif.gif" alt="{$_('howToRatePopup.gifAltText')}" class="rate_tutorial__image" width="410">
         <ul class="rate_tutorial__list partners__list">
             <li class="rate_tutorial__item partners__item">
                 {#if isUserLoggedIn}
-                    Find a needed town (search at the top left)
+                    {$_('howToRatePopup.findNeededTown')}
                 {:else}
-                    You need to <a href="#" class="footer__link" on:click|preventDefault={openLoginPopup}>register</a> first
+                <!-- todo: check how to do it in an adequate way -->
+                    {$_('howToRatePopup.youNeedTo')} <a href="#" class="footer__link" on:click|preventDefault={openLoginPopup}>{$_('howToRatePopup.register')}</a> {$_('howToRatePopup.first')}
                 {/if}
             </li>
             <li class="rate_tutorial__item partners__item">
-                Look for a place where you have experience of living
+                {$_('howToRatePopup.lookForPlace')}
             </li>
             <li class="rate_tutorial__item partners__item">
-                Click it! Or touch the screen
+                {$_('howToRatePopup.clickIt')}
             </li>
             <li class="rate_tutorial__item partners__item">
-                Rate all criteria in the appeared modal
+                {$_('howToRatePopup.rateAllCriteria')}
             </li>
             <li class="rate_tutorial__item partners__item">
-                Leave the comment and save
+                {$_('howToRatePopup.leaveTheComment')}
             </li>
         </ul>
-        <MainButton text="Got ya, let's go!" action={closePopup} />
+        <MainButton text="{$_('howToRatePopup.submit')}" action={closePopup} />
     </div>
 </PopupWrap>

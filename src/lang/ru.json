@@ -92,5 +92,24 @@
         "youHaveAlreadyRated": "Твоя оценка уже добавлена",
         "addNewRating": "Добавить свою оценку",
         "loginAndRate": "Войти и добавить оценку"
+    },
+    "howToRatePopup": {
+        "soYouWantTo": "Как поставить отметку",
+        "gifAltText": "гифка с показом",
+        "findNeededTown": "Ищем нужный город (поиск слева вверху)",
+        "youNeedTo": "Для начала нужно",
+        "register": "зарегистрироваться",
+        "first": " ",
+        "lookForPlace": "Далее выбираем место на карте, где мы жили или живём",
+        "clickIt": "Нажимаем на него 1 раз",
+        "rateAllCriteria": "В появившемся окне оцениваем критерии",
+        "leaveTheComment": "Оставляем комментарий и готово!",
+        "submit": "Понятно"
+    },
+    "partnersPopup": {
+        "ourFriendsAndPartners": "Наши друзья и единомышленники",
+        "list": [
+            "Объявления аренды жилья в Москве и Санкт-Петербурге с самым удобным поиском.</br></br>Квартиры с хорошим ремонтом или с интересной локацией.</br></br>Москва: <a href='https://t.me/lvngrm_msk' target='_blank' rel='noopener' class='footer__link'>t.me/lvngrm_msk</a>, Санкт-Петербург: <a href='https://t.me/lvngrm' target='_blank' rel='noopener' class='footer__link'>t.me/lvngrm</a>"
+        ]
     }
 }
