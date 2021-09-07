@@ -1,6 +1,7 @@
 <script>
     import { browser } from '$app/env';
     import { getContext, onDestroy } from 'svelte';
+    import { json, _ } from 'svelte-i18n';
 
     import PopupWrap from '../PopupWrap.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
@@ -12,7 +13,6 @@
     import { appStateStore, userStateStore } from "../../../../../../stores/state.js";
     import { criteria } from '../../../../../constants/criteria.js';
     import { getFinalRating, roundToTen, openAnotherOverlay } from '../../../../../utilities/helpers.js';
-    import { json } from 'svelte-i18n';
 
     export let popupData;
 
@@ -26,18 +26,18 @@
     let personalExperiencePercent = 100;
     let shareRatingURL = '';
     let shouldShowURLCopySuccess = false;
-    let approximateAdress = 'calculating...';
     let commentGeoID = null;
     let currentLatLng = null;
     let loadedRating = null;
 
+    $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
     // complexity because of translation
     $: criteriaArray = loadedRating === null
         ? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
         : Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
 
     const copyShareRatingURL = () => {
-        if (browser) {
+        if (browser && !shouldShowURLCopySuccess) {
             try {
                 navigator.clipboard.writeText(shareRatingURL);
                 shouldShowURLCopySuccess = true;
@@ -93,7 +93,7 @@
 <PopupWrap className='rate__wrap'>
     <div class="rating__popup rating__popup-active rate__popup" tabindex="0">
         <div class="adress_bar">
-            Approximate address: {approximateAdress}
+            {$_('showRatingPopup.approximateAddress')}: {approximateAdress}
         </div>
         <ul class="rating__list">
             {#each criteriaArray as item}
@@ -103,38 +103,38 @@
 
         <a href={"#"} class="rate__link_btn" on:click|preventDefault={copyShareRatingURL}>
             {#if shouldShowURLCopySuccess}
-                Copied
+                {$_('showRatingPopup.copied')}
             {:else}
-                Share this rating
+                {$_('showRatingPopup.shareThisRating')}
             {/if}
         </a>
 
-        <div class="rate__caption" title="How much people are actually lived here">
-            {personalExperiencePercent} % of the participants lived nearby
+        <div class="rate__caption" title="{$_('showRatingPopup.howMuchPeople')}">
+            {personalExperiencePercent}% {$_('showRatingPopup.ofParticipantsLived')}
         </div>
     </div>
 
     <div class="rate__container">
         <div class="rate__container_item">
-            <span class="rateText1">Av. rating: </span>
+            <span>{$_('showRatingPopup.averageRating')}: </span>
             <span class="rate__highlight">{averageRating}</span>
         </div>
         <div class="rate__container_item">
-            <span class="rateText2">Users rated: </span>
+            <span>{$_('showRatingPopup.usersRated')}: </span>
             <span class="rate__highlight">{numberOfUsers}</span>
         </div>
         <div class="rate__container_item">
-            <a href={"#"} class="rate__comments" on:click|preventDefault={openCommentsSidebar}>Comments</a>:
+            <a href={"#"} class="rate__comments" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:
             <span class="rate__highlight">{numberOfComments}</span>
         </div>
     </div>
 
     {#if isUserLoggedIn && isAlreadyRatedByThisUser}
-        <div href={"#"} class="rate__evaluate btn rate__rated_btn">You have already rated this place</div>
+        <div href={"#"} class="rate__evaluate btn rate__rated_btn">{$_('showRatingPopup.youHaveAlreadyRated')}</div>
     {:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
-        <MainButton text='Add new rating' action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
+        <MainButton text='{$_('showRatingPopup.addNewRating')}' action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
     {:else}
-        <MainButton text='Login and rate' action={() => openAnotherOverlay('loginPopup')} />
+        <MainButton text='{$_('showRatingPopup.loginAndRate')}' action={() => openAnotherOverlay('loginPopup')} />
     {/if}
 
     {#await promise}

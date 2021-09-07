@@ -67,6 +67,8 @@
         "paidOptions": "Paid options",
         "aboutUs": "О нас",
         "support": "Поддержка",
+        "newsTelegram": "Новости в Телеграме",
+        "checkList": "Чек-лист арендатора",
         "blog": "Блог"
     },
     "footer": {
@@ -76,5 +78,19 @@
         "creditsLink": "RomanistHere",
         "allRightsReserved": "Все права защищены",
         "rightsYear": "© 2021"
+    },
+    "showRatingPopup": {
+        "approximateAddress": "Примерный адрес",
+        "approximateAddressDefault": "высчитываем...",
+        "copied": "Скопировано в буфер обмена",
+        "shareThisRating": "Поделиться рейтингом",
+        "ofParticipantsLived": "проголосовавших проживало рядом",
+        "averageRating": "Ср. рейтинг",
+        "usersRated": "Кол-во оценивших",
+        "comments": "Комментарии",
+        "howMuchPeople": "Сколько оценивших пользователей имело опыт личного проживания здесь",
+        "youHaveAlreadyRated": "Твоя оценка уже добавлена",
+        "addNewRating": "Добавить свою оценку",
+        "loginAndRate": "Войти и добавить оценку"
     }
 }

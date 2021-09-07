@@ -68,6 +68,8 @@
         "paidOptions": "Paid options",
         "aboutUs": "About us",
         "support": "Support",
+        "newsTelegram": "Новости в Телеграме",
+        "checkList": "Чек-лист арендатора",
         "blog": "Blog"
     },
     "footer": {
@@ -77,5 +79,19 @@
         "creditsLink": "RomanistHere",
         "allRightsReserved": "All rights reserved",
         "rightsYear": "© 2021"
+    },
+    "showRatingPopup": {
+        "approximateAddress": "Approximate address",
+        "approximateAddressDefault": "calculating...",
+        "copied": "Copied",
+        "shareThisRating": "Share this rating",
+        "ofParticipantsLived": "of the participants lived nearby",
+        "averageRating": "Av. rating",
+        "usersRated": "Users rated",
+        "comments": "Comments",
+        "howMuchPeople": "How much people are actually lived here",
+        "youHaveAlreadyRated": "You have already rated this place",
+        "addNewRating": "Add new rating",
+        "loginAndRate": "Login and rate"
     }
 }

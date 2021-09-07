@@ -74,9 +74,6 @@
             text: $_('menuSidebar.ourGuideBook'),
             href: 'blog/tutorial/',
         }, {
-            text: $_('menuSidebar.paidOptions'),
-            href: 'blog/paid-options/',
-        }, {
             text: $_('menuSidebar.aboutUs'),
             href: 'blog/about-us/',
         }, {
@@ -87,6 +84,22 @@
             href: 'blog/',
         }]
     };
+
+    $: if ($locale === 'ru') {
+        dataBottomBlock = {
+            ...dataBottomBlock,
+            list: [
+                {
+                    text: $_('menuSidebar.newsTelegram'),
+                    href: 'https://t.me/measureland_ru',
+                }, {
+                    text: $_('menuSidebar.checkList'),
+                    href: 'blog/universal-guide/',
+                },
+                ...dataBottomBlock.list,
+            ]
+        }
+    }
 </script>
 
 <SidebarWrap>

@@ -1,11 +1,11 @@
 <script>
+    import { locale } from 'svelte-i18n';
+
     import { userStateStore } from "../../../../../../stores/state.js";
     import { openAnotherOverlay } from "../../../../../utilities/helpers.js";
 
     export let data;
 
-    // TODO: language
-    const lang = 'ru';
     const { isYours, isLiked, isDisliked, rating, comment, username, liked, disliked, id } = data;
 
     const isUserLoggedIn = $userStateStore.userID === null ? false : true;
@@ -29,7 +29,7 @@
 <li class="comments__item {isYours ? 'comments__item-highlight' : ''}">
     <p class="comments__name rating__title">
         {username}
-        <span class="comments__rating">{lang === 'en' ? 'gave' : 'поставил/а'} {rating}</span>
+        <span class="comments__rating">{$locale === 'en' ? 'gave' : 'поставил/а'} {rating}</span>
     </p>
     <p class="comments__text">{comment}</p>
     <div class="comments__btns">
