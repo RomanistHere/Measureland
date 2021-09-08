@@ -258,45 +258,45 @@ const userLoggedOut = () => {
     removeClass($('.settings__available'), 'settings__available-show')
 }
 
-const userInit = async () => {
-    const { error, data } = await checkUser()
-    if (error === 'Too many requests, please try again later') {
-        blockMap()
-        showLimitError()
-        return
-    } else if (error) {
-        console.warn(error)
-        if ($('.start'))
-            $('.start').remove()
-        showErrorScreen()
-        return
-    }
-    console.log(data)
-    const { userID, userName, lang, dateCreated, activeRatings, wantMoreRatings } = data
-    const prevLang = state.lang
-    if (userID) {
-        state = {
-            ...state,
-            userID,
-            userName,
-            dateCreated,
-            activeRatings,
-            lang
-        }
-        if (wantMoreRatings)
-            disableMoreRatingsBtn()
-        userLoggedIn()
-        // fillDB(20000)
-    } else {
-        userLoggedOut()
-        state = {
-            ...state,
-            lang: detectPrefLang()
-        }
-    }
-
-    document.querySelector('.spinner__main').remove()
-}
+// const userInit = async () => {
+//     const { error, data } = await checkUser()
+//     if (error === 'Too many requests, please try again later') {
+//         blockMap()
+//         showLimitError()
+//         return
+//     } else if (error) {
+//         console.warn(error)
+//         if ($('.start'))
+//             $('.start').remove()
+//         showErrorScreen()
+//         return
+//     }
+//     console.log(data)
+//     const { userID, userName, lang, dateCreated, activeRatings, wantMoreRatings } = data
+//     const prevLang = state.lang
+//     if (userID) {
+//         state = {
+//             ...state,
+//             userID,
+//             userName,
+//             dateCreated,
+//             activeRatings,
+//             lang
+//         }
+//         if (wantMoreRatings)
+//             disableMoreRatingsBtn()
+//         userLoggedIn()
+//         // fillDB(20000)
+//     } else {
+//         userLoggedOut()
+//         state = {
+//             ...state,
+//             lang: detectPrefLang()
+//         }
+//     }
+//
+//     document.querySelector('.spinner__main').remove()
+// }
 
 const initLoginBtns = () => {
     // login timeout
@@ -496,71 +496,71 @@ const initLoginBtns = () => {
         }
     })
 
-    let loginTimeout = null
-    let loginTimeoutBool = false
+    // let loginTimeout = null
+    // let loginTimeoutBool = false
 
     signInForm.addEventListener('submit', async (e) => {
-        const notification = $('.login__notifications_wrap')
+        // const notification = $('.login__notifications_wrap')
 
-        e.preventDefault()
-        removeLoginErrors()
+        // e.preventDefault()
+        // removeLoginErrors()
         logInBtn.focus()
 
-        if (!loginState.isPassValid || !loginState.isEmailValid) {
-            addClass(notification, 'login__notifications_wrap-fill')
+        // if (!loginState.isPassValid || !loginState.isEmailValid) {
+        //     addClass(notification, 'login__notifications_wrap-fill')
+        //
+        //     if (!loginState.isEmailValid)
+        //         $('#current-email').focus()
+        //     else if (!loginState.isPassValid)
+        //         $('#current-password').focus()
+        //
+        //     return
+        // }
 
-            if (!loginState.isEmailValid)
-                $('#current-email').focus()
-            else if (!loginState.isPassValid)
-                $('#current-password').focus()
+        // if (loginTimeoutBool) {
+        //     clearTimeout(loginTimeout)
+        //     addClass(notification, 'login__notifications_wrap-timeout')
+        //     loginTimeout = setTimeout(() => {
+        //         loginTimeoutBool = false
+        //     }, logTimeout)
+        //     return
+        // } else {
+        //     loginTimeoutBool = true
+        //     loginTimeout = setTimeout(() => {
+        //         loginTimeoutBool = false
+        //     }, logTimeout)
+        // }
 
-            return
-        }
+        // runSpinner('.login__spinner')
 
-        if (loginTimeoutBool) {
-            clearTimeout(loginTimeout)
-            addClass(notification, 'login__notifications_wrap-timeout')
-            loginTimeout = setTimeout(() => {
-                loginTimeoutBool = false
-            }, logTimeout)
-            return
-        } else {
-            loginTimeoutBool = true
-            loginTimeout = setTimeout(() => {
-                loginTimeoutBool = false
-            }, logTimeout)
-        }
+        // const { error, data } = await login(loginState.email, loginState.pass)
+        // hideSpinner('.login__spinner')
 
-        runSpinner('.login__spinner')
-
-        const { error, data } = await login(loginState.email, loginState.pass)
-        hideSpinner('.login__spinner')
-
-        if (error === null) {
-            state = {
-                ...state,
-                userID: data.userID,
-                activeRatings: data.activeRatings + 1
-            }
-            $('.ratingAvailableNumber').textContent = data.activeRatings != null ? data.activeRatings + 1 : 0
-            $('.ratingUserName').textContent = data.userName
-            if (data.wantMoreRatings)
-                disableMoreRatingsBtn()
-            clearLoginFields()
-            userLoggedIn()
-            changeLoginScreen('loggedIn')
-            showSuccessNotification()
-        } else if (error === 'Email is wrong') {
-            addClass(notification, 'login__notifications_wrap-email_not_exist')
-        } else if (error === 'User is not verified') {
-            addClass(notification, 'login__notifications_wrap-verify')
-        } else if (error === 'Password is wrong') {
-            addClass(notification, 'login__notifications_wrap-wrong_pass')
-        } else if (error === 'Too many requests, please try again later') {
-            addClass(notification, 'login__notifications_wrap-timeout')
-        } else {
-            addClass(notification, 'login__notifications_wrap-err')
-        }
+        // if (error === null) {
+            // state = {
+            //     ...state,
+            //     userID: data.userID,
+            //     activeRatings: data.activeRatings + 1
+            // }
+            // $('.ratingAvailableNumber').textContent = data.activeRatings != null ? data.activeRatings + 1 : 0
+            // $('.ratingUserName').textContent = data.userName
+            // if (data.wantMoreRatings)
+            //     disableMoreRatingsBtn()
+            // clearLoginFields()
+            // userLoggedIn()
+            // changeLoginScreen('loggedIn')
+            // showSuccessNotification()
+        // } else if (error === 'Email is wrong') {
+        //     addClass(notification, 'login__notifications_wrap-email_not_exist')
+        // } else if (error === 'User is not verified') {
+        //     addClass(notification, 'login__notifications_wrap-verify')
+        // } else if (error === 'Password is wrong') {
+        //     addClass(notification, 'login__notifications_wrap-wrong_pass')
+        // } else if (error === 'Too many requests, please try again later') {
+        //     addClass(notification, 'login__notifications_wrap-timeout')
+        // } else {
+        //     addClass(notification, 'login__notifications_wrap-err')
+        // }
     })
 
     let registerTimeout = null

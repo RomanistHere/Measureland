@@ -6,6 +6,7 @@
 
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
+	import Loading from './components/Loading.svelte';
 
     let popupActive = false;
     let popupName;
@@ -16,7 +17,7 @@
 
     const handleKeydown = event => {
         const key = event.key;
-        console.log(key);
+        // console.log(key);
         if ((popupActive || sidebarActive) && key === 'Escape')
             closeOverlays();
     }
@@ -78,6 +79,9 @@
     $: dataOpen = checkIsOpen($overlayStateStore);
     $: manageOverlays(dataOpen);
 </script>
+
+<!-- // show loader while user data is loading -->
+<Loading />
 
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />

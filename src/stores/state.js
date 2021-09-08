@@ -12,16 +12,17 @@ export const userStateStore = writable({
     userName: 'Аноним',
     // lang: detectPrefLang(),
     lang: 'ru',
-    wasMoreRatingsAsked: false,
     uniqID: Math.random().toString(16).slice(2),
     // shouldSendEvent: getCookie('sentryOn') !== '0' ? true : false,
     shouldSendEvent: false,
+    wantMoreRatings: false,
 });
 
 export const appStateStore = writable({
     zoom: 12,
     filters: null,
     openModal: false,
+    shouldWork: true,
     showRating: false,
     isFiltersOn: false,
     ratingToSave: null,

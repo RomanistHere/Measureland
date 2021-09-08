@@ -50,13 +50,15 @@
     }
 </script>
 
-<div use:mapAction>
-    {#if map}
-        <MarkerCluster />
-        <GeoSearch />
-    {/if}
-    <!-- // drawing component -->
-</div>
+{#if $appStateStore.shouldWork}
+    <div use:mapAction>
+        {#if map}
+            <MarkerCluster />
+            <GeoSearch />
+        {/if}
+        <!-- // drawing component -->
+    </div>
+{/if}
 
 <style>
     div {

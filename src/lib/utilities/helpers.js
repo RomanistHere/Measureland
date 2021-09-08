@@ -1,6 +1,21 @@
 import { overlayStateStore, appStateStore } from '../../stores/state.js';
 import { overlayStateDefault } from '../constants/overlayStateDefault.js';
 
+const debounce = (func, wait, immediate) => {
+	var timeout
+	return function() {
+		var context = this, args = arguments
+		var later = function() {
+			timeout = null
+			if (!immediate) func.apply(context, args)
+		}
+		var callNow = immediate && !timeout
+		clearTimeout(timeout)
+		timeout = setTimeout(later, wait)
+		if (callNow) func.apply(context, args)
+	}
+}
+
 const sleep = milliseconds =>
     new Promise(resolve => setTimeout(resolve, milliseconds));
 
@@ -126,6 +141,8 @@ const closeOverlay = (overlayType = null) => {
 const closeOverlays = () => closeOverlay();
 
 export {
+    debounce,
+    sleep,
     getAverageRating,
     splitString,
     roundToFifthDecimal,

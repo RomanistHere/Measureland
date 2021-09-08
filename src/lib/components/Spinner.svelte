@@ -4,7 +4,7 @@
     // TODO: extended version (with words)
 </script>
 
-<div class="spinner__wrap {className}">
+<div class="spinner__wrap spinner__wrap-active {className}">
     <div class="spinner__centr">
         <div class="spinner"></div>
         <p class="spinner__text">Loading</p>

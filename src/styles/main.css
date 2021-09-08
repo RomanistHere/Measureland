@@ -691,7 +691,7 @@ input:checked ~ .checkbox__checkmark::after {
 
 .error_screen {
     position: absolute;
-    display: none;
+    display: flex;
     z-index: 4;
 
     top: 0;
@@ -705,10 +705,6 @@ input:checked ~ .checkbox__checkmark::after {
     background: var(--bg-color-add);
 }
 
-.error_screen-show {
-    display: flex;
-}
-
 .error_screen__text {
     display: block;
 
@@ -717,7 +713,7 @@ input:checked ~ .checkbox__checkmark::after {
 }
 
 .limit_error {
-    display: none;
+    display: flex;
     position: absolute;
     z-index: 5;
 
@@ -734,10 +730,6 @@ input:checked ~ .checkbox__checkmark::after {
     font-size: 18px;
     line-height: 1.4;
     font-style: italic;
-}
-
-.limit_error-show {
-    display: block;
 }
 
 @media (hover: hover) and (pointer: fine) {
