@@ -4,13 +4,21 @@
     import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
 
-    import { openAnotherOverlay } from '../../../../utilities/helpers.js';
+    import { openAnotherOverlay, closeOverlays } from '../../../../utilities/helpers.js';
     import { logout } from '../../../../utilities/api.js';
     import { userStateStore } from "../../../../../stores/state.js";
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     // TODO: get real version
     const currentVersion = '2.0.0';
+
+    const toggleSendingEvents = () => {
+        const shouldSendEvent = !$userStateStore.shouldSendEvent;
+        userStateStore.update(state => ({
+            ...state,
+            shouldSendEvent
+        }));
+    }
 
     $: dataTopBlock = {
         title: $_('menuSidebar.titleTop'),
@@ -28,6 +36,7 @@
             href: '#',
             onClick: async (e) => {
                 e.preventDefault();
+                closeOverlays();
                 const { error, data } = await logout();
 
                 if (!error) {
@@ -74,6 +83,34 @@
             }
         },]
     };
+
+    // $: dataMiddleBlock = {
+    //     title: $_('menuSidebar.titleMid'),
+    //     list: [{
+    //         text: $_('menuSidebar.sendCrashReports') + $userStateStore.shouldSendEvent ? $_('menuSidebar.toggleOn') : $_('menuSidebar.toggleOff'),
+    //         shouldShow: !isUserLoggedIn,
+    //         href: '#',
+    //         onClick: (e) => {
+    //             e.preventDefault();
+    //             toggleSendingEvents();
+    //         }
+    //     }, {
+    //         text: isUserLoggedIn ? : $_('menuSidebar.ratePlace'),
+    //         shouldShow: isUserLoggedIn,
+    //         href: '#',
+    //         onClick: (e) => {
+    //             e.preventDefault();
+    //         }
+    //     }, {
+    //         text: $_('menuSidebar.changePassword'),
+    //         shouldShow: isUserLoggedIn,
+    //         href: '#',
+    //         onClick: (e) => {
+    //             e.preventDefault();
+    //             openAnotherOverlay('howToRatePopup');
+    //         }
+    //     }]
+    // };
 
     $: dataBottomBlock = {
         title: $_('menuSidebar.titleBot'),
@@ -124,10 +161,13 @@
         <hr>
         <ul class="settings__list">
             <li class="setting__item">
-                <a href={"#"} class="settings__link settings__link-on rating__title crashReportsBtn">
+                <a href={"#"} class="settings__link rating__title" on:click|preventDefault={toggleSendingEvents}>
                     {$_('menuSidebar.sendCrashReports')}:
-                    <span class="settings__off">{$_('menuSidebar.toggleOff')}</span>
-                    <span class="settings__on">{$_('menuSidebar.toggleOn')}</span>
+                    {#if $userStateStore.shouldSendEvent}
+                        {$_('menuSidebar.toggleOn')}
+                    {:else}
+                        {$_('menuSidebar.toggleOff')}
+                    {/if}
                 </a>
             </li>
             <li class="setting__item">

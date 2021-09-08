@@ -8,7 +8,8 @@
     import { openAnotherOverlay, debounce } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
 
-    let errorsObj = $json('loginErrors');
+    $: errorsObj = $json('loginErrors');
+    
     let email = '';
     let password = '';
     let passwordConfirm = '';

@@ -9,7 +9,8 @@
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
-    let errorsObj = $json('loginErrors');
+    $: errorsObj = $json('loginErrors');
+    
     let email = '';
     let password = '';
     let isEmailValid = true;
