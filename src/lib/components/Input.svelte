@@ -2,9 +2,11 @@
     export let title = 'Email';
     export let type = 'email';
     export let id = 'current-email';
+    export let value = '';
+    export let isInputValid = true;
+    export let autofocus = false;
 
     let shouldShowPassword = false;
-    let isInputValid = true;
     let isInputActive = false;
     let hasTypingStarted = false;
 
@@ -19,13 +21,13 @@
 
     const onBlur = e => {
         isInputActive = false;
-        const inputContent = e.currentTarget.value;
+        value = e.currentTarget.value;
 
         if (type === 'email') {
-            const email = inputContent.toLowerCase();
-            isInputValid = validateEmail(email);
+            value = value.toLowerCase();
+            isInputValid = validateEmail(value);
         } else if (type === 'password') {
-            isInputValid = validatePass(inputContent);
+            isInputValid = validatePass(value);
         }
     }
 
@@ -33,7 +35,7 @@
         isInputValid = false;
         hasTypingStarted = true;
         isInputActive = true;
-        const inputContent = e.currentTarget.value;
+        value = e.currentTarget.value;
     }
 </script>
 
@@ -51,6 +53,7 @@
         autocomplete='{id}'
         on:blur={onBlur}
         on:input={onInput}
+        { autofocus }
     >
 
     {#if !isInputValid && !isInputActive}
