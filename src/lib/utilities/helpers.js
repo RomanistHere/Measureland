@@ -115,11 +115,15 @@ const closeOverlaysWithSameType = (overlayType, state) => {
 }
 
 const openAnotherOverlay = (overlayName = null, data = {}) => {
-    overlayStateStore.update(state => {
-        const overlayType = state[overlayName]['type'];
-        const { newState } = closeOverlaysWithSameType(overlayType, state);
-        return ({ ...newState, [overlayName]: { ...newState[overlayName], isOpen: true, data } });
-    });
+    try {
+		overlayStateStore.update(state => {
+	        const overlayType = state[overlayName]['type'];
+	        const { newState } = closeOverlaysWithSameType(overlayType, state);
+	        return ({ ...newState, [overlayName]: { ...newState[overlayName], isOpen: true, data } });
+	    });
+	} catch (e) {
+		console.warn('Define popup in constatns/overlayStateDefault.js');
+	}
 }
 
 const closeOverlay = (overlayType = null) => {

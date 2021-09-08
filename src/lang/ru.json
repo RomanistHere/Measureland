@@ -106,6 +106,30 @@
         "leaveTheComment": "Оставляем комментарий и готово!",
         "submit": "Понятно"
     },
+    "loggedInPopup": {
+        "welcome": "Добро пожаловать",
+        "activeRatingsRemaining": "Твои активные рейтинги",
+        "learnWhyLimits": "Узнай зачем ограничения существуют и как избавиться от них",
+        "learnWhyLimitsAddition": "Это не платно, мы лишь хотим быть увереными в тебе :)",
+        "hereSomeArticles": "Пара статей, которые могут быть полезны",
+        "list": [{
+            "text": "Универсальный гайд по съёму жилья (чек-лист)",
+            "link": "blog/universal-guide/"
+        }, {
+            "text": "Путеводитель по Измерии (руководство)",
+            "link": "blog/tutorial/"
+        }, {
+            "text": "Наши цели",
+            "link": "blog/about-us/"
+        }, {
+            "text": "Поддержка",
+            "link": "blog/support/"
+        }, {
+            "text": "Новостной канал в Телеграме",
+            "link": "https://t.me/measureland_ru"
+        }]
+
+    },
     "partnersPopup": {
         "ourFriendsAndPartners": "Наши друзья и единомышленники",
         "list": [

@@ -7,7 +7,7 @@ export const flowStore = writable([]);
 export const userStateStore = writable({
     userID: null,
     passToken: null,
-    activeRatings: 2,
+    activeRatings: 3,
     dateCreated: null,
     userName: 'Аноним',
     // lang: detectPrefLang(),

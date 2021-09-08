@@ -107,6 +107,23 @@
         "leaveTheComment": "Leave the comment and save",
         "submit": "Got ya, let's go!"
     },
+    "loggedInPopup": {
+        "welcome": "Welcome",
+        "activeRatingsRemaining": "Active ratings remaining",
+        "learnWhyLimits": "Learn why there are limits and how to increase this number",
+        "learnWhyLimitsAddition": "It's free, we just need to confirm you're a nice person :)",
+        "hereSomeArticles": "Here are some articles to help you get started or remind about",
+        "list": [{
+            "text": "Measureland guide book (tutorial)",
+            "link": "blog/tutorial/"
+        }, {
+            "text": "Our goals",
+            "link": "blog/about-us/"
+        }, {
+            "text": "Support",
+            "link": "blog/support/"
+        }]
+    },
     "partnersPopup": {
         "ourFriendsAndPartners": "Our friends and partners",
         "list": [

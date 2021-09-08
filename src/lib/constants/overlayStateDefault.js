@@ -39,6 +39,16 @@ export const overlayStateDefault = {
         type: 'popup',
         data: {},
     },
+    loggedInPopup: {
+        isOpen: false,
+        type: 'popup',
+        data: {},
+    },
+    checkEmailPopup: {
+        isOpen: false,
+        type: 'popup',
+        data: {},
+    },
     menuSidebar: {
         isOpen: false,
         type: 'sidebar',

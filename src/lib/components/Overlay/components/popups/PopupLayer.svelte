@@ -3,6 +3,7 @@
 
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
     import LoginPopup from './LoginPopup.svelte';
+    import LoggedInPopup from './LoggedInPopup.svelte';
     import RegisterPopup from './RegisterPopup.svelte';
     import PartnersPopup from './PartnersPopup.svelte';
     import HowToRatePopup from './HowToRatePopup.svelte';
@@ -16,6 +17,10 @@
         howToRatePopup: {
             className: 'rate_tutorial',
             component: HowToRatePopup
+        },
+        loggedInPopup: {
+            className: 'login',
+            component: LoggedInPopup
         },
         loginPopup: {
             className: 'login',

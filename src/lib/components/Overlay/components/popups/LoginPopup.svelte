@@ -114,10 +114,6 @@
             wantMoreRatings
         }));
 
-        if (wantMoreRatings) {
-            // TODO:
-        }
-
         // TODO:
         openAnotherOverlay('loggedInPopup');
 
