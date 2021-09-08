@@ -136,11 +136,22 @@
         "password": "Пароль",
         "forgotPasswordBtn": "Не помню пароль",
         "loginBtn": "Войти",
-        "registerBtn": "Хочу зарегистрироваться!",
+        "registerBtn": "Хочу зарегистрироваться!"
+    },
+    "registrationPopup": {
+        "title": "Регистрация",
+        "email": "Почта (Email)",
+        "password": "Пароль",
+        "repeatPassword": "Повтори пароль",
+        "goToLoginBtn": "Перейти ко Входу",
+        "registerBtn": "Регистрация"
+    },
+    "loginErrors": {
         "errorVerification": "Нужно пройти верификацию (проверь почту)",
         "errorVerificationBtn": "Послать письмо ещё раз",
         "fieldsError": "Проверь все поля!",
         "noAccount": "Мы не нашли такого аккаунта",
+        "accountExists": "Такой аккаунт уже существует",
         "wrongPassword": "Неверный пароль",
         "unrecognizedError": "Ошибка, попробуй ещё раз позже :(",
         "manyAttempts": "Слишком много попыток, погоди!",

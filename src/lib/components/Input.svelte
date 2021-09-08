@@ -7,6 +7,7 @@
     export let value = '';
     export let isInputValid = true;
     export let autofocus = false;
+    export let shouldShowMatchError = false;
 
     let shouldShowPassword = false;
     let isInputActive = false;
@@ -35,6 +36,7 @@
 
     const onInput = e => {
         isInputValid = false;
+        shouldShowMatchError = false;
         hasTypingStarted = true;
         isInputActive = true;
         value = e.currentTarget.value;
@@ -42,17 +44,17 @@
 </script>
 
 <div class="rating__stars form__grp">
-    <label for="current-email" class="rating__title title form__label">
+    <label for={id} class="rating__title title form__label">
         <span>{title}</span>
         {#if type === 'password'}
             <a href={"#"} class="form__label_help" on:click|preventDefault={changeInputType}>{$_('input.showOrHide')}</a>
         {/if}
     </label>
     <input
-        class="form__input {!isInputValid && !isInputActive ? 'form__input-error' : ''} {isInputValid && hasTypingStarted && !isInputActive ? 'form__input-success' : ''}"
-        type="{shouldShowPassword ? 'text' : type}"
-        id="{id}"
-        autocomplete='{id}'
+        class="form__input {(!isInputValid && !isInputActive) || shouldShowMatchError ? 'form__input-error' : ''} {isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError ? 'form__input-success' : ''}"
+        type={shouldShowPassword ? 'text' : type}
+        id={id}
+        autocomplete={id}
         on:blur={onBlur}
         on:input={onInput}
         { autofocus }
@@ -64,6 +66,10 @@
         {:else if type === 'password'}
             <span class="form__error">{$_('input.passwordError')}</span>
         {/if}
+    {/if}
+
+    {#if shouldShowMatchError}
+        <span class="form__error">Passwords should match!</span>
     {/if}
 </div>
 

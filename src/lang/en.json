@@ -130,11 +130,22 @@
         "password": "Password",
         "forgotPasswordBtn": "Forgot password",
         "loginBtn": "Log in",
-        "registerBtn": "I want to register!",
+        "registerBtn": "I want to register!"
+    },
+    "registrationPopup": {
+        "title": "Registration",
+        "email": "Email",
+        "password": "Password",
+        "repeatPassword": "Repeat the password",
+        "goToLoginBtn": "Go to Login",
+        "registerBtn": "Register"
+    },
+    "loginErrors": {
         "errorVerification": "Check email for verification letter",
         "errorVerificationBtn": "Resend letter",
         "fieldsError": "Check all the fields!",
         "noAccount": "Couldn't find your account",
+        "accountExists": "Account already exists",
         "wrongPassword": "Wrong password",
         "unrecognizedError": "Error, try again later :(",
         "manyAttempts": "Too many attempts, wait a bit!",

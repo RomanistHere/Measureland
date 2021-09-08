@@ -499,12 +499,12 @@ const initLoginBtns = () => {
     // let loginTimeout = null
     // let loginTimeoutBool = false
 
-    signInForm.addEventListener('submit', async (e) => {
+    // signInForm.addEventListener('submit', async (e) => {
         // const notification = $('.login__notifications_wrap')
 
         // e.preventDefault()
         // removeLoginErrors()
-        logInBtn.focus()
+        // logInBtn.focus()
 
         // if (!loginState.isPassValid || !loginState.isEmailValid) {
         //     addClass(notification, 'login__notifications_wrap-fill')
@@ -561,62 +561,62 @@ const initLoginBtns = () => {
         // } else {
         //     addClass(notification, 'login__notifications_wrap-err')
         // }
-    })
+    // })
+    //
+    // let registerTimeout = null
+    // let registerTimeoutBool = false
+    //
+    // registerForm.addEventListener('submit', async (e) => {
+        // const notification = $('.register__notifications_wrap')
+        //
+        // e.preventDefault()
+        // removeLoginErrors()
+        // registerBtn.focus()
+        //
+        // if (!loginState.isPassValid || !loginState.isEmailValid || loginState.doublePassIDs.length !== 2) {
+        //     addClass(notification, 'register__notifications_wrap-fill')
+        //
+        //     if (!loginState.isEmailValid)
+        //         $('#new-email').focus()
+        //     else if (!loginState.isPassValid)
+        //         $('#new-password').focus()
+        //     else if (loginState.doublePassIDs.length !== 2)
+        //         $('#repeat-new-password').focus()
+        //
+        //     return
+        // }
 
-    let registerTimeout = null
-    let registerTimeoutBool = false
+        // if (registerTimeoutBool) {
+        //     clearTimeout(registerTimeout)
+        //     addClass(notification, 'register__notifications_wrap-timeout')
+        //     registerTimeout = setTimeout(() => {
+        //         registerTimeoutBool = false
+        //     }, regTimeout)
+        //     return
+        // } else {
+        //     registerTimeoutBool = true
+        //     registerTimeout = setTimeout(() => {
+        //         registerTimeoutBool = false
+        //     }, regTimeout)
+        // }
 
-    registerForm.addEventListener('submit', async (e) => {
-        const notification = $('.register__notifications_wrap')
-
-        e.preventDefault()
-        removeLoginErrors()
-        registerBtn.focus()
-
-        if (!loginState.isPassValid || !loginState.isEmailValid || loginState.doublePassIDs.length !== 2) {
-            addClass(notification, 'register__notifications_wrap-fill')
-
-            if (!loginState.isEmailValid)
-                $('#new-email').focus()
-            else if (!loginState.isPassValid)
-                $('#new-password').focus()
-            else if (loginState.doublePassIDs.length !== 2)
-                $('#repeat-new-password').focus()
-
-            return
-        }
-
-        if (registerTimeoutBool) {
-            clearTimeout(registerTimeout)
-            addClass(notification, 'register__notifications_wrap-timeout')
-            registerTimeout = setTimeout(() => {
-                registerTimeoutBool = false
-            }, regTimeout)
-            return
-        } else {
-            registerTimeoutBool = true
-            registerTimeout = setTimeout(() => {
-                registerTimeoutBool = false
-            }, regTimeout)
-        }
-
-        runSpinner('.register__spinner')
-
-        const { error, data } = await register(loginState.email, loginState.pass, state.lang)
-        hideSpinner('.register__spinner')
-
-        if (error === null) {
-            clearLoginFields()
-            changeLoginScreen('check')
-            showSuccessNotification()
-        } else if (error === 'Email already exists') {
-            addClass(notification, 'register__notifications_wrap-email_exists')
-        } else if (error === 'Too many requests, please try again later') {
-            addClass(notification, 'register__notifications_wrap-timeout')
-        } else {
-            addClass(notification, 'register__notifications_wrap-err')
-        }
-    })
+        // runSpinner('.register__spinner')
+    //
+    //     const { error, data } = await register(loginState.email, loginState.pass, state.lang)
+    //     hideSpinner('.register__spinner')
+    //
+    //     if (error === null) {
+    //         clearLoginFields()
+    //         changeLoginScreen('check')
+    //         showSuccessNotification()
+    //     } else if (error === 'Email already exists') {
+    //         addClass(notification, 'register__notifications_wrap-email_exists')
+    //     } else if (error === 'Too many requests, please try again later') {
+    //         addClass(notification, 'register__notifications_wrap-timeout')
+    //     } else {
+    //         addClass(notification, 'register__notifications_wrap-err')
+    //     }
+    // })
 
     onboardingForm.addEventListener('submit', async (e) => {
         e.preventDefault()

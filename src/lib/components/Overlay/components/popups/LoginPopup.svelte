@@ -1,5 +1,5 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _, json } from 'svelte-i18n';
 
     import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
@@ -9,16 +9,7 @@
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
-    const errorsObj = {
-        'fieldsError': $_('loginPopup.fieldsError'),
-        'noAccount': $_('loginPopup.noAccount'),
-        'wrongPassword': $_('loginPopup.wrongPassword'),
-        'unrecognizedError': $_('loginPopup.unrecognizedError'),
-        'manyAttempts': $_('loginPopup.manyAttempts'),
-        'manyRequests': $_('loginPopup.manyRequests'),
-        'alreadyVerified': $_('loginPopup.alreadyVerified'),
-    }
-
+    let errorsObj = $json('loginErrors');
     let email = '';
     let password = '';
     let isEmailValid = true;
@@ -33,6 +24,7 @@
     const openForgotPasswordPopup = () => openAnotherOverlay('forgotPasswordPopup');
 
     const resendVerificationLetter = async () => {
+        // TODO: test!
         isError = false;
         if (!isEmailValid || email.length === 0) {
             // TODO: focus needed input
@@ -42,9 +34,7 @@
         }
 
         isLoading = true;
-
         const { error, data } = await reverify(email);
-
         isLoading = false;
 
         console.log(data)
@@ -68,6 +58,10 @@
     }
 
     const submit = async () => {
+        // TODO: make in more declarative way
+        if (document)
+            document.activeElement.blur();
+
         isError = false;
         const isValuesNotEmpty = email.length > 0 && password.length > 0;
         if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
@@ -78,14 +72,8 @@
         }
 
         isLoading = true;
-
-        await sleep(500);
-
         const { error, data } = await login(email, password);
-
         isLoading = false;
-
-        console.log(data)
 
         if (error) {
             console.warn(error);
@@ -116,7 +104,6 @@
             wantMoreRatings
         }));
 
-        // TODO:
         openAnotherOverlay('loggedInPopup');
 
         // TODO:
@@ -146,7 +133,7 @@
 </script>
 
 <PopupWrap className='login__wrap'>
-    <form class="rating__popup rating__popup-active login__popup form" id="loginForm" on:submit|preventDefault={debouncedSubmit}>
+    <form class="rating__popup rating__popup-active login__popup form" on:submit|preventDefault={debouncedSubmit}>
         <div class="rating__content login__content">
             <p class="rating__text">
                 <strong class="rating__text-highlight">{$_('loginPopup.title')}</strong>
@@ -176,8 +163,8 @@
             <div class="login__notifications_wrap">
                 {#if isError && errorType === 'verificationLetter'}
                     <div class="login__notifications login__notifications-verify">
-                        <span class="login__notifications-small">{$_('loginPopup.errorVerification')}</span>
-                        <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('loginPopup.errorVerificationBtn')}</a>
+                        <span class="login__notifications-small">{$_('loginErrors.errorVerification')}</span>
+                        <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('loginErrors.errorVerificationBtn')}</a>
                     </div>
                 {:else if isError}
                     <span class="login__notifications">

@@ -5,20 +5,18 @@
     import SidebarBlock from './SidebarBlock.svelte';
 
     import { openAnotherOverlay } from '../../../../utilities/helpers.js';
+    import { logout } from '../../../../utilities/api.js';
     import { userStateStore } from "../../../../../stores/state.js";
 
-    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     // TODO: get real version
-    const currentVersion = '1.2.1';
-
-    // TODO: get for user
-    let numberOfAvailableRatings = 3;
+    const currentVersion = '2.0.0';
 
     $: dataTopBlock = {
         title: $_('menuSidebar.titleTop'),
         list: [{
             text: $_('menuSidebar.loginOrRegister'),
-            shouldShow: true,
+            shouldShow: !isUserLoggedIn,
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
@@ -26,21 +24,36 @@
             }
         }, {
             text: $_('menuSidebar.logout'),
-            shouldShow: false,
+            shouldShow: isUserLoggedIn,
             href: '#',
-            onClick: (e) => {
+            onClick: async (e) => {
                 e.preventDefault();
+                const { error, data } = await logout();
+
+                if (!error) {
+                    // showSuccessNotification()
+                    userStateStore.update(state => ({
+                        ...state,
+                        userID: null,
+                        activeRatings: 3,
+                        userName: 'Аноним',
+                        wantMoreRatings: false
+                    }));
+                } else {
+                    console.warn(error)
+                    // showError('unrecognizedError', error)
+                }
             }
         }, {
             text: $_('menuSidebar.myRatings'),
-            shouldShow: false,
+            shouldShow: isUserLoggedIn,
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
             }
         }, {
             text: $_('menuSidebar.changePassword'),
-            shouldShow: false,
+            shouldShow: isUserLoggedIn,
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
@@ -133,7 +146,7 @@
                     {#if isUserLoggedIn}
                         <div class="settings__title-small settings__available">
                           ({$_('menuSidebar.ratePlaceAvailable')}:
-                          <span class="settings__highlight settings__highlight-small">{numberOfAvailableRatings}</span>)
+                          <span class="settings__highlight settings__highlight-small">{$userStateStore.activeRatings}</span>)
                         </div>
                     {/if}
                 </a>

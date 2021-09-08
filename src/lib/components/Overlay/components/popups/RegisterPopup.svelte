@@ -1,77 +1,161 @@
 <script>
+    import { _, json, locale } from 'svelte-i18n';
+
     import PopupWrap from './PopupWrap.svelte';
+    import Input from '../../../Input.svelte';
+    import Spinner from '../../../Spinner.svelte';
 
-    import { openAnotherOverlay } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce } from "../../../../utilities/helpers.js";
+    import { register } from "../../../../utilities/api.js";
 
-    const openLoginPopup = () => openAnotherOverlay('loginPopup')
+    let errorsObj = $json('loginErrors');
+    let email = '';
+    let password = '';
+    let passwordConfirm = '';
+    let isEmailValid = true;
+    let isPasswordValid = true;
+    let isPasswordConfirmValid = true;
+    let isError = false;
+    let errorType = '';
+    let isLoading = false;
+    let isSpam = null;
+    let shouldShowMatchError = false;
+
+    const openLoginPopup = () => openAnotherOverlay('loginPopup');
+
+    const submit = async () => {
+        // TODO: make in more declarative way
+        if (document)
+            document.activeElement.blur();
+
+        isError = false;
+        shouldShowMatchError = false;
+        const isValuesNotEmpty = email.length > 0 && password.length > 0 && passwordConfirm.length > 0;
+        if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid || !isPasswordConfirmValid) {
+            // TODO: focus needed input
+            isError = true;
+            errorType = 'fieldsError';
+
+            return;
+        } else if (password !== passwordConfirm) {
+            // TODO: focus needed input
+            shouldShowMatchError = true;
+            isError = true;
+            errorType = 'fieldsError';
+
+            return;
+        }
+
+        isLoading = true;
+        const { error, data } = await register(email, password, $locale);
+        isLoading = false;
+
+        if (error) {
+            console.warn(error);
+            isError = true;
+            errorType = 'unrecognizedError';
+
+            if (error === 'Email already exists') {
+                errorType = 'accountExists';
+            } else if (error === 'Too many requests, please try again later') {
+                errorType = 'manyRequests';
+            }
+
+            return;
+        }
+
+        openAnotherOverlay('checkEmailPopup');
+
+        // TODO:
+        // showSuccessNotification()
+    }
+
+    const debouncedSubmit = debounce(() => {
+        if (isSpam) {
+            isError = true;
+            errorType = 'manyAttempts';
+            clearTimeout(isSpam);
+            isSpam = setTimeout(() => {
+                clearTimeout(isSpam);
+                isSpam = null;
+                isError = false;
+            }, 2000);
+            return;
+        }
+
+        isSpam = setTimeout(() => {
+            clearTimeout(isSpam);
+            isSpam = null;
+        }, 2000);
+
+        submit();
+    }, 200);
 </script>
 
 <PopupWrap className='login__wrap login__wrap-register'>
-    <form class="rating__popup rating__popup-active login__popup loginPopup2 loginPopup form" id="registerForm" action="#register">
+    <form class="rating__popup rating__popup-active login__popup loginPopup form" on:submit|preventDefault={debouncedSubmit}>
         <div class="rating__content register__content">
             <p class="rating__text">
-                <strong class="rating__text-highlight">Registration</strong>
+                <strong class="rating__text-highlight">{$_('registrationPopup.title')}</strong>
             </p>
 
-            <div class="container">
-                <div class="rating__stars form__grp">
-                    <label for="new-email" class="rating__title title form__label">Email</label>
-                    <input class="form__input inputEmail" type="email" id="new-email">
-                    <span class="form__error">Wrong email format! Example: yournick@mail.com</span>
-                </div>
+            <Input
+                autofocus={true}
+                title={$_('registrationPopup.email')}
+                type='email'
+                id='new-email'
+                bind:value={email}
+                bind:isInputValid={isEmailValid}
+            />
 
-                <div class="rating__stars form__grp">
-                    <label for="new-password" class="rating__title title form__label">
-                        <span class="loginText3">Password</span>
-                        <a href="#" class="form__label_help togglePass">Show/hide</a>
-                    </label>
-                    <input class="form__input inputPass" type="password" id="new-password" autocomplete="new-password">
-                    <span class="form__error">Password should be longer than 6 characters!</span>
-                    <span class="form__error form__error-passw">Passwords should match!</span>
-                </div>
+            <Input
+                title={$_('registrationPopup.password')}
+                type='password'
+                id='new-password'
+                bind:value={password}
+                bind:isInputValid={isPasswordValid}
+                bind:shouldShowMatchError={shouldShowMatchError}
+            />
 
-                <div class="rating__stars form__grp">
-                    <label for="repeat-new-password" class="rating__title title form__label">
-                        <span>Repeat the password</span>
-                        <a href="#" class="form__label_help togglePass">Show/hide</a>
-                    </label>
-                    <input class="form__input inputPass" type="password" id="repeat-new-password" autocomplete="repeat-new-password">
-                    <span class="form__error">Password should be longer than 6 characters!</span>
-                    <span class="form__error form__error-passw">Passwords should match!</span>
-                </div>
-            </div>
+            <Input
+                title={$_('registrationPopup.repeatPassword')}
+                type='password'
+                id='repeat-new-password'
+                bind:value={passwordConfirm}
+                bind:isInputValid={isPasswordConfirmValid}
+                bind:shouldShowMatchError={shouldShowMatchError}
+            />
 
-            <div class="spinner__wrap register__spinner">
-                <div class="spinner__centr">
-                    <div class="spinner"></div>
-                </div>
-            </div>
+            {#if isLoading}
+                <Spinner className='register__spinner' />
+            {/if}
 
             <div class="register__notifications_wrap">
-                <span class="register__notifications register__notifications-email_exists">
-                    Account already exists
-                </span>
-                <span class="register__notifications register__notifications-err">
-                    Error, try again later :(
-                </span>
-                <span class="register__notifications register__notifications-fill">
-                    Check all the fields!
-                </span>
-                <span class="register__notifications register__notifications-timeout">
-                    Too many attempts, wait a bit!
-                </span>
+                {#if isError}
+                    <span class="register__notifications">
+                        {errorsObj[errorType]}
+                    </span>
+                {/if}
             </div>
         </div>
 
         <div class="rating__btns btns_wrap">
             <a href="#" class="rating__btn btn btn-low openLogin" on:click|preventDefault={openLoginPopup}>
-                Go to Login
+                {$_('registrationPopup.goToLoginBtn')}
             </a>
-            <button type="submit" class="rating__btn btn form__btn" id="registerBtn">Registration</button>
+            <button type="submit" class="rating__btn btn form__btn" on:click|preventDefault={debouncedSubmit}>
+                {$_('registrationPopup.registerBtn')}
+            </button>
         </div>
     </form>
 </PopupWrap>
 
 <style>
+    .register__notifications {
+        display: block;
+    }
 
+    .register__notifications_wrap {
+        align-items: center;
+    }
 </style>
