@@ -124,6 +124,28 @@
             "link": "blog/support/"
         }]
     },
+    "loginPopup": {
+        "title": "Log in",
+        "email": "Email",
+        "password": "Password",
+        "forgotPasswordBtn": "Forgot password",
+        "loginBtn": "Log in",
+        "registerBtn": "I want to register!",
+        "errorVerification": "Check email for verification letter",
+        "errorVerificationBtn": "Resend letter",
+        "fieldsError": "Check all the fields!",
+        "noAccount": "Couldn't find your account",
+        "wrongPassword": "Wrong password",
+        "unrecognizedError": "Error, try again later :(",
+        "manyAttempts": "Too many attempts, wait a bit!",
+        "manyRequests": "Too many requests, try later.",
+        "alreadyVerified": "Already verified. Just log in :)"
+    },
+    "input": {
+        "showOrHide": "Show/Hide",
+        "emailError": "Wrong email format! Example: yournick@mail.com",
+        "passwordError": "Password should be longer than 6 characters!"
+    },
     "partnersPopup": {
         "ourFriendsAndPartners": "Our friends and partners",
         "list": [

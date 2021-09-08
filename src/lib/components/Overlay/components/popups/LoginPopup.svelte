@@ -1,4 +1,6 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
@@ -8,13 +10,13 @@
     import { userStateStore } from "../../../../../stores/state.js";
 
     const errorsObj = {
-        'fieldsError': `Check all the fields!`,
-        'noAccount': `Couldn't find your account`,
-        'wrongPassword': `Wrong password`,
-        'unrecognizedError': `Error, try again later :(`,
-        'manyAttempts': `Too many attempts, wait a bit!`,
-        'manyRequests': `Too many requests, try later.`,
-        'alreadyVerified': `Already verified. Just log in :)`,
+        'fieldsError': $_('loginPopup.fieldsError'),
+        'noAccount': $_('loginPopup.noAccount'),
+        'wrongPassword': $_('loginPopup.wrongPassword'),
+        'unrecognizedError': $_('loginPopup.unrecognizedError'),
+        'manyAttempts': $_('loginPopup.manyAttempts'),
+        'manyRequests': $_('loginPopup.manyRequests'),
+        'alreadyVerified': $_('loginPopup.alreadyVerified'),
     }
 
     let email = '';
@@ -147,12 +149,12 @@
     <form class="rating__popup rating__popup-active login__popup form" id="loginForm" on:submit|preventDefault={debouncedSubmit}>
         <div class="rating__content login__content">
             <p class="rating__text">
-                <strong class="rating__text-highlight">Log in</strong>
+                <strong class="rating__text-highlight">{$_('loginPopup.title')}</strong>
             </p>
 
             <Input
                 autofocus={true}
-                title='Email'
+                title={$_('loginPopup.email')}
                 type='email'
                 id='current-email'
                 bind:value={email}
@@ -160,7 +162,7 @@
             />
 
             <Input
-                title='Password'
+                title={$_('loginPopup.password')}
                 type='password'
                 id='current-password'
                 bind:value={password}
@@ -174,8 +176,8 @@
             <div class="login__notifications_wrap">
                 {#if isError && errorType === 'verificationLetter'}
                     <div class="login__notifications login__notifications-verify">
-                        <span class="login__notifications-small">Check email for verification letter</span>
-                        <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>Resend letter</a>
+                        <span class="login__notifications-small">{$_('loginPopup.errorVerification')}</span>
+                        <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('loginPopup.errorVerificationBtn')}</a>
                     </div>
                 {:else if isError}
                     <span class="login__notifications">
@@ -187,12 +189,14 @@
 
         <div class="rating__btns btns_wrap">
             <a href={"#"} class="rating__btn btn btn-low" on:click|preventDefault={openForgotPasswordPopup}>
-                Forgot password
+                {$_('loginPopup.forgotPasswordBtn')}
             </a>
-            <button type="submit" class="rating__btn btn form__btn" on:click|preventDefault={debouncedSubmit}>Log in</button>
+            <button type="submit" class="rating__btn btn form__btn" on:click|preventDefault={debouncedSubmit}>
+                {$_('loginPopup.loginBtn')}
+            </button>
         </div>
         <a href={"#"} class="login__link" on:click|preventDefault={openRegisterPopup}>
-            I want to register!
+            {$_('loginPopup.registerBtn')}
         </a>
     </form>
 </PopupWrap>

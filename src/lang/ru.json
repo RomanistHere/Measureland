@@ -130,6 +130,28 @@
         }]
 
     },
+    "loginPopup": {
+        "title": "Войти",
+        "email": "Почта (Email)",
+        "password": "Пароль",
+        "forgotPasswordBtn": "Не помню пароль",
+        "loginBtn": "Войти",
+        "registerBtn": "Хочу зарегистрироваться!",
+        "errorVerification": "Нужно пройти верификацию (проверь почту)",
+        "errorVerificationBtn": "Послать письмо ещё раз",
+        "fieldsError": "Проверь все поля!",
+        "noAccount": "Мы не нашли такого аккаунта",
+        "wrongPassword": "Неверный пароль",
+        "unrecognizedError": "Ошибка, попробуй ещё раз позже :(",
+        "manyAttempts": "Слишком много попыток, погоди!",
+        "manyRequests": "Слишком много запросов, жди!",
+        "alreadyVerified": "Уже верифицирован, залогинься :)"
+    },
+    "input": {
+        "showOrHide": "Показать/Скрыть",
+        "emailError": "Неправильный формат! Пример: example@mail.ru",
+        "passwordError": "Пароль должен быть длиннее 6-ти символов!"
+    },
     "partnersPopup": {
         "ourFriendsAndPartners": "Наши друзья и единомышленники",
         "list": [

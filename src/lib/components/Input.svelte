@@ -1,4 +1,6 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     export let title = 'Email';
     export let type = 'email';
     export let id = 'current-email';
@@ -43,7 +45,7 @@
     <label for="current-email" class="rating__title title form__label">
         <span>{title}</span>
         {#if type === 'password'}
-            <a href={"#"} class="form__label_help" on:click|preventDefault={changeInputType}>Show/hide</a>
+            <a href={"#"} class="form__label_help" on:click|preventDefault={changeInputType}>{$_('input.showOrHide')}</a>
         {/if}
     </label>
     <input
@@ -58,9 +60,9 @@
 
     {#if !isInputValid && !isInputActive}
         {#if type === 'email'}
-            <span class="form__error">Wrong email format! Example: yournick@mail.com</span>
+            <span class="form__error">{$_('input.emailError')}</span>
         {:else if type === 'password'}
-            <span class="form__error">Password should be longer than 6 characters!</span>
+            <span class="form__error">{$_('input.passwordError')}</span>
         {/if}
     {/if}
 </div>
