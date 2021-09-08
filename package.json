@@ -1,6 +1,6 @@
 {
-  "name": "~TODO~",
-  "version": "0.0.1",
+  "name": "Measureland",
+  "version": "1.3.0",
   "scripts": {
     "start": "svelte-kit dev --port=8080",
     "build": "svelte-kit build",
