@@ -15,7 +15,7 @@ More info is in our [blog](https://measureland.org/blog):
 
 ## Contributing
 
-**Important** Right now we're migrating the project to Svelte in another branch
+**Important!** Right now we're migrating the project to Svelte in another branch. Learn more about Svelte: https://svelte.dev/
 
 We can think of 3 ways we'd like to see contributions about:
 - **Code itself.** Since the project is in MVP stage, best programming practices weren't the goal, however after the release it becomes more important. Improvements, fixes, new technologies (something more functional, not OOP) - it's a truly vaporous area to code.
