@@ -1,0 +1,18 @@
+# To do:
+
+- learn how to use i18n with tags, expressions and methods
+- sanitize html
+- build with two languages
+- check (stricter) content security policy
+- animate popups
+- create popup for handling (showing) errors
+- move everything from old files
+- test registration/login flow after everything is implemented
+- move registration button to nav bar at the top of the screen
+- do we need loggedInPopup?
+- move our tremendous main-non-crit.css to separate instances
+- remaining ratings, show true number
+- implement new start screen
+- write a contribution guide
+- write an article about how awesome svelte is
+- write an article about how we handle popup/sidebar opening
