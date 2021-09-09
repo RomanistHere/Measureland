@@ -15,6 +15,8 @@ More info is in our [blog](https://measureland.org/blog):
 
 ## Contributing
 
+**Important** Right now we're migrating the project to Svelte in another branch
+
 We can think of 3 ways we'd like to see contributions about:
 - **Code itself.** Since the project is in MVP stage, best programming practices weren't the goal, however after the release it becomes more important. Improvements, fixes, new technologies (something more functional, not OOP) - it's a truly vaporous area to code.
 - **How-to-rent-in-your-city guide.** If you have this experience, it'd be extremely useful for everyone if you shared it. Check out the [existing guides](https://measureland.org/blog) and use the [template](blog/minsk-belarus)
