@@ -59,6 +59,7 @@
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
+                openAnotherOverlay('myPlacesPopup');
             }
         }, {
             text: $_('menuSidebar.changePassword'),

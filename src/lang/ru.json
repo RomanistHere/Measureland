@@ -146,6 +146,11 @@
         "goToLoginBtn": "Перейти ко Входу",
         "registerBtn": "Регистрация"
     },
+    "myPlacesPopup": {
+        "title": "Твои оценки",
+        "youHaveNotRated": "У тебя пока ноль оценок. Найди знакомое место, кликни на карту и оценивай!",
+        "defaultAdress": "Адрес не нашёлся..."
+    },
     "loginErrors": {
         "errorVerification": "Нужно пройти верификацию (проверь почту)",
         "errorVerificationBtn": "Послать письмо ещё раз",

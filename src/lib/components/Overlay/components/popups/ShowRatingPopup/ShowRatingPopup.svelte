@@ -1,7 +1,7 @@
 <script>
     import { browser } from '$app/env';
     import { getContext, onDestroy } from 'svelte';
-    import { json, _ } from 'svelte-i18n';
+    import { json, _, locale } from 'svelte-i18n';
 
     import PopupWrap from '../PopupWrap.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
@@ -9,14 +9,15 @@
     import MainButton from '../../MainButton.svelte';
 
     import { getSinglePointData } from "../../../../../utilities/api.js";
-    import { mapReference } from "../../../../../../stores/references.js";
+    import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { appStateStore, userStateStore } from "../../../../../../stores/state.js";
     import { criteria } from '../../../../../constants/criteria.js';
     import { getFinalRating, roundToTen, openAnotherOverlay } from '../../../../../utilities/helpers.js';
 
     export let popupData;
 
-	const map = $mapReference;
+    const map = $mapReference;
+	const geocodeService = $geocodeServiceReference;
     const isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
     let isAlreadyRatedByThisUser = false;
@@ -53,8 +54,14 @@
         openAnotherOverlay('commentsSidebar', commentGeoID);
 
     const fetchData = async ({ lng, lat }) => {
+        geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
+            if (error) {
+                console.warn(error);
+                return;
+            }
+            approximateAdress = result.address.LongLabel;
+        });
         // TODO:
-        // fillAdress(latlng)
         // $('.rate__popup').focus()
 
         const currentZoom = map.getZoom();

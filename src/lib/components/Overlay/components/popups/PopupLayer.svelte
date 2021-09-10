@@ -7,6 +7,7 @@
     import RegisterPopup from './RegisterPopup.svelte';
     import PartnersPopup from './PartnersPopup.svelte';
     import HowToRatePopup from './HowToRatePopup.svelte';
+    import MyPlacesPopup from './MyPlacesPopup.svelte';
 
     export let popupName;
     export let popupData;
@@ -25,6 +26,10 @@
         loginPopup: {
             className: 'login',
             component: LoginPopup
+        },
+        myPlacesPopup: {
+            className: 'places',
+            component: MyPlacesPopup
         },
         partnersPopup: {
             className: 'partners',

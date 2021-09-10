@@ -140,6 +140,11 @@
         "goToLoginBtn": "Go to Login",
         "registerBtn": "Register"
     },
+    "myPlacesPopup": {
+        "title": "Your ratings",
+        "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",
+        "defaultAdress": "Didn't find address"
+    },
     "loginErrors": {
         "errorVerification": "Check email for verification letter",
         "errorVerificationBtn": "Resend letter",
