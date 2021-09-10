@@ -35,30 +35,30 @@ const openSideBar = (className = 'settings') => {
     addToUrlOpenModalFlag()
 }
 
-const closeSideBar = () => {
-    state.flow.push('cs')
-    removeClass(document.body, 'sidebar-open')
-    hideSpinner('.sidebar__spinner')
-    commentsWrap.textContent = ''
-}
+// const closeSideBar = () => {
+//     state.flow.push('cs')
+//     removeClass(document.body, 'sidebar-open')
+//     hideSpinner('.sidebar__spinner')
+//     commentsWrap.textContent = ''
+// }
 
-const openPartners = () => {
-    state.flow.push('op')
-    addClass(partnersPopup, 'rating-active')
-}
+// const openPartners = () => {
+//     state.flow.push('op')
+//     addClass(partnersPopup, 'rating-active')
+// }
+//
+// const closePartners = () => {
+//     removeClass(partnersPopup, 'rating-active')
+// }
 
-const closePartners = () => {
-    removeClass(partnersPopup, 'rating-active')
-}
-
-const openRateTutorial = () => {
-    state.flow.push('rt')
-    addClass($('.rate_tutorial'), 'rating-active')
-}
-
-const closeRateTutorial = () => {
-    removeClass($('.rate_tutorial'), 'rating-active')
-}
+// const openRateTutorial = () => {
+//     state.flow.push('rt')
+//     addClass($('.rate_tutorial'), 'rating-active')
+// }
+//
+// const closeRateTutorial = () => {
+//     removeClass($('.rate_tutorial'), 'rating-active')
+// }
 
 const openAskForRatings = () => {
     state.flow.push('mr')
@@ -74,7 +74,7 @@ const closeAskForRatings = () => {
 }
 
 const initSideBar = () => {
-    handleClickPrevDef(closeSideBarBtn, closeSideBar)
+    // handleClickPrevDef(closeSideBarBtn, closeSideBar)
 
     // features
 
@@ -102,14 +102,14 @@ const initSideBar = () => {
     handleClickPrevDef($('.rate_ask_ratings__ok'), closeAskForRatings)
     handleClickPrevDef($('.rate_ask_ratings__close'), closeAskForRatings)
 
-    handleClickPrevDef(crashReportsBtn, () => {
-        state.flow.push('cr')
-
-        state = { ...state, shouldSendEvent: !state.shouldSendEvent }
-        setCookie('sentryOn', state.shouldSendEvent === false ? '0' : '1', 365)
-
-        crashReportsBtn.classList.toggle('settings__link-on')
-    })
+    // handleClickPrevDef(crashReportsBtn, () => {
+    //     state.flow.push('cr')
+    //
+    //     state = { ...state, shouldSendEvent: !state.shouldSendEvent }
+    //     setCookie('sentryOn', state.shouldSendEvent === false ? '0' : '1', 365)
+    //
+    //     crashReportsBtn.classList.toggle('settings__link-on')
+    // })
 
     handleClickPrevDef(openFiltersBtn, () => {
         openSideBar('filters')
@@ -119,65 +119,65 @@ const initSideBar = () => {
         openSideBar('filters')
     })
 
-    handleClickPrevDef(openLoginBtn, () => {
-        hideAllSides()
-        openLoginForm()
-    })
-
-    handleClickPrevDef(openSettingsBtn, () => {
-        openSideBar()
-    })
+    // handleClickPrevDef(openLoginBtn, () => {
+    //     hideAllSides()
+    //     openLoginForm()
+    // })
+    //
+    // handleClickPrevDef(openSettingsBtn, () => {
+    //     openSideBar()
+    // })
 
     handleClickPrevDef(changePassBtn, () => {
         hideAllSides()
         openLoginForm('forgot')
     })
 
-    handleClickPrevDef(myRatingsBtn, () => {
-        hideAllSides()
-        openMyPlaces()
-    })
+    // handleClickPrevDef(myRatingsBtn, () => {
+    //     hideAllSides()
+    //     openMyPlaces()
+    // })
 
-    handleClickPrevDef($('.registerFromTutorialBtn'), () => {
-        hideAllSides()
-        openLoginForm('register')
-    })
+    // handleClickPrevDef($('.registerFromTutorialBtn'), () => {
+    //     hideAllSides()
+    //     openLoginForm('register')
+    // })
 
-    handleClickPrevDef(openRateTutorialBtn, () => {
-        hideAllSides()
-        openRateTutorial()
-    })
+    // handleClickPrevDef(openRateTutorialBtn, () => {
+    //     hideAllSides()
+    //     openRateTutorial()
+    // })
+    //
+    // handleClickPrevDef($('.rate_tutorial__ok'), closeRateTutorial)
+    // handleClickPrevDef($('.rate_tutorial__close'), closeRateTutorial)
 
-    handleClickPrevDef($('.rate_tutorial__ok'), closeRateTutorial)
-    handleClickPrevDef($('.rate_tutorial__close'), closeRateTutorial)
-
-    handleClickPrevDef(partnersBtn, () => {
-        hideAllSides()
-        openPartners()
-    })
-
-    handleClickPrevDef(closePartnersBtn, closePartners)
-
-    handleClick(partnersPopup, e => {
-        if (e.target === e.currentTarget) {
-            hideAllSides()
-        }
-    })
-
-    handleClickPrevDef(changeLangBtn, async () => {
-        const newLang = state.lang === 'en' ? 'ru' : 'en'
-        const urlLang = detectPrefLang()
-
-        if (!state.userID) {
-            changeLang(newLang)
-        } else if (state.lang !== urlLang) {
-            // fix for wrong url
-            changeLang(state.lang)
-        } else {
-            const result = await saveLang(newLang)
-            changeLang(newLang)
-        }
-    })
+    // handleClickPrevDef(partnersBtn, () => {
+    //     hideAllSides()
+    //     openPartners()
+    // })
+    //
+    // handleClickPrevDef(closePartnersBtn, closePartners)
+    //
+    // handleClick(partnersPopup, e => {
+    //     if (e.target === e.currentTarget) {
+    //         hideAllSides()
+    //     }
+    // })
+    //
+    // handleClickPrevDef(changeLangBtn, async () => {
+    //     const newLang = state.lang === 'en' ? 'ru' : 'en'
+    //     const urlLang = detectPrefLang()
+    //
+    //     if (!state.userID) {
+    //         changeLang(newLang)
+    //     } else if (state.lang !== urlLang) {
+    //         // fix for wrong url
+    //         changeLang(state.lang)
+    //     } else {
+    //         const result = await saveLang(newLang)
+    //         changeLang(newLang)
+    //     }
+    // })
 }
 
 initSideBar()

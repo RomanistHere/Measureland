@@ -1,5 +1,12 @@
 # To do:
 
+- quiz popup
+- forgot/change password
+- post register popup
+- ask for ratings popup
+- filters
+- drawing
+- start screen
 - learn how to use i18n with tags, expressions and methods
 - sanitize html
 - build with two languages
@@ -16,3 +23,4 @@
 - write a contribution guide
 - write an article about how awesome svelte is
 - write an article about how we handle popup/sidebar opening
+- track user flow

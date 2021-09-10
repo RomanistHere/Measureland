@@ -9,30 +9,15 @@
 
     import { userStateStore, appStateStore } from "../../../../stores/state.js";
     import { mapReference } from "../../../../stores/references.js";
-    import { roundToFifthDecimal, roundToInt, openAnotherOverlay } from "../../../utilities/helpers.js";
+    import { roundToFifthDecimal, roundToInt, openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
 	const map = $mapReference;
 
-    let visitedPoly = null
-    let cachedData = []
-    let usedBounds = []
-    let index
-
-    const debounce = (func, wait, immediate) => {
-    	var timeout
-    	return function() {
-    		var context = this, args = arguments
-    		var later = function() {
-    			timeout = null
-    			if (!immediate) func.apply(context, args)
-    		}
-    		var callNow = immediate && !timeout
-    		clearTimeout(timeout)
-    		timeout = setTimeout(later, wait)
-    		if (callNow) func.apply(context, args)
-    	}
-    }
+    let visitedPoly = null;
+    let cachedData = [];
+    let usedBounds = [];
+    let index;
 
     const getIcon = rating =>
         L.icon({
@@ -43,7 +28,7 @@
             shadowUrl: '../static/images/house-base.svg',
             shadowAnchor: [25, 70],
             shadowSize: [61, 100],
-        })
+        });
 
     const getGrpIcon = rating =>
         L.icon({
@@ -54,7 +39,7 @@
             shadowUrl: '../static/images/buildings-base.svg',
             shadowAnchor: [25, 70],
             shadowSize: [61, 100],
-        })
+        });
 
     const clusterCaption = {
     	en: {
@@ -75,64 +60,63 @@
     const createClusterIcon = (feature, latlng) => {
         if (!feature.properties.cluster) {
     		// single point
-    		const rating = roundToInt(feature.properties.averageRating)
-    	    const icon = getIcon(Math.floor(rating))
+    		const rating = roundToInt(feature.properties.averageRating);
+    	    const icon = getIcon(Math.floor(rating));
     	    const marker = L.marker(latlng, {
     	        icon: icon,
     	        title: `${clusterCaption[$userStateStore.lang]['titleSingle']} ${rating}`,
     	        riseOnHover: true,
     	        rating: rating,
-    	    })
-            // TODO:
-    		marker.on('click', initShowRatingPopup)
-    		return marker
+    	    });
+    		marker.on('click', initShowRatingPopup);
+    		return marker;
     	} else {
     		// cluster
-    		const rating = roundToInt(feature.properties.ratingSum / feature.properties.point_count)
-    		const grpIcon = getGrpIcon(Math.floor(rating))
+    		const rating = roundToInt(feature.properties.ratingSum / feature.properties.point_count);
+    		const grpIcon = getGrpIcon(Math.floor(rating));
     		const marker = L.marker(latlng, {
     			icon: grpIcon,
     			title: `${clusterCaption[$userStateStore.lang]['titleGrp']} ${rating}`,
     			riseOnHover: true,
     			rating: rating,
-    		})
-    		return marker
+    		});
+    		return marker;
     	}
     }
 
     const clusterMarkers = L.geoJson(null, {
         pointToLayer: createClusterIcon
-    }).addTo(map)
+    }).addTo(map);
 
     const updateClusters = () => {
-    	const bounds = map.getBounds()
-    	const bbox = [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()]
-    	const zoom = map.getZoom()
-    	const clusters = index.getClusters(bbox, zoom)
+    	const bounds = map.getBounds();
+    	const bbox = [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()];
+    	const zoom = map.getZoom();
+    	const clusters = index.getClusters(bbox, zoom);
 
-    	clusterMarkers.clearLayers()
-    	clusterMarkers.addData(clusters)
+    	clusterMarkers.clearLayers();
+    	clusterMarkers.addData(clusters);
     }
 
     clusterMarkers.on('click', e => {
-    	const clusterId = e.layer.feature.properties.cluster_id
-    	const center = e.latlng
+    	const clusterId = e.layer.feature.properties.cluster_id;
+    	const center = e.latlng;
     	if (clusterId) {
-    		const expansionZoom = index.getClusterExpansionZoom(clusterId)
-    		map.setView(center, expansionZoom)
+    		const expansionZoom = index.getClusterExpansionZoom(clusterId);
+    		map.setView(center, expansionZoom);
     	}
     })
 
     const clusterData = (geoData = null) => {
-    	const data = geoData || cachedData
+    	const data = geoData || cachedData;
     	index = new Supercluster({
             // log: true,
             radius: 150,
             minPoints: 2,
             minZoom: 4
-        }).load(data)
+        }).load(data);
 
-    	updateClusters()
+    	updateClusters();
     }
 
     // addPointer cluster 2.0 version (supercluster)
@@ -148,13 +132,13 @@
     		type: "Feature"
     	}
 
-    	cachedData = [ ...cachedData, newPoint ]
-    	clusterData()
+    	cachedData = [ ...cachedData, newPoint ];
+    	clusterData();
     }
 
     const removePointer = (coords) => {
-    	const [ lat, lng ] = coords.reverse()
-    	const length = cachedData.length
+    	const [ lat, lng ] = coords.reverse();
+    	const length = cachedData.length;
         for (let i = 0; i < length; i++) {
     		const arr = cachedData[i]['geometry']['coordinates']
             if (arr[0] === lat && arr[1] === lng) {
@@ -178,22 +162,22 @@
             delete newObj['location']
             delete newObj['_id']
             return newObj
-        })
+        });
 
     	if (!$appStateStore.isFiltersOn) {
-    		cachedData = [ ...cachedData, ...geoData ]
+    		cachedData = [ ...cachedData, ...geoData ];
     		// console.log('total number of points in cache: ', cachedData.length)
 
     		// console.timeEnd('fix geojson')
 
-    		clusterData()
+    		clusterData();
     	} else {
-    		clusterData(geoData)
+    		clusterData(geoData);
     	}
     }
 
     const updateState = (coords, zoom) => {
-    	const { lat, lng } = coords
+    	const { lat, lng } = coords;
     	appStateStore.update(state => ({
             ...state,
             center: [roundToFifthDecimal(lat), roundToFifthDecimal(lng)],
@@ -204,15 +188,15 @@
     const getNewData = async () => {
     	// console.warn('____________new_try____________')
     	// console.time('preparations')
-        const bounds = map.getBounds()
-        const zoom = map.getZoom()
+        const bounds = map.getBounds();
+        const zoom = map.getZoom();
 
-    	updateState(bounds.getCenter(), zoom)
+    	updateState(bounds.getCenter(), zoom);
 
-    	const east = roundToFifthDecimal(bounds.getEast())
-    	const north = roundToFifthDecimal(bounds.getNorth())
-    	const west = roundToFifthDecimal(bounds.getWest())
-    	const south = roundToFifthDecimal(bounds.getSouth())
+    	const east = roundToFifthDecimal(bounds.getEast());
+    	const north = roundToFifthDecimal(bounds.getNorth());
+    	const west = roundToFifthDecimal(bounds.getWest());
+    	const south = roundToFifthDecimal(bounds.getSouth());
 
     	const currentScreenPoly = {
     		regions: [
@@ -223,59 +207,67 @@
 
     	const queryPolygon = visitedPoly !== null && !$appStateStore.isFiltersOn
     		? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
-    		: currentScreenPoly
+    		: currentScreenPoly;
 
     	// use data from cache
     	if (!queryPolygon.regions[0])
-    		return clusterData()
+    		return clusterData();
 
     	const getQuery = queryPolygon => {
     		if (queryPolygon.regions[2]) {
-    			return currentScreenPoly.regions[0]
+    			return currentScreenPoly.regions[0];
     		} else if (queryPolygon.regions[1]) {
-    			const secondRegLength = queryPolygon.regions[1].length
-    			const [ lastElemLat, lastElemLng ] = queryPolygon.regions[0].pop()
-    			const [ lastElemLat2, lastElemLng2 ] = queryPolygon.regions[1][secondRegLength - 1]
-    			const fixedFirstPart = [ ...queryPolygon.regions[0], [lastElemLat, lastElemLng2] ]
-    			const queryPol = [ ...fixedFirstPart, ...queryPolygon.regions[1].reverse(), [lastElemLat + 0.001, lastElemLng2], [lastElemLat + 0.001, lastElemLng] ]
-    			return queryPol
+    			const secondRegLength = queryPolygon.regions[1].length;
+    			const [ lastElemLat, lastElemLng ] = queryPolygon.regions[0].pop();
+    			const [ lastElemLat2, lastElemLng2 ] = queryPolygon.regions[1][secondRegLength - 1];
+    			const fixedFirstPart = [ ...queryPolygon.regions[0], [lastElemLat, lastElemLng2] ];
+    			const queryPol = [ ...fixedFirstPart, ...queryPolygon.regions[1].reverse(), [lastElemLat + 0.001, lastElemLng2], [lastElemLat + 0.001, lastElemLng] ];
+    			return queryPol;
     		} else {
-    			return queryPolygon.regions[0]
+    			return queryPolygon.regions[0];
     		}
     	}
 
-        // TODO:
-    	// addClass($('.overlay__loading'), 'overlay__loading-show')
+        // TODO:  addClass($('.overlay__loading'), 'overlay__loading-show')
 
-    	const query = getQuery(queryPolygon)
+    	const query = getQuery(queryPolygon);
     	const poly = L.polygon(query, {
     		fillOpacity: 0.05,
     		weight: 2
-    	})
-    	if (!$appStateStore.isFiltersOn)
-    		usedBounds.push(poly)
-    	if ($appStateStore.shouldShowLoading && !$appStateStore.isFiltersOn)
-    		poly.addTo(map)
+    	});
 
-    	const filters = $appStateStore.isFiltersOn ? $appStateStore.filters : null
+    	if (!$appStateStore.isFiltersOn)
+    		usedBounds.push(poly);
+
+    	if ($appStateStore.shouldShowLoading && !$appStateStore.isFiltersOn)
+    		poly.addTo(map);
+
+    	const filters = $appStateStore.isFiltersOn ? $appStateStore.filters : null;
     	// console.timeEnd('preparations')
     	// console.time('fetch new data')
-        const { error, data } = await fetchBoundsData(query, zoom, filters)
+        const { error, data } = await fetchBoundsData(query, zoom, filters);
     	// console.timeEnd('fetch new data')
 
     	if (error === 'Too many requests, please try again later') {
-    		blockMap()
-    		showLimitError()
+    		appStateStore.update(state => ({ ...state, shouldWork: false }));
+            // TODO: showLimitError()
     		return
     	} else if (error) {
-    		showError('unrecognizedError', error)
+    		// TODO: showError('unrecognizedError', error)
     		return
     	}
 
-    	const { result, userID } = data
-        // TODO:
-        if (!userID)
-            // userLoggedOut()
+    	const { result, userID } = data;
+
+        if (!userID) {
+            userStateStore.update(state => ({
+                ...state,
+                userID: null,
+                activeRatings: 3,
+                userName: 'Аноним',
+                wantMoreRatings: false
+            }));
+        }
 
         // TODO:
         // console.log('number of downloaded points: ', result.length)
@@ -283,16 +275,16 @@
     	if (!$appStateStore.isFiltersOn) {
     		visitedPoly = visitedPoly !== null
     			? PolyBool.union(visitedPoly, queryPolygon)
-    			: currentScreenPoly
+    			: currentScreenPoly;
     	}
 
         // checkSize(result)
 
         // TODO:
     	// removeClass($('.overlay__loading'), 'overlay__loading-show')
-    	addDataAndDisplay(result)
+    	addDataAndDisplay(result);
     }
 
-    map.on('moveend', debounce(getNewData, 500))
-    onMount(getNewData)
+    map.on('moveend', debounce(getNewData, 300));
+    onMount(getNewData);
 </script>

@@ -5,7 +5,7 @@
     import SidebarBlock from './SidebarBlock.svelte';
 
     import { openAnotherOverlay, closeOverlays } from '../../../../utilities/helpers.js';
-    import { logout } from '../../../../utilities/api.js';
+    import { logout, saveLang } from '../../../../utilities/api.js';
     import { userStateStore } from "../../../../../stores/state.js";
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
@@ -14,6 +14,7 @@
 
     const toggleSendingEvents = () => {
         const shouldSendEvent = !$userStateStore.shouldSendEvent;
+        setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
         userStateStore.update(state => ({
             ...state,
             shouldSendEvent
@@ -72,7 +73,7 @@
             text: $_('menuSidebar.changeLanguage'),
             shouldShow: true,
             href: `#`,
-            onClick: (e) => {
+            onClick: async (e) => {
                 e.preventDefault();
                 const nextLang = $locale === 'ru' ? 'en' : 'ru';
                 locale.set(nextLang);
@@ -80,6 +81,11 @@
                     const url = new URL(window.location.href);
                     url.pathname = `/${nextLang}`;
                     window.history.replaceState(null, null, url);
+
+                    if (isUserLoggedIn)
+                        await saveLang(nextLang);
+
+                    // showSuccessNotification
                 };
             }
         },]
