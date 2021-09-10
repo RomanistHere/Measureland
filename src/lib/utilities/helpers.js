@@ -1,4 +1,4 @@
-import { overlayStateStore, appStateStore } from '../../stores/state.js';
+import { overlayStateStore, appStateStore, notificationsStore } from '../../stores/state.js';
 import { overlayStateDefault } from '../constants/overlayStateDefault.js';
 
 const debounce = (func, wait, immediate) => {
@@ -144,6 +144,9 @@ const closeOverlay = (overlayType = null) => {
 
 const closeOverlays = () => closeOverlay();
 
+const showSuccessNotification = () =>
+	notificationsStore.update(state => ({ ...state, successNotification: true }));
+
 export {
     debounce,
     sleep,
@@ -157,4 +160,5 @@ export {
     openAnotherOverlay,
     closeOverlay,
     closeOverlays,
+	showSuccessNotification,
 }

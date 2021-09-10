@@ -6,7 +6,8 @@
 
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
-	import Loading from './components/Loading.svelte';
+	import NotificationLayer from './components/notifications/NotificationLayer.svelte';
+    import Loading from './components/Loading.svelte';
 
     let popupActive = false;
     let popupName;
@@ -94,5 +95,7 @@
 <a href={"#"} class="overlay__btn open_settings" on:click|preventDefault={openSideBar}>
     <span class="menu_btn"></span>
 </a>
+
+<NotificationLayer />
 
 <svelte:window on:keydown={handleKeydown}/>

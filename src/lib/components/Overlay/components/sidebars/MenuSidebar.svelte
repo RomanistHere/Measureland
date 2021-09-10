@@ -4,7 +4,7 @@
     import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
 
-    import { openAnotherOverlay, closeOverlays } from '../../../../utilities/helpers.js';
+    import { openAnotherOverlay, closeOverlays, showSuccessNotification } from '../../../../utilities/helpers.js';
     import { logout, saveLang } from '../../../../utilities/api.js';
     import { userStateStore } from "../../../../../stores/state.js";
 
@@ -41,7 +41,6 @@
                 const { error, data } = await logout();
 
                 if (!error) {
-                    // showSuccessNotification()
                     userStateStore.update(state => ({
                         ...state,
                         userID: null,
@@ -49,6 +48,7 @@
                         userName: 'Аноним',
                         wantMoreRatings: false
                     }));
+                    showSuccessNotification();
                 } else {
                     console.warn(error)
                     // showError('unrecognizedError', error)
@@ -85,7 +85,7 @@
                     if (isUserLoggedIn)
                         await saveLang(nextLang);
 
-                    // showSuccessNotification
+                    showSuccessNotification();
                 };
             }
         },]

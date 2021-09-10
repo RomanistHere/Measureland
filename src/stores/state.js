@@ -31,4 +31,8 @@ export const appStateStore = writable({
     shouldShowLoading: false,
 });
 
+export const notificationsStore = writable({
+    successNotification: false,
+});
+
 export const overlayStateStore = writable(overlayStateDefault);

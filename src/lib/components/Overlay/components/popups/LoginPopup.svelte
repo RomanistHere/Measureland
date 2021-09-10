@@ -5,12 +5,12 @@
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
 
-    import { openAnotherOverlay, debounce, sleep } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, sleep, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
     $: errorsObj = $json('loginErrors');
-    
+
     let email = '';
     let password = '';
     let isEmailValid = true;
@@ -106,9 +106,7 @@
         }));
 
         openAnotherOverlay('loggedInPopup');
-
-        // TODO:
-        // showSuccessNotification()
+        showSuccessNotification();
     }
 
     const debouncedSubmit = debounce(() => {

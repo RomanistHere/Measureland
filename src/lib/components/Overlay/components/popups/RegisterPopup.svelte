@@ -5,11 +5,11 @@
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
 
-    import { openAnotherOverlay, debounce } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
 
     $: errorsObj = $json('loginErrors');
-    
+
     let email = '';
     let password = '';
     let passwordConfirm = '';
@@ -66,9 +66,7 @@
         }
 
         openAnotherOverlay('checkEmailPopup');
-
-        // TODO:
-        // showSuccessNotification()
+        showSuccessNotification()
     }
 
     const debouncedSubmit = debounce(() => {

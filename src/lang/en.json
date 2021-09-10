@@ -83,7 +83,7 @@
     "showRatingPopup": {
         "approximateAddress": "Approximate address",
         "approximateAddressDefault": "calculating...",
-        "copied": "Copied",
+        "copied": "Copied to buffer",
         "shareThisRating": "Share this rating",
         "ofParticipantsLived": "of the participants lived nearby",
         "averageRating": "Av. rating",
