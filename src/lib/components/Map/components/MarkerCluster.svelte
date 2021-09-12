@@ -287,4 +287,12 @@
 
     map.on('moveend', debounce(getNewData, 300));
     onMount(getNewData);
+
+    // const subscribeToFiltersChanges = ({ filters, isFiltersOn }) => {
+    //     if (!isFiltersOn || !filters)
+    //         return;
+    //
+    //     getNewData();
+    // }
+    // $: subscribeToFiltersChanges($appStateStore);
 </script>

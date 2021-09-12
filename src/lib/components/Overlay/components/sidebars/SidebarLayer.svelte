@@ -1,6 +1,6 @@
 <script>
     import CommentsSidebar from './CommentsSidebar/CommentsSidebar.svelte';
-    // import FiltersSidebar from './FiltersSidebar.svelte';
+    import FiltersSidebar from './FiltersSidebar/FiltersSidebar.svelte';
     import MenuSidebar from './MenuSidebar.svelte';
 
     export let sidebarName;
@@ -8,7 +8,7 @@
 
     const sidebarList = {
         commentsSidebar: CommentsSidebar,
-        // filtersSidebar: FiltersSidebar,
+        filtersSidebar: FiltersSidebar,
         menuSidebar: MenuSidebar,
     };
 

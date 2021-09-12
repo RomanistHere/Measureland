@@ -147,6 +147,16 @@ const closeOverlays = () => closeOverlay();
 const showSuccessNotification = () =>
 	notificationsStore.update(state => ({ ...state, successNotification: true }));
 
+const objToString = (object) => {
+    let str = ''
+    for (let k in object) {
+        if (object.hasOwnProperty(k)) {
+            str += k + ':' + object[k] + ','
+        }
+    }
+    return str.slice(0, -1)
+}
+
 export {
     debounce,
     sleep,
@@ -161,4 +171,5 @@ export {
     closeOverlay,
     closeOverlays,
 	showSuccessNotification,
+	objToString,
 }

@@ -1104,36 +1104,6 @@ textarea {
 
 /* // filters // */
 
-.noUi-horizontal {
-    height: 14px;
-}
-
-.noUi-horizontal .noUi-handle {
-    width: 26px;
-    height: 22px;
-    right: -17px;
-    top: -5px;
-}
-
-.noUi-handle::after, .noUi-handle::before {
-    content: "";
-    display: block;
-    position: absolute;
-    height: 12px;
-    width: 1px;
-    background: #E8E7E6;
-    left: 10px;
-    top: 4px;
-}
-
-.noUi-handle::after {
-    left: 13px;
-}
-
-.connect-colored {
-    background-color: var(--bg-color);
-}
-
 .fiters__subtitle {
     margin: 20px 0 5px;
 }

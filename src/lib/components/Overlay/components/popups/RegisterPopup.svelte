@@ -139,7 +139,7 @@
         </div>
 
         <div class="rating__btns btns_wrap">
-            <a href="#" class="rating__btn btn btn-low openLogin" on:click|preventDefault={openLoginPopup}>
+            <a href={"#"} class="rating__btn btn btn-low openLogin" on:click|preventDefault={openLoginPopup}>
                 {$_('registrationPopup.goToLoginBtn')}
             </a>
             <button type="submit" class="rating__btn btn form__btn" on:click|preventDefault={debouncedSubmit}>

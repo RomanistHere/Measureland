@@ -1,47 +1,47 @@
-const initSlider = (slider) => {
-    const key = slider.getAttribute('data-key')
-    const setFilter = (values, handle, unencoded) => {
-        const [leftVal, rightVal] = unencoded
-        state = {
-            ...state,
-            filters: {
-                ...state.filters,
-                [key]: `${leftVal}-${rightVal}`
-            }
-        }
+// const initSlider = (slider) => {
+    // const key = slider.getAttribute('data-key')
+    // const setFilter = (values, handle, unencoded) => {
+    //     const [leftVal, rightVal] = unencoded
+    //     state = {
+    //         ...state,
+    //         filters: {
+    //             ...state.filters,
+    //             [key]: `${leftVal}-${rightVal}`
+    //         }
+    //     }
+    //
+    //     if (leftVal === 1 && rightVal === 5)
+    //         delete state.filters[key]
+    //
+    //     if (Object.keys(state.filters).length === 0)
+    //         state = { ...state, filters: null }
+    //
+    //     const presetElems = $All('.filter__preset')
+    //     presetElems.forEach(elem => { removeClass(elem, 'filter__preset-active') })
+    // }
+    // const setFilterText = (values, handle, unencoded) => {
+    //     const [leftVal, rightVal] = unencoded
+    //     const text = leftVal !== rightVal
+    //         ? `${leftVal}-${rightVal}`
+    //         : leftVal
+    //
+    //     const sliderTextElem = $(`.filter__value[data-key="${key}"]`)
+    //     sliderTextElem.textContent = text
+    // }
 
-        if (leftVal === 1 && rightVal === 5)
-            delete state.filters[key]
+    // noUiSlider.create(slider, {
+    //     start: [1, 5],
+    //     connect: true,
+    //     step: 1,
+    //     range: {
+    //         'min': 1,
+    //         'max': 5
+    //     }
+    // })
 
-        if (Object.keys(state.filters).length === 0)
-            state = { ...state, filters: null }
-
-        const presetElems = $All('.filter__preset')
-        presetElems.forEach(elem => { removeClass(elem, 'filter__preset-active') })
-    }
-    const setFilterText = (values, handle, unencoded) => {
-        const [leftVal, rightVal] = unencoded
-        const text = leftVal !== rightVal
-            ? `${leftVal}-${rightVal}`
-            : leftVal
-
-        const sliderTextElem = $(`.filter__value[data-key="${key}"]`)
-        sliderTextElem.textContent = text
-    }
-
-    noUiSlider.create(slider, {
-        start: [1, 5],
-        connect: true,
-        step: 1,
-        range: {
-            'min': 1,
-            'max': 5
-        }
-    })
-
-    slider.noUiSlider.on('end', setFilter)
-    slider.noUiSlider.on('slide', setFilterText)
-}
+    // slider.noUiSlider.on('end', setFilter)
+    // slider.noUiSlider.on('slide', setFilterText)
+// }
 
 const applyFilters = () => {
     state.flow.push('fa')
@@ -147,11 +147,11 @@ const handlePresetClick = e => {
 }
 
 const initSliders = () => {
-    const sliders = $All('.filter__slider')
-    sliders.forEach(initSlider)
+    // const sliders = $All('.filter__slider')
+    // sliders.forEach(initSlider)
 
-    const connect = $All('.noUi-connect')
-    connect.forEach(elem => { addClass(elem, 'connect-colored') })
+    // const connect = $All('.noUi-connect')
+    // connect.forEach(elem => { addClass(elem, 'connect-colored') })
 
     handleClickPrevDef($('.filters__apply'), applyFilters)
     handleClickPrevDef($('.filters__reset'), resetFilters)

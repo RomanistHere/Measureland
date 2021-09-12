@@ -178,7 +178,7 @@
                 </a>
             </li>
             <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title openFiltersBtn">{$_('menuSidebar.filters')}</a>
+                <a href={"#"} class="settings__link rating__title openFiltersBtn" on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}>{$_('menuSidebar.filters')}</a>
             </li>
             <!-- <li class="setting__item">
                 <a href={"#"} class="settings__link rating__title vizualizeLoadingBtn">

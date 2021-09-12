@@ -22,7 +22,7 @@
                     {$_('howToRatePopup.findNeededTown')}
                 {:else}
                 <!-- todo: check how to do it in an adequate way -->
-                    {$_('howToRatePopup.youNeedTo')} <a href="#" class="footer__link" on:click|preventDefault={openLoginPopup}>{$_('howToRatePopup.register')}</a> {$_('howToRatePopup.first')}
+                    {$_('howToRatePopup.youNeedTo')} <a href={"#"} class="footer__link" on:click|preventDefault={openLoginPopup}>{$_('howToRatePopup.register')}</a> {$_('howToRatePopup.first')}
                 {/if}
             </li>
             <li class="rate_tutorial__item partners__item">

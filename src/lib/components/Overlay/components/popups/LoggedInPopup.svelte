@@ -18,9 +18,11 @@
                 {$_('loggedInPopup.activeRatingsRemaining')}: {$userStateStore.activeRatings}.
             </p>
 
-            <p class="rating__text">
-                <a href="blog/how-to-become-citizen/" target="_blank" class="text_link">{$_('loggedInPopup.learnWhyLimits')}</a>. {$_('loggedInPopup.learnWhyLimitsAddition')}
-            </p>
+            {#if $userStateStore.activeRatings <= 5}
+                <p class="rating__text">
+                    <a href="blog/how-to-become-citizen/" target="_blank" class="text_link">{$_('loggedInPopup.learnWhyLimits')}</a>. {$_('loggedInPopup.learnWhyLimitsAddition')}
+                </p>
+            {/if}
 
             <p class="rating__text">
                 {$_('loggedInPopup.hereSomeArticles')}:

@@ -5,7 +5,7 @@
     import { mapReference } from "../../stores/references.js";
 
     // TODO: check roundToTen OK or need to use roundToFifthDecimal
-    import { roundToFifthDecimal, openAnotherOverlay } from "../utilities/helpers.js";
+    import { roundToFifthDecimal, openAnotherOverlay, objToString } from "../utilities/helpers.js";
 
     $: if (typeof window !== 'undefined') {
         updateURL($appStateStore);
@@ -15,6 +15,7 @@
         $mapReference === null ? false : true;
 
     const updateURL = ({ center, zoom, filters, isFiltersOn, openModal, showRating }) => {
+        console.log(filters, isFiltersOn)
     	const [lat, lng] = center;
 
         const url = new URL(window.location.href);
@@ -24,6 +25,8 @@
 
     	if (isFiltersOn && filters)
     		url.searchParams.set('fi', objToString(filters));
+        // TODO:
+        // else
 
         if (openModal)
             url.searchParams.set('openModal', true);
@@ -67,7 +70,6 @@
 
         url.searchParams.delete('openModal');
         window.history.replaceState(null, null, url);
-
     }
 
     if (typeof window !== 'undefined') {
