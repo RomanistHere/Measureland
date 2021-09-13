@@ -6,6 +6,7 @@
     let slider;
     const dispatch = createEventDispatcher();
 
+    export let className;
     export let start = [1, 5];
     export let connect = true;
     // export let margin;
@@ -45,16 +46,16 @@
             range
         });
 
-        // slider.noUiSlider.on(
-        //     'update',
-        //     (values, handle, unencoded, tap, positions) =>
-        //         dispatch('update', { values, handle, unencoded, tap, positions })
-        // );
         slider.noUiSlider.on(
-            'slide',
+            'update',
             (values, handle, unencoded, tap, positions) =>
-                dispatch('slide', { values, handle, unencoded, tap, positions })
+                dispatch('update', { values, handle, unencoded, tap, positions })
         );
+        // slider.noUiSlider.on(
+        //     'slide',
+        //     (values, handle, unencoded, tap, positions) =>
+        //         dispatch('slide', { values, handle, unencoded, tap, positions })
+        // );
         // slider.noUiSlider.on(
         //     'set',
         //     (values, handle, unencoded, tap, positions) =>
@@ -78,7 +79,7 @@
     });
 </script>
 
-<div class="slider" bind:this={slider}></div>
+<div class="slider {className}" bind:this={slider}></div>
 
 <style>
     :global(.noUi-horizontal) {

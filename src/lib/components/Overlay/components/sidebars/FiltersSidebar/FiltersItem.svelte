@@ -43,7 +43,7 @@
             return newState;
         });
 
-        // TODO: maybe do
+        // TODO: maybe do thorugh dispatch event
         // const presetElems = $All('.filter__preset')
         // presetElems.forEach(elem => { removeClass(elem, 'filter__preset-active') })
     }
@@ -65,7 +65,7 @@
 
     <Slider
         className='filter__slider'
-        on:slide={setFilterText}
+        on:update={setFilterText}
         on:end={setFilter}
         bind:this={slider}
     />

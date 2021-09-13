@@ -1,4 +1,4 @@
-import { overlayStateStore, appStateStore, notificationsStore } from '../../stores/state.js';
+import { overlayStateStore, appStateStore, notificationsStore, filtersStore } from '../../stores/state.js';
 import { overlayStateDefault } from '../constants/overlayStateDefault.js';
 
 const debounce = (func, wait, immediate) => {
@@ -157,6 +157,36 @@ const objToString = (object) => {
     return str.slice(0, -1)
 }
 
+const fillFiltersFromArrOfStrings = (arrOfStrings, refs) => {
+	let obj;
+
+	// probably refactor to something less complicated
+	for (let k = 0; k < arrOfStrings.length; k++) {
+		const string = arrOfStrings[k];
+		const [key, valString] = string.split(':');
+		const values = valString.split('-');
+		const rangeArr = [Number(values[0]), Number(values[1])];
+		obj = {
+			...obj,
+			[key]: valString
+		};
+
+		// if we didn't need obj, loop over refs would give more performance
+		for (let i = 0; i < refs.length; i++) {
+			const refObj = refs[i];
+
+			if (refObj.key === key)
+				refObj.ref.setSlider(rangeArr);
+		}
+	}
+
+	filtersStore.update(state => ({
+		...state,
+		isFiltersOn: true,
+		filters: { ...obj }
+	}));
+}
+
 export {
     debounce,
     sleep,
@@ -172,4 +202,5 @@ export {
     closeOverlays,
 	showSuccessNotification,
 	objToString,
+	fillFiltersFromArrOfStrings
 }

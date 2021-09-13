@@ -2,10 +2,11 @@
     import { onMount } from 'svelte';
 
     import { appStateStore, filtersStore } from '../../stores/state.js';
+    import { filterReferences } from '../../stores/references.js';
     import { mapReference } from "../../stores/references.js";
 
     // TODO: check roundToTen OK or need to use roundToFifthDecimal
-    import { roundToFifthDecimal, openAnotherOverlay, objToString } from "../utilities/helpers.js";
+    import { roundToFifthDecimal, openAnotherOverlay, objToString, fillFiltersFromArrOfStrings } from "../utilities/helpers.js";
 
     $: if (typeof window !== 'undefined') {
         updateURL($appStateStore, $filtersStore);
@@ -13,6 +14,9 @@
 
     const checkIfMapLoaded = () =>
         $mapReference === null ? false : true;
+
+    const checkIsFilterRefsReady = () =>
+        $filterReferences[0].ref === null ? false : true;
 
     const updateURL = ({ center, zoom, openModal, showRating }, { isFiltersOn, filters }) => {
     	const [lat, lng] = center;
@@ -45,6 +49,7 @@
         const lat = url.searchParams.get('lat');
         const lng = url.searchParams.get('lng');
         const zoom = url.searchParams.get('zoom');
+        const filters = url.searchParams.get('fi');
         const showRating = url.searchParams.get('showRating');
         // TODO: other params
         const center = [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
@@ -62,6 +67,19 @@
 
                 if (isMapReady) {
                     openAnotherOverlay('showRatingsPopup', { lat, lng });
+                    clearInterval(interval);
+                }
+            }, 60);
+        }
+
+        if (filters) {
+            openAnotherOverlay('filtersSidebar');
+            const interval = setInterval(() => {
+                const isRefsReady = checkIsFilterRefsReady();
+
+                if (isRefsReady) {
+                    const arrOfStrings = filters.split(',');
+                    fillFiltersFromArrOfStrings(arrOfStrings, $filterReferences);
                     clearInterval(interval);
                 }
             }, 60);
