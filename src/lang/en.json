@@ -72,6 +72,21 @@
         "checkList": "Чек-лист арендатора",
         "blog": "Blog"
     },
+    "filterSidebar": {
+        "title": "Set up filters",
+        "filterPresets": "Try our filter presets:",
+        "currentValue": "current value: ",
+        "applyBtn": "Apply",
+        "resetBtn": "Reset",
+        "footerText1": "Do you like our free features without any ads?",
+        "footerLink": "Support Measureland",
+        "footerText2": ", so we can keep it that way!",
+        "footerTextSmall": "(73% of those surveyed agreed to support Measureland)",
+        "preset1Text": "Quiet",
+        "preset2Text": "Stir",
+        "preset3Text": "Nature",
+        "preset4Text": "The perfect place"
+    },
     "footer": {
         "version": "Version",
         "termsOfUse": "Terms of use",

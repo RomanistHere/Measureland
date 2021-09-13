@@ -1,4 +1,6 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     import Slider from './Slider.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
@@ -11,7 +13,7 @@
     export let tooltip = '';
     export let currentValue = '1-5';
     export let isShortDesc = true;
-    $: description = isShortDesc ? '' : 'current value: ';
+    $: description = isShortDesc ? '' : $_('filterSidebar.currentValue');
 
     const setFilterText = e => {
         const { values, handle, unencoded } = e.detail;
