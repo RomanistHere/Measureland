@@ -7,7 +7,7 @@
     // Supercluster is changed
     import "../../../external/supercluster.js";
 
-    import { userStateStore, appStateStore } from "../../../../stores/state.js";
+    import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
     import { mapReference } from "../../../../stores/references.js";
     import { roundToFifthDecimal, roundToInt, openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
@@ -164,7 +164,7 @@
             return newObj
         });
 
-    	if (!$appStateStore.isFiltersOn) {
+    	if (!$filtersStore.isFiltersOn) {
     		cachedData = [ ...cachedData, ...geoData ];
     		// console.log('total number of points in cache: ', cachedData.length)
 
@@ -203,9 +203,9 @@
     			[ [north, west], [north, east], [south, east], [south, west] ]
     		],
     		inverted: false
-    	}
+    	};
 
-    	const queryPolygon = visitedPoly !== null && !$appStateStore.isFiltersOn
+    	const queryPolygon = visitedPoly !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
     		? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
     		: currentScreenPoly;
 
@@ -236,13 +236,13 @@
     		weight: 2
     	});
 
-    	if (!$appStateStore.isFiltersOn)
+    	if (!$filtersStore.isFiltersOn)
     		usedBounds.push(poly);
 
-    	if ($appStateStore.shouldShowLoading && !$appStateStore.isFiltersOn)
+    	if ($appStateStore.shouldShowLoading && !$filtersStore.isFiltersOn)
     		poly.addTo(map);
 
-    	const filters = $appStateStore.isFiltersOn ? $appStateStore.filters : null;
+    	const filters = $filtersStore.isFiltersOn ? $filtersStore.filters : null;
     	// console.timeEnd('preparations')
     	// console.time('fetch new data')
         const { error, data } = await fetchBoundsData(query, zoom, filters);
@@ -272,7 +272,7 @@
         // TODO:
         // console.log('number of downloaded points: ', result.length)
 
-    	if (!$appStateStore.isFiltersOn) {
+    	if (!$filtersStore.isFiltersOn) {
     		visitedPoly = visitedPoly !== null
     			? PolyBool.union(visitedPoly, queryPolygon)
     			: currentScreenPoly;
@@ -288,11 +288,15 @@
     map.on('moveend', debounce(getNewData, 300));
     onMount(getNewData);
 
-    // const subscribeToFiltersChanges = ({ filters, isFiltersOn }) => {
-    //     if (!isFiltersOn || !filters)
-    //         return;
-    //
-    //     getNewData();
-    // }
-    // $: subscribeToFiltersChanges($appStateStore);
+    const subscribeToFiltersChanges = ({ isFiltersOn, filters }) => {
+        if (!isFiltersOn)
+            return;
+
+        getNewData();
+
+        // kostil' (workaround)
+        if (filters === null)
+            filtersStore.update(state => ({ ...state, isFiltersOn: false }));
+    }
+    $: subscribeToFiltersChanges($filtersStore);
 </script>

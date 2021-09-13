@@ -14,7 +14,7 @@
     }));
 
     const applyFilters = () => {
-        appStateStore.update(state => ({ ...state, isFiltersOn: true }));
+        // appStateStore.update(state => ({ ...state, isFiltersOn: true }));
         // getNewData()
         // showNotification('.filters_notification')
     }

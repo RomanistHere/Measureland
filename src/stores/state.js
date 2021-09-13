@@ -20,11 +20,9 @@ export const userStateStore = writable({
 
 export const appStateStore = writable({
     zoom: 12,
-    filters: null,
     openModal: false,
     shouldWork: true,
     showRating: false,
-    isFiltersOn: false,
     ratingToSave: null,
     corrdsToSave: null,
     center: [53.9, 27.5],
@@ -33,6 +31,11 @@ export const appStateStore = writable({
 
 export const notificationsStore = writable({
     successNotification: false,
+});
+
+export const filtersStore = writable({
+    isFiltersOn: false,
+    filters: null
 });
 
 export const overlayStateStore = writable(overlayStateDefault);

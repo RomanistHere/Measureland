@@ -1,7 +1,7 @@
 <script>
     import Slider from './Slider.svelte';
 
-    import { appStateStore } from "../../../../../../stores/state.js";
+    import { filtersStore } from "../../../../../../stores/state.js";
 
     export let key = '';
     export let title = '';
@@ -21,9 +21,10 @@
     const setFilter = e => {
         const { values, handle, unencoded } = e.detail;
         const [leftVal, rightVal] = unencoded;
-        appStateStore.update(state => {
+        filtersStore.update(state => {
             let newState = {
                 ...state,
+                isFiltersOn: true,
                 filters: {
                     ...state.filters,
                     [key]: `${leftVal}-${rightVal}`

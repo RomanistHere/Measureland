@@ -1,21 +1,20 @@
 <script>
     import { onMount } from 'svelte';
 
-    import { appStateStore } from '../../stores/state.js';
+    import { appStateStore, filtersStore } from '../../stores/state.js';
     import { mapReference } from "../../stores/references.js";
 
     // TODO: check roundToTen OK or need to use roundToFifthDecimal
     import { roundToFifthDecimal, openAnotherOverlay, objToString } from "../utilities/helpers.js";
 
     $: if (typeof window !== 'undefined') {
-        updateURL($appStateStore);
+        updateURL($appStateStore, $filtersStore);
     };
 
     const checkIfMapLoaded = () =>
         $mapReference === null ? false : true;
 
-    const updateURL = ({ center, zoom, filters, isFiltersOn, openModal, showRating }) => {
-        console.log(filters, isFiltersOn)
+    const updateURL = ({ center, zoom, openModal, showRating }, { isFiltersOn, filters }) => {
     	const [lat, lng] = center;
 
         const url = new URL(window.location.href);
