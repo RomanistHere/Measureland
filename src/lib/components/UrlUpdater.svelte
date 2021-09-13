@@ -24,8 +24,8 @@
 
     	if (isFiltersOn && filters)
     		url.searchParams.set('fi', objToString(filters));
-        // TODO:
-        // else
+        else
+            url.searchParams.delete('fi');
 
         if (openModal)
             url.searchParams.set('openModal', true);

@@ -1,4 +1,5 @@
 <script>
+    import { _, locale } from 'svelte-i18n';
     import { onMount } from 'svelte';
     import { get } from 'svelte/store';
 
@@ -41,6 +42,7 @@
             shadowSize: [61, 100],
         });
 
+    // TODO: move to i18n
     const clusterCaption = {
     	en: {
     		titleSingle: `This place's average rating's about`,
@@ -64,7 +66,7 @@
     	    const icon = getIcon(Math.floor(rating));
     	    const marker = L.marker(latlng, {
     	        icon: icon,
-    	        title: `${clusterCaption[$userStateStore.lang]['titleSingle']} ${rating}`,
+    	        title: `${clusterCaption[$locale]['titleSingle']} ${rating}`,
     	        riseOnHover: true,
     	        rating: rating,
     	    });
@@ -76,7 +78,7 @@
     		const grpIcon = getGrpIcon(Math.floor(rating));
     		const marker = L.marker(latlng, {
     			icon: grpIcon,
-    			title: `${clusterCaption[$userStateStore.lang]['titleGrp']} ${rating}`,
+    			title: `${clusterCaption[$locale]['titleGrp']} ${rating}`,
     			riseOnHover: true,
     			rating: rating,
     		});
@@ -296,7 +298,7 @@
 
         // kostil' (workaround)
         if (filters === null)
-            filtersStore.update(state => ({ ...state, isFiltersOn: false }));
+            setTimeout(() => { filtersStore.update(state => ({ ...state, isFiltersOn: false })); }, 300);
     }
     $: subscribeToFiltersChanges($filtersStore);
 </script>

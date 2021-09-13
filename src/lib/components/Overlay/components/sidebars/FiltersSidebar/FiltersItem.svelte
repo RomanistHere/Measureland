@@ -3,6 +3,9 @@
 
     import { filtersStore } from "../../../../../../stores/state.js";
 
+    let slider;
+    export const setSlider = val => slider.set(val);
+
     export let key = '';
     export let title = '';
     export let tooltip = '';
@@ -64,5 +67,6 @@
         className='filter__slider'
         on:slide={setFilterText}
         on:end={setFilter}
+        bind:this={slider}
     />
 </li>

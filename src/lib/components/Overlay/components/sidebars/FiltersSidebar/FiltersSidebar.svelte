@@ -1,9 +1,9 @@
 <script>
-    import { _, json } from 'svelte-i18n'
+    import { _, json } from 'svelte-i18n';
     import SidebarWrap from '../SidebarWrap.svelte';
     import FiltersItem from './FiltersItem.svelte';
 
-    import { appStateStore } from "../../../../../../stores/state.js";
+    import { filtersStore } from "../../../../../../stores/state.js";
 
     $: criteria = $json('criteria');
     $: filters = Object.keys(criteria).map((key, i) => ({
@@ -13,10 +13,25 @@
         key,
     }));
 
+    let refs = [];
+
     const applyFilters = () => {
-        // appStateStore.update(state => ({ ...state, isFiltersOn: true }));
-        // getNewData()
+        // filtersStore.update(state => ({ ...state, isFiltersOn: true }));
         // showNotification('.filters_notification')
+    }
+
+    const resetFilters = () => {
+        filtersStore.update(state => ({
+            ...state,
+            isFiltersOn: true,
+            filters: null
+        }));
+        refs.map(ref => { ref.setSlider([1,5]); })
+
+        // const presetElems = $All('.filter__preset')
+        // presetElems.forEach(elem => { removeClass(elem, 'filter__preset-active') })
+        //
+        // hideNotification('.filters_notification')
     }
 </script>
 
@@ -40,12 +55,12 @@
     </ul>
     <hr>
     <ul class="filters__list">
-        {#each filters as filterConfig}
-            <FiltersItem { ...filterConfig } />
+        {#each filters as filterConfig, i}
+            <FiltersItem { ...filterConfig } bind:this={refs[i]} />
         {/each}
     </ul>
     <a href={"#"} class="filters__apply btn" on:click|preventDefault={applyFilters}>Apply</a>
-    <a href={"#"} class="filters__reset">Reset</a>
+    <a href={"#"} class="filters__reset" on:click|preventDefault={resetFilters}>Reset</a>
     <div class="filters__bot">
         Do you like our free features without any ads? <a href="https://www.donationalerts.com/r/romanisthere" rel="noopener" target="_blank" class="footer__link">Support Measureland</a>, so we can keep it that way!
     </div>
