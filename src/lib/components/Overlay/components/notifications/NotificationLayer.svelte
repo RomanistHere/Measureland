@@ -1,6 +1,7 @@
 <script>
     import SuccessNotification from './SuccessNotification.svelte'
-    import { notificationsStore } from '../../../../../stores/state.js';
+    import FiltersNotification from './FiltersNotification.svelte'
+    import { notificationsStore, shouldShowFiltersNotification } from '../../../../../stores/state.js';
 
     let shouldShowSuccessNotification = false;
     let successNotificationTimeout = null;
@@ -27,6 +28,10 @@
     <!-- TODO: animations -->
     {#if shouldShowSuccessNotification}
         <SuccessNotification />
+    {/if}
+
+    {#if $shouldShowFiltersNotification}
+        <FiltersNotification />
     {/if}
 </div>
 

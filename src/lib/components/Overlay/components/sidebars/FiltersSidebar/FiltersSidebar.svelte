@@ -16,12 +16,12 @@
         key,
     }));
 
+    // get filterReferences sheme from store and update it on change
     let refs = $filterReferences;
     $: filterReferences.update(store => [ ...refs ]);
 
     const applyFilters = () => {
         // filtersStore.update(state => ({ ...state, isFiltersOn: true }));
-        // showNotification('.filters_notification')
     }
 
     const resetFilters = shouldGetNewData => {
@@ -35,8 +35,6 @@
         }
 
         refs.map(({ ref }) => { ref.setSlider([1,5]); });
-
-        // hideNotification('.filters_notification')
     }
     const debouncedResetFilters = debounce(resetFilters, 300);
 
@@ -50,8 +48,6 @@
 
         resetFilters(false);
         fillFiltersFromArrOfStrings(preset, refs);
-
-        // showNotification('.filters_notification')
     }
     const debouncedApplyPreset = debounce(applyPreset, 300);
 

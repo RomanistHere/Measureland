@@ -4,7 +4,7 @@
 - forgot/change password
 - post register popup
 - ask for ratings popup
-- filters
+- filters on open plus notification
 - drawing
 - start screen
 - learn how to use i18n with tags, expressions and methods
