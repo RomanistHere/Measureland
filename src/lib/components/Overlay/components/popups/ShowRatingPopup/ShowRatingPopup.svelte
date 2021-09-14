@@ -18,7 +18,6 @@
 
     const map = $mapReference;
 	const geocodeService = $geocodeServiceReference;
-    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
     let isAlreadyRatedByThisUser = false;
     let averageRating = '';
@@ -32,6 +31,7 @@
     let loadedRating = null;
 
     $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
+    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     // complexity because of translation
     $: criteriaArray = loadedRating === null
         ? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
@@ -98,7 +98,7 @@
 </script>
 
 <PopupWrap className='rate__wrap'>
-    <div class="rating__popup rating__popup-active rate__popup" tabindex="0">
+    <div class="rating__popup rating__popup-active rate__popup">
         <div class="adress_bar">
             {$_('showRatingPopup.approximateAddress')}: {approximateAdress}
         </div>

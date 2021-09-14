@@ -21,7 +21,7 @@ export const userStateStore = writable({
 export const appStateStore = writable({
     zoom: 12,
     openModal: false,
-    shouldWork: false,
+    shouldWork: true,
     showRating: false,
     ratingToSave: null,
     corrdsToSave: null,

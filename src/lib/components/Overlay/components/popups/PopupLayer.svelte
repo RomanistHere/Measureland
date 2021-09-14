@@ -2,12 +2,13 @@
     import { closeOverlays } from '../../../../utilities/helpers.js';
 
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
-    import LoginPopup from './LoginPopup.svelte';
+    import QuizPopup from './QuizPopup/QuizPopup.svelte';
+    import HowToRatePopup from './HowToRatePopup.svelte';
     import LoggedInPopup from './LoggedInPopup.svelte';
     import RegisterPopup from './RegisterPopup.svelte';
     import PartnersPopup from './PartnersPopup.svelte';
-    import HowToRatePopup from './HowToRatePopup.svelte';
     import MyPlacesPopup from './MyPlacesPopup.svelte';
+    import LoginPopup from './LoginPopup.svelte';
 
     export let popupName;
     export let popupData;
@@ -35,7 +36,10 @@
             className: 'partners',
             component: PartnersPopup
         },
-        // quizPopup: PopupLayer,
+        quizPopup: {
+            className: 'rating ratingShow',
+            component: QuizPopup
+        },
         registerPopup: {
             className: 'register',
             component: RegisterPopup

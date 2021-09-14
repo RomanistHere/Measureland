@@ -23,7 +23,3 @@
 - write an article about how awesome svelte is
 - write an article about how we handle popup/sidebar opening
 - track user flow
-
-
-"example": "{0} meets {1}",
-<p>{$_('example', { values: ['asd', 'asdas']})}</p>
