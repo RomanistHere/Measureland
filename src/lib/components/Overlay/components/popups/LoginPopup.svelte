@@ -9,7 +9,7 @@
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
-    $: errorsObj = $json('loginErrors');
+    $: errorsObj = $json('errors');
 
     let email = '';
     let password = '';
@@ -162,8 +162,8 @@
             <div class="login__notifications_wrap">
                 {#if isError && errorType === 'verificationLetter'}
                     <div class="login__notifications login__notifications-verify">
-                        <span class="login__notifications-small">{$_('loginErrors.errorVerification')}</span>
-                        <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('loginErrors.errorVerificationBtn')}</a>
+                        <span class="login__notifications-small">{$_('errors.errorVerification')}</span>
+                        <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>
                     </div>
                 {:else if isError}
                     <span class="login__notifications">

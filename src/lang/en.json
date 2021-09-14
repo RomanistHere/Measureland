@@ -2,47 +2,58 @@
     "criteria": {
         "air": {
             "title": "Air quality",
-            "tooltip": "Foreign smells (from fields, factories, etc.). How nice to breathe."
+            "tooltip": "Foreign smells (from fields, factories, etc.). How nice to breathe.",
+            "caption": "1 - bad, 5 - awesome"
         },
         "water": {
             "title": "Water quality",
-            "tooltip": "Water problems (smell, taste, color, itching). How good it is."
+            "tooltip": "Water problems (smell, taste, color, itching). How good it is.",
+            "caption": "1 - terrible, 5 - good"
         },
         "logistic": {
             "title": "Basic and social infrastructure",
-            "tooltip": "The number and quality of shops, cafes, entertainment facilities, hairdressers, gyms, etc. nearby."
+            "tooltip": "The number and quality of shops, cafes, entertainment facilities, hairdressers, gyms, etc. nearby.",
+            "caption": "1 - awful, 5 - great"
         },
         "transport": {
             "title": "Transport and location conditions",
-            "tooltip": "How easy it is to get to the needed places by public or personal transport, bicycle, on foot."
+            "tooltip": "How easy it is to get to the needed places by public or personal transport, bicycle, on foot.",
+            "caption": "1 - poor, 5 - nice"
         },
         "noize": {
             "title": "Light and noise pollution",
-            "tooltip": "How much noise and light disturbs. 1 - disturbs strongly, 5 - does not disturb."
+            "tooltip": "How much noise and light disturbs. 1 - disturbs strongly, 5 - does not disturb.",
+            "caption": "1 - noizy, 5 - quietly"
         },
         "clean": {
             "title": "Cleanliness and tidiness",
-            "tooltip": "The amount of garbage. Caring for the appearance of the entrances/lawns/areas."
+            "tooltip": "The amount of garbage. Caring for the appearance of the entrances/lawns/areas.",
+            "caption": "1 - dirty, 5 - clean"
         },
         "chill": {
             "title": "Outdoor activities and walks",
-            "tooltip": "The presence of parks, water, walks and bike paths nearby, as well as their equipment."
+            "tooltip": "The presence of parks, water, walks and bike paths nearby, as well as their equipment.",
+            "caption": "1 - far, 5 - nearby"
         },
         "safety": {
             "title": "Safety",
-            "tooltip": "How safe does it feel to live in this area compared to other places."
+            "tooltip": "How safe does it feel to live in this area compared to other places.",
+            "caption": "1 - anxious, 5 - calmly"
         },
         "pets": {
             "title": "Life with pets",
-            "tooltip": "How well tenants treat pets. Walking and training areas."
+            "tooltip": "How well tenants treat pets. Walking and training areas.",
+            "caption": "1 - tough, 5 - easy"
         },
         "kids": {
             "title": "Life with kids",
-            "tooltip": "Infrastructure for children: kindergartens and playgrounds, schools nearby - and security."
+            "tooltip": "Infrastructure for children: kindergartens and playgrounds, schools nearby - and security.",
+            "caption": "1 - rough, 5 - cool"
         },
         "parking": {
             "title": "Parking places",
-            "tooltip": "Parking space problems. 1 - no places, 5 - no problem."
+            "tooltip": "Parking space problems. 1 - no places, 5 - no problem.",
+            "caption": "1 - sad, 5 - terrific"
         }
     },
     "loading": {
@@ -172,18 +183,6 @@
         "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",
         "defaultAdress": "Didn't find address"
     },
-    "loginErrors": {
-        "errorVerification": "Check email for verification letter",
-        "errorVerificationBtn": "Resend letter",
-        "fieldsError": "Check all the fields!",
-        "noAccount": "Couldn't find your account",
-        "accountExists": "Account already exists",
-        "wrongPassword": "Wrong password",
-        "unrecognizedError": "Error, try again later :(",
-        "manyAttempts": "Too many attempts, wait a bit!",
-        "manyRequests": "Too many requests, try later.",
-        "alreadyVerified": "Already verified. Just log in :)"
-    },
     "input": {
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",
@@ -196,7 +195,22 @@
             "textBetweenLinks": ": either you a bad guy who for some reason wants our aimed at helping people service go down or our system being not ideal. We are strongly believe it's a second one. If you ",
             "textSecondLink": "dropped us a message",
             "textAfterLinks": "we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
-        }
+        },
+        "errorVerification": "Check email for verification letter",
+        "errorVerificationBtn": "Resend letter",
+        "fieldsError": "Check all the fields!",
+        "noAccount": "Couldn't find your account",
+        "accountExists": "Account already exists",
+        "wrongPassword": "Wrong password",
+        "unrecognizedError": "Error, try again later :(",
+        "manyAttempts": "Too many attempts, wait a bit!",
+        "manyRequests": "Too many requests, try later.",
+        "alreadyVerified": "Already verified. Just log in :)",
+        "rateEveryField": "Rate every field please!",
+        "nearbyPlaceAlreadyRated": "Nearby place is already rated by you",
+        "sessionExpired": "Session expired, please, refresh and login.",
+        "youRateTooOften": "You rate too often, please wait.",
+        "youRateTooOftenLink": "Why?"
     },
     "partnersPopup": {
         "ourFriendsAndPartners": "Our friends and partners",

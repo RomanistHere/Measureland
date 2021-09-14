@@ -1,20 +1,149 @@
 <script>
+    import { _, json } from 'svelte-i18n';
+
     import PopupWrap from '../PopupWrap.svelte';
     import QuizItem from './QuizItem.svelte';
 
     import { getSinglePointData } from "../../../../../utilities/api.js";
+    import { getFinalRating, roundToTen, openAnotherOverlay } from "../../../../../utilities/helpers.js";
     import { geocodeServiceReference } from "../../../../../../stores/references.js";
     import { userStateStore } from "../../../../../../stores/state.js";
 
     export let popupData;
 
-    const maxCommentLength = 330;
-	const geocodeService = $geocodeServiceReference;
+    $: errorsObj = $json('errors');
+    $: console.log(errorsObj)
+    $: criteriaObj = $json('criteria');
+    $: criteria = Object.keys(criteriaObj).map((key, i) => ({
+        title: criteriaObj[key]['title'],
+        tooltip: criteriaObj[key]['tooltip'],
+        caption: criteriaObj[key]['caption'],
+        rating: null,
+        key,
+    }));
+
+    $: quizArray = criteria.map(({ title, tooltip, caption, rating, key }) => ({
+        title,
+        tooltip,
+        caption,
+        rating,
+        key,
+    }));
+
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: currentStage = 1;
+    $: progressBarClassName = getProgressBarClassName(currentStage);
 
-    const nextStage = () => currentStage++;
-    const prevStage = () => currentStage--;
+    let errorType = null;
+    let isLoading = false;
+    let isError = false;
+    let quizState = {
+        ratings: {},
+        comment: null,
+        isPersonalExperience: false,
+    };
+
+    const maxCommentLength = 330;
+	const geocodeService = $geocodeServiceReference;
+
+    const nextStage = () => {
+        currentStage++;
+        isError = false;
+    }
+    const prevStage = () => {
+        currentStage--;
+        isError = false;
+    }
+
+    const changePersonalExperience = isPersonalExperience => {
+        quizState = {
+            ...quizState,
+            isPersonalExperience,
+        }
+    }
+
+    const getProgressBarClassName = stage => {
+        if (stage === 1)
+            return 'rating__progr-stage1';
+        else if (stage === 2)
+            return 'rating__progr-stage2';
+        else if (stage === 3)
+            return 'rating__progr-stage3';
+        else if (stage === 4)
+            return 'rating__progr-stage4';
+        else if (stage === 5)
+            return 'rating__progr-stage5';
+        else if (stage === 6)
+            return 'rating__progr-stage6';
+    }
+
+    const setRating = event => {
+        const { key, rating } = event.detail;
+        for (let i = 0; i < quizArray.length; i++) {
+            const item = quizArray[i];
+            if (item.key === key)
+                item.rating = rating;
+        }
+
+        quizState = {
+            ...quizState,
+            ratings: {
+                ...quizState.ratings,
+                [key]: rating
+            }
+        }
+    }
+
+    const checkAndGetData = rating => {
+        const { finalRating, answersNumber } = getFinalRating(rating)
+
+        return {
+            isDataValid: answersNumber === 11 ? true : false,
+            averageRating: roundToTen(finalRating)
+        }
+    }
+
+    const save = async () => {
+        errorType = null;
+        isError = false;
+        isLoading = true;
+        const { isDataValid, averageRating } = checkAndGetData(quizState.ratings);
+        if (!isDataValid) {
+            // TODO: later forward to non rated field
+            errorType = 'rateEveryField';
+            isLoading = false;
+            isError = true;
+            return
+        }
+
+        try {
+            const { error, data } = await saveToDB(coords, quizState.ratings, averageRating, quizState.comment, quizState.isPersonalExperience);
+            isLoading = false;
+
+            if (error === 'Nearby place is already rated') {
+                errorType = 'nearbyPlaceAlreadyRated';
+                isError = true;
+                return;
+            } else if (error === 'No active ratings') {
+                errorType = 'youRateTooOften';
+                isError = true;
+                return;
+            } else if (error === 'User is not logged in') {
+                errorType = 'sessionExpired';
+                isError = true;
+                return;
+            } else if (error) {
+                errorType = 'unrecognizedError';
+                isError = true;
+                return;
+            }
+        } catch (e) {
+            console.warn(e);
+            errorType = 'unrecognizedError';
+            isError = true;
+            isLoading = false;
+        }
+    }
 </script>
 
 <PopupWrap className='rating__wrap'>
@@ -36,17 +165,13 @@
                 </p>
 
                 <QuizItem
-                    title='Air quality'
-                    tooltip='Foreign smells (from fields, factories, etc.). How nice to breathe.'
-                    key='air'
-                    caption='1 - bad, 5 - awesome'
+                    on:setRating={setRating}
+                    { ...quizArray[0] }
                 />
 
                 <QuizItem
-                    title='Water quality'
-                    tooltip='Water problems (smell, taste, color, itching). How good it is.'
-                    key='water'
-                    caption='1 - terrible, 5 - good'
+                    on:setRating={setRating}
+                    { ...quizArray[1] }
                 />
             {:else if currentStage === 3}
                 <p class="rating__text">
@@ -54,24 +179,18 @@
                 </p>
 
                 <QuizItem
-                    title='Basic and social infrastructure'
-                    tooltip='The number and quality of shops, cafes, entertainment facilities, hairdressers, gyms, etc. nearby.'
-                    key='logistic'
-                    caption='1 - awful, 5 - great'
+                    on:setRating={setRating}
+                    { ...quizArray[2] }
                 />
 
                 <QuizItem
-                    title='Transport and location conditions'
-                    tooltip='How easy it is to get to the needed places by public or personal transport, bicycle, on foot.'
-                    key='transport'
-                    caption='1 - poor, 5 - nice'
+                    on:setRating={setRating}
+                    { ...quizArray[3] }
                 />
 
                 <QuizItem
-                    title='Light and noise pollution'
-                    tooltip='How much noise and light disturbs. 1 - disturbs strongly, 5 - does not disturb.'
-                    key='noize'
-                    caption='1 - noizy, 5 - quietly'
+                    on:setRating={setRating}
+                    { ...quizArray[4] }
                 />
             {:else if currentStage === 4}
                 <p class="rating__text">
@@ -79,24 +198,18 @@
                 </p>
 
                 <QuizItem
-                    title='Cleanliness and tidiness'
-                    tooltip='The amount of garbage. Caring for the appearance of the entrances/lawns/areas.'
-                    key='clean'
-                    caption='1 - dirty, 5 - clean'
+                    on:setRating={setRating}
+                    { ...quizArray[5] }
                 />
 
                 <QuizItem
-                    title='Outdoor activities and walks'
-                    tooltip='The presence of parks, water, walks and bike paths nearby, as well as their equipment.'
-                    key='chill'
-                    caption='1 - far, 5 - nearby'
+                    on:setRating={setRating}
+                    { ...quizArray[6] }
                 />
 
                 <QuizItem
-                    title='Safety'
-                    tooltip='How safe does it feel to live in this area compared to other places.'
-                    key='safety'
-                    caption='1 - anxious, 5 - calmly'
+                    on:setRating={setRating}
+                    { ...quizArray[7] }
                 />
             {:else if currentStage === 5}
                 <p class="rating__text">
@@ -104,24 +217,18 @@
                 </p>
 
                 <QuizItem
-                    title='Life with pets'
-                    tooltip='How well tenants treat pets. Walking and training areas. If you have no experience, remember how much pets you have seen here.'
-                    key='pets'
-                    caption='1 - tough, 5 - easy'
+                    on:setRating={setRating}
+                    { ...quizArray[8] }
                 />
 
                 <QuizItem
-                    title='Life with kids'
-                    tooltip='Infrastructure for children: kindergartens and playgrounds, schools nearby - and security.'
-                    key='kids'
-                    caption='1 - rough, 5 - cool'
+                    on:setRating={setRating}
+                    { ...quizArray[9] }
                 />
 
                 <QuizItem
-                    title='Parking places'
-                    tooltip='Parking space problems. 1 - no places, 5 - no problem.'
-                    key='parking'
-                    caption='1 - sad, 5 - terrific'
+                    on:setRating={setRating}
+                    { ...quizArray[10] }
                 />
             {:else if currentStage === 6}
                 <p class="rating__text">
@@ -141,24 +248,17 @@
                 </div>
 
                 <div class="rating__status">
-                    <div class="rating__status_text">
+                    {#if isLoading}
                         <div class="spinner"></div>
-                    </div>
-                    <div class="rating__status_text rating__status_text-err">
-                        Error, try again later :(
-                    </div>
-                    <div class="rating__status_text rating__status_text-more">
-                        Rate every field please!
-                    </div>
-                    <div class="rating__status_text rating__status_text-rated">
-                        Nearby place is already rated by you
-                    </div>
-                    <div class="rating__status_text rating__status_text-limit">
-                        You rate too often, have to wait. <a href="blog/how-to-become-citizen/" target="_blank" class="rating__link">Why?</a>
-                    </div>
-                    <div class="rating__status_text rating__status_text-logout">
-                        Session expired, please, refresh and login.
-                    </div>
+                    {:else if isError && errorType === 'youRateTooOften'}
+                        <div class="rating__status_text">
+                            {$_('errors.youRateTooOften')} <a href="blog/how-to-become-citizen/" target="_blank" class="rating__link">{$_('errors.youRateTooOftenLink')}</a>
+                        </div>
+                    {:else if isError}
+                        <div class="rating__status_text">
+                            {errorsObj[errorType]}
+                        </div>
+                    {/if}
                 </div>
 
             {/if}
@@ -170,15 +270,15 @@
             </p>
             {#if isUserLoggedIn}
                 <div class="rating__btns btns_wrap">
-                    <a href="#" class="rating__btn btn" on:click|preventDefault={nextStage}>
+                    <a href="#" class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(false) }}>
                         No, I don't
                     </a>
-                    <a href="#" class="rating__btn btn" on:click|preventDefault={nextStage}>
+                    <a href="#" class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(true) }}>
                         Yes, I lived here
                     </a>
                 </div>
             {:else}
-                <a href="#" class="rating__login btn">Login and rate</a>
+                <a href="#" class="rating__login btn" on:click|preventDefault={() => { openAnotherOverlay('loginPopup') }}>Login and rate</a>
             {/if}
         {:else}
             <div class="rating__btns btns_wrap">
@@ -186,7 +286,7 @@
                     Back
                 </a>
                 {#if currentStage === 6}
-                    <a href="#" class="rating__btn btn btnSave">
+                    <a href="#" class="rating__btn btn" on:click|preventDefault={save}>
                         Save
                     </a>
                 {:else}
@@ -199,6 +299,36 @@
     </div>
 
     <div class="rating__progr_wrap">
-        <div class="rating__progr"></div>
+        <div class="rating__progr {progressBarClassName}"></div>
     </div>
 </PopupWrap>
+
+<style>
+    .rating__status {
+        opacity: 1;
+    }
+
+    .rating__progr-stage1 {
+        width: 0;
+    }
+
+    .rating__progr-stage2 {
+        width: 20%;
+    }
+
+    .rating__progr-stage3 {
+        width: 40%;
+    }
+
+    .rating__progr-stage4 {
+        width: 60%;
+    }
+
+    .rating__progr-stage5 {
+        width: 80%;
+    }
+
+    .rating__progr-stage6 {
+        width: 100%;
+    }
+</style>

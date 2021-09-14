@@ -47,72 +47,72 @@ const resetQuiz = () => {
     ratingCount.textContent = '330'
 }
 
-const setProgrBar = stageNumb => {
-    const level = (stageNumb - 1) / 5 * 100
-    ratingProgr.style.width = `${level}%`
-}
+// const setProgrBar = stageNumb => {
+//     const level = (stageNumb - 1) / 5 * 100
+//     ratingProgr.style.width = `${level}%`
+// }
 
-const hideAllSides = () => {
-    closeSideBar()
-    closeLoginForm()
-    resetQuiz()
-    resetRate()
-    closePlaces()
-    closePartners()
-    closeRateTutorial()
-}
+// const hideAllSides = () => {
+//     closeSideBar()
+//     closeLoginForm()
+//     resetQuiz()
+//     resetRate()
+//     closePlaces()
+//     closePartners()
+//     closeRateTutorial()
+// }
 
 const showQuiz = (stageNumb = 1) => {
-    quizes.forEach(item => removeClass(item, 'rating__popup-active'))
-    removeClass(saveStatus, 'rating__status-more')
-
-    const nextSlide = $(`.ratingPopup${stageNumb}`)
-    addClass(nextSlide, 'rating__popup-active')
-    setProgrBar(stageNumb)
+    // quizes.forEach(item => removeClass(item, 'rating__popup-active'))
+    // removeClass(saveStatus, 'rating__status-more')
+    //
+    // const nextSlide = $(`.ratingPopup${stageNumb}`)
+    // addClass(nextSlide, 'rating__popup-active')
+    // setProgrBar(stageNumb)
     nextSlide.focus()
 }
 
-const checkAndGetData = rating => {
-    const { finalRating, answersNumber } = getFinalRating(rating)
-
-    return {
-        isDataValid: answersNumber === 11 ? true : false,
-        averageRating: roundToTen(finalRating)
-    }
-}
+// const checkAndGetData = rating => {
+//     const { finalRating, answersNumber } = getFinalRating(rating)
+//
+//     return {
+//         isDataValid: answersNumber === 11 ? true : false,
+//         averageRating: roundToTen(finalRating)
+//     }
+// }
 
 const handleQuizBtns = () => {
-    handleClickPrevDef(closeBtn, () => {
-        hideAllSides()
-    })
+    // handleClickPrevDef(closeBtn, () => {
+    //     hideAllSides()
+    // })
 
-    handleClick(ratingPopup, e => {
-        if (e.target === e.currentTarget)
-            hideAllSides()
-    })
+    // handleClick(ratingPopup, e => {
+    //     if (e.target === e.currentTarget)
+    //         hideAllSides()
+    // })
 
-    quizNextButtons.forEach(item => handleClickPrevDef(item, () => {
-        quizState = { ...quizState, curStage: quizState.curStage + 1 }
-        showQuiz(quizState.curStage)
-    }))
+    // quizNextButtons.forEach(item => handleClickPrevDef(item, () => {
+    //     quizState = { ...quizState, curStage: quizState.curStage + 1 }
+    //     showQuiz(quizState.curStage)
+    // }))
+    //
+    // quizPrevButtons.forEach(item => handleClickPrevDef(item, () => {
+    //     quizState = { ...quizState, curStage: quizState.curStage - 1 }
+    //     showQuiz(quizState.curStage)
+    // }))
 
-    quizPrevButtons.forEach(item => handleClickPrevDef(item, () => {
-        quizState = { ...quizState, curStage: quizState.curStage - 1 }
-        showQuiz(quizState.curStage)
-    }))
-
-    setRatingButtons.forEach(item => handleClickPrevDef(item, e => {
-        const target = e.currentTarget
-        const parent = target.parentNode
-        const ratingName = parent.getAttribute('data-name')
-        const rating = Number(target.getAttribute('data-rating'))
-
-        quizRating = { ...quizRating, [ratingName]: rating }
-
-        parent.querySelectorAll('.star').forEach(item => removeClass(item, 'star-active'))
-        addClass(target, 'star-active')
-        target.blur()
-    }))
+    // setRatingButtons.forEach(item => handleClickPrevDef(item, e => {
+    //     const target = e.currentTarget
+    //     const parent = target.parentNode
+    //     const ratingName = parent.getAttribute('data-name')
+    //     const rating = Number(target.getAttribute('data-rating'))
+    //
+    //     quizRating = { ...quizRating, [ratingName]: rating }
+    //
+    //     parent.querySelectorAll('.star').forEach(item => removeClass(item, 'star-active'))
+    //     addClass(target, 'star-active')
+    //     target.blur()
+    // }))
 
     handleClickPrevDef(isPersExpBtn, () => {
         quizState = { ...quizState, isPersonalExperience: true }
@@ -128,44 +128,44 @@ const handleQuizBtns = () => {
             return
 
         isSaving = true
-        const { isDataValid, averageRating } = checkAndGetData(quizRating)
-        if (!isDataValid) {
-            isSaving = false
-            addClass(saveStatus, 'rating__status-more')
-            return
-        }
+        // const { isDataValid, averageRating } = checkAndGetData(quizRating)
+        // if (!isDataValid) {
+        //     isSaving = false
+        //     addClass(saveStatus, 'rating__status-more')
+        //     return
+        // }
 
         // TODO: LATER
         // check if data could be irelevant (for example in radius of 1km average rating is 2 points higher)
 
-        addClass(saveStatus, 'rating__status-progress')
+        // addClass(saveStatus, 'rating__status-progress')
         const actualCoords = [ ...state.corrdsToSave ]
 
         try {
-            const { error, data } = await saveToDB(actualCoords, quizRating, averageRating, quizState.comment, quizState.isPersonalExperience)
-            if (error === 'Nearby place is already rated') {
-                removeClass(saveStatus, 'rating__status-progress')
-                addClass(saveStatus, 'rating__status-rated')
-                isSaving = false
-                return
-            } else if (error === 'No active ratings') {
-                removeClass(saveStatus, 'rating__status-progress')
-                addClass(saveStatus, 'rating__status-limit')
-                isSaving = false
-                return
-            } else if (error === 'User is not logged in') {
-                userLoggedOut()
-                state = { ...state, userID: null }
-                removeClass(saveStatus, 'rating__status-progress')
-                addClass(saveStatus, 'rating__status-logout')
-                isSaving = false
-                return
-            } else if (error) {
-                removeClass(saveStatus, 'rating__status-progress')
-                addClass(saveStatus, 'rating__status-error')
-                isSaving = false
-                return
-            }
+            // const { error, data } = await saveToDB(actualCoords, quizRating, averageRating, quizState.comment, quizState.isPersonalExperience)
+            // if (error === 'Nearby place is already rated') {
+            //     removeClass(saveStatus, 'rating__status-progress')
+            //     addClass(saveStatus, 'rating__status-rated')
+            //     isSaving = false
+            //     return
+            // } else if (error === 'No active ratings') {
+            //     removeClass(saveStatus, 'rating__status-progress')
+            //     addClass(saveStatus, 'rating__status-limit')
+            //     isSaving = false
+            //     return
+            // } else if (error === 'User is not logged in') {
+            //     userLoggedOut()
+            //     state = { ...state, userID: null }
+            //     removeClass(saveStatus, 'rating__status-progress')
+            //     addClass(saveStatus, 'rating__status-logout')
+            //     isSaving = false
+            //     return
+            // } else if (error) {
+            //     removeClass(saveStatus, 'rating__status-progress')
+            //     addClass(saveStatus, 'rating__status-error')
+            //     isSaving = false
+            //     return
+            // }
 
             const isUpdated = data.message === 'Rating updated' ? true : false
 
