@@ -87,6 +87,11 @@
         "preset3Text": "Nature",
         "preset4Text": "The perfect place"
     },
+    "filterNotification": {
+        "filters": "Filters",
+        "active": "active",
+        "reset": "Reset"
+    },
     "footer": {
         "version": "Version",
         "termsOfUse": "Terms of use",

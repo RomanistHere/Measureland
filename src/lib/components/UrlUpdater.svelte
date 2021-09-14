@@ -47,7 +47,6 @@
         const zoom = url.searchParams.get('zoom');
         const filters = url.searchParams.get('fi');
         const showRating = url.searchParams.get('showRating');
-        // TODO: other params
         const center = [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
 
         if (lat && lng)

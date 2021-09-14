@@ -86,6 +86,11 @@
         "preset3Text": "Природа!",
         "preset4Text": "Идеальное место"
     },
+    "filterNotification": {
+        "filters": "Фильтры",
+        "active": "активны",
+        "reset": "Сбросить"
+    },
     "footer": {
         "version": "Версия",
         "termsOfUse": "Условия использования",
