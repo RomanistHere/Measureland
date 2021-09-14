@@ -45,6 +45,13 @@
             "tooltip": "Parking space problems. 1 - no places, 5 - no problem."
         }
     },
+    "loading": {
+        "geo": "Loading..."
+    },
+    "clusters": {
+        "titleSingle": "This place's average rating's about",
+        "titleGrp": "This group of places average rating's about"
+    },
     "menuSidebar": {
         "titleTop": "Account",
         "loginOrRegister": "Login/Register",
@@ -181,6 +188,15 @@
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",
         "passwordError": "Password should be longer than 6 characters!"
+    },
+    "errors": {
+        "limitError": {
+            "textBeforeLink": "You have exceeded our limit of requests. There are",
+            "textFirstLink": "two options",
+            "textBetweenLinks": ": either you a bad guy who for some reason wants our aimed at helping people service go down or our system being not ideal. We are strongly believe it's a second one. If you ",
+            "textSecondLink": "dropped us a message",
+            "textAfterLinks": "we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
+        }
     },
     "partnersPopup": {
         "ourFriendsAndPartners": "Our friends and partners",

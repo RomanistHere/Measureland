@@ -1,11 +1,11 @@
 <script>
-    import { _, locale } from 'svelte-i18n';
+    import { _ } from 'svelte-i18n';
     import { onMount } from 'svelte';
     import { get } from 'svelte/store';
 
 	import L from 'leaflet';
     import PolyBool from 'polybooljs';
-    // Supercluster is changed
+    // Supercluster is changed on our side, so we can't use npm's one
     import "../../../external/supercluster.js";
 
     import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
@@ -19,6 +19,7 @@
     let cachedData = [];
     let usedBounds = [];
     let index;
+    let isLoading = false;
 
     const getIcon = rating =>
         L.icon({
@@ -42,18 +43,6 @@
             shadowSize: [61, 100],
         });
 
-    // TODO: move to i18n
-    const clusterCaption = {
-    	en: {
-    		titleSingle: `This place's average rating's about`,
-    		titleGrp: `This group of places average rating's about`,
-    	},
-    	ru: {
-    		titleSingle: `Средний рейтинг в данном месте примерно`,
-    		titleGrp: `Средний рейтинг в данной группе примерно`,
-    	}
-    }
-
     const initShowRatingPopup = ({ latlng }) => {
         openAnotherOverlay('showRatingsPopup', latlng);
         appStateStore.update(state => ({ ...state, openModal: true }));
@@ -66,7 +55,7 @@
     	    const icon = getIcon(Math.floor(rating));
     	    const marker = L.marker(latlng, {
     	        icon: icon,
-    	        title: `${clusterCaption[$locale]['titleSingle']} ${rating}`,
+    	        title: `${$_('clusters.titleSingle')} ${rating}`,
     	        riseOnHover: true,
     	        rating: rating,
     	    });
@@ -78,7 +67,7 @@
     		const grpIcon = getGrpIcon(Math.floor(rating));
     		const marker = L.marker(latlng, {
     			icon: grpIcon,
-    			title: `${clusterCaption[$locale]['titleGrp']} ${rating}`,
+    			title: `${$_('clusters.titleGrp')} ${rating}`,
     			riseOnHover: true,
     			rating: rating,
     		});
@@ -230,7 +219,7 @@
     		}
     	}
 
-        // TODO:  addClass($('.overlay__loading'), 'overlay__loading-show')
+        isLoading = true;
 
     	const query = getQuery(queryPolygon);
     	const poly = L.polygon(query, {
@@ -281,9 +270,7 @@
     	}
 
         // checkSize(result)
-
-        // TODO:
-    	// removeClass($('.overlay__loading'), 'overlay__loading-show')
+    	isLoading = false;
     	addDataAndDisplay(result);
     }
 
@@ -302,3 +289,16 @@
     }
     $: subscribeToFiltersChanges($filtersStore);
 </script>
+
+{#if isLoading}
+    <!-- todo: animations -->
+    <div class="overlay__loading overlay__loading-show">
+        {$_('loading.geo')}
+    </div>
+{/if}
+
+<style>
+    .overlay__loading {
+        z-index: 1000;
+    }
+</style>

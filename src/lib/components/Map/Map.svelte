@@ -1,4 +1,5 @@
 <script>
+    import { _ } from 'svelte-i18n';
     import L from 'leaflet';
     import 'leaflet/dist/leaflet.css';
 
@@ -58,11 +59,30 @@
         {/if}
         <!-- // drawing component -->
     </div>
+{:else}
+    <div class="limit_error">
+        {$_('errors.limitError.textBeforeLink')}
+        <a href="blog/how-to-become-citizen/">{$_('errors.limitError.textFirstLink')}</a>
+        {$_('errors.limitError.textBetweenLinks')}
+        <a href="mailto:support@measureland.org">{$_('errors.limitError.textSecondLink')}</a>
+        {$_('errors.limitError.textAfterLinks')}
+    </div>
 {/if}
 
 <style>
     div {
         height: 100%;
         width: 100%;
+    }
+
+    .limit_error {
+        display: block;
+
+        width: 480px;
+        height: 200px;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 </style>
