@@ -157,7 +157,7 @@ const objToString = (object) => {
     return str.slice(0, -1)
 }
 
-const fillFiltersFromArrOfStrings = (arrOfStrings, refs) => {
+const fillFiltersFromArrOfStrings = (arrOfStrings, refs = null) => {
 	let obj;
 
 	// probably refactor to something less complicated
@@ -172,6 +172,9 @@ const fillFiltersFromArrOfStrings = (arrOfStrings, refs) => {
 		};
 
 		// if we didn't need obj, loop over refs would give more performance
+		if (!refs)
+			continue;
+
 		for (let i = 0; i < refs.length; i++) {
 			const refObj = refs[i];
 

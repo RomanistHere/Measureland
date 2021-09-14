@@ -5,7 +5,6 @@
     import PresetBtn from './PresetBtn.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
-    import { filterReferences } from "../../../../../../stores/references.js";
     import { fillFiltersFromArrOfStrings, debounce } from '../../../../../utilities/helpers.js'
 
     $: criteria = $json('criteria');
@@ -14,11 +13,24 @@
         tooltip: criteria[key]['tooltip'],
         isShortDesc: i === 0 ? false : true,
         key,
+        start: $filtersStore.filters && $filtersStore.filters[key]
+            ? [Number($filtersStore.filters[key].split('-')[0]), Number($filtersStore.filters[key].split('-')[1])]
+            : [1, 5]
     }));
 
-    // get filterReferences sheme from store and update it on change
-    let refs = $filterReferences;
-    $: filterReferences.update(store => [ ...refs ]);
+    let refs = [
+        { key: 'air', ref: null },
+        { key: 'chill', ref: null },
+        { key: 'clean', ref: null },
+        { key: 'kids', ref: null },
+        { key: 'logistic', ref: null },
+        { key: 'noize', ref: null },
+        { key: 'parking', ref: null },
+        { key: 'pets', ref: null },
+        { key: 'safety', ref: null },
+        { key: 'transport', ref: null },
+        { key: 'water', ref: null },
+    ];
 
     const applyFilters = () => {
         // filtersStore.update(state => ({ ...state, isFiltersOn: true }));

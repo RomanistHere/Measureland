@@ -11,6 +11,7 @@
     export let key = '';
     export let title = '';
     export let tooltip = '';
+    export let start = [1, 5];
     export let currentValue = '1-5';
     export let isShortDesc = true;
     $: description = isShortDesc ? '' : $_('filterSidebar.currentValue');
@@ -70,5 +71,6 @@
         on:update={setFilterText}
         on:end={setFilter}
         bind:this={slider}
+        { start }
     />
 </li>

@@ -2,7 +2,6 @@
     import { onMount } from 'svelte';
 
     import { appStateStore, filtersStore } from '../../stores/state.js';
-    import { filterReferences } from '../../stores/references.js';
     import { mapReference } from "../../stores/references.js";
 
     // TODO: check roundToTen OK or need to use roundToFifthDecimal
@@ -14,9 +13,6 @@
 
     const checkIfMapLoaded = () =>
         $mapReference === null ? false : true;
-
-    const checkIsFilterRefsReady = () =>
-        $filterReferences[0].ref === null ? false : true;
 
     const updateURL = ({ center, zoom, openModal, showRating }, { isFiltersOn, filters }) => {
     	const [lat, lng] = center;
@@ -73,16 +69,8 @@
         }
 
         if (filters) {
-            openAnotherOverlay('filtersSidebar');
-            const interval = setInterval(() => {
-                const isRefsReady = checkIsFilterRefsReady();
-
-                if (isRefsReady) {
-                    const arrOfStrings = filters.split(',');
-                    fillFiltersFromArrOfStrings(arrOfStrings, $filterReferences);
-                    clearInterval(interval);
-                }
-            }, 60);
+            const arrOfStrings = filters.split(',');
+            fillFiltersFromArrOfStrings(arrOfStrings);
         }
 
         url.searchParams.delete('openModal');

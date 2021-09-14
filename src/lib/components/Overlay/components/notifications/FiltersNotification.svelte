@@ -1,7 +1,7 @@
 <script>
     import { _ } from 'svelte-i18n';
 
-    import { notificationsStore, filtersStore } from "../../../../../stores/state.js";
+    import { filtersStore } from "../../../../../stores/state.js";
     import { openAnotherOverlay, closeOverlays } from "../../../../utilities/helpers.js";
 
     const openFilters = () =>
@@ -9,7 +9,6 @@
 
     const resetFilters = () => {
         closeOverlays();
-        notificationsStore.update(state => ({ ...state, filtersNotification: false }));
         filtersStore.update(state => ({
             ...state,
             isFiltersOn: true,
