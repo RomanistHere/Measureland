@@ -5,3 +5,9 @@
 </script>
 
 <a href={"#"} class="btn {className}" on:click|preventDefault={action}>{text}</a>
+
+<style>
+    .d-b {
+        display: block;
+    }
+</style>

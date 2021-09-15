@@ -39,11 +39,11 @@
 	const geocodeService = $geocodeServiceReference;
 
     const nextStage = () => {
-        currentStage++;
+        currentStage += 1;
         isError = false;
     }
     const prevStage = () => {
-        currentStage--;
+        currentStage -= 1;
         isError = false;
     }
 

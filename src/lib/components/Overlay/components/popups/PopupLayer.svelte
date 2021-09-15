@@ -5,6 +5,7 @@
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
     import ForgotPasswordPopup from './ForgotPasswordPopup.svelte';
     import CheckEmailPopup from './CheckEmailPopup.svelte';
+    import OnboardingPopup from './OnboardingPopup.svelte';
     import QuizPopup from './QuizPopup/QuizPopup.svelte';
     import HowToRatePopup from './HowToRatePopup.svelte';
     import LoggedInPopup from './LoggedInPopup.svelte';
@@ -45,6 +46,10 @@
         myPlacesPopup: {
             className: 'places',
             component: MyPlacesPopup
+        },
+        onboardingPopup: {
+            className: 'partners',
+            component: OnboardingPopup
         },
         partnersPopup: {
             className: 'partners',

@@ -78,7 +78,7 @@
         const { finalRating } = getFinalRating(ratingObj);
 
         appStateStore.update(state => ({ ...state, showRating: true }));
-        
+
         isAlreadyRatedByThisUser = properties.isRated;
         currentLatLng = { lng, lat };
         commentGeoID = properties.geoID;
@@ -135,6 +135,7 @@
     </div>
 
     {#if isUserLoggedIn && isAlreadyRatedByThisUser}
+        <!-- div because user can't focus -->
         <div href={"#"} class="rate__evaluate btn rate__rated_btn">{$_('showRatingPopup.youHaveAlreadyRated')}</div>
     {:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
         <MainButton text='{$_('showRatingPopup.addNewRating')}' action={() => openAnotherOverlay('quizPopup', currentLatLng)} />

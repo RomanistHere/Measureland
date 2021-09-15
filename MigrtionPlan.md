@@ -1,6 +1,6 @@
 # To do:
 
-- referify login sent
+- quiz popup mainbutton
 - forgot/change password
 - post register popup
 - ask for ratings popup

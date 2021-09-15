@@ -101,98 +101,98 @@ const changeLoginScreen = (stage = 'login') => {
     loginState = { ...loginState, stage: stage }
 }
 
-const openLoginForm = stage => {
-    changeLoginScreen(stage)
-    addClass(loginForm, 'rating-active')
-    addToUrlOpenModalFlag()
-}
+// const openLoginForm = stage => {
+//     changeLoginScreen(stage)
+//     addClass(loginForm, 'rating-active')
+//     addToUrlOpenModalFlag()
+// }
+//
+// const closeLoginForm = () => {
+//     removeClass(loginForm, 'rating-active')
+//     changeLoginScreen()
+// }
 
-const closeLoginForm = () => {
-    removeClass(loginForm, 'rating-active')
-    changeLoginScreen()
-}
+// const validateEmail = email =>
+//     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
+//
+// const validatePass = pass =>
+//     pass.length > 6 && pass.length < 255
 
-const validateEmail = email =>
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
+// const removeLoginErrors = () => {
+//     const notificationLogin = $('.login__notifications_wrap')
+//     notificationLogin.classList.remove(
+//         'login__notifications_wrap-err',
+//         'login__notifications_wrap-fill',
+//         'login__notifications_wrap-verify',
+//         'login__notifications_wrap-timeout',
+//         'login__notifications_wrap-wrong_pass',
+//         'login__notifications_wrap-email_not_exist'
+//     )
+//
+//     const notificationRegister = $('.register__notifications_wrap')
+//     notificationRegister.classList.remove(
+//         'register__notifications_wrap-err',
+//         'register__notifications_wrap-fill',
+//         'register__notifications_wrap-timeout',
+//         'register__notifications_wrap-email_exists'
+//     )
+//
+//     const notificationReset = $('.reset__notifications_wrap')
+//     notificationReset.classList.remove(
+//         'reset__notifications_wrap-err',
+//         'reset__notifications_wrap-fill'
+//     )
+//
+//     const notificationForgot = $('.forgot__notifications_wrap')
+//     notificationForgot.classList.remove(
+//         'forgot__notifications_wrap-err',
+//         'forgot__notifications_wrap-fill',
+//         'forgot__notifications_wrap-timeout',
+//         'forgot__notifications_wrap-old_pass',
+//         'forgot__notifications_wrap-email_not_exist'
+//     )
+// }
 
-const validatePass = pass =>
-    pass.length > 6 && pass.length < 255
+// const clearLoginFields = () => {
+//     // reset DOM
+//     passwordInputs.forEach(item => {
+//         const errElem = item.parentNode.querySelector('.form__error')
+//         item.value = ''
+//
+//         removeClass(item, 'form__input-error')
+//         removeClass(errElem, 'form__error-show')
+//         removeClass(item, 'form__input-success')
+//     })
+//     emailInputs.forEach(item => {
+//         const errElem = item.parentNode.querySelector('.form__error')
+//         item.value = ''
+//
+//         removeClass(item, 'form__input-error')
+//         removeClass(errElem, 'form__error-show')
+//         removeClass(item, 'form__input-success')
+//     })
+//     removeLoginErrors()
+//
+//     // reset state
+//     loginState = { ...loginStateDef }
+// }
 
-const removeLoginErrors = () => {
-    const notificationLogin = $('.login__notifications_wrap')
-    notificationLogin.classList.remove(
-        'login__notifications_wrap-err',
-        'login__notifications_wrap-fill',
-        'login__notifications_wrap-verify',
-        'login__notifications_wrap-timeout',
-        'login__notifications_wrap-wrong_pass',
-        'login__notifications_wrap-email_not_exist'
-    )
-
-    const notificationRegister = $('.register__notifications_wrap')
-    notificationRegister.classList.remove(
-        'register__notifications_wrap-err',
-        'register__notifications_wrap-fill',
-        'register__notifications_wrap-timeout',
-        'register__notifications_wrap-email_exists'
-    )
-
-    const notificationReset = $('.reset__notifications_wrap')
-    notificationReset.classList.remove(
-        'reset__notifications_wrap-err',
-        'reset__notifications_wrap-fill'
-    )
-
-    const notificationForgot = $('.forgot__notifications_wrap')
-    notificationForgot.classList.remove(
-        'forgot__notifications_wrap-err',
-        'forgot__notifications_wrap-fill',
-        'forgot__notifications_wrap-timeout',
-        'forgot__notifications_wrap-old_pass',
-        'forgot__notifications_wrap-email_not_exist'
-    )
-}
-
-const clearLoginFields = () => {
-    // reset DOM
-    passwordInputs.forEach(item => {
-        const errElem = item.parentNode.querySelector('.form__error')
-        item.value = ''
-
-        removeClass(item, 'form__input-error')
-        removeClass(errElem, 'form__error-show')
-        removeClass(item, 'form__input-success')
-    })
-    emailInputs.forEach(item => {
-        const errElem = item.parentNode.querySelector('.form__error')
-        item.value = ''
-
-        removeClass(item, 'form__input-error')
-        removeClass(errElem, 'form__error-show')
-        removeClass(item, 'form__input-success')
-    })
-    removeLoginErrors()
-
-    // reset state
-    loginState = { ...loginStateDef }
-}
-
-const onboardingInit = () => {
-    $('#age-select').addEventListener('change', e => {
-        const grp = Number(e.target.value)
-        onboardingState = { ...onboardingState, ageGrp: grp }
-    })
-
-    $('#money-select').addEventListener('change', e => {
-        const grp = Number(e.target.value)
-        onboardingState = { ...onboardingState, moneyGrp: grp }
-    })
-
-    $('#username').addEventListener('input', e => {
-        const value = e.currentTarget.value
-        onboardingState = { ...onboardingState, name: value }
-    })
-}
+// const onboardingInit = () => {
+//     $('#age-select').addEventListener('change', e => {
+//         const grp = Number(e.target.value)
+//         onboardingState = { ...onboardingState, ageGrp: grp }
+//     })
+//
+//     $('#money-select').addEventListener('change', e => {
+//         const grp = Number(e.target.value)
+//         onboardingState = { ...onboardingState, moneyGrp: grp }
+//     })
+//
+//     $('#username').addEventListener('input', e => {
+//         const value = e.currentTarget.value
+//         onboardingState = { ...onboardingState, name: value }
+//     })
+// }
 
 const clearURLParams = () => {
     try {
@@ -237,26 +237,26 @@ const verificationInit = async () => {
         changeLoginScreen('resetPassword')
     }
 }
-
-const userLoggedIn = () => {
-    state.flow.push('li')
-    const loggedInBtns = $All('.loggedInShow')
-    loggedInBtns.forEach(item => addClass(item, 'loggedInShow-show'))
-    const loggedOutBtns = $All('.loggedOutShow')
-    loggedOutBtns.forEach(item => removeClass(item, 'loggedOutShow-show'))
-    addClass($('.settings__available'), 'settings__available-show')
-    setActiveRatings(state.activeRatings)
-    if (state.activeRatings > 5 && $('.moreRatingsBtn'))
-        $('.moreRatingsBtn').remove()
-}
-
-const userLoggedOut = () => {
-    const loggedInBtns = $All('.loggedInShow')
-    loggedInBtns.forEach(item => removeClass(item, 'loggedInShow-show'))
-    const loggedOutBtns = $All('.loggedOutShow')
-    loggedOutBtns.forEach(item => addClass(item, 'loggedOutShow-show'))
-    removeClass($('.settings__available'), 'settings__available-show')
-}
+//
+// const userLoggedIn = () => {
+//     state.flow.push('li')
+//     const loggedInBtns = $All('.loggedInShow')
+//     loggedInBtns.forEach(item => addClass(item, 'loggedInShow-show'))
+//     const loggedOutBtns = $All('.loggedOutShow')
+//     loggedOutBtns.forEach(item => removeClass(item, 'loggedOutShow-show'))
+//     addClass($('.settings__available'), 'settings__available-show')
+//     setActiveRatings(state.activeRatings)
+//     if (state.activeRatings > 5 && $('.moreRatingsBtn'))
+//         $('.moreRatingsBtn').remove()
+// }
+//
+// const userLoggedOut = () => {
+//     const loggedInBtns = $All('.loggedInShow')
+//     loggedInBtns.forEach(item => removeClass(item, 'loggedInShow-show'))
+//     const loggedOutBtns = $All('.loggedOutShow')
+//     loggedOutBtns.forEach(item => addClass(item, 'loggedOutShow-show'))
+//     removeClass($('.settings__available'), 'settings__available-show')
+// }
 
 // const userInit = async () => {
 //     const { error, data } = await checkUser()
@@ -618,35 +618,35 @@ const initLoginBtns = () => {
     //     }
     // })
 
-    onboardingForm.addEventListener('submit', async (e) => {
-        e.preventDefault()
-        const { name, ageGrp, moneyGrp } = onboardingState
-        const userName = name === null || name.trim() === ''
-            ? state.lang === 'en'
-                ? 'Anonym'
-                : 'Аноним'
-            : name
+    // onboardingForm.addEventListener('submit', async (e) => {
+        // e.preventDefault()
+        // const { name, ageGrp, moneyGrp } = onboardingState
+        // const userName = name === null || name.trim() === ''
+        //     ? state.lang === 'en'
+        //         ? 'Anonym'
+        //         : 'Аноним'
+        //     : name
 
-        if (userName === 'Anonym' && ageGrp === 1 && moneyGrp === 1) {
-            closeLoginForm()
-            onboardingState = { ...onboardingStateDef }
-            showSuccessNotification()
-            userLoggedIn()
-            return
-        }
+        // if (userName === 'Anonym' && ageGrp === 1 && moneyGrp === 1) {
+        //     closeLoginForm()
+        //     onboardingState = { ...onboardingStateDef }
+        //     showSuccessNotification()
+        //     userLoggedIn()
+        //     return
+        // }
 
-        const { error } = await onboard(userName, ageGrp, moneyGrp, state.userID)
+        // const { error } = await onboard(userName, ageGrp, moneyGrp, state.userID)
+        //
+        // if (error) {
+        //     showError('unrecognizedError', error)
+        //     return
+        // }
 
-        if (error) {
-            showError('unrecognizedError', error)
-            return
-        }
-
-        closeLoginForm()
-        onboardingState = { ...onboardingStateDef }
-        showSuccessNotification()
-        userLoggedIn()
-    })
+    //     closeLoginForm()
+    //     onboardingState = { ...onboardingStateDef }
+    //     showSuccessNotification()
+    //     userLoggedIn()
+    // })
 
     resetPasswordForm.addEventListener('submit', async (e) => {
         e.preventDefault()
