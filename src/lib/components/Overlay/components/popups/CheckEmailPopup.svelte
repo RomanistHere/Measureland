@@ -1,5 +1,5 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _, json } from 'svelte-i18n';
 
     import PopupWrap from './PopupWrap.svelte';
     import MainButton from '../MainButton.svelte';
@@ -13,14 +13,14 @@
     <div class="rating__popup rating__popup-active login__popup">
         <div class="rating__content login__content-check">
             <p class="rating__text">
-                <strong class="rating__text-highlight">{$_('confirmForgotPasswordPopup.title')}</strong>
+                <strong class="rating__text-highlight">{$_('checkEmailPopup.title')}</strong>
             </p>
 
             <p class="rating__text">
-                {$_('confirmForgotPasswordPopup.text')}
+                {$_('checkEmailPopup.text')}
             </p>
         </div>
 
-        <MainButton text="{$_('confirmForgotPasswordPopup.button')}" className="confirm__btn" action={closePopup} />
+        <MainButton text="{$_('checkEmailPopup.button')}" className="login__recover" action={closePopup} />
     </div>
 </PopupWrap>

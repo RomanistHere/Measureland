@@ -39,8 +39,6 @@
         const { error, data } = await sendResetPass(email);
         isLoading = false;
 
-        console.log(data)
-
         if (error) {
             console.warn(error);
             isError = true;

@@ -209,6 +209,11 @@
         "text": "We sent a letter to the given email. By clicking the link inside you'll get to the new password form. Once you submit new password, old one stops to work",
         "button": "Got ya"
     },
+    "checkEmailPopup": {
+        "title": "Check your email",
+        "text": "One of the stages in fighting with cheating - verification of users by email - so we sent a letter to you. We know you can't wait to start rating the places, so once you confirm yourself you can start. Check it out :)",
+        "button": "Got ya"
+    },
     "myPlacesPopup": {
         "title": "Your ratings",
         "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",

@@ -4,6 +4,8 @@
     import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
+    import SecondaryButton from '../SecondaryButton.svelte';
+    import FormButton from '../FormButton.svelte';
 
     import { openAnotherOverlay, debounce, sleep, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
@@ -25,7 +27,6 @@
     const openForgotPasswordPopup = () => openAnotherOverlay('forgotPasswordPopup');
 
     const resendVerificationLetter = async () => {
-        // TODO: test!
         isError = false;
         if (!isEmailValid || email.length === 0) {
             // TODO: focus needed input
@@ -37,8 +38,6 @@
         isLoading = true;
         const { error, data } = await reverify(email);
         isLoading = false;
-
-        console.log(data)
 
         if (error) {
             console.warn(error);
@@ -54,7 +53,6 @@
             return;
         }
 
-        // TODO:
         openAnotherOverlay('checkEmailPopup');
     }
 
@@ -95,7 +93,6 @@
         }
 
         const { userID, activeRatings, userName, wantMoreRatings } = data;
-        console.log(data)
 
         userStateStore.update(state => ({
             ...state,
@@ -174,12 +171,8 @@
         </div>
 
         <div class="rating__btns btns_wrap">
-            <a href={"#"} class="rating__btn btn btn-low" on:click|preventDefault={openForgotPasswordPopup}>
-                {$_('loginPopup.forgotPasswordBtn')}
-            </a>
-            <button type="submit" class="rating__btn btn form__btn" on:click|preventDefault={debouncedSubmit}>
-                {$_('loginPopup.loginBtn')}
-            </button>
+            <SecondaryButton text={$_('loginPopup.forgotPasswordBtn')} className="rating__btn" action={openForgotPasswordPopup} />
+            <FormButton text={$_('loginPopup.loginBtn')} action={debouncedSubmit} />
         </div>
         <a href={"#"} class="login__link" on:click|preventDefault={openRegisterPopup}>
             {$_('loginPopup.registerBtn')}

@@ -4,6 +4,8 @@
     import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
+    import SecondaryButton from '../SecondaryButton.svelte';
+    import FormButton from '../FormButton.svelte';
 
     import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
@@ -66,7 +68,7 @@
         }
 
         openAnotherOverlay('checkEmailPopup');
-        showSuccessNotification()
+        showSuccessNotification();
     }
 
     const debouncedSubmit = debounce(() => {
@@ -139,12 +141,8 @@
         </div>
 
         <div class="rating__btns btns_wrap">
-            <a href={"#"} class="rating__btn btn btn-low openLogin" on:click|preventDefault={openLoginPopup}>
-                {$_('registrationPopup.goToLoginBtn')}
-            </a>
-            <button type="submit" class="rating__btn btn form__btn" on:click|preventDefault={debouncedSubmit}>
-                {$_('registrationPopup.registerBtn')}
-            </button>
+            <SecondaryButton text={$_('registrationPopup.goToLoginBtn')} className="rating__btn" action={openLoginPopup} />
+            <FormButton text={$_('registrationPopup.registerBtn')} action={debouncedSubmit} />
         </div>
     </form>
 </PopupWrap>
