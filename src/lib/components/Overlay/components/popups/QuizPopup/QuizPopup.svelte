@@ -13,19 +13,11 @@
 
     $: errorsObj = $json('errors');
     $: criteriaObj = $json('criteria');
-    $: criteria = Object.keys(criteriaObj).map((key, i) => ({
+    $: quizArray = Object.keys(criteriaObj).map((key, i) => ({
         title: criteriaObj[key]['title'],
         tooltip: criteriaObj[key]['tooltip'],
         caption: criteriaObj[key]['caption'],
         rating: null,
-        key,
-    }));
-
-    $: quizArray = criteria.map(({ title, tooltip, caption, rating, key }) => ({
-        title,
-        tooltip,
-        caption,
-        rating,
         key,
     }));
 
@@ -153,8 +145,8 @@
                 const { coords, averageRating } = data;
                 markerStore.update(state => ({
                     ...state,
-                    markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating } ],
                     markersToRemove: [ ...state.markersToRemove, { coords: currentCoords } ],
+                    markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating } ],
                 }));
             } else {
                 markerStore.update(state => ({

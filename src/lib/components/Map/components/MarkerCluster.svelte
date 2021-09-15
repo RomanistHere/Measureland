@@ -114,7 +114,7 @@
     const addMarker = (coordsData, ratingData) => {
         const newPoint = {
     		geometry: {
-    			coordinates: coordsData.reverse(),
+    			coordinates: coordsData,
     			type: 'Point'
     		},
     		properties: {
@@ -128,7 +128,7 @@
     }
 
     const removeMarker = coords => {
-    	const [ lat, lng ] = coords.reverse();
+    	const [ lat, lng ] = coords;
     	const length = cachedData.length;
         for (let i = 0; i < length; i++) {
     		const arr = cachedData[i]['geometry']['coordinates'];
@@ -146,17 +146,17 @@
         if (toAddArrayLength === 0 && toRemoveArrayLength === 0)
             return;
 
-        if (toAddArrayLength !== 0) {
-            for (let i = 0; i < toAddArrayLength; i++) {
-                const { coords, rating } = markersToAdd[i];
-                addMarker(coords, rating);
-            }
-        }
-
         if (toRemoveArrayLength !== 0) {
             for (let i = 0; i < toRemoveArrayLength; i++) {
                 const { coords } = markersToAdd[i];
                 removeMarker(coords);
+            }
+        }
+
+        if (toAddArrayLength !== 0) {
+            for (let i = 0; i < toAddArrayLength; i++) {
+                const { coords, rating } = markersToAdd[i];
+                addMarker(coords, rating);
             }
         }
 

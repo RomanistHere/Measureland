@@ -78,7 +78,8 @@
         const { finalRating } = getFinalRating(ratingObj);
 
         appStateStore.update(state => ({ ...state, showRating: true }));
-
+        
+        isAlreadyRatedByThisUser = properties.isRated;
         currentLatLng = { lng, lat };
         commentGeoID = properties.geoID;
         averageRating = roundToTen(finalRating);
