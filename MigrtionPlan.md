@@ -1,5 +1,6 @@
 # To do:
 
+- referify login sent
 - forgot/change password
 - post register popup
 - ask for ratings popup

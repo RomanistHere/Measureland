@@ -1,7 +1,8 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     import PopupWrap from './PopupWrap.svelte';
     import MainButton from '../MainButton.svelte';
-    import { _ } from 'svelte-i18n';
 
     import { closeOverlay, openAnotherOverlay } from "../../../../utilities/helpers.js";
     import { userStateStore } from "../../../../../stores/state.js";

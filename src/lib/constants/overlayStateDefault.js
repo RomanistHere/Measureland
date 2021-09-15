@@ -19,6 +19,11 @@ export const overlayStateDefault = {
         type: 'popup',
         data: {},
     },
+    confirmForgotPasswordPopup: {
+        isOpen: false,
+        type: 'popup',
+        data: {},
+    },
     showRatingsPopup: {
         isOpen: false,
         type: 'popup',

@@ -198,6 +198,17 @@
         "goToLoginBtn": "Go to Login",
         "registerBtn": "Register"
     },
+    "forgotPasswordPopup": {
+        "title": "Restore (change) the password",
+        "email": "Email",
+        "secondaryBtn": "Register",
+        "mainBtn": "Restore"
+    },
+    "confirmForgotPasswordPopup": {
+        "title": "Check your email",
+        "text": "We sent a letter to the given email. By clicking the link inside you'll get to the new password form. Once you submit new password, old one stops to work",
+        "button": "Got ya"
+    },
     "myPlacesPopup": {
         "title": "Your ratings",
         "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",

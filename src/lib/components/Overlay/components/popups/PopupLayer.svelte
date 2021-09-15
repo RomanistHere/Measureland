@@ -1,7 +1,9 @@
 <script>
     import { closeOverlays } from '../../../../utilities/helpers.js';
 
+    import ConfirmForgotPasswordPopup from './ConfirmForgotPasswordPopup.svelte';
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
+    import ForgotPasswordPopup from './ForgotPasswordPopup.svelte';
     import QuizPopup from './QuizPopup/QuizPopup.svelte';
     import HowToRatePopup from './HowToRatePopup.svelte';
     import LoggedInPopup from './LoggedInPopup.svelte';
@@ -15,7 +17,14 @@
 
     const popupList = {
         // changePasswordPopup: PopupLayer,
-        // forgotPasswordPopup: PopupLayer,
+        confirmForgotPasswordPopup: {
+            className: 'login',
+            component: ConfirmForgotPasswordPopup
+        },
+        forgotPasswordPopup: {
+            className: 'login',
+            component: ForgotPasswordPopup
+        },
         howToRatePopup: {
             className: 'rate_tutorial',
             component: HowToRatePopup

@@ -306,161 +306,161 @@ const initLoginBtns = () => {
     // reset password timeout
     const forgTimeout = 20000
 
-    handleClickPrevDef(loginCloseBtn, closeLoginForm)
-    handleClickPrevDef(logoutBtn, async () => {
-        const { error, data } = await logout()
+    // handleClickPrevDef(loginCloseBtn, closeLoginForm)
+    // handleClickPrevDef(logoutBtn, async () => {
+    //     const { error, data } = await logout()
+    //
+    //     if (!error) {
+    //         state.flow.push('lo')
+    //         userLoggedOut()
+    //         state = { ...state, userID: null }
+    //         showSuccessNotification()
+    //     } else {
+    //         showError('unrecognizedError', error)
+    //     }
+    // })
+    //
+    // handleClickPrevDef(openRegisterBtn, () => { changeLoginScreen('register') })
+    // handleClickPrevDef(openRegisterBtn2, () => { changeLoginScreen('register') })
+    // handleClickPrevDef(openLoginFormBtn, () => { changeLoginScreen('login') })
+    // handleClickPrevDef(onenLoginFormBtn2, () => { changeLoginScreen('login') })
+    // handleClickPrevDef(openForgotPassBtn, () => { changeLoginScreen('forgot') })
 
-        if (!error) {
-            state.flow.push('lo')
-            userLoggedOut()
-            state = { ...state, userID: null }
-            showSuccessNotification()
-        } else {
-            showError('unrecognizedError', error)
-        }
-    })
+    // handleClick(loginForm, e => {
+    //     if (e.target === e.currentTarget)
+    //         hideAllSides()
+    // })
 
-    handleClickPrevDef(openRegisterBtn, () => { changeLoginScreen('register') })
-    handleClickPrevDef(openRegisterBtn2, () => { changeLoginScreen('register') })
-    handleClickPrevDef(openLoginFormBtn, () => { changeLoginScreen('login') })
-    handleClickPrevDef(onenLoginFormBtn2, () => { changeLoginScreen('login') })
-    handleClickPrevDef(openForgotPassBtn, () => { changeLoginScreen('forgot') })
+    // openLoginFromRatingsBtns.forEach(item => handleClickPrevDef(item, () => {
+    //     hideAllSides()
+    //     openLoginForm()
+    // }))
 
-    handleClick(loginForm, e => {
-        if (e.target === e.currentTarget)
-            hideAllSides()
-    })
-
-    openLoginFromRatingsBtns.forEach(item => handleClickPrevDef(item, () => {
-        hideAllSides()
-        openLoginForm()
-    }))
-
-    togglePassBtns.forEach(elem => handleClickPrevDef(elem, e => {
-        const inpID = e.currentTarget.parentNode.htmlFor
-        const input = $(`#${inpID}`)
-        const inputType = input.type
-
-        if (inputType === 'password')
-            input.type = 'text'
-        else
-            input.type = 'password'
-    }))
+    // togglePassBtns.forEach(elem => handleClickPrevDef(elem, e => {
+    //     const inpID = e.currentTarget.parentNode.htmlFor
+    //     const input = $(`#${inpID}`)
+    //     const inputType = input.type
+    //
+    //     if (inputType === 'password')
+    //         input.type = 'text'
+    //     else
+    //         input.type = 'password'
+    // }))
 
     // inputs
 
-    emailInputs.forEach(input => {
-        input.addEventListener('blur', e => {
-            const target = e.currentTarget
-            const errElem = target.parentNode.querySelector('.form__error')
-            const email = target.value.toLowerCase()
-            const isValid = validateEmail(email)
+    // emailInputs.forEach(input => {
+    //     input.addEventListener('blur', e => {
+    //         const target = e.currentTarget
+    //         const errElem = target.parentNode.querySelector('.form__error')
+    //         const email = target.value.toLowerCase()
+    //         const isValid = validateEmail(email)
+    //
+    //         if (isValid) {
+    //             addClass(target, 'form__input-filled')
+    //             addClass(target, 'form__input-success')
+    //             removeClass(target, 'form__input-error')
+    //             removeClass(errElem, 'form__error-show')
+    //
+    //             loginState = { ...loginState, isEmailValid: true, email: email }
+    //         } else {
+    //             removeClass(target, 'form__input-filled')
+    //             removeClass(target, 'form__input-success')
+    //             addClass(target, 'form__input-error')
+    //             addClass(errElem, 'form__error-show')
+    //
+    //             loginState = { ...loginState, isEmailValid: false }
+    //         }
+    //     })
+    //
+    //     input.addEventListener('input', e => {
+    //         const target = e.currentTarget
+    //         const errElem = target.parentNode.querySelector('.form__error')
+    //
+    //         removeClass(target, 'form__input-error')
+    //         removeClass(errElem, 'form__error-show')
+    //         removeClass(target, 'form__input-success')
+    //         removeLoginErrors()
+    //     })
+    // })
 
-            if (isValid) {
-                addClass(target, 'form__input-filled')
-                addClass(target, 'form__input-success')
-                removeClass(target, 'form__input-error')
-                removeClass(errElem, 'form__error-show')
-
-                loginState = { ...loginState, isEmailValid: true, email: email }
-            } else {
-                removeClass(target, 'form__input-filled')
-                removeClass(target, 'form__input-success')
-                addClass(target, 'form__input-error')
-                addClass(errElem, 'form__error-show')
-
-                loginState = { ...loginState, isEmailValid: false }
-            }
-        })
-
-        input.addEventListener('input', e => {
-            const target = e.currentTarget
-            const errElem = target.parentNode.querySelector('.form__error')
-
-            removeClass(target, 'form__input-error')
-            removeClass(errElem, 'form__error-show')
-            removeClass(target, 'form__input-success')
-            removeLoginErrors()
-        })
-    })
-
-    passwordInputs.forEach(input => {
-        input.addEventListener('blur', e => {
-            const target = e.currentTarget
-            const errElem = target.parentNode.querySelector('.form__error')
-            const errElem2 = target.parentNode.querySelector('.form__error-passw')
-            const password = target.value
-            const isValid = validatePass(password)
-
-            const resolvePassInputs = (inp1, inp2, inp1Err, inp2Err) => {
-                removeClass(inp1, 'form__input-error')
-                removeClass(inp2, 'form__input-error')
-                removeClass(inp1Err, 'form__error-show')
-                removeClass(inp2Err, 'form__error-show')
-                addClass(inp1, 'form__input-success')
-                addClass(inp2, 'form__input-success')
-            }
-
-            if (isValid) {
-                addClass(target, 'form__input-filled')
-                addClass(target, 'form__input-success')
-                removeClass(target, 'form__input-error')
-                removeClass(errElem, 'form__error-show')
-
-                if (loginState.stage !== 'register' && loginState.stage !== 'resetPassword') {
-                    loginState = { ...loginState, isPassValid: true, pass: password }
-                    return
-                }
-
-                if (loginState.doublePassIDs.length !== 2) {
-                    loginState = { ...loginState, isPassValid: false }
-                    return
-                }
-
-                const inp1 = loginState.stage === 'register' ? $('#new-password') : $('#new-password-reset')
-                const inp2 = loginState.stage === 'register' ? $('#repeat-new-password') : $('#repeat-new-password-reset')
-                const anotherInp = target === inp1 ? inp2 : inp1
-                const anotherInpErrorElem = anotherInp.parentNode.querySelector('.form__error-passw')
-
-                if (((target.id === 'new-password' || target.id === 'new-password-reset') && inp2.value !== password)
-                    || ((target.id === 'repeat-new-password' || target.id === 'repeat-new-password-reset') && inp1.value !== password)) {
-                    removeClass(target, 'form__input-success')
-                    removeClass(anotherInp, 'form__input-success')
-                    addClass(target, 'form__input-error')
-                    addClass(anotherInp, 'form__input-error')
-                    addClass(errElem2, 'form__error-show')
-                    addClass(anotherInpErrorElem, 'form__error-show')
-
-                    loginState = { ...loginState, isPassValid: false }
-                } else {
-                    resolvePassInputs(inp1, inp2, errElem2, anotherInpErrorElem)
-
-                    loginState = { ...loginState, isPassValid: true, pass: password }
-                }
-            } else {
-                removeClass(target, 'form__input-filled')
-                removeClass(target, 'form__input-success')
-                addClass(target, 'form__input-error')
-                addClass(errElem, 'form__error-show')
-
-                loginState = { ...loginState, isPassValid: false }
-            }
-        })
-
-        input.addEventListener('input', e => {
-            const target = e.currentTarget
-            const curItemID = target.id
-            const errElem = target.parentNode.querySelector('.form__error')
-
-            removeClass(target, 'form__input-error')
-            removeClass(errElem, 'form__error-show')
-            removeClass(target, 'form__input-success')
-            removeLoginErrors()
-
-            if (!loginState.doublePassIDs.includes(curItemID) && (loginState.stage === 'register' || loginState.stage === 'resetPassword'))
-                loginState = { ...loginState, doublePassIDs: [ ...loginState.doublePassIDs, curItemID ] }
-        })
-    })
+    // passwordInputs.forEach(input => {
+    //     input.addEventListener('blur', e => {
+    //         const target = e.currentTarget
+    //         const errElem = target.parentNode.querySelector('.form__error')
+    //         const errElem2 = target.parentNode.querySelector('.form__error-passw')
+    //         const password = target.value
+    //         const isValid = validatePass(password)
+    //
+    //         const resolvePassInputs = (inp1, inp2, inp1Err, inp2Err) => {
+    //             removeClass(inp1, 'form__input-error')
+    //             removeClass(inp2, 'form__input-error')
+    //             removeClass(inp1Err, 'form__error-show')
+    //             removeClass(inp2Err, 'form__error-show')
+    //             addClass(inp1, 'form__input-success')
+    //             addClass(inp2, 'form__input-success')
+    //         }
+    //
+    //         if (isValid) {
+    //             addClass(target, 'form__input-filled')
+    //             addClass(target, 'form__input-success')
+    //             removeClass(target, 'form__input-error')
+    //             removeClass(errElem, 'form__error-show')
+    //
+    //             if (loginState.stage !== 'register' && loginState.stage !== 'resetPassword') {
+    //                 loginState = { ...loginState, isPassValid: true, pass: password }
+    //                 return
+    //             }
+    //
+    //             if (loginState.doublePassIDs.length !== 2) {
+    //                 loginState = { ...loginState, isPassValid: false }
+    //                 return
+    //             }
+    //
+    //             const inp1 = loginState.stage === 'register' ? $('#new-password') : $('#new-password-reset')
+    //             const inp2 = loginState.stage === 'register' ? $('#repeat-new-password') : $('#repeat-new-password-reset')
+    //             const anotherInp = target === inp1 ? inp2 : inp1
+    //             const anotherInpErrorElem = anotherInp.parentNode.querySelector('.form__error-passw')
+    //
+    //             if (((target.id === 'new-password' || target.id === 'new-password-reset') && inp2.value !== password)
+    //                 || ((target.id === 'repeat-new-password' || target.id === 'repeat-new-password-reset') && inp1.value !== password)) {
+    //                 removeClass(target, 'form__input-success')
+    //                 removeClass(anotherInp, 'form__input-success')
+    //                 addClass(target, 'form__input-error')
+    //                 addClass(anotherInp, 'form__input-error')
+    //                 addClass(errElem2, 'form__error-show')
+    //                 addClass(anotherInpErrorElem, 'form__error-show')
+    //
+    //                 loginState = { ...loginState, isPassValid: false }
+    //             } else {
+    //                 resolvePassInputs(inp1, inp2, errElem2, anotherInpErrorElem)
+    //
+    //                 loginState = { ...loginState, isPassValid: true, pass: password }
+    //             }
+    //         } else {
+    //             removeClass(target, 'form__input-filled')
+    //             removeClass(target, 'form__input-success')
+    //             addClass(target, 'form__input-error')
+    //             addClass(errElem, 'form__error-show')
+    //
+    //             loginState = { ...loginState, isPassValid: false }
+    //         }
+    //     })
+    //
+    //     input.addEventListener('input', e => {
+    //         const target = e.currentTarget
+    //         const curItemID = target.id
+    //         const errElem = target.parentNode.querySelector('.form__error')
+    //
+    //         removeClass(target, 'form__input-error')
+    //         removeClass(errElem, 'form__error-show')
+    //         removeClass(target, 'form__input-success')
+    //         removeLoginErrors()
+    //
+    //         if (!loginState.doublePassIDs.includes(curItemID) && (loginState.stage === 'register' || loginState.stage === 'resetPassword'))
+    //             loginState = { ...loginState, doublePassIDs: [ ...loginState.doublePassIDs, curItemID ] }
+    //     })
+    // })
 
     onboardingInit()
     verificationInit()
@@ -468,10 +468,10 @@ const initLoginBtns = () => {
 
     // form submits
 
-    handleClickPrevDef(confirmBtn, () => {
-        openLoginForm()
-        hideAllSides()
-    })
+    // handleClickPrevDef(confirmBtn, () => {
+    //     openLoginForm()
+    //     hideAllSides()
+    // })
 
     handleClickPrevDef(reverifyBtn, async () => {
         const notification = $('.login__notifications_wrap')
@@ -685,56 +685,56 @@ const initLoginBtns = () => {
         }
     })
 
-    let resetTimeout = null
-    let resetTimeoutBool = false
+    // let resetTimeout = null
+    // let resetTimeoutBool = false
 
-    forgotPassForm.addEventListener('submit', async (e) => {
-        e.preventDefault()
+    // forgotPassForm.addEventListener('submit', async (e) => {
+        // e.preventDefault()
+        //
+        // const notification = $('.forgot__notifications_wrap')
+        // removeLoginErrors()
+        // forgotPassBtn.focus()
+        //
+        // if (!loginState.isEmailValid) {
+        //     addClass(notification, 'forgot__notifications_wrap-fill')
+        //     $('#old-email-restore').focus()
+        //
+        //     return
+        // }
 
-        const notification = $('.forgot__notifications_wrap')
-        removeLoginErrors()
-        forgotPassBtn.focus()
+        // if (resetTimeoutBool) {
+        //     clearTimeout(resetTimeout)
+        //     addClass(notification, 'forgot__notifications_wrap-timeout')
+        //     resetTimeout = setTimeout(() => {
+        //         resetTimeoutBool = false
+        //     }, forgTimeout)
+        //     return
+        // } else {
+        //     resetTimeoutBool = true
+        //     resetTimeout = setTimeout(() => {
+        //         resetTimeoutBool = false
+        //     }, forgTimeout)
+        // }
+        //
+        // runSpinner('.forgot__spinner')
+        //
+        // const { error, data } = await sendResetPass(loginState.email)
+        // hideSpinner('.forgot__spinner')
 
-        if (!loginState.isEmailValid) {
-            addClass(notification, 'forgot__notifications_wrap-fill')
-            $('#old-email-restore').focus()
-
-            return
-        }
-
-        if (resetTimeoutBool) {
-            clearTimeout(resetTimeout)
-            addClass(notification, 'forgot__notifications_wrap-timeout')
-            resetTimeout = setTimeout(() => {
-                resetTimeoutBool = false
-            }, forgTimeout)
-            return
-        } else {
-            resetTimeoutBool = true
-            resetTimeout = setTimeout(() => {
-                resetTimeoutBool = false
-            }, forgTimeout)
-        }
-
-        runSpinner('.forgot__spinner')
-
-        const { error, data } = await sendResetPass(loginState.email)
-        hideSpinner('.forgot__spinner')
-
-        if (error === null) {
-            state.flow.push('fp')
-            clearLoginFields()
-            clearURLParams()
-            changeLoginScreen('confirmForgotPassword')
-            showSuccessNotification()
-        } else if (error === 'Too many requests, please try again later') {
-            addClass(notification, 'forgot__notifications_wrap-timeout')
-        }  else if (error === 'Email is wrong') {
-            addClass(notification, 'forgot__notifications_wrap-email_not_exist')
-        } else {
-            addClass(notification, 'forgot__notifications_wrap-err')
-        }
-    })
+        // if (error === null) {
+        //     state.flow.push('fp')
+        //     clearLoginFields()
+        //     clearURLParams()
+        //     changeLoginScreen('confirmForgotPassword')
+            // showSuccessNotification()
+        // } else if (error === 'Too many requests, please try again later') {
+        //     addClass(notification, 'forgot__notifications_wrap-timeout')
+        // }  else if (error === 'Email is wrong') {
+        //     addClass(notification, 'forgot__notifications_wrap-email_not_exist')
+        // } else {
+        //     addClass(notification, 'forgot__notifications_wrap-err')
+        // }
+    // })
 }
 
 initLoginBtns()
