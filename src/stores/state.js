@@ -35,7 +35,12 @@ export const notificationsStore = writable({
 
 export const filtersStore = writable({
     isFiltersOn: false,
-    filters: null
+    filters: null,
+});
+
+export const markerStore = writable({
+    markersToAdd: [],
+    markersToRemove: [],
 });
 
 export const overlayStateStore = writable(overlayStateDefault);

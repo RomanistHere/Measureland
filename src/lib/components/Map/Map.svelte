@@ -3,18 +3,17 @@
     import L from 'leaflet';
     import 'leaflet/dist/leaflet.css';
 
-    import { appStateStore } from "../../../stores/state.js";
-    import { mapReference } from "../../../stores/references.js";
-
     import MarkerCluster from './components/MarkerCluster.svelte';
     import GeoSearch from './components/GeoSearch.svelte';
 
+    import { appStateStore } from "../../../stores/state.js";
+    import { mapReference } from "../../../stores/references.js";
+    import { openAnotherOverlay } from '../../utilities/helpers.js'
+
     let map;
 
-    const onMapClick = e => {
-        console.log(e.latlng);
-        // TODO:
-    }
+    const onMapClick = e =>
+        openAnotherOverlay('quizPopup', e.latlng);
 
     const createMap = (node) => {
         const { zoom, center } = $appStateStore;

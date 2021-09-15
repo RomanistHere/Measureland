@@ -24,7 +24,6 @@
     let numberOfUsers = '';
     let numberOfComments = '';
     let personalExperiencePercent = 100;
-    let shareRatingURL = '';
     let shouldShowURLCopySuccess = false;
     let commentGeoID = null;
     let currentLatLng = null;
@@ -39,6 +38,7 @@
 
     const copyShareRatingURL = () => {
         if (browser && !shouldShowURLCopySuccess) {
+            const shareRatingURL = new URL(window.location.href).toString();
             try {
                 navigator.clipboard.writeText(shareRatingURL);
                 shouldShowURLCopySuccess = true;
@@ -85,9 +85,6 @@
         numberOfUsers = properties.numberOfUsers;
         numberOfComments = properties.numberOfComments;
         personalExperiencePercent = Math.floor(properties.numberOfPersonalExperience / properties.numberOfUsers * 100);
-
-        if (browser)
-            shareRatingURL = new URL(window.location.href).toString();
     }
 
     let promise = fetchData(popupData);

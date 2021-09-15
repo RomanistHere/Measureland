@@ -8,7 +8,7 @@
     // Supercluster is changed on our side, so we can't use npm's one
     import "../../../external/supercluster.js";
 
-    import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
+    import { userStateStore, appStateStore, filtersStore, markerStore } from "../../../../stores/state.js";
     import { mapReference } from "../../../../stores/references.js";
     import { roundToFifthDecimal, roundToInt, openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
@@ -110,8 +110,8 @@
     	updateClusters();
     }
 
-    // addPointer cluster 2.0 version (supercluster)
-    const addPointer = (coordsData, ratingData) => {
+    // addMarker cluster 2.0 version (supercluster)
+    const addMarker = (coordsData, ratingData) => {
         const newPoint = {
     		geometry: {
     			coordinates: coordsData.reverse(),
@@ -121,23 +121,53 @@
     			averageRating: ratingData
     		},
     		type: "Feature"
-    	}
+    	};
 
     	cachedData = [ ...cachedData, newPoint ];
     	clusterData();
     }
 
-    const removePointer = (coords) => {
+    const removeMarker = coords => {
     	const [ lat, lng ] = coords.reverse();
     	const length = cachedData.length;
         for (let i = 0; i < length; i++) {
-    		const arr = cachedData[i]['geometry']['coordinates']
+    		const arr = cachedData[i]['geometry']['coordinates'];
             if (arr[0] === lat && arr[1] === lng) {
-    			cachedData.splice(i, 1)
-                return
+    			cachedData.splice(i, 1);
+                return;
             }
         }
     }
+
+    const handleExternalMarkers = ({ markersToAdd, markersToRemove }) => {
+        const toAddArrayLength = markersToAdd.length;
+        const toRemoveArrayLength = markersToRemove.length;
+
+        if (toAddArrayLength === 0 && toRemoveArrayLength === 0)
+            return;
+
+        if (toAddArrayLength !== 0) {
+            for (let i = 0; i < toAddArrayLength; i++) {
+                const { coords, rating } = markersToAdd[i];
+                addMarker(coords, rating);
+            }
+        }
+
+        if (toRemoveArrayLength !== 0) {
+            for (let i = 0; i < toRemoveArrayLength; i++) {
+                const { coords } = markersToAdd[i];
+                removeMarker(coords);
+            }
+        }
+
+        markerStore.update(state => ({
+            ...state,
+            markersToAdd: [],
+            markersToRemove: [],
+        }));
+    }
+
+    $: handleExternalMarkers($markerStore);
 
     const addDataAndDisplay = data => {
     	// console.time('fix geojson')

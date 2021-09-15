@@ -25,7 +25,7 @@ export const overlayStateDefault = {
         data: {},
     },
     quizPopup: {
-        isOpen: true,
+        isOpen: false,
         type: 'popup',
         data: {},
     },

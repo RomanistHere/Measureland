@@ -4,15 +4,14 @@
     import PopupWrap from '../PopupWrap.svelte';
     import QuizItem from './QuizItem.svelte';
 
-    import { getSinglePointData } from "../../../../../utilities/api.js";
-    import { getFinalRating, roundToTen, openAnotherOverlay } from "../../../../../utilities/helpers.js";
+    import { saveToDB } from "../../../../../utilities/api.js";
+    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce } from "../../../../../utilities/helpers.js";
     import { geocodeServiceReference } from "../../../../../../stores/references.js";
-    import { userStateStore } from "../../../../../../stores/state.js";
+    import { userStateStore, markerStore } from "../../../../../../stores/state.js";
 
     export let popupData;
 
     $: errorsObj = $json('errors');
-    $: console.log(errorsObj)
     $: criteriaObj = $json('criteria');
     $: criteria = Object.keys(criteriaObj).map((key, i) => ({
         title: criteriaObj[key]['title'],
@@ -34,6 +33,7 @@
     $: currentStage = 1;
     $: progressBarClassName = getProgressBarClassName(currentStage);
 
+    let remainingCommentLength = 330;
     let errorType = null;
     let isLoading = false;
     let isError = false;
@@ -53,6 +53,12 @@
     const prevStage = () => {
         currentStage--;
         isError = false;
+    }
+
+    const updateComment = e => {
+        const comment = e.target.value;
+        remainingCommentLength = 330 - comment.length;
+        quizState = { ...quizState, comment };
     }
 
     const changePersonalExperience = isPersonalExperience => {
@@ -103,7 +109,7 @@
         }
     }
 
-    const save = async () => {
+    const submit = async () => {
         errorType = null;
         isError = false;
         isLoading = true;
@@ -116,9 +122,12 @@
             return
         }
 
+        const currentCoords = [roundToFifthDecimal(popupData.lat), roundToFifthDecimal(popupData.lng)];
+
         try {
-            const { error, data } = await saveToDB(coords, quizState.ratings, averageRating, quizState.comment, quizState.isPersonalExperience);
+            const { error, data } = await saveToDB(currentCoords, quizState.ratings, averageRating, quizState.comment, quizState.isPersonalExperience);
             isLoading = false;
+            console.log(error, data)
 
             if (error === 'Nearby place is already rated') {
                 errorType = 'nearbyPlaceAlreadyRated';
@@ -133,10 +142,30 @@
                 isError = true;
                 return;
             } else if (error) {
+                console.warn(error);
                 errorType = 'unrecognizedError';
                 isError = true;
                 return;
             }
+
+            const isUpdated = data.message === 'Rating updated' ? true : false;
+            if (isUpdated) {
+                const { coords, averageRating } = data;
+                markerStore.update(state => ({
+                    ...state,
+                    markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating } ],
+                    markersToRemove: [ ...state.markersToRemove, { coords: currentCoords } ],
+                }));
+            } else {
+                markerStore.update(state => ({
+                    ...state,
+                    markersToAdd: [ ...state.markersToAdd, { coords: currentCoords, rating: averageRating } ],
+                }));
+            }
+
+            userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
+            closeOverlays();
+            showSuccessNotification();
         } catch (e) {
             console.warn(e);
             errorType = 'unrecognizedError';
@@ -144,6 +173,8 @@
             isLoading = false;
         }
     }
+
+    const debouncedSubmit = debounce(submit, 300);
 </script>
 
 <PopupWrap className='rating__wrap'>
@@ -151,17 +182,18 @@
         <div class="rating__content">
             {#if currentStage === 1}
                 <p class="rating__text">
-                    So you want to rate the place. Before we start, there is one important question to answer. We expect an honest answer, thank you!
+                    {$_('quizPopup.soYouWantToRate')}
                 </p>
                 <p class="rating__text rating__text-italic">
-                    Do you have personal experience of living at the given place?
+                    {$_('quizPopup.doYouHavePersonalExperience')}
                 </p>
                 <div class="rating__img_wrap">
-                    <img src="images/crowd.png" width="400" height="180" alt="Picture of a crowd looking at you" class="rating__img">
+                    <img src="images/crowd.png" width="400" height="180" alt="{$_('quizPopup.imageTitle')}" class="rating__img">
                 </div>
             {:else if currentStage === 2}
                 <p class="rating__text">
-                    Great, thanks. There are about ten criteria you will need to rate in order to submit your rating. You can skip and return later, there is an opportunity to leave a comment at the end. Let's start with <strong class="rating__text-highlight">important</strong>:
+                    {$_('quizPopup.tenCriteria')}
+                    <strong class="rating__text-highlight">{$_('quizPopup.tenCriteriaStrong')}</strong>:
                 </p>
 
                 <QuizItem
@@ -175,7 +207,7 @@
                 />
             {:else if currentStage === 3}
                 <p class="rating__text">
-                    <strong class="rating__text-highlight">Location</strong>
+                    <strong class="rating__text-highlight">{$_('quizPopup.title3')}</strong>
                 </p>
 
                 <QuizItem
@@ -194,7 +226,7 @@
                 />
             {:else if currentStage === 4}
                 <p class="rating__text">
-                    <strong class="rating__text-highlight">Comfort</strong>
+                    <strong class="rating__text-highlight">{$_('quizPopup.title4')}</strong>
                 </p>
 
                 <QuizItem
@@ -213,7 +245,7 @@
                 />
             {:else if currentStage === 5}
                 <p class="rating__text">
-                    <strong class="rating__text-highlight">Extras</strong>
+                    <strong class="rating__text-highlight">{$_('quizPopup.title5')}</strong>
                 </p>
 
                 <QuizItem
@@ -232,18 +264,23 @@
                 />
             {:else if currentStage === 6}
                 <p class="rating__text">
-                    <strong class="rating__text-highlight">Comment</strong>
+                    <strong class="rating__text-highlight">{$_('quizPopup.title6')}</strong>
                 </p>
 
                 <p class="rating__text">
-                    Is there anything you'd like to add?
+                    {$_('quizPopup.isThereAnythingToAdd')}
                 </p>
 
-                <textarea class="rating__textarea ratingComment" placeholder="Extremely friendly and clean neighborhood!" maxlength="{maxCommentLength}"></textarea>
+                <textarea
+                    class="rating__textarea ratingComment"
+                    placeholder="{$_('quizPopup.textAreaPlaceholder')}"
+                    maxlength="{maxCommentLength}"
+                    on:input={updateComment}
+                ></textarea>
 
                 <div class="rating__count_wrap">
                     <span class="rating__count">
-                        {maxCommentLength}
+                        {remainingCommentLength}
                     </span>
                 </div>
 
@@ -266,32 +303,32 @@
 
         {#if currentStage === 1}
             <p class="rating__text rating__text-small rating__text-abs">
-                Be sincere. Help us and we will help you back!
+                {$_('quizPopup.beSincere')}
             </p>
             {#if isUserLoggedIn}
                 <div class="rating__btns btns_wrap">
-                    <a href="#" class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(false) }}>
-                        No, I don't
+                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(false) }}>
+                        {$_('quizPopup.noPersonalExperienceBtn')}
                     </a>
-                    <a href="#" class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(true) }}>
-                        Yes, I lived here
+                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(true) }}>
+                        {$_('quizPopup.yesPersonalExperienceBtn')}
                     </a>
                 </div>
             {:else}
-                <a href="#" class="rating__login btn" on:click|preventDefault={() => { openAnotherOverlay('loginPopup') }}>Login and rate</a>
+                <a href={"#"} class="rating__login btn" on:click|preventDefault={() => { openAnotherOverlay('loginPopup') }}>{$_('quizPopup.loginBtn')}</a>
             {/if}
         {:else}
             <div class="rating__btns btns_wrap">
-                <a href="#" class="rating__btn btn btn-low" on:click|preventDefault={prevStage}>
-                    Back
+                <a href={"#"} class="rating__btn btn btn-low" on:click|preventDefault={prevStage}>
+                    {$_('quizPopup.backBtn')}
                 </a>
                 {#if currentStage === 6}
-                    <a href="#" class="rating__btn btn" on:click|preventDefault={save}>
-                        Save
+                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={debouncedSubmit}>
+                        {$_('quizPopup.submitBtn')}
                     </a>
                 {:else}
-                    <a href="#" class="rating__btn btn" on:click|preventDefault={nextStage}>
-                        Next
+                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={nextStage}>
+                        {$_('quizPopup.nextBtn')}
                     </a>
                 {/if}
             </div>

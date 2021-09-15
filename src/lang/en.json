@@ -118,6 +118,26 @@
         "allRightsReserved": "All rights reserved",
         "rightsYear": "© 2021"
     },
+    "quizPopup": {
+        "soYouWantToRate": "So you want to rate the place. Before we start, there is one important question to answer. We expect an honest answer, thank you!",
+        "doYouHavePersonalExperience": "Do you have personal experience of living at the given place?",
+        "imageTitle": "Picture of a crowd looking at you",
+        "beSincere": "Be sincere. Help us and we will help you back!",
+        "tenCriteria": "Great, thanks. There are about ten criteria you will need to rate in order to submit your rating. You can skip and return later, there is an opportunity to leave a comment at the end. Let's start with",
+        "tenCriteriaStrong": "important",
+        "title3": "Location",
+        "title4": "Comfort",
+        "title5": "Extras",
+        "title6": "Comment",
+        "isThereAnythingToAdd": "Is there anything you'd like to add?",
+        "textAreaPlaceholder": "Extremely friendly and clean neighborhood!",
+        "noPersonalExperienceBtn": "No, I don't",
+        "yesPersonalExperienceBtn": "Yes, I lived here",
+        "loginBtn": "Login and rate",
+        "backBtn": "Back",
+        "nextBtn": "Next",
+        "submitBtn": "Save"
+    },
     "showRatingPopup": {
         "approximateAddress": "Approximate address",
         "approximateAddressDefault": "calculating...",

@@ -1,10 +1,10 @@
 # To do:
 
-- quiz popup
 - forgot/change password
 - post register popup
 - ask for ratings popup
 - drawing
+- focus popups when open
 - start screen
 - learn how to use i18n with tags, expressions and methods
 - sanitize html
@@ -23,3 +23,5 @@
 - write an article about how awesome svelte is
 - write an article about how we handle popup/sidebar opening
 - track user flow
+
+- check the issue where polybool fails and we have group icons instead of single ones
