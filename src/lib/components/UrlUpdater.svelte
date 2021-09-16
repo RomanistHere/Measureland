@@ -88,12 +88,11 @@
             const { userID } = data;
             userStateStore.update(state => ({ ...state, userID }));
             openAnotherOverlay('onboardingPopup');
-        } else if (passToken && passToken.length >= 25) {
-            // TODO:
-            // state = { ...state, passToken }
-            // openLoginForm()
-            // changeLoginScreen('resetPassword')
+        }
+
+        if (passToken && passToken.length >= 25) {
             url.searchParams.delete('reset_pass_token');
+            openAnotherOverlay('changePasswordPopup', passToken);
         }
 
         url.searchParams.delete('openModal');

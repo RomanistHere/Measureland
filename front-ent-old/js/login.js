@@ -648,42 +648,42 @@ const initLoginBtns = () => {
     //     userLoggedIn()
     // })
 
-    resetPasswordForm.addEventListener('submit', async (e) => {
-        e.preventDefault()
-
-        const notification = $('.reset__notifications_wrap')
-        removeLoginErrors()
-        changePasswordBtn.focus()
-
-        if (!loginState.isPassValid || loginState.doublePassIDs.length !== 2) {
-            addClass(notification, 'reset__notifications_wrap-fill')
-
-            if (!loginState.isPassValid)
-                $('#new-password-reset').focus()
-            else if (loginState.doublePassIDs.length !== 2)
-                $('#repeat-new-password-reset').focus()
-
-            return
-        }
-        runSpinner('.reset__spinner')
-
-        const { error, data } = await reset(loginState.pass, state.passToken)
-        hideSpinner('.reset__spinner')
-
-        if (error === null) {
-            state.flow.push('pr')
-            closeLoginForm()
-            clearLoginFields()
-            clearURLParams()
-            showSuccessNotification()
-        } else if (error === 'Matches old password') {
-            addClass(notification, 'reset__notifications_wrap-old_pass')
-        } else if (error === 'Password link is invalid or expired') {
-            addClass(notification, 'reset__notifications_wrap-expired')
-        }  else {
-            addClass(notification, 'reset__notifications_wrap-err')
-        }
-    })
+    // resetPasswordForm.addEventListener('submit', async (e) => {
+    //     e.preventDefault()
+    //
+    //     const notification = $('.reset__notifications_wrap')
+    //     removeLoginErrors()
+    //     changePasswordBtn.focus()
+    //
+    //     if (!loginState.isPassValid || loginState.doublePassIDs.length !== 2) {
+    //         addClass(notification, 'reset__notifications_wrap-fill')
+    //
+    //         if (!loginState.isPassValid)
+    //             $('#new-password-reset').focus()
+    //         else if (loginState.doublePassIDs.length !== 2)
+    //             $('#repeat-new-password-reset').focus()
+    //
+    //         return
+    //     }
+    //     runSpinner('.reset__spinner')
+    //
+    //     const { error, data } = await reset(loginState.pass, state.passToken)
+    //     hideSpinner('.reset__spinner')
+    //
+    //     if (error === null) {
+    //         state.flow.push('pr')
+    //         closeLoginForm()
+    //         clearLoginFields()
+    //         clearURLParams()
+    //         showSuccessNotification()
+    //     } else if (error === 'Matches old password') {
+    //         addClass(notification, 'reset__notifications_wrap-old_pass')
+    //     } else if (error === 'Password link is invalid or expired') {
+    //         addClass(notification, 'reset__notifications_wrap-expired')
+    //     }  else {
+    //         addClass(notification, 'reset__notifications_wrap-err')
+    //     }
+    // })
 
     // let resetTimeout = null
     // let resetTimeoutBool = false

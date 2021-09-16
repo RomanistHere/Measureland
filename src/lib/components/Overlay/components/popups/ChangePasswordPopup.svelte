@@ -7,15 +7,15 @@
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
-    import { register } from "../../../../utilities/api.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification, closeOverlays } from "../../../../utilities/helpers.js";
+    import { reset } from "../../../../utilities/api.js";
+
+    export let popupData;
 
     $: errorsObj = $json('errors');
 
-    let email = '';
     let password = '';
     let passwordConfirm = '';
-    let isEmailValid = true;
     let isPasswordValid = true;
     let isPasswordConfirmValid = true;
     let isError = false;
@@ -26,6 +26,11 @@
 
     const openLoginPopup = () => openAnotherOverlay('loginPopup');
 
+    const resendLink = () => {
+        // TODO: resend link
+        console.log('heh')
+    }
+
     const submit = async () => {
         // TODO: make in more declarative way
         if (document)
@@ -33,8 +38,8 @@
 
         isError = false;
         shouldShowMatchError = false;
-        const isValuesNotEmpty = email.length > 0 && password.length > 0 && passwordConfirm.length > 0;
-        if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid || !isPasswordConfirmValid) {
+        const isValuesNotEmpty = password.length > 0 && passwordConfirm.length > 0;
+        if (!isValuesNotEmpty || !isPasswordValid || !isPasswordConfirmValid) {
             // TODO: focus needed input
             isError = true;
             errorType = 'fieldsError';
@@ -50,7 +55,7 @@
         }
 
         isLoading = true;
-        const { error, data } = await register(email, password, $locale);
+        const { error, data } = await reset(password, popupData);
         isLoading = false;
 
         if (error) {
@@ -58,16 +63,18 @@
             isError = true;
             errorType = 'unrecognizedError';
 
-            if (error === 'Email already exists') {
-                errorType = 'accountExists';
+            if (error === 'Matches old password') {
+                errorType = 'samePass';
             } else if (error === 'Too many requests, please try again later') {
                 errorType = 'manyRequests';
+            } else if (error === 'Password link is invalid or expired') {
+                errorType = 'linkExpired';
             }
 
             return;
         }
 
-        openAnotherOverlay('checkEmailPopup');
+        closeOverlays();
         showSuccessNotification();
     }
 
@@ -93,47 +100,43 @@
     }, 200);
 </script>
 
-<PopupWrap className='login__wrap login__wrap-register'>
+<PopupWrap className='login__wrap login__wrap-reset'>
     <form class="rating__popup rating__popup-active login__popup form" on:submit|preventDefault={debouncedSubmit}>
-        <div class="rating__content register__content">
+        <div class="rating__content reset__content">
             <p class="rating__text">
-                <strong class="rating__text-highlight">{$_('registrationPopup.title')}</strong>
+                <strong class="rating__text-highlight">Password change</strong>
             </p>
 
             <Input
-                autofocus={true}
-                title={$_('registrationPopup.email')}
-                type='email'
-                id='new-email'
-                bind:value={email}
-                bind:isInputValid={isEmailValid}
-            />
-
-            <Input
-                title={$_('registrationPopup.password')}
+                title='Type new password here'
                 type='password'
-                id='new-password'
+                id='new-password-reset'
                 bind:value={password}
                 bind:isInputValid={isPasswordValid}
                 bind:shouldShowMatchError={shouldShowMatchError}
             />
 
             <Input
-                title={$_('registrationPopup.repeatPassword')}
+                title='Repeat the password'
                 type='password'
-                id='repeat-new-password'
+                id='repeat-new-password-reset'
                 bind:value={passwordConfirm}
                 bind:isInputValid={isPasswordConfirmValid}
                 bind:shouldShowMatchError={shouldShowMatchError}
             />
 
             {#if isLoading}
-                <Spinner className='register__spinner' />
+                <Spinner className='reset__spinner' />
             {/if}
 
-            <div class="register__notifications_wrap">
-                {#if isError}
-                    <span class="register__notifications">
+            <div class="reset__notifications_wrap">
+                {#if isError && errorType === 'linkExpired'}
+                    <div class="reset__notifications">
+                        <span class="login__notifications-small">{$_('errors.linkExpired')}</span>
+                        <a href={"#"} class="login__notifications-small link" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>
+                    </div>
+                {:else if isError}
+                    <span class="reset__notifications">
                         {errorsObj[errorType]}
                     </span>
                 {/if}
@@ -141,18 +144,17 @@
         </div>
 
         <div class="rating__btns btns_wrap">
-            <SecondaryButton text={$_('registrationPopup.goToLoginBtn')} className="rating__btn" action={openLoginPopup} />
-            <FormButton text={$_('registrationPopup.registerBtn')} action={debouncedSubmit} />
+            <FormButton text='Change the password' className='reset__btn' action={debouncedSubmit} />
         </div>
     </form>
 </PopupWrap>
 
 <style>
-    .register__notifications {
+    .reset__notifications {
         display: block;
     }
 
-    .register__notifications_wrap {
+    .reset__notifications_wrap {
         align-items: center;
     }
 </style>

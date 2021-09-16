@@ -6,7 +6,6 @@ export const flowStore = writable([]);
 // TODO:
 export const userStateStore = writable({
     userID: null,
-    passToken: null,
     activeRatings: 3,
     dateCreated: null,
     userName: 'Аноним',

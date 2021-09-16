@@ -3,6 +3,7 @@
 
     import ConfirmForgotPasswordPopup from './ConfirmForgotPasswordPopup.svelte';
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
+    import ChangePasswordPopup from './ChangePasswordPopup.svelte';
     import ForgotPasswordPopup from './ForgotPasswordPopup.svelte';
     import CheckEmailPopup from './CheckEmailPopup.svelte';
     import OnboardingPopup from './OnboardingPopup.svelte';
@@ -18,7 +19,10 @@
     export let popupData;
 
     const popupList = {
-        // changePasswordPopup: PopupLayer,
+        changePasswordPopup: {
+            className: 'login',
+            component: ChangePasswordPopup
+        },
         checkEmailPopup: {
             className: 'login',
             component: CheckEmailPopup

@@ -218,10 +218,14 @@
         "mainBtn": "Let's go"
     },
     "forgotPasswordPopup": {
-        "title": "Restore (change) the password",
+        "title": "Restore (change) password",
         "email": "Email",
         "secondaryBtn": "Register",
         "mainBtn": "Restore"
+    },
+    "changePasswordPopup": {
+        "title": "Change password",
+        "mainBtn": "Change"
     },
     "confirmForgotPasswordPopup": {
         "title": "Check your email",
@@ -251,6 +255,9 @@
             "textSecondLink": "dropped us a message",
             "textAfterLinks": "we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
         },
+        "samePass": "The pass is the same as previous. Pick another one.",
+        "linkExpired": "The link is expired :(",
+        "linkExpiredLink": "Get another one",
         "errorVerification": "Check email for verification letter",
         "errorVerificationBtn": "Resend letter",
         "fieldsError": "Check all the fields!",

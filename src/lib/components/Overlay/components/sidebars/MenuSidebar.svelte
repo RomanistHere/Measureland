@@ -68,6 +68,7 @@
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
+                openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
             }
         }, {
             text: $_('menuSidebar.changeLanguage'),

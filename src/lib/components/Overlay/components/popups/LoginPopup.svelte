@@ -24,7 +24,7 @@
 
     const openRegisterPopup = () => openAnotherOverlay('registerPopup');
 
-    const openForgotPasswordPopup = () => openAnotherOverlay('forgotPasswordPopup');
+    const openForgotPasswordPopup = () => openAnotherOverlay('forgotPasswordPopup', { isChangePass: false });
 
     const resendVerificationLetter = async () => {
         isError = false;

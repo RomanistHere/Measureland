@@ -10,6 +10,12 @@
     import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { sendResetPass } from "../../../../utilities/api.js";
 
+    export let popupData;
+
+    $: isChangePass = popupData.isChangePass;
+    $: console.log(isChangePass)
+    $: title = isChangePass ? $_('changePasswordPopup.title') : $_('forgotPasswordPopup.title');
+    $: mainBtn = isChangePass ? $_('changePasswordPopup.mainBtn') : $_('forgotPasswordPopup.mainBtn');
     $: errorsObj = $json('errors');
 
     let isLoading = false;
@@ -83,7 +89,9 @@
     <form class="rating__popup login__popup rating__popup-active form" on:submit|preventDefault={debouncedSubmit}>
         <div class="rating__content forgot__content">
             <p class="rating__text">
-                <strong class="rating__text-highlight">{$_('forgotPasswordPopup.title')}</strong>
+                <strong class="rating__text-highlight">
+                    {title}
+                </strong>
             </p>
 
             <Input
@@ -109,8 +117,10 @@
         </div>
 
         <div class="rating__btns btns_wrap">
-            <SecondaryButton text={$_('forgotPasswordPopup.secondaryBtn')} className="rating__btn btn-low" action={openRegisterPopup} />
-            <FormButton text={$_('forgotPasswordPopup.mainBtn')} action={debouncedSubmit} />
+            {#if !isChangePass}
+                <SecondaryButton text={$_('forgotPasswordPopup.secondaryBtn')} className="rating__btn btn-low" action={openRegisterPopup} />
+            {/if}
+            <FormButton text={mainBtn} action={debouncedSubmit} />
         </div>
     </form>
 </PopupWrap>
