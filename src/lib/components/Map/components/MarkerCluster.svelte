@@ -272,10 +272,10 @@
     	if (error === 'Too many requests, please try again later') {
     		appStateStore.update(state => ({ ...state, shouldWork: false }));
             // TODO: showLimitError()
-    		return
+    		return;
     	} else if (error) {
     		// TODO: showError('unrecognizedError', error)
-    		return
+    		return;
     	}
 
     	const { result, userID } = data;

@@ -194,48 +194,48 @@ const changeLoginScreen = (stage = 'login') => {
 //     })
 // }
 
-const clearURLParams = () => {
-    try {
-        const url = new URL(window.location.href)
-        url.searchParams.delete('reset_pass_token')
-        url.searchParams.delete('token')
-        url.searchParams.delete('lang')
-        window.history.replaceState(null, null, url)
-    } catch (e) {
-        console.warn(e)
-    }
-
-    state = {
-        ...state,
-        passToken: null
-    }
-}
+// const clearURLParams = () => {
+//     try {
+//         const url = new URL(window.location.href)
+//         url.searchParams.delete('reset_pass_token')
+//         url.searchParams.delete('token')
+//         url.searchParams.delete('lang')
+//         window.history.replaceState(null, null, url)
+//     } catch (e) {
+//         console.warn(e)
+//     }
+//
+//     state = {
+//         ...state,
+//         passToken: null
+//     }
+// }
 
 const verificationInit = async () => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const token = urlParams.get('token')
-    const lang = urlParams.get('lang')
-    const passToken = urlParams.get('reset_pass_token')
+    // const urlParams = new URLSearchParams(window.location.search)
+    // const token = urlParams.get('token')
+    // const lang = urlParams.get('lang')
+    // const passToken = urlParams.get('reset_pass_token')
 
-    if (token) {
-        const { error, data } = await verifyUser(token)
-
-        if (!error) {
-            const { userID } = data
-            state = { ...state, userID }
-            openLoginForm()
-            changeLoginScreen('onboarding')
-        } else {
-            console.warn('Token might be expired')
-            showError('unrecognizedError', error)
-        }
-
-        clearURLParams()
-    } else if (passToken && passToken.length >= 25) {
-        state = { ...state, passToken }
-        openLoginForm()
-        changeLoginScreen('resetPassword')
-    }
+    // if (token) {
+    //     const { error, data } = await verifyUser(token)
+    //
+    //     if (!error) {
+    //         const { userID } = data
+    //         state = { ...state, userID }
+    //         openLoginForm()
+    //         changeLoginScreen('onboarding')
+    //     } else {
+    //         console.warn('Token might be expired')
+    //         showError('unrecognizedError', error)
+    //     }
+    //
+    //     clearURLParams()
+    // } else if (passToken && passToken.length >= 25) {
+    //     state = { ...state, passToken }
+    //     openLoginForm()
+    //     changeLoginScreen('resetPassword')
+    // }
 }
 //
 // const userLoggedIn = () => {

@@ -9,7 +9,7 @@
     import { onboard } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
-    let defaultName = 'Anonym';
+    let defaultName = $_('onboardingPopup.defaultName');
     let email = '';
     let password = '';
     let isSpam = null;
@@ -20,27 +20,27 @@
     };
 
     const ageOptions = [{
-        text: 'Yonger than 25 years',
+        text: $_('onboardingPopup.ageOption1'),
         selected: false,
     },{
-        text: '25 - 40 years',
+        text: $_('onboardingPopup.ageOption2'),
         selected: true,
     },{
-        text: '41 - 55 years',
+        text: $_('onboardingPopup.ageOption3'),
         selected: false,
     },{
-        text: 'Older than 55 years',
+        text: $_('onboardingPopup.ageOption4'),
         selected: false,
     }];
 
     const incomeOptions = [{
-        text: 'Below average',
+        text: $_('onboardingPopup.incomeOption1'),
         selected: false,
     },{
-        text: 'Average',
+        text: $_('onboardingPopup.incomeOption2'),
         selected: true,
     },{
-        text: 'Above average',
+        text: $_('onboardingPopup.incomeOption3'),
         selected: false,
     }];
 
@@ -100,29 +100,31 @@
     <form class="rating__popup rating__popup-active login__popup" on:submit|preventDefault={debouncedSubmit}>
         <div class="onboarding__content">
             <p class="rating__text">
-                <strong class="rating__text-highlight">Thank you for registration!</strong>
+                <strong class="rating__text-highlight">
+                    {$_('onboardingPopup.title')}
+                </strong>
             </p>
             <p class="rating__text">
-                You'll help us by answering this two simple questions (deafault values applied if skipped), and we would help you if you were looking for a new place to live in the future :)
+                {$_('onboardingPopup.caption')}
             </p>
 
             <Select
                 options={ageOptions}
                 id='age-select'
-                title='Your age group:'
+                title={$_('onboardingPopup.yourAgeGroup')}
                 on:change={(e) => { handleSelect(e, 'ageGrp') }}
             />
 
             <Select
                 options={incomeOptions}
                 id='money-select'
-                title='Income level (roughly):'
+                title={$_('onboardingPopup.incomeLevel')}
                 on:change={(e) => { handleSelect(e, 'moneyGrp') }}
             />
 
             <div class="rating__stars">
                 <h2 class="rating__title title">
-                    Your name. If skipped, you're going to be "{defaultName}" in the comments
+                    {$_('onboardingPopup.yourName', { values: [defaultName] })}
                 </h2>
                 <input
                     class="form__input onboarding__input"
@@ -134,6 +136,6 @@
             </div>
         </div>
 
-        <FormButton text="Let's go" className='onboarding__btn' action={debouncedSubmit} />
+        <FormButton text={$_('onboardingPopup.mainBtn')} className='onboarding__btn' action={debouncedSubmit} />
     </form>
 </PopupWrap>

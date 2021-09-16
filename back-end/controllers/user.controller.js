@@ -247,20 +247,26 @@ exports.user_reverify = async (req, res) => {
 exports.user_check = async (req, res) => {
     const { userID } = req.session
 
-    const user = await User.findOne({ email: userID }, '-properties.ratedLocations -properties.ratings');
+    try {
+        const user = await User.findOne({ email: userID }, '-properties.ratedLocations -properties.ratings');
 
-    return res.json({
-        error: null,
-        data: {
-            message: "Check user",
-            userID: user ? user.email : null,
-            userName: user ? user.username : null,
-            lang: user ? user.properties.lang : null,
-            dateCreated: user ? user.dateCreated : null,
-            wantMoreRatings: user ? user.properties.wantMoreRatings : null,
-            activeRatings: user ? (user.usergroup === 0 ? 999 : activeRatings) : null,
-        },
-    });
+        return res.json({
+            error: null,
+            data: {
+                message: "Check user",
+                userID: user ? user.email : null,
+                userName: user ? user.username : null,
+                lang: user ? user.properties.lang : null,
+                dateCreated: user ? user.dateCreated : null,
+                wantMoreRatings: user ? user.properties.wantMoreRatings : null,
+                activeRatings: user ? (user.usergroup === 0 ? 999 : user.properties.activeRatings) : null,
+            },
+        });
+    } catch (error) {
+        console.log(error)
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
+    }
 };
 
 exports.user_places = async (req, res) => {

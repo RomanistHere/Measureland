@@ -198,6 +198,22 @@
         "goToLoginBtn": "Go to Login",
         "registerBtn": "Register"
     },
+    "onboardingPopup": {
+        "defaultName": "Anonym",
+        "title": "Thank you for registration!",
+        "caption": "You'll help us by answering this two simple questions (deafault values applied if skipped), and we would help you if you were looking for a new place to live in the future :)",
+        "yourAgeGroup": "Your age group:",
+        "ageOption1": "Yonger than 25 years",
+        "ageOption2": "25 - 40 years",
+        "ageOption3": "41 - 55 years",
+        "ageOption4": "Older than 55 years",
+        "incomeLevel": "Income level (roughly):",
+        "incomeOption1": "Below average",
+        "incomeOption2": "Average",
+        "incomeOption3": "Above average",
+        "yourName": "Your name. If skipped, you're going to appear as «{0}» in the comments",
+        "mainBtn": "Let's go"
+    },
     "forgotPasswordPopup": {
         "title": "Restore (change) the password",
         "email": "Email",

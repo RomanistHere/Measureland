@@ -1,11 +1,12 @@
 <script>
     import { onMount } from 'svelte';
 
-    import { appStateStore, filtersStore } from '../../stores/state.js';
+    import { appStateStore, userStateStore, filtersStore } from '../../stores/state.js';
     import { mapReference } from "../../stores/references.js";
 
     // TODO: check roundToTen OK or need to use roundToFifthDecimal
     import { roundToFifthDecimal, openAnotherOverlay, objToString, fillFiltersFromArrOfStrings } from "../utilities/helpers.js";
+    import { verifyUser } from "../utilities/api.js";
 
     $: if (typeof window !== 'undefined') {
         updateURL($appStateStore, $filtersStore);
@@ -40,13 +41,15 @@
     	window.history.replaceState(null, null, url);
     };
 
-    const updateAppStateFromURL = () => {
+    const updateAppStateFromURL = async () => {
         const url = new URL(window.location.href);
         const lat = url.searchParams.get('lat');
         const lng = url.searchParams.get('lng');
         const zoom = url.searchParams.get('zoom');
         const filters = url.searchParams.get('fi');
         const showRating = url.searchParams.get('showRating');
+        const token = url.searchParams.get('token');
+        const passToken = url.searchParams.get('reset_pass_token');
         const center = [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
 
         if (lat && lng)
@@ -70,6 +73,27 @@
         if (filters) {
             const arrOfStrings = filters.split(',');
             fillFiltersFromArrOfStrings(arrOfStrings);
+        }
+
+        if (token) {
+            url.searchParams.delete('token');
+            const { error, data } = await verifyUser(token);
+
+            if (error) {
+                console.warn('Token might be expired');
+                return;
+                // TODO: showError('unrecognizedError', error);
+            }
+
+            const { userID } = data;
+            userStateStore.update(state => ({ ...state, userID }));
+            openAnotherOverlay('onboardingPopup');
+        } else if (passToken && passToken.length >= 25) {
+            // TODO:
+            // state = { ...state, passToken }
+            // openLoginForm()
+            // changeLoginScreen('resetPassword')
+            url.searchParams.delete('reset_pass_token');
         }
 
         url.searchParams.delete('openModal');

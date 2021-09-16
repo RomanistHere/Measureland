@@ -38,7 +38,7 @@
         }
     }
 
-    let promise = userInit()
+    let promise = userInit();
 </script>
 
 {#if !isLoaded}

@@ -25,7 +25,7 @@ export const overlayStateDefault = {
         data: {},
     },
     onboardingPopup: {
-        isOpen: true,
+        isOpen: false,
         type: 'popup',
         data: {},
     },
