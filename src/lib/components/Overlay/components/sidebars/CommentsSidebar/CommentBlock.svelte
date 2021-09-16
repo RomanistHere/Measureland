@@ -1,26 +1,64 @@
 <script>
-    import { locale } from 'svelte-i18n';
+    import { _, locale } from 'svelte-i18n';
 
     import { userStateStore } from "../../../../../../stores/state.js";
     import { openAnotherOverlay } from "../../../../../utilities/helpers.js";
+    import { reactOnComment } from "../../../../../utilities/api.js";
 
     export let data;
 
-    const { isYours, isLiked, isDisliked, rating, comment, username, liked, disliked, id } = data;
+    let { isYours, isLiked, isDisliked, rating, comment, username, liked, disliked, id } = data;
+    let isLikesDisabled = isLiked || isYours;
+    let isDislikesDisabled = isDisliked || isYours;
 
     const isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
-    // TODO: like/dislike comments
-    const likeComment = () => {
+    const likeComment = async () => {
         if (!isUserLoggedIn) {
             openAnotherOverlay('loginPopup');
             return;
         }
+
+        if (isLikesDisabled)
+            return;
+
+        if (isDislikesDisabled) {
+            isDislikesDisabled = false;
+            disliked -= 1;
+        }
+
+        liked += 1;
+        isLikesDisabled = true;
+
+        const { error, data } = await reactOnComment('like', id);
+        if (error) {
+            console.warn(error);
+            alert('error');
+            return;
+        }
     }
 
-    const dislikeComment = () => {
+    const dislikeComment = async () => {
         if (!isUserLoggedIn) {
             openAnotherOverlay('loginPopup');
+            return;
+        }
+
+        if (isDislikesDisabled)
+            return;
+
+        if (isLikesDisabled) {
+            isLikesDisabled = false;
+            liked -= 1;
+        }
+
+        disliked += 1;
+        isDislikesDisabled = true;
+
+        const { error, data } = await reactOnComment('dislike', id);
+        if (error) {
+            console.warn(error);
+            alert('error');
             return;
         }
     }
@@ -29,15 +67,15 @@
 <li class="comments__item {isYours ? 'comments__item-highlight' : ''}">
     <p class="comments__name rating__title">
         {username}
-        <span class="comments__rating">{$locale === 'en' ? 'gave' : 'поставил/а'} {rating}</span>
+        <span class="comments__rating">{$_('_.commentConnector')} {rating}</span>
     </p>
     <p class="comments__text">{comment}</p>
     <div class="comments__btns">
-        <a href={"#"} class="comment__btn" data-goal="like" data-key="{id}" data-disabled="{isLiked || isYours}" on:click|preventDefault={likeComment}>
+        <a href={"#"} class="comment__btn" data-disabled="{isLikesDisabled}" on:click|preventDefault={likeComment}>
             <span class="comment__btn-emoj">👍</span>
             <span class="comment__btn-numb">{liked}</span>
         </a>
-        <a href={"#"} class="comment__btn" data-goal="dislike" data-key="{id}" data-disabled="{isDisliked || isYours}" on:click|preventDefault={dislikeComment}>
+        <a href={"#"} class="comment__btn" data-disabled="{isDislikesDisabled}" on:click|preventDefault={dislikeComment}>
             <span class="comment__btn-emoj">👎</span>
             <span class="comment__btn-numb">{disliked}</span>
         </a>

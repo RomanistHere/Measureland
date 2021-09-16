@@ -1,14 +1,12 @@
 # To do:
 
-- quiz popup mainbutton
 - forgot/change password
-- post register popup
 - ask for ratings popup
 - drawing
 - focus popups when open
 - start screen
-- learn how to use i18n with tags, expressions and methods
-- sanitize html
+- comment like/dislike
+- sanitize html (comments)
 - build with two languages
 - check (stricter) content security policy
 - animate popups

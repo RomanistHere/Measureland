@@ -3,6 +3,8 @@
 
     import PopupWrap from '../PopupWrap.svelte';
     import QuizItem from './QuizItem.svelte';
+    import SecondaryButton from '../../SecondaryButton.svelte';
+    import MainButton from '../../MainButton.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
     import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce } from "../../../../../utilities/helpers.js";
@@ -54,10 +56,8 @@
     }
 
     const changePersonalExperience = isPersonalExperience => {
-        quizState = {
-            ...quizState,
-            isPersonalExperience,
-        }
+        nextStage();
+        quizState = { ...quizState, isPersonalExperience };
     }
 
     const getProgressBarClassName = stage => {
@@ -151,7 +151,7 @@
             } else {
                 markerStore.update(state => ({
                     ...state,
-                    markersToAdd: [ ...state.markersToAdd, { coords: currentCoords, rating: averageRating } ],
+                    markersToAdd: [ ...state.markersToAdd, { coords: currentCoords.reverse(), rating: averageRating } ],
                 }));
             }
 
@@ -299,29 +299,43 @@
             </p>
             {#if isUserLoggedIn}
                 <div class="rating__btns btns_wrap">
-                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(false) }}>
-                        {$_('quizPopup.noPersonalExperienceBtn')}
-                    </a>
-                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={nextStage} on:click={() => { changePersonalExperience(true) }}>
-                        {$_('quizPopup.yesPersonalExperienceBtn')}
-                    </a>
+                    <MainButton
+                        action={() => { changePersonalExperience(false) }}
+                        className='rating__btn'
+                        text={$_('quizPopup.noPersonalExperienceBtn')}
+                    />
+                    <MainButton
+                        action={() => { changePersonalExperience(true) }}
+                        className='rating__btn'
+                        text={$_('quizPopup.yesPersonalExperienceBtn')}
+                    />
                 </div>
             {:else}
-                <a href={"#"} class="rating__login btn" on:click|preventDefault={() => { openAnotherOverlay('loginPopup') }}>{$_('quizPopup.loginBtn')}</a>
+                <MainButton
+                    action={() => { openAnotherOverlay('loginPopup') }}
+                    className='rating__login'
+                    text={$_('quizPopup.loginBtn')}
+                />
             {/if}
         {:else}
             <div class="rating__btns btns_wrap">
-                <a href={"#"} class="rating__btn btn btn-low" on:click|preventDefault={prevStage}>
-                    {$_('quizPopup.backBtn')}
-                </a>
+                <SecondaryButton
+                    action={prevStage}
+                    className='rating__btn'
+                    text={$_('quizPopup.backBtn')}
+                />
                 {#if currentStage === 6}
-                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={debouncedSubmit}>
-                        {$_('quizPopup.submitBtn')}
-                    </a>
+                    <MainButton
+                        action={debouncedSubmit}
+                        className='rating__btn'
+                        text={$_('quizPopup.submitBtn')}
+                    />
                 {:else}
-                    <a href={"#"} class="rating__btn btn" on:click|preventDefault={nextStage}>
-                        {$_('quizPopup.nextBtn')}
-                    </a>
+                    <MainButton
+                        action={nextStage}
+                        className='rating__btn'
+                        text={$_('quizPopup.nextBtn')}
+                    />
                 {/if}
             </div>
         {/if}

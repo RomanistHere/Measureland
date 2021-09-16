@@ -202,42 +202,42 @@ initSideBar()
 //     </li>`
 // }
 
-const appendComments = array => {
+// const appendComments = array => {
     // const sortedArray = array.sort((a, b) => b.liked - a.liked)
     // const list = sortedArray.map(item => getCommentHtml(item))
     // commentsWrap.insertAdjacentHTML("afterbegin", list.join(''))
 
-    commentsWrap.querySelectorAll('.comment__btn').forEach(item => handleClickPrevDef(item, async (e) => {
-        if (!state.userID) {
-            openLoginForm()
-            return
-        }
-
-        const target = e.currentTarget
-        const { goal, disabled, key } = target.dataset
-
-        if (disabled !== 'false') {
-            return
-        }
-
-        const anotherBtnQuery = goal === 'like' ? 'dislike' : 'like'
-        const anotherBtn = target.parentNode.querySelector(`.comment__btn[data-goal=${anotherBtnQuery}]`)
-        if (anotherBtn.dataset.disabled === 'true') {
-            anotherBtn.dataset.disabled = false
-            const numberElem = anotherBtn.querySelector('.comment__btn-numb')
-            numberElem.textContent = Number(numberElem.textContent) - 1
-        }
-
-        target.dataset.disabled = true
-        const numberElem = target.querySelector('.comment__btn-numb')
-        numberElem.textContent = Number(numberElem.textContent) + 1
-        const { error, data } = await reactOnComment(goal, key)
-        if (error) {
-            showError('unrecognizedError', error)
-            return
-        }
-    }))
-}
+    // commentsWrap.querySelectorAll('.comment__btn').forEach(item => handleClickPrevDef(item, async (e) => {
+    //     if (!state.userID) {
+    //         openLoginForm()
+    //         return
+    //     }
+    //
+    //     const target = e.currentTarget
+    //     const { goal, disabled, key } = target.dataset
+    //
+    //     if (disabled !== 'false') {
+    //         return
+    //     }
+    //
+    //     const anotherBtnQuery = goal === 'like' ? 'dislike' : 'like'
+    //     const anotherBtn = target.parentNode.querySelector(`.comment__btn[data-goal=${anotherBtnQuery}]`)
+    //     if (anotherBtn.dataset.disabled === 'true') {
+    //         anotherBtn.dataset.disabled = false
+    //         const numberElem = anotherBtn.querySelector('.comment__btn-numb')
+    //         numberElem.textContent = Number(numberElem.textContent) - 1
+    //     }
+    //
+    //     target.dataset.disabled = true
+    //     const numberElem = target.querySelector('.comment__btn-numb')
+    //     numberElem.textContent = Number(numberElem.textContent) + 1
+    //     const { error, data } = await reactOnComment(goal, key)
+    //     if (error) {
+    //         showError('unrecognizedError', error)
+    //         return
+    //     }
+    // }))
+// }
 
 // const showComments = async ({ geoID }) => {
 //     runSpinner('.sidebar__spinner')

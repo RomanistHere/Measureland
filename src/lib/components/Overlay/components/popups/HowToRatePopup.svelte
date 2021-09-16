@@ -39,6 +39,11 @@
                 {$_('howToRatePopup.leaveTheComment')}
             </li>
         </ul>
-        <MainButton text="{$_('howToRatePopup.submit')}" action={closePopup} />
+        
+        <MainButton
+            text="{$_('howToRatePopup.submit')}"
+            className='rate_tutorial__ok'
+            action={closePopup}
+        />
     </div>
 </PopupWrap>
