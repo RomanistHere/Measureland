@@ -230,8 +230,8 @@
         "mainBtn": "Восстановить"
     },
     "changePasswordPopup": {
-        "title": "Изменение пароля",
-        "mainBtn": "Изменить"
+        "title": "Изменение пароля (через почту)",
+        "mainBtn": "Отправить ссылку на почту"
     },
     "confirmForgotPasswordPopup": {
         "title": "Проверь почту",

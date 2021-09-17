@@ -224,8 +224,8 @@
         "mainBtn": "Restore"
     },
     "changePasswordPopup": {
-        "title": "Change password",
-        "mainBtn": "Change"
+        "title": "Change password (through email)",
+        "mainBtn": "Send me the link"
     },
     "confirmForgotPasswordPopup": {
         "title": "Check your email",

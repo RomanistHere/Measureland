@@ -111,13 +111,13 @@ const initSideBar = () => {
     //     crashReportsBtn.classList.toggle('settings__link-on')
     // })
 
-    handleClickPrevDef(openFiltersBtn, () => {
-        openSideBar('filters')
-    })
-
-    handleClickPrevDef(openFiltersFromNotifBtn, () => {
-        openSideBar('filters')
-    })
+    // handleClickPrevDef(openFiltersBtn, () => {
+    //     openSideBar('filters')
+    // })
+    //
+    // handleClickPrevDef(openFiltersFromNotifBtn, () => {
+    //     openSideBar('filters')
+    // })
 
     // handleClickPrevDef(openLoginBtn, () => {
     //     hideAllSides()
@@ -128,10 +128,10 @@ const initSideBar = () => {
     //     openSideBar()
     // })
 
-    handleClickPrevDef(changePassBtn, () => {
-        hideAllSides()
-        openLoginForm('forgot')
-    })
+    // handleClickPrevDef(changePassBtn, () => {
+    //     hideAllSides()
+    //     openLoginForm('forgot')
+    // })
 
     // handleClickPrevDef(myRatingsBtn, () => {
     //     hideAllSides()

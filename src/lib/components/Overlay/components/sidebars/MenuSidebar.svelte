@@ -187,7 +187,7 @@
             </li>
         </ul>
         {#if shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
-            <div class="btn settings__btn">{$_('menuSidebar.requestProcessing')}</div>
+            <div class="btn settings__btn settings__btn-show_text">{$_('menuSidebar.requestProcessing')}</div>
         {:else if shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
             <a href={"#"} class="btn settings__btn" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
         {/if}

@@ -1,12 +1,8 @@
 # To do:
 
-- forgot/change password
-- ask for ratings popup
 - drawing
 - focus popups when open
 - start screen
-- comment like/dislike
-- sanitize html (comments)
 - build with two languages
 - check (stricter) content security policy
 - animate popups
