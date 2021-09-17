@@ -12,7 +12,6 @@ export const userStateStore = writable({
     // lang: detectPrefLang(),
     lang: 'ru',
     uniqID: Math.random().toString(16).slice(2),
-    // shouldSendEvent: getCookie('sentryOn') !== '0' ? true : false,
     shouldSendEvent: false,
     wantMoreRatings: false,
 });

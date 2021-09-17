@@ -242,6 +242,19 @@
         "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",
         "defaultAdress": "Didn't find address"
     },
+    "askForMoreRatingsPopup": {
+        "title": "Done",
+        "weProcessingRequest": "We're processing your request now. Can not guarantee to resolve it fast - our team is tiny right now, but the amount of work is tremendous.",
+        "url": "https://www.donationalerts.com/r/romanisthere",
+        "weProcessingRequestLink": "You can help",
+        "weProcessingRequestAfterLink": ", though.",
+        "limitationsExist": "These limitations exist as one of the layers of protection.",
+        "limitationsExistLink": "Read more.",
+        "youCanTryFasten": "You can try to fasten this process, write us an email:",
+        "orOurTelegramBot": " - or our Telegram bot: ",
+        "weWillRespond": " - we will respond ASAP.",
+        "mainBtn": "Understood"
+    },
     "input": {
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",

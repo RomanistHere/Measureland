@@ -248,6 +248,19 @@
         "youHaveNotRated": "У тебя пока ноль оценок. Найди знакомое место, кликни на карту и оценивай!",
         "defaultAdress": "Адрес не нашёлся..."
     },
+    "askForMoreRatingsPopup": {
+        "title": "Готово",
+        "weProcessingRequest": "Мы взяли твой запрос в обработку! Мы пока не можем гарантировать быстрое его разрешение, наша команда очень маленькая, а задач много. Но ты ",
+        "url": "https://www.donationalerts.com/r/measureland",
+        "weProcessingRequestLink": "можешь нам помочь",
+        "weProcessingRequestAfterLink": ", рассчитываем на понимание :)",
+        "limitationsExist": "Ограничения на оценки со старта существуют для защиты от спама.",
+        "limitationsExistLink": "Узнать больше.",
+        "youCanTryFasten": " ",
+        "orOurTelegramBot": "Можешь попробовать ускорить данный процесс написав свою почту нашему Телеграм боту:",
+        "weWillRespond": " ",
+        "mainBtn": "Понятно"
+    },
     "input": {
         "showOrHide": "Показать/Скрыть",
         "emailError": "Неправильный формат! Пример: example@mail.ru",

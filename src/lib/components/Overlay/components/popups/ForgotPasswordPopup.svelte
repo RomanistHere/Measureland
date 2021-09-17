@@ -13,7 +13,6 @@
     export let popupData;
 
     $: isChangePass = popupData.isChangePass;
-    $: console.log(isChangePass)
     $: title = isChangePass ? $_('changePasswordPopup.title') : $_('forgotPasswordPopup.title');
     $: mainBtn = isChangePass ? $_('changePasswordPopup.mainBtn') : $_('forgotPasswordPopup.mainBtn');
     $: errorsObj = $json('errors');

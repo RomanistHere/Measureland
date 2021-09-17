@@ -16,24 +16,24 @@ const changePassBtn = $('.changePass')
 const myRatingsBtn = $('.myRatings')
 const partnersPopup = $('.partners')
 
-const changeLang = lang => {
-    state.flow.push('cl')
-
-    if (lang === 'en') {
-        window.location.pathname = '/'
-    } else {
-        window.location.pathname = '/ru/'
-    }
-}
-
-const openSideBar = (className = 'settings') => {
-    $All('.sidebar__section').forEach(elem => removeClass(elem, 'sidebar__section-show'))
-    addClass($(`.${className}`), 'sidebar__section-show')
-
-    addClass(document.body, 'sidebar-open')
-    state.flow.push('os')
-    addToUrlOpenModalFlag()
-}
+// const changeLang = lang => {
+//     state.flow.push('cl')
+//
+//     if (lang === 'en') {
+//         window.location.pathname = '/'
+//     } else {
+//         window.location.pathname = '/ru/'
+//     }
+// }
+//
+// const openSideBar = (className = 'settings') => {
+//     $All('.sidebar__section').forEach(elem => removeClass(elem, 'sidebar__section-show'))
+//     addClass($(`.${className}`), 'sidebar__section-show')
+//
+//     addClass(document.body, 'sidebar-open')
+//     state.flow.push('os')
+//     addToUrlOpenModalFlag()
+// }
 
 // const closeSideBar = () => {
 //     state.flow.push('cs')
@@ -60,18 +60,18 @@ const openSideBar = (className = 'settings') => {
 //     removeClass($('.rate_tutorial'), 'rating-active')
 // }
 
-const openAskForRatings = () => {
-    state.flow.push('mr')
-    addClass($('.rate_ask_ratings'), 'rating-active')
-    state = {
-        ...state,
-        wasMoreRatingsAsked: true
-    }
-}
-
-const closeAskForRatings = () => {
-    removeClass($('.rate_ask_ratings'), 'rating-active')
-}
+// const openAskForRatings = () => {
+//     state.flow.push('mr')
+//     addClass($('.rate_ask_ratings'), 'rating-active')
+//     state = {
+//         ...state,
+//         wasMoreRatingsAsked: true
+//     }
+// }
+//
+// const closeAskForRatings = () => {
+//     removeClass($('.rate_ask_ratings'), 'rating-active')
+// }
 
 const initSideBar = () => {
     // handleClickPrevDef(closeSideBarBtn, closeSideBar)
@@ -89,18 +89,18 @@ const initSideBar = () => {
     //         state.shouldShowLoading ? poly.addTo(map) : poly.removeFrom(map))
     // })
 
-    handleClickPrevDef(moreRatingsBtn, async () => {
-        const { error } = await askMoreRatings()
-        if (error)
-            showError('unrecognizedError', error)
-
-        disableMoreRatingsBtn()
-        hideAllSides()
-        openAskForRatings()
-    })
-
-    handleClickPrevDef($('.rate_ask_ratings__ok'), closeAskForRatings)
-    handleClickPrevDef($('.rate_ask_ratings__close'), closeAskForRatings)
+    // handleClickPrevDef(moreRatingsBtn, async () => {
+    //     const { error } = await askMoreRatings()
+    //     if (error)
+    //         showError('unrecognizedError', error)
+    //
+    //     disableMoreRatingsBtn()
+    //     hideAllSides()
+    //     openAskForRatings()
+    // })
+    //
+    // handleClickPrevDef($('.rate_ask_ratings__ok'), closeAskForRatings)
+    // handleClickPrevDef($('.rate_ask_ratings__close'), closeAskForRatings)
 
     // handleClickPrevDef(crashReportsBtn, () => {
     //     state.flow.push('cr')

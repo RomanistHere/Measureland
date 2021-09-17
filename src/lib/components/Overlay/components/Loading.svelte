@@ -1,7 +1,11 @@
 <script>
-    import { checkUser } from "../../../utilities/api.js";
-    import { userStateStore, appStateStore } from "../../../../stores/state.js";
+    import { browser } from '$app/env';
+
     import Spinner from '../../Spinner.svelte';
+
+    import { checkUser } from "../../../utilities/api.js";
+    import { getCookie } from "../../../utilities/helpers.js";
+    import { userStateStore, appStateStore } from "../../../../stores/state.js";
 
     let isError = false;
     let errorName = null;
@@ -9,8 +13,6 @@
 
     const userInit = async () => {
         const { error, data } = await checkUser();
-
-        console.log(error)
         console.log(data)
 
         if (error) {
@@ -23,6 +25,7 @@
             return;
         }
         const { userID, userName, activeRatings, wantMoreRatings } = data;
+        const shouldSendEvent = browser ? getCookie('shouldSendEvent') !== '0' ? true : false : false;
 
         isLoaded = true;
         if (userID) {
@@ -31,7 +34,8 @@
                 userID,
                 activeRatings,
                 userName,
-                wantMoreRatings
+                wantMoreRatings,
+                shouldSendEvent,
             }));
             // for test purposes
             // fillDB(20000)

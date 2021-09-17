@@ -1,24 +1,38 @@
 <script>
     import { _, locale } from 'svelte-i18n';
+    import { browser } from '$app/env';
 
     import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
 
-    import { openAnotherOverlay, closeOverlays, showSuccessNotification } from '../../../../utilities/helpers.js';
-    import { logout, saveLang } from '../../../../utilities/api.js';
+    import { openAnotherOverlay, closeOverlays, showSuccessNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
+    import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
     import { userStateStore } from "../../../../../stores/state.js";
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
+    $: isUserAskedForMoreRatings = $userStateStore.wantMoreRatings;
     // TODO: get real version
     const currentVersion = '2.0.0';
 
     const toggleSendingEvents = () => {
+        if (!browser)
+            return;
         const shouldSendEvent = !$userStateStore.shouldSendEvent;
         setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
-        userStateStore.update(state => ({
-            ...state,
-            shouldSendEvent
-        }));
+        userStateStore.update(state => ({ ...state, shouldSendEvent }));
+    }
+
+    const askForMoreRatings = async () => {
+        openAnotherOverlay('askForMoreRatingsPopup');
+        userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
+        const { error } = await askMoreRatings();
+        closeOverlay('sidebar');
+        // TODO:
+        if (error)
+            alert('unrecognizedError');
+        else
+            showSuccessNotification();
     }
 
     $: dataTopBlock = {
@@ -91,34 +105,6 @@
             }
         },]
     };
-
-    // $: dataMiddleBlock = {
-    //     title: $_('menuSidebar.titleMid'),
-    //     list: [{
-    //         text: $_('menuSidebar.sendCrashReports') + $userStateStore.shouldSendEvent ? $_('menuSidebar.toggleOn') : $_('menuSidebar.toggleOff'),
-    //         shouldShow: !isUserLoggedIn,
-    //         href: '#',
-    //         onClick: (e) => {
-    //             e.preventDefault();
-    //             toggleSendingEvents();
-    //         }
-    //     }, {
-    //         text: isUserLoggedIn ? : $_('menuSidebar.ratePlace'),
-    //         shouldShow: isUserLoggedIn,
-    //         href: '#',
-    //         onClick: (e) => {
-    //             e.preventDefault();
-    //         }
-    //     }, {
-    //         text: $_('menuSidebar.changePassword'),
-    //         shouldShow: isUserLoggedIn,
-    //         href: '#',
-    //         onClick: (e) => {
-    //             e.preventDefault();
-    //             openAnotherOverlay('howToRatePopup');
-    //         }
-    //     }]
-    // };
 
     $: dataBottomBlock = {
         title: $_('menuSidebar.titleBot'),
@@ -200,10 +186,11 @@
                 </a>
             </li>
         </ul>
-        <a href={"#"} class="btn moreRatingsBtn loggedInShow settings__btn">
-            <span class="settings__showed_rating_text">{$_('menuSidebar.needMoreRatings')}</span>
-            <span class="settings__hidden_ratings_text">{$_('menuSidebar.requestProcessing')}</span>
-        </a>
+        {#if shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
+            <div class="btn settings__btn">{$_('menuSidebar.requestProcessing')}</div>
+        {:else if shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
+            <a href={"#"} class="btn settings__btn" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
+        {/if}
     </div>
 
     <SidebarBlock { ...dataBottomBlock }/>

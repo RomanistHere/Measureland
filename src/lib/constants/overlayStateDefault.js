@@ -1,4 +1,9 @@
 export const overlayStateDefault = {
+    askForMoreRatingsPopup: {
+        isOpen: true,
+        type: 'popup',
+        data: {},
+    },
     loginPopup: {
         isOpen: false,
         type: 'popup',
