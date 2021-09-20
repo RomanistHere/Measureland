@@ -313,7 +313,7 @@
             {:else}
                 <MainButton
                     action={() => { openAnotherOverlay('loginPopup') }}
-                    className='rating__login'
+                    className='rating__login d-b'
                     text={$_('quizPopup.loginBtn')}
                 />
             {/if}
