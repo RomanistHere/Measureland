@@ -24,7 +24,6 @@
     }
 
     const checkIsOpen = state => {
-        console.log(state);
         let openOverlays = [];
         for (let [key, value] of Object.entries(state)) {
             const { isOpen, data, type } = value;

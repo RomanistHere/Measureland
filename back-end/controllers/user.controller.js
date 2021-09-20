@@ -93,7 +93,7 @@ const isRatingActive = (user) => {
     else if (dayDifference > 15)
         return { canUserAdd: true, activeRatings: 2 }
 
-    return { canUserAdd: false, activeRatings: null }
+    return { canUserAdd: false, activeRatings: 0 }
 }
 
 exports.user_login = async (req, res) => {

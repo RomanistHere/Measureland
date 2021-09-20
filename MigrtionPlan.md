@@ -1,18 +1,16 @@
 # To do:
 
 - drawing
-- focus popups when open
-- start screen
 - build with two languages
 - check (stricter) content security policy
 - animate popups
 - create popup for handling (showing) errors
 - move everything from old files
-- test registration/login flow after everything is implemented
 - move registration button to nav bar at the top of the screen
 - do we need loggedInPopup?
 - move our tremendous main-non-crit.css to separate instances
 - remaining ratings, show true number
+- start screen
 - implement new start screen
 - write a contribution guide
 - write an article about how awesome svelte is

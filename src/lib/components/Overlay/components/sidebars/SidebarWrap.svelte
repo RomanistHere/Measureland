@@ -4,12 +4,13 @@
     export let className;
 
     const overlayType = 'sidebar';
+    const buttonClassName = 'sidebar__close';
 </script>
 
 <div class="settings sidebar__section sidebar__section-show">
     <slot></slot>
-    <CloseBtn { overlayType } />
 </div>
+<CloseBtn { overlayType } className={buttonClassName} />
 
 <style>
     /* div {

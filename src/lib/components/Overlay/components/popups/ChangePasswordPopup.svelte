@@ -26,10 +26,7 @@
 
     const openLoginPopup = () => openAnotherOverlay('loginPopup');
 
-    const resendLink = () => {
-        // TODO: resend link
-        console.log('heh')
-    }
+    const resendLink = () => openAnotherOverlay('forgotPasswordPopup');
 
     const submit = async () => {
         // TODO: make in more declarative way
