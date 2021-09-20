@@ -38,6 +38,8 @@ We suggest to name branches this way:
 
 All branches go to/from master and applied by pull requests with reviews.
 
+More info on how to start in our wiki: https://github.com/RomanistHere/Measureland/wiki/How-to-run-the-project
+
 ## Contact, feedback, suggestions
 
 You can leave it here, in the repository or send via email:
