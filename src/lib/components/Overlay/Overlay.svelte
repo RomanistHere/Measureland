@@ -86,11 +86,11 @@
 <!-- // show loader while user data is loading -->
 <Loading />
 
-{#if shouldShowStartScreen}
+<!-- {#if shouldShowStartScreen}
     <StartScreen />
 {/if}
 
-<NavBar />
+<NavBar /> -->
 
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />
