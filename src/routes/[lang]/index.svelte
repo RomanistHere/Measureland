@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { addMessages, init } from 'svelte-i18n';
 	import { page } from '$app/stores';
-	import 'esri-leaflet-geocoder/dist/img/search.png'
+	import 'esri-leaflet-geocoder/dist/img/search.png';
 
 	import UrlUpdater from '../../lib/components/UrlUpdater.svelte';
 	import Overlay from '../../lib/components/Overlay/Overlay.svelte';
@@ -21,7 +21,6 @@
 	});
 
 	let Map;
-	let startScreen = false;
 	let shouldSendEvent = false;
 
 	onMount(async () => {
@@ -44,10 +43,6 @@
 
 <!-- // popup and sidebar layers inside -->
 <Overlay />
-
-{#if startScreen}
-	<!-- <StartScreen /> -->
-{/if}
 
 {#if shouldSendEvent}
 	<!-- handle errors and sending -->

@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from 'svelte';
     import { browser } from '$app/env';
 
     import { overlayStateStore } from '../../../stores/state.js';
@@ -9,7 +10,6 @@
 	import NotificationLayer from './components/notifications/NotificationLayer.svelte';
     import Loading from './components/Loading.svelte';
     import NavBar from './components/NavBar.svelte';
-    import StartScreen from './components/StartScreen.svelte';
 
     let popupActive = false;
     let popupName;
@@ -18,6 +18,7 @@
     let sidebarName;
     let sidebarData;
     let shouldShowStartScreen = true;
+    let StartScreen;
 
     const handleKeydown = event => {
         const key = event.key;
@@ -81,13 +82,18 @@
 
     $: dataOpen = checkIsOpen($overlayStateStore);
     $: manageOverlays(dataOpen);
+
+    onMount(async () => {
+		const module = await import('./components/StartScreen/StartScreen.svelte');
+		StartScreen = module.default;
+	});
 </script>
 
 <!-- // show loader while user data is loading -->
 <Loading />
 
 <!-- {#if shouldShowStartScreen}
-    <StartScreen />
+    <svelte:component this={StartScreen}/>
 {/if}
 
 <NavBar /> -->
