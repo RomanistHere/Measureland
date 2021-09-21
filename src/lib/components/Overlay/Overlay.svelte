@@ -8,6 +8,8 @@
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
 	import NotificationLayer from './components/notifications/NotificationLayer.svelte';
     import Loading from './components/Loading.svelte';
+    import NavBar from './components/NavBar.svelte';
+    import StartScreen from './components/StartScreen.svelte';
 
     let popupActive = false;
     let popupName;
@@ -15,6 +17,7 @@
     let sidebarActive = false;
     let sidebarName;
     let sidebarData;
+    let shouldShowStartScreen = true;
 
     const handleKeydown = event => {
         const key = event.key;
@@ -82,6 +85,12 @@
 
 <!-- // show loader while user data is loading -->
 <Loading />
+
+{#if shouldShowStartScreen}
+    <StartScreen />
+{/if}
+
+<NavBar />
 
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />

@@ -1,3 +1,4 @@
+import preprocess from "svelte-preprocess";
 /** @type {import('@sveltejs/kit').Config} */
 import adapter from '@sveltejs/adapter-static';
 
@@ -6,7 +7,8 @@ const handleError = ({ status, path, referrer, referenceType }) => {
 };
 
 const config = {
-	kit: {
+    // ssr: true
+    kit: {
 		target: '#svelte',
 		adapter: adapter({
 			pages: 'dist',
@@ -24,7 +26,10 @@ const config = {
 			onError: handleError
 		}
 	},
-	// ssr: true
+
+    preprocess: [preprocess({
+        postcss: true
+    })]
 };
 
 export default config;

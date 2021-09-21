@@ -23,7 +23,7 @@ export const appStateStore = writable({
     showRating: false,
     ratingToSave: null,
     corrdsToSave: null,
-    center: [53.9, 27.5],
+    center: [53.9065, 27.6663],
     shouldShowLoading: false,
 });
 
