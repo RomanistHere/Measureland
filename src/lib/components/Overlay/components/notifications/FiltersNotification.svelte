@@ -1,4 +1,5 @@
 <script>
+    import { fade } from 'svelte/transition';
     import { _ } from 'svelte-i18n';
 
     import { filtersStore } from "../../../../../stores/state.js";
@@ -17,7 +18,7 @@
     }
 </script>
 
-<div class="notification filters_notification notification-show">
+<div class="notification filters_notification notification-show" transition:fade>
     <div class="notification__text">
         <a href="#" class="footer__link openFiltersFromNotifBtn" on:click|preventDefault={openFilters}>{$_('filterNotification.filters')}</a>
         {$_('filterNotification.active')}.

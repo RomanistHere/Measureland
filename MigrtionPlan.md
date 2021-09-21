@@ -3,7 +3,6 @@
 - drawing
 - build with two languages
 - check (stricter) content security policy
-- animate popups
 - create popup for handling (showing) errors
 - move everything from old files
 - move registration button to nav bar at the top of the screen

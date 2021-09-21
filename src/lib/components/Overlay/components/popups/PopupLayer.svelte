@@ -1,4 +1,5 @@
 <script>
+    import { fade } from 'svelte/transition';
     // after install change node_modules/svelte-focus-trap/src/index.js if error persists
     //https://github.com/Duder-onomy/svelte-focus-trap/issues/4
     import { focusTrap } from 'svelte-focus-trap';
@@ -88,7 +89,12 @@
     $: popupParentClass = popupList[popupName]['className'];
 </script>
 
-<div class="rating {popupParentClass}" on:click|preventDefault={closePopups} use:focusTrap>
+<div
+    class="rating {popupParentClass}"
+    on:click|preventDefault={closePopups}
+    use:focusTrap
+    transition:fade
+>
     <svelte:component this={Popup} { popupData }/>
 </div>
 

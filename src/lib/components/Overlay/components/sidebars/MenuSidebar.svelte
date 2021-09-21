@@ -7,13 +7,12 @@
 
     import { openAnotherOverlay, closeOverlays, showSuccessNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
+    import { APP_VERSION } from '../../../../constants/env.js';
     import { userStateStore } from "../../../../../stores/state.js";
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
     $: isUserAskedForMoreRatings = $userStateStore.wantMoreRatings;
-    // TODO: get real version
-    const currentVersion = '2.0.0';
 
     const toggleSendingEvents = () => {
         if (!browser)
@@ -186,9 +185,9 @@
                 </a>
             </li>
         </ul>
-        {#if shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
+        {#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
             <div class="btn settings__btn settings__btn-show_text">{$_('menuSidebar.requestProcessing')}</div>
-        {:else if shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
+        {:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
             <a href={"#"} class="btn settings__btn" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
         {/if}
     </div>
@@ -197,7 +196,7 @@
 
     <footer class="footer">
         <div>
-            <span class="footer__version">{$_('footer.version')}: {currentVersion}</span>.
+            <span class="footer__version">{$_('footer.version')}: {APP_VERSION}</span>.
             <a class="footer__link" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
         </div>
         <div>

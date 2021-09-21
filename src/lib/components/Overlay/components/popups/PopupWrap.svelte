@@ -1,4 +1,6 @@
 <script>
+    import { fly } from 'svelte/transition';
+
     import CloseBtn from '../../../CloseBtn.svelte';
 
     export let className;
@@ -6,7 +8,11 @@
     const overlayType = 'popup';
 </script>
 
-<div class="rating__wrap {className}">
+<div
+    class="rating__wrap {className}"
+    in:fly="{{ y: 80, duration: 300 }}"
+    out:fly="{{ y: -80, duration: 300 }}"
+>
     <slot></slot>
     <CloseBtn { overlayType } />
 </div>

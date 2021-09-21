@@ -1,4 +1,6 @@
 <script>
+    import { fly } from 'svelte/transition';
+
     import CommentsSidebar from './CommentsSidebar/CommentsSidebar.svelte';
     import FiltersSidebar from './FiltersSidebar/FiltersSidebar.svelte';
     import MenuSidebar from './MenuSidebar.svelte';
@@ -15,7 +17,10 @@
     $: Sidebar = sidebarList[sidebarName];
 </script>
 
-<aside class="sidebar">
+<aside
+    class="sidebar"
+    in:fly="{{ x: 200, duration: 80 }}"
+>
     <svelte:component this={Sidebar} { sidebarData }/>
 </aside>
 
