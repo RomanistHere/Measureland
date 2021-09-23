@@ -7,6 +7,7 @@
     import 'swiper/css/pagination';
 
     import Slide from './Slide.svelte';
+    import TextLink from '../../../TextLink.svelte';
     import MainButton from '../MainButton.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import ScrollBottomText from './ScrollBottomText.svelte';
@@ -28,7 +29,9 @@
             : () => {
                 window.open(item.href,'_blank');
             }
-    }))
+    }));
+
+    $: lastSlideList = Object.values($json('startScreen.lastSlide.list'));
 
     const onSlideChange = () => {
         shouldShowScrollCaption = false;
@@ -36,7 +39,7 @@
 
     const closeStartScreen = () => {
         appStateStore.update(state => ({ ...state, startScreen: false }));
-        // setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
+        setCookie('startScreen', '0', 365);
     }
 
     const openRegister = () => {
@@ -54,8 +57,7 @@
         mousewheel={true}
         pagination={true}
         slidesPerView={1}
-        on:slideChange={onSlideChange}
-        on:swiper={(e) => console.log(e.detail[0])}
+        on:slideChange|once={onSlideChange}
     >
         <SwiperSlide>
             <section class="flex items-center justify-center w-full h-full slide-1 px-10">
@@ -90,6 +92,35 @@
                 <Slide { ...slideData } slideNumber={i} />
             </SwiperSlide>
         {/each}
+
+        <SwiperSlide>
+            <section class="flex items-center justify-center w-full h-full slide-1 px-10">
+                <div class="max-w-xl">
+                    <h1 class="lg:text-5xl -lg:text-3xl mb-10 @lg:text-5xl">
+                        {$_('startScreen.lastSlide.title')}
+                    </h1>
+                    <ul>
+                        {#each lastSlideList as {url, text}}
+                            <li>
+                                <TextLink href={url} { text } blank={true} className="text-2xl" />
+                            </li>
+                        {/each}
+                    </ul>
+                    <div class="flex items-center justify-left -lg:flex-wrap">
+                        <SecondaryButton
+                            text={$_('startScreen.firstSlide.btn1')}
+                            className="mr-5 mt-5"
+                            action={closeStartScreen}
+                        />
+                        <MainButton
+                            text={$_('startScreen.firstSlide.btn2')}
+                            className='block mt-5'
+                            action={openRegister}
+                        />
+                    </div>
+                </div>
+            </section>
+        </SwiperSlide>
     </Swiper>
 
     {#if shouldShowScrollCaption}
@@ -117,5 +148,9 @@
 
     :global(.swiper-pagination-bullet-active) {
         background: var(--active-color);
+    }
+
+    ul {
+        list-style-type: square;
     }
 </style>

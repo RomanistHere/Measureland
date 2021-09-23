@@ -91,12 +91,34 @@
                 "title": "We are privacy oriented",
                 "text1": "Do not trust our words 🙈 Trust our code 🙉 It is open source.",
                 "text2": "We can't sell or lose your personal data because we don't collect it 🙊",
-                "button": "Check our code",
+                "button": "Look at our code",
                 "href": "https://github.com/RomanistHere/Measureland/"
             }
         },
         "lastSlide": {
-
+            "list": [{
+                "text": "Join our Telegram community",
+                "url": "https://t.me/measureland"
+            },{
+                "text": "Check the Measureland guide book (tutorial)",
+                "url": "/blog/tutorial/"
+            },{
+                "text": "Learn about us",
+                "url": "/blog/about-us/"
+            },{
+                "text": "Go to the support page",
+                "url": "/blog/support/"
+            },{
+                "text": "See our terms of use",
+                "url": "/blog/terms-of-use/"
+            },{
+                "text": "... or privacy policy",
+                "url": "/blog/policy/"
+            },{
+                "text": "Find the rest at our blog",
+                "url": "/blog/"
+            }],
+            "title": "And this is only the beggining"
         },
         "ScrollToLearnMode": "Scroll to learn more"
     },

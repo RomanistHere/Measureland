@@ -2,7 +2,23 @@
     import MainButton from './MainButton.svelte';
     import SecondaryButton from './SecondaryButton.svelte';
 
+    import { openAnotherOverlay } from '../../../utilities/helpers.js';
     import { appStateStore } from "../../../../stores/state.js";
+
+    const closeStartScreen = () => {
+        appStateStore.update(state => ({ ...state, startScreen: false }));
+        // setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
+    }
+
+    const openRegister = () => {
+        closeStartScreen();
+        openAnotherOverlay('registerPopup');
+    }
+
+    const openLogin = () => {
+        closeStartScreen();
+        openAnotherOverlay('loginPopup');
+    }
 
     let isLeftHovered = false;
     const handleMouseenterLeft = () => {
@@ -58,8 +74,8 @@
             on:mouseenter={handleMouseenterRight}
             on:mouseleave={handleMouseleaveRight}
         >
-            <SecondaryButton text='Log in' className='py-2' />
-            <MainButton text='Register' className='ml-4 py-2' />
+            <SecondaryButton text='Log in' className='py-2' action={openLogin} />
+            <MainButton text='Register' className='ml-4 py-2' action={openRegister} />
         </li>
     </ul>
     <div class="absolute inset-0 -inset-x-80 nav_gradient {!isCenterHovered && 'opacity-90'} {isLeftHovered && 'left-0 opacity-100'} {isRightHovered && 'right-0 opacity-100'} {isCenterHovered && 'transform scale-x-150 opacity-100'}"></div>
