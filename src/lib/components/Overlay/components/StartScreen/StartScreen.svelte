@@ -1,4 +1,5 @@
 <script>
+    import { _, json } from 'svelte-i18n';
     import { fade } from 'svelte/transition';
     import { Swiper, SwiperSlide } from 'swiper/svelte';
     import SwiperCore, { Mousewheel, Pagination } from 'swiper';
@@ -8,48 +9,26 @@
     import Slide from './Slide.svelte';
     import MainButton from '../MainButton.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
+    import ScrollBottomText from './ScrollBottomText.svelte';
 
-    import { setCookie, openAnotherOverlay } from '../../../../utilities/helpers.js';
+    import { setCookie, openAnotherOverlay, fillFiltersFromArrOfStrings } from '../../../../utilities/helpers.js';
     import { appStateStore } from '../../../../../stores/state.js';
 
     SwiperCore.use([Mousewheel, Pagination]);
 
     let shouldShowScrollCaption = true;
 
-    const contentSlides = [{
-        title: `We are simple and useful`,
-        btnText: `Check good water around`,
-        btnAction: () => {
-            // open filters
-            // remove layer
-        },
-        text: `We help people by saving time, energy and reducing the stress 🤯 while looking for a place to stay.`,
-        text2: `Check the districts with good or bad water quality 💧 in the town (by townsman's opionion) in literally three clicks from now.`
-    },{
-        title:`We are community driven`,
-        btnText: `Check our community guides`,
-        btnAction: () => {
-            // link to github
-        },
-        text: `There are no thing like promoted rating or paid review here. Content created for people by people.`,
-        text2: `Become the creator. We will help you 👋`
-    },{
-        title: `We are non-commercial`,
-        btnText: `Support us`,
-        btnAction: () => {
-            // link to support
-        },
-        text: `We would love your support, but making the money is not the goal of this service.`,
-        text2: `There are more important things in life 🌼`
-    },{
-        title: `We are privacy oriented`,
-        btnText: `Check our code`,
-        btnAction: () => {
-            // link to github
-        },
-        text: `Do not trust our words 🙈 Trust our code 🙉 It is open source.`,
-        text2: `We can't sell or lose your personal data because we don't collect it 🙊`
-    }];
+    $: contentSlides = Object.values($json('startScreen.slides')).map(item => ({
+        ...item,
+        action: item.action === 'openFilters'
+            ? () => {
+                closeStartScreen();
+                fillFiltersFromArrOfStrings(['water:5-5']);
+            }
+            : () => {
+                window.open(item.href,'_blank');
+            }
+    }))
 
     const onSlideChange = () => {
         shouldShowScrollCaption = false;
@@ -82,22 +61,22 @@
             <section class="flex items-center justify-center w-full h-full slide-1 px-10">
                 <div class="max-w-xl">
                     <h1 class="lg:text-6xl -lg:text-5xl mb-5">
-                        Welcome to
+                        {$_('startScreen.firstSlide.titleLow')}
                         <span class="lg:text-7xl -lg:text-6xl font-bold">
-                            Measureland
+                            {$_('startScreen.firstSlide.titleBig')}
                         </span>
                     </h1>
                     <p class="lg:text-2xl">
-                        Free service we built to help you share your residential experiences and find the best place 🏡 to rent or buy.
+                        {$_('startScreen.firstSlide.text')}
                     </p>
                     <div class="flex items-center justify-left -lg:flex-wrap">
                         <SecondaryButton
-                            text="Continue without signing in"
+                            text={$_('startScreen.firstSlide.btn1')}
                             className="mr-5 mt-5"
                             action={closeStartScreen}
                         />
                         <MainButton
-                            text="Create new account"
+                            text={$_('startScreen.firstSlide.btn2')}
                             className='block mt-5'
                             action={openRegister}
                         />
@@ -114,15 +93,7 @@
     </Swiper>
 
     {#if shouldShowScrollCaption}
-        <div class="absolute bottom-5 w-full flex justify-center animate-bounce z-1" transition:fade>
-            <svg class="mx-5 w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-            Scroll to learn more
-            <svg class="mx-5 w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </div>
+        <ScrollBottomText text={$_('startScreen.ScrollToLearnMode')} />
     {/if}
 </div>
 

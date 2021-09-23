@@ -13,7 +13,7 @@
 - implement new start screen
 - write a contribution guide
 - write an article about how awesome svelte is
-- write an article about how we handle popup/sidebar opening
 - track user flow
+- create measureland discord and some community articles to get started
 
 - check the issue where polybool fails and we have group icons instead of single ones

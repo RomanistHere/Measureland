@@ -20,9 +20,9 @@
 
 <div class="notification filters_notification notification-show" transition:fade>
     <div class="notification__text">
-        <a href={"#"} class="footer__link openFiltersFromNotifBtn" on:click|preventDefault={openFilters}>{$_('filterNotification.filters')}</a>
+        <a href={"#"} class="underline footer__link openFiltersFromNotifBtn" on:click|preventDefault={openFilters}>{$_('filterNotification.filters')}</a>
         {$_('filterNotification.active')}.
-        <a href={"#"} class="footer__link filters_notification__reset" on:click|preventDefault={resetFilters}>{$_('filterNotification.reset')}</a>
+        <a href={"#"} class="underline footer__link filters_notification__reset" on:click|preventDefault={resetFilters}>{$_('filterNotification.reset')}</a>
     </div>
 </div>
 

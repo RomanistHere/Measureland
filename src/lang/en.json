@@ -56,6 +56,50 @@
             "caption": "1 - sad, 5 - terrific"
         }
     },
+    "startScreen": {
+        "firstSlide": {
+            "titleLow": "Welcome to",
+            "titleBig": "Measureland",
+            "text": "Free service we built to help you share your residential experiences and find the best place 🏡 to rent or buy.",
+            "btn1": "Continue without signing in",
+            "btn2": "Create new account"
+        },
+        "slides": {
+            "2": {
+                "title": "We are simple and useful",
+                "text1": "We help people by saving time, energy and reducing the stress 🤯 while looking for a place to stay.",
+                "text2": "Check the districts with good or bad water quality 💧 in the town (by townsman's opionion) in literally one click from now.",
+                "button": "Check good water around",
+                "href": "",
+                "action": "openFilters"
+            },
+            "3": {
+                "title": "We are community driven",
+                "text1": "There are no thing like promoted rating or paid review here. Content created for people by people.",
+                "text2": "Become the creator. We will help you 👋",
+                "button": "See our community guides",
+                "href": "https://github.com/RomanistHere/Measureland/wiki/Contributions"
+            },
+            "4": {
+                "title": "We are non-commercial",
+                "text1": "We would love your support, but making the money is not the goal of this service.",
+                "text2": "There are more important things in life 🌼",
+                "button": "Support us",
+                "href": "https://www.donationalerts.com/r/romanisthere"
+            },
+            "5": {
+                "title": "We are privacy oriented",
+                "text1": "Do not trust our words 🙈 Trust our code 🙉 It is open source.",
+                "text2": "We can't sell or lose your personal data because we don't collect it 🙊",
+                "button": "Check our code",
+                "href": "https://github.com/RomanistHere/Measureland/"
+            }
+        },
+        "lastSlide": {
+
+        },
+        "ScrollToLearnMode": "Scroll to learn more"
+    },
     "_": {
         "commentConnector": "gave"
     },
