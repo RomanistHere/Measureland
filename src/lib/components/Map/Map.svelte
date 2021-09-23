@@ -70,8 +70,8 @@
 
 <style>
     div {
-        height: calc(100% - 3.5rem);
-        top: 3.5rem;
+        height: calc(100% - var(--navbar-height));
+        top: var(--navbar-height);
     }
 
     .limit_error {

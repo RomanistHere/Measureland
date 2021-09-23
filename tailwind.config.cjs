@@ -18,7 +18,11 @@ const config = {
 			},
 			zIndex: {
         		'1': 1,
+				'5': 5,
 			},
+			fontFamily: {
+				sans: ['"Nunito"', 'sans-serif']
+		    }
 		},
 	},
 	plugins: [],

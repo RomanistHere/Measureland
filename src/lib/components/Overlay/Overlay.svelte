@@ -113,3 +113,9 @@
 <NotificationLayer />
 
 <svelte:window on:keydown={handleKeydown}/>
+
+<style>
+    a {
+        top: calc(var(--navbar-height) + 10px);
+    }
+</style>

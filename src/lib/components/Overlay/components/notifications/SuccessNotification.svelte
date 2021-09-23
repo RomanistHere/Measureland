@@ -13,4 +13,8 @@
     .success_notif {
         opacity: 1;
     }
+
+    div {
+        top: calc(10px + var(--navbar-height));
+    }
 </style>
