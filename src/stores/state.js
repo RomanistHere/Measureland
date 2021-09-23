@@ -25,6 +25,7 @@ export const appStateStore = writable({
     corrdsToSave: null,
     center: [53.9065, 27.6663],
     shouldShowLoading: false,
+    startScreen: false,
 });
 
 export const notificationsStore = writable({

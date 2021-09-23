@@ -32,4 +32,8 @@
         border-bottom-color: var(--bg-color-add);
         border-top-color: var(--bg-color-add);
     } */
+    /* todo: when separate main.css into components, remove this */
+    div {
+        box-sizing: content-box;
+    }
 </style>

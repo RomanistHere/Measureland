@@ -117,5 +117,7 @@
     div {
         opacity: 1;
         z-index: 1;
+
+        top: var(--navbar-height);
     }
 </style>

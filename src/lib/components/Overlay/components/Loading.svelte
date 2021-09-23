@@ -26,6 +26,7 @@
         }
         const { userID, userName, activeRatings, wantMoreRatings } = data;
         const shouldSendEvent = browser ? getCookie('shouldSendEvent') !== '0' ? true : false : false;
+        const shouldShowStartScreen = browser ? getCookie('startScreen') !== '0' ? true : false : false;
 
         isLoaded = true;
         if (userID) {
@@ -40,6 +41,9 @@
             // for test purposes
             // fillDB(20000)
         }
+
+        if (shouldShowStartScreen)
+            appStateStore.update(state => ({ ...state, startScreen: true }));
     }
 
     let promise = userInit();

@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { browser } from '$app/env';
 
-    import { overlayStateStore } from '../../../stores/state.js';
+    import { overlayStateStore, appStateStore } from '../../../stores/state.js';
     import { closeOverlays, openAnotherOverlay } from '../../utilities/helpers.js';
 
     import PopupLayer from './components/popups/PopupLayer.svelte';
@@ -17,7 +17,6 @@
     let sidebarActive = false;
     let sidebarName;
     let sidebarData;
-    let shouldShowStartScreen = true;
     let StartScreen;
 
     const handleKeydown = event => {
@@ -92,12 +91,6 @@
 <!-- // show loader while user data is loading -->
 <Loading />
 
-<!-- {#if shouldShowStartScreen}
-    <svelte:component this={StartScreen}/>
-{/if} -->
-
-<NavBar />
-
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />
 {/if}
@@ -106,9 +99,15 @@
     <SidebarLayer { sidebarName } { sidebarData } />
 {/if}
 
-<a href={"#"} class="overlay__btn open_settings" on:click|preventDefault={openSideBar}>
+<a href={"#"} class="overlay__btn open_settings z-1" on:click|preventDefault={openSideBar}>
     <span class="menu_btn"></span>
 </a>
+
+{#if $appStateStore.startScreen}
+    <svelte:component this={StartScreen}/>
+{/if}
+
+<NavBar />
 
 <NotificationLayer />
 

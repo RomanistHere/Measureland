@@ -67,10 +67,11 @@
 
 <style>
     .nav_gradient {
-        background: linear-gradient(270deg, #FFF0A0 11.38%, #FCDCFF 50.48%, #D4EFF5 80.4%);
         background: linear-gradient(270deg, #FCEA8D 11.38%, #FBD2FF 50.48%, #D8F8FF 80.4%);
+        /* background: #fde9ff; */
         z-index: -1;
         transition: all ease .5s;
+        box-shadow: 0px 0px 30px #fde9ff;
     }
 
     a {

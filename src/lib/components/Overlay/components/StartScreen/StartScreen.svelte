@@ -9,6 +9,9 @@
     import MainButton from '../MainButton.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
 
+    import { setCookie, openAnotherOverlay } from '../../../../utilities/helpers.js';
+    import { appStateStore } from '../../../../../stores/state.js';
+
     SwiperCore.use([Mousewheel, Pagination]);
 
     let shouldShowScrollCaption = true;
@@ -51,10 +54,21 @@
     const onSlideChange = () => {
         shouldShowScrollCaption = false;
     }
+
+    const closeStartScreen = () => {
+        appStateStore.update(state => ({ ...state, startScreen: false }));
+        // setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
+    }
+
+    const openRegister = () => {
+        closeStartScreen();
+        openAnotherOverlay('registerPopup');
+    }
 </script>
 
 <div
-    class="start_screen fixed z-1 inset-0 pt-20 lg:left-1/2 -lg:text-xl"
+    class="start_screen fixed z-1 inset-0 lg:left-1/2 -lg:text-xl"
+    transition:fade
 >
     <Swiper
         direction='vertical'
@@ -77,8 +91,16 @@
                         Free service we built to help you share your residential experiences and find the best place 🏡 to rent or buy.
                     </p>
                     <div class="flex items-center justify-left -lg:flex-wrap">
-                        <SecondaryButton text="Continue without signing in" className="mr-5 mt-5" />
-                        <MainButton text="Create account" className='block mt-5' />
+                        <SecondaryButton
+                            text="Continue without signing in"
+                            className="mr-5 mt-5"
+                            action={closeStartScreen}
+                        />
+                        <MainButton
+                            text="Create new account"
+                            className='block mt-5'
+                            action={openRegister}
+                        />
                     </div>
                 </div>
             </section>
@@ -111,6 +133,7 @@
 
     .start_screen {
         background-color: var(--bg-color);
+        padding-top: var(--navbar-height);
     }
 
     :global(.swiper) {
