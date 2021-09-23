@@ -83,3 +83,24 @@ html {
     --col6: #000;
     --col7: #312838;
 }
+
+body {
+    --sidebar-width: 0px;
+    --normal-fz: 18px;
+    --bigger-fz: 20px;
+}
+
+.sidebar-open {
+    --sidebar-width: 400px;
+}
+
+textarea {
+    font-family: "Nunito", sans-serif;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 1366px) {
+    html {
+        font-size: 12px;
+    }
+}

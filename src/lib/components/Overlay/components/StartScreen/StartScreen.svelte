@@ -54,7 +54,7 @@
 </script>
 
 <div
-    class="start_screen fixed z-10 top-0 right-0 bottom-0 pt-20 left-1/2"
+    class="start_screen fixed z-1 inset-0 pt-20 lg:left-1/2 -lg:text-xl"
 >
     <Swiper
         direction='vertical'
@@ -65,34 +65,34 @@
         on:swiper={(e) => console.log(e.detail[0])}
     >
         <SwiperSlide>
-            <section class="flex items-center justify-center w-full h-full">
+            <section class="flex items-center justify-center w-full h-full slide-1 px-10">
                 <div class="max-w-xl">
-                    <h1 class="text-6xl mb-5">
+                    <h1 class="lg:text-6xl -lg:text-5xl mb-5">
                         Welcome to
-                        <span class="text-7xl font-bold">
+                        <span class="lg:text-7xl -lg:text-6xl font-bold">
                             Measureland
                         </span>
                     </h1>
-                    <p class="text-2xl mb-5">
+                    <p class="lg:text-2xl">
                         Free service we built to help you share your residential experiences and find the best place 🏡 to rent or buy.
                     </p>
-                    <div class="flex items-center justify-left">
-                        <SecondaryButton text="Continue without signing in" className="mr-5" />
-                        <MainButton text="Create account" className='block' />
+                    <div class="flex items-center justify-left -lg:flex-wrap">
+                        <SecondaryButton text="Continue without signing in" className="mr-5 mt-5" />
+                        <MainButton text="Create account" className='block mt-5' />
                     </div>
                 </div>
             </section>
         </SwiperSlide>
 
-        {#each contentSlides as slideData}
+        {#each contentSlides as slideData, i}
             <SwiperSlide>
-                <Slide { ...slideData } />
+                <Slide { ...slideData } slideNumber={i} />
             </SwiperSlide>
         {/each}
     </Swiper>
 
     {#if shouldShowScrollCaption}
-        <div class="absolute bottom-5 w-full flex justify-center animate-bounce" transition:fade>
+        <div class="absolute bottom-5 w-full flex justify-center animate-bounce z-1" transition:fade>
             <svg class="mx-5 w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
@@ -105,6 +105,10 @@
 </div>
 
 <style>
+    .slide-1 {
+        background: radial-gradient(59.96% 40.57% at 80.44% 52.41%, #FFF0A0 0%, #D4EFF5 100%);
+    }
+
     .start_screen {
         background-color: var(--bg-color);
     }

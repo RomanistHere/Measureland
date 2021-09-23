@@ -2,14 +2,18 @@
     import MainButton from './MainButton.svelte';
     import SecondaryButton from './SecondaryButton.svelte';
 
-    let isMini = false;
+    import { appStateStore } from "../../../../stores/state.js";
 </script>
 
-<nav class="fixed flex z-10 justify-center inset-x-0 top-0 {isMini ? 'h-16' : 'h-20'}">
+<nav
+    class="transition-all fixed flex z-1 justify-center inset-x-0 top-0 h-14"
+>
     <ul class="m-0 px-4 w-full flex justify-between">
         <li class="m-0 p-0 list-none flex items-center justify-center">
-            <a href="#" class="flex flex-wrap justify-center items-center decoration-none font-bold {isMini ? 'text-lg' : 'text-2xl'}">
-                <img src="static/images/favicon.svg" alt="Measureland logo" width={isMini ? '40' : '50'}>
+            <a href="#" class="flex flex-wrap justify-center items-center decoration-none font-bold text-lg">
+                <div class="w-12 flex justify-center">
+                    <img src="static/images/favicon.svg" alt="Measureland logo" class="transition-all" width='40'>
+                </div>
                 <span class="ml-4">
                     Measureland
                 </span>
@@ -21,8 +25,8 @@
             <a class="block mx-4 p-2" href="#">Support</a>
         </li>
         <li class="m-0 p-0 list-none flex items-center justify-center">
-            <SecondaryButton text='Log in' />
-            <MainButton text='Register' className='ml-4' />
+            <SecondaryButton text='Log in' className='py-2' />
+            <MainButton text='Register' className='ml-4 py-2' />
         </li>
     </ul>
 </nav>

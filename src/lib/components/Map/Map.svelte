@@ -51,7 +51,7 @@
 </script>
 
 {#if $appStateStore.shouldWork}
-    <div use:mapAction>
+    <div use:mapAction class="w-full">
         {#if map}
             <MarkerCluster />
             <GeoSearch />
@@ -70,8 +70,8 @@
 
 <style>
     div {
-        height: 100%;
-        width: 100%;
+        height: calc(100% - 3.5rem);
+        top: 3.5rem;
     }
 
     .limit_error {

@@ -4,4 +4,4 @@
     export let className = '';
 </script>
 
-<a href={"#"} class="btn btn-low {className}" on:click|preventDefault={action}>{text}</a>
+<a href={"#"} class="btn text-base lg:text-lg btn-low {className}" on:click|preventDefault={action}>{text}</a>

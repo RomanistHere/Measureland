@@ -94,9 +94,9 @@
 
 <!-- {#if shouldShowStartScreen}
     <svelte:component this={StartScreen}/>
-{/if}
+{/if} -->
 
-<NavBar /> -->
+<NavBar />
 
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />

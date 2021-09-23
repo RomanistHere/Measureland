@@ -1,19 +1,4 @@
 /* // general // */
-body {
-    --sidebar-width: 0px;
-    --normal-fz: 18px;
-    --bigger-fz: 20px;
-}
-
-.sidebar-open {
-    --sidebar-width: 400px;
-}
-
-textarea {
-    font-family: "Nunito", sans-serif;
-    font-size: 16px;
-}
-
 .overlay__seo_heading {
     position: absolute;
     opacity: 0;

@@ -4,7 +4,7 @@
     export let className = 'rate__evaluate';
 </script>
 
-<a href={"#"} class="btn {className}" on:click|preventDefault={action}>{text}</a>
+<a href={"#"} class="btn text-base lg:text-lg {className}" on:click|preventDefault={action}>{text}</a>
 
 <style>
     .d-b {
