@@ -1,6 +1,6 @@
 <script>
     export let text = '';
-    export let href = '';
+    export let href = '#';
     export let className = '';
     export let blank = null;
 

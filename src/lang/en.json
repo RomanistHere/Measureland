@@ -132,6 +132,22 @@
         "titleSingle": "This place's average rating's about",
         "titleGrp": "This group of places average rating's about"
     },
+    "navBar": {
+        "logoTitle": "Measureland",
+        "logoAlt": "Measureland logo",
+        "primaryBtn": "Register",
+        "secondaryBtn": "Log in",
+        "links": [{
+            "text": "Blog",
+            "url": "/blog/"
+        },{
+            "text": "Community",
+            "url": "https://t.me/measureland"
+        },{
+            "text": "Support",
+            "url": "/blog/support/"
+        }]
+    },
     "menuSidebar": {
         "titleTop": "Account",
         "loginOrRegister": "Login/Register",

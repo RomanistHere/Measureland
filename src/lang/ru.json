@@ -132,6 +132,22 @@
         "titleSingle": "Средний рейтинг этого места примерно",
         "titleGrp": "`Средний рейтинг в данной группе примерно"
     },
+    "navBar": {
+        "logoTitle": "Измерия",
+        "logoAlt": "Измерийский логотип",
+        "primaryBtn": "Регистрация",
+        "secondaryBtn": "Войти",
+        "links": [{
+            "text": "Блог",
+            "url": "/blog/"
+        },{
+            "text": "Сообщество",
+            "url": "https://t.me/measureland_ru"
+        },{
+            "text": "Поддержка",
+            "url": "/blog/support/"
+        }]
+    },
     "menuSidebar": {
         "titleTop": "Аккаунт",
         "loginOrRegister": "Войти/Зарегистрироваться",

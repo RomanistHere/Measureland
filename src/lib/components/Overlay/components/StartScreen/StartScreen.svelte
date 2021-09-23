@@ -8,6 +8,7 @@
 
     import Slide from './Slide.svelte';
     import TextLink from '../../../TextLink.svelte';
+    import CheckBox from '../../../CheckBox.svelte';
     import MainButton from '../MainButton.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import ScrollBottomText from './ScrollBottomText.svelte';
@@ -83,6 +84,13 @@
                             action={openRegister}
                         />
                     </div>
+                    <CheckBox
+                        text='By using Measureland I agree with'
+                        textLink='terms of use'
+                        hrefLink='blog/terms-of-use/'
+                        checked={true}
+                        className="mt-5 text-base"
+                    />
                 </div>
             </section>
         </SwiperSlide>

@@ -1,4 +1,6 @@
 <script>
+    import { _, json } from 'svelte-i18n';
+
     import MainButton from './MainButton.svelte';
     import SecondaryButton from './SecondaryButton.svelte';
 
@@ -54,9 +56,9 @@
                 on:mouseenter={handleMouseenterLeft}
                 on:mouseleave={handleMouseleaveLeft}
             >
-                <img src="static/images/favicon.svg" alt="Measureland logo" class="transition-all" width='40'>
+                <img src="static/images/favicon.svg" alt="{$_('navBar.logoAlt')}" class="transition-all" width='40'>
                 <span class="ml-4">
-                    Measureland
+                    {$_('navBar.logoTitle')}
                 </span>
             </a>
         </li>
@@ -65,17 +67,21 @@
             on:mouseenter={handleMouseenterCenter}
             on:mouseleave={handleMouseleaveCenter}
         >
-            <a class="block mx-4 p-2" href="#">Blog</a>
-            <a class="block mx-4 p-2" href="#">Community guides</a>
-            <a class="block mx-4 p-2" href="#">Support</a>
+            <ul>
+                {#each $json('navBar.links') as { text, url }}
+                    <li class="inline-block">
+                        <a class="block mx-4 p-2 hover:underline" href={url}>{text}</a>
+                    </li>
+                {/each}
+            </ul>
         </li>
         <li
             class="m-0 p-0 list-none flex items-center justify-center"
             on:mouseenter={handleMouseenterRight}
             on:mouseleave={handleMouseleaveRight}
         >
-            <SecondaryButton text='Log in' className='py-2' action={openLogin} />
-            <MainButton text='Register' className='ml-4 py-2' action={openRegister} />
+            <SecondaryButton text={$_('navBar.secondaryBtn')} className='py-2' action={openLogin} />
+            <MainButton text={$_('navBar.primaryBtn')} className='ml-4 py-2' action={openRegister} />
         </li>
     </ul>
     <div class="absolute inset-0 -inset-x-80 nav_gradient {!isCenterHovered && 'opacity-90'} {isLeftHovered && 'left-0 opacity-100'} {isRightHovered && 'right-0 opacity-100'} {isCenterHovered && 'transform scale-x-150 opacity-100'}"></div>

@@ -17,13 +17,15 @@ export const userStateStore = writable({
 });
 
 export const appStateStore = writable({
-    zoom: 12,
+    // zoom: 12,
+    zoom: 4,
     openModal: false,
     shouldWork: true,
     showRating: false,
     ratingToSave: null,
     corrdsToSave: null,
-    center: [53.9065, 27.6663],
+    // center: [53.9065, 27.6663],
+    center: [40, 64],
     shouldShowLoading: false,
     startScreen: false,
 });
