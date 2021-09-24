@@ -39,15 +39,23 @@
     }
 
     const closeStartScreen = () => {
+        if (!$appStateStore.termsOfUseAgreed)
+            return;
         appStateStore.update(state => ({ ...state, startScreen: false }));
         setCookie('startScreen', '0', 365);
     }
 
     const openRegister = () => {
+        if (!$appStateStore.termsOfUseAgreed)
+            return;
         closeStartScreen();
         openAnotherOverlay('registerPopup');
     }
 </script>
+
+{#if !$appStateStore.termsOfUseAgreed}
+    <div class="fixed z-1 inset-0 lg:right-1/2"></div>
+{/if}
 
 <div
     class="start_screen fixed z-1 inset-0 lg:left-1/2 -lg:text-xl"
@@ -72,25 +80,27 @@
                     <p class="lg:text-2xl">
                         {$_('startScreen.firstSlide.text')}
                     </p>
-                    <div class="flex items-center justify-left -lg:flex-wrap">
+                    <CheckBox
+                        text='By using Measureland I agree with'
+                        textLink='terms of use'
+                        hrefLink='blog/terms-of-use/'
+                        bind:checked={$appStateStore.termsOfUseAgreed}
+                        className="mt-5 text-base"
+                    />
+                    <div class="flex items-center justify-left -lg:flex-wrap {!$appStateStore.termsOfUseAgreed && 'opacity-30'}">
                         <SecondaryButton
                             text={$_('startScreen.firstSlide.btn1')}
                             className="mr-5 mt-5"
+                            disabled={!$appStateStore.termsOfUseAgreed}
                             action={closeStartScreen}
                         />
                         <MainButton
                             text={$_('startScreen.firstSlide.btn2')}
                             className='block mt-5'
+                            disabled={!$appStateStore.termsOfUseAgreed}
                             action={openRegister}
                         />
                     </div>
-                    <CheckBox
-                        text='By using Measureland I agree with'
-                        textLink='terms of use'
-                        hrefLink='blog/terms-of-use/'
-                        checked={true}
-                        className="mt-5 text-base"
-                    />
                 </div>
             </section>
         </SwiperSlide>
@@ -114,15 +124,17 @@
                             </li>
                         {/each}
                     </ul>
-                    <div class="flex items-center justify-left -lg:flex-wrap">
+                    <div class="flex items-center justify-left -lg:flex-wrap {!$appStateStore.termsOfUseAgreed && 'opacity-30'}">
                         <SecondaryButton
                             text={$_('startScreen.firstSlide.btn1')}
                             className="mr-5 mt-5"
+                            disabled={!$appStateStore.termsOfUseAgreed}
                             action={closeStartScreen}
                         />
                         <MainButton
                             text={$_('startScreen.firstSlide.btn2')}
                             className='block mt-5'
+                            disabled={!$appStateStore.termsOfUseAgreed}
                             action={openRegister}
                         />
                     </div>

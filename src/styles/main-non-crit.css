@@ -950,6 +950,10 @@
     color: var(--text-color);
 }
 
+.btn-disabled {
+    cursor: default;
+}
+
 /* // settings // */
 
 .settings__list,
@@ -1548,12 +1552,11 @@ a::selection {
         color: var(--active-color);
     }
 
-    .btn:hover {
+    .btn:not(.btn-disabled):not(.btn-low):hover {
         background-color: var(--suc-color);
     }
 
-    .btn-low:hover {
-        background: none;
+    .btn-low:not(.btn-disabled):hover {
         border-color: var(--text-color);
     }
 

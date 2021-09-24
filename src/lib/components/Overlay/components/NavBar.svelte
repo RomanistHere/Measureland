@@ -8,16 +8,22 @@
     import { appStateStore } from "../../../../stores/state.js";
 
     const closeStartScreen = () => {
+        if (!$appStateStore.termsOfUseAgreed)
+            return;
         appStateStore.update(state => ({ ...state, startScreen: false }));
-        // setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
+        setCookie('startScreen', '0', 365);
     }
 
     const openRegister = () => {
+        if (!$appStateStore.termsOfUseAgreed)
+            return;
         closeStartScreen();
         openAnotherOverlay('registerPopup');
     }
 
     const openLogin = () => {
+        if (!$appStateStore.termsOfUseAgreed)
+            return;
         closeStartScreen();
         openAnotherOverlay('loginPopup');
     }
@@ -76,12 +82,22 @@
             </ul>
         </li>
         <li
-            class="m-0 p-0 list-none flex items-center justify-center"
+            class="m-0 p-0 list-none flex items-center justify-center {!$appStateStore.termsOfUseAgreed && 'opacity-30'}"
             on:mouseenter={handleMouseenterRight}
             on:mouseleave={handleMouseleaveRight}
         >
-            <SecondaryButton text={$_('navBar.secondaryBtn')} className='py-2' action={openLogin} />
-            <MainButton text={$_('navBar.primaryBtn')} className='ml-4 py-2' action={openRegister} />
+            <SecondaryButton
+                text={$_('navBar.secondaryBtn')}
+                className='py-2'
+                disabled={!$appStateStore.termsOfUseAgreed}
+                action={openLogin}
+            />
+            <MainButton
+                text={$_('navBar.primaryBtn')}
+                className='ml-4 py-2'
+                disabled={!$appStateStore.termsOfUseAgreed}
+                action={openRegister}
+            />
         </li>
     </ul>
     <div class="absolute inset-0 -inset-x-80 nav_gradient {!isCenterHovered && 'opacity-90'} {isLeftHovered && 'left-0 opacity-100'} {isRightHovered && 'right-0 opacity-100'} {isCenterHovered && 'transform scale-x-150 opacity-100'}"></div>

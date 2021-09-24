@@ -17,7 +17,7 @@
     {#if isLink}
         <TextLink blank={true} href={hrefLink} text={textLink} />
     {/if}
-    <input type="checkbox" id="terms" class="absolute opacity-0 h-0 w-0 cursor-pointer" { checked }>
+    <input type="checkbox" id="terms" class="absolute opacity-0 h-0 w-0 cursor-pointer" bind:checked={checked}>
     <span class="box absolute flex justify-center items-center left-0 top-0 h-6 w-6"></span>
 </label>
 

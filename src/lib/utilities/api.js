@@ -1,3 +1,5 @@
+import { get } from 'svelte/store';
+import { appStateStore } from '../../stores/state.js';
 // TODO: env
 const path = 'http://localhost:3000/api'
 
@@ -38,9 +40,9 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
     if (!url)
         return ({ error: 'Not valid URL' })
 
-    // TODO:
-    // if (!startScreenState.terms)
-    //     return ({ error: 'Not agreed to the terms of use' })
+    const { termsOfUseAgreed } = get(appStateStore);
+    if (!termsOfUseAgreed)
+        return ({ error: 'Not agreed to the terms of use' });
 
     // default values
     method = method ? method : 'GET'
