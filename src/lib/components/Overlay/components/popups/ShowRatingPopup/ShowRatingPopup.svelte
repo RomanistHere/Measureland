@@ -129,7 +129,7 @@
             <span class="rate__highlight">{numberOfUsers}</span>
         </div>
         <div class="rate__container_item">
-            <a href={"#"} class="rate__comments" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:
+            <a href={"#"} class="rate__comments underline" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:
             <span class="rate__highlight">{numberOfComments}</span>
         </div>
     </div>

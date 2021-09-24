@@ -74,7 +74,7 @@
                     <span>{$_('myPlacesPopup.youHaveNotRated')}</span>
                 {:else}
                     {#each array as { lang, lat, lng, address }}
-                        <a class="places__link" href="https://measureland.org/{lang}?lat={lat}&lng={lng}&showRating=true" on:click|preventDefault={() => openShowRatingsPopup(lat, lng)}>{address}</a>
+                        <a class="places__link underline" href="https://measureland.org/{lang}?lat={lat}&lng={lng}&showRating=true" on:click|preventDefault={() => openShowRatingsPopup(lat, lng)}>{address}</a>
                     {/each}
                 {/if}
             </ul>

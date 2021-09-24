@@ -34,77 +34,6 @@
             showSuccessNotification();
     }
 
-    $: dataTopBlock = {
-        title: $_('menuSidebar.titleTop'),
-        list: [{
-            text: $_('menuSidebar.loginOrRegister'),
-            shouldShow: !isUserLoggedIn,
-            href: '#',
-            onClick: (e) => {
-                e.preventDefault();
-                openAnotherOverlay('loginPopup');
-            }
-        }, {
-            text: $_('menuSidebar.logout'),
-            shouldShow: isUserLoggedIn,
-            href: '#',
-            onClick: async (e) => {
-                e.preventDefault();
-                closeOverlays();
-                const { error, data } = await logout();
-
-                if (!error) {
-                    userStateStore.update(state => ({
-                        ...state,
-                        userID: null,
-                        activeRatings: 3,
-                        userName: 'Аноним',
-                        wantMoreRatings: false
-                    }));
-                    showSuccessNotification();
-                } else {
-                    console.warn(error)
-                    // showError('unrecognizedError', error)
-                }
-            }
-        }, {
-            text: $_('menuSidebar.myRatings'),
-            shouldShow: isUserLoggedIn,
-            href: '#',
-            onClick: (e) => {
-                e.preventDefault();
-                openAnotherOverlay('myPlacesPopup');
-            }
-        }, {
-            text: $_('menuSidebar.changePassword'),
-            shouldShow: isUserLoggedIn,
-            href: '#',
-            onClick: (e) => {
-                e.preventDefault();
-                openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
-            }
-        }, {
-            text: $_('menuSidebar.changeLanguage'),
-            shouldShow: true,
-            href: `#`,
-            onClick: async (e) => {
-                e.preventDefault();
-                const nextLang = $locale === 'ru' ? 'en' : 'ru';
-                locale.set(nextLang);
-                if (typeof window !== 'undefined') {
-                    const url = new URL(window.location.href);
-                    url.pathname = `/${nextLang}`;
-                    window.history.replaceState(null, null, url);
-
-                    if (isUserLoggedIn)
-                        await saveLang(nextLang);
-
-                    showSuccessNotification();
-                };
-            }
-        },]
-    };
-
     $: dataBottomBlock = {
         title: $_('menuSidebar.titleBot'),
         list: [{
@@ -147,8 +76,6 @@
 </script>
 
 <SidebarWrap>
-    <SidebarBlock { ...dataTopBlock }/>
-
     <div class="settings__block">
         <h2 class="rating__title title rating__item_text settings__title sidebar__title">{$_('menuSidebar.titleMid')}</h2>
         <hr>
@@ -197,12 +124,12 @@
     <footer class="footer">
         <div>
             <span class="footer__version">{$_('footer.version')}: {APP_VERSION}</span>.
-            <a class="footer__link" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
+            <a class="footer__link underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
         </div>
         <div>
-            {$_('footer.credits')} (<a class="footer__link" target="_blank" rel="noopener" href="https://romanisthere.github.io/">{$_('footer.creditsLink')}</a>).
+            {$_('footer.credits')} (<a class="footer__link underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/">{$_('footer.creditsLink')}</a>).
             <br/>
-            <a class="footer__link" target="_blank" rel="noopener" href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p">{$_('footer.allRightsReserved')}</a>. {$_('footer.rightsYear')}.
+            <a class="footer__link underline" target="_blank" rel="noopener" href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p">{$_('footer.allRightsReserved')}</a>. {$_('footer.rightsYear')}.
         </div>
     </footer>
 </SidebarWrap>

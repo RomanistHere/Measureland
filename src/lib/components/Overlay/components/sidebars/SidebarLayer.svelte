@@ -18,14 +18,16 @@
 </script>
 
 <aside
-    class="sidebar"
-    in:fly="{{ x: 200, duration: 80 }}"
+    class="fixed z-4 left-4 bottom-4 overflow-y-auto overflow-x-hidden rounded-md"
+    in:fly="{{ x: -100, duration: 300 }}"
+    out:fly="{{ x: -100, duration: 300 }}"
 >
     <svelte:component this={Sidebar} { sidebarData }/>
 </aside>
 
 <style>
     aside {
-        z-index: 4;
+        top: calc(1rem + var(--navbar-height));
+        width: 340px;
     }
 </style>

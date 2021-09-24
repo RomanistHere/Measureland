@@ -92,7 +92,7 @@ body {
 }
 
 .sidebar-open {
-    --sidebar-width: 400px;
+    --sidebar-width: 340px;
 }
 
 textarea {

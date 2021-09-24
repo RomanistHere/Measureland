@@ -10,29 +10,37 @@
 <PopupWrap className='login__wrap'>
     <div class="rating__popup login__popup rating__popup-active loginPopup">
         <div class="rating__content login__content">
-            <p class="rating__text">
+            <p class="my-3">
                 <strong class="rating__text-highlight">{$_('loggedInPopup.welcome')}, {$userStateStore.userName}!</strong>
             </p>
 
-            <p class="rating__text">
+            <p class="my-3">
                 {$_('loggedInPopup.activeRatingsRemaining')}: {$userStateStore.activeRatings}.
             </p>
 
             {#if $userStateStore.activeRatings <= 5}
-                <p class="rating__text">
-                    <a href="blog/how-to-become-citizen/" target="_blank" class="text_link">{$_('loggedInPopup.learnWhyLimits')}</a>. {$_('loggedInPopup.learnWhyLimitsAddition')}
+                <p class="my-3">
+                    <a href="blog/how-to-become-citizen/" target="_blank" class="text_link underline">{$_('loggedInPopup.learnWhyLimits')}</a>. {$_('loggedInPopup.learnWhyLimitsAddition')}
                 </p>
             {/if}
 
-            <p class="rating__text">
+            <p class="my-3">
                 {$_('loggedInPopup.hereSomeArticles')}:
             </p>
 
-            {#each list as { text, link }}
-                <p class="rating__text">
-                    <a href={link} target="_blank" class="text_link">{text}</a>
-                </p>
-            {/each}
+            <ul class="pl-5">
+                {#each list as { text, link }}
+                    <li class="my-3">
+                        <a href={link} target="_blank" class="text_link underline">{text}</a>
+                    </li>
+                {/each}
+            </ul>
         </div>
     </div>
 </PopupWrap>
+
+<style>
+    ul {
+        list-style-type: square;
+    }
+</style>

@@ -3,7 +3,7 @@
     import { browser } from '$app/env';
 
     import { overlayStateStore, appStateStore } from '../../../stores/state.js';
-    import { closeOverlays, openAnotherOverlay } from '../../utilities/helpers.js';
+    import { closeOverlays, openAnotherOverlay, closeOverlay } from '../../utilities/helpers.js';
 
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
@@ -52,8 +52,6 @@
             sidebarName = key;
             sidebarData = data;
             sidebarActive = true;
-            if (browser)
-                document.body.classList.add('sidebar-open');
         } else if (type === 'popup') {
             popupName = key;
             popupData = data;
@@ -62,11 +60,6 @@
     }
 
     const manageOverlays = openOverlays => {
-        // TODO: change document.body.classList when resolved:
-        // https://github.com/sveltejs/svelte/issues/3105#issuecomment-622437031
-        if (browser)
-            document.body.classList.remove('sidebar-open');
-
         sidebarActive = false;
         popupActive = false;
 
@@ -77,7 +70,9 @@
             manageOverlay(openOverlays[i]);
     }
 
-    const openSideBar = () => openAnotherOverlay('menuSidebar');
+    const toggleSideBar = () => sidebarActive
+        ? closeOverlay('sidebar')
+        : openAnotherOverlay('menuSidebar');
 
     $: dataOpen = checkIsOpen($overlayStateStore);
     $: manageOverlays(dataOpen);
@@ -99,7 +94,7 @@
     <SidebarLayer { sidebarName } { sidebarData } />
 {/if}
 
-<a href={"#"} class="overlay__btn open_settings z-1" on:click|preventDefault={openSideBar}>
+<a href={"#"} class="overlay__btn open_settings z-1" on:click|preventDefault={toggleSideBar}>
     <span class="menu_btn"></span>
 </a>
 

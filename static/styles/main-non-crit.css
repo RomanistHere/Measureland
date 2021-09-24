@@ -765,23 +765,9 @@
 
 /* // sidebar // */
 
-.sidebar {
-    position: fixed;
-    z-index: 3;
-
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: var(--sidebar-width);
-
-    background-color: var(--side-bg-color);
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 .sidebar__close {
-    right: 47px;
-    top: 23px;
+    right: 30px;
+    top: 24px;
 }
 
 .sidebar__section {
@@ -791,7 +777,6 @@
     min-height: 100%;
     padding: 20px 30px 60px;
 
-    border: 20px solid var(--bg-color);
     border-bottom: none;
     border-top: none;
 
