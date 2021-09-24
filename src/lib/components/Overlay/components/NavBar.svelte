@@ -4,12 +4,14 @@
     import MainButton from './MainButton.svelte';
     import SecondaryButton from './SecondaryButton.svelte';
 
-    import { openAnotherOverlay } from '../../../utilities/helpers.js';
+    import { openAnotherOverlay, setCookie } from '../../../utilities/helpers.js';
     import { appStateStore } from "../../../../stores/state.js";
 
     const closeStartScreen = () => {
-        if (!$appStateStore.termsOfUseAgreed)
+        const { termsOfUseAgreed, startScreen } = $appStateStore;
+        if (!startScreen || !termsOfUseAgreed)
             return;
+
         appStateStore.update(state => ({ ...state, startScreen: false }));
         setCookie('startScreen', '0', 365);
     }
