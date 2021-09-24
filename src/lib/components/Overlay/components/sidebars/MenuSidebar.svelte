@@ -14,25 +14,76 @@
     $: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
     $: isUserAskedForMoreRatings = $userStateStore.wantMoreRatings;
 
-    const toggleSendingEvents = () => {
-        if (!browser)
-            return;
-        const shouldSendEvent = !$userStateStore.shouldSendEvent;
-        setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
-        userStateStore.update(state => ({ ...state, shouldSendEvent }));
-    }
-
-    const askForMoreRatings = async () => {
-        openAnotherOverlay('askForMoreRatingsPopup');
-        userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
-        const { error } = await askMoreRatings();
-        closeOverlay('sidebar');
-        // TODO:
-        if (error)
-            alert('unrecognizedError');
-        else
-            showSuccessNotification();
-    }
+    $: dataTopBlock = {
+        title: $_('menuSidebar.titleTop'),
+        list: [{
+            text: $_('menuSidebar.loginOrRegister'),
+            shouldShow: !isUserLoggedIn,
+            href: '#',
+            onClick: (e) => {
+                e.preventDefault();
+                closeOverlay('sidebar');
+                openAnotherOverlay('loginPopup');
+            }
+        }, {
+            text: $_('menuSidebar.logout'),
+            shouldShow: isUserLoggedIn,
+            href: '#',
+            onClick: async (e) => {
+                e.preventDefault();
+                closeOverlays();
+                const { error, data } = await logout();
+                if (!error) {
+                    userStateStore.update(state => ({
+                        ...state,
+                        userID: null,
+                        activeRatings: 3,
+                        userName: 'Аноним',
+                        wantMoreRatings: false
+                    }));
+                    showSuccessNotification();
+                } else {
+                    console.warn(error)
+                    // showError('unrecognizedError', error)
+                }
+            }
+        }, {
+            text: $_('menuSidebar.myRatings'),
+            shouldShow: isUserLoggedIn,
+            href: '#',
+            onClick: (e) => {
+                e.preventDefault();
+                closeOverlay('sidebar');
+                openAnotherOverlay('myPlacesPopup');
+            }
+        }, {
+            text: $_('menuSidebar.changePassword'),
+            shouldShow: isUserLoggedIn,
+            href: '#',
+            onClick: (e) => {
+                e.preventDefault();
+                closeOverlay('sidebar');
+                openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
+            }
+        }, {
+            text: $_('menuSidebar.changeLanguage'),
+            shouldShow: true,
+            href: `#`,
+            onClick: async (e) => {
+                e.preventDefault();
+                const nextLang = $locale === 'ru' ? 'en' : 'ru';
+                locale.set(nextLang);
+                if (typeof window !== 'undefined') {
+                    const url = new URL(window.location.href);
+                    url.pathname = `/${nextLang}`;
+                    window.history.replaceState(null, null, url);
+                    if (isUserLoggedIn)
+                        await saveLang(nextLang);
+                    showSuccessNotification();
+                };
+            }
+        },]
+    };
 
     $: dataBottomBlock = {
         title: $_('menuSidebar.titleBot'),
@@ -41,6 +92,8 @@
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
+                if (window.innerWidth < 768)
+                    closeOverlay('sidebar');
                 openAnotherOverlay('partnersPopup');
             }
         }, {
@@ -73,9 +126,39 @@
             ]
         }
     }
+
+    const toggleSendingEvents = () => {
+        if (!browser)
+            return;
+        const shouldSendEvent = !$userStateStore.shouldSendEvent;
+        setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
+        userStateStore.update(state => ({ ...state, shouldSendEvent }));
+    }
+
+    const askForMoreRatings = async () => {
+        if (window.innerWidth < 768)
+            closeOverlay('sidebar');
+        openAnotherOverlay('askForMoreRatingsPopup');
+        userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
+        const { error } = await askMoreRatings();
+        closeOverlay('sidebar');
+        // TODO:
+        if (error)
+            alert('unrecognizedError');
+        else
+            showSuccessNotification();
+    }
+
+    const openHowToRatePopup = () => {
+        if (window.innerWidth < 768)
+            closeOverlay('sidebar');
+        openAnotherOverlay('howToRatePopup');
+    }
 </script>
 
 <SidebarWrap>
+    <SidebarBlock { ...dataTopBlock } className="md:hidden"/>
+
     <div class="settings__block">
         <h2 class="rating__title title rating__item_text settings__title sidebar__title">{$_('menuSidebar.titleMid')}</h2>
         <hr>
@@ -101,7 +184,7 @@
                 </a>
             </li> -->
             <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title" on:click|preventDefault={() => openAnotherOverlay('howToRatePopup')}>
+                <a href={"#"} class="settings__link rating__title" on:click|preventDefault={openHowToRatePopup}>
                     {$_('menuSidebar.ratePlace')}
                     {#if isUserLoggedIn}
                         <div class="settings__title-small settings__available">

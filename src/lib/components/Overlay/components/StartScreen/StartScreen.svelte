@@ -24,12 +24,17 @@
         ...item,
         action: item.action === 'openFilters'
             ? () => {
+                if (!$appStateStore.termsOfUseAgreed)
+                    return;
                 closeStartScreen();
                 fillFiltersFromArrOfStrings(['water:5-5']);
             }
             : () => {
                 window.open(item.href,'_blank');
-            }
+            },
+        disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed
+            ? true
+            : false
     }));
 
     $: lastSlideList = Object.values($json('startScreen.lastSlide.list'));

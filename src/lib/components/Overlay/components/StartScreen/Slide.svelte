@@ -7,6 +7,7 @@
     export let button = '';
     export let slideNumber;
     export let action = () => {};
+    export let disabled = false;
 </script>
 
 <section class="flex items-center justify-center px-10 w-full h-full slide-{slideNumber + 1}">
@@ -17,7 +18,7 @@
             <p class="lg:text-2xl mt-5">{text2}</p>
         {/if}
         {#if button}
-            <MainButton text={button} action={action} className='inline-block mt-5 px-10' />
+            <MainButton text={button} action={action} { disabled } className='inline-block mt-5 px-10 {disabled && 'opacity-30'}' />
         {/if}
     </div>
 </section>

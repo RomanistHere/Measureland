@@ -86,13 +86,8 @@ html {
 
 body {
     --navbar-height: 3.5rem;
-    --sidebar-width: 0px;
     --normal-fz: 18px;
     --bigger-fz: 20px;
-}
-
-.sidebar-open {
-    --sidebar-width: 340px;
 }
 
 textarea {
@@ -103,5 +98,11 @@ textarea {
 @media screen and (max-width: 1366px) {
     html {
         font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    body {
+        --navbar-height: 0px;
     }
 }

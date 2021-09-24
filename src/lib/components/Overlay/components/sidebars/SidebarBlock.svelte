@@ -1,6 +1,7 @@
 <script>
     export let title;
     export let list;
+    export let className = '';
 
     $: list = list.map(item => ({
         ...item,
@@ -9,7 +10,7 @@
     }))
 </script>
 
-<div class="settings__block">
+<div class="settings__block {className}">
     <h2 class="rating__title title rating__item_text settings__title sidebar__title">{title}</h2>
     <hr>
     <nav>

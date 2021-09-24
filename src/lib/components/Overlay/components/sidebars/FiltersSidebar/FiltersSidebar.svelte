@@ -108,7 +108,7 @@
     <a href={"#"} class="filters__reset" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
     <div class="filters__bot">
         {$_('filterSidebar.footerText1')}
-        <a href="https://www.donationalerts.com/r/romanisthere" rel="noopener" target="_blank" class="footer__link">
+        <a href="https://www.donationalerts.com/r/romanisthere" rel="noopener" target="_blank" class="footer__link underline">
             {$_('filterSidebar.footerLink')}
         </a>
         {$_('filterSidebar.footerText2')}

@@ -24,7 +24,7 @@
     $: showAndHideNotifications($notificationsStore);
 </script>
 
-<div>
+<div class="inset-0 fixed z-4 pointer-events-none">
     <!-- TODO: animations -->
     {#if shouldShowSuccessNotification}
         <SuccessNotification />
@@ -34,17 +34,3 @@
         <FiltersNotification />
     {/if}
 </div>
-
-<style>
-    div {
-        position: fixed;
-        z-index: 4;
-
-        top: 0;
-        left: 0;
-        width: calc(100% - var(--sidebar-width));
-        bottom: 0;
-
-        pointer-events: none;
-    }
-</style>

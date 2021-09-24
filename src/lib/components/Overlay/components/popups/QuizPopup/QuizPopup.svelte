@@ -173,17 +173,17 @@
     <div class="rating__popup rating__popup-active">
         <div class="rating__content">
             {#if currentStage === 1}
-                <p class="rating__text">
+                <p class="rating__text my-4">
                     {$_('quizPopup.soYouWantToRate')}
                 </p>
-                <p class="rating__text rating__text-italic">
+                <p class="rating__text rating__text-italic my-4">
                     {$_('quizPopup.doYouHavePersonalExperience')}
                 </p>
                 <div class="rating__img_wrap">
                     <img src="images/crowd.png" width="400" height="180" alt="{$_('quizPopup.imageTitle')}" class="rating__img">
                 </div>
             {:else if currentStage === 2}
-                <p class="rating__text">
+                <p class="rating__text my-4">
                     {$_('quizPopup.tenCriteria')}
                     <strong class="rating__text-highlight">{$_('quizPopup.tenCriteriaStrong')}</strong>:
                 </p>
@@ -198,7 +198,7 @@
                     { ...quizArray[1] }
                 />
             {:else if currentStage === 3}
-                <p class="rating__text">
+                <p class="rating__text my-4">
                     <strong class="rating__text-highlight">{$_('quizPopup.title3')}</strong>
                 </p>
 
@@ -217,7 +217,7 @@
                     { ...quizArray[4] }
                 />
             {:else if currentStage === 4}
-                <p class="rating__text">
+                <p class="rating__text my-4">
                     <strong class="rating__text-highlight">{$_('quizPopup.title4')}</strong>
                 </p>
 
@@ -236,7 +236,7 @@
                     { ...quizArray[7] }
                 />
             {:else if currentStage === 5}
-                <p class="rating__text">
+                <p class="rating__text my-4">
                     <strong class="rating__text-highlight">{$_('quizPopup.title5')}</strong>
                 </p>
 
@@ -255,7 +255,7 @@
                     { ...quizArray[10] }
                 />
             {:else if currentStage === 6}
-                <p class="rating__text">
+                <p class="rating__text my-4">
                     <strong class="rating__text-highlight">{$_('quizPopup.title6')}</strong>
                 </p>
 

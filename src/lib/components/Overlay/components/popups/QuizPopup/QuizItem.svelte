@@ -18,7 +18,7 @@
 </script>
 
 <div class="rating__stars">
-    <h2 class="rating__title title">
+    <h2 class="rating__title title font-bold">
         {title}
         <Tooltip { tooltip } />
     </h2>

@@ -90,7 +90,7 @@
 </script>
 
 <div
-    class="rating {popupParentClass}"
+    class="rating {popupParentClass} z-1 -md:z-2"
     on:click|preventDefault={closePopups}
     use:focusTrap
     transition:fade
@@ -116,7 +116,6 @@
     } */
     div {
         opacity: 1;
-        z-index: 1;
 
         top: var(--navbar-height);
     }
