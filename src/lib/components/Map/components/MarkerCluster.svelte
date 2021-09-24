@@ -23,22 +23,22 @@
 
     const getIcon = rating =>
         L.icon({
-            iconUrl: `../static/images/rating${rating}.svg`,
+            iconUrl: `../images/rating${rating}.svg`,
             iconSize: [61, 100],
             iconAnchor: [25, 70],
             popupAnchor: [-3, -76],
-            shadowUrl: '../static/images/house-base.svg',
+            shadowUrl: '../images/house-base.svg',
             shadowAnchor: [25, 70],
             shadowSize: [61, 100],
         });
 
     const getGrpIcon = rating =>
         L.icon({
-            iconUrl: `../static/images/rating${rating}.svg`,
+            iconUrl: `../images/rating${rating}.svg`,
             iconSize: [61, 100],
             iconAnchor: [25, 70],
             popupAnchor: [-3, -76],
-            shadowUrl: '../static/images/buildings-base.svg',
+            shadowUrl: '../images/buildings-base.svg',
             shadowAnchor: [25, 70],
             shadowSize: [61, 100],
         });

@@ -30,9 +30,6 @@
 </script>
 
 <svelte:head>
-	<link rel='stylesheet' href='src/styles/main.css'>
-	<link rel='stylesheet' href='src/styles/main-non-crit.css'>
-	<link rel='stylesheet' href='src/styles/restyle_external.css'>
 	<title>Welcome to Measureland</title>
 </svelte:head>
 
