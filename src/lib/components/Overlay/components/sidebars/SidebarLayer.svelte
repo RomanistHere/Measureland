@@ -18,7 +18,7 @@
 </script>
 
 <aside
-    class="fixed z-2 left-4 bottom-4 overflow-y-auto overflow-x-hidden rounded-md -md:inset-0"
+    class="fixed z-2 left-4 bottom-4 overflow-y-auto overflow-x-hidden rounded-md -md:inset-0 popup-shadow"
     in:fly="{{ x: -100, duration: 300 }}"
     out:fly="{{ x: -100, duration: 300 }}"
 >
@@ -29,6 +29,7 @@
     aside {
         top: calc(1rem + var(--navbar-height));
         width: 340px;
+        width: 20rem;
     }
 
     @media screen and (max-width: 767px) {

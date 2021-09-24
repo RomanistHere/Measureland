@@ -6,13 +6,13 @@
 </script>
 
 <ul
-    class="absolute {className} rounded-md shadow-xl"
+    class="absolute {className} rounded-md overflow-hidden popup-shadow"
     in:fly="{{ y: 20, duration: 300 }}"
     out:fly="{{ y: -20, duration: 300 }}"
 >
     {#each dropdownData as { text, action }}
         <li>
-            <a class="block px-4 py-3" href={"#"} on:click|preventDefault={action}>{text}</a>
+            <a class="block px-4 py-4" href={"#"} on:click|preventDefault={action}>{text}</a>
         </li>
     {/each}
 </ul>
@@ -24,5 +24,9 @@
 
     a:hover {
         background-color: var(--bg-color);
+    }
+
+    ul {
+        transform: translateY(0);
     }
 </style>

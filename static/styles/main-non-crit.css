@@ -766,8 +766,8 @@
 /* // sidebar // */
 
 .sidebar__close {
-    right: 30px;
-    top: 24px;
+    right: 2rem;
+    top: 1.8rem;
 }
 
 .sidebar__section {
@@ -1828,10 +1828,6 @@ a::selection {
         margin: 20px;
     }
 
-    .overlay__btn {
-        z-index: 2;
-    }
-
     .rating {
         background-color: var(--side-bg-color);
         overflow: auto;
@@ -1905,17 +1901,6 @@ a::selection {
     .checkbox__checkmark {
         width: 20px;
         height: 20px;
-    }
-
-    .leaflet-touch .leaflet-control-geocoder-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .leaflet-touch .leaflet-bar:not(.leaflet-draw-toolbar) a {
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
     }
 
     .rating__item_text {

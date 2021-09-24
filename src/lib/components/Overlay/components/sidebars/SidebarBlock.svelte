@@ -10,18 +10,27 @@
     }))
 </script>
 
-<div class="settings__block {className}">
-    <h2 class="rating__title title rating__item_text settings__title sidebar__title">{title}</h2>
-    <hr>
-    <nav>
-        <ul class="settings__list">
-            {#each list as { text, shouldShow, onClick, href, target }, i}
-                {#if shouldShow}
-                    <li class="setting__item">
-                        <a { href } { target } class="settings__link rating__title" on:click={onClick}>{text}</a>
-                    </li>
-                {/if}
-        	{/each}
-        </ul>
-    </nav>
+<div class="mb-8 {className}">
+    <h2 class="font-bold px-8 text-xl">{title}</h2>
+    <ul class="mt-2">
+        {#each list as { text, shouldShow, onClick, href, target }, i}
+            {#if shouldShow}
+                <li>
+                    <a { href } { target } class="block px-8 text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click={onClick}>{text}</a>
+                </li>
+            {/if}
+    	{/each}
+    </ul>
 </div>
+
+<style>
+    a {
+        transition: background-color .2s;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        a:hover {
+            background-color: var(--bg-color);
+        }
+    }
+</style>

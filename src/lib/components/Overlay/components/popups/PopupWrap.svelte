@@ -9,7 +9,7 @@
 </script>
 
 <div
-    class="rating__wrap {className}"
+    class="rating__wrap popup-shadow {className}"
     in:fly="{{ y: 80, duration: 300 }}"
     out:fly="{{ y: -80, duration: 300 }}"
 >

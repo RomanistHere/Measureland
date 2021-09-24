@@ -8,6 +8,7 @@
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
 	import NotificationLayer from './components/notifications/NotificationLayer.svelte';
+    import BurgerButton from './components/BurgerButton.svelte';
     import Loading from './components/Loading.svelte';
     import NavBar from './components/NavBar.svelte';
 
@@ -94,9 +95,9 @@
     <SidebarLayer { sidebarName } { sidebarData } />
 {/if}
 
-<a href={"#"} class="overlay__btn open_settings z-1" on:click|preventDefault={toggleSideBar}>
-    <span class="menu_btn"></span>
-</a>
+<BurgerButton
+    action={toggleSideBar}
+/>
 
 {#if $appStateStore.startScreen}
     <svelte:component this={StartScreen}/>
@@ -107,9 +108,3 @@
 <NotificationLayer />
 
 <svelte:window on:keydown={handleKeydown}/>
-
-<style>
-    a {
-        top: calc(var(--navbar-height) + 10px);
-    }
-</style>

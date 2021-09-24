@@ -4,52 +4,6 @@
     height: 100%;
 }
 
-.overlay__btn {
-    position: absolute;
-    z-index: 3;
-}
-
-.open_settings {
-    width: 40px;
-    height: 40px;
-    right: 10px;
-    top: 10px;
-
-    text-decoration: none;
-    font-size: 30px;
-}
-
-.open_settings::before,
-.open_settings::after {
-    content: '';
-}
-
-.open_settings::before,
-.open_settings::after,
-.menu_btn {
-    position: absolute;
-
-    width: 100%;
-    top: 0;
-    left: 0;
-    height: 8px;
-    border: 2px solid var(--text-color);
-
-    box-sizing: border-box;
-
-    background-color: var(--bg-color);
-    box-shadow: 0 0 1px var(--text-color);
-    transition: transform .2s;
-}
-
-.menu_btn {
-    top: 14px;
-}
-
-.open_settings::after {
-    top: 27px;
-}
-
 /* // leaflet // */
 
 .geocoder-control .geocoder-control-input,
@@ -692,15 +646,6 @@ input:checked ~ .checkbox__checkmark::after {
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .open_settings:hover::before,
-    .open_settings:hover::after {
-        transform: translateX(-2px);
-    }
-
-    .open_settings:hover .menu_btn {
-        transform: translateX(2px);
-    }
-
     .leaflet-control-geocoder-alternatives li:hover {
         background-color: var(--bg-color);
     }

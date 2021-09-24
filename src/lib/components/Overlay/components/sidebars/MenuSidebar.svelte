@@ -4,6 +4,7 @@
 
     import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
+    import MainButton from '../MainButton.svelte';
 
     import { openAnotherOverlay, closeOverlays, showSuccessNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
@@ -159,12 +160,11 @@
 <SidebarWrap>
     <SidebarBlock { ...dataTopBlock } className="md:hidden"/>
 
-    <div class="settings__block">
-        <h2 class="rating__title title rating__item_text settings__title sidebar__title">{$_('menuSidebar.titleMid')}</h2>
-        <hr>
-        <ul class="settings__list">
-            <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title" on:click|preventDefault={toggleSendingEvents}>
+    <div class="mb-8">
+        <h2 class="font-bold px-8 text-xl">{$_('menuSidebar.titleMid')}</h2>
+        <ul class="mt-2">
+            <li>
+                <a href={"#"} class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click|preventDefault={toggleSendingEvents}>
                     {$_('menuSidebar.sendCrashReports')}:
                     {#if $userStateStore.shouldSendEvent}
                         {$_('menuSidebar.toggleOn')}
@@ -173,21 +173,14 @@
                     {/if}
                 </a>
             </li>
-            <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title openFiltersBtn" on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}>{$_('menuSidebar.filters')}</a>
+            <li>
+                <a href={"#"} class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}>{$_('menuSidebar.filters')}</a>
             </li>
-            <!-- <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title vizualizeLoadingBtn">
-                    Vizualize loading:
-                    <span class="settings__off">OFF</span>
-                    <span class="settings__on">ON</span>
-                </a>
-            </li> -->
-            <li class="setting__item">
-                <a href={"#"} class="settings__link rating__title" on:click|preventDefault={openHowToRatePopup}>
+            <li>
+                <a href={"#"} class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click|preventDefault={openHowToRatePopup}>
                     {$_('menuSidebar.ratePlace')}
                     {#if isUserLoggedIn}
-                        <div class="settings__title-small settings__available">
+                        <div class="inline-block text-sm settings__available">
                           ({$_('menuSidebar.ratePlaceAvailable')}:
                           <span class="settings__highlight settings__highlight-small">{$userStateStore.activeRatings}</span>)
                         </div>
@@ -195,24 +188,41 @@
                 </a>
             </li>
         </ul>
+
         {#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
-            <div class="btn settings__btn settings__btn-show_text">{$_('menuSidebar.requestProcessing')}</div>
+            <MainButton
+                className="mx-8 cursor-default px-5 py-2 text-center block opacity-50 text-xl -2xl:text-lg"
+                disabled={true}
+                text={$_('menuSidebar.requestProcessing')}
+            />
         {:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
-            <a href={"#"} class="btn settings__btn" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
+            <a href={"#"} class="btn mx-8 mt-2 px-5 py-2 text-center" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
         {/if}
     </div>
 
     <SidebarBlock { ...dataBottomBlock }/>
 
-    <footer class="footer">
+    <footer class="absolute bottom-0 inset-x-0 text-center text-sm py-5 pb-5">
         <div>
-            <span class="footer__version">{$_('footer.version')}: {APP_VERSION}</span>.
-            <a class="footer__link underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
+            <span>{$_('footer.version')}: {APP_VERSION}</span>.
+            <a class="link underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
         </div>
         <div>
-            {$_('footer.credits')} (<a class="footer__link underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/">{$_('footer.creditsLink')}</a>).
+            {$_('footer.credits')} (<a class="link underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/">{$_('footer.creditsLink')}</a>).
             <br/>
-            <a class="footer__link underline" target="_blank" rel="noopener" href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p">{$_('footer.allRightsReserved')}</a>. {$_('footer.rightsYear')}.
+            <a class="link underline" target="_blank" rel="noopener" href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p">{$_('footer.allRightsReserved')}</a>. {$_('footer.rightsYear')}.
         </div>
     </footer>
 </SidebarWrap>
+
+<style>
+    .link {
+        transition: background-color .2s;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .link:hover {
+            background-color: var(--bg-color);
+        }
+    }
+</style>
