@@ -79,7 +79,7 @@
     });
 </script>
 
-<div class="slider {className}" bind:this={slider}></div>
+<div class="{className}" bind:this={slider}></div>
 
 <style>
     :global(.noUi-horizontal) {

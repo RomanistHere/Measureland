@@ -30,6 +30,10 @@
         top: calc(1rem + var(--navbar-height));
     }
 
+    /* aside::-webkit-scrollbar {
+        display: none;
+    } */
+
     @media screen and (max-width: 1023px) {
         aside {
             top: var(--navbar-height);

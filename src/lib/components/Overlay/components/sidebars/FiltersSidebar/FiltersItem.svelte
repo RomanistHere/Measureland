@@ -53,17 +53,17 @@
     }
 </script>
 
-<li class="filters__item px-8 text-base">
-    <span class="">
+<li class="mb-4 px-8 text-base">
+    <span>
         {title}
         <ToolTip { tooltip } />
-        <div class="filter__value_wrap">
-            ({description}<span class="filter__value">{currentValue}</span>)
+        <div class="inline-block font-bold">
+            ({description}{currentValue})
         </div>
     </span>
 
     <Slider
-        className='filter__slider'
+        className='my-2 mx-3'
         on:update={setFilterText}
         on:end={setFilter}
         bind:this={slider}

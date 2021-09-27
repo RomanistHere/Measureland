@@ -14,7 +14,7 @@
     ?
     {#if showTooltip}
         <span
-            class="info__tooltip text-xs w-32 -left-16 absolute z-1 pointer-events-none px-2 py-1 rounded-md font-normal"
+            class="info__tooltip text-xs w-32 -left-14 absolute z-1 pointer-events-none px-2 py-1 rounded-md font-normal"
             in:fly="{{ y: 10, duration: 200 }}"
             out:fly="{{ y: -10, duration: 200 }}"
         >
@@ -47,7 +47,7 @@
         content: "";
         position: absolute;
         top: 100%;
-        left: 55%;
+        left: 50%;
         margin-left: -5px;
         border-width: 5px;
         border-style: solid;

@@ -1,8 +1,10 @@
 <script>
     import { _, json } from 'svelte-i18n';
+
     import SidebarWrap from '../SidebarWrap.svelte';
     import FiltersItem from './FiltersItem.svelte';
     import PresetBtn from './PresetBtn.svelte';
+    import MainButton from '../../MainButton.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
     import { fillFiltersFromArrOfStrings, debounce } from '../../../../../utilities/helpers.js'
@@ -87,7 +89,7 @@
     <h4 class="px-8 mb-2">{$_('filterSidebar.filterPresets')}</h4>
     <ul class="flex flex-wrap justify-between px-8 mb-4">
         {#each presets as { presetText, value, isActive }, presetNumber}
-            <li class="">
+            <li>
                 <PresetBtn
                     on:presetClick={debouncedApplyPreset}
                     { presetText }
@@ -97,15 +99,17 @@
             </li>
         {/each}
     </ul>
+
     <ul>
         {#each filters as filterConfig, i}
             <FiltersItem { ...filterConfig } bind:this={refs[i].ref} />
         {/each}
     </ul>
-    <div class="px-8 mb-4">
-        <a href={"#"} class="filters__apply btn" on:click|preventDefault={applyFilters}>{$_('filterSidebar.applyBtn')}</a>
-        <a href={"#"} class="filters__reset underline" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
+
+    <div class="px-8 mb-4 text-right">
+        <a href={"#"} class="underline text-lg cursor-default opacity-60 {$filtersStore.isFiltersOn && 'hoverable'}" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
     </div>
+
     <div class="px-8 text-sm -mb-10 -lg:mb-2">
         {$_('filterSidebar.footerText1')}
         <a href="https://www.donationalerts.com/r/romanisthere" rel="noopener" target="_blank" class="footer__link underline">
@@ -115,3 +119,15 @@
         <span class="filters__bot-small">{$_('filterSidebar.footerTextSmall')}</span>
     </div>
 </SidebarWrap>
+
+<style>
+    .hoverable {
+        opacity: 1;
+        cursor: pointer;
+        transition: color .2s;
+    }
+
+    .hoverable:hover {
+        color: var(--active-color);
+    }
+</style>

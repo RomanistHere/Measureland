@@ -107,6 +107,8 @@
             minZoom: 4
         }).load(data);
 
+        console.log(data)
+
     	updateClusters();
     }
 
@@ -169,6 +171,26 @@
 
     $: handleExternalMarkers($markerStore);
 
+    const checkDataForRepeat = (geoData) => {
+        // due to some cases that is not covered by poolybool we need to check
+        // if didn't load the same data twice, if so reset cached data, othervise
+        // user will see group icons instead of single ones
+        // TODO: WATCH FOR THE PERFORMANCE!!!
+        const isRepeated = geoData.some(newItem =>
+            cachedData.find(item => item.geometry.coordinates.toString() === newItem.geometry.coordinates.toString())
+        );
+
+        if (isRepeated) {
+            cachedData = [];
+            usedBounds = [];
+            visitedPoly = null;
+            return true;
+        } else {
+            cachedData = [ ...cachedData, ...geoData ];
+            return false;
+        }
+    }
+
     const addDataAndDisplay = data => {
     	// console.time('fix geojson')
     	const geoData = Object.values(data).map(item => {
@@ -186,7 +208,11 @@
         });
 
     	if (!$filtersStore.isFiltersOn) {
-    		cachedData = [ ...cachedData, ...geoData ];
+            const shouldRedownload = checkDataForRepeat(geoData);
+            if (shouldRedownload) {
+                getNewData();
+                return;
+            }
     		// console.log('total number of points in cache: ', cachedData.length)
 
     		// console.timeEnd('fix geojson')
@@ -204,6 +230,20 @@
             center: [roundToFifthDecimal(lat), roundToFifthDecimal(lng)],
             zoom
         }));
+    }
+
+    const getQueryPolygon = (visitedPoly, currentScreenPoly) => {
+        try {
+            const queryPolygon = visitedPoly !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
+        		? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
+        		: currentScreenPoly;
+            return queryPolygon;
+        } catch (e) {
+            // TODO:
+            alert('polybool error');
+            console.log(e);
+            return currentScreenPoly;
+        }
     }
 
     const getNewData = async () => {
@@ -226,9 +266,7 @@
     		inverted: false
     	};
 
-    	const queryPolygon = visitedPoly !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
-    		? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
-    		: currentScreenPoly;
+    	const queryPolygon = getQueryPolygon(visitedPoly, currentScreenPoly);
 
     	// use data from cache
     	if (!queryPolygon.regions[0])
@@ -293,11 +331,17 @@
         // TODO:
         // console.log('number of downloaded points: ', result.length)
 
-    	if (!$filtersStore.isFiltersOn) {
-    		visitedPoly = visitedPoly !== null
-    			? PolyBool.union(visitedPoly, queryPolygon)
-    			: currentScreenPoly;
-    	}
+    	try {
+            if (!$filtersStore.isFiltersOn) {
+        		visitedPoly = visitedPoly !== null
+        			? PolyBool.union(visitedPoly, queryPolygon)
+        			: currentScreenPoly;
+        	}
+        } catch (e) {
+            // TODO:
+            alert('polybool error')
+            console.log(e)
+        }
 
         // checkSize(result)
     	isLoading = false;

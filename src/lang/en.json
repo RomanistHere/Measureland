@@ -11,12 +11,12 @@
             "caption": "1 - terrible, 5 - good"
         },
         "logistic": {
-            "title": "Basic and social infrastructure",
+            "title": "Basic and social facilities",
             "tooltip": "The number and quality of shops, cafes, entertainment facilities, hairdressers, gyms, etc. nearby.",
             "caption": "1 - awful, 5 - great"
         },
         "transport": {
-            "title": "Transport and location conditions",
+            "title": "Transport and location",
             "tooltip": "How easy it is to get to the needed places by public or personal transport, bicycle, on foot.",
             "caption": "1 - poor, 5 - nice"
         },

@@ -178,7 +178,7 @@
     },
     "filterSidebar": {
         "title": "Фильтры",
-        "filterPresets": "Готовые наборы фильтров:",
+        "filterPresets": "Попробуй готовые наборы:",
         "currentValue": "текущее значение: ",
         "applyBtn": "Применить",
         "resetBtn": "Сбросить",
