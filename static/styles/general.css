@@ -111,6 +111,12 @@ textarea {
     }
 }
 
+@media screen and (max-width: 1023px) {
+    html {
+        font-size: 16px;
+    }
+}
+
 @media screen and (max-width: 767px) {
     body {
         --navbar-height: 0px;

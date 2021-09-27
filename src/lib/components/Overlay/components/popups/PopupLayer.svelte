@@ -90,7 +90,7 @@
 </script>
 
 <div
-    class="rating {popupParentClass} z-1 -md:z-2"
+    class="rating {popupParentClass} z-1 -lg:z-2"
     on:click|preventDefault={closePopups}
     use:focusTrap
     transition:fade

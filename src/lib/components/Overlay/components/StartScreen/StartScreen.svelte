@@ -86,8 +86,8 @@
                         {$_('startScreen.firstSlide.text')}
                     </p>
                     <CheckBox
-                        text='By using Measureland I agree with'
-                        textLink='terms of use'
+                        text={$_('startScreen.checkboxText')}
+                        textLink={$_('startScreen.checkboxLink')}
                         hrefLink='blog/terms-of-use/'
                         bind:checked={$appStateStore.termsOfUseAgreed}
                         className="mt-5 text-base"
@@ -149,7 +149,7 @@
     </Swiper>
 
     {#if shouldShowScrollCaption}
-        <ScrollBottomText text={$_('startScreen.ScrollToLearnMode')} />
+        <ScrollBottomText text={$_('startScreen.scrollToLearnMode')} />
     {/if}
 </div>
 

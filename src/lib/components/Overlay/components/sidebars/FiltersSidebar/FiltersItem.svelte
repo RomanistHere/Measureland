@@ -2,6 +2,7 @@
     import { _ } from 'svelte-i18n';
 
     import Slider from './Slider.svelte';
+    import ToolTip from '../../../../ToolTip.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
 
@@ -52,15 +53,10 @@
     }
 </script>
 
-<li class="filters__item">
-    <span class="filters__label">
+<li class="filters__item px-8 text-base">
+    <span class="">
         {title}
-        <div class="info">
-            ?
-            <span class="info__tooltip info__tooltip-top">
-                {tooltip}
-            </span>
-        </div>
+        <ToolTip { tooltip } />
         <div class="filter__value_wrap">
             ({description}<span class="filter__value">{currentValue}</span>)
         </div>

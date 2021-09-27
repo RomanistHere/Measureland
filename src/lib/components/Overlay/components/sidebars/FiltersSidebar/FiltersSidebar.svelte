@@ -18,6 +18,24 @@
             : [1, 5]
     }));
 
+    $: presets = [{
+        presetText: $_('filterSidebar.preset1Text'),
+        isActive: false,
+        value: ["air:4-5", "water:4-5", "noize:4-5", "clean:4-5", "chill:4-5", "pets:4-5", "kids:4-5", "safety:4-5"]
+    },{
+        presetText: $_('filterSidebar.preset4Text'),
+        isActive: false,
+        value: ["air:4-5", "water:4-5", "noize:4-5", "chill:4-5", "pets:3-5", "logistic:4-5", "transport:4-5", "clean:4-5", "safety:4-5", "kids:3-5", "parking:3-5"]
+    },{
+        presetText: $_('filterSidebar.preset2Text'),
+        isActive: false,
+        value: ["clean:4-5", "safety:4-5", "logistic:4-5", "transport:4-5", "parking:3-5", "chill:3-5"]
+    },{
+        presetText: $_('filterSidebar.preset3Text'),
+        isActive: false,
+        value: ["air:5-5", "water:5-5", "noize:5-5", "chill:5-5", "pets:5-5"]
+    }];
+
     let refs = [
         { key: 'air', ref: null },
         { key: 'chill', ref: null },
@@ -62,33 +80,14 @@
         fillFiltersFromArrOfStrings(preset, refs);
     }
     const debouncedApplyPreset = debounce(applyPreset, 300);
-
-    let presets = [{
-        presetText: $_('filterSidebar.preset1Text'),
-        isActive: false,
-        value: ["air:4-5", "water:4-5", "noize:4-5", "clean:4-5", "chill:4-5", "pets:4-5", "kids:4-5", "safety:4-5"]
-    },{
-        presetText: $_('filterSidebar.preset2Text'),
-        isActive: false,
-        value: ["clean:4-5", "safety:4-5", "logistic:4-5", "transport:4-5", "parking:3-5", "chill:3-5"]
-    },{
-        presetText: $_('filterSidebar.preset3Text'),
-        isActive: false,
-        value: ["air:5-5", "water:5-5", "noize:5-5", "chill:5-5", "pets:5-5"]
-    },{
-        presetText: $_('filterSidebar.preset4Text'),
-        isActive: false,
-        value: ["air:4-5", "water:4-5", "noize:4-5", "chill:4-5", "pets:3-5", "logistic:4-5", "transport:4-5", "clean:4-5", "safety:4-5", "kids:3-5", "parking:3-5"]
-    }];
 </script>
 
 <SidebarWrap>
-    <h2 class="rating__title title rating__item_text comments__title sidebar__title">{$_('filterSidebar.title')}</h2>
-    <hr>
-    <h4 class="fiters__subtitle">{$_('filterSidebar.filterPresets')}</h4>
-    <ul class="settings__list filters__top_block">
+    <h2 class="font-bold px-8 text-xl mb-2">{$_('filterSidebar.title')}</h2>
+    <h4 class="px-8 mb-2">{$_('filterSidebar.filterPresets')}</h4>
+    <ul class="flex flex-wrap justify-between px-8 mb-4">
         {#each presets as { presetText, value, isActive }, presetNumber}
-            <li class="setting__item">
+            <li class="">
                 <PresetBtn
                     on:presetClick={debouncedApplyPreset}
                     { presetText }
@@ -98,15 +97,16 @@
             </li>
         {/each}
     </ul>
-    <hr>
-    <ul class="filters__list">
+    <ul>
         {#each filters as filterConfig, i}
             <FiltersItem { ...filterConfig } bind:this={refs[i].ref} />
         {/each}
     </ul>
-    <a href={"#"} class="filters__apply btn" on:click|preventDefault={applyFilters}>{$_('filterSidebar.applyBtn')}</a>
-    <a href={"#"} class="filters__reset" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
-    <div class="filters__bot">
+    <div class="px-8 mb-4">
+        <a href={"#"} class="filters__apply btn" on:click|preventDefault={applyFilters}>{$_('filterSidebar.applyBtn')}</a>
+        <a href={"#"} class="filters__reset underline" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
+    </div>
+    <div class="px-8 text-sm -mb-10 -lg:mb-2">
         {$_('filterSidebar.footerText1')}
         <a href="https://www.donationalerts.com/r/romanisthere" rel="noopener" target="_blank" class="footer__link underline">
             {$_('filterSidebar.footerLink')}

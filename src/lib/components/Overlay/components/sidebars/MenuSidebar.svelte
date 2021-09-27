@@ -191,18 +191,18 @@
 
         {#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
             <MainButton
-                className="mx-8 cursor-default px-5 py-2 text-center block opacity-50 text-xl -2xl:text-lg"
+                className="mx-8 cursor-default px-5 py-2 text-center block opacity-50 text-xl -2xl:text-lg max-w-sm"
                 disabled={true}
                 text={$_('menuSidebar.requestProcessing')}
             />
         {:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
-            <a href={"#"} class="btn mx-8 mt-2 px-5 py-2 text-center" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
+            <a href={"#"} class="btn mx-8 mt-2 px-5 py-2 max-w-sm text-center" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
         {/if}
     </div>
 
     <SidebarBlock { ...dataBottomBlock }/>
 
-    <footer class="absolute bottom-0 inset-x-0 text-center text-sm py-5 pb-5">
+    <footer class="absolute bottom-0 inset-x-0 text-center text-sm py-5 pb-5 -lg:static">
         <div>
             <span>{$_('footer.version')}: {APP_VERSION}</span>.
             <a class="link underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>

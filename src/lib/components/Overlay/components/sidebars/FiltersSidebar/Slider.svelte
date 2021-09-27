@@ -89,7 +89,7 @@
     :global(.noUi-horizontal .noUi-handle) {
         width: 26px;
         height: 22px;
-        right: -17px;
+        right: -12px;
         top: -5px;
     }
 
