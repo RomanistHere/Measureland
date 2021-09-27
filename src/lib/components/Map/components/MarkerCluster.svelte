@@ -176,9 +176,10 @@
         // if didn't load the same data twice, if so reset cached data, othervise
         // user will see group icons instead of single ones
         // TODO: WATCH FOR THE PERFORMANCE!!!
-        const isRepeated = geoData.some(newItem =>
-            cachedData.find(item => item.geometry.coordinates.toString() === newItem.geometry.coordinates.toString())
-        );
+        const isRepeated = geoData.some(newItem => {
+            const coords = newItem.geometry.coordinates.toString();
+            return cachedData.find(item => item.geometry.coordinates.toString() === coords);
+        });
 
         if (isRepeated) {
             cachedData = [];
