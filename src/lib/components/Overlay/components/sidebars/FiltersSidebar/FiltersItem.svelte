@@ -2,7 +2,7 @@
     import { _ } from 'svelte-i18n';
 
     import Slider from './Slider.svelte';
-    import ToolTip from '../../../../ToolTip.svelte';
+    import Tooltip from '../../../../Tooltip.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
 
@@ -56,7 +56,7 @@
 <li class="mb-4 px-8 text-base">
     <span>
         {title}
-        <ToolTip { tooltip } />
+        <Tooltip { tooltip } />
         <div class="inline-block font-bold">
             ({description}{currentValue})
         </div>

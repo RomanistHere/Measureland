@@ -1,8 +1,6 @@
 <script>
     import CloseBtn from '../../../CloseBtn.svelte';
 
-    export let className;
-
     const overlayType = 'sidebar';
     const buttonClassName = 'sidebar__close';
 </script>
