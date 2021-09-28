@@ -21,7 +21,6 @@
 		"prettier": "~2.2.1",
 		"prettier-plugin-svelte": "^2.2.0",
 		"svelte": "^3.34.0",
-		"svelte-focus-trap": "^1.2.0",
 		"svelte-preprocess": "^4.9.4",
 		"tailwindcss": "^2.2.15"
 	},
@@ -31,6 +30,7 @@
 		"leaflet": "^1.7.1",
 		"nouislider": "^15.4.0",
 		"polybooljs": "^1.2.0",
+		"svelte-focus-trap": "^1.2.0",
 		"svelte-i18n": "^3.3.10",
 		"swiper": "^7.0.6"
 	}
