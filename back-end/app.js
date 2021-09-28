@@ -78,7 +78,7 @@ app.use(session({
     }
 }));
 app.use(cors({
-    origin: isProd ? process.env.CORS_PATH : process.env.CORS_PATH_DEV,
+    origin: isProd ? [process.env.CORS_PATH, new RegExp(process.env.CORS_REGEX)] : process.env.CORS_PATH_DEV,
     methods: ['GET', 'POST', 'DELETE'],
     credentials: true // enable set cookie
 }));
