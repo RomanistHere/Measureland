@@ -107,8 +107,6 @@
             minZoom: 4
         }).load(data);
 
-        console.log(data)
-
     	updateClusters();
     }
 

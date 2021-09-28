@@ -1,4 +1,5 @@
 <script>
+    import Tooltip from '$lib/components/Tooltip.svelte';
     import ShowRatingPopupStars from './ShowRatingPopupStars.svelte';
 
     export let title;
@@ -10,6 +11,7 @@
 <li class="rating__stars rating__item">
     <h2 class="rating__title title rating__item_text">
         { title }
+        <Tooltip { tooltip } { side } />
     </h2>
     <ShowRatingPopupStars { rating } />
 </li>

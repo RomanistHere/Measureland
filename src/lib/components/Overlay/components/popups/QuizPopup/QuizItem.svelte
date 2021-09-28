@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
 
-    import Tooltip from '../../../../Tooltip.svelte';
+    import Tooltip from '$lib/components/Tooltip.svelte';
 
     export let title;
     export let tooltip;
