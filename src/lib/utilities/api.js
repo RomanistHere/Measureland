@@ -1,14 +1,15 @@
 import { get } from 'svelte/store';
 import { appStateStore } from '../../stores/state.js';
-// TODO: env
-const path = 'http://localhost:3000/api'
+import { API_URL } from '../constants/env.js';
+
+console.log(API_URL)
 
 // TODO: move somewhere else (component)
 // window.addEventListener('error', event => {
 //     if (!state.shouldSendEvent)
 //         return
 //     const { message, filename, lineno, colno, error } = event
-//     navigator.sendBeacon(`${path}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }))
+//     navigator.sendBeacon(`${API_URL}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }))
 // })
 
 const sendFeedback = () => {
@@ -33,7 +34,7 @@ const sendFeedback = () => {
             }
         }
     }
-    flow.length > 10 && navigator.sendBeacon(`${path}/flow/add`, new URLSearchParams({ flow, uniqID }))
+    flow.length > 10 && navigator.sendBeacon(`${API_URL}/flow/add`, new URLSearchParams({ flow, uniqID }))
 }
 
 const fetchFunction = async ({ url, method, credentials, headers, body }) => {
@@ -77,7 +78,7 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 }
 
 const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperience) => {
-    const url = `${path}/geo/add`
+    const url = `${API_URL}/geo/add`
 
     return await fetchFunction({
         url,
@@ -98,7 +99,7 @@ const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperi
 }
 
 // const checkIfExist = async (latlng) => {
-//     const url = `${path}/geo/read_same/${new URLSearchParams({ latlng })}`
+//     const url = `${API_URL}/geo/read_same/${new URLSearchParams({ latlng })}`
 //
 //     try {
 //         const resp = await fetch(url, {
@@ -117,14 +118,14 @@ const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperi
 // }
 
 const getSinglePointData = async (latlng) => {
-    const url = `${path}/geo/read_loc/${new URLSearchParams({ latlng })}`
+    const url = `${API_URL}/geo/read_loc/${new URLSearchParams({ latlng })}`
 
     return await fetchFunction({ url })
 }
 
 // not used. Fetch all markers
 // const fetchAllData = async () => {
-//     const url = `${path}/geo/read_all`
+//     const url = `${API_URL}/geo/read_all`
 //
 //     return await fetchFunction({ url })
 // }
@@ -133,7 +134,7 @@ const fetchBoundsData = async (box, zoom, filtersObj = null) => {
     const preparedBox = box.map(item => [item[1], item[0]])
     const bounds = JSON.stringify(preparedBox)
     const filters = JSON.stringify(filtersObj)
-    const url = `${path}/geo/read_bounds/${new URLSearchParams({ bounds, zoom, filters })}`
+    const url = `${API_URL}/geo/read_bounds/${new URLSearchParams({ bounds, zoom, filters })}`
 
     return await fetchFunction({ url })
 }
@@ -141,13 +142,13 @@ const fetchBoundsData = async (box, zoom, filtersObj = null) => {
 // comments
 
 const fetchComments = async (geoID) => {
-    const url = `${path}/geo/read_comments/${new URLSearchParams({ geoID })}`
+    const url = `${API_URL}/geo/read_comments/${new URLSearchParams({ geoID })}`
 
     return await fetchFunction({ url })
 }
 
 const reactOnComment = async (goal, key) => {
-    const url = `${path}/geo/react_comment`
+    const url = `${API_URL}/geo/react_comment`
 
     return await fetchFunction({
         url,
@@ -162,7 +163,7 @@ const reactOnComment = async (goal, key) => {
 // users
 
 const register = async (email, password, lang) => {
-    const url = `${path}/user/register`
+    const url = `${API_URL}/user/register`
 
     return await fetchFunction({
         url,
@@ -176,7 +177,7 @@ const register = async (email, password, lang) => {
 }
 
 const login = async (email, password) => {
-    const url = `${path}/user/login`
+    const url = `${API_URL}/user/login`
 
     return await fetchFunction({
         url,
@@ -189,7 +190,7 @@ const login = async (email, password) => {
 }
 
 const onboard = async (userName, ageGrp, moneyGrp, userID) => {
-    const url = `${path}/user/onboard`
+    const url = `${API_URL}/user/onboard`
 
     return await fetchFunction({
         url,
@@ -204,37 +205,37 @@ const onboard = async (userName, ageGrp, moneyGrp, userID) => {
 }
 
 const verifyUser = async (token) => {
-    const url = `${path}/user/verify/${new URLSearchParams({ token })}`
+    const url = `${API_URL}/user/verify/${new URLSearchParams({ token })}`
 
     return await fetchFunction({ url })
 }
 
 const checkUser = async () => {
-    const url = `${path}/user/check_user`
+    const url = `${API_URL}/user/check_user`
 
     return await fetchFunction({ url })
 }
 
 const fetchRatedPlace = async () => {
-    const url = `${path}/user/read_places`
+    const url = `${API_URL}/user/read_places`
 
     return await fetchFunction({ url })
 }
 
 const askMoreRatings = async () => {
-    const url = `${path}/user/ask_more_ratings`
+    const url = `${API_URL}/user/ask_more_ratings`
 
     return await fetchFunction({ url })
 }
 
 const logout = async () => {
-    const url = `${path}/user/logout`
+    const url = `${API_URL}/user/logout`
 
     return await fetchFunction({ url, method: 'DELETE' })
 }
 
 const reverify = async (email) => {
-    const url = `${path}/user/reverify`
+    const url = `${API_URL}/user/reverify`
 
     return await fetchFunction({
         url,
@@ -246,7 +247,7 @@ const reverify = async (email) => {
 }
 
 const reset = async (password, token) => {
-    const url = `${path}/user/change_pass`
+    const url = `${API_URL}/user/change_pass`
 
     return await fetchFunction({
         url,
@@ -259,7 +260,7 @@ const reset = async (password, token) => {
 }
 
 const sendResetPass = async (email) => {
-    const url = `${path}/user/reset_pass`
+    const url = `${API_URL}/user/reset_pass`
 
     return await fetchFunction({
         url,
@@ -271,7 +272,7 @@ const sendResetPass = async (email) => {
 }
 
 const saveLang = async (lang) => {
-    const url = `${path}/user/language`
+    const url = `${API_URL}/user/language`
 
     return await fetchFunction({
         url,
