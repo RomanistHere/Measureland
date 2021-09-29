@@ -1,5 +1,5 @@
 <script>
-    import Tooltip from '$lib/components/Tooltip.svelte';
+    import Tooltip from '../../../../../components/Tooltip.svelte';
     import ShowRatingPopupStars from './ShowRatingPopupStars.svelte';
 
     export let title;

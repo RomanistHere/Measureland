@@ -1,7 +1,6 @@
 # To do:
 
 - drawing
-- build with two languages
 - check (stricter) content security policy
 - create popup for handling (showing) errors
 - move everything from old files
