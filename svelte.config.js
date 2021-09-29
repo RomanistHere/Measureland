@@ -24,7 +24,8 @@ const config = {
 				'/en'
 			],
 			onError: handleError
-		}
+		},
+		trailingSlash: 'always'
 	},
 
     preprocess: [preprocess({
