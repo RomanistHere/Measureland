@@ -25,7 +25,6 @@
 </script>
 
 <div class="inset-0 fixed z-4 pointer-events-none">
-    <!-- TODO: animations -->
     {#if shouldShowSuccessNotification}
         <SuccessNotification />
     {/if}
