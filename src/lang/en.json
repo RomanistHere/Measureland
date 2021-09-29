@@ -376,5 +376,14 @@
         "list": [
             "None so far. Be first!"
         ]
+    },
+    "SEO": {
+        "title": "Welcome to Measureland",
+        "description": "Looking to buy a house, rent an apartment or searching for a place to stay? Check the neighbourhood first!",
+        "imageAltText": "Measureland icon (a little house)",
+        "keywords": "Measureland, rate, Non-commerical, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
+        "subject": "Help people to find the best place to stay at or live in.",
+        "author": "Roman Smunyov",
+        "twitterUsername": "RomanistHere"
     }
 }

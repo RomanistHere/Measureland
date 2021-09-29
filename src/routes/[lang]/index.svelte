@@ -1,9 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
-	import { addMessages, init } from 'svelte-i18n';
+	import { addMessages, init, _ } from 'svelte-i18n';
 	import { page } from '$app/stores';
 	import 'esri-leaflet-geocoder/dist/img/search.png';
 
+	import SEO from '../../lib/components/SEO/SEO.svelte';
 	import UrlUpdater from '../../lib/components/UrlUpdater.svelte';
 	import Overlay from '../../lib/components/Overlay/Overlay.svelte';
 
@@ -29,9 +30,12 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Welcome to Measureland</title>
-</svelte:head>
+<SEO
+    pageTitle={$_('SEO.title')}
+    description={$_('SEO.description')}
+    imageSrc='https://measureland.org/images/PWA-icon-512x512.png'
+	imageAltText={$_('SEO.imageAltText')}
+/>
 
 <!-- // subsribe to certain changes and update url -->
 <UrlUpdater />
