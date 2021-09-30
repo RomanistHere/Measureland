@@ -8,7 +8,7 @@
 
     import { openAnotherOverlay, closeOverlays, showSuccessNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
-    import { APP_VERSION } from '../../../../constants/env.js';
+    import { APP_VERSION } from '../../../../../configs/env.js';
     import { userStateStore } from "../../../../../stores/state.js";
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;

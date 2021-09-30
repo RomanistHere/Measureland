@@ -5,6 +5,7 @@
     import MainButton from '../MainButton.svelte';
 
     import { closeOverlay } from "../../../../utilities/helpers.js";
+    import { appInfo } from '../../../../../configs/index.js';
 
     const closePopup = () => closeOverlay('popup');
 </script>
@@ -31,11 +32,11 @@
         <p class="rate_ask_ratings__text">
             {#if $locale === 'en'}
                 {$_('askForMoreRatingsPopup.youCanTryFasten')}
-                <a href="mailto:support@measureland.org" class="footer__link">support@measureland.org</a>
+                <a href="mailto:{appInfo.supportEmail}" class="footer__link">{appInfo.supportEmail}</a>
             {:else}
             {/if}
             {$_('askForMoreRatingsPopup.orOurTelegramBot')}
-            <a href="https://t.me/MeasurelandBot" target="_blank" rel="noopener" class="footer__link">https://t.me/MeasurelandBot</a>
+            <a href="{appInfo.telegramBot}" target="_blank" rel="noopener" class="footer__link">{appInfo.telegramBot}</a>
             {$_('askForMoreRatingsPopup.weWillRespond')}
         </p>
         <MainButton text={$_('askForMoreRatingsPopup.mainBtn')} className="rate_ask_ratings__ok" action={closePopup} />

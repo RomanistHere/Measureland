@@ -1,5 +1,7 @@
 # To do:
 
+- check error screen
+- move popups to the side
 - drawing
 - check (stricter) content security policy
 - create popup for handling (showing) errors

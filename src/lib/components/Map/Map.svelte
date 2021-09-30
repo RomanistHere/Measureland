@@ -5,10 +5,12 @@
 
     import MarkerCluster from './components/MarkerCluster.svelte';
     import GeoSearch from './components/GeoSearch.svelte';
+    import TextLink from '../TextLink.svelte';
 
     import { appStateStore } from "../../../stores/state.js";
     import { mapReference } from "../../../stores/references.js";
-    import { openAnotherOverlay } from '../../utilities/helpers.js'
+    import { openAnotherOverlay } from '../../utilities/helpers.js';
+    import { appInfo } from '../../../configs/index.js';
 
     let map;
 
@@ -59,30 +61,35 @@
         <!-- // drawing component -->
     </div>
 {:else}
-    <div class="limit_error">
-        {$_('errors.limitError.textBeforeLink')}
-        <a href="blog/how-to-become-citizen/">{$_('errors.limitError.textFirstLink')}</a>
-        {$_('errors.limitError.textBetweenLinks')}
-        <a href="mailto:support@measureland.org">{$_('errors.limitError.textSecondLink')}</a>
-        {$_('errors.limitError.textAfterLinks')}
-    </div>
+    <section class="fixed inset-0 z-5 flex justify-center items-center">
+        <p class="error_text">
+            {$_('errors.limitError.textBeforeLink')}
+            <TextLink
+                text={$_('errors.limitError.textFirstLink')}
+                href="blog/how-to-become-citizen/"
+            />
+            {$_('errors.limitError.textBetweenLinks')}
+            <TextLink
+                text={$_('errors.limitError.textSecondLink')}
+                href="mailto:{appInfo.supportEmail}"
+            />
+            {$_('errors.limitError.textAfterLinks')}
+        </p>
+    </section>
 {/if}
 
 <style>
+    section {
+        background-color: var(--side-bg-color);
+    }
+
+    .error_text {
+        width: 30rem;
+    }
+
     div {
         height: calc(100% - var(--navbar-height));
         top: var(--navbar-height);
-    }
-
-    .limit_error {
-        display: block;
-
-        width: 480px;
-        height: 200px;
-
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
     }
 
     :global(.leaflet-left .leaflet-control) {

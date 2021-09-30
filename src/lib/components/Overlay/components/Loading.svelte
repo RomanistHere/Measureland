@@ -1,14 +1,16 @@
 <script>
     import { browser } from '$app/env';
+    import { _ } from 'svelte-i18n';
 
     import Spinner from '../../Spinner.svelte';
+    import TextLink from '../../TextLink.svelte';
 
     import { checkUser } from "../../../utilities/api.js";
     import { getCookie } from "../../../utilities/helpers.js";
     import { userStateStore, appStateStore } from "../../../../stores/state.js";
+    import { appInfo } from '../../../../configs/index.js';
 
     let isError = false;
-    let errorName = null;
     let isLoaded = false;
 
     const userInit = async () => {
@@ -18,7 +20,6 @@
         if (error) {
             console.warn(error);
             isError = true;
-            errorName = error;
             if (error === 'Too many requests, please try again later')
                 appStateStore.update(state => ({ ...state, shouldWork: false }));
 
@@ -50,18 +51,23 @@
 </script>
 
 {#if !isLoaded}
-    <Spinner className="spinner__main" />
+    <Spinner className="fixed z-3 inset-0 {$appStateStore.startScreen && 'right-1/2'}" />
 
-    {#if isError && errorName === 'Too many requests, please try again later'}
-        <!-- TODO: check if it's working -->
-        <div class="limit_error">
-            You have exceeded our limit of requests. There are <a href="blog/how-to-become-citizen/">two options</a>: either you a bad guy who for some reason wants our aimed at helping people service go down or our system being not ideal. We are strongly believe it's a second one. If you <a href="mailto:support@measureland.org">dropped us a message</a> we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience.
-        </div>
-    {:else if isError}
-        <section class="error_screen">
-            <span class="error_screen__text">
-                Unfortunately, there is no response from the server. Try later or contact us: <a href="mailto:support@measureland.org">support@measureland.org</a>
+    {#if isError}
+        <section class="absolute z-4 flex justify-center items-center inset-0 {$appStateStore.startScreen && 'right-1/2'}">
+            <span class="text-xl pt-64">
+                {$_('errors.noResponseFromServer')}
+                <TextLink
+                    text={appInfo.supportEmail}
+                    href="mailto:{appInfo.supportEmail}"
+                />
             </span>
         </section>
     {/if}
 {/if}
+
+<style>
+    span {
+        width: 30rem;
+    }
+</style>

@@ -11,7 +11,6 @@
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { appStateStore, userStateStore } from "../../../../../../stores/state.js";
-    import { criteria } from '../../../../../constants/criteria.js';
     import { getFinalRating, roundToTen, openAnotherOverlay } from '../../../../../utilities/helpers.js';
 
     export let popupData;

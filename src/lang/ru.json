@@ -372,7 +372,8 @@
         "nearbyPlaceAlreadyRated": "Где-то рядом уже есть твоя оценка",
         "sessionExpired": "Сессия закончилась. Обнови страницу и войди заново.",
         "youRateTooOften": "Слишком часто оцениваешь, нужно подождать.",
-        "youRateTooOftenLink": "Зачем?"
+        "youRateTooOftenLink": "Зачем?",
+        "noResponseFromServer": "К сожалению, похоже что сервер не работает. Попробуй позже или пиши:"
     },
     "partnersPopup": {
         "ourFriendsAndPartners": "Наши друзья и единомышленники",
@@ -386,7 +387,6 @@
         "imageAltText": "Лого Измерии (маленький домик)",
         "keywords": "Измерия, оцени, некоммерческий, опен сурс, Роман Смунёв, RomanistHere, независимый, недвижимость, карта, рейтинг",
         "subject": "Помочь людям выбрать лучшее место для жизни.",
-        "author": "Роман Смунёв",
-        "twitterUsername": "RomanistHere"
+        "author": "Роман Смунёв"
     }
 }

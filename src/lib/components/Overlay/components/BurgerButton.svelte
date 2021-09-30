@@ -18,7 +18,7 @@
         background-color: var(--side-bg-color);
         border-radius: 50%;
         border: 2px solid var(--text-color);
-        
+
         -webkit-tap-highlight-color: transparent;
 
         --burger-size: 39px;

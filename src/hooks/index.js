@@ -1,19 +1,9 @@
-import { API_DOMAIN } from '../lib/constants/env.js';
+import { API_DOMAIN } from '../configs/env.js';
 const devStyleSrc = import.meta.env.PROD ? '' : "'unsafe-inline'";
 
 const directives = {
-    'img-src': [
-        "*.openstreetmap.org",
-        "'self'",
-        "data:",
-    ],
-    'font-src': [
-        "'self'",
-        "data:",
-    ],
-    'style-src': [
-        "'self'",
-        devStyleSrc
+    'base-uri': [
+        "'self'"
     ],
     'connect-src': [
         API_DOMAIN,
@@ -23,24 +13,34 @@ const directives = {
         "*.sentry.io",
         "geocode-api.arcgis.com"
     ],
+    'default-src': [
+        "'self'",
+    ],
+    'font-src': [
+        "'self'",
+        "data:",
+    ],
+    'frame-src': [
+        "'none'"
+    ],
+    'img-src': [
+        "*.openstreetmap.org",
+        "'self'",
+        "data:",
+    ],
+    'media-src': [
+        "'self'"
+    ],
     'script-src': [
         "'self'",
         "'unsafe-inline'",
         "plausible.io"
         // (req, res) => `'nonce-${res.locals.nonce}'`,
     ],
-    'frame-src': [
-        "'none'"
-    ],
-    'default-src': [
+    'style-src': [
         "'self'",
+        devStyleSrc
     ],
-    'base-uri': [
-        "'self'"
-    ],
-    'media-src': [
-        "'self'"
-    ]
 };
 
 let CSP = Object.entries(directives).map(([key, arr]) => key + ' ' + arr.join(' ')).join('; ');

@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 import { appStateStore } from '../../stores/state.js';
-import { API_URL } from '../constants/env.js';
+import { API_URL } from '../../configs/env.js';
 
 // TODO: move somewhere else (component)
 // window.addEventListener('error', event => {

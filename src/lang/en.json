@@ -348,7 +348,7 @@
         "limitError": {
             "textBeforeLink": "You have exceeded our limit of requests. There are",
             "textFirstLink": "two options",
-            "textBetweenLinks": ": either you a bad guy who for some reason wants our aimed at helping people service go down or our system being not ideal. We are strongly believe it's a second one. If you ",
+            "textBetweenLinks": ": either you a bad guy who for some reason wants our aimed at our helping people service going down or our system being not ideal. We are strongly believe it's a second one. If you ",
             "textSecondLink": "dropped us a message",
             "textAfterLinks": "we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
         },
@@ -369,7 +369,8 @@
         "nearbyPlaceAlreadyRated": "Nearby place is already rated by you",
         "sessionExpired": "Session expired, please, refresh and login.",
         "youRateTooOften": "You rate too often, please wait.",
-        "youRateTooOftenLink": "Why?"
+        "youRateTooOftenLink": "Why?",
+        "noResponseFromServer": "Unfortunately, there is no response from the server. Try later or contact us:"
     },
     "partnersPopup": {
         "ourFriendsAndPartners": "Our friends and partners",
@@ -383,7 +384,6 @@
         "imageAltText": "Measureland icon (a little house)",
         "keywords": "Measureland, rate, Non-commerical, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
         "subject": "Help people to find the best place to stay at or live in.",
-        "author": "Roman Smunyov",
-        "twitterUsername": "RomanistHere"
+        "author": "Roman Smunyov"
     }
 }
