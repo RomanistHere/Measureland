@@ -43,15 +43,15 @@
     }
 </script>
 
-<div class="rating__stars form__grp">
-    <label for={id} class="rating__title title form__label">
+<div class="relative">
+    <label for={id} class="mt-8 relative block font-bold sug-color">
         <span>{title}</span>
         {#if type === 'password'}
-            <a href={"#"} class="form__label_help" on:click|preventDefault={changeInputType}>{$_('input.showOrHide')}</a>
+            <a href={"#"} class="underline absolute right-0 bottom-0 text-sm" on:click|preventDefault={changeInputType}>{$_('input.showOrHide')}</a>
         {/if}
     </label>
     <input
-        class="form__input {(!isInputValid && !isInputActive) || shouldShowMatchError ? 'form__input-error' : ''} {isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError ? 'form__input-success' : ''}"
+        class="input mt-4 p-2 w-full rounded-md shadow {isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError && 'input-valid'}"
         type={shouldShowPassword ? 'text' : type}
         id={id}
         autocomplete={id}
@@ -60,21 +60,54 @@
         { autofocus }
     >
 
-    {#if !isInputValid && !isInputActive}
-        {#if type === 'email'}
-            <span class="form__error">{$_('input.emailError')}</span>
-        {:else if type === 'password'}
-            <span class="form__error">{$_('input.passwordError')}</span>
-        {/if}
-    {/if}
+    <span class="dot w-3 h-3 rounded-full absolute -left-6 top-14 opacity-0 {((!isInputValid && !isInputActive) || shouldShowMatchError) && 'dot-error'}"></span>
+    <span class="dot w-3 h-3 rounded-full absolute -right-6 top-14 opacity-0 {((!isInputValid && !isInputActive) || shouldShowMatchError) && 'dot-error'}"></span>
 
-    {#if shouldShowMatchError}
-        <span class="form__error">Passwords should match!</span>
-    {/if}
+    <span class="absolute right-0 -bottom-6 text-sm">
+        {#if !isInputValid && !isInputActive}
+            {#if type === 'email'}
+                {$_('input.emailError')}
+            {:else if type === 'password'}
+                {$_('input.passwordError')}
+            {/if}
+        {/if}
+
+        {#if shouldShowMatchError}
+            {$_('input.passwordsShouldMatch')}
+        {/if}
+    </span>
 </div>
 
 <style>
-    .form__error {
+    .input {
+        border: 2px solid var(--active-color);
+        transition: background-color .1s;
+    }
+
+    .input:focus {
+        outline: none;
+    }
+
+    .dot {
+        background-color: var(--active-color);
+        transition: opacity .2s .1s;
+    }
+
+    .dot-error {
         opacity: 1;
+        background-color: #ffa500;
+    }
+
+    .input:focus + .dot {
+        opacity: 1;
+    }
+
+    .input:focus + .dot + .dot {
+        opacity: 1;
+    }
+
+    .input-valid {
+        background-color: var(--active-color);
+        color: var(--side-bg-color);
     }
 </style>

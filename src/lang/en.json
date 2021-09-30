@@ -342,7 +342,8 @@
     "input": {
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",
-        "passwordError": "Password should be longer than 6 characters!"
+        "passwordError": "Password should be longer than 6 characters!",
+        "passwordsShouldMatch": "Passwords should match!"
     },
     "errors": {
         "limitError": {

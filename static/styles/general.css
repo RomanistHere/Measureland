@@ -82,6 +82,10 @@ html {
     --col5: #222222;
     --col6: #000;
     --col7: #312838;
+
+    /* ///////////// new ////////////// */
+    --active-color: #007097;
+    --suc-color: #146481;
 }
 
 body {
@@ -93,6 +97,11 @@ body {
 textarea {
     font-family: "Nunito", sans-serif;
     font-size: 16px;
+}
+
+/* // temporare class */
+.sug-color {
+    color: var(--sug-color);
 }
 
 .popup-shadow {

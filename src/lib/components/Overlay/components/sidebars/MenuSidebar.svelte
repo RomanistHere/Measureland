@@ -196,7 +196,11 @@
                 text={$_('menuSidebar.requestProcessing')}
             />
         {:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
-            <a href={"#"} class="btn mx-8 mt-2 px-5 py-2 max-w-sm text-center" on:click|preventDefault={askForMoreRatings}>{$_('menuSidebar.needMoreRatings')}</a>
+            <MainButton
+                action={askForMoreRatings}
+                text={$_('menuSidebar.needMoreRatings')}
+                className='mx-8 mt-2 block text-center'
+            />
         {/if}
     </div>
 
@@ -217,12 +221,13 @@
 
 <style>
     .link {
-        transition: background-color .2s;
+        transition: background-color .2s, color .2s;
     }
 
     @media (hover: hover) and (pointer: fine) {
         .link:hover {
-            background-color: var(--bg-color);
+            background-color: var(--active-color);
+            color: var(--side-bg-color);
         }
     }
 </style>

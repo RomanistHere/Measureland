@@ -1,11 +1,11 @@
 <script>
     import { _, json } from 'svelte-i18n';
 
-    import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';
+    import PopupTitle from './PopupTitle.svelte';
 
     import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { sendResetPass } from "../../../../utilities/api.js";
@@ -84,52 +84,33 @@
     }, 200);
 </script>
 
-<PopupWrap className='login__wrap-forgot'>
-    <form class="rating__popup login__popup rating__popup-active form" on:submit|preventDefault={debouncedSubmit}>
-        <div class="rating__content forgot__content">
-            <p class="rating__text">
-                <strong class="rating__text-highlight">
-                    {title}
-                </strong>
-            </p>
+<form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
+    <PopupTitle { title } />
 
-            <Input
-                autofocus={true}
-                title={$_('forgotPasswordPopup.email')}
-                type='email'
-                id='old-email-restore'
-                bind:value={email}
-                bind:isInputValid={isEmailValid}
-            />
+    <Input
+        autofocus={true}
+        title={$_('forgotPasswordPopup.email')}
+        type='email'
+        id='old-email-restore'
+        bind:value={email}
+        bind:isInputValid={isEmailValid}
+    />
 
-            {#if isLoading}
-                <Spinner className='login__spinner' />
-            {/if}
+    <div class="relative flex justify-center items-center h-28">
+        {#if isLoading}
+            <Spinner className='bg-transparent' />
+        {/if}
+        {#if isError}
+            <span class="italic font-bold sug-color">
+                {errorsObj[errorType]}
+            </span>
+        {/if}
+    </div>
 
-            <div class="forgot__notifications_wrap">
-                {#if isError}
-                    <span class="forgot__notifications">
-                        {errorsObj[errorType]}
-                    </span>
-                {/if}
-            </div>
-        </div>
-
-        <div class="rating__btns btns_wrap">
-            {#if !isChangePass}
-                <SecondaryButton text={$_('forgotPasswordPopup.secondaryBtn')} className="rating__btn btn-low" action={openRegisterPopup} />
-            {/if}
-            <FormButton text={mainBtn} action={debouncedSubmit} />
-        </div>
-    </form>
-</PopupWrap>
-
-<style>
-    .forgot__notifications_wrap {
-        align-items: center;
-    }
-
-    .forgot__notifications {
-        display: block;
-    }
-</style>
+    <div class="flex justify-evenly items-center">
+        {#if !isChangePass}
+            <SecondaryButton text={$_('forgotPasswordPopup.secondaryBtn')} action={openRegisterPopup} />
+        {/if}
+        <FormButton text={mainBtn} action={debouncedSubmit} />
+    </div>
+</form>

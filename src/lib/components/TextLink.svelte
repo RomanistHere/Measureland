@@ -11,12 +11,14 @@
 
 <style>
     a {
-        transition: color .2s;
+        transition: background-color .2s, color .2s;
     }
 
     @media (hover: hover) and (pointer: fine) {
         a:hover {
-            color: var(--active-color);
+            background-color: var(--active-color);
+            color: #fff;
+            text-decoration: none;
         }
     }
 </style>

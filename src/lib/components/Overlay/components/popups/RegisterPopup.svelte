@@ -1,11 +1,11 @@
 <script>
     import { _, json, locale } from 'svelte-i18n';
 
-    import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';
+    import PopupTitle from './PopupTitle.svelte';
 
     import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
@@ -93,66 +93,49 @@
     }, 200);
 </script>
 
-<PopupWrap className='login__wrap login__wrap-register'>
-    <form class="rating__popup rating__popup-active login__popup form" on:submit|preventDefault={debouncedSubmit}>
-        <div class="rating__content register__content">
-            <p class="rating__text">
-                <strong class="rating__text-highlight">{$_('registrationPopup.title')}</strong>
-            </p>
+<form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
+    <PopupTitle title={$_('registrationPopup.title')} />
 
-            <Input
-                autofocus={true}
-                title={$_('registrationPopup.email')}
-                type='email'
-                id='new-email'
-                bind:value={email}
-                bind:isInputValid={isEmailValid}
-            />
+    <Input
+        autofocus={true}
+        title={$_('registrationPopup.email')}
+        type='email'
+        id='new-email'
+        bind:value={email}
+        bind:isInputValid={isEmailValid}
+    />
 
-            <Input
-                title={$_('registrationPopup.password')}
-                type='password'
-                id='new-password'
-                bind:value={password}
-                bind:isInputValid={isPasswordValid}
-                bind:shouldShowMatchError={shouldShowMatchError}
-            />
+    <Input
+        title={$_('registrationPopup.password')}
+        type='password'
+        id='new-password'
+        bind:value={password}
+        bind:isInputValid={isPasswordValid}
+        bind:shouldShowMatchError={shouldShowMatchError}
+    />
 
-            <Input
-                title={$_('registrationPopup.repeatPassword')}
-                type='password'
-                id='repeat-new-password'
-                bind:value={passwordConfirm}
-                bind:isInputValid={isPasswordConfirmValid}
-                bind:shouldShowMatchError={shouldShowMatchError}
-            />
+    <Input
+        title={$_('registrationPopup.repeatPassword')}
+        type='password'
+        id='repeat-new-password'
+        bind:value={passwordConfirm}
+        bind:isInputValid={isPasswordConfirmValid}
+        bind:shouldShowMatchError={shouldShowMatchError}
+    />
 
-            {#if isLoading}
-                <Spinner className='register__spinner' />
-            {/if}
+    <div class="relative flex justify-center items-center h-28">
+        {#if isLoading}
+            <Spinner className='bg-transparent' />
+        {/if}
+        {#if isError}
+            <span class="italic font-bold sug-color">
+                {errorsObj[errorType]}
+            </span>
+        {/if}
+    </div>
 
-            <div class="register__notifications_wrap">
-                {#if isError}
-                    <span class="register__notifications">
-                        {errorsObj[errorType]}
-                    </span>
-                {/if}
-            </div>
-        </div>
-
-        <div class="rating__btns btns_wrap">
-            <SecondaryButton text={$_('registrationPopup.goToLoginBtn')} className="rating__btn" action={openLoginPopup} />
-            <FormButton text={$_('registrationPopup.registerBtn')} action={debouncedSubmit} />
-        </div>
-    </form>
-</PopupWrap>
-
-<style>
-    .register__notifications {
-        display: block;
-    }
-
-    .register__notifications_wrap {
-        align-items: center;
-    }
-</style>
+    <div class="flex justify-evenly items-center">
+        <SecondaryButton text={$_('registrationPopup.goToLoginBtn')} action={openLoginPopup} />
+        <FormButton text={$_('registrationPopup.registerBtn')} action={debouncedSubmit} />
+    </div>
+</form>

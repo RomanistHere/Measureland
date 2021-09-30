@@ -1,11 +1,11 @@
 <script>
     import { _, json } from 'svelte-i18n';
 
-    import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';
+    import PopupTitle from './PopupTitle.svelte';
 
     import { openAnotherOverlay, debounce, sleep, showSuccessNotification } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
@@ -128,64 +128,53 @@
     }, 200);
 </script>
 
-<PopupWrap className='login__wrap'>
-    <form class="rating__popup rating__popup-active login__popup form" on:submit|preventDefault={debouncedSubmit}>
-        <div class="rating__content login__content">
-            <p class="rating__text">
-                <strong class="rating__text-highlight">{$_('loginPopup.title')}</strong>
-            </p>
+<form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
+    <PopupTitle title={$_('loginPopup.title')} />
 
-            <Input
-                autofocus={true}
-                title={$_('loginPopup.email')}
-                type='email'
-                id='current-email'
-                bind:value={email}
-                bind:isInputValid={isEmailValid}
-            />
+    <Input
+        autofocus={true}
+        title={$_('loginPopup.email')}
+        type='email'
+        id='current-email'
+        bind:value={email}
+        bind:isInputValid={isEmailValid}
+    />
 
-            <Input
-                title={$_('loginPopup.password')}
-                type='password'
-                id='current-password'
-                bind:value={password}
-                bind:isInputValid={isPasswordValid}
-            />
+    <Input
+        title={$_('loginPopup.password')}
+        type='password'
+        id='current-password'
+        bind:value={password}
+        bind:isInputValid={isPasswordValid}
+    />
 
-            {#if isLoading}
-                <Spinner className='login__spinner' />
-            {/if}
-
-            <div class="login__notifications_wrap">
-                {#if isError && errorType === 'verificationLetter'}
-                    <div class="login__notifications login__notifications-verify">
-                        <span class="login__notifications-small">{$_('errors.errorVerification')}</span>
-                        <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>
-                    </div>
-                {:else if isError}
-                    <span class="login__notifications">
-                        {errorsObj[errorType]}
-                    </span>
-                {/if}
+    <div class="relative flex justify-center items-center h-28">
+        {#if isLoading}
+            <Spinner className='bg-transparent' />
+        {/if}
+        {#if isError && errorType === 'verificationLetter'}
+            <div class="login__notifications login__notifications-verify">
+                <span class="login__notifications-small">{$_('errors.errorVerification')}</span>
+                <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>
             </div>
-        </div>
+        {:else if isError}
+            <span class="italic font-bold sug-color">
+                {errorsObj[errorType]}
+            </span>
+        {/if}
+    </div>
 
-        <div class="rating__btns btns_wrap">
-            <SecondaryButton text={$_('loginPopup.forgotPasswordBtn')} className="rating__btn" action={openForgotPasswordPopup} />
-            <FormButton text={$_('loginPopup.loginBtn')} action={debouncedSubmit} />
-        </div>
-        <a href={"#"} class="login__link" on:click|preventDefault={openRegisterPopup}>
-            {$_('loginPopup.registerBtn')}
-        </a>
-    </form>
-</PopupWrap>
+    <div class="flex justify-evenly items-center">
+        <SecondaryButton text={$_('loginPopup.forgotPasswordBtn')} action={openForgotPasswordPopup} />
+        <FormButton text={$_('loginPopup.loginBtn')} action={debouncedSubmit} />
+    </div>
+    <a href={"#"} class="underline block text-center p-2 my-2 mx-auto w-60" on:click|preventDefault={openRegisterPopup}>
+        {$_('loginPopup.registerBtn')}
+    </a>
+</form>
 
 <style>
     .login__notifications {
         display: block;
-    }
-
-    .login__notifications_wrap {
-        align-items: center;
     }
 </style>

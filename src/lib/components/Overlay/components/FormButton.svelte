@@ -4,4 +4,4 @@
     export let className = '';
 </script>
 
-<button type="submit" class="text-base lg:text-lg rating__btn btn form__btn {className}" on:click|preventDefault={action}>{text}</button>
+<button type="submit" class="text-base lg:text-lg rating__btn btn form__btn rounded-md py-2 {className}" on:click|preventDefault={action}>{text}</button>

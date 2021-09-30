@@ -1,11 +1,11 @@
 <script>
     import { _, json, locale } from 'svelte-i18n';
 
-    import PopupWrap from './PopupWrap.svelte';
     import Input from '../../../Input.svelte';
     import Spinner from '../../../Spinner.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';
+    import PopupTitle from './PopupTitle.svelte';
 
     import { openAnotherOverlay, debounce, showSuccessNotification, closeOverlays } from "../../../../utilities/helpers.js";
     import { reset } from "../../../../utilities/api.js";
@@ -97,54 +97,47 @@
     }, 200);
 </script>
 
-<PopupWrap className='login__wrap login__wrap-reset'>
-    <form class="rating__popup rating__popup-active login__popup form" on:submit|preventDefault={debouncedSubmit}>
-        <div class="rating__content reset__content">
-            <p class="rating__text">
-                <strong class="rating__text-highlight">Password change</strong>
-            </p>
+<form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
+    <PopupTitle title='Password change' />
 
-            <Input
-                title='Type new password here'
-                type='password'
-                id='new-password-reset'
-                bind:value={password}
-                bind:isInputValid={isPasswordValid}
-                bind:shouldShowMatchError={shouldShowMatchError}
-            />
+    <Input
+        title='Type new password here'
+        type='password'
+        id='new-password-reset'
+        bind:value={password}
+        bind:isInputValid={isPasswordValid}
+        bind:shouldShowMatchError={shouldShowMatchError}
+    />
 
-            <Input
-                title='Repeat the password'
-                type='password'
-                id='repeat-new-password-reset'
-                bind:value={passwordConfirm}
-                bind:isInputValid={isPasswordConfirmValid}
-                bind:shouldShowMatchError={shouldShowMatchError}
-            />
+    <Input
+        title='Repeat the password'
+        type='password'
+        id='repeat-new-password-reset'
+        bind:value={passwordConfirm}
+        bind:isInputValid={isPasswordConfirmValid}
+        bind:shouldShowMatchError={shouldShowMatchError}
+    />
 
-            {#if isLoading}
-                <Spinner className='reset__spinner' />
-            {/if}
-
-            <div class="reset__notifications_wrap">
-                {#if isError && errorType === 'linkExpired'}
-                    <div class="reset__notifications">
-                        <span class="login__notifications-small">{$_('errors.linkExpired')}</span>
-                        <a href={"#"} class="login__notifications-small link" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>
-                    </div>
-                {:else if isError}
-                    <span class="reset__notifications">
-                        {errorsObj[errorType]}
-                    </span>
-                {/if}
+    <div class="relative flex justify-center items-center h-28">
+        {#if isLoading}
+            <Spinner className='bg-transparent' />
+        {/if}
+        {#if isError && errorType === 'linkExpired'}
+            <div class="reset__notifications">
+                <span class="login__notifications-small">{$_('errors.linkExpired')}</span>
+                <a href={"#"} class="login__notifications-small link" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>
             </div>
-        </div>
+        {:else if isError}
+            <span class="italic font-bold sug-color">
+                {errorsObj[errorType]}
+            </span>
+        {/if}
+    </div>
 
-        <div class="rating__btns btns_wrap">
-            <FormButton text='Change the password' className='reset__btn' action={debouncedSubmit} />
-        </div>
-    </form>
-</PopupWrap>
+    <div class="flex justify-evenly items-center">
+        <FormButton text='Change the password' action={debouncedSubmit} />
+    </div>
+</form>
 
 <style>
     .reset__notifications {

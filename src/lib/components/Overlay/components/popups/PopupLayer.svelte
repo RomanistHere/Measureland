@@ -1,9 +1,11 @@
 <script>
-    import { fade } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     // after install change node_modules/svelte-focus-trap/src/index.js if error persists
     //https://github.com/Duder-onomy/svelte-focus-trap/issues/4
     import { focusTrap } from 'svelte-focus-trap';
     import { closeOverlays } from '../../../../utilities/helpers.js';
+
+    import CloseBtn from '../../../CloseBtn.svelte';
 
     import ConfirmForgotPasswordPopup from './ConfirmForgotPasswordPopup.svelte';
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
@@ -82,41 +84,23 @@
         },
     };
 
-    const closePopups = e =>
-        (e.target === e.currentTarget) ? closeOverlays() : false;
-
     $: Popup = popupList[popupName]['component'];
     $: popupParentClass = popupList[popupName]['className'];
 </script>
 
 <div
-    class="rating {popupParentClass} z-1 -lg:z-2"
-    on:click|preventDefault={closePopups}
+    class="z-2 inset-0 left-1/2 absolute flex justify-center items-center"
     use:focusTrap
-    transition:fade
+    in:fly="{{ y: 80, duration: 300 }}"
+    out:fly="{{ y: -80, duration: 300 }}"
 >
     <svelte:component this={Popup} { popupData }/>
+    <CloseBtn overlayType='popup' className='top-3 right-3 z-2 -lg:top-3 -lg:right-3' />
 </div>
 
 <style>
-    /* div {
-        position: fixed;
-        z-index: 1;
-
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        opacity: 1;
-        background-color: rgba(0, 0, 0, .2);
-        transition: opacity .5s;
-
-        font-size: var(--normal-fz);
-    } */
     div {
-        opacity: 1;
-
+        background-color: var(--bg-color-add-non-transparent);
         top: var(--navbar-height);
     }
 </style>

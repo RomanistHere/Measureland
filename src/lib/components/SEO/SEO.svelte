@@ -7,7 +7,6 @@
 
     import { appInfo } from '../../../configs/index.js';
     import { API_DOMAIN } from '../../../configs/env.js';
-    const STYLE_SRC = import.meta.env.PROD ? '' : "'unsafe-inline'";
 
     export let keywords = $_('SEO.keywords');
     export let subject = $_('SEO.subject');
@@ -39,7 +38,7 @@
         img-src 'self' *.openstreetmap.org data:;
         media-src 'self';
         script-src 'self' 'unsafe-inline' plausible.io;
-        style-src 'self' {STYLE_SRC};
+        style-src 'self' 'unsafe-inline';
     "/>
 
     <meta name="description" content={description} />
@@ -70,8 +69,8 @@
     { timeToRead }
 />
 
-<section class="w-full h-full flex justify-center items-center absolute">
+<head class="flex justify-center items-center absolute -top-20">
     <h1 class="text-bold px-4 w-96">
         {description}
     </h1>
-</section>
+</head>

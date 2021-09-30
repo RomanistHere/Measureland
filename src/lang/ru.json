@@ -310,7 +310,7 @@
     "forgotPasswordPopup": {
         "title": "Восстановление (изменение) пароля",
         "email": "Почта (Email)",
-        "secondaryBtn": "Зарегистрироваться",
+        "secondaryBtn": "К регистрации",
         "mainBtn": "Восстановить"
     },
     "changePasswordPopup": {
@@ -348,7 +348,8 @@
     "input": {
         "showOrHide": "Показать/Скрыть",
         "emailError": "Неправильный формат! Пример: example@mail.ru",
-        "passwordError": "Пароль должен быть длиннее 6-ти символов!"
+        "passwordError": "Пароль должен быть длиннее 6-ти символов!",
+        "passwordsShouldMatch": "Пароли должны совпадать!"
     },
     "errors": {
         "limitError": {
