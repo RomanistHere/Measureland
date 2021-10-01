@@ -1,18 +1,21 @@
 <script>
-    import PopupWrap from './PopupWrap.svelte';
     import { json, _ } from 'svelte-i18n';
+
+    import PopupTitle from './PopupTitle.svelte';
 </script>
 
-<PopupWrap className='partners__wrap'>
-    <div class="rating__popup rating__popup-active">
-        <h2 class="rating__title title rating__item_text sidebar__title">{$_('partnersPopup.ourFriendsAndPartners')}</h2>
-        <hr>
-        <ul class="partners__list">
-            {#each $json('partnersPopup.list') as item}
-                <li class="partners__item">
-                    {@html item}
-                </li>
-            {/each}
-        </ul>
-    </div>
-</PopupWrap>
+<div class="max-w-sm w-full">
+    <PopupTitle title={$_('partnersPopup.ourFriendsAndPartners')} />
+
+    <ul class="max-h-96 overflow-y-auto">
+        {#each $json('partnersPopup.list') as item, i}
+            {#if i !== 0}
+                <hr />
+            {/if}
+
+            <li class="my-4">
+                {@html item}
+            </li>
+        {/each}
+    </ul>
+</div>

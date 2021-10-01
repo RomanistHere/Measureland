@@ -1,7 +1,7 @@
 <script>
     import { _, json, locale } from 'svelte-i18n';
 
-    import Input from '../../../Input.svelte';
+    import Input from '../../../form-elements/Input.svelte';
     import Spinner from '../../../Spinner.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';
@@ -123,9 +123,9 @@
             <Spinner className='bg-transparent' />
         {/if}
         {#if isError && errorType === 'linkExpired'}
-            <div class="reset__notifications">
-                <span class="login__notifications-small">{$_('errors.linkExpired')}</span>
-                <a href={"#"} class="login__notifications-small link" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>
+            <div class="italic font-bold sug-color">
+                <span class="block text-center">{$_('errors.linkExpired')}</span>
+                <a href={"#"} class="block text-center underline" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>
             </div>
         {:else if isError}
             <span class="italic font-bold sug-color">
@@ -138,13 +138,3 @@
         <FormButton text='Change the password' action={debouncedSubmit} />
     </div>
 </form>
-
-<style>
-    .reset__notifications {
-        display: block;
-    }
-
-    .reset__notifications_wrap {
-        align-items: center;
-    }
-</style>

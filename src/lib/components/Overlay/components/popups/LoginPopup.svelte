@@ -1,7 +1,7 @@
 <script>
     import { _, json } from 'svelte-i18n';
 
-    import Input from '../../../Input.svelte';
+    import Input from '../../../form-elements/Input.svelte';
     import Spinner from '../../../Spinner.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';
@@ -153,9 +153,9 @@
             <Spinner className='bg-transparent' />
         {/if}
         {#if isError && errorType === 'verificationLetter'}
-            <div class="login__notifications login__notifications-verify">
-                <span class="login__notifications-small">{$_('errors.errorVerification')}</span>
-                <a href={"#"} class="login__notifications-small" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>
+            <div class="italic font-bold sug-color">
+                <span class="block text-center">{$_('errors.errorVerification')}</span>
+                <a href={"#"} class="block text-center underline" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>
             </div>
         {:else if isError}
             <span class="italic font-bold sug-color">
@@ -172,9 +172,3 @@
         {$_('loginPopup.registerBtn')}
     </a>
 </form>
-
-<style>
-    .login__notifications {
-        display: block;
-    }
-</style>

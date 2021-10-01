@@ -115,7 +115,7 @@
     }
 </script>
 
-<nav class="transition-all fixed flex z-1 justify-center inset-x-0 top-0 h-14 -md:hidden">
+<nav class="transition-all fixed flex z-5 justify-center inset-x-0 top-0 h-14 -md:hidden">
     <ul class="m-0 px-4 w-full flex justify-between">
         <li class="m-0 p-0 list-none flex items-center justify-center">
             <a
@@ -136,11 +136,11 @@
             on:mouseleave={handleMouseleaveCenter}
         >
             <ul>
-                {#each $json('navBar.links') as { text, url }}
+                <!-- {#each $json('navBar.links') as { text, url }}
                     <li class="inline-block">
                         <a class="block mx-4 p-2 hover:underline" href={url}>{text}</a>
                     </li>
-                {/each}
+                {/each} -->
             </ul>
         </li>
         <li

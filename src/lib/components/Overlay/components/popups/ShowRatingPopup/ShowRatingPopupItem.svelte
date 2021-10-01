@@ -5,13 +5,18 @@
     export let title;
     export let tooltip;
     export let rating;
-    export let side = 'top';
 </script>
 
-<li class="rating__stars rating__item">
-    <h2 class="rating__title title rating__item_text">
+<li class="flex items-center justify-between my-3">
+    <h2>
         { title }
-        <Tooltip { tooltip } { side } />
+        <Tooltip { tooltip } />
     </h2>
     <ShowRatingPopupStars { rating } />
 </li>
+
+<style>
+    h2 {
+        font-size: 1.05rem;
+    }
+</style>

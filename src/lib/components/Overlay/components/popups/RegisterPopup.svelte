@@ -1,7 +1,7 @@
 <script>
     import { _, json, locale } from 'svelte-i18n';
 
-    import Input from '../../../Input.svelte';
+    import Input from '../../../form-elements/Input.svelte';
     import Spinner from '../../../Spinner.svelte';
     import SecondaryButton from '../SecondaryButton.svelte';
     import FormButton from '../FormButton.svelte';

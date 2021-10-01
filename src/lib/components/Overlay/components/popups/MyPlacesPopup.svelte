@@ -1,7 +1,7 @@
 <script>
     import { _, locale } from 'svelte-i18n';
 
-    import PopupWrap from './PopupWrap.svelte';
+    import PopupTitle from './PopupTitle.svelte';
     import Spinner from '../../../Spinner.svelte';
 
     import { fetchRatedPlace } from "../../../../utilities/api.js";
@@ -62,22 +62,22 @@
     let promise = fetchData(sidebarData);
 </script>
 
-<PopupWrap className='places__wrap'>
+<div class="max-w-sm w-full">
     {#await promise}
         <Spinner className="places__spinner" />
     {:then array}
-        <div class="rating__popup rating__popup-active">
-            <h2 class="rating__title title rating__item_text sidebar__title">{$_('myPlacesPopup.title')}</h2>
-            <hr>
-            <ul class="places__list">
-                {#if array.length === 0}
-                    <span>{$_('myPlacesPopup.youHaveNotRated')}</span>
-                {:else}
-                    {#each array as { lang, lat, lng, address }}
+        <PopupTitle title={$_('myPlacesPopup.title')} />
+
+        <ul class="max-h-96 overflow-y-auto mt-4">
+            {#if array.length === 0}
+                <span>{$_('myPlacesPopup.youHaveNotRated')}</span>
+            {:else}
+                {#each array as { lang, lat, lng, address }}
+                    <ul>
                         <a class="places__link underline" href="https://measureland.org/{lang}?lat={lat}&lng={lng}&showRating=true" on:click|preventDefault={() => openShowRatingsPopup(lat, lng)}>{address}</a>
-                    {/each}
-                {/if}
-            </ul>
-        </div>
+                    </ul>
+                {/each}
+            {/if}
+        </ul>
     {/await}
-</PopupWrap>
+</div>

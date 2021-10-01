@@ -51,7 +51,7 @@
         {/if}
     </label>
     <input
-        class="input mt-4 p-2 w-full rounded-md shadow {isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError && 'input-valid'}"
+        class="mt-4 p-2 w-full rounded-md shadow {isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError && 'input-valid'}"
         type={shouldShowPassword ? 'text' : type}
         id={id}
         autocomplete={id}
@@ -79,12 +79,12 @@
 </div>
 
 <style>
-    .input {
+    input {
         border: 2px solid var(--active-color);
         transition: background-color .1s;
     }
 
-    .input:focus {
+    input:focus {
         outline: none;
     }
 
@@ -98,16 +98,27 @@
         background-color: #ffa500;
     }
 
-    .input:focus + .dot {
+    input:focus + .dot {
         opacity: 1;
     }
 
-    .input:focus + .dot + .dot {
+    input:focus + .dot + .dot {
         opacity: 1;
     }
 
     .input-valid {
         background-color: var(--active-color);
         color: var(--side-bg-color);
+    }
+
+    input:-webkit-autofill {
+        --bg-color-inp: var(--active-color);
+        box-shadow: 0 0 0 30px var(--bg-color-inp) inset !important;
+        -webkit-text-fill-color: var(--side-bg-color);
+    }
+
+    input-filled {
+        --bg-color-inp: var(--active-color);
+        -webkit-text-fill-color: var(--side-bg-color);
     }
 </style>

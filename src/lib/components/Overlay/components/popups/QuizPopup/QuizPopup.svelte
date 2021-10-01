@@ -1,7 +1,7 @@
 <script>
     import { _, json } from 'svelte-i18n';
 
-    import PopupWrap from '../PopupWrap.svelte';
+    import PopupTitle from '../PopupTitle.svelte';
     import QuizItem from './QuizItem.svelte';
     import SecondaryButton from '../../SecondaryButton.svelte';
     import MainButton from '../../MainButton.svelte';
@@ -62,17 +62,17 @@
 
     const getProgressBarClassName = stage => {
         if (stage === 1)
-            return 'rating__progr-stage1';
+            return 'progress-stage1';
         else if (stage === 2)
-            return 'rating__progr-stage2';
+            return 'progress-stage2';
         else if (stage === 3)
-            return 'rating__progr-stage3';
+            return 'progress-stage3';
         else if (stage === 4)
-            return 'rating__progr-stage4';
+            return 'progress-stage4';
         else if (stage === 5)
-            return 'rating__progr-stage5';
+            return 'progress-stage5';
         else if (stage === 6)
-            return 'rating__progr-stage6';
+            return 'progress-stage6';
     }
 
     const setRating = event => {
@@ -169,209 +169,193 @@
     const debouncedSubmit = debounce(submit, 300);
 </script>
 
-<PopupWrap className='rating__wrap'>
-    <div class="rating__popup rating__popup-active">
-        <div class="rating__content">
-            {#if currentStage === 1}
-                <p class="rating__text my-4">
-                    {$_('quizPopup.soYouWantToRate')}
-                </p>
-                <p class="rating__text rating__text-italic my-4">
-                    {$_('quizPopup.doYouHavePersonalExperience')}
-                </p>
-                <div class="rating__img_wrap">
-                    <img src="images/crowd.png" width="400" height="180" alt="{$_('quizPopup.imageTitle')}" class="rating__img">
+<div class="max-w-sm w-full">
+    {#if currentStage === 1}
+        <p class="my-4">
+            {$_('quizPopup.soYouWantToRate')}
+        </p>
+
+        <p class="italic my-4">
+            {$_('quizPopup.doYouHavePersonalExperience')}
+        </p>
+
+        <img src="/images/crowd.png" width="400" height="180" alt="{$_('quizPopup.imageTitle')}">
+
+        <p class="text-xs text-center my-4">
+            {$_('quizPopup.beSincere')}
+        </p>
+    {:else if currentStage === 2}
+        <p class="my-4">
+            {$_('quizPopup.tenCriteria')}
+            <strong class="underline font-normal">{$_('quizPopup.tenCriteriaStrong')}</strong>:
+        </p>
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[0] }
+        />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[1] }
+        />
+    {:else if currentStage === 3}
+        <PopupTitle title={$_('quizPopup.title3')} />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[2] }
+        />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[3] }
+        />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[4] }
+        />
+    {:else if currentStage === 4}
+        <PopupTitle title={$_('quizPopup.title4')} />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[5] }
+        />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[6] }
+        />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[7] }
+        />
+    {:else if currentStage === 5}
+        <PopupTitle title={$_('quizPopup.title5')} />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[8] }
+        />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[9] }
+        />
+
+        <QuizItem
+            on:setRating={setRating}
+            { ...quizArray[10] }
+        />
+    {:else if currentStage === 6}
+        <PopupTitle title={$_('quizPopup.title6')} />
+
+        <p class="my-4">
+            {$_('quizPopup.isThereAnythingToAdd')}
+        </p>
+
+        <textarea
+            class="rating__textarea ratingComment"
+            placeholder="{$_('quizPopup.textAreaPlaceholder')}"
+            maxlength="{maxCommentLength}"
+            on:input={updateComment}
+        ></textarea>
+
+        <div class="rating__count_wrap">
+            <span class="rating__count">
+                {remainingCommentLength}
+            </span>
+        </div>
+
+        <div class="rating__status">
+            {#if isLoading}
+                <div class="spinner"></div>
+            {:else if isError && errorType === 'youRateTooOften'}
+                <div class="rating__status_text">
+                    {$_('errors.youRateTooOften')} <a href="blog/how-to-become-citizen/" target="_blank" class="rating__link">{$_('errors.youRateTooOftenLink')}</a>
                 </div>
-            {:else if currentStage === 2}
-                <p class="rating__text my-4">
-                    {$_('quizPopup.tenCriteria')}
-                    <strong class="rating__text-highlight">{$_('quizPopup.tenCriteriaStrong')}</strong>:
-                </p>
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[0] }
-                />
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[1] }
-                />
-            {:else if currentStage === 3}
-                <p class="rating__text my-4">
-                    <strong class="rating__text-highlight">{$_('quizPopup.title3')}</strong>
-                </p>
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[2] }
-                />
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[3] }
-                />
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[4] }
-                />
-            {:else if currentStage === 4}
-                <p class="rating__text my-4">
-                    <strong class="rating__text-highlight">{$_('quizPopup.title4')}</strong>
-                </p>
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[5] }
-                />
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[6] }
-                />
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[7] }
-                />
-            {:else if currentStage === 5}
-                <p class="rating__text my-4">
-                    <strong class="rating__text-highlight">{$_('quizPopup.title5')}</strong>
-                </p>
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[8] }
-                />
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[9] }
-                />
-
-                <QuizItem
-                    on:setRating={setRating}
-                    { ...quizArray[10] }
-                />
-            {:else if currentStage === 6}
-                <p class="rating__text my-4">
-                    <strong class="rating__text-highlight">{$_('quizPopup.title6')}</strong>
-                </p>
-
-                <p class="rating__text">
-                    {$_('quizPopup.isThereAnythingToAdd')}
-                </p>
-
-                <textarea
-                    class="rating__textarea ratingComment"
-                    placeholder="{$_('quizPopup.textAreaPlaceholder')}"
-                    maxlength="{maxCommentLength}"
-                    on:input={updateComment}
-                ></textarea>
-
-                <div class="rating__count_wrap">
-                    <span class="rating__count">
-                        {remainingCommentLength}
-                    </span>
+            {:else if isError}
+                <div class="rating__status_text">
+                    {errorsObj[errorType]}
                 </div>
-
-                <div class="rating__status">
-                    {#if isLoading}
-                        <div class="spinner"></div>
-                    {:else if isError && errorType === 'youRateTooOften'}
-                        <div class="rating__status_text">
-                            {$_('errors.youRateTooOften')} <a href="blog/how-to-become-citizen/" target="_blank" class="rating__link">{$_('errors.youRateTooOftenLink')}</a>
-                        </div>
-                    {:else if isError}
-                        <div class="rating__status_text">
-                            {errorsObj[errorType]}
-                        </div>
-                    {/if}
-                </div>
-
             {/if}
         </div>
 
-        {#if currentStage === 1}
-            <p class="rating__text rating__text-small rating__text-abs">
-                {$_('quizPopup.beSincere')}
-            </p>
-            {#if isUserLoggedIn}
-                <div class="rating__btns btns_wrap">
-                    <MainButton
-                        action={() => { changePersonalExperience(false) }}
-                        className='rating__btn'
-                        text={$_('quizPopup.noPersonalExperienceBtn')}
-                    />
-                    <MainButton
-                        action={() => { changePersonalExperience(true) }}
-                        className='rating__btn'
-                        text={$_('quizPopup.yesPersonalExperienceBtn')}
-                    />
-                </div>
+    {/if}
+
+    <div class="flex justify-evenly items-center my-4">
+        {#if isUserLoggedIn && currentStage === 1}
+            <MainButton
+                action={() => { changePersonalExperience(false) }}
+                text={$_('quizPopup.noPersonalExperienceBtn')}
+            />
+            <MainButton
+                action={() => { changePersonalExperience(true) }}
+                text={$_('quizPopup.yesPersonalExperienceBtn')}
+            />
+        {:else if currentStage === 1}
+            <MainButton
+                action={() => { openAnotherOverlay('loginPopup') }}
+                text={$_('quizPopup.loginBtn')}
+            />
+        {:else}
+            <SecondaryButton
+                action={prevStage}
+                text={$_('quizPopup.backBtn')}
+            />
+            {#if currentStage === 6}
+                <MainButton
+                    action={debouncedSubmit}
+                    text={$_('quizPopup.submitBtn')}
+                />
             {:else}
                 <MainButton
-                    action={() => { openAnotherOverlay('loginPopup') }}
-                    className='rating__login d-b'
-                    text={$_('quizPopup.loginBtn')}
+                    action={nextStage}
+                    text={$_('quizPopup.nextBtn')}
                 />
             {/if}
-        {:else}
-            <div class="rating__btns btns_wrap">
-                <SecondaryButton
-                    action={prevStage}
-                    className='rating__btn'
-                    text={$_('quizPopup.backBtn')}
-                />
-                {#if currentStage === 6}
-                    <MainButton
-                        action={debouncedSubmit}
-                        className='rating__btn'
-                        text={$_('quizPopup.submitBtn')}
-                    />
-                {:else}
-                    <MainButton
-                        action={nextStage}
-                        className='rating__btn'
-                        text={$_('quizPopup.nextBtn')}
-                    />
-                {/if}
-            </div>
         {/if}
     </div>
 
-    <div class="rating__progr_wrap">
-        <div class="rating__progr {progressBarClassName}"></div>
+    <div class="absolute inset-x-0 bottom-0 h-5">
+        <div class="progress h-full w-0 {progressBarClassName}"></div>
     </div>
-</PopupWrap>
+</div>
 
 <style>
+    .progress {
+        background-color: var(--active-color);
+        transition: width .5s;
+    }
+
     .rating__status {
         opacity: 1;
     }
 
-    .rating__progr-stage1 {
+    .progress-stage1 {
         width: 0;
     }
 
-    .rating__progr-stage2 {
+    .progress-stage2 {
         width: 20%;
     }
 
-    .rating__progr-stage3 {
+    .progress-stage3 {
         width: 40%;
     }
 
-    .rating__progr-stage4 {
+    .progress-stage4 {
         width: 60%;
     }
 
-    .rating__progr-stage5 {
+    .progress-stage5 {
         width: 80%;
     }
 
-    .rating__progr-stage6 {
+    .progress-stage6 {
         width: 100%;
     }
 </style>

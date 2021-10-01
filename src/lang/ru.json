@@ -379,7 +379,7 @@
     "partnersPopup": {
         "ourFriendsAndPartners": "Наши друзья и единомышленники",
         "list": [
-            "Объявления аренды жилья в Москве и Санкт-Петербурге с самым удобным поиском.</br></br>Квартиры с хорошим ремонтом или с интересной локацией.</br></br>Москва: <a href='https://t.me/lvngrm_msk' target='_blank' rel='noopener' class='footer__link'>t.me/lvngrm_msk</a>, Санкт-Петербург: <a href='https://t.me/lvngrm' target='_blank' rel='noopener' class='footer__link'>t.me/lvngrm</a>"
+            "Объявления аренды жилья в Москве и Санкт-Петербурге с самым удобным поиском.</br></br>Квартиры с хорошим ремонтом или с интересной локацией.</br></br>Москва: <a href='https://t.me/lvngrm_msk' target='_blank' rel='noopener' class='underline'>t.me/lvngrm_msk</a>, Санкт-Петербург: <a href='https://t.me/lvngrm' target='_blank' rel='noopener' class='underline'>t.me/lvngrm</a>"
         ]
     },
     "SEO": {

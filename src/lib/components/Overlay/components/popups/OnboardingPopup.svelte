@@ -1,8 +1,10 @@
 <script>
     import { _ } from 'svelte-i18n';
 
-    import PopupWrap from './PopupWrap.svelte';
-    import Select from '../../../Select.svelte';
+    import PopupTitle from './PopupTitle.svelte';
+    import Select from '../../../form-elements/Select.svelte';
+    import InputSimple from '../../../form-elements/InputSimple.svelte';
+    import InputGroupSimple from '../../../form-elements/InputGroupSimple.svelte';
     import FormButton from '../FormButton.svelte';
 
     import { closeOverlay, showSuccessNotification, debounce } from "../../../../utilities/helpers.js";
@@ -96,46 +98,33 @@
     }, 200);
 </script>
 
-<PopupWrap className='login__wrap-onboarding'>
-    <form class="rating__popup rating__popup-active login__popup" on:submit|preventDefault={debouncedSubmit}>
-        <div class="onboarding__content">
-            <p class="rating__text">
-                <strong class="rating__text-highlight">
-                    {$_('onboardingPopup.title')}
-                </strong>
-            </p>
-            <p class="rating__text">
-                {$_('onboardingPopup.caption')}
-            </p>
+<form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
+    <PopupTitle title={$_('onboardingPopup.title')} />
 
-            <Select
-                options={ageOptions}
-                id='age-select'
-                title={$_('onboardingPopup.yourAgeGroup')}
-                on:change={(e) => { handleSelect(e, 'ageGrp') }}
-            />
+    <p class="mt-4">
+        {$_('onboardingPopup.caption')}
+    </p>
 
-            <Select
-                options={incomeOptions}
-                id='money-select'
-                title={$_('onboardingPopup.incomeLevel')}
-                on:change={(e) => { handleSelect(e, 'moneyGrp') }}
-            />
+    <Select
+        options={ageOptions}
+        id='age-select'
+        title={$_('onboardingPopup.yourAgeGroup')}
+        on:change={(e) => { handleSelect(e, 'ageGrp') }}
+    />
 
-            <div class="rating__stars">
-                <h2 class="rating__title title">
-                    {$_('onboardingPopup.yourName', { values: [defaultName] })}
-                </h2>
-                <input
-                    class="form__input onboarding__input"
-                    type="text"
-                    autocomplete="username"
-                    placeholder="{defaultName}"
-                    on:change={handleInput}
-                >
-            </div>
-        </div>
+    <Select
+        options={incomeOptions}
+        id='money-select'
+        title={$_('onboardingPopup.incomeLevel')}
+        on:change={(e) => { handleSelect(e, 'moneyGrp') }}
+    />
 
-        <FormButton text={$_('onboardingPopup.mainBtn')} className='onboarding__btn' action={debouncedSubmit} />
-    </form>
-</PopupWrap>
+    <InputGroupSimple
+        title={$_('onboardingPopup.yourName', { values: [defaultName] })}
+        on:change={handleInput}
+        placeholder="{defaultName}"
+        autocomplete="username"
+    />
+
+    <FormButton text={$_('onboardingPopup.mainBtn')} className='onboarding__btn' action={debouncedSubmit} />
+</form>

@@ -20,5 +20,7 @@
         {text}
     </p>
 
-    <MainButton text="{button}" className="text-center block" action={closePopup} />
+    <div class="flex justify-evenly items-center mt-4">
+        <MainButton text="{button}" className="text-center block px-10" action={closePopup} />
+    </div>
 </div>
