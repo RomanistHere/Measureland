@@ -1,7 +1,6 @@
 <script>
     import { _, json } from 'svelte-i18n';
 
-    import PopupWrap from './PopupWrap.svelte';
     import TextLink from '../../../TextLink.svelte';
     import PopupTitle from './PopupTitle.svelte';
 

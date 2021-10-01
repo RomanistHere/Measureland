@@ -345,6 +345,14 @@
         "passwordError": "Password should be longer than 6 characters!",
         "passwordsShouldMatch": "Passwords should match!"
     },
+    "spinner": {
+        "start": "Loading...",
+        "change": [
+            "Processing",
+            "Oops, it didn't work",
+            "Loading something else..."
+        ]
+    },
     "errors": {
         "limitError": {
             "textBeforeLink": "You have exceeded our limit of requests. There are",

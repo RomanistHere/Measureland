@@ -3,8 +3,11 @@
 
     import PopupTitle from '../PopupTitle.svelte';
     import QuizItem from './QuizItem.svelte';
+    import Spinner from '../../../../Spinner.svelte';
+    import TextLink from '../../../../TextLink.svelte';
     import SecondaryButton from '../../SecondaryButton.svelte';
     import MainButton from '../../MainButton.svelte';
+    import Textarea from '../../../../form-elements/Textarea.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
     import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce } from "../../../../../utilities/helpers.js";
@@ -257,28 +260,30 @@
             {$_('quizPopup.isThereAnythingToAdd')}
         </p>
 
-        <textarea
-            class="rating__textarea ratingComment"
+        <Textarea
             placeholder="{$_('quizPopup.textAreaPlaceholder')}"
             maxlength="{maxCommentLength}"
             on:input={updateComment}
-        ></textarea>
+        />
 
-        <div class="rating__count_wrap">
-            <span class="rating__count">
-                {remainingCommentLength}
-            </span>
-        </div>
+        <p>
+            {remainingCommentLength}
+        </p>
 
-        <div class="rating__status">
+        <div class="flex justify-center items-center h-24 relative w-full">
             {#if isLoading}
-                <div class="spinner"></div>
+                <Spinner />
             {:else if isError && errorType === 'youRateTooOften'}
-                <div class="rating__status_text">
-                    {$_('errors.youRateTooOften')} <a href="blog/how-to-become-citizen/" target="_blank" class="rating__link">{$_('errors.youRateTooOftenLink')}</a>
+                <div class="italic font-bold sug-color">
+                    {$_('errors.youRateTooOften')}
+                    <TextLink
+                        href="blog/how-to-become-citizen/"
+                        blank={true}
+                        text={$_('errors.youRateTooOftenLink')}
+                    />
                 </div>
             {:else if isError}
-                <div class="rating__status_text">
+                <div class="italic font-bold sug-color">
                     {errorsObj[errorType]}
                 </div>
             {/if}

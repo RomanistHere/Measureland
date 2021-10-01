@@ -136,11 +136,11 @@
             on:mouseleave={handleMouseleaveCenter}
         >
             <ul>
-                <!-- {#each $json('navBar.links') as { text, url }}
+                {#each $json('navBar.links') as { text, url }}
                     <li class="inline-block">
                         <a class="block mx-4 p-2 hover:underline" href={url}>{text}</a>
                     </li>
-                {/each} -->
+                {/each}
             </ul>
         </li>
         <li

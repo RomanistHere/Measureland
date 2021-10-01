@@ -51,7 +51,7 @@
 </script>
 
 {#if !isLoaded}
-    <Spinner className="fixed z-3 inset-0 {$appStateStore.startScreen && 'right-1/2'}" />
+    <Spinner className="fixed z-3 non-transparent inset-0 {$appStateStore.startScreen && 'right-1/2'}" isWithText={!isError} />
 
     {#if isError}
         <section class="absolute z-4 flex justify-center items-center inset-0 {$appStateStore.startScreen && 'right-1/2'}">
@@ -68,6 +68,6 @@
 
 <style>
     span {
-        width: 30rem;
+        width: 32rem;
     }
 </style>

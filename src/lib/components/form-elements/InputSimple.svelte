@@ -5,7 +5,7 @@
 </script>
 
 <input
-    class="input mt-4 p-2 w-full rounded-md shadow {className}"
+    class="mt-4 p-2 w-full rounded-md shadow {className}"
     type="text"
     { autocomplete }
     { placeholder }
@@ -30,11 +30,11 @@
         transition: opacity .2s .1s;
     }
 
-    .input:focus + .dot {
+    input:focus + .dot {
         opacity: 1;
     }
 
-    .input:focus + .dot + .dot {
+    input:focus + .dot + .dot {
         opacity: 1;
     }
 </style>

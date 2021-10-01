@@ -150,7 +150,7 @@
 
     <div class="relative flex justify-center items-center h-28">
         {#if isLoading}
-            <Spinner className='bg-transparent' />
+            <Spinner />
         {/if}
         {#if isError && errorType === 'verificationLetter'}
             <div class="italic font-bold sug-color">

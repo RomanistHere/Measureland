@@ -89,7 +89,7 @@
 </script>
 
 <div
-    class="z-2 inset-0 left-1/2 absolute flex justify-center items-center"
+    class="z-2 inset-0 left-1/2 absolute flex justify-center items-center -lg:left-0 px-4"
     use:focusTrap
     in:fly="{{ y: 80, duration: 300 }}"
     out:fly="{{ y: -80, duration: 300 }}"

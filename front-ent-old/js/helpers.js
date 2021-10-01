@@ -73,58 +73,58 @@ const getFinalRating = (obj) => {
 
 // spinner
 
-let spinnerInterval = null
-let spinnerTimeout = null
-const spinnerTextRus = [
-    'Обрабатываем',
-    'Упс, не то!',
-    'Загружаем то',
-]
-const spinnerTextEng = [
-    'Processing',
-    `Oops, it didn't work`,
-    'Loading another thing',
-]
-
-const runSpinner = className => {
-    const spinner = $(className)
-    const textNode = spinner.querySelector('.spinner__text')
-
-    addClass(spinner, 'spinner__wrap-active')
-
-    if (!textNode)
-        return
-
-    let i = 0
-    spinnerInterval = setInterval(() => {
-        const spinnerText = state.lang === 'ru' ? [...spinnerTextRus] : [...spinnerTextEng]
-        textNode.textContent = spinnerText[i]
-        i = i >= 2 ? 0 : i + 1
-    }, 4000)
-
-    spinnerTimeout = setTimeout(() => {
-        addClass(textNode, 'spinner__text-active')
-    }, 2000)
-}
-
-const hideSpinner = className => {
-    const spinner = $(className)
-    const textNode = spinner.querySelector('.spinner__text')
-
-    addClass(spinner, 'spinner__wrap-fade')
-    clearInterval(spinnerInterval)
-    clearTimeout(spinnerTimeout)
-
-    setTimeout(() => {
-        removeClass(spinner, 'spinner__wrap-fade')
-        removeClass(spinner, 'spinner__wrap-active')
-    }, 400)
-
-    if (!textNode)
-        return
-
-    removeClass(textNode, 'spinner__text-active')
-}
+// let spinnerInterval = null
+// let spinnerTimeout = null
+// const spinnerTextRus = [
+//     'Обрабатываем',
+//     'Упс, не то!',
+//     'Загружаем то',
+// ]
+// const spinnerTextEng = [
+//     'Processing',
+//     `Oops, it didn't work`,
+//     'Loading another thing',
+// ]
+//
+// const runSpinner = className => {
+//     const spinner = $(className)
+//     const textNode = spinner.querySelector('.spinner__text')
+//
+//     addClass(spinner, 'spinner__wrap-active')
+//
+//     if (!textNode)
+//         return
+//
+//     let i = 0
+//     spinnerInterval = setInterval(() => {
+//         const spinnerText = state.lang === 'ru' ? [...spinnerTextRus] : [...spinnerTextEng]
+//         textNode.textContent = spinnerText[i]
+//         i = i >= 2 ? 0 : i + 1
+//     }, 4000)
+//
+//     spinnerTimeout = setTimeout(() => {
+//         addClass(textNode, 'spinner__text-active')
+//     }, 2000)
+// }
+//
+// const hideSpinner = className => {
+//     const spinner = $(className)
+//     const textNode = spinner.querySelector('.spinner__text')
+//
+//     addClass(spinner, 'spinner__wrap-fade')
+//     clearInterval(spinnerInterval)
+//     clearTimeout(spinnerTimeout)
+//
+//     setTimeout(() => {
+//         removeClass(spinner, 'spinner__wrap-fade')
+//         removeClass(spinner, 'spinner__wrap-active')
+//     }, 400)
+//
+//     if (!textNode)
+//         return
+//
+//     removeClass(textNode, 'spinner__text-active')
+// }
 
 const setActiveRatings = number =>
     $('.availRating').textContent = number + 1

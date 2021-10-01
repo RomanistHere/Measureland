@@ -64,7 +64,7 @@
 
 <div class="max-w-sm w-full">
     {#await promise}
-        <Spinner className="places__spinner" />
+        <Spinner isWithText={true} />
     {:then array}
         <PopupTitle title={$_('myPlacesPopup.title')} />
 
