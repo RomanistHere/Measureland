@@ -28,11 +28,6 @@
         else
             url.searchParams.delete('fi');
 
-        if (openModal)
-            url.searchParams.set('openModal', true);
-        else
-            url.searchParams.delete('openModal');
-
         if (showRating) {
             const [lat, lng] = showRating;
             url.searchParams.set('srlat', roundToFifthDecimal(lat));
@@ -42,7 +37,13 @@
             url.searchParams.delete('srlng');
         }
 
-    	window.history.replaceState(null, null, url);
+        if (openModal) {
+            url.searchParams.set('openModal', true);
+            window.history.pushState(null, null, url);
+        } else {
+            url.searchParams.delete('openModal');
+            window.history.replaceState(null, null, url);
+        }
     };
 
     const updateAppStateFromURL = async () => {

@@ -1,6 +1,5 @@
 # To do:
 
-- mobile back doesn't work
 - restyle filters
 - create popup for handling (showing) errors
 - check error screen

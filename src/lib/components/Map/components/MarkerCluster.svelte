@@ -44,10 +44,8 @@
             shadowSize: [61, 100],
         });
 
-    const initShowRatingPopup = ({ latlng }) => {
+    const initShowRatingPopup = ({ latlng }) =>
         openAnotherOverlay('showRatingsPopup', latlng);
-        appStateStore.update(state => ({ ...state, openModal: true }));
-    }
 
     const createClusterIcon = (feature, latlng) => {
         if (!feature.properties.cluster) {

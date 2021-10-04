@@ -58,6 +58,11 @@
             popupData = data;
             popupActive = true;
         }
+
+        if (popupActive || sidebarActive)
+            appStateStore.update(state => ({ ...state, openModal: true }));
+        else
+            appStateStore.update(state => ({ ...state, openModal: false }));
     }
 
     const manageOverlays = openOverlays => {
@@ -107,4 +112,7 @@
 
 <NotificationLayer />
 
-<svelte:window on:keydown={handleKeydown}/>
+<svelte:window
+    on:keydown={handleKeydown}
+    on:popstate={closeOverlays}
+/>
