@@ -136,10 +136,14 @@ textarea {
     html {
         font-size: 16px;
     }
+
+    body {
+        --navbar-height: 0px;
+    }
 }
 
 @media screen and (max-width: 767px) {
-    body {
-        --navbar-height: 0px;
+    html {
+        font-size: 14px;
     }
 }

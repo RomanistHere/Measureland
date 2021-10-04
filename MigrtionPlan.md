@@ -1,5 +1,7 @@
 # To do:
 
+- mobile phones center
+- temporarily highlight area (during the quiz)
 - restyle filters
 - create popup for handling (showing) errors
 - check error screen

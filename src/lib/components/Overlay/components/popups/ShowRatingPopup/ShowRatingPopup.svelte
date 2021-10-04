@@ -107,7 +107,7 @@
 </script>
 
 <div class="max-w-lg w-full">
-    <p class="mb-4 text-center italic text-base font-bold">
+    <p class="mb-4 text-center italic text-base font-bold -md:px-10">
         {$_('showRatingPopup.approximateAddress')}: {approximateAdress}
     </p>
 
@@ -129,18 +129,18 @@
         {personalExperiencePercent}% {$_('showRatingPopup.ofParticipantsLived')}
     </div>
 
-    <div class="flex justify-between my-4">
+    <div class="flex justify-between my-4 -md:text-sm">
         <div>
             {$_('showRatingPopup.averageRating')}:
-            <span class="sug-col font-bold text-2xl">{averageRating}</span>
+            <span class="sug-col font-bold text-2xl -md:text-lg">{averageRating}</span>
         </div>
         <div>
             {$_('showRatingPopup.usersRated')}:
-            <span class="sug-col font-bold text-2xl">{numberOfUsers}</span>
+            <span class="sug-col font-bold text-2xl -md:text-lg">{numberOfUsers}</span>
         </div>
         <div>
             <a href={"#"} class="rate__comments underline" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:
-            <span class="sug-col font-bold text-2xl">{numberOfComments}</span>
+            <span class="sug-col font-bold text-2xl -md:text-lg">{numberOfComments}</span>
         </div>
     </div>
 

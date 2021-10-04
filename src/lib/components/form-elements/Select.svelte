@@ -15,8 +15,8 @@
         {/each}
     </select>
 
-    <span class="dot w-3 h-3 rounded-full absolute -left-6 top-14 opacity-0"></span>
-    <span class="dot w-3 h-3 rounded-full absolute -right-6 top-14 opacity-0"></span>
+    <span class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-14 opacity-0"></span>
+    <span class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-14 opacity-0"></span>
 </div>
 
 <style>

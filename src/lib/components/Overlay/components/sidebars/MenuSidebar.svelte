@@ -156,8 +156,8 @@
     }
 </script>
 
-<div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4">
-    <SidebarBlock { ...dataTopBlock } className="md:hidden"/>
+<div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4 relative">
+    <SidebarBlock { ...dataTopBlock } className="lg:hidden"/>
 
     <div class="mb-8">
         <h2 class="font-bold px-8 text-xl">{$_('menuSidebar.titleMid')}</h2>
