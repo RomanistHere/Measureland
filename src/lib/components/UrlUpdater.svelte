@@ -33,10 +33,14 @@
         else
             url.searchParams.delete('openModal');
 
-        if (showRating)
-            url.searchParams.set('showRating', true);
-        else
-            url.searchParams.delete('showRating');
+        if (showRating) {
+            const [lat, lng] = showRating;
+            url.searchParams.set('srlat', roundToFifthDecimal(lat));
+            url.searchParams.set('srlng', roundToFifthDecimal(lng));
+        } else {
+            url.searchParams.delete('srlat');
+            url.searchParams.delete('srlng');
+        }
 
     	window.history.replaceState(null, null, url);
     };
@@ -47,7 +51,8 @@
         const lng = url.searchParams.get('lng');
         const zoom = url.searchParams.get('zoom');
         const filters = url.searchParams.get('fi');
-        const showRating = url.searchParams.get('showRating');
+        const srlat = url.searchParams.get('srlat');
+        const srlng = url.searchParams.get('srlng');
         const token = url.searchParams.get('token');
         const passToken = url.searchParams.get('reset_pass_token');
         const center = [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
@@ -58,13 +63,13 @@
         if (zoom)
             appStateStore.update(state => ({ ...state, zoom }));
 
-        if (showRating) {
+        if (srlat && srlng) {
             // open popup only after map is loaded
             const interval = setInterval(() => {
                 const isMapReady = checkIfMapLoaded();
 
                 if (isMapReady) {
-                    openAnotherOverlay('showRatingsPopup', { lat, lng });
+                    openAnotherOverlay('showRatingsPopup', { lat: roundToFifthDecimal(srlat), lng: roundToFifthDecimal(srlng) });
                     clearInterval(interval);
                 }
             }, 60);

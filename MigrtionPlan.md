@@ -1,8 +1,6 @@
 # To do:
 
-- focus map in the left part of screen when open popup
-- update comments when click without closing
-- fix showRating from url (save center in url)
+- mobile back doesn't work
 - restyle filters
 - create popup for handling (showing) errors
 - check error screen

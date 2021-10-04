@@ -84,7 +84,7 @@
         const ratingObj = properties.rating;
         const { finalRating } = getFinalRating(ratingObj);
 
-        appStateStore.update(state => ({ ...state, showRating: true }));
+        appStateStore.update(state => ({ ...state, showRating: [ lat, lng ] }));
 
         isAlreadyRatedByThisUser = properties.isRated;
         currentLatLng = { lng, lat };
