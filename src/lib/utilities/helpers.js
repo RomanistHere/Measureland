@@ -28,6 +28,9 @@ const splitString = (str, key) =>
 const roundToFifthDecimal = number =>
     Math.round(10000 * number) / 10000
 
+const roundToFifthDecimalLatLng = ({ lat, lng }) =>
+    ({ lat: roundToFifthDecimal(lat), lng: roundToFifthDecimal(lng) });
+
 const roundToTen = number =>
     Math.round(10 * number) / 10
 
@@ -218,6 +221,7 @@ export {
     getAverageRating,
     splitString,
     roundToFifthDecimal,
+	roundToFifthDecimalLatLng,
     roundToTen,
     roundToInt,
     getColor,

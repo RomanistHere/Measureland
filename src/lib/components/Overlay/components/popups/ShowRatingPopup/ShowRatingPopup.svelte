@@ -11,7 +11,7 @@
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { appStateStore, userStateStore } from "../../../../../../stores/state.js";
-    import { getFinalRating, roundToTen, openAnotherOverlay } from '../../../../../utilities/helpers.js';
+    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay } from '../../../../../utilities/helpers.js';
 
     export let popupData;
 
@@ -62,10 +62,18 @@
         });
         // TODO:
         // $('.rate__popup').focus()
-
+        const bounds = map.getBounds();
+        const east = roundToFifthDecimal(bounds.getEast());
+    	const west = roundToFifthDecimal(bounds.getWest());
+        const distanceBetweenEdgesOfScreen = roundToFifthDecimal(Math.abs(east - west));
         const currentZoom = map.getZoom();
         const zoom = currentZoom <= 12 ? 13 : currentZoom;
-        map.setView({ lng, lat }, zoom);
+
+        // center in left half of the screen
+        map.setView({
+            lng: lng + distanceBetweenEdgesOfScreen / 4,
+            lat
+        }, zoom);
 
         const { error, data } = await getSinglePointData([ lng, lat ]);
         console.log(error)
@@ -87,7 +95,7 @@
         personalExperiencePercent = Math.floor(properties.numberOfPersonalExperience / properties.numberOfUsers * 100);
     }
 
-    let promise = fetchData(popupData);
+    $: promise = fetchData(popupData);
 
     onDestroy(() => {
         appStateStore.update(state => ({ ...state, showRating: false }));
@@ -144,6 +152,10 @@
 
 
     {#await promise}
-        <Spinner />
+        <Spinner
+            className="absolute w-full h-full inset-0 z-5"
+            isWithText={true}
+            isWithBg={true}
+        />
     {/await}
 </div>

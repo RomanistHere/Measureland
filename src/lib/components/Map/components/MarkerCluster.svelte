@@ -2,6 +2,7 @@
     import { _ } from 'svelte-i18n';
     import { onMount } from 'svelte';
     import { get } from 'svelte/store';
+    import { fade } from 'svelte/transition';
 
 	import L from 'leaflet';
     import PolyBool from 'polybooljs';
@@ -10,7 +11,7 @@
 
     import { userStateStore, appStateStore, filtersStore, markerStore } from "../../../../stores/state.js";
     import { mapReference } from "../../../../stores/references.js";
-    import { roundToFifthDecimal, roundToInt, openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
+    import { roundToFifthDecimal, roundToFifthDecimalLatLng, roundToInt, openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
 	const map = $mapReference;
@@ -250,13 +251,13 @@
     	// console.time('preparations')
         const bounds = map.getBounds();
         const zoom = map.getZoom();
-
-    	updateState(bounds.getCenter(), zoom);
-
+        const center = roundToFifthDecimalLatLng(bounds.getCenter());
     	const east = roundToFifthDecimal(bounds.getEast());
     	const north = roundToFifthDecimal(bounds.getNorth());
     	const west = roundToFifthDecimal(bounds.getWest());
     	const south = roundToFifthDecimal(bounds.getSouth());
+
+    	updateState(center, zoom);
 
     	const currentScreenPoly = {
     		regions: [
@@ -364,14 +365,14 @@
 </script>
 
 {#if isLoading}
-    <!-- todo: animations -->
-    <div class="overlay__loading overlay__loading-show">
+    <div class="absolute top-12 left-1/2 transform -translate-x-1/2 italic text-3xl pointer-events-none" transition:fade>
         {$_('loading.geo')}
     </div>
 {/if}
 
 <style>
-    .overlay__loading {
+    div {
+        text-shadow: 0 0 2px #000;
         z-index: 1000;
     }
 </style>

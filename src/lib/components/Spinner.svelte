@@ -1,12 +1,14 @@
 <script>
     import { _, json } from 'svelte-i18n';
     import { onDestroy } from 'svelte';
-    import { fly } from 'svelte/transition';
+    import { fly, fade } from 'svelte/transition';
 
     $: statusText = $_('spinner.start');
 
     export let className = '';
     export let isWithText = false;
+    export let isWithBg = false;
+
     let shouldShowText = false;
     let spinnerInterval;
     let spinnerTimeout;
@@ -40,7 +42,11 @@
     onDestroy(resetTimers);
 </script>
 
-<div class="flex justify-center items-center {className ? className : 'relative'}">
+<div
+    class="flex justify-center items-center {className ? className : 'relative'}"
+    class:non-transparent={isWithBg}
+    transition:fade
+>
     <div class="spinner h-20 w-20"></div>
     {#if shouldShowText}
         {#key statusText}
@@ -64,6 +70,7 @@
 
     .non-transparent {
         background-color: var(--side-bg-color);
+        background-color: var(--bg-color-add-non-transparent);
     }
 
     @keyframes spinner {
