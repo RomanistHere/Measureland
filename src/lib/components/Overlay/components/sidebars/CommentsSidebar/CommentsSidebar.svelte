@@ -1,7 +1,6 @@
 <script>
     import { _ } from 'svelte-i18n';
 
-    import SidebarWrap from '../SidebarWrap.svelte';
     import CommentBlock from './CommentBlock.svelte';
     import Spinner from '../../../../Spinner.svelte';
 
@@ -19,10 +18,10 @@
         return data;
     }
 
-    let promise = fetchData(sidebarData);
+    $: promise = fetchData(sidebarData);
 </script>
 
-<SidebarWrap>
+<div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4">
     <h2 class="font-bold px-8 text-xl">{$_('commentSidebar.title')}</h2>
     {#await promise}
         <Spinner className="absolute-centered" />
@@ -33,4 +32,4 @@
             {/each}
         </ul>
     {/await}
-</SidebarWrap>
+</div>

@@ -1,7 +1,5 @@
 <script>
     import { fly } from 'svelte/transition';
-    // after install change node_modules/svelte-focus-trap/src/index.js if error persists
-    //https://github.com/Duder-onomy/svelte-focus-trap/issues/4
     import { focusTrap } from 'svelte-focus-trap';
     import { closeOverlays } from '../../../../utilities/helpers.js';
 
@@ -26,66 +24,23 @@
     export let popupData;
 
     const popupList = {
-        askForMoreRatingsPopup: {
-            className: 'rate_ask_ratings',
-            component: AskForMoreRatingsPopup
-        },
-        changePasswordPopup: {
-            className: 'login',
-            component: ChangePasswordPopup
-        },
-        checkEmailPopup: {
-            className: 'login',
-            component: CheckEmailPopup
-        },
-        confirmForgotPasswordPopup: {
-            className: 'login',
-            component: ConfirmForgotPasswordPopup
-        },
-        forgotPasswordPopup: {
-            className: 'login',
-            component: ForgotPasswordPopup
-        },
-        howToRatePopup: {
-            className: 'rate_tutorial',
-            component: HowToRatePopup
-        },
-        loggedInPopup: {
-            className: 'login',
-            component: LoggedInPopup
-        },
-        loginPopup: {
-            className: 'login',
-            component: LoginPopup
-        },
-        myPlacesPopup: {
-            className: 'places',
-            component: MyPlacesPopup
-        },
-        onboardingPopup: {
-            className: 'partners',
-            component: OnboardingPopup
-        },
-        partnersPopup: {
-            className: 'partners',
-            component: PartnersPopup
-        },
-        quizPopup: {
-            className: 'rating ratingShow',
-            component: QuizPopup
-        },
-        registerPopup: {
-            className: 'register',
-            component: RegisterPopup
-        },
-        showRatingsPopup: {
-            className: 'rate',
-            component: ShowRatingPopup
-        },
+        askForMoreRatingsPopup: AskForMoreRatingsPopup,
+        changePasswordPopup: ChangePasswordPopup,
+        checkEmailPopup: CheckEmailPopup,
+        confirmForgotPasswordPopup: ConfirmForgotPasswordPopup,
+        forgotPasswordPopup: ForgotPasswordPopup,
+        howToRatePopup: HowToRatePopup,
+        loggedInPopup: LoggedInPopup,
+        loginPopup: LoginPopup,
+        myPlacesPopup: MyPlacesPopup,
+        onboardingPopup: OnboardingPopup,
+        partnersPopup: PartnersPopup,
+        quizPopup: QuizPopup,
+        registerPopup: RegisterPopup,
+        showRatingsPopup: ShowRatingPopup,
     };
 
-    $: Popup = popupList[popupName]['component'];
-    $: popupParentClass = popupList[popupName]['className'];
+    $: Popup = popupList[popupName];
 </script>
 
 <div

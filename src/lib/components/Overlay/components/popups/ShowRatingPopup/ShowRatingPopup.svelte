@@ -10,7 +10,7 @@
 
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
-    import { appStateStore, userStateStore } from "../../../../../../stores/state.js";
+    import { appStateStore, userStateStore, overlayStateStore } from "../../../../../../stores/state.js";
     import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay } from '../../../../../utilities/helpers.js';
 
     export let popupData;
@@ -93,6 +93,10 @@
         numberOfUsers = properties.numberOfUsers;
         numberOfComments = properties.numberOfComments;
         personalExperiencePercent = Math.floor(properties.numberOfPersonalExperience / properties.numberOfUsers * 100);
+
+        // update comments if they opened
+        if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data !== commentGeoID)
+            openAnotherOverlay('commentsSidebar', commentGeoID);
     }
 
     $: promise = fetchData(popupData);

@@ -4,6 +4,7 @@
     import CommentsSidebar from './CommentsSidebar/CommentsSidebar.svelte';
     import FiltersSidebar from './FiltersSidebar/FiltersSidebar.svelte';
     import MenuSidebar from './MenuSidebar.svelte';
+    import CloseBtn from '../../../CloseBtn.svelte';
 
     export let sidebarName;
     export let sidebarData;
@@ -23,11 +24,20 @@
     out:fly="{{ x: -100, duration: 300 }}"
 >
     <svelte:component this={Sidebar} { sidebarData }/>
+
+    <CloseBtn overlayType='sidebar' />
 </aside>
 
 <style>
     aside {
         top: calc(1rem + var(--navbar-height));
+        background-color: var(--side-bg-color);
+        /* try this */
+        backdrop-filter: blur(7px) saturate(180%);
+        -webkit-backdrop-filter: blur(7px) saturate(180%);
+        background-color: rgba(255, 255, 255, 0.75);
+        border-radius: 12px;
+        border: 1px solid rgba(209, 213, 219, 0.3);
     }
 
     /* aside::-webkit-scrollbar {

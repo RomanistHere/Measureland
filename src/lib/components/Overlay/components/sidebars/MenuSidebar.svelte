@@ -2,7 +2,6 @@
     import { _, locale } from 'svelte-i18n';
     import { browser } from '$app/env';
 
-    import SidebarWrap from './SidebarWrap.svelte';
     import SidebarBlock from './SidebarBlock.svelte';
     import MainButton from '../MainButton.svelte';
 
@@ -157,7 +156,7 @@
     }
 </script>
 
-<SidebarWrap>
+<div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4">
     <SidebarBlock { ...dataTopBlock } className="md:hidden"/>
 
     <div class="mb-8">
@@ -217,7 +216,7 @@
             <a class="link underline" target="_blank" rel="noopener" href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p">{$_('footer.allRightsReserved')}</a>. {$_('footer.rightsYear')}.
         </div>
     </footer>
-</SidebarWrap>
+</div>
 
 <style>
     .link {

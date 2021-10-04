@@ -1,7 +1,6 @@
 <script>
     import { _, json } from 'svelte-i18n';
 
-    import SidebarWrap from '../SidebarWrap.svelte';
     import FiltersItem from './FiltersItem.svelte';
     import PresetBtn from './PresetBtn.svelte';
     import MainButton from '../../MainButton.svelte';
@@ -84,7 +83,7 @@
     const debouncedApplyPreset = debounce(applyPreset, 300);
 </script>
 
-<SidebarWrap>
+<div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4">
     <h2 class="font-bold px-8 text-xl mb-2">{$_('filterSidebar.title')}</h2>
     <h4 class="px-8 mb-2">{$_('filterSidebar.filterPresets')}</h4>
     <ul class="flex flex-wrap justify-between px-8 mb-4">
@@ -118,7 +117,7 @@
         {$_('filterSidebar.footerText2')}
         <span class="filters__bot-small">{$_('filterSidebar.footerTextSmall')}</span>
     </div>
-</SidebarWrap>
+</div>
 
 <style>
     .hoverable {
