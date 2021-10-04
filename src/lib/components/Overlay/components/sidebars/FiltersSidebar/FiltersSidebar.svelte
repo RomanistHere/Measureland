@@ -106,7 +106,7 @@
     </ul>
 
     <div class="px-8 mb-4 text-right">
-        <a href={"#"} class="underline text-lg cursor-default opacity-60 {$filtersStore.isFiltersOn && 'hoverable'}" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
+        <a href={"#"} class="underline cursor-default opacity-60 {$filtersStore.isFiltersOn && 'hoverable'}" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
     </div>
 
     <div class="px-8 text-sm -mb-10 -lg:mb-2">

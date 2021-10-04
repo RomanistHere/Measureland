@@ -3,6 +3,7 @@
 - mobile phones center
 - temporarily highlight area (during the quiz)
 - restyle filters
+- filter fix (disappearing)
 - create popup for handling (showing) errors
 - check error screen
 - drawing
@@ -14,4 +15,4 @@
 - write a contribution guide
 - write an article about how awesome svelte is
 - track user flow
-- create measureland discord and some community articles to get started
+- create Measureland discord and some community articles to get started

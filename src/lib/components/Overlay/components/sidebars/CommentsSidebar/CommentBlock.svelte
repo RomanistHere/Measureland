@@ -4,7 +4,7 @@
     import VoteButton from "../../../../VoteButton.svelte";
 
     import { userStateStore } from "../../../../../../stores/state.js";
-    import { openAnotherOverlay } from "../../../../../utilities/helpers.js";
+    import { openAnotherOverlay, closeOverlay } from "../../../../../utilities/helpers.js";
     import { reactOnComment } from "../../../../../utilities/api.js";
 
     export let data;
@@ -17,6 +17,7 @@
 
     const likeComment = async () => {
         if (!isUserLoggedIn) {
+            closeOverlay('sidebar');
             openAnotherOverlay('loginPopup');
             return;
         }
@@ -42,6 +43,7 @@
 
     const dislikeComment = async () => {
         if (!isUserLoggedIn) {
+            closeOverlay('sidebar');
             openAnotherOverlay('loginPopup');
             return;
         }

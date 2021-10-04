@@ -24,12 +24,13 @@
         background-color: #fcd9f6;
         /* background-color: #fce9a5; */
         /* background-color: #ddfaff; */
-        transition: background-color .3s;
+        transition: background-color .5s, color .5s;
     }
 
     .active,
     a:hover {
-        background-color: #fce9a5;
+        background-color: var(--active-color);
+        color: var(--side-bg-color);
     }
 
     .active {
