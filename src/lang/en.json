@@ -125,7 +125,8 @@
         "checkboxLink": "terms of use"
     },
     "_": {
-        "commentConnector": "gave"
+        "commentConnector": "gave",
+        "user": "you"
     },
     "loading": {
         "geo": "Loading..."
@@ -176,6 +177,9 @@
         "newsTelegram": "Новости в Телеграме",
         "checkList": "Чек-лист арендатора",
         "blog": "Blog"
+    },
+    "commentSidebar": {
+        "title": "Comments"
     },
     "filterSidebar": {
         "title": "Set up filters",

@@ -101,6 +101,15 @@ textarea {
     font-size: 16px;
 }
 
+/* // if not needed anywhere except Spinner component, move there */
+.absolute-centered {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 /* // temporare class */
 .sug-color {
     color: var(--sug-color);

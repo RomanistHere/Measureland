@@ -1,6 +1,8 @@
 <script>
     import { _, locale } from 'svelte-i18n';
 
+    import VoteButton from "../../../../VoteButton.svelte";
+
     import { userStateStore } from "../../../../../../stores/state.js";
     import { openAnotherOverlay } from "../../../../../utilities/helpers.js";
     import { reactOnComment } from "../../../../../utilities/api.js";
@@ -64,20 +66,50 @@
     }
 </script>
 
-<li class="comments__item {isYours ? 'comments__item-highlight' : ''}">
-    <p class="comments__name rating__title">
+<li
+    class="mt-4 px-8"
+    class:isYours
+>
+    <p class="font-bold">
         {username}
-        <span class="comments__rating">{$_('_.commentConnector')} {rating}</span>
+        {#if isYours}
+            ({$_('_.user')})
+        {/if}
+        <span class="italic opacity-60 text-sm">{$_('_.commentConnector')} {rating}</span>
     </p>
-    <p class="comments__text">{comment}</p>
-    <div class="comments__btns">
-        <a href={"#"} class="comment__btn" data-disabled="{isLikesDisabled}" on:click|preventDefault={likeComment}>
-            <span class="comment__btn-emoj">👍</span>
-            <span class="comment__btn-numb">{liked}</span>
-        </a>
-        <a href={"#"} class="comment__btn" data-disabled="{isDislikesDisabled}" on:click|preventDefault={dislikeComment}>
-            <span class="comment__btn-emoj">👎</span>
-            <span class="comment__btn-numb">{disliked}</span>
-        </a>
+
+    <p class="my-2">{comment}</p>
+
+    <div>
+        <VoteButton
+            isLike={true}
+            isDisabled={isLikesDisabled}
+            action={likeComment}
+            text={liked}
+        />
+        <VoteButton
+            isLike={false}
+            isDisabled={isDislikesDisabled}
+            action={dislikeComment}
+            text={disliked}
+        />
     </div>
 </li>
+
+<style>
+    .isYours {
+        position: relative;
+    }
+
+    .isYours::after {
+        content: '';
+        position: absolute;
+
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: .5rem;
+
+        background-color: var(--active-color);
+    }
+</style>

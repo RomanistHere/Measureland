@@ -1,10 +1,10 @@
 # To do:
 
+- focus map in the left part of screen when open popup
+- create popup for handling (showing) errors
 - check error screen
-- move popups to the side
 - drawing
 - check (stricter) content security policy
-- create popup for handling (showing) errors
 - move everything from old files
 - do we need loggedInPopup?
 - move our tremendous main-non-crit.css to separate instances

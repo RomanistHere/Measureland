@@ -1,4 +1,6 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     import SidebarWrap from '../SidebarWrap.svelte';
     import CommentBlock from './CommentBlock.svelte';
     import Spinner from '../../../../Spinner.svelte';
@@ -10,6 +12,7 @@
     const fetchData = async (geoID) => {
         const { error, data } = await fetchComments(geoID);
 
+        // todo show error
         console.log(error)
         console.log(data)
 
@@ -20,12 +23,11 @@
 </script>
 
 <SidebarWrap>
+    <h2 class="font-bold px-8 text-xl">{$_('commentSidebar.title')}</h2>
     {#await promise}
-        <Spinner />
+        <Spinner className="absolute-centered" />
     {:then response}
-        <h2 class="rating__title title rating__item_text comments__title sidebar__title">Comments</h2>
-        <hr>
-        <ul class="comments__wrap">
+        <ul class="mt-2">
             {#each response.array.sort((a, b) => b.liked - a.liked) as data}
                 <CommentBlock { data } />
             {/each}

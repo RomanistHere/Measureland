@@ -28,6 +28,7 @@
     <div class="wrap flex-row-reverse inline-flex my-2">
         {#each possibleRatingsArr as number}
             <a
+                href={"#"}
                 class="leading-none text-4xl ml-1 cursor-pointer s{number}"
                 class:active={rating === number}
                 on:click|preventDefault={(e) => {
