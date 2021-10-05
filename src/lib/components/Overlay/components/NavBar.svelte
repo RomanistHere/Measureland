@@ -115,7 +115,7 @@
     }
 </script>
 
-<nav class="transition-all fixed flex z-5 justify-center inset-x-0 top-0 h-14 -lg:hidden">
+<nav class="overflow-hidden transition-all fixed flex z-5 justify-center inset-x-4 top-4 h-14 -lg:hidden glassmorphism">
     <ul class="m-0 px-4 w-full flex justify-between">
         <li class="m-0 p-0 list-none flex items-center justify-center">
             <a
@@ -168,7 +168,7 @@
 
                     {#if profileDropDownOpen}
                         <DropdownMenu
-                            className='right-0 w-48 top-10 mt-2 bg-white bg-gray-100'
+                            className='right-0 w-48 top-10 mt-2'
                             { dropdownData }
                         />
                     {/if}
@@ -189,13 +189,20 @@
             {/if}
         </li>
     </ul>
-    <div class="absolute inset-0 -inset-x-80 nav_gradient {!isCenterHovered && 'opacity-90'} {isLeftHovered && 'left-0 opacity-100'} {isRightHovered && 'right-0 opacity-100'} {isCenterHovered && 'transform scale-x-150 opacity-100'}"></div>
+    <div
+        class="absolute inset-0 -inset-x-80 nav_gradient transform"
+        class:opacity-50={isCenterHovered || isLeftHovered || isRightHovered}
+        class:opacity-30={!isCenterHovered}
+        class:left-0={isLeftHovered}
+        class:right-0={isRightHovered}
+        class:scale-x-150={isCenterHovered}
+    ></div>
 </nav>
 
 <style>
     .nav_gradient {
+        background: #fde9ff;
         background: linear-gradient(270deg, #FCEA8D 11.38%, #FBD2FF 50.48%, #D8F8FF 80.4%);
-        /* background: #fde9ff; */
         z-index: -1;
         transition: all ease .5s;
         box-shadow: 0px 0px 30px #fde9ff;

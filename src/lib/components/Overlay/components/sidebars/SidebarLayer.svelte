@@ -19,7 +19,7 @@
 </script>
 
 <aside
-    class="fixed z-2 left-4 bottom-4 overflow-y-auto overflow-x-hidden rounded-md w-80 -lg:inset-0 -lg:w-full popup-shadow"
+    class="fixed z-2 left-4 bottom-4 overflow-y-auto overflow-x-hidden rounded-md w-80 -lg:right-4 -lg:w-auto popup-shadow glassmorphism"
     in:fly="{{ x: -100, duration: 300 }}"
     out:fly="{{ x: -100, duration: 300 }}"
 >
@@ -30,23 +30,16 @@
 
 <style>
     aside {
-        top: calc(1rem + var(--navbar-height));
-        background-color: var(--side-bg-color);
-        /* try this */
-        backdrop-filter: blur(7px) saturate(180%);
-        -webkit-backdrop-filter: blur(7px) saturate(180%);
-        background-color: rgba(255, 255, 255, 0.75);
-        border-radius: 12px;
-        border: 1px solid rgba(209, 213, 219, 0.3);
+        top: var(--distance-top);
     }
 
     /* aside::-webkit-scrollbar {
         display: none;
     } */
 
-    @media screen and (max-width: 1023px) {
+    /* @media screen and (max-width: 1023px) {
         aside {
             top: var(--navbar-height);
         }
-    }
+    } */
 </style>

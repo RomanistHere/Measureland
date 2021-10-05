@@ -12,19 +12,24 @@
 
 <section class="flex items-center justify-center px-10 w-full h-full slide-{slideNumber + 1}">
     <div class="max-w-xl">
-        <h1 class="lg:text-5xl -lg:text-3xl mb-10 @lg:text-5xl">{title}</h1>
-        <p class="lg:text-2xl">{text1}</p>
+        <h1 class="lg:text-5xl -lg:text-3xl mb-10 @lg:text-5xl -md:text-2xl">{title}</h1>
+        <p class="lg:text-2xl -md:text-base">{text1}</p>
         {#if text2}
-            <p class="lg:text-2xl mt-5">{text2}</p>
+            <p class="lg:text-2xl mt-5 -md:text-base">{text2}</p>
         {/if}
         {#if button}
-            <PrimaryButton text={button} action={action} { disabled } className='inline-block mt-5 px-10 {disabled && 'opacity-30'}' />
+            <PrimaryButton
+                text={button}
+                action={action}
+                { disabled }
+                className='inline-block mt-5 px-10 -md:text-sm'
+            />
         {/if}
     </div>
 </section>
 
 <style>
-    .slide-1 {
+    /* .slide-1 {
         background: radial-gradient(46.49% 30.77% at 33.76% 31.67%, #C9FFC8 0%, #D4EFF5 100%);
     }
 
@@ -38,5 +43,5 @@
 
     .slide-4 {
         background: radial-gradient(43.07% 32.28% at 66.97% 71.42%, #FFD8D8 0%, #D4EFF5 100%);
-    }
+    } */
 </style>

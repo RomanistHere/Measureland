@@ -6,7 +6,7 @@
 </script>
 
 <ul
-    class="absolute {className} rounded-md overflow-hidden popup-shadow"
+    class="absolute {className} rounded-md overflow-hidden popup-shadow glassmorphism"
     in:fly="{{ y: 20, duration: 300 }}"
     out:fly="{{ y: -20, duration: 300 }}"
 >

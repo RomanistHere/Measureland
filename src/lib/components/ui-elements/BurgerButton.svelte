@@ -3,7 +3,7 @@
     export let action = () => {};
 </script>
 
-<a href={"#"} class="absolute flex justify-center items-center z-1 popup-shadow {className}" on:click|preventDefault={action}>
+<a href={"#"} class="absolute flex justify-center items-center z-1 popup-shadow glassmorphism {className}" on:click|preventDefault={action}>
     <div class="relative">
         <span></span>
     </div>
@@ -11,11 +11,11 @@
 
 <style>
     a {
-        top: calc(var(--navbar-height) + 1rem);
+        top: var(--distance-top);
         right: 1rem;
         width: 64px;
         height: 64px;
-        background-color: var(--side-bg-color);
+        /* background-color: var(--side-bg-color); */
         border-radius: 50%;
         border: 2px solid var(--text-color);
 

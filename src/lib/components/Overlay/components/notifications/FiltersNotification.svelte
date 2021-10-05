@@ -20,7 +20,7 @@
     }
 </script>
 
-<div class="fixed bottom-12 left-1/2 transform -translate-x-1/2 rounded-md px-4 py-1 z-5" transition:fade>
+<div class="fixed bottom-12 left-1/2 transform -translate-x-1/2 rounded-md px-4 py-1 z-1 glassmorphism whitespace-nowrap" transition:fade>
     <TextButton
         action={openFilters}
         text={$_('filterNotification.filters')}
@@ -34,7 +34,7 @@
 
 <style>
     div {
-        background-color: var(--side-bg-color);
+        /* background-color: var(--side-bg-color); */
         border: 2px solid var(--text-color);
         pointer-events: all;
     }

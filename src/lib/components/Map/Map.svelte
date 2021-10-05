@@ -53,7 +53,7 @@
 </script>
 
 {#if $appStateStore.shouldWork}
-    <div use:mapAction class="w-full">
+    <div use:mapAction class="w-full h-full">
         {#if map}
             <MarkerCluster />
             <GeoSearch />
@@ -62,7 +62,7 @@
     </div>
 {:else}
     <section class="fixed inset-0 z-5 flex justify-center items-center">
-        <p class="error_text">
+        <p class="error_text px-4">
             {$_('errors.limitError.textBeforeLink')}
             <TextLink
                 text={$_('errors.limitError.textFirstLink')}
@@ -88,8 +88,12 @@
     }
 
     div {
-        height: calc(100% - var(--navbar-height));
-        top: var(--navbar-height);
+        /* height: calc(100% - var(--navbar-height)); */
+        /* top: var(--navbar-height); */
+    }
+
+    :global(.leaflet-top) {
+        top: calc(1rem + var(--navbar-height))
     }
 
     :global(.leaflet-left .leaflet-control) {
@@ -144,5 +148,11 @@
     :global(.leaflet-touch .geocoder-control-suggestion:hover) {
         background-color: var(--side-bg-color);
         border-color: var(--side-bg-color);
+    }
+
+    @media screen and (max-width: 1023px) {
+        :global(.leaflet-top) {
+            top: 0
+        }
     }
 </style>

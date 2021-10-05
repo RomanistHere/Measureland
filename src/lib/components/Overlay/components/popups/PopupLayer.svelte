@@ -44,18 +44,25 @@
 </script>
 
 <div
-    class="z-2 inset-0 left-1/2 absolute flex justify-center items-center flex-wrap -lg:left-0 px-4 py-6 overflow-auto"
+    class="glassmorphism z-2 inset-4 left-1/2 absolute flex justify-center items-center flex-wrap -lg:left-4 -md:inset-0 -md:rounded-none px-4 py-6 overflow-auto"
     use:focusTrap
     in:fly="{{ y: 80, duration: 300 }}"
     out:fly="{{ y: -80, duration: 300 }}"
 >
     <svelte:component this={Popup} { popupData }/>
-    <CloseButton overlayType='popup' className='top-3 right-3 z-2 -lg:top-3 -lg:right-3' />
+    <CloseButton overlayType='popup' className='-md:top-3 -md:right-3' />
 </div>
 
 <style>
     div {
-        background-color: var(--bg-color-add-non-transparent);
-        top: var(--navbar-height);
+        /* background-color: var(--bg-color-add-non-transparent);
+        top: var(--navbar-height); */
+        top: var(--distance-top);
+    }
+
+    @media screen and (max-width: 766px) {
+        div {
+            top: 0;
+        }
     }
 </style>
