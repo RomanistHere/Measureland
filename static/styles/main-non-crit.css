@@ -869,44 +869,6 @@
     width: 100%;
 }
 
-/* // buttons // */
-
-.btns_wrap {
-    display: flex;
-
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.btn {
-    padding: 12px 22px;
-
-    background-color: var(--active-color);
-
-    text-decoration: none;
-    color: var(--text-color-btn);
-    font-size: var(--normal-fz);
-
-    transition: background-color .3s;
-}
-
-.btn:focus {
-    outline-color: var(--sug-color);
-}
-
-.btn-low {
-    background: none;
-    border-bottom: 1px solid var(--non-active-color);
-
-    transition: border-color ease .5s;
-
-    color: var(--text-color);
-}
-
-.btn-disabled {
-    cursor: default;
-}
-
 /* // settings // */
 
 .settings__list,
@@ -1382,14 +1344,6 @@ a::selection {
 
     .places__link:hover {
         color: var(--active-color);
-    }
-
-    .btn:not(.btn-disabled):not(.btn-low):hover {
-        background-color: var(--suc-color);
-    }
-
-    .btn-low:not(.btn-disabled):hover {
-        border-color: var(--text-color);
     }
 
     .settings__btn-show_text:hover {

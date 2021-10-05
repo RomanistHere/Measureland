@@ -1,8 +1,8 @@
 <script>
     import { _, locale } from 'svelte-i18n';
 
-    import TextLink from '../../../TextLink.svelte';
-    import MainButton from '../MainButton.svelte';
+    import TextLink from '../../../ui-elements/TextLink.svelte';
+    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
     import { closeOverlay } from "../../../../utilities/helpers.js";
@@ -51,5 +51,5 @@
         {$_('askForMoreRatingsPopup.weWillRespond')}
     </p>
     
-    <MainButton text={$_('askForMoreRatingsPopup.mainBtn')} className="block text-center mt-4" action={closePopup} />
+    <PrimaryButton text={$_('askForMoreRatingsPopup.mainBtn')} className="block text-center mt-4" action={closePopup} />
 </div>

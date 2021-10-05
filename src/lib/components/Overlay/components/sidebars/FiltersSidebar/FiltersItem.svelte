@@ -2,7 +2,7 @@
     import { _ } from 'svelte-i18n';
 
     import Slider from './Slider.svelte';
-    import Tooltip from '../../../../../components/Tooltip.svelte';
+    import Tooltip from '../../../../ui-elements/Tooltip.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
 

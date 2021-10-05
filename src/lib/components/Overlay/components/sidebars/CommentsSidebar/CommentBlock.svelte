@@ -1,7 +1,7 @@
 <script>
     import { _, locale } from 'svelte-i18n';
 
-    import VoteButton from "../../../../VoteButton.svelte";
+    import VoteButton from "../../../../ui-elements/VoteButton.svelte";
 
     import { userStateStore } from "../../../../../../stores/state.js";
     import { openAnotherOverlay, closeOverlay } from "../../../../../utilities/helpers.js";

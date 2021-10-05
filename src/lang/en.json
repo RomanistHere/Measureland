@@ -126,7 +126,8 @@
     },
     "_": {
         "commentConnector": "gave",
-        "user": "you"
+        "user": "you",
+        "averageRating": "Average rating is"
     },
     "loading": {
         "geo": "Loading..."

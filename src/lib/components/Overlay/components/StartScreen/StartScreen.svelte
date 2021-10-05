@@ -7,10 +7,10 @@
     import 'swiper/css/pagination';
 
     import Slide from './Slide.svelte';
-    import TextLink from '../../../TextLink.svelte';
-    import CheckBox from '../../../CheckBox.svelte';
-    import MainButton from '../MainButton.svelte';
-    import SecondaryButton from '../SecondaryButton.svelte';
+    import TextLink from '../../../ui-elements/TextLink.svelte';
+    import CheckBox from '../../../ui-elements/CheckBox.svelte';
+    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
+    import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
     import ScrollBottomText from './ScrollBottomText.svelte';
 
     import { setCookie, openAnotherOverlay, fillFiltersFromArrOfStrings } from '../../../../utilities/helpers.js';
@@ -99,7 +99,7 @@
                             disabled={!$appStateStore.termsOfUseAgreed}
                             action={closeStartScreen}
                         />
-                        <MainButton
+                        <PrimaryButton
                             text={$_('startScreen.firstSlide.btn2')}
                             className='block mt-5'
                             disabled={!$appStateStore.termsOfUseAgreed}
@@ -136,7 +136,7 @@
                             disabled={!$appStateStore.termsOfUseAgreed}
                             action={closeStartScreen}
                         />
-                        <MainButton
+                        <PrimaryButton
                             text={$_('startScreen.firstSlide.btn2')}
                             className='block mt-5'
                             disabled={!$appStateStore.termsOfUseAgreed}

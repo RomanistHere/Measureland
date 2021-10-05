@@ -2,8 +2,8 @@
     import { browser } from '$app/env';
     import { _ } from 'svelte-i18n';
 
-    import Spinner from '../../Spinner.svelte';
-    import TextLink from '../../TextLink.svelte';
+    import Spinner from '../../ui-elements/Spinner.svelte';
+    import TextLink from '../../ui-elements/TextLink.svelte';
 
     import { checkUser } from "../../../utilities/api.js";
     import { getCookie } from "../../../utilities/helpers.js";

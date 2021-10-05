@@ -2,7 +2,7 @@
     import { _ } from 'svelte-i18n';
 
     import PopupTitle from './PopupTitle.svelte';
-    import MainButton from '../MainButton.svelte';
+    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
 
     import { closeOverlay, openAnotherOverlay } from "../../../../utilities/helpers.js";
     import { userStateStore } from "../../../../../stores/state.js";
@@ -43,7 +43,7 @@
     </ul>
 
     <div class="flex justify-evenly items-center mt-4">
-        <MainButton
+        <PrimaryButton
             text="{$_('howToRatePopup.submit')}"
             className='block text-center px-10'
             action={closePopup}

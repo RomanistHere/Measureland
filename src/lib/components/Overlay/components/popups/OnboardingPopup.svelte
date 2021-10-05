@@ -2,10 +2,10 @@
     import { _ } from 'svelte-i18n';
 
     import PopupTitle from './PopupTitle.svelte';
-    import Select from '../../../form-elements/Select.svelte';
-    import InputSimple from '../../../form-elements/InputSimple.svelte';
-    import InputGroupSimple from '../../../form-elements/InputGroupSimple.svelte';
-    import FormButton from '../FormButton.svelte';
+    import Select from '../../../ui-elements/Select.svelte';
+    import InputSimple from '../../../ui-elements/InputSimple.svelte';
+    import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
+    import FormButton from '../../../ui-elements/FormButton.svelte';
 
     import { closeOverlay, showSuccessNotification, debounce } from "../../../../utilities/helpers.js";
     import { onboard } from "../../../../utilities/api.js";

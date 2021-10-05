@@ -2,7 +2,7 @@
     import { _, locale } from 'svelte-i18n';
 
     import PopupTitle from './PopupTitle.svelte';
-    import Spinner from '../../../Spinner.svelte';
+    import Spinner from '../../../ui-elements/Spinner.svelte';
 
     import { fetchRatedPlace } from "../../../../utilities/api.js";
     import { openAnotherOverlay } from "../../../../utilities/helpers.js";
@@ -64,7 +64,7 @@
 
 <div class="max-w-sm w-full">
     {#await promise}
-        <Spinner isWithText={true} />
+        <Spinner isWithText={true} className="absolute w-full h-full inset-0 z-5" />
     {:then array}
         <PopupTitle title={$_('myPlacesPopup.title')} />
 

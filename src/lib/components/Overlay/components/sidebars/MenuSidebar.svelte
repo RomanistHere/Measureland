@@ -3,7 +3,7 @@
     import { browser } from '$app/env';
 
     import SidebarBlock from './SidebarBlock.svelte';
-    import MainButton from '../MainButton.svelte';
+    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
 
     import { openAnotherOverlay, closeOverlays, showSuccessNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
@@ -189,13 +189,13 @@
         </ul>
 
         {#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
-            <MainButton
+            <PrimaryButton
                 className="mx-8 cursor-default px-5 py-2 text-center block opacity-50 text-xl -2xl:text-lg max-w-sm"
                 disabled={true}
                 text={$_('menuSidebar.requestProcessing')}
             />
         {:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
-            <MainButton
+            <PrimaryButton
                 action={askForMoreRatings}
                 text={$_('menuSidebar.needMoreRatings')}
                 className='mx-8 mt-2 block text-center'

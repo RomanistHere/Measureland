@@ -8,7 +8,7 @@
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
 	import NotificationLayer from './components/notifications/NotificationLayer.svelte';
-    import BurgerButton from './components/BurgerButton.svelte';
+    import BurgerButton from '../ui-elements/BurgerButton.svelte';
     import Loading from './components/Loading.svelte';
     import NavBar from './components/NavBar.svelte';
 

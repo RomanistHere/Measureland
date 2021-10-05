@@ -2,7 +2,7 @@
     import { _ } from 'svelte-i18n';
 
     import CommentBlock from './CommentBlock.svelte';
-    import Spinner from '../../../../Spinner.svelte';
+    import Spinner from '../../../../ui-elements/Spinner.svelte';
 
     import { fetchComments } from "../../../../../utilities/api.js";
 

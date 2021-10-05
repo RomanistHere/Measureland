@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
 
-    import Tooltip from '../../../../../components/Tooltip.svelte';
+    import Tooltip from '../../../../ui-elements/Tooltip.svelte';
 
     export let title;
     export let tooltip;
@@ -29,7 +29,7 @@
         {#each possibleRatingsArr as number}
             <a
                 href={"#"}
-                class="leading-none text-4xl ml-1 cursor-pointer s{number}"
+                class="leading-none text-4xl mr-2 cursor-pointer s{number}"
                 class:active={rating === number}
                 on:click|preventDefault={(e) => {
                     handleClick(number);

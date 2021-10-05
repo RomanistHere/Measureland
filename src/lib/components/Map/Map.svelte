@@ -5,7 +5,7 @@
 
     import MarkerCluster from './components/MarkerCluster.svelte';
     import GeoSearch from './components/GeoSearch.svelte';
-    import TextLink from '../TextLink.svelte';
+    import TextLink from '../ui-elements/TextLink.svelte';
 
     import { appStateStore } from "../../../stores/state.js";
     import { mapReference } from "../../../stores/references.js";

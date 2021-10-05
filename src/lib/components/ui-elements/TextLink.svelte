@@ -5,9 +5,17 @@
     export let blank = null;
 
     const target = blank ? '_blank' : null;
+    const rel = blank ? 'noopener' : null;
 </script>
 
-<a { href } { target } class="underline {className}">{text}</a>
+<a
+    { href }
+    { target }
+    { rel }
+    class="underline {className}"
+>
+    {text}
+</a>
 
 <style>
     a {

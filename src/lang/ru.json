@@ -126,7 +126,8 @@
     },
     "_": {
         "commentConnector": "поставил/а",
-        "user": "ты"
+        "user": "ты",
+        "averageRating": "Средняя оценка равна"
     },
     "loading": {
         "geo": "Загружаем..."

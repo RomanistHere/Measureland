@@ -1,7 +1,7 @@
 <script>
     import { _ } from 'svelte-i18n';
 
-    import MainButton from '../MainButton.svelte';
+    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
     import { closeOverlay } from "../../../../utilities/helpers.js";
@@ -21,6 +21,6 @@
     </p>
 
     <div class="flex justify-evenly items-center mt-4">
-        <MainButton text="{button}" className="text-center block px-10" action={closePopup} />
+        <PrimaryButton text="{button}" className="text-center block px-10" action={closePopup} />
     </div>
 </div>

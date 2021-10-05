@@ -1,10 +1,10 @@
 <script>
     import { _, json, locale } from 'svelte-i18n';
 
-    import MainButton from './MainButton.svelte';
-    import SecondaryButton from './SecondaryButton.svelte';
+    import PrimaryButton from '../../ui-elements/PrimaryButton.svelte';
+    import SecondaryButton from '../../ui-elements/SecondaryButton.svelte';
     import UserProfileIcon from '../../inline-images/UserProfileIcon.svelte';
-    import DropdownMenu from '../../DropdownMenu.svelte';
+    import DropdownMenu from '../../ui-elements/DropdownMenu.svelte';
 
     import { openAnotherOverlay, setCookie, showSuccessNotification, closeOverlays } from '../../../utilities/helpers.js';
     import { saveLang, logout } from '../../../utilities/api.js';
@@ -180,7 +180,7 @@
                     disabled={!$appStateStore.termsOfUseAgreed}
                     action={openLogin}
                 />
-                <MainButton
+                <PrimaryButton
                     text={$_('navBar.primaryBtn')}
                     className='ml-4 py-2'
                     disabled={!$appStateStore.termsOfUseAgreed}

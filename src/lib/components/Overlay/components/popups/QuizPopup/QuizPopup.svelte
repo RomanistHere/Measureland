@@ -3,11 +3,11 @@
 
     import PopupTitle from '../PopupTitle.svelte';
     import QuizItem from './QuizItem.svelte';
-    import Spinner from '../../../../Spinner.svelte';
-    import TextLink from '../../../../TextLink.svelte';
-    import SecondaryButton from '../../SecondaryButton.svelte';
-    import MainButton from '../../MainButton.svelte';
-    import Textarea from '../../../../form-elements/Textarea.svelte';
+    import Spinner from '../../../../ui-elements/Spinner.svelte';
+    import TextLink from '../../../../ui-elements/TextLink.svelte';
+    import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
+    import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
+    import Textarea from '../../../../ui-elements/Textarea.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
     import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce } from "../../../../../utilities/helpers.js";
@@ -293,16 +293,16 @@
 
     <div class="flex justify-evenly items-center my-4">
         {#if isUserLoggedIn && currentStage === 1}
-            <MainButton
+            <PrimaryButton
                 action={() => { changePersonalExperience(false) }}
                 text={$_('quizPopup.noPersonalExperienceBtn')}
             />
-            <MainButton
+            <PrimaryButton
                 action={() => { changePersonalExperience(true) }}
                 text={$_('quizPopup.yesPersonalExperienceBtn')}
             />
         {:else if currentStage === 1}
-            <MainButton
+            <PrimaryButton
                 action={() => { openAnotherOverlay('loginPopup') }}
                 text={$_('quizPopup.loginBtn')}
             />
@@ -312,12 +312,12 @@
                 text={$_('quizPopup.backBtn')}
             />
             {#if currentStage === 6}
-                <MainButton
+                <PrimaryButton
                     action={debouncedSubmit}
                     text={$_('quizPopup.submitBtn')}
                 />
             {:else}
-                <MainButton
+                <PrimaryButton
                     action={nextStage}
                     text={$_('quizPopup.nextBtn')}
                 />

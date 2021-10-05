@@ -3,7 +3,7 @@
     import { focusTrap } from 'svelte-focus-trap';
     import { closeOverlays } from '../../../../utilities/helpers.js';
 
-    import CloseBtn from '../../../CloseBtn.svelte';
+    import CloseButton from '../../../ui-elements/CloseButton.svelte';
 
     import ConfirmForgotPasswordPopup from './ConfirmForgotPasswordPopup.svelte';
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
@@ -50,7 +50,7 @@
     out:fly="{{ y: -80, duration: 300 }}"
 >
     <svelte:component this={Popup} { popupData }/>
-    <CloseBtn overlayType='popup' className='top-3 right-3 z-2 -lg:top-3 -lg:right-3' />
+    <CloseButton overlayType='popup' className='top-3 right-3 z-2 -lg:top-3 -lg:right-3' />
 </div>
 
 <style>

@@ -1,5 +1,5 @@
 <script>
-    import MainButton from '../MainButton.svelte';
+    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
 
     export let title = '';
     export let text1 = '';
@@ -18,7 +18,7 @@
             <p class="lg:text-2xl mt-5">{text2}</p>
         {/if}
         {#if button}
-            <MainButton text={button} action={action} { disabled } className='inline-block mt-5 px-10 {disabled && 'opacity-30'}' />
+            <PrimaryButton text={button} action={action} { disabled } className='inline-block mt-5 px-10 {disabled && 'opacity-30'}' />
         {/if}
     </div>
 </section>

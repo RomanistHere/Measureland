@@ -4,7 +4,7 @@
     import CommentsSidebar from './CommentsSidebar/CommentsSidebar.svelte';
     import FiltersSidebar from './FiltersSidebar/FiltersSidebar.svelte';
     import MenuSidebar from './MenuSidebar.svelte';
-    import CloseBtn from '../../../CloseBtn.svelte';
+    import CloseButton from '../../../ui-elements/CloseButton.svelte';
 
     export let sidebarName;
     export let sidebarData;
@@ -25,7 +25,7 @@
 >
     <svelte:component this={Sidebar} { sidebarData }/>
 
-    <CloseBtn overlayType='sidebar' />
+    <CloseButton overlayType='sidebar' />
 </aside>
 
 <style>

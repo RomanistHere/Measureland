@@ -3,7 +3,8 @@
 
     import FiltersItem from './FiltersItem.svelte';
     import PresetBtn from './PresetBtn.svelte';
-    import MainButton from '../../MainButton.svelte';
+    import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
+    import TextLink from '../../../../ui-elements/TextLink.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
     import { fillFiltersFromArrOfStrings, debounce } from '../../../../../utilities/helpers.js'
@@ -84,8 +85,14 @@
 </script>
 
 <div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4">
-    <h2 class="font-bold px-8 text-xl mb-2">{$_('filterSidebar.title')}</h2>
-    <h4 class="px-8 mb-2">{$_('filterSidebar.filterPresets')}</h4>
+    <h2 class="font-bold px-8 text-xl mb-2">
+        {$_('filterSidebar.title')}
+    </h2>
+
+    <h4 class="px-8 mb-2">
+        {$_('filterSidebar.filterPresets')}
+    </h4>
+
     <ul class="flex flex-wrap justify-between px-8 mb-4">
         {#each presets as { presetText, value, isActive }, presetNumber}
             <li>
@@ -106,16 +113,25 @@
     </ul>
 
     <div class="px-8 mb-4 text-right">
-        <a href={"#"} class="underline cursor-default opacity-60 {$filtersStore.isFiltersOn && 'hoverable'}" on:click|preventDefault={debouncedResetFilters}>{$_('filterSidebar.resetBtn')}</a>
+        <a
+            href={"#"}
+            class="underline cursor-default opacity-60"
+            class:hoverable={$filtersStore.isFiltersOn}
+            on:click|preventDefault={debouncedResetFilters}
+        >
+            {$_('filterSidebar.resetBtn')}
+        </a>
     </div>
 
     <div class="px-8 text-sm -mb-10 -lg:mb-2">
         {$_('filterSidebar.footerText1')}
-        <a href="https://www.donationalerts.com/r/romanisthere" rel="noopener" target="_blank" class="footer__link underline">
-            {$_('filterSidebar.footerLink')}
-        </a>
+        <TextLink
+            href="https://www.donationalerts.com/r/romanisthere"
+            blank={true}
+            text={$_('filterSidebar.footerLink')}
+        />
         {$_('filterSidebar.footerText2')}
-        <span class="filters__bot-small">{$_('filterSidebar.footerTextSmall')}</span>
+        <span class="text-xs">{$_('filterSidebar.footerTextSmall')}</span>
     </div>
 </div>
 

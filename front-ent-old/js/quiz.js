@@ -62,15 +62,15 @@
 //     closeRateTutorial()
 // }
 
-const showQuiz = (stageNumb = 1) => {
+// const showQuiz = (stageNumb = 1) => {
     // quizes.forEach(item => removeClass(item, 'rating__popup-active'))
     // removeClass(saveStatus, 'rating__status-more')
     //
     // const nextSlide = $(`.ratingPopup${stageNumb}`)
     // addClass(nextSlide, 'rating__popup-active')
     // setProgrBar(stageNumb)
-    nextSlide.focus()
-}
+    // nextSlide.focus()
+// }
 
 // const checkAndGetData = rating => {
 //     const { finalRating, answersNumber } = getFinalRating(rating)

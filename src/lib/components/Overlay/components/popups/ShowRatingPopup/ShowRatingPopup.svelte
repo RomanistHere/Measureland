@@ -5,8 +5,8 @@
 
     import PopupTitle from '../PopupTitle.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
-    import Spinner from '../../../../Spinner.svelte';
-    import MainButton from '../../MainButton.svelte';
+    import Spinner from '../../../../ui-elements/Spinner.svelte';
+    import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
 
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
@@ -146,11 +146,11 @@
 
     <div class="flex justify-evenly items-center mt-4">
         {#if isUserLoggedIn && isAlreadyRatedByThisUser}
-            <MainButton text={$_('showRatingPopup.youHaveAlreadyRated')} disabled={true} />
+            <PrimaryButton text={$_('showRatingPopup.youHaveAlreadyRated')} disabled={true} />
         {:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
-            <MainButton text='{$_('showRatingPopup.addNewRating')}' action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
+            <PrimaryButton text='{$_('showRatingPopup.addNewRating')}' action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
         {:else}
-            <MainButton text='{$_('showRatingPopup.loginAndRate')}' action={() => openAnotherOverlay('loginPopup')} />
+            <PrimaryButton text='{$_('showRatingPopup.loginAndRate')}' action={() => openAnotherOverlay('loginPopup')} />
         {/if}
     </div>
 

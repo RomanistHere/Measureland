@@ -1,7 +1,7 @@
 <script>
     import { _, json } from 'svelte-i18n';
 
-    import TextLink from '../../../TextLink.svelte';
+    import TextLink from '../../../ui-elements/TextLink.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
     import { userStateStore } from "../../../../../stores/state.js";

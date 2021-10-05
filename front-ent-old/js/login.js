@@ -24,82 +24,82 @@ const registerBtn = $('#registerBtn')
 const forgotPassBtn = $('#forgotPassBtn')
 const changePasswordBtn = $('#changePasswordBtn')
 
-const loginStateDef = {
-    isPassValid: false,
-    pass: null,
-    isEmailValid: false,
-    email: null,
-    stage: 'login',
-    doublePassIDs: [],
-}
-
-let loginState = { ...loginStateDef }
-
-const onboardingStateDef = {
-    name: null,
-    ageGrp: 1,
-    moneyGrp: 1
-}
-
-let onboardingState = { ...onboardingStateDef }
-
-const getActiveLoginScreen = stage => {
-    if (stage === 'login')
-        return loginForm.querySelector('.loginPopup1')
-    else if (stage === 'register')
-        return loginForm.querySelector('.loginPopup2')
-    else if (stage === 'forgot')
-        return loginForm.querySelector('.loginPopup3')
-    else if (stage === 'loggedIn')
-        return loginForm.querySelector('.loginPopup4')
-    else if (stage === 'onboarding')
-        return loginForm.querySelector('.loginPopup5')
-    else if (stage === 'check')
-        return loginForm.querySelector('.loginPopup6')
-    else if (stage === 'resetPassword')
-        return loginForm.querySelector('.loginPopup7')
-    else if (stage === 'confirmForgotPassword')
-        return loginForm.querySelector('.loginPopup8')
-}
-
-const changeLoginScreen = (stage = 'login') => {
-    loginScreens.forEach(elem => removeClass(elem, 'rating__popup-active'))
-
-    const activeLoginScren = getActiveLoginScreen(stage)
-    const popupWrap = activeLoginScren.parentNode
-    popupWrap.classList.remove(
-        'login__wrap-register',
-        'login__wrap-forgot',
-        'login__wrap-onboarding',
-        'login__wrap-check',
-        'login__wrap-reset'
-    )
-
-    if (stage === 'register')
-        addClass(popupWrap, 'login__wrap-register')
-    else if (stage === 'forgot')
-        addClass(popupWrap, 'login__wrap-forgot')
-    else if (stage === 'onboarding')
-        addClass(popupWrap, 'login__wrap-onboarding')
-    else if (stage === 'check' || stage === 'confirmForgotPassword')
-        addClass(popupWrap, 'login__wrap-check')
-    else if (stage === 'resetPassword')
-        addClass(popupWrap, 'login__wrap-reset')
-
-    addClass(activeLoginScren, 'rating__popup-active')
-
-    if (stage === 'loggedIn' || stage === 'onboarding' || stage === 'check' || stage === 'confirmForgotPassword')
-        return
-
-    const windowWidth = window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth
-
-    if (windowWidth > 1024)
-        activeLoginScren.querySelector('input').focus()
-
-    loginState = { ...loginState, stage: stage }
-}
+// const loginStateDef = {
+//     isPassValid: false,
+//     pass: null,
+//     isEmailValid: false,
+//     email: null,
+//     stage: 'login',
+//     doublePassIDs: [],
+// }
+//
+// let loginState = { ...loginStateDef }
+//
+// const onboardingStateDef = {
+//     name: null,
+//     ageGrp: 1,
+//     moneyGrp: 1
+// }
+//
+// let onboardingState = { ...onboardingStateDef }
+//
+// const getActiveLoginScreen = stage => {
+//     if (stage === 'login')
+//         return loginForm.querySelector('.loginPopup1')
+//     else if (stage === 'register')
+//         return loginForm.querySelector('.loginPopup2')
+//     else if (stage === 'forgot')
+//         return loginForm.querySelector('.loginPopup3')
+//     else if (stage === 'loggedIn')
+//         return loginForm.querySelector('.loginPopup4')
+//     else if (stage === 'onboarding')
+//         return loginForm.querySelector('.loginPopup5')
+//     else if (stage === 'check')
+//         return loginForm.querySelector('.loginPopup6')
+//     else if (stage === 'resetPassword')
+//         return loginForm.querySelector('.loginPopup7')
+//     else if (stage === 'confirmForgotPassword')
+//         return loginForm.querySelector('.loginPopup8')
+// }
+//
+// const changeLoginScreen = (stage = 'login') => {
+//     loginScreens.forEach(elem => removeClass(elem, 'rating__popup-active'))
+//
+//     const activeLoginScren = getActiveLoginScreen(stage)
+//     const popupWrap = activeLoginScren.parentNode
+//     popupWrap.classList.remove(
+//         'login__wrap-register',
+//         'login__wrap-forgot',
+//         'login__wrap-onboarding',
+//         'login__wrap-check',
+//         'login__wrap-reset'
+//     )
+//
+//     if (stage === 'register')
+//         addClass(popupWrap, 'login__wrap-register')
+//     else if (stage === 'forgot')
+//         addClass(popupWrap, 'login__wrap-forgot')
+//     else if (stage === 'onboarding')
+//         addClass(popupWrap, 'login__wrap-onboarding')
+//     else if (stage === 'check' || stage === 'confirmForgotPassword')
+//         addClass(popupWrap, 'login__wrap-check')
+//     else if (stage === 'resetPassword')
+//         addClass(popupWrap, 'login__wrap-reset')
+//
+//     addClass(activeLoginScren, 'rating__popup-active')
+//
+//     if (stage === 'loggedIn' || stage === 'onboarding' || stage === 'check' || stage === 'confirmForgotPassword')
+//         return
+//
+//     const windowWidth = window.innerWidth
+//         || document.documentElement.clientWidth
+//         || document.body.clientWidth
+//
+//     if (windowWidth > 1024)
+//         activeLoginScren.querySelector('input').focus()
+//
+//     loginState = { ...loginState, stage: stage }
+// }
 
 // const openLoginForm = stage => {
 //     changeLoginScreen(stage)
@@ -462,9 +462,9 @@ const initLoginBtns = () => {
     //     })
     // })
 
-    onboardingInit()
-    verificationInit()
-    userInit()
+    // onboardingInit()
+    // verificationInit()
+    // userInit()
 
     // form submits
 
@@ -473,28 +473,28 @@ const initLoginBtns = () => {
     //     hideAllSides()
     // })
 
-    handleClickPrevDef(reverifyBtn, async () => {
-        const notification = $('.login__notifications_wrap')
-        if (!loginState.isEmailValid) {
-            $('#current-email').focus()
-            return
-        }
-        runSpinner('.login__spinner')
-        removeLoginErrors()
-        const { error, data } = await reverify(loginState.email)
-        hideSpinner('.login__spinner')
-
-        if (error === null) {
-            clearLoginFields()
-            changeLoginScreen('check')
-        } if (error === 'Email is wrong') {
-            addClass(notification, 'login__notifications_wrap-email_not_exist')
-        } else if (error === 'Already verified') {
-            addClass(notification, 'login__notifications_wrap-already_verified')
-        } else {
-            addClass(notification, 'login__notifications_wrap-err')
-        }
-    })
+    // handleClickPrevDef(reverifyBtn, async () => {
+    //     const notification = $('.login__notifications_wrap')
+    //     if (!loginState.isEmailValid) {
+    //         $('#current-email').focus()
+    //         return
+    //     }
+    //     runSpinner('.login__spinner')
+    //     removeLoginErrors()
+    //     const { error, data } = await reverify(loginState.email)
+    //     hideSpinner('.login__spinner')
+    //
+    //     if (error === null) {
+    //         clearLoginFields()
+    //         changeLoginScreen('check')
+    //     } if (error === 'Email is wrong') {
+    //         addClass(notification, 'login__notifications_wrap-email_not_exist')
+    //     } else if (error === 'Already verified') {
+    //         addClass(notification, 'login__notifications_wrap-already_verified')
+    //     } else {
+    //         addClass(notification, 'login__notifications_wrap-err')
+    //     }
+    // })
 
     // let loginTimeout = null
     // let loginTimeoutBool = false

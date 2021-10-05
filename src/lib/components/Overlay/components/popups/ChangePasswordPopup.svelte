@@ -1,10 +1,10 @@
 <script>
     import { _, json, locale } from 'svelte-i18n';
 
-    import Input from '../../../form-elements/Input.svelte';
-    import Spinner from '../../../Spinner.svelte';
-    import SecondaryButton from '../SecondaryButton.svelte';
-    import FormButton from '../FormButton.svelte';
+    import Input from '../../../ui-elements/Input.svelte';
+    import Spinner from '../../../ui-elements/Spinner.svelte';
+    import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
+    import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
     import { openAnotherOverlay, debounce, showSuccessNotification, closeOverlays } from "../../../../utilities/helpers.js";

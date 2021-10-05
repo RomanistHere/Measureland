@@ -1,5 +1,5 @@
 <script>
-    import { closeOverlay } from '../utilities/helpers.js';
+    import { closeOverlay } from '../../utilities/helpers.js';
 
     export let overlayType = null;
     export let className = '';

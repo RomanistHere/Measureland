@@ -12,8 +12,8 @@ let showRatingState = {
     geoID: null
 }
 
-const getStarsTitle = (key, val) =>
-    state.lang === 'ru' ? `Средняя оценка за ${rusRating[key]} ${val}` : `Average ${engRating[key]} rating is ${val}`
+// const getStarsTitle = (key, val) =>
+//     state.lang === 'ru' ? `Средняя оценка за ${rusRating[key]} ${val}` : `Average ${engRating[key]} rating is ${val}`
 //
 // const setMarkerUrl = (coords) => {
 //     const { lat, lng } = coords
@@ -36,33 +36,33 @@ const getStarsTitle = (key, val) =>
 //     window.history.replaceState(null, null, url)
 // }
 
-const initRatingPopup = async ({ latlng }) => {
-    state.flow.push('srp')
-    fillAdress(latlng)
-    // runSpinner('.rate__spinner')
-    // addClass(ratePopup, 'rating-active')
-    $('.rate__popup').focus()
-
-    // const { error, data } = await getSinglePointData([ latlng.lng, latlng.lat, ])
-
-    if (error === 'Location not found') {
-        showError('locationNotFound')
-        resetRate()
-        closeSideBar()
-        return
-    } else if (error) {
-        showError('unrecognizedError', error)
-        resetRate()
-        closeSideBar()
-        return
-    }
-
-    const isLoggedIn = data.userID
-    if (!isLoggedIn)
-        userLoggedOut()
-
-    // const markerUrl = setMarkerUrl(latlng)
-    const markerUrlBtn = $('.rate__link_btn')
+// const initRatingPopup = async ({ latlng }) => {
+//     state.flow.push('srp')
+//     fillAdress(latlng)
+//     // runSpinner('.rate__spinner')
+//     // addClass(ratePopup, 'rating-active')
+//     $('.rate__popup').focus()
+//
+//     // const { error, data } = await getSinglePointData([ latlng.lng, latlng.lat, ])
+//
+//     if (error === 'Location not found') {
+//         showError('locationNotFound')
+//         resetRate()
+//         closeSideBar()
+//         return
+//     } else if (error) {
+//         showError('unrecognizedError', error)
+//         resetRate()
+//         closeSideBar()
+//         return
+//     }
+//
+//     const isLoggedIn = data.userID
+//     if (!isLoggedIn)
+//         userLoggedOut()
+//
+//     // const markerUrl = setMarkerUrl(latlng)
+//     const markerUrlBtn = $('.rate__link_btn')
     // const { properties } = data
     // const ratingObj = properties.rating
     // const props = Object.keys(ratingObj)
@@ -85,7 +85,7 @@ const initRatingPopup = async ({ latlng }) => {
     //     const star = starsWrap.querySelector(`.star[data-rating="${number}"]`)
     //
     //     addClass(star, 'star-active')
-        starsWrap.title = getStarsTitle(key, val)
+        // starsWrap.title = getStarsTitle(key, val)
     // }
     //
     // rateAverageRating.textContent = roundToTen(finalRating)
@@ -122,33 +122,33 @@ const initRatingPopup = async ({ latlng }) => {
     // hideSpinner('.rate__spinner')
 }
 
-const initMarkerFromURL = () => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const lat = urlParams.get('lat')
-    const lng = urlParams.get('lng')
-    const urlZoom = urlParams.get('zoom') || 13
-    const zoom = urlZoom <= 12 ? 13 : urlZoom
-    const showRating = urlParams.get('showRating')
-
-    if (!showRating || !lat || !lng)
-        return
-
-    state.flow.push('sru')
-    openRatingAndZoom(lat, lng, zoom)
-}
-
-const resetRate = () => {
-    resetMarkerUrl()
-    removeClass(ratePopup, 'rating-active')
-    showRatingState = { ...showRatingState, latlng: null, geoID: null }
-
-    const activeStars = ratePopup.querySelectorAll('.star-active')
-    activeStars.forEach(item => removeClass(item, 'star-active'))
-    const starsWraps = ratePopup.querySelectorAll(`.star-wrapper`)
-    starsWraps.forEach(item => item.title = '')
-
-    hideSpinner('.rate__spinner')
-}
+// const initMarkerFromURL = () => {
+//     const urlParams = new URLSearchParams(window.location.search)
+//     const lat = urlParams.get('lat')
+//     const lng = urlParams.get('lng')
+//     const urlZoom = urlParams.get('zoom') || 13
+//     const zoom = urlZoom <= 12 ? 13 : urlZoom
+//     const showRating = urlParams.get('showRating')
+//
+//     if (!showRating || !lat || !lng)
+//         return
+//
+//     state.flow.push('sru')
+//     openRatingAndZoom(lat, lng, zoom)
+// }
+//
+// const resetRate = () => {
+//     resetMarkerUrl()
+//     removeClass(ratePopup, 'rating-active')
+//     showRatingState = { ...showRatingState, latlng: null, geoID: null }
+//
+//     const activeStars = ratePopup.querySelectorAll('.star-active')
+//     activeStars.forEach(item => removeClass(item, 'star-active'))
+//     const starsWraps = ratePopup.querySelectorAll(`.star-wrapper`)
+//     starsWraps.forEach(item => item.title = '')
+//
+//     hideSpinner('.rate__spinner')
+// }
 
 const handleRatingsBtns = () => {
     // handleClickPrevDef(rateCloseBtn, () => {
@@ -169,14 +169,14 @@ const handleRatingsBtns = () => {
     //     showComments(showRatingState)
     // })
 
-    handleClickPrevDef(addEvaluation, () => {
-        state.flow.push('iqr')
-        initQuizPopup(showRatingState.latlng)
-        resetRate()
-        // closeSideBar()
-    })
-
-    initMarkerFromURL()
+    // handleClickPrevDef(addEvaluation, () => {
+    //     state.flow.push('iqr')
+    //     initQuizPopup(showRatingState.latlng)
+    //     resetRate()
+    //     // closeSideBar()
+    // })
+    //
+    // initMarkerFromURL()
 }
 
 handleRatingsBtns()
