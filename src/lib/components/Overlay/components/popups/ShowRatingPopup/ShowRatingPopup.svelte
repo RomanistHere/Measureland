@@ -139,7 +139,7 @@
             <span class="sug-col font-bold text-2xl -md:text-lg">{numberOfUsers}</span>
         </div>
         <div>
-            <a href={"#"} class="rate__comments underline" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:
+            <a href={"#"} class="underline" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:
             <span class="sug-col font-bold text-2xl -md:text-lg">{numberOfComments}</span>
         </div>
     </div>

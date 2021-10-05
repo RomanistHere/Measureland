@@ -3,6 +3,7 @@
 
     import PopupTitle from './PopupTitle.svelte';
     import Spinner from '../../../ui-elements/Spinner.svelte';
+    import TextButton from '../../../ui-elements/TextButton.svelte';
 
     import { fetchRatedPlace } from "../../../../utilities/api.js";
     import { openAnotherOverlay } from "../../../../utilities/helpers.js";
@@ -68,14 +69,19 @@
     {:then array}
         <PopupTitle title={$_('myPlacesPopup.title')} />
 
-        <ul class="max-h-96 overflow-y-auto mt-4">
+        <ul class="max-h-96 overflow-y-auto mt-2 list-inside list-decimal py-2">
             {#if array.length === 0}
                 <span>{$_('myPlacesPopup.youHaveNotRated')}</span>
             {:else}
                 {#each array as { lang, lat, lng, address }}
-                    <ul>
-                        <a class="places__link underline" href="https://measureland.org/{lang}?lat={lat}&lng={lng}&showRating=true" on:click|preventDefault={() => openShowRatingsPopup(lat, lng)}>{address}</a>
-                    </ul>
+                    <li>
+                        <TextButton
+                            href="https://measureland.org/{lang}?lat={lat}&lng={lng}&showRating=true"
+                            action={() => openShowRatingsPopup(lat, lng)}
+                            text={address}
+                            className="py-1"
+                        />
+                    </li>
                 {/each}
             {/if}
         </ul>

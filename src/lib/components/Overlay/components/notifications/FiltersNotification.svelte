@@ -2,6 +2,8 @@
     import { fade } from 'svelte/transition';
     import { _ } from 'svelte-i18n';
 
+    import TextButton from '../../../ui-elements/TextButton.svelte';
+
     import { filtersStore } from "../../../../../stores/state.js";
     import { openAnotherOverlay, closeOverlays } from "../../../../utilities/helpers.js";
 
@@ -18,17 +20,22 @@
     }
 </script>
 
-<div class="notification filters_notification notification-show" transition:fade>
-    <div class="notification__text">
-        <a href={"#"} class="underline footer__link openFiltersFromNotifBtn" on:click|preventDefault={openFilters}>{$_('filterNotification.filters')}</a>
-        {$_('filterNotification.active')}.
-        <a href={"#"} class="underline footer__link filters_notification__reset" on:click|preventDefault={resetFilters}>{$_('filterNotification.reset')}</a>
-    </div>
+<div class="fixed bottom-12 left-1/2 transform -translate-x-1/2 rounded-md px-4 py-1 z-5" transition:fade>
+    <TextButton
+        action={openFilters}
+        text={$_('filterNotification.filters')}
+    />
+    {$_('filterNotification.active')}.
+    <TextButton
+        action={resetFilters}
+        text={$_('filterNotification.reset')}
+    />
 </div>
 
 <style>
-    .filters_notification {
-        position: absolute;
+    div {
+        background-color: var(--side-bg-color);
+        border: 2px solid var(--text-color);
         pointer-events: all;
     }
 </style>

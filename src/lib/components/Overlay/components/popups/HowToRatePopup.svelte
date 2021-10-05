@@ -3,6 +3,7 @@
 
     import PopupTitle from './PopupTitle.svelte';
     import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
+    import TextButton from '../../../ui-elements/TextButton.svelte';
 
     import { closeOverlay, openAnotherOverlay } from "../../../../utilities/helpers.js";
     import { userStateStore } from "../../../../../stores/state.js";
@@ -17,27 +18,30 @@
 
     <img src="../images/tutorial_gif.gif" alt="{$_('howToRatePopup.gifAltText')}" class="w-full mt-4" width="410">
 
-    <ul class="rate_tutorial__list partners__list">
-        <li class="rate_tutorial__item partners__item">
+    <ul class="my-4 list-inside list-decimal">
+        <li>
             {#if isUserLoggedIn}
                 {$_('howToRatePopup.findNeededTown')}
             {:else}
             <!-- todo: check how to do it in an adequate way -->
                 {$_('howToRatePopup.youNeedTo')}
-                <a href={"#"} class="underline" on:click|preventDefault={openLoginPopup}>{$_('howToRatePopup.register')}</a>
+                <TextButton
+                    text={$_('howToRatePopup.register')}
+                    action={openLoginPopup}
+                />
                 {$_('howToRatePopup.first')}
             {/if}
         </li>
-        <li class="rate_tutorial__item partners__item">
+        <li>
             {$_('howToRatePopup.lookForPlace')}
         </li>
-        <li class="rate_tutorial__item partners__item">
+        <li>
             {$_('howToRatePopup.clickIt')}
         </li>
-        <li class="rate_tutorial__item partners__item">
+        <li>
             {$_('howToRatePopup.rateAllCriteria')}
         </li>
-        <li class="rate_tutorial__item partners__item">
+        <li>
             {$_('howToRatePopup.leaveTheComment')}
         </li>
     </ul>

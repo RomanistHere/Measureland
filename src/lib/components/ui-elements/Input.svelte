@@ -1,6 +1,8 @@
 <script>
     import { _ } from 'svelte-i18n';
 
+    import TextButton from './TextButton.svelte';
+
     export let title = 'Email';
     export let type = 'email';
     export let id = 'current-email';
@@ -47,7 +49,11 @@
     <label for={id} class="mt-8 relative block font-bold sug-color">
         <span>{title}</span>
         {#if type === 'password'}
-            <a href={"#"} class="underline absolute right-0 bottom-0 text-sm" on:click|preventDefault={changeInputType}>{$_('input.showOrHide')}</a>
+            <TextButton
+                className="absolute right-0 bottom-0 text-sm px-1 rounded-md"
+                action={changeInputType}
+                text={$_('input.showOrHide')}
+            />
         {/if}
     </label>
     <input
