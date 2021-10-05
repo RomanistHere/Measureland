@@ -10,8 +10,8 @@
 
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
-    import { appStateStore, userStateStore, overlayStateStore } from "../../../../../../stores/state.js";
-    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay } from '../../../../../utilities/helpers.js';
+    import { appStateStore, userStateStore, overlayStateStore, isDesktop } from "../../../../../../stores/state.js";
+    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay, centerMap } from '../../../../../utilities/helpers.js';
 
     export let popupData;
 
@@ -62,18 +62,7 @@
         });
         // TODO:
         // $('.rate__popup').focus()
-        const bounds = map.getBounds();
-        const east = roundToFifthDecimal(bounds.getEast());
-    	const west = roundToFifthDecimal(bounds.getWest());
-        const distanceBetweenEdgesOfScreen = roundToFifthDecimal(Math.abs(east - west));
-        const currentZoom = map.getZoom();
-        const zoom = currentZoom <= 12 ? 13 : currentZoom;
-
-        // center in left half of the screen
-        map.setView({
-            lng: lng + distanceBetweenEdgesOfScreen / 4,
-            lat
-        }, zoom);
+        centerMap(map, lat, lng, $isDesktop);
 
         const { error, data } = await getSinglePointData([ lng, lat ]);
         console.log(error)

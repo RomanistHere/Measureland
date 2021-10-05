@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { browser } from '$app/env';
 
-    import { overlayStateStore, appStateStore } from '../../../stores/state.js';
+    import { overlayStateStore, appStateStore, appWidth } from '../../../stores/state.js';
     import { closeOverlays, openAnotherOverlay, closeOverlay } from '../../utilities/helpers.js';
 
     import PopupLayer from './components/popups/PopupLayer.svelte';
@@ -115,4 +115,5 @@
 <svelte:window
     on:keydown={handleKeydown}
     on:popstate={closeOverlays}
+    bind:innerWidth={$appWidth}
 />

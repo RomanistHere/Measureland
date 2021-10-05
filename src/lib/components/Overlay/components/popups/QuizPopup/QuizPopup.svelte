@@ -1,5 +1,6 @@
 <script>
     import { _, json } from 'svelte-i18n';
+    import { onMount, onDestroy } from 'svelte';
 
     import PopupTitle from '../PopupTitle.svelte';
     import QuizItem from './QuizItem.svelte';
@@ -10,9 +11,9 @@
     import Textarea from '../../../../ui-elements/Textarea.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
-    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce } from "../../../../../utilities/helpers.js";
-    import { geocodeServiceReference } from "../../../../../../stores/references.js";
-    import { userStateStore, markerStore } from "../../../../../../stores/state.js";
+    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap } from "../../../../../utilities/helpers.js";
+    import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
+    import { userStateStore, markerStore, isDesktop } from "../../../../../../stores/state.js";
 
     export let popupData;
 
@@ -30,6 +31,7 @@
     $: currentStage = 1;
     $: progressBarClassName = getProgressBarClassName(currentStage);
 
+    let circle;
     let remainingCommentLength = 330;
     let errorType = null;
     let isLoading = false;
@@ -40,6 +42,7 @@
         isPersonalExperience: false,
     };
 
+    const map = $mapReference;
     const maxCommentLength = 330;
 	const geocodeService = $geocodeServiceReference;
 
@@ -170,6 +173,21 @@
     }
 
     const debouncedSubmit = debounce(submit, 300);
+
+    const addCircle = () => {
+        const { lat, lng } = popupData;
+        circle = L.circle(popupData, 200, { color: '#007097' });
+
+        circle.addTo(map);
+
+        centerMap(map, lat, lng, $isDesktop, true);
+    }
+
+    const removeCircle = () =>
+        map.removeLayer(circle);
+
+    onMount(addCircle);
+    onDestroy(removeCircle);
 </script>
 
 <div class="max-w-sm w-full">

@@ -8,6 +8,7 @@
     import { fetchRatedPlace } from "../../../../utilities/api.js";
     import { openAnotherOverlay } from "../../../../utilities/helpers.js";
     import { geocodeServiceReference } from "../../../../../stores/references.js";
+    import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
     export let sidebarData;
 
@@ -76,7 +77,7 @@
                 {#each array as { lang, lat, lng, address }}
                     <li>
                         <TextButton
-                            href="https://measureland.org/{lang}?lat={lat}&lng={lng}&showRating=true"
+                            href="{WEB_DOMAIN}/{lang}/?zoom=13&srlat={lat}&srlng={lng}"
                             action={() => openShowRatingsPopup(lat, lng)}
                             text={address}
                             className="py-1"

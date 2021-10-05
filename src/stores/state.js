@@ -48,3 +48,7 @@ export const markerStore = writable({
 export const overlayStateStore = writable(overlayStateDefault);
 
 export const shouldShowFiltersNotification = derived(filtersStore, $filtersStore => $filtersStore.isFiltersOn);
+
+export const appWidth = writable(0);
+
+export const isDesktop = derived(appWidth, $appWidth => $appWidth >= 1024);

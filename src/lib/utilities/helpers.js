@@ -215,6 +215,23 @@ const getCookie = (cname) => {
     return ''
 }
 
+const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false) => {
+	const bounds = map.getBounds();
+	const east = roundToFifthDecimal(bounds.getEast());
+	const west = roundToFifthDecimal(bounds.getWest());
+	const distanceBetweenEdgesOfScreen = roundToFifthDecimal(Math.abs(east - west));
+	const currentZoom = map.getZoom();
+	const zoom = zoomClosely
+		? currentZoom <= 14 ? 15 : currentZoom
+		: currentZoom <= 12 ? 13 : currentZoom;
+
+	// center in left half of the screen for desktop
+	map.setView({
+		lng: isDesktop ? lng + distanceBetweenEdgesOfScreen / (4 * map.getZoomScale(zoom)) : lng,
+		lat
+	}, zoom);
+}
+
 export {
     debounce,
     sleep,
@@ -234,4 +251,5 @@ export {
 	fillFiltersFromArrOfStrings,
 	setCookie,
 	getCookie,
+	centerMap,
 }
