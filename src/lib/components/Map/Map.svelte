@@ -123,18 +123,19 @@
     :global(.geocoder-control .geocoder-control-input),
     :global(.leaflet-control-zoom) {
         background-color: var(--side-bg-color);
-        border: 2px solid var(--text-color);
+        border: 1px solid var(--text-color);
         box-shadow: 0 0 1px var(--text-color);
     }
 
     :global(.leaflet-touch .leaflet-bar a) {
-        background-color: var(--side-bg-color);
+        background-color: transparent;
     }
 
     :global(.leaflet-touch .leaflet-draw-toolbar a),
     :global(.leaflet-touch .leaflet-control-layers),
     :global(.leaflet-touch .leaflet-bar) {
         border-color: var(--text-color);
+        border-width: 1px;
     }
 
     :global(.leaflet-touch .leaflet-draw-toolbar .leaflet-disabled) {
@@ -148,6 +149,19 @@
     :global(.leaflet-touch .geocoder-control-suggestion:hover) {
         background-color: var(--side-bg-color);
         border-color: var(--side-bg-color);
+    }
+
+    @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+        :global(.geocoder-control .geocoder-control-input),
+        :global(.leaflet-control-zoom) {
+            background-color: var(--side-bg-color);
+            border: 1px solid var(--text-color);
+            backdrop-filter: blur(7px) saturate(180%);
+            -webkit-backdrop-filter: blur(7px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid var(--text-color);
+            box-shadow: 0 0 1px var(--text-color);
+        }
     }
 
     @media screen and (max-width: 1023px) {

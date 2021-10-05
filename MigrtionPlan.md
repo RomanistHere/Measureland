@@ -2,7 +2,6 @@
 
 - filter fix (disappearing)
 - create popup for handling (showing) errors
-- check error screen
 - drawing
 - restyle filters
 - check (stricter) content security policy

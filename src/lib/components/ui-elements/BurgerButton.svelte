@@ -17,13 +17,12 @@
         height: 64px;
         /* background-color: var(--side-bg-color); */
         border-radius: 50%;
-        border: 2px solid var(--text-color);
 
         -webkit-tap-highlight-color: transparent;
 
-        --burger-size: 39px;
-        --distance: 4px;
-        --layer-height: calc((var(--burger-size) / 3) - var(--distance));
+        --burger-size: 36px;
+        --layer-height: 8px;
+        --distance: calc((var(--burger-size) - (var(--layer-height) * 3)) / 2);
     }
 
     div {
@@ -45,7 +44,7 @@
         top: 0;
         left: 0;
         height: var(--layer-height);
-        border: 2px solid var(--text-color);
+        border: 1px solid var(--text-color);
 
         box-sizing: border-box;
 
