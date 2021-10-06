@@ -7,7 +7,7 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification, closeOverlays } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification, closeOverlays, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
     import { reset } from "../../../../utilities/api.js";
 
     export let popupData;
@@ -68,6 +68,7 @@
                 errorType = 'linkExpired';
             }
 
+            showSomethingWrongNotification();
             return;
         }
 

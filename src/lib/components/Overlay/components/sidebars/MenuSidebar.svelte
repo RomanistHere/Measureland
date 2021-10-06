@@ -5,10 +5,10 @@
     import SidebarBlock from './SidebarBlock.svelte';
     import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
 
-    import { openAnotherOverlay, closeOverlays, showSuccessNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
+    import { openAnotherOverlay, closeOverlays, showSuccessNotification, showSomethingWrongNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
     import { APP_VERSION } from '../../../../../configs/env.js';
-    import { userStateStore } from "../../../../../stores/state.js";
+    import { userStateStore, isDesktop } from "../../../../../stores/state.js";
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
@@ -44,7 +44,7 @@
                     showSuccessNotification();
                 } else {
                     console.warn(error)
-                    // showError('unrecognizedError', error)
+                    showSomethingWrongNotification();
                 }
             }
         }, {
@@ -92,7 +92,7 @@
             href: '#',
             onClick: (e) => {
                 e.preventDefault();
-                if (window.innerWidth < 768)
+                if (!$isDesktop)
                     closeOverlay('sidebar');
                 openAnotherOverlay('partnersPopup');
             }
@@ -136,21 +136,21 @@
     }
 
     const askForMoreRatings = async () => {
-        if (window.innerWidth < 768)
+        if (!$isDesktop)
             closeOverlay('sidebar');
         openAnotherOverlay('askForMoreRatingsPopup');
         userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
         const { error } = await askMoreRatings();
         closeOverlay('sidebar');
-        // TODO:
-        if (error)
-            alert('unrecognizedError');
-        else
+        if (error) {
+            console.warn(error)
+            showSomethingWrongNotification();
+        } else
             showSuccessNotification();
     }
 
     const openHowToRatePopup = () => {
-        if (window.innerWidth < 768)
+        if (!$isDesktop)
             closeOverlay('sidebar');
         openAnotherOverlay('howToRatePopup');
     }

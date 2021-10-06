@@ -7,7 +7,7 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
 
     $: errorsObj = $json('errors');
@@ -64,6 +64,7 @@
                 errorType = 'manyRequests';
             }
 
+            showSomethingWrongNotification();
             return;
         }
 

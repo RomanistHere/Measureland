@@ -11,7 +11,7 @@
 
     import { userStateStore, appStateStore, filtersStore, markerStore } from "../../../../stores/state.js";
     import { mapReference } from "../../../../stores/references.js";
-    import { roundToFifthDecimal, roundToFifthDecimalLatLng, roundToInt, openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
+    import { roundToFifthDecimal, roundToFifthDecimalLatLng, roundToInt, openAnotherOverlay, debounce, showSomethingWrongNotification } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
 	const map = $mapReference;
@@ -238,9 +238,8 @@
         		: currentScreenPoly;
             return queryPolygon;
         } catch (e) {
-            // TODO:
-            alert('polybool error');
-            console.log(e);
+            console.warn(e);
+            showSomethingWrongNotification();
             return currentScreenPoly;
         }
     }
@@ -310,10 +309,11 @@
 
     	if (error === 'Too many requests, please try again later') {
     		appStateStore.update(state => ({ ...state, shouldWork: false }));
-            // TODO: showLimitError()
+            showSomethingWrongNotification();
     		return;
     	} else if (error) {
-    		// TODO: showError('unrecognizedError', error)
+    		console.warn(error);
+            showSomethingWrongNotification();
     		return;
     	}
 
@@ -339,9 +339,8 @@
         			: currentScreenPoly;
         	}
         } catch (e) {
-            // TODO:
-            alert('polybool error')
-            console.log(e)
+            console.warn(e);
+            showSomethingWrongNotification();
         }
 
         // checkSize(result)

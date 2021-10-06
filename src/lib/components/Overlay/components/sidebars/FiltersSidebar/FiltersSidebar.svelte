@@ -131,7 +131,7 @@
             text={$_('filterSidebar.footerLink')}
         />
         {$_('filterSidebar.footerText2')}
-        <span class="text-xs">{$_('filterSidebar.footerTextSmall')}</span>
+        <span class="text-xs hidden">{$_('filterSidebar.footerTextSmall')}</span>
     </div>
 </div>
 

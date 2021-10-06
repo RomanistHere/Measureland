@@ -11,7 +11,7 @@
     import Textarea from '../../../../ui-elements/Textarea.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
-    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap } from "../../../../../utilities/helpers.js";
+    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap, showSomethingWrongNotification } from "../../../../../utilities/helpers.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { userStateStore, markerStore, isDesktop } from "../../../../../../stores/state.js";
 
@@ -143,6 +143,7 @@
                 console.warn(error);
                 errorType = 'unrecognizedError';
                 isError = true;
+                showSomethingWrongNotification();
                 return;
             }
 
@@ -169,6 +170,7 @@
             errorType = 'unrecognizedError';
             isError = true;
             isLoading = false;
+            showSomethingWrongNotification();
         }
     }
 

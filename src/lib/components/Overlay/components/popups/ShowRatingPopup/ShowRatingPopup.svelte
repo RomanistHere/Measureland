@@ -11,7 +11,7 @@
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { appStateStore, userStateStore, overlayStateStore, isDesktop } from "../../../../../../stores/state.js";
-    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay, centerMap } from '../../../../../utilities/helpers.js';
+    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay, centerMap, showSomethingWrongNotification } from '../../../../../utilities/helpers.js';
 
     export let popupData;
 
@@ -43,8 +43,8 @@
                 shouldShowURLCopySuccess = true;
                 setTimeout(() => { shouldShowURLCopySuccess = false }, 1000);
             } catch (e) {
-                // TODO: show notification
                 console.warn(e);
+                showSomethingWrongNotification();
             }
         }
     }
@@ -65,7 +65,13 @@
         centerMap(map, lat, lng, $isDesktop);
 
         const { error, data } = await getSinglePointData([ lng, lat ]);
-        console.log(error)
+
+        if (error) {
+            console.warn(error);
+            showSomethingWrongNotification();
+            return;
+        }
+
         console.log(data)
         const { properties } = data;
         loadedRating = properties['rating'];

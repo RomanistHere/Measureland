@@ -6,7 +6,7 @@
     import TextLink from '../../ui-elements/TextLink.svelte';
 
     import { checkUser } from "../../../utilities/api.js";
-    import { getCookie } from "../../../utilities/helpers.js";
+    import { getCookie, showSomethingWrongNotification } from "../../../utilities/helpers.js";
     import { userStateStore, appStateStore } from "../../../../stores/state.js";
     import { appInfo } from '../../../../configs/index.js';
 
@@ -19,6 +19,7 @@
 
         if (error) {
             console.warn(error);
+            showSomethingWrongNotification();
             isError = true;
             if (error === 'Too many requests, please try again later')
                 appStateStore.update(state => ({ ...state, shouldWork: false }));

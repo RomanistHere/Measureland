@@ -6,7 +6,7 @@
     import TextButton from '../../../ui-elements/TextButton.svelte';
 
     import { fetchRatedPlace } from "../../../../utilities/api.js";
-    import { openAnotherOverlay } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
     import { geocodeServiceReference } from "../../../../../stores/references.js";
     import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
@@ -20,19 +20,11 @@
     const fetchData = async (geoID) => {
         const { error, data } = await fetchRatedPlace();
 
-        // TODO:
-        // if (error === `Couldn't find the user`) {
-        //     showError('userNotFound')
-        //     window.location.reload()
-        //     return
-        // } else if (error) {
-        //     hideSpinner('.places__spinner')
-        //     showError('unrecognizedError', error)
-        //     return
-        // }
-
-        console.log(error)
-        console.log(data)
+        if (error) {
+            console.warn(error);
+            showSomethingWrongNotification();
+            return [];
+        }
 
         const { places } = data;
 

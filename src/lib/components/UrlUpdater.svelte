@@ -5,7 +5,7 @@
     import { mapReference } from "../../stores/references.js";
 
     // TODO: check roundToTen OK or need to use roundToFifthDecimal
-    import { roundToFifthDecimal, openAnotherOverlay, objToString, fillFiltersFromArrOfStrings } from "../utilities/helpers.js";
+    import { roundToFifthDecimal, openAnotherOverlay, objToString, fillFiltersFromArrOfStrings, showSomethingWrongNotification } from "../utilities/helpers.js";
     import { verifyUser } from "../utilities/api.js";
 
     $: if (typeof window !== 'undefined') {
@@ -86,9 +86,10 @@
             const { error, data } = await verifyUser(token);
 
             if (error) {
+                console.warn(error);
                 console.warn('Token might be expired');
+                showSomethingWrongNotification();
                 return;
-                // TODO: showError('unrecognizedError', error);
             }
 
             const { userID } = data;

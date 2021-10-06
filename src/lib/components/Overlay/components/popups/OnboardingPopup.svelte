@@ -7,7 +7,7 @@
     import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
     import FormButton from '../../../ui-elements/FormButton.svelte';
 
-    import { closeOverlay, showSuccessNotification, debounce } from "../../../../utilities/helpers.js";
+    import { closeOverlay, showSuccessNotification, debounce, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
     import { onboard } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
@@ -69,9 +69,8 @@
         const { error } = await onboard(userName, ageGrp, moneyGrp, $userStateStore.userID);
 
         if (error) {
-            // TODO:
-            alert('unrecognizedError')
             console.warn(error)
+            showSomethingWrongNotification();
             return;
         }
 

@@ -7,7 +7,7 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
     import { sendResetPass } from "../../../../utilities/api.js";
 
     export let popupData;
@@ -55,6 +55,7 @@
                 errorType = 'manyRequests';
             }
 
+            showSomethingWrongNotification();
             return;
         }
 

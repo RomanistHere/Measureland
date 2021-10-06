@@ -33,7 +33,7 @@
                 showSuccessNotification();
             } else {
                 console.warn(error)
-                // showError('unrecognizedError', error)
+                showSomethingWrongNotification();
             }
         }
     }, {

@@ -7,7 +7,7 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, sleep, showSuccessNotification } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
@@ -50,6 +50,7 @@
                 errorType = 'alreadyVerified';
             }
 
+            showSomethingWrongNotification();
             return;
         }
 
@@ -89,6 +90,7 @@
                 errorType = 'manyRequests';
             }
 
+            showSomethingWrongNotification();
             return;
         }
 

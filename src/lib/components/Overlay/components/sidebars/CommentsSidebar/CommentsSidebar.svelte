@@ -5,15 +5,18 @@
     import Spinner from '../../../../ui-elements/Spinner.svelte';
 
     import { fetchComments } from "../../../../../utilities/api.js";
+    import { showSomethingWrongNotification } from '../../../../../utilities/helpers.js';
 
     export let sidebarData;
 
     const fetchData = async (geoID) => {
         const { error, data } = await fetchComments(geoID);
 
-        // todo show error
-        console.log(error)
-        console.log(data)
+        if (error) {
+            console.warn(error)
+            showSomethingWrongNotification();
+            return [];
+        }
 
         return data;
     }
