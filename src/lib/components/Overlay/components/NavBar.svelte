@@ -115,7 +115,7 @@
     }
 </script>
 
-<nav class="overflow-hidden transition-all fixed flex z-5 justify-center inset-x-4 top-4 h-14 -lg:hidden glassmorphism">
+<nav class="transition-all fixed flex z-5 justify-center inset-x-4 top-4 h-14 -lg:hidden">
     <ul class="m-0 px-4 w-full flex justify-between">
         <li class="m-0 p-0 list-none flex items-center justify-center">
             <a
@@ -157,9 +157,11 @@
                 <a
                     href={"#"}
                     class="flex items-center relative"
-                    on:focus={() => {profileDropDownOpen = true}}
                     on:blur={() => {setTimeout(() => {profileDropDownOpen = false}, 200)}}
-                    on:click={(e) => {e.preventDefault()}}
+                    on:click={(e) => {
+                        e.preventDefault();
+                        profileDropDownOpen = !profileDropDownOpen;
+                    }}
                 >
                     <UserProfileIcon />
                     <span class="ml-2">
@@ -189,26 +191,22 @@
             {/if}
         </li>
     </ul>
-    <div
-        class="absolute inset-0 -inset-x-80 nav_gradient transform"
-        class:opacity-50={isCenterHovered || isLeftHovered || isRightHovered}
-        class:opacity-30={!isCenterHovered}
-        class:left-0={isLeftHovered}
-        class:right-0={isRightHovered}
-        class:scale-x-150={isCenterHovered}
-    ></div>
+    <div class="absolute inset-0 overflow-hidden -z-1 glassmorphism">
+        <div
+            class="absolute inset-0 -inset-x-80 -z-1 nav_gradient transform"
+            class:opacity-50={isCenterHovered || isLeftHovered || isRightHovered}
+            class:opacity-30={!isCenterHovered}
+            class:left-0={isLeftHovered}
+            class:right-0={isRightHovered}
+            class:scale-x-150={isCenterHovered}
+        ></div>
+    </div>
 </nav>
 
 <style>
     .nav_gradient {
         background: #fde9ff;
         background: linear-gradient(270deg, #FCEA8D 11.38%, #FBD2FF 50.48%, #D8F8FF 80.4%);
-        z-index: -1;
         transition: all ease .5s;
-        box-shadow: 0px 0px 30px #fde9ff;
-    }
-
-    a {
-        color: var(--text-color);
     }
 </style>

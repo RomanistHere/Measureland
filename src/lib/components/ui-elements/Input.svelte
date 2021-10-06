@@ -57,7 +57,8 @@
         {/if}
     </label>
     <input
-        class="mt-4 p-2 w-full rounded-md shadow {isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError && 'input-valid'}"
+        class="mt-4 p-2 w-full rounded-md shadow"
+        class:input-valid={isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError}
         type={shouldShowPassword ? 'text' : type}
         id={id}
         autocomplete={id}
@@ -66,8 +67,14 @@
         { autofocus }
     >
 
-    <span class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-14 opacity-0 {((!isInputValid && !isInputActive) || shouldShowMatchError) && 'dot-error'}"></span>
-    <span class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-14 opacity-0 {((!isInputValid && !isInputActive) || shouldShowMatchError) && 'dot-error'}"></span>
+    <span
+        class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-14 opacity-0"
+        class:dot-error={(!isInputValid && !isInputActive) || shouldShowMatchError}
+    ></span>
+    <span
+        class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-14 opacity-0"
+        class:dot-error={(!isInputValid && !isInputActive) || shouldShowMatchError}
+    ></span>
 
     <span class="absolute right-0 -bottom-6 text-sm">
         {#if !isInputValid && !isInputActive}
@@ -120,11 +127,6 @@
     input:-webkit-autofill {
         --bg-color-inp: var(--active-color);
         box-shadow: 0 0 0 30px var(--bg-color-inp) inset !important;
-        -webkit-text-fill-color: var(--side-bg-color);
-    }
-
-    input-filled {
-        --bg-color-inp: var(--active-color);
         -webkit-text-fill-color: var(--side-bg-color);
     }
 </style>

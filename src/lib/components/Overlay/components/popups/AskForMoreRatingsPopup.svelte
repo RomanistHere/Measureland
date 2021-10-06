@@ -40,7 +40,6 @@
                 href="mailto:{appInfo.supportEmail}"
                 text={appInfo.supportEmail}
             />
-        {:else}
         {/if}
         {$_('askForMoreRatingsPopup.orOurTelegramBot')}
         <TextLink
@@ -50,6 +49,6 @@
         />
         {$_('askForMoreRatingsPopup.weWillRespond')}
     </p>
-    
+
     <PrimaryButton text={$_('askForMoreRatingsPopup.mainBtn')} className="block text-center mt-4" action={closePopup} />
 </div>
