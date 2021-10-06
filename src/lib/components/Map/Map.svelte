@@ -151,6 +151,12 @@
         border-color: var(--side-bg-color);
     }
 
+    :global(.leaflet-touch .geocoder-control-input) {
+        line-height: 34px;
+        background-size: 34px;
+        background-image: url(/node_modules/esri-leaflet-geocoder/dist/img/search@2x.png);
+    }
+
     @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
         :global(.geocoder-control .geocoder-control-input),
         :global(.leaflet-control-zoom) {

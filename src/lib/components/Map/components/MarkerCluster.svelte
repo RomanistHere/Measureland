@@ -289,7 +289,9 @@
 
     	const query = getQuery(queryPolygon);
     	const poly = L.polygon(query, {
-    		fillOpacity: 0.05,
+            // generate random color to see the difference between areas
+            fillColor: "#" + ((1<<24)*Math.random() | 0).toString(16),
+    		fillOpacity: 0.3,
     		weight: 2
     	});
 
@@ -353,11 +355,10 @@
         if (!isFiltersOn)
             return;
 
-        getNewData();
-
-        // kostil' (workaround)
         if (filters === null)
-            setTimeout(() => { filtersStore.update(state => ({ ...state, isFiltersOn: false })); }, 300);
+            filtersStore.update(state => ({ ...state, isFiltersOn: false }));
+
+        getNewData();
     }
     $: subscribeToFiltersChanges($filtersStore);
 </script>

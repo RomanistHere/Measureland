@@ -1,6 +1,5 @@
 # To do:
 
-- filter fix (disappearing)
 - create popup for handling (showing) errors
 - drawing
 - restyle filters
