@@ -15,7 +15,7 @@
     const checkIfMapLoaded = () =>
         $mapReference === null ? false : true;
 
-    const updateURL = ({ center, zoom, openModal, showRating }, { isFiltersOn, filters }) => {
+    const updateURL = ({ center, zoom, openModal, showRating, shades }, { isFiltersOn, filters }) => {
     	const [lat, lng] = center;
 
         const url = new URL(window.location.href);
@@ -27,6 +27,11 @@
     		url.searchParams.set('fi', objToString(filters));
         else
             url.searchParams.delete('fi');
+
+        if (shades)
+    		url.searchParams.set('shades', shades);
+        else
+            url.searchParams.delete('shades');
 
         if (showRating) {
             const [lat, lng] = showRating;
@@ -55,6 +60,7 @@
         const srlat = url.searchParams.get('srlat');
         const srlng = url.searchParams.get('srlng');
         const token = url.searchParams.get('token');
+        const shades = url.searchParams.get('shades');
         const passToken = url.searchParams.get('reset_pass_token');
         const center = [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
 
@@ -63,6 +69,9 @@
 
         if (zoom)
             appStateStore.update(state => ({ ...state, zoom }));
+
+        if (shades)
+            appStateStore.update(state => ({ ...state, shades }));
 
         if (srlat && srlng) {
             // open popup only after map is loaded

@@ -29,6 +29,7 @@ export const appStateStore = writable({
     shouldShowLoading: false,
     startScreen: false,
     termsOfUseAgreed: true,
+    shades: null
 });
 
 export const notificationsStore = writable({

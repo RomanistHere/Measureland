@@ -5,6 +5,7 @@
 
     import MarkerCluster from './components/MarkerCluster.svelte';
     import GeoSearch from './components/GeoSearch.svelte';
+    import Draw from './components/Draw/Draw.svelte';
     import TextLink from '../ui-elements/TextLink.svelte';
 
     import { appStateStore } from "../../../stores/state.js";
@@ -57,8 +58,8 @@
         {#if map}
             <MarkerCluster />
             <GeoSearch />
+            <Draw mapClickRefFuntcion={onMapClick} />
         {/if}
-        <!-- // drawing component -->
     </div>
 {:else}
     <section class="fixed inset-0 z-5 flex justify-center items-center">
@@ -85,11 +86,6 @@
 
     .error_text {
         width: 30rem;
-    }
-
-    div {
-        /* height: calc(100% - var(--navbar-height)); */
-        /* top: var(--navbar-height); */
     }
 
     :global(.leaflet-top) {
@@ -131,15 +127,10 @@
         background-color: transparent;
     }
 
-    :global(.leaflet-touch .leaflet-draw-toolbar a),
     :global(.leaflet-touch .leaflet-control-layers),
     :global(.leaflet-touch .leaflet-bar) {
         border-color: var(--text-color);
         border-width: 1px;
-    }
-
-    :global(.leaflet-touch .leaflet-draw-toolbar .leaflet-disabled) {
-        background-color: var(--bg-color-add-non-transparent);
     }
 
     :global(.leaflet-touch .geocoder-control-suggestion) {

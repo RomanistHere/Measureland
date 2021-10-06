@@ -1,8 +1,7 @@
 # To do:
 
-- create popup for handling (showing) errors
 - remaining ratings, show true number
-- drawing
+- handle errors in an independent component
 - restyle filters
 - check (stricter) content security policy
 - do we need loggedInPopup?
