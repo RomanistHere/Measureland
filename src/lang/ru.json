@@ -127,7 +127,8 @@
     "_": {
         "commentConnector": "поставил/а",
         "user": "ты",
-        "averageRating": "Средняя оценка равна"
+        "averageRating": "Средняя оценка равна",
+        "searchPlaceholder": "Поиск по местам и адресам"
     },
     "loading": {
         "geo": "Загружаем..."

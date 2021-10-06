@@ -127,7 +127,8 @@
     "_": {
         "commentConnector": "gave",
         "user": "you",
-        "averageRating": "Average rating is"
+        "averageRating": "Average rating is",
+        "searchPlaceholder": "Search for places or addresses"
     },
     "loading": {
         "geo": "Loading..."
