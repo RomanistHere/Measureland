@@ -6,7 +6,7 @@
     import UserProfileIcon from '../../inline-images/UserProfileIcon.svelte';
     import DropdownMenu from '../../ui-elements/DropdownMenu.svelte';
 
-    import { openAnotherOverlay, setCookie, showSuccessNotification, showSomethingWrongNotification, closeOverlays } from '../../../utilities/helpers.js';
+    import { openAnotherOverlay, setCookie, showSuccessNotification, showSomethingWrongNotification, closeOverlays, registerAction } from '../../../utilities/helpers.js';
     import { saveLang, logout } from '../../../utilities/api.js';
     import { appStateStore, userStateStore } from "../../../../stores/state.js";
 
@@ -59,6 +59,7 @@
 
         appStateStore.update(state => ({ ...state, startScreen: false }));
         setCookie('startScreen', '0', 365);
+        registerAction('navbarButtons');
     }
 
     const openRegister = () => {
@@ -111,6 +112,7 @@
                 await saveLang(nextLang);
 
             showSuccessNotification();
+            registerAction('navbarLanguage');
         };
     }
 </script>

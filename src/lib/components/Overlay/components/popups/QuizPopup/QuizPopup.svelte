@@ -11,7 +11,7 @@
     import Textarea from '../../../../ui-elements/Textarea.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
-    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap, showSomethingWrongNotification } from "../../../../../utilities/helpers.js";
+    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap, showSomethingWrongNotification, registerAction } from "../../../../../utilities/helpers.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { userStateStore, markerStore, isDesktop } from "../../../../../../stores/state.js";
 
@@ -108,6 +108,7 @@
     }
 
     const submit = async () => {
+        registerAction('trySubmitQuiz');
         errorType = null;
         isError = false;
         isLoading = true;
@@ -120,9 +121,10 @@
             return
         }
 
-        const currentCoords = [roundToFifthDecimal(popupData.lat), roundToFifthDecimal(popupData.lng)];
+        const currentCoords = [ roundToFifthDecimal(popupData.lat), roundToFifthDecimal(popupData.lng) ];
 
         try {
+            registerAction('submitQuiz');
             const { error, data } = await saveToDB(currentCoords, quizState.ratings, averageRating, quizState.comment, quizState.isPersonalExperience);
             isLoading = false;
             console.log(error, data)
@@ -162,6 +164,7 @@
                 }));
             }
 
+            registerAction('successQuiz');
             userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
             closeOverlays();
             showSuccessNotification();

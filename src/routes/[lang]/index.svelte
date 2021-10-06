@@ -6,6 +6,8 @@
 
 	import SEO from '../../lib/components/SEO/SEO.svelte';
 	import UrlUpdater from '../../lib/components/UrlUpdater.svelte';
+	import ErrorHandler from '../../lib/components/ErrorHandler.svelte';
+	import EventsHandler from '../../lib/components/EventsHandler.svelte';
 	import Overlay from '../../lib/components/Overlay/Overlay.svelte';
 
 	import en from '../../lang/en.json';
@@ -22,7 +24,6 @@
 	});
 
 	let Map;
-	let shouldSendEvent = false;
 
 	onMount(async () => {
 		const module = await import('../../lib/components/Map/Map.svelte');
@@ -37,15 +38,11 @@
 	imageAltText={$_('SEO.imageAltText')}
 />
 
-<!-- // subsribe to certain changes and update url -->
+<ErrorHandler />
+<EventsHandler />
+
 <UrlUpdater />
 
 <svelte:component this={Map}/>
 
-<!-- // popup and sidebar layers inside -->
 <Overlay />
-
-{#if shouldSendEvent}
-	<!-- handle errors and sending -->
-	<!-- <ErrorLayer /> -->
-{/if}

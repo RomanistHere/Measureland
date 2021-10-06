@@ -7,7 +7,7 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification, registerAction } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
@@ -62,6 +62,7 @@
         if (document)
             document.activeElement.blur();
 
+        registerAction('trySubmitLogin');
         isError = false;
         const isValuesNotEmpty = email.length > 0 && password.length > 0;
         if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
@@ -71,6 +72,7 @@
             return;
         }
 
+        registerAction('submitLogin');
         isLoading = true;
         const { error, data } = await login(email, password);
         isLoading = false;
@@ -104,6 +106,7 @@
             wantMoreRatings
         }));
 
+        registerAction('successLogin');
         openAnotherOverlay('loggedInPopup');
         showSuccessNotification();
     }

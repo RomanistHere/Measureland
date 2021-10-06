@@ -7,7 +7,7 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification, registerAction } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
 
     $: errorsObj = $json('errors');
@@ -31,6 +31,7 @@
         if (document)
             document.activeElement.blur();
 
+        registerAction('trySubmitRegister');
         isError = false;
         shouldShowMatchError = false;
         const isValuesNotEmpty = email.length > 0 && password.length > 0 && passwordConfirm.length > 0;
@@ -49,6 +50,7 @@
             return;
         }
 
+        registerAction('submitRegister');
         isLoading = true;
         const { error, data } = await register(email, password, $locale);
         isLoading = false;
@@ -68,6 +70,7 @@
             return;
         }
 
+        registerAction('successRegister');
         openAnotherOverlay('checkEmailPopup');
         showSuccessNotification();
     }

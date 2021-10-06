@@ -1,0 +1,21 @@
+<script>
+    import { userStateStore } from '../../stores/state.js';
+    import { API_DOMAIN } from '../../configs/env.js';
+    import { showSomethingWrongNotification } from "../utilities/helpers.js";
+
+    const handleErrors = event => {
+        showSomethingWrongNotification();
+        
+        if (!$userStateStore.shouldSendEvent)
+            return;
+
+        const { message, filename, lineno, colno, error } = event;
+        navigator.sendBeacon(`${API_DOMAIN}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }));
+        return true;
+    }
+</script>
+
+<svelte:window
+    on:error={handleErrors}
+    on:unhandledrejection={handleErrors}
+/>

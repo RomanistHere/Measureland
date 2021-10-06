@@ -6,7 +6,7 @@
     import TextLink from '../../ui-elements/TextLink.svelte';
 
     import { checkUser } from "../../../utilities/api.js";
-    import { getCookie, showSomethingWrongNotification } from "../../../utilities/helpers.js";
+    import { getCookie, showSomethingWrongNotification, registerAction } from "../../../utilities/helpers.js";
     import { userStateStore, appStateStore } from "../../../../stores/state.js";
     import { appInfo } from '../../../../configs/index.js';
 
@@ -40,12 +40,15 @@
                 wantMoreRatings,
                 shouldSendEvent,
             }));
+            registerAction('user')
             // for test purposes
             // fillDB(20000)
         }
 
-        if (shouldShowStartScreen)
+        if (shouldShowStartScreen) {
             appStateStore.update(state => ({ ...state, startScreen: true }));
+            registerAction('startScreen');
+        }
     }
 
     let promise = userInit();

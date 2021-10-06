@@ -1,7 +1,6 @@
 # To do:
 
 - remaining ratings, show true number
-- handle errors in an independent component
 - restyle filters
 - check (stricter) content security policy
 - do we need loggedInPopup?

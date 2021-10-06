@@ -5,12 +5,15 @@
     import TextButton from '../../../ui-elements/TextButton.svelte';
 
     import { filtersStore, shouldShowFiltersNotification } from "../../../../../stores/state.js";
-    import { openAnotherOverlay, closeOverlays } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, closeOverlays, registerAction } from "../../../../utilities/helpers.js";
 
-    const openFilters = () =>
+    const openFilters = () => {
+        registerAction('filtersNotifcationClick');
         openAnotherOverlay('filtersSidebar');
+    }
 
     const resetFilters = () => {
+        registerAction('filtersNotifcationClick');
         closeOverlays();
         filtersStore.update(state => ({
             ...state,

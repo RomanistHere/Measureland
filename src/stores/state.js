@@ -25,7 +25,7 @@ export const appStateStore = writable({
     ratingToSave: null,
     corrdsToSave: null,
     // center: [53.9065, 27.6663],
-    center: [40, 64],
+    center: [55, 64],
     shouldShowLoading: false,
     startScreen: false,
     termsOfUseAgreed: true,

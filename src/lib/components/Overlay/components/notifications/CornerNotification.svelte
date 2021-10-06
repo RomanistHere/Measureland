@@ -3,7 +3,7 @@
     import SomethingWrongNotification from './SomethingWrongNotification.svelte';
 
     import { notificationsStore } from '../../../../../stores/state.js';
-    import { hideSomethingWrongNotification } from '../../../../utilities/helpers.js';
+    import { hideSomethingWrongNotification, registerAction } from '../../../../utilities/helpers.js';
 
     let shouldShowSuccessNotification = false;
     let successNotificationTimeout = null;
@@ -26,6 +26,7 @@
     const somethingWrongOnMouseenter = () => {
         stopSomethingWrongTimeout();
         somethingWrongNotificationExpanded = true;
+        registerAction('hoverNotification');
     }
 
     const somethingWrongOnMouseleave = () => {
@@ -33,13 +34,16 @@
         somethingWrongNotificationExpanded = false;
     }
 
-    const somethignWrongOnClick = () =>
+    const somethignWrongOnClick = () => {
         hideSomethingWrongNotification();
+        registerAction('clickNotification');
+    }
 
     const showAndHideNotifications = ({ successNotification, somethingWrongNotification }) => {
         if (somethingWrongNotification && !somethingWrongNotificationTimeout) {
             shouldShowSomethingWrongNotification = true;
             startSomethingWrongTimeout();
+            registerAction('showNotification');
         }
 
         if (successNotification && !successNotificationTimeout) {

@@ -7,7 +7,7 @@
     import TextLink from '../../../../ui-elements/TextLink.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
-    import { fillFiltersFromArrOfStrings, debounce } from '../../../../../utilities/helpers.js'
+    import { fillFiltersFromArrOfStrings, debounce, registerAction } from '../../../../../utilities/helpers.js'
 
     $: criteria = $json('criteria');
     $: filters = Object.keys(criteria).map((key, i) => ({
@@ -67,6 +67,7 @@
         }
 
         refs.map(({ ref }) => { ref.setSlider([1,5]); });
+        registerAction('filtersReset');
     }
     const debouncedResetFilters = debounce(resetFilters, 300);
 
@@ -80,6 +81,7 @@
 
         resetFilters(false);
         fillFiltersFromArrOfStrings(preset, refs);
+        registerAction('filtersPreset');
     }
     const debouncedApplyPreset = debounce(applyPreset, 300);
 </script>

@@ -5,7 +5,7 @@
     import SidebarBlock from './SidebarBlock.svelte';
     import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
 
-    import { openAnotherOverlay, closeOverlays, showSuccessNotification, showSomethingWrongNotification, setCookie, closeOverlay } from '../../../../utilities/helpers.js';
+    import { openAnotherOverlay, closeOverlays, showSuccessNotification, showSomethingWrongNotification, setCookie, closeOverlay, registerAction } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
     import { APP_VERSION } from '../../../../../configs/env.js';
     import { userStateStore, isDesktop } from "../../../../../stores/state.js";
@@ -42,6 +42,7 @@
                         wantMoreRatings: false
                     }));
                     showSuccessNotification();
+                    registerAction('logoutMobile');
                 } else {
                     console.warn(error)
                     showSomethingWrongNotification();
@@ -80,6 +81,7 @@
                     if (isUserLoggedIn)
                         await saveLang(nextLang);
                     showSuccessNotification();
+                    registerAction('changeLanguageMobile');
                 };
             }
         },]

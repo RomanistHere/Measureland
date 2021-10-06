@@ -1,5 +1,6 @@
-import { overlayStateStore, appStateStore, notificationsStore, filtersStore } from '../../stores/state.js';
+import { overlayStateStore, appStateStore, notificationsStore, filtersStore, flowStore } from '../../stores/state.js';
 import { overlayStateDefault } from '../constants/overlayStateDefault.js';
+import { flowDictionary } from '../../configs/flow.js';
 
 const debounce = (func, wait, immediate) => {
 	var timeout
@@ -124,6 +125,7 @@ const openAnotherOverlay = (overlayName = null, data = {}) => {
 	        const { newState } = closeOverlaysWithSameType(overlayType, state);
 	        return ({ ...newState, [overlayName]: { ...newState[overlayName], isOpen: true, data } });
 	    });
+		registerAction(overlayName);
 	} catch (e) {
 		console.warn('Define popup in constatns/overlayStateDefault.js');
 	}
@@ -139,9 +141,11 @@ const closeOverlay = (overlayType = null) => {
 
             return ({ ...newState });
         });
+		registerAction(`cl-${overlayType}`);
     } else {
         overlayStateStore.update(state => overlayStateDefault);
         appStateStore.update(state => ({ ...state, openModal: false }));
+		registerAction(`cl`);
     }
 }
 
@@ -238,6 +242,9 @@ const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false) => {
 	}, zoom);
 }
 
+const registerAction = action =>
+	flowStore.update(actions => ([ ...actions, flowDictionary[action] ]));
+
 export {
     debounce,
     sleep,
@@ -260,4 +267,5 @@ export {
 	setCookie,
 	getCookie,
 	centerMap,
+	registerAction,
 }

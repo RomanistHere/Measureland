@@ -116,13 +116,13 @@ textarea {
 }
 
 .popup-shadow {
-    box-shadow:
+    /* box-shadow:
         1.9px 1.6px 2.8px rgba(0, 0, 0, 0.039),
         4.5px 3.9px 6.8px rgba(0, 0, 0, 0.057),
         8.5px 7.3px 12.8px rgba(0, 0, 0, 0.07),
         15.2px 13px 22.8px rgba(0, 0, 0, 0.083),
         28.4px 24.2px 42.6px rgba(0, 0, 0, 0.101),
-        68px 58px 102px rgba(0, 0, 0, 0.14);
+        68px 58px 102px rgba(0, 0, 0, 0.14); */
 }
 
 .glassmorphism {

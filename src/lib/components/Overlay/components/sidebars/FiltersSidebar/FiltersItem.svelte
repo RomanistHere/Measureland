@@ -5,6 +5,7 @@
     import Tooltip from '../../../../ui-elements/Tooltip.svelte';
 
     import { filtersStore } from "../../../../../../stores/state.js";
+    import { registerAction } from '../../../../../utilities/helpers.js';
 
     let slider;
     export const setSlider = val => slider.set(val);
@@ -46,6 +47,8 @@
 
             return newState;
         });
+
+        registerAction(`filter-${key}`)
 
         // TODO: maybe do thorugh dispatch event
         // const presetElems = $All('.filter__preset')

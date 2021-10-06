@@ -1,11 +1,11 @@
 const path = window.location.origin === 'http://localhost:8080' ? 'http://localhost:3000/api' : 'https://measureland.org/api'
 
-window.addEventListener('error', event => {
-    if (!state.shouldSendEvent)
-        return
-    const { message, filename, lineno, colno, error } = event
-    navigator.sendBeacon(`${path}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }))
-})
+// window.addEventListener('error', event => {
+//     if (!state.shouldSendEvent)
+//         return
+//     const { message, filename, lineno, colno, error } = event
+//     navigator.sendBeacon(`${path}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }))
+// })
 
 const sendFeedback = () => {
     const uniqID = state.uniqID

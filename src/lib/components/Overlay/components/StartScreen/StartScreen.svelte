@@ -13,7 +13,7 @@
     import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
     import ScrollBottomText from './ScrollBottomText.svelte';
 
-    import { setCookie, openAnotherOverlay, fillFiltersFromArrOfStrings } from '../../../../utilities/helpers.js';
+    import { setCookie, openAnotherOverlay, fillFiltersFromArrOfStrings, registerAction } from '../../../../utilities/helpers.js';
     import { appStateStore } from '../../../../../stores/state.js';
 
     SwiperCore.use([Mousewheel, Pagination]);
@@ -30,6 +30,7 @@
                 fillFiltersFromArrOfStrings(['water:5-5']);
             }
             : () => {
+                registerAction('startScreenExternalLink');
                 window.open(item.href,'_blank');
             },
         disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed
@@ -41,6 +42,7 @@
 
     const onSlideChange = () => {
         shouldShowScrollCaption = false;
+        registerAction('startScreenSlideChange')
     }
 
     const closeStartScreen = () => {
@@ -71,7 +73,7 @@
         mousewheel={true}
         pagination={true}
         slidesPerView={1}
-        on:slideChange|once={onSlideChange}
+        on:slideChange={onSlideChange}
     >
         <SwiperSlide>
             <section class="flex items-center justify-center w-full h-full slide-1 px-10">
