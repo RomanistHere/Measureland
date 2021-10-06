@@ -6,7 +6,7 @@
     import UserProfileIcon from '../../inline-images/UserProfileIcon.svelte';
     import DropdownMenu from '../../ui-elements/DropdownMenu.svelte';
 
-    import { openAnotherOverlay, setCookie, showSuccessNotification, closeOverlays } from '../../../utilities/helpers.js';
+    import { openAnotherOverlay, setCookie, showSuccessNotification, showSomethingWrongNotification, closeOverlays } from '../../../utilities/helpers.js';
     import { saveLang, logout } from '../../../utilities/api.js';
     import { appStateStore, userStateStore } from "../../../../stores/state.js";
 

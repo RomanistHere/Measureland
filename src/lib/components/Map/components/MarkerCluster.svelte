@@ -62,6 +62,7 @@
     		return marker;
     	} else {
     		// cluster
+            // docs: https://github.com/mapbox/supercluster
     		const rating = roundToInt(feature.properties.ratingSum / feature.properties.point_count);
     		const grpIcon = getGrpIcon(Math.floor(rating));
     		const marker = L.marker(latlng, {

@@ -7,7 +7,8 @@
 
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
-	import NotificationLayer from './components/notifications/NotificationLayer.svelte';
+    import FiltersNotification from './components/notifications/FiltersNotification.svelte';
+	import CornerNotification from './components/notifications/CornerNotification.svelte';
     import BurgerButton from '../ui-elements/BurgerButton.svelte';
     import Loading from './components/Loading.svelte';
     import NavBar from './components/NavBar.svelte';
@@ -110,7 +111,8 @@
 
 <NavBar />
 
-<NotificationLayer />
+<FiltersNotification />
+<CornerNotification />
 
 <svelte:window
     on:keydown={handleKeydown}

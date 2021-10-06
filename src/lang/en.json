@@ -366,6 +366,11 @@
             "textSecondLink": "dropped us a message",
             "textAfterLinks": "we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
         },
+        "somethingWentWrong": [
+            "Something went wrong",
+            "Check console for more info",
+            "Press F12 to open it"
+        ],
         "samePass": "The pass is the same as previous. Pick another one.",
         "linkExpired": "The link is expired :(",
         "linkExpiredLink": "Get another one",

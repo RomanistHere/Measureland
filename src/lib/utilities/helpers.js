@@ -150,6 +150,12 @@ const closeOverlays = () => closeOverlay();
 const showSuccessNotification = () =>
 	notificationsStore.update(state => ({ ...state, successNotification: true }));
 
+const showSomethingWrongNotification = () =>
+	notificationsStore.update(state => ({ ...state, somethingWrongNotification: true }));
+
+const hideSomethingWrongNotification = () =>
+	notificationsStore.update(state => ({ ...state, somethingWrongNotification: false }));
+
 const objToString = (object) => {
     let str = ''
     for (let k in object) {
@@ -247,6 +253,8 @@ export {
     closeOverlay,
     closeOverlays,
 	showSuccessNotification,
+	showSomethingWrongNotification,
+	hideSomethingWrongNotification,
 	objToString,
 	fillFiltersFromArrOfStrings,
 	setCookie,

@@ -33,6 +33,7 @@ export const appStateStore = writable({
 
 export const notificationsStore = writable({
     successNotification: false,
+    somethingWrongNotification: false,
 });
 
 export const filtersStore = writable({
