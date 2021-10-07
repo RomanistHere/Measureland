@@ -13,15 +13,16 @@ const morgan = require('morgan');
 const Sentry = require('@sentry/node');
 const Tracing = require("@sentry/tracing");
 
+const isProd = process.env.IS_PROD === '1';
+const isAdmin = process.env.IS_ADMIN === '1';
+
+const adminRouter = isAdmin ? require('./routes/admin.route') : null;
 const geoRouter = require('./routes/geo.route');
 const userRouter = require('./routes/user.route');
 const flowRouter = require('./routes/flow.route');
-const adminRouter = require('./routes/admin.route');
 const winston = require('./helpers/winston');
 
 const app = express();
-
-const isProd = process.env.IS_PROD === '1';
 
 if (isProd) {
     Sentry.init({
@@ -77,7 +78,7 @@ app.use(session({
     }
 }));
 app.use(cors({
-    origin: isProd ? process.env.CORS_PATH : process.env.CORS_PATH_DEV,
+    origin: isProd ? [process.env.CORS_PATH, new RegExp(process.env.CORS_REGEX)] : process.env.CORS_PATH_DEV,
     methods: ['GET', 'POST', 'DELETE'],
     credentials: true // enable set cookie
 }));
@@ -112,7 +113,9 @@ app.use('/api/geo', geoLimiter, geoRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);
 app.use('/api/flow', flowLimiter, flowRouter);
-app.use('/api/admin', adminRouter);
+if (isAdmin) {
+    app.use('/api/admin', adminRouter);
+}
 
 // logging and errors
 if (isProd) {

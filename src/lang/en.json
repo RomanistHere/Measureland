@@ -1,0 +1,409 @@
+{
+    "criteria": {
+        "air": {
+            "title": "Air quality",
+            "tooltip": "Foreign smells (from fields, factories, etc.). How nice to breathe.",
+            "caption": "1 - bad, 5 - awesome"
+        },
+        "water": {
+            "title": "Water quality",
+            "tooltip": "Water problems (smell, taste, color, itching). How good it is.",
+            "caption": "1 - terrible, 5 - good"
+        },
+        "logistic": {
+            "title": "Basic and social facilities",
+            "tooltip": "The number and quality of shops, cafes, entertainment facilities, hairdressers, gyms, etc. nearby.",
+            "caption": "1 - awful, 5 - great"
+        },
+        "transport": {
+            "title": "Transport and location",
+            "tooltip": "How easy it is to get to the needed places by public or personal transport, bicycle, on foot.",
+            "caption": "1 - poor, 5 - nice"
+        },
+        "noize": {
+            "title": "Light and noise pollution",
+            "tooltip": "How much noise and light disturbs. 1 - disturbs strongly, 5 - does not disturb.",
+            "caption": "1 - noizy, 5 - quietly"
+        },
+        "clean": {
+            "title": "Cleanliness and tidiness",
+            "tooltip": "The amount of garbage. Caring for the appearance of the entrances/lawns/areas.",
+            "caption": "1 - dirty, 5 - clean"
+        },
+        "chill": {
+            "title": "Outdoor activities and walks",
+            "tooltip": "The presence of parks, water, walks and bike paths nearby, as well as their equipment.",
+            "caption": "1 - far, 5 - nearby"
+        },
+        "safety": {
+            "title": "Safety",
+            "tooltip": "How safe does it feel to live in this area compared to other places.",
+            "caption": "1 - anxious, 5 - calmly"
+        },
+        "pets": {
+            "title": "Life with pets",
+            "tooltip": "How well tenants treat pets. Walking and training areas.",
+            "caption": "1 - tough, 5 - easy"
+        },
+        "kids": {
+            "title": "Life with kids",
+            "tooltip": "Infrastructure for children: kindergartens and playgrounds, schools nearby - and security.",
+            "caption": "1 - rough, 5 - cool"
+        },
+        "parking": {
+            "title": "Parking places",
+            "tooltip": "Parking space problems. 1 - no places, 5 - no problem.",
+            "caption": "1 - sad, 5 - terrific"
+        }
+    },
+    "startScreen": {
+        "firstSlide": {
+            "titleLow": "Welcome to",
+            "titleBig": "Measureland",
+            "text": "Free service we built to help you share your residential experiences and find the best place 🏡 to rent or buy.",
+            "btn1": "Continue without signing in",
+            "btn2": "Create new account"
+        },
+        "slides": {
+            "2": {
+                "title": "We are simple and useful",
+                "text1": "We help people by saving time, energy and reducing the stress 🤯 while looking for a place to stay.",
+                "text2": "Check the districts with good or bad water quality 💧 in the town (by townsman's opionion) in literally one click from now.",
+                "button": "Check good water around",
+                "href": "",
+                "action": "openFilters"
+            },
+            "3": {
+                "title": "We are community driven",
+                "text1": "There are no thing like promoted rating or paid review here. Content created for people by people.",
+                "text2": "Become the creator. We will help you 👋",
+                "button": "See our community guides",
+                "href": "https://github.com/RomanistHere/Measureland/wiki/Contributions"
+            },
+            "4": {
+                "title": "We are non-commercial",
+                "text1": "We would love your support, but making the money is not the goal of this service.",
+                "text2": "There are more important things in life 🌼",
+                "button": "Support us",
+                "href": "https://www.donationalerts.com/r/romanisthere"
+            },
+            "5": {
+                "title": "We are privacy oriented",
+                "text1": "Do not trust our words 🙈 Trust our code 🙉 It is open source.",
+                "text2": "We can't sell or lose your personal data because we don't collect it 🙊",
+                "button": "Look at our code",
+                "href": "https://github.com/RomanistHere/Measureland/"
+            }
+        },
+        "lastSlide": {
+            "list": [{
+                "text": "Join our Telegram community",
+                "url": "https://t.me/measureland"
+            },{
+                "text": "Check the Measureland guide book (tutorial)",
+                "url": "/en/blog/tutorial/"
+            },{
+                "text": "Learn about us",
+                "url": "/en/blog/about-us/"
+            },{
+                "text": "Go to the support page",
+                "url": "/en/blog/support/"
+            },{
+                "text": "See our terms of use",
+                "url": "/en/blog/terms-of-use/"
+            },{
+                "text": "... or privacy policy",
+                "url": "/en/blog/policy/"
+            },{
+                "text": "Find the rest at our blog",
+                "url": "/en/blog/"
+            }],
+            "title": "And this is only the beggining"
+        },
+        "scrollToLearnMode": "Scroll to learn more",
+        "checkboxText": "By using Measureland I agree with",
+        "checkboxLink": "terms of use"
+    },
+    "_": {
+        "commentConnector": "gave",
+        "user": "you",
+        "averageRating": "Average rating is",
+        "searchPlaceholder": "Search for places or addresses"
+    },
+    "loading": {
+        "geo": "Loading..."
+    },
+    "clusters": {
+        "titleSingle": "This place's average rating's about",
+        "titleGrp": "This group of places average rating's about"
+    },
+    "navBar": {
+        "logoTitle": "Measureland",
+        "logoAlt": "Measureland logo",
+        "primaryBtn": "Register",
+        "secondaryBtn": "Log in",
+        "links": [{
+            "text": "Blog",
+            "url": "/en/blog/"
+        },{
+            "text": "Community",
+            "url": "https://t.me/measureland"
+        },{
+            "text": "Support",
+            "url": "/en/blog/support/"
+        }]
+    },
+    "menuSidebar": {
+        "titleTop": "Account",
+        "loginOrRegister": "Login/Register",
+        "logout": "Log out",
+        "myRatings": "My ratings",
+        "changePassword": "Change password",
+        "changeLanguage": "Change language (язык)",
+        "titleMid": "Features",
+        "sendCrashReports": "Send crash reports",
+        "toggleOn": "ON",
+        "toggleOff": "OFF",
+        "filters": "Filters",
+        "ratePlace": "Rate a place",
+        "ratePlaceAvailable": "available",
+        "needMoreRatings": "I need more ratings!",
+        "requestProcessing": "Request processing",
+        "filters": "Filters",
+        "titleBot": "Related",
+        "ourPartners": "Our partners",
+        "ourGuideBook": "Our guide book (Tutorial)",
+        "paidOptions": "Paid options",
+        "aboutUs": "About us",
+        "support": "Support",
+        "newsTelegram": "Новости в Телеграме",
+        "checkList": "Чек-лист арендатора",
+        "blog": "Blog"
+    },
+    "commentSidebar": {
+        "title": "Comments"
+    },
+    "filterSidebar": {
+        "title": "Set up filters",
+        "filterPresets": "Try our filter presets:",
+        "currentValue": "current value: ",
+        "applyBtn": "Apply",
+        "resetBtn": "Reset",
+        "footerText1": "Do you like our free features without any ads?",
+        "footerLink": "Support Measureland",
+        "footerText2": ", so we can keep it that way!",
+        "footerTextSmall": "(73% of those surveyed agreed to support Measureland)",
+        "preset1Text": "Quiet",
+        "preset2Text": "Stir",
+        "preset3Text": "Nature",
+        "preset4Text": "The perfect place"
+    },
+    "filterNotification": {
+        "filters": "Filters",
+        "active": "active",
+        "reset": "Reset"
+    },
+    "footer": {
+        "version": "Version",
+        "termsOfUse": "Terms of use",
+        "credits": "by Roman Smunyov",
+        "creditsLink": "RomanistHere",
+        "allRightsReserved": "All rights reserved",
+        "rightsYear": "© 2021"
+    },
+    "quizPopup": {
+        "soYouWantToRate": "So you want to rate the place. Before we start, there is one important question to answer. We expect an honest answer, thank you!",
+        "doYouHavePersonalExperience": "Do you have personal experience of living at the given place?",
+        "imageTitle": "Picture of a crowd looking at you",
+        "beSincere": "Be sincere. Help us and we will help you back!",
+        "tenCriteria": "Great, thanks. There are about ten criteria you will need to rate in order to submit your rating. You can skip and return later, there is an opportunity to leave a comment at the end. Let's start with",
+        "tenCriteriaStrong": "important",
+        "title3": "Location",
+        "title4": "Comfort",
+        "title5": "Extras",
+        "title6": "Comment",
+        "isThereAnythingToAdd": "Is there anything you'd like to add?",
+        "textAreaPlaceholder": "Extremely friendly and clean neighborhood!",
+        "noPersonalExperienceBtn": "No, I don't",
+        "yesPersonalExperienceBtn": "Yes, I lived here",
+        "loginBtn": "Login and rate",
+        "backBtn": "Back",
+        "nextBtn": "Next",
+        "submitBtn": "Save"
+    },
+    "showRatingPopup": {
+        "approximateAddress": "Approximate address",
+        "approximateAddressDefault": "calculating...",
+        "copied": "Copied to buffer",
+        "shareThisRating": "Share this rating",
+        "ofParticipantsLived": "of the participants lived nearby",
+        "averageRating": "Av. rating",
+        "usersRated": "Users rated",
+        "comments": "Comments",
+        "howMuchPeople": "How much people are actually lived here",
+        "youHaveAlreadyRated": "You have already rated this place",
+        "addNewRating": "Add new rating",
+        "loginAndRate": "Login and rate"
+    },
+    "howToRatePopup": {
+        "soYouWantTo": "So you want to measure land",
+        "gifAltText": "tutorial gif",
+        "findNeededTown": "Find a needed town (search at the top left)",
+        "youNeedTo": "You need to",
+        "register": "register",
+        "first": "first",
+        "lookForPlace": "Look for a place where you have experience of living",
+        "clickIt": "Click it! Or touch the screen",
+        "rateAllCriteria": "Rate all criteria in the appeared modal",
+        "leaveTheComment": "Leave the comment and save",
+        "submit": "Got ya, let's go!"
+    },
+    "loggedInPopup": {
+        "welcome": "Welcome",
+        "activeRatingsRemaining": "Active ratings remaining",
+        "learnWhyLimits": "Learn why there are limits and how to increase this number",
+        "learnWhyLimitsAddition": "It's free, we just need to confirm you're a nice person :)",
+        "hereSomeArticles": "Here are some articles to help you get started or remind about",
+        "list": [{
+            "text": "Measureland guide book (tutorial)",
+            "link": "/en/blog/tutorial/"
+        }, {
+            "text": "Our goals",
+            "link": "/en/blog/about-us/"
+        }, {
+            "text": "Support",
+            "link": "/en/blog/support/"
+        }]
+    },
+    "loginPopup": {
+        "title": "Log in",
+        "email": "Email",
+        "password": "Password",
+        "forgotPasswordBtn": "Forgot password",
+        "loginBtn": "Log in",
+        "registerBtn": "I want to register!"
+    },
+    "registrationPopup": {
+        "title": "Registration",
+        "email": "Email",
+        "password": "Password",
+        "repeatPassword": "Repeat the password",
+        "goToLoginBtn": "Go to Login",
+        "registerBtn": "Register"
+    },
+    "onboardingPopup": {
+        "defaultName": "Anonym",
+        "title": "Thank you for registration!",
+        "caption": "You'll help us by answering this two simple questions (deafault values applied if skipped), and we would help you if you were looking for a new place to live in the future :)",
+        "yourAgeGroup": "Your age group:",
+        "ageOption1": "Yonger than 25 years",
+        "ageOption2": "25 - 40 years",
+        "ageOption3": "41 - 55 years",
+        "ageOption4": "Older than 55 years",
+        "incomeLevel": "Income level (roughly):",
+        "incomeOption1": "Below average",
+        "incomeOption2": "Average",
+        "incomeOption3": "Above average",
+        "yourName": "Your name. If skipped, you're going to appear as «{0}» in the comments",
+        "mainBtn": "Let's go"
+    },
+    "forgotPasswordPopup": {
+        "title": "Restore (change) password",
+        "email": "Email",
+        "secondaryBtn": "Register",
+        "mainBtn": "Restore"
+    },
+    "changePasswordPopup": {
+        "title": "Change password (through email)",
+        "mainBtn": "Send me the link"
+    },
+    "confirmForgotPasswordPopup": {
+        "title": "Check your email",
+        "text": "We sent a letter to the given email. By clicking the link inside you'll get to the new password form. Once you submit new password, old one stops to work",
+        "button": "Got ya"
+    },
+    "checkEmailPopup": {
+        "title": "Check your email",
+        "text": "One of the stages in fighting with cheating - verification of users by email - so we sent a letter to you. We know you can't wait to start rating the places, so once you confirm yourself you can start. Check it out :)",
+        "button": "Got ya"
+    },
+    "myPlacesPopup": {
+        "title": "Your ratings",
+        "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",
+        "defaultAdress": "Didn't find address"
+    },
+    "askForMoreRatingsPopup": {
+        "title": "Done",
+        "weProcessingRequest": "We're processing your request now. Can not guarantee to resolve it fast - our team is tiny right now, but the amount of work is tremendous.",
+        "url": "https://www.donationalerts.com/r/romanisthere",
+        "weProcessingRequestLink": "You can help",
+        "weProcessingRequestAfterLink": ", though.",
+        "limitationsExist": "These limitations exist as one of the layers of protection.",
+        "limitationsExistLink": "Read more.",
+        "youCanTryFasten": "You can try to fasten this process, write us an email:",
+        "orOurTelegramBot": " - or our Telegram bot: ",
+        "weWillRespond": " - we will respond ASAP.",
+        "mainBtn": "Understood"
+    },
+    "input": {
+        "showOrHide": "Show/Hide",
+        "emailError": "Wrong email format! Example: yournick@mail.com",
+        "passwordError": "Password should be longer than 6 characters!",
+        "passwordsShouldMatch": "Passwords should match!"
+    },
+    "spinner": {
+        "start": "Loading...",
+        "change": [
+            "Processing",
+            "Oops, it didn't work",
+            "Loading something else..."
+        ]
+    },
+    "errors": {
+        "limitError": {
+            "textBeforeLink": "You have exceeded our limit of requests. There are",
+            "textFirstLink": "two options",
+            "textBetweenLinks": ": either you a bad guy who for some reason wants our aimed at our helping people service going down or our system being not ideal. We are strongly believe it's a second one. If you ",
+            "textSecondLink": "dropped us a message",
+            "textAfterLinks": "we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
+        },
+        "somethingWentWrong": [
+            "Something went wrong",
+            "Check console for more info",
+            "Press F12 to open it"
+        ],
+        "samePass": "The pass is the same as previous. Pick another one.",
+        "linkExpired": "The link is expired :(",
+        "linkExpiredLink": "Get another one",
+        "errorVerification": "Check email for verification letter",
+        "errorVerificationBtn": "Resend letter",
+        "fieldsError": "Check all the fields!",
+        "noAccount": "Couldn't find your account",
+        "accountExists": "Account already exists",
+        "wrongPassword": "Wrong password",
+        "unrecognizedError": "Error, try again later :(",
+        "manyAttempts": "Too many attempts, wait a bit!",
+        "manyRequests": "Too many requests, try later.",
+        "alreadyVerified": "Already verified. Just log in :)",
+        "rateEveryField": "Rate every field please!",
+        "nearbyPlaceAlreadyRated": "Nearby place is already rated by you",
+        "sessionExpired": "Session expired, please, refresh and login.",
+        "youRateTooOften": "You rate too often, please wait.",
+        "youRateTooOftenLink": "Why?",
+        "noResponseFromServer": "Unfortunately, there is no response from the server. Try later or contact us:"
+    },
+    "partnersPopup": {
+        "ourFriendsAndPartners": "Our friends and partners",
+        "list": [
+            "None so far. Be first!"
+        ]
+    },
+    "SEO": {
+        "title": "Welcome to Measureland",
+        "description": "Looking to buy a house, rent an apartment or searching for a place to stay? Check the neighbourhood first!",
+        "imageAltText": "Measureland icon (a little house)",
+        "keywords": "Measureland, rate, Non-commerical, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
+        "subject": "Help people to find the best place to stay at or live in.",
+        "author": "Roman Smunyov"
+    }
+}
