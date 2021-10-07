@@ -101,22 +101,22 @@
                 "url": "https://t.me/measureland_ru"
             },{
                 "text": "Пролистай наш путеводитель-пособие по Измерии",
-                "url": "/blog/tutorial/"
+                "url": "/ru/blog/tutorial/"
             },{
                 "text": "Узнай больше о нас",
-                "url": "/blog/about-us/"
+                "url": "/ru/blog/about-us/"
             },{
                 "text": "Напиши в поддержку",
-                "url": "/blog/support/"
+                "url": "/ru/blog/support/"
             },{
                 "text": "Изучи наши условия использования",
-                "url": "/blog/terms-of-use/"
+                "url": "/ru/blog/terms-of-use/"
             },{
                 "text": "... и политику конфиденциальность",
-                "url": "/blog/policy/"
+                "url": "/ru/blog/policy/"
             },{
                 "text": "Найди остальное в нашем блоге",
-                "url": "/blog/"
+                "url": "/ru/blog/"
             }],
             "title": "И это только начало"
         },
@@ -144,13 +144,13 @@
         "secondaryBtn": "Войти",
         "links": [{
             "text": "Блог",
-            "url": "/blog/"
+            "url": "/ru/blog/"
         },{
             "text": "Сообщество",
             "url": "https://t.me/measureland_ru"
         },{
             "text": "Поддержка",
-            "url": "/blog/support/"
+            "url": "/ru/blog/support/"
         }]
     },
     "menuSidebar": {
@@ -265,16 +265,16 @@
         "hereSomeArticles": "Пара статей, которые могут быть полезны",
         "list": [{
             "text": "Универсальный гайд по съёму жилья (чек-лист)",
-            "link": "blog/universal-guide/"
+            "link": "/ru/blog/universal-guide/"
         }, {
             "text": "Путеводитель по Измерии (руководство)",
-            "link": "blog/tutorial/"
+            "link": "/ru/blog/tutorial/"
         }, {
             "text": "Наши цели",
-            "link": "blog/about-us/"
+            "link": "/ru/blog/about-us/"
         }, {
             "text": "Поддержка",
-            "link": "blog/support/"
+            "link": "/ru/blog/support/"
         }, {
             "text": "Новостной канал в Телеграме",
             "link": "https://t.me/measureland_ru"

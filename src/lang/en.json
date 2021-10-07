@@ -101,22 +101,22 @@
                 "url": "https://t.me/measureland"
             },{
                 "text": "Check the Measureland guide book (tutorial)",
-                "url": "/blog/tutorial/"
+                "url": "/en/blog/tutorial/"
             },{
                 "text": "Learn about us",
-                "url": "/blog/about-us/"
+                "url": "/en/blog/about-us/"
             },{
                 "text": "Go to the support page",
-                "url": "/blog/support/"
+                "url": "/en/blog/support/"
             },{
                 "text": "See our terms of use",
-                "url": "/blog/terms-of-use/"
+                "url": "/en/blog/terms-of-use/"
             },{
                 "text": "... or privacy policy",
-                "url": "/blog/policy/"
+                "url": "/en/blog/policy/"
             },{
                 "text": "Find the rest at our blog",
-                "url": "/blog/"
+                "url": "/en/blog/"
             }],
             "title": "And this is only the beggining"
         },
@@ -144,13 +144,13 @@
         "secondaryBtn": "Log in",
         "links": [{
             "text": "Blog",
-            "url": "/blog/"
+            "url": "/en/blog/"
         },{
             "text": "Community",
             "url": "https://t.me/measureland"
         },{
             "text": "Support",
-            "url": "/blog/support/"
+            "url": "/en/blog/support/"
         }]
     },
     "menuSidebar": {
@@ -266,13 +266,13 @@
         "hereSomeArticles": "Here are some articles to help you get started or remind about",
         "list": [{
             "text": "Measureland guide book (tutorial)",
-            "link": "blog/tutorial/"
+            "link": "/en/blog/tutorial/"
         }, {
             "text": "Our goals",
-            "link": "blog/about-us/"
+            "link": "/en/blog/about-us/"
         }, {
             "text": "Support",
-            "link": "blog/support/"
+            "link": "/en/blog/support/"
         }]
     },
     "loginPopup": {
