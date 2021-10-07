@@ -62,4 +62,8 @@ export const flowDictionary = {
     // navbar
     'navbarButtons': 'n-b', // click from navbar buttons
     'navbarLanguage': 'n-l', // change language from navbar
+    'navbarLogout': 'n-lt', // logouet desktop (from navbar)
+    // map
+    'mapSearch': 'm-s', // geo search done
+    'mapLoadData': 'm-ld', // load data (move end on map)
 }

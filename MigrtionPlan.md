@@ -6,8 +6,8 @@
 - do we need loggedInPopup?
 - write a contribution guide
 - write an article about how awesome svelte is
-- track user flow
 - create Measureland discord and some community articles to get started
 
 # Non-migration to do:
 - highlight area with showrating popup
+- add question about timeline in quiz

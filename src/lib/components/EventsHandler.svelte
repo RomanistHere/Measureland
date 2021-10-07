@@ -6,7 +6,6 @@
     const sendFeedback = () => {
         const { uniqID } = $userStateStore;
         const flow = $flowStore;
-        console.log(flow)
         const length = flow.length;
         let flowString = '';
         let prevElem = flow[0];
@@ -27,8 +26,7 @@
                 }
             }
         }
-        console.log(flowString)
-        // flowString.length > 10 && navigator.sendBeacon(`${API_DOMAIN}/flow/add`, new URLSearchParams({ flowString, uniqID }));
+        flowString.length > 10 && navigator.sendBeacon(`${API_DOMAIN}/flow/add`, new URLSearchParams({ flowString, uniqID }));
     }
 
     onMount(() => {

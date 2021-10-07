@@ -11,7 +11,7 @@
 
     import { userStateStore, appStateStore, filtersStore, markerStore } from "../../../../stores/state.js";
     import { mapReference } from "../../../../stores/references.js";
-    import { roundToFifthDecimal, roundToFifthDecimalLatLng, roundToInt, openAnotherOverlay, debounce, showSomethingWrongNotification } from "../../../utilities/helpers.js";
+    import { roundToFifthDecimal, roundToFifthDecimalLatLng, roundToInt, openAnotherOverlay, debounce, showSomethingWrongNotification, registerAction } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
 	const map = $mapReference;
@@ -245,6 +245,7 @@
     }
 
     const getNewData = async () => {
+        registerAction('mapLoadData');
     	// console.warn('____________new_try____________')
     	// console.time('preparations')
         const bounds = map.getBounds();

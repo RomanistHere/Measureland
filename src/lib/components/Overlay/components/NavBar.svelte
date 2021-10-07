@@ -31,6 +31,7 @@
                     wantMoreRatings: false
                 }));
                 showSuccessNotification();
+                registerAction('navbarLogout');
             } else {
                 console.warn(error)
                 showSomethingWrongNotification();
