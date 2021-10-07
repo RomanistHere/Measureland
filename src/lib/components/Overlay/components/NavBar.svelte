@@ -141,7 +141,7 @@
             <ul>
                 {#each $json('navBar.links') as { text, url }}
                     <li class="inline-block">
-                        <a class="block mx-4 p-2 hover:underline" href={url}>{text}</a>
+                        <a class="block mx-4 p-2 hover:underline" target="_blank" href={url}>{text}</a>
                     </li>
                 {/each}
             </ul>
@@ -152,9 +152,9 @@
             on:mouseleave={handleMouseleaveRight}
         >
             <a class="block mx-4 p-2" href={'#'} on:click|preventDefault={changeLanguage}>
-                <span class="{$locale === 'ru' && 'underline'}">RU</span>
+                <span class:underline={$locale === 'ru'}>RU</span>
                 /
-                <span class="{$locale === 'en' && 'underline'}">EN</span>
+                <span class:underline={$locale === 'en'}>EN</span>
             </a>
             {#if isUserLoggedIn}
                 <a
