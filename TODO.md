@@ -1,8 +1,5 @@
 # To do:
 
-- remaining ratings, show true number
-- do we need loggedInPopup?
-- highlight area with showrating popup
 - add question about timeline in quiz
 - restyle filters
 - move blog to svelte

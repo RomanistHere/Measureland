@@ -27,6 +27,7 @@
     let commentGeoID = null;
     let currentLatLng = null;
     let loadedRating = null;
+    let circle = null;
 
     $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
@@ -62,6 +63,12 @@
         });
         // TODO:
         // $('.rate__popup').focus()
+        if (circle)
+            map.removeLayer(circle);
+
+        circle = L.circle({ lng, lat }, 300, { color: '#007097' });
+
+        circle.addTo(map);
         centerMap(map, lat, lng, $isDesktop);
 
         const { error, data } = await getSinglePointData([ lng, lat ]);
@@ -98,6 +105,8 @@
 
     onDestroy(() => {
         appStateStore.update(state => ({ ...state, showRating: false }));
+        map.removeLayer(circle);
+        circle = null;
     })
 </script>
 

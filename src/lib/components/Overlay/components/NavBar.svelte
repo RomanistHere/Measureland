@@ -168,7 +168,7 @@
                 >
                     <UserProfileIcon />
                     <div class="ml-2 flex">
-                        <span class="name truncate block" title='Account of {$userStateStore.userName}. Click to expand.'>
+                        <span class="name truncate block mr-1" title='Account of {$userStateStore.userName}. Click to expand.'>
                             {$userStateStore.userName}
                         </span>
                         - {$userStateStore.activeRatings}🏡
