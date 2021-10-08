@@ -57,6 +57,10 @@ const UserSchema = new Schema({
             type: Date,
             default: Date.now()
         },
+        lastRatingsAdded: {
+            type: Date,
+            default: Date.now()
+        },
         lang: {
             type: String,
             default: 'en'

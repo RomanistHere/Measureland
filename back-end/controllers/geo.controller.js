@@ -155,7 +155,7 @@ const addGeoToUser = async (userID, geoID, activeRatings, rating, commentID) => 
                 'properties.ratings': ratings
             },
             $set: {
-                'properties.activeRatings': activeRatings,
+                'properties.activeRatings': activeRatings - 1,
                 'properties.lastRated': Date.now(),
             }
         }, {
@@ -168,52 +168,22 @@ const addGeoToUser = async (userID, geoID, activeRatings, rating, commentID) => 
     }
 }
 
-const dateDiffInDays = (date1, date2) => {
-    const msPerDay = 1000 * 60 * 60 * 24
-    const a = new Date(date1)
-    const b = new Date(date2)
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
-
-    return Math.floor(Math.abs(utc2 - utc1) / msPerDay)
-}
-
-const isRatingActive = (user) => {
-    if (user.usergroup === 0)
-        return { canUserAdd: true, activeRatings: 3 }
-
-    if (user.properties.activeRatings > 0)
-        return { canUserAdd: true, activeRatings: user.properties.activeRatings - 1 }
-
-    const dayDifference = dateDiffInDays(Date.now(), user.properties.lastRated)
-
-    if (dayDifference > 5 && dayDifference <= 10)
-        return { canUserAdd: true, activeRatings: 0 }
-    else if (dayDifference > 10 && dayDifference <= 15)
-        return { canUserAdd: true, activeRatings: 1 }
-    else if (dayDifference > 15)
-        return { canUserAdd: true, activeRatings: 2 }
-
-    return { canUserAdd: false, activeRatings: null }
-}
-
 exports.geo_add = async (req, res, next) => {
-    const { body } = req
+    const { body } = req;
 
     if (!req.session.userID)
-        return res.status(400).json({ error: "User is not logged in" })
+        return res.status(400).json({ error: "User is not logged in" });
 
-    const userID = req.session.userID
-    body.location.coordinates = [body.location.coordinates[1], body.location.coordinates[0]]
+    const userID = req.session.userID;
+    body.location.coordinates = [body.location.coordinates[1], body.location.coordinates[0]];
 
     try {
         const user = await User.findOne({ email: userID })
         if (!user)
-            return res.status(400).json({ error: "User is not found" })
+            return res.status(400).json({ error: "User is not found" });
 
-        const { canUserAdd, activeRatings } = isRatingActive(user)
-        if (!canUserAdd)
-            return res.status(400).json({ error: "No active ratings" })
+        if (user.properties.activeRatings <= 0 || !user.properties.activeRatings)
+            return res.status(400).json({ error: "No active ratings" });
 
         const geo = await Geo.findOne({
             "location": {
@@ -227,8 +197,9 @@ exports.geo_add = async (req, res, next) => {
             }
         })
 
-        const { properties } = body
-        const { rating, averageRating, comment, isPersonalExperience } = properties
+        const { properties } = body;
+        const { rating, averageRating, comment, isPersonalExperience } = properties;
+        const activeRatings = user.properties.activeRatings;
         if (geo) {
             // check if user rated it already
             const id = geo._id
