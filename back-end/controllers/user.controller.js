@@ -67,35 +67,6 @@ exports.user_register = async (req, res) => {
     }
 };
 
-const dateDiffInDays = (date1, date2) => {
-    const msPerDay = 1000 * 60 * 60 * 24
-    const a = new Date(date1)
-    const b = new Date(date2)
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
-
-    return Math.floor(Math.abs(utc2 - utc1) / msPerDay)
-}
-
-const isRatingActive = (user) => {
-    if (user.usergroup === 0)
-        return { canUserAdd: true, activeRatings: 3 }
-
-    if (user.properties.activeRatings > 0)
-        return { canUserAdd: true, activeRatings: user.properties.activeRatings - 1 }
-
-    const dayDifference = dateDiffInDays(Date.now(), user.properties.lastRated)
-
-    if (dayDifference > 5 && dayDifference <= 10)
-        return { canUserAdd: true, activeRatings: 0 }
-    else if (dayDifference > 10 && dayDifference <= 15)
-        return { canUserAdd: true, activeRatings: 1 }
-    else if (dayDifference > 15)
-        return { canUserAdd: true, activeRatings: 2 }
-
-    return { canUserAdd: false, activeRatings: 0 }
-}
-
 exports.user_login = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email }, '-properties.ratedLocations -properties.ratings');
@@ -111,9 +82,7 @@ exports.user_login = async (req, res) => {
         if (!user.verified)
             return res.status(400).json({ error: "User is not verified" });
 
-        req.session.userID = user.email
-
-        const { activeRatings } = isRatingActive(user)
+        req.session.userID = user.email;
 
         return res.json({
             error: null,
@@ -121,7 +90,7 @@ exports.user_login = async (req, res) => {
                 message: "Login successful",
                 userID: user.email,
                 dateCreated: user.dateCreated,
-                activeRatings: user.usergroup === 0 ? 999 : activeRatings,
+                activeRatings: user.usergroup === 0 ? 99 : user.properties.activeRatings,
                 wantMoreRatings: user.properties.wantMoreRatings,
                 userName: user.username
             },
@@ -244,11 +213,46 @@ exports.user_reverify = async (req, res) => {
     }
 };
 
+const updateActiveRatings = user => {
+    if (!user)
+        return { shouldUpdate: false };
+
+    const { lastRatingsAdded, activeRatings } = user.properties;
+    const timeUpdated = new Date(lastRatingsAdded).getTime();
+    const timeDifference = Math.abs(Date.now() - timeUpdated);
+    const differenceInDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    if (differenceInDays >= 5 && activeRatings < 3)
+        return { shouldUpdate: true, activeRatings: 3 };
+
+    return { shouldUpdate: false, activeRatings };
+}
+
 exports.user_check = async (req, res) => {
     const { userID } = req.session
 
     try {
         const user = await User.findOne({ email: userID }, '-properties.ratedLocations -properties.ratings');
+
+        const { shouldUpdate, activeRatings } = updateActiveRatings(user);
+
+        if (shouldUpdate) {
+            const update = await User.updateOne(
+                { email: userID },
+                {
+                    $set: {
+                        'properties.lastRatingsAdded': Date.now(),
+                        'properties.wantMoreRatings': false,
+                        'properties.activeRatings': activeRatings,
+                    }
+                }
+            )
+
+            if (update.nModified == 0) {
+                console.log("Automatic active rating update didn't work (user_check)")
+                Sentry.captureException("Automatic active rating update didn't work (user_check)");
+            }
+        }
 
         return res.json({
             error: null,
@@ -258,8 +262,8 @@ exports.user_check = async (req, res) => {
                 userName: user ? user.username : null,
                 lang: user ? user.properties.lang : null,
                 dateCreated: user ? user.dateCreated : null,
-                wantMoreRatings: user ? user.properties.wantMoreRatings : null,
-                activeRatings: user ? (user.usergroup === 0 ? 999 : user.properties.activeRatings) : null,
+                wantMoreRatings: user ? (shouldUpdate ? false : user.properties.wantMoreRatings) : null,
+                activeRatings: user ? (user.usergroup === 0 ? 99 : activeRatings) : null,
             },
         });
     } catch (error) {

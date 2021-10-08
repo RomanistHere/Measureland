@@ -343,7 +343,7 @@
         "weProcessingRequest": "Мы взяли твой запрос в обработку! Мы пока не можем гарантировать быстрое его разрешение, наша команда очень маленькая, а задач много. Но ты ",
         "url": "https://www.donationalerts.com/r/measureland",
         "weProcessingRequestLink": "можешь нам помочь",
-        "weProcessingRequestAfterLink": ", рассчитываем на понимание :)",
+        "weProcessingRequestAfterLink": "- рассчитываем на понимание :)",
         "limitationsExist": "Ограничения на оценки со старта существуют для защиты от спама.",
         "limitationsExistLink": "Узнать больше.",
         "youCanTryFasten": " ",
@@ -391,8 +391,8 @@
         "rateEveryField": "Нужно оценить все критерии!",
         "nearbyPlaceAlreadyRated": "Где-то рядом уже есть твоя оценка",
         "sessionExpired": "Сессия закончилась. Обнови страницу и войди заново.",
-        "youRateTooOften": "Слишком часто оцениваешь, нужно подождать.",
-        "youRateTooOftenLink": "Зачем?",
+        "youRateTooOften": "Оценки закончились, мы добавим новые в течение пары дней.",
+        "youRateTooOftenLink": "Почему?",
         "noResponseFromServer": "К сожалению, похоже что сервер не работает. Попробуй позже или пиши:"
     },
     "partnersPopup": {

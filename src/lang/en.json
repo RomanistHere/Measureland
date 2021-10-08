@@ -388,7 +388,7 @@
         "rateEveryField": "Rate every field please!",
         "nearbyPlaceAlreadyRated": "Nearby place is already rated by you",
         "sessionExpired": "Session expired, please, refresh and login.",
-        "youRateTooOften": "You rate too often, please wait.",
+        "youRateTooOften": "You spent all the ratings. We'll add some in a few days.",
         "youRateTooOftenLink": "Why?",
         "noResponseFromServer": "Unfortunately, there is no response from the server. Try later or contact us:"
     },

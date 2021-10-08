@@ -17,6 +17,7 @@ exports.flow_add = async (req, res, next) => {
             },
         });
     } catch (e) {
+        console.log(e);
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }

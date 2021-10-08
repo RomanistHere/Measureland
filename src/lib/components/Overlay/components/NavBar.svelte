@@ -167,9 +167,12 @@
                     }}
                 >
                     <UserProfileIcon />
-                    <span class="ml-2">
-                        {$userStateStore.userName}
-                    </span>
+                    <div class="ml-2 flex">
+                        <span class="name truncate block" title='Account of {$userStateStore.userName}. Click to expand.'>
+                            {$userStateStore.userName}
+                        </span>
+                        - {$userStateStore.activeRatings}🏡
+                    </div>
 
                     {#if profileDropDownOpen}
                         <DropdownMenu
@@ -211,5 +214,9 @@
         background: #fde9ff;
         background: linear-gradient(270deg, #FCEA8D 11.38%, #FBD2FF 50.48%, #D8F8FF 80.4%);
         transition: all ease .5s;
+    }
+
+    .name {
+        max-width: 10rem;
     }
 </style>

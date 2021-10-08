@@ -192,7 +192,7 @@
 
         {#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
             <PrimaryButton
-                className="mx-8 cursor-default px-5 py-2 text-center block opacity-50 text-xl -2xl:text-lg max-w-sm"
+                className="mx-8 mt-2 block text-center px-5"
                 disabled={true}
                 text={$_('menuSidebar.requestProcessing')}
             />

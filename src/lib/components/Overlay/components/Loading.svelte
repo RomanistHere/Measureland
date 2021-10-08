@@ -55,10 +55,14 @@
 </script>
 
 {#if !isLoaded}
-    <Spinner className="fixed z-3 non-transparent inset-0 {$appStateStore.startScreen && 'right-1/2'}" isWithText={!isError} />
+    <Spinner
+        className="fixed z-3 inset-0"
+        isWithText={!isError}
+        isWithBg={true}
+    />
 
     {#if isError}
-        <section class="absolute z-4 flex justify-center items-center inset-0 {$appStateStore.startScreen && 'right-1/2'}">
+        <section class="absolute z-4 flex justify-center items-center inset-0">
             <span class="text-xl pt-64">
                 {$_('errors.noResponseFromServer')}
                 <TextLink
