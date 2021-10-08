@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { userStateStore, flowStore } from '../../stores/state.js';
-    import { API_DOMAIN } from '../../configs/env.js';
+    import { API_URL } from '../../configs/env.js';
 
     const sendFeedback = () => {
         const { uniqID } = $userStateStore;
@@ -26,7 +26,7 @@
                 }
             }
         }
-        flowString.length > 10 && navigator.sendBeacon(`${API_DOMAIN}/flow/add`, new URLSearchParams({ flowString, uniqID }));
+        flowString.length > 10 && navigator.sendBeacon(`${API_URL}/flow/add`, new URLSearchParams({ flowString, uniqID }));
     }
 
     onMount(() => {

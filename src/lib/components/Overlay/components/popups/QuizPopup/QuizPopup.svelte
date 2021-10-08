@@ -9,6 +9,7 @@
     import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
     import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
     import Textarea from '../../../../ui-elements/Textarea.svelte';
+    import Select from '../../../../ui-elements/Select.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
     import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap, showSomethingWrongNotification, registerAction } from "../../../../../utilities/helpers.js";
@@ -30,6 +31,20 @@
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: currentStage = 1;
     $: progressBarClassName = getProgressBarClassName(currentStage);
+
+    $: timelineOptions = [{
+        value: new Date().getFullYear(),
+        text: $_('quizPopup.timelineSelectOption1'),
+        selected: false,
+    }, {
+        value: new Date().getFullYear() - 4,
+        text: $_('quizPopup.timelineSelectOption2'),
+        selected: true,
+    }, {
+        value: new Date().getFullYear() - 10,
+        text: $_('quizPopup.timelineSelectOption3'),
+        selected: false,
+    }];
 
     let circle;
     let remainingCommentLength = 330;
@@ -279,6 +294,16 @@
     {:else if currentStage === 6}
         <PopupTitle title={$_('quizPopup.title6')} />
 
+        <Select
+            title={$_('quizPopup.timelineSelectTitle')}
+            id='timeline-select'
+            options={timelineOptions}
+            className='mb-8'
+            on:change={(e) => { console.log(e) }}
+        />
+    {:else if currentStage === 7}
+        <PopupTitle title={$_('quizPopup.title7')} />
+
         <p class="my-4">
             {$_('quizPopup.isThereAnythingToAdd')}
         </p>
@@ -287,6 +312,7 @@
             placeholder="{$_('quizPopup.textAreaPlaceholder')}"
             maxlength="{maxCommentLength}"
             on:input={updateComment}
+            className='mt-10'
         />
 
         <p>
@@ -334,7 +360,7 @@
                 action={prevStage}
                 text={$_('quizPopup.backBtn')}
             />
-            {#if currentStage === 6}
+            {#if currentStage === 7}
                 <PrimaryButton
                     action={debouncedSubmit}
                     text={$_('quizPopup.submitBtn')}
@@ -349,7 +375,7 @@
     </div>
 
     <div class="absolute inset-x-0 bottom-0 h-5">
-        <div class="progress h-full w-0 {progressBarClassName}"></div>
+        <div class="progress h-full w-0 progress-stage{currentStage}"></div>
     </div>
 </div>
 
@@ -368,22 +394,26 @@
     }
 
     .progress-stage2 {
-        width: 20%;
+        width: 16.67%;
     }
 
     .progress-stage3 {
-        width: 40%;
+        width: 33.34%;
     }
 
     .progress-stage4 {
-        width: 60%;
+        width: 50%;
     }
 
     .progress-stage5 {
-        width: 80%;
+        width: 66.67%;
     }
 
     .progress-stage6 {
+        width: 83.34%;
+    }
+
+    .progress-stage7 {
         width: 100%;
     }
 </style>

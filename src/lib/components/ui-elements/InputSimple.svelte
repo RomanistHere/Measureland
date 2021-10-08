@@ -1,7 +1,7 @@
 <script>
     export let autocomplete;
     export let placeholder;
-    export let className;
+    export let className = '';
 </script>
 
 <input

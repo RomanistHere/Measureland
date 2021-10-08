@@ -4,19 +4,22 @@
     export let options = [];
     export let title = '';
     export let id = '';
+    export let className = '';
 </script>
 
-<div class="relative">
+<div class="{className}">
     <GroupTitle { title } />
 
-    <select class="form__select mt-4 w-full rounded-md shadow" id="{id}" on:change>
-        {#each options as { value, text, selected }, i}
-            <option value={i} { selected }>{text}</option>
-        {/each}
-    </select>
+    <div class="relative">
+        <select class="form__select mt-4 p-2 w-full rounded-md shadow" id="{id}" on:change>
+            {#each options as { value, text, selected }, i}
+                <option value={value ? value : i} { selected }>{text}</option>
+            {/each}
+        </select>
 
-    <span class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-14 opacity-0"></span>
-    <span class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-14 opacity-0"></span>
+        <span class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-8 opacity-0"></span>
+        <span class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-8 opacity-0"></span>
+    </div>
 </div>
 
 <style>

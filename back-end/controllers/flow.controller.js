@@ -4,10 +4,10 @@ const AnonymFlow = require('../models/anonym-flow.model');
 const ErrorFlow = require('../models/error-flow.model');
 
 exports.flow_add = async (req, res, next) => {
-    const { flow, uniqID } = req.body
+    const { flowString, uniqID } = req.body
 
     try {
-        const newFlow = await AnonymFlow.findOneAndUpdate({ uniqID: uniqID }, { flow: flow, uniqID: uniqID }, { new: true, upsert: true })
+        const newFlow = await AnonymFlow.findOneAndUpdate({ uniqID: uniqID }, { flow: flowString, uniqID: uniqID }, { new: true, upsert: true })
 
         return res.json({
             error: null,

@@ -54,6 +54,7 @@
     const handleInput = e => {
         const value = e.currentTarget.value;
         onboardingState = { ...onboardingState, name: value };
+        userStateStore.update(state => ({ ...state, userName: value }));
     }
 
     const submit = async () => {
@@ -125,5 +126,7 @@
         autocomplete="username"
     />
 
-    <FormButton text={$_('onboardingPopup.mainBtn')} className='onboarding__btn' action={debouncedSubmit} />
+    <div class="flex justify-evenly items-center mt-8">
+        <FormButton text={$_('onboardingPopup.mainBtn')} action={debouncedSubmit} />
+    </div>
 </form>
