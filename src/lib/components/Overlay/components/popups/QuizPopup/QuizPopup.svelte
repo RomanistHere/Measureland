@@ -30,20 +30,26 @@
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: currentStage = 1;
-    $: progressBarClassName = getProgressBarClassName(currentStage);
+
+    const currentYear = new Date().getFullYear();
+    const timelineStamps = {
+        1: currentYear,
+        2: currentYear - 4,
+        3: currentYear - 10,
+    };
 
     $: timelineOptions = [{
-        value: new Date().getFullYear(),
+        value: timelineStamps[1],
         text: $_('quizPopup.timelineSelectOption1'),
-        selected: false,
+        selected: timelineStamps[1] == quizState.timeline,
     }, {
-        value: new Date().getFullYear() - 4,
+        value: timelineStamps[2],
         text: $_('quizPopup.timelineSelectOption2'),
-        selected: true,
+        selected: timelineStamps[2] == quizState.timeline,
     }, {
-        value: new Date().getFullYear() - 10,
+        value: timelineStamps[3],
         text: $_('quizPopup.timelineSelectOption3'),
-        selected: false,
+        selected: timelineStamps[3] == quizState.timeline,
     }];
 
     let circle;
@@ -55,6 +61,7 @@
         ratings: {},
         comment: null,
         isPersonalExperience: false,
+        timeline: new Date().getFullYear() - 4,
     };
 
     const map = $mapReference;
@@ -81,19 +88,9 @@
         quizState = { ...quizState, isPersonalExperience };
     }
 
-    const getProgressBarClassName = stage => {
-        if (stage === 1)
-            return 'progress-stage1';
-        else if (stage === 2)
-            return 'progress-stage2';
-        else if (stage === 3)
-            return 'progress-stage3';
-        else if (stage === 4)
-            return 'progress-stage4';
-        else if (stage === 5)
-            return 'progress-stage5';
-        else if (stage === 6)
-            return 'progress-stage6';
+    const setTimeline = event => {
+        const timeline = event.target.value;
+        quizState = { ...quizState, timeline };
     }
 
     const setRating = event => {
@@ -140,7 +137,8 @@
 
         try {
             registerAction('submitQuiz');
-            const { error, data } = await saveToDB(currentCoords, quizState.ratings, averageRating, quizState.comment, quizState.isPersonalExperience);
+            const { ratings, comment, isPersonalExperience, timeline } = quizState;
+            const { error, data } = await saveToDB(currentCoords, ratings, averageRating, comment, isPersonalExperience, timeline);
             isLoading = false;
             console.log(error, data)
 
@@ -299,7 +297,7 @@
             id='timeline-select'
             options={timelineOptions}
             className='mb-8'
-            on:change={(e) => { console.log(e) }}
+            on:change={setTimeline}
         />
     {:else if currentStage === 7}
         <PopupTitle title={$_('quizPopup.title7')} />

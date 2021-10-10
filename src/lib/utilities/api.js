@@ -75,8 +75,8 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
     }
 }
 
-const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperience) => {
-    const url = `${API_URL}/geo/add`
+const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperience, timeline) => {
+    const url = `${API_URL}/geo/add`;
 
     return await fetchFunction({
         url,
@@ -87,13 +87,14 @@ const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperi
                 averageRating,
                 comment,
                 isPersonalExperience,
+                timeline,
             },
             location: {
                 type: 'Point',
                 coordinates: [ ...coords ]
             }
         })
-    })
+    });
 }
 
 // const checkIfExist = async (latlng) => {
