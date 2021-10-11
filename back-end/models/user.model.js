@@ -59,7 +59,10 @@ const UserSchema = new Schema({
         wantMoreRatings: {
             type: Boolean,
             default: false
-        }
+        },
+        // remove after migration
+        ratings: [],
+        ratedLocations: []
     }
 }).index({ 'email': 1 });
 

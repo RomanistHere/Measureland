@@ -19,17 +19,5 @@
 
 # With the next release
 
-- Update db:
-`
-db.users.update(
-  { 'properties.wantMoreRatings': { $exists: false }},
-  { $set: { 'properties.wantMoreRatings': false }},
-  { multi: true }
-)
-
-db.users.update(
-  { 'properties.lastRatingsAdded': { $exists: false }},
-  { $set: { 'properties.lastRatingsAdded': new Date() }},
-  { multi: true }
-)
-`
+- Update db (temporarily.js):
+- adjust user.model.js (remove two fields)

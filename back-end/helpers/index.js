@@ -40,7 +40,7 @@ exports.getFinalRating = (obj) => {
 
     return {
         answersNumber: mainAsnwersCounter + additionalAsnwersCounter,
-        finalRating: finalRating,
+        finalRating: Math.round(100 * finalRating) / 100,
     }
 }
 
