@@ -69,7 +69,7 @@ exports.user_register = async (req, res) => {
 
 exports.user_login = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email }, '-properties.ratedLocations -properties.ratings');
+        const user = await User.findOne({ email: req.body.email }, '-properties.ratingIDs -properties.geoIDs');
 
         if (!user)
             return res.status(400).json({ error: "Email is wrong" });
@@ -232,7 +232,7 @@ exports.user_check = async (req, res) => {
     const { userID } = req.session
 
     try {
-        const user = await User.findOne({ email: userID }, '-properties.ratedLocations -properties.ratings');
+        const user = await User.findOne({ email: userID }, '-properties.ratingIDs -properties.geoIDs');
 
         const { shouldUpdate, activeRatings } = updateActiveRatings(user);
 
@@ -267,42 +267,48 @@ exports.user_check = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }
 };
 
 exports.user_places = async (req, res) => {
-    const { userID } = req.session
+    const { userID } = req.session;
 
-    const user = await User.findOne({ email: userID }, 'properties.ratedLocations');
+    try {
+        const user = await User.findOne({ email: userID }, 'properties.geoIDs');
 
-    if (!user)
-        return res.status(400).json({ error: "Couldn't find the user" });
+        if (!user)
+            return res.status(400).json({ error: "Couldn't find the user" });
 
-    const geo = await Geo.find(
-        {
-            _id: {
-                $in: user.properties.ratedLocations
-            }
-        },
-        'location.coordinates -_id'
-    )
+        const geo = await Geo.find(
+            {
+                _id: {
+                    $in: user.properties.geoIDs
+                }
+            },
+            'location.coordinates -_id'
+        );
 
-    return res.json({
-        error: null,
-        data: {
-            message: "Rated places",
-            places: geo
-        },
-    });
+        return res.json({
+            error: null,
+            data: {
+                message: "Rated places",
+                places: geo
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
+    }
 };
 
 exports.ask_more_ratings = async (req, res) => {
-    const { userID } = req.session
+    const { userID } = req.session;
 
-    const user = await User.findOneAndUpdate({ email: userID }, { 'properties.wantMoreRatings': true })
+    const user = await User.findOneAndUpdate({ email: userID }, { 'properties.wantMoreRatings': true });
 
     if (!user)
         return res.status(400).json({ error: "Couldn't find the user" });

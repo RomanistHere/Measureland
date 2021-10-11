@@ -1,6 +1,9 @@
 # To do:
 
-- add question about timeline in quiz
+- add timelines at showRating popup
+- add lint check
+- add shortcut key tips for desktop
+- fix share rating for first time users
 - restyle filters
 - move blog to svelte
 

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const GeoSchema = new Schema({
     properties: {
+        ratingIDs: [{ type: Schema.Types.ObjectId, ref: 'Rating' }],
         // TODO: specify rating fields
         rating: Object,
         averageRating: {

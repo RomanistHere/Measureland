@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require('mongoose');
 
 const UserSchema = new Schema({
     email: {
@@ -30,17 +30,8 @@ const UserSchema = new Schema({
         default: Date.now()
     },
     properties: {
-        ratedLocations: [{ type: Schema.Types.ObjectId, ref: 'Geo' }],
-        ratings: [{
-            geoID: { type: Schema.Types.ObjectId, ref: 'Geo' },
-            commentID: { type: Schema.Types.ObjectId, ref: 'Comment' },
-            rating: {
-                type: Object
-            },
-            dateRated: {
-                type: Date
-            },
-        }],
+        ratingIDs: [{ type: Schema.Types.ObjectId, ref: 'Rating' }],
+        geoIDs: [{ type: Schema.Types.ObjectId, ref: 'Geo' }],
         ageGrp: {
             type: Number,
             default: 1 // 0 - under 25, 1 - 25-40, 2- 41-55, 3 - 55+
@@ -52,10 +43,6 @@ const UserSchema = new Schema({
         activeRatings: {
             type: Number,
             default: 3
-        },
-        lastRated: {
-            type: Date,
-            default: Date.now()
         },
         lastRatingsAdded: {
             type: Date,

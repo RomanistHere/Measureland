@@ -2,10 +2,10 @@ const Sentry = require('@sentry/node');
 
 const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
+const Rating = require('../models/rating.model');
 const Comment = require('../models/comment.model');
 
-const roundToTen = number =>
-    Math.round(10 * number) / 10
+const { getFinalRating, roundToTen } = require('../helpers/index');
 
 const getNewRating = (rating, numberOfUsers, quizRating) => {
     const newKeys = Object.keys(quizRating)
@@ -18,154 +18,61 @@ const getNewRating = (rating, numberOfUsers, quizRating) => {
     }, {})
 }
 
-const additionalProps = ['pets', 'kids', 'parking']
-
-const checkAdditionalProp = prop =>
-    additionalProps.some(item => prop === item)
-
-const getFinalRating = (obj) => {
-    const keys = Object.keys(obj)
-    let mainAsnwersCounter = 0
-    let additionalAsnwersCounter = 0
-    let sumMain = 0
-    let sumAdditional = 0
-
-    for (let i = 0; i < keys.length; i++) {
-        const key = keys[i]
-        const val = obj[key]
-
-        if (val === null)
-            continue
-
-        // check what value the property is going to have. Distribution is 75% for main props and 25 for additional ones
-        const isAdditionalProp = checkAdditionalProp(key)
-        if (isAdditionalProp) {
-            sumAdditional = sumAdditional + val
-            additionalAsnwersCounter++
-        } else {
-            sumMain = sumMain + val
-            mainAsnwersCounter++
-        }
-    }
-
-    const mainPart = mainAsnwersCounter !== 0
-        ? sumMain / mainAsnwersCounter
-        : 0 // 75%
-    const additionalPart = additionalAsnwersCounter !== 0
-        ? sumAdditional / additionalAsnwersCounter
-        : 0 // 25%
-    const finalRating = additionalPart !== 0
-        ? (mainPart * 3 + additionalPart) / 4
-        : mainPart // if no additional ratings
-
-    return {
-        answersNumber: mainAsnwersCounter + additionalAsnwersCounter,
-        finalRating: finalRating,
-    }
-}
-
-exports.geo_react_comment = async (req, res) => {
-    if (!req.session.userID)
-        return res.status(400).json({ error: "User is not logged in" })
-
-    const email = req.session.userID
-    const { key, goal } = req.body
-    const property = goal === 'like' ? 'likes' : 'dislikes'
-    const propertyOpp = goal === 'like' ? 'dislikes' : 'likes'
-
-    try {
-        const user = await User.findOne({ email: email });
-
-        if (!user)
-            return res.status(400).json({ error: "User not found" });
-
-        const userID = user._id
-        const result = await Comment.findOneAndUpdate(
-        {
-            _id: key
-        }, {
-            $addToSet: {
-                [property]: userID
-            }
-        }, {
-            new: true
-        })
-
-        const resultRemove = await Comment.findOneAndUpdate(
-        {
-            _id: key
-        }, {
-            $pull: {
-                [propertyOpp]: userID
-            }
-        }, {
-            new: true
-        })
-
-        return res.json({
-            error: null,
-            data: {
-                message: "Login successful",
-                userID: user.email
-            },
-        });
-    } catch (error) {
-        Sentry.captureException(error);
-        return res.status(400).json({ error });
-    }
-};
-
-const saveComment = async (comment, userID, geoID, username, rating) => {
-    const user = await User.findOne({ email: userID });
-    const newComment = new Comment({
-        user: user._id,
+const saveComment = async (comment, userID, geoID, username, rating) =>
+    await new Comment({
+        user: userID,
         geo: geoID,
         username,
         comment,
         rating
-    });
-    try {
-        const result = await newComment.save()
-        return result
-    } catch (e) {
-        Sentry.captureException(e);
-        return e
-    }
-}
+    }).save();
 
-const addGeoToUser = async (userID, geoID, activeRatings, rating, commentID) => {
-    try {
-        const ratings = commentID
-            ? {
-                geoID,
-                rating,
-                commentID,
-                dateRated: Date.now()
-            }
-            : {
-                geoID,
-                rating,
-                dateRated: Date.now()
-            }
-        const result = await User.findOneAndUpdate(
-        { email: userID },
-        {
-            $addToSet: {
-                'properties.ratedLocations': geoID,
-                'properties.ratings': ratings
-            },
-            $set: {
-                'properties.activeRatings': activeRatings - 1,
-                'properties.lastRated': Date.now(),
-            }
-        }, {
-            new: true
-        })
-        return result
-    } catch (e) {
-        Sentry.captureException(e);
-        return e
-    }
+const saveRating = async (userID, commentID, geoID, rating, averageRating, isPersonalExperience, timeline) =>
+    await new Rating({
+        userID,
+        commentID,
+        geoID,
+        rating,
+        averageRating,
+        isPersonalExperience,
+        timeline,
+    }).save();
+
+const addGeoToUser = async (userEmail, ratingID, geoID, activeRatings) =>
+    await User.findOneAndUpdate({
+        email: userEmail
+    }, {
+        $addToSet: {
+            'properties.ratingIDs': ratingID,
+            'properties.geoIDs': geoID,
+        },
+        $set: {
+            'properties.activeRatings': activeRatings - 1
+        }
+    }, {
+        new: true
+    });
+
+const addRatingRefToGeo = async (geoID, ratingID) =>
+    await Geo.findOneAndUpdate({
+        _id: geoID
+    }, {
+        $addToSet: {
+            'properties.ratingIDs': ratingID
+        }
+    }, {
+        new: true
+    });
+
+const saveAndUpdateRefs = async (userID, geoID, comment, username, averageRating, rating, isPersonalExperience, timeline, userEmail, activeRatings) => {
+    const commentSaved = comment ? await saveComment(comment, userID, geoID, username, averageRating) : null;
+    const commentID = commentSaved ? commentSaved._id : null;
+
+    const ratingSaved = await saveRating(userID, commentID, geoID, rating, averageRating, isPersonalExperience, timeline);
+    const ratingID = ratingSaved._id;
+
+    const userResult = await addGeoToUser(userEmail, ratingID, geoID, activeRatings);
+    const geoUpdatedSecondTime = await addRatingRefToGeo(geoID, ratingID);
 }
 
 exports.geo_add = async (req, res, next) => {
@@ -174,11 +81,11 @@ exports.geo_add = async (req, res, next) => {
     if (!req.session.userID)
         return res.status(400).json({ error: "User is not logged in" });
 
-    const userID = req.session.userID;
+    const userEmail = req.session.userID;
     body.location.coordinates = [body.location.coordinates[1], body.location.coordinates[0]];
 
     try {
-        const user = await User.findOne({ email: userID })
+        const user = await User.findOne({ email: userEmail })
         if (!user)
             return res.status(400).json({ error: "User is not found" });
 
@@ -198,24 +105,25 @@ exports.geo_add = async (req, res, next) => {
         })
 
         const { properties } = body;
-        const { rating, averageRating, comment, isPersonalExperience } = properties;
+        const { rating, averageRating, comment, isPersonalExperience, timeline } = properties;
         const activeRatings = user.properties.activeRatings;
+        const userID = user._id;
         if (geo) {
             // check if user rated it already
-            const id = geo._id
-            const exists = user.properties.ratedLocations.some(val => val.equals(id))
+            const id = geo._id;
+            const exists = user.properties.geoIDs.some(val => val.equals(id));
             if (exists)
                 return res.status(400).json({ error: "Nearby place is already rated" });
             // update
-            const oldProps = geo.properties
-            const newRating = getNewRating(oldProps.rating, oldProps.numberOfUsers, rating)
-            const { finalRating } = getFinalRating(newRating)
-            const numberOfUsers = oldProps.numberOfUsers + 1
-            const numberOfComments = comment !== null ? oldProps.numberOfComments + 1 : oldProps.numberOfComments
-            const numberOfPersonalExperience = isPersonalExperience ? oldProps.numberOfPersonalExperience + 1 : oldProps.numberOfPersonalExperience
+            const oldProps = geo.properties;
+            const newRating = getNewRating(oldProps.rating, oldProps.numberOfUsers, rating);
+            const { finalRating } = getFinalRating(newRating);
+            const numberOfUsers = oldProps.numberOfUsers + 1;
+            const numberOfComments = comment !== null ? oldProps.numberOfComments + 1 : oldProps.numberOfComments;
+            const numberOfPersonalExperience = isPersonalExperience ? oldProps.numberOfPersonalExperience + 1 : oldProps.numberOfPersonalExperience;
 
             try {
-                const result = await Geo.findOneAndUpdate({
+                const geoUpdated = await Geo.findOneAndUpdate({
                     _id: geo._id
                 }, {
                     $set: {
@@ -229,42 +137,36 @@ exports.geo_add = async (req, res, next) => {
                     }
                 }, {
                     new: true
-                })
-
-                const commentSaved = comment ? await saveComment(comment, userID, result._id, user.username, averageRating) : null
-                const commentID = commentSaved ? commentSaved._id : null
-                const userResult = await addGeoToUser(userID, result._id, activeRatings, rating, commentID)
+                });
+                await saveAndUpdateRefs(userID, geoUpdated._id, comment, user.username, averageRating, rating, isPersonalExperience, timeline, userEmail, activeRatings);
 
                 return res.json({
                     error: null,
                     data: {
                         message: "Rating updated",
-                        coords: result.location.coordinates,
-                        averageRating: result.properties.averageRating
+                        coords: geoUpdated.location.coordinates,
+                        averageRating: geoUpdated.properties.averageRating
                     }
                 });
             } catch (e) {
-                // Sentry.captureException(e);
-                console.log(e)
-                return res.status(400).json({ error: "Could not save your rating" })
+                console.log(e);
+                Sentry.captureException(e);
+                return res.status(400).json({ error: "Could not save your rating" });
             }
         } else {
             // create
-            const newGeo = new Geo({
-                properties: {
-                    rating: rating,
-                    averageRating: averageRating,
-                    numberOfComments: comment ? 1 : 0,
-                    numberOfPersonalExperience: isPersonalExperience ? 1 : 0,
-                    numberOfUsers: 1
-                },
-                location: body.location
-            });
             try {
-                const result = await newGeo.save()
-                const commentSaved = comment ? await saveComment(comment, userID, result._id, user.username, averageRating) : null
-                const commentID = commentSaved ? commentSaved._id : null
-                const userResult = await addGeoToUser(userID, result._id, activeRatings, rating, commentID)
+                const geoSaved = await new Geo({
+                    properties: {
+                        rating: rating,
+                        averageRating: averageRating,
+                        numberOfComments: comment ? 1 : 0,
+                        numberOfPersonalExperience: isPersonalExperience ? 1 : 0,
+                        numberOfUsers: 1
+                    },
+                    location: body.location
+                }).save();
+                await saveAndUpdateRefs(userID, geoSaved._id, comment, user.username, averageRating, rating, isPersonalExperience, timeline, userEmail, activeRatings);
 
                 return res.json({
                     error: null,
@@ -273,9 +175,9 @@ exports.geo_add = async (req, res, next) => {
                     },
                 });
             } catch (e) {
+                console.log(e);
                 Sentry.captureException(e);
-                console.log(e)
-                return res.status(400).json({ error: "Could not save your rating" })
+                return res.status(400).json({ error: "Could not save your rating" });
             }
         }
     } catch (error) {
@@ -286,11 +188,11 @@ exports.geo_add = async (req, res, next) => {
 };
 
 exports.geo_location = async (req, res, next) => {
-    const userID = req.session.userID
+    const userID = req.session.userID;
 
-    const urlParams = new URLSearchParams(req.params.coords)
-    const nearCoords = Object.fromEntries(urlParams)
-    const arr = nearCoords.latlng.split(',').map(Number)
+    const urlParams = new URLSearchParams(req.params.coords);
+    const nearCoords = Object.fromEntries(urlParams);
+    const arr = nearCoords.latlng.split(',').map(Number);
     try {
         const result = await Geo.findOne({
             "location": {
@@ -302,25 +204,25 @@ exports.geo_location = async (req, res, next) => {
                     $maxDistance: 50
                 }
             }
-        }, '-location')
+        }, '-location');
 
         if (!result)
-            return res.status(400).json({ error: 'Location not found' })
+            return res.status(400).json({ error: 'Location not found' });
 
-        const geoID = result._id
+        const geoID = result._id;
         const user = userID ? await User.findOne({ $and: [
             { email: userID },
-            { 'properties.ratedLocations': {
+            { 'properties.geoIDs': {
                 $in: [geoID]
             }}
-        ]}) : null
+        ]}) : null;
 
-        const { properties } = result
+        const { properties } = result;
         const props = {
             ...properties,
             isRated: user ? true : false,
             geoID
-        }
+        };
 
         return res.json({
             error: null,
@@ -329,10 +231,10 @@ exports.geo_location = async (req, res, next) => {
                 userID: userID ? userID : null,
                 properties: props
             },
-        })
+        });
     } catch (error) {
         Sentry.captureException(error);
-        return res.status(400).json({ error })
+        return res.status(400).json({ error });
     }
 };
 
@@ -343,11 +245,11 @@ exports.geo_comments = async (req, res, next) => {
     const { geoID } = Object.fromEntries(urlParams)
 
     try {
-        const result = await Comment.find({ "geo": geoID })
+        const comments = await Comment.find({ "geo": geoID })
         const user = await User.findOne({ email: userEmail })
         const userID = user ? user._id : 'anon'
 
-        const arrayToSend = result.map(item => {
+        const arrayToSend = comments.map(item => {
             return {
                 isYours: user ? (userID.equals(item.user) ? true : false) : false,
                 isLiked: user ? item.likes.some(item => item.equals(userID)) : false,
@@ -375,29 +277,54 @@ exports.geo_comments = async (req, res, next) => {
     }
 };
 
-// exports.geo_same_location = async (req, res, next) => {
-//     const urlParams = new URLSearchParams(req.params.coords)
-//     const nearCoords = Object.fromEntries(urlParams)
-//     const arr = nearCoords.latlng.split(',').map(Number)
-//
-//     try {
-//         const result = await Geo.findOne({
-//             "location": {
-//                 $near: {
-//                     $geometry: {
-//                         type: "Point" ,
-//                         coordinates: [ ...arr ]
-//                     },
-//                     $maxDistance: 250
-//                 }
-//             }
-//         })
-//
-//         res.send(result ? true : false)
-//     } catch (error) {
-//         res.status(400).json({ error })
-//     }
-// };
+exports.geo_react_comment = async (req, res) => {
+    if (!req.session.userID)
+        return res.status(400).json({ error: "User is not logged in" });
+
+    const email = req.session.userID;
+    const { key, goal } = req.body;
+    const property = goal === 'like' ? 'likes' : 'dislikes';
+    const propertyOpp = goal === 'like' ? 'dislikes' : 'likes';
+
+    try {
+        const user = await User.findOne({ email: email });
+
+        if (!user)
+            return res.status(400).json({ error: "User not found" });
+
+        const userID = user._id;
+        const result = await Comment.findOneAndUpdate({
+            _id: key
+        }, {
+            $addToSet: {
+                [property]: userID
+            }
+        }, {
+            new: true
+        });
+
+        const resultRemove = await Comment.findOneAndUpdate({
+            _id: key
+        }, {
+            $pull: {
+                [propertyOpp]: userID
+            }
+        }, {
+            new: true
+        });
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Login successful",
+                userID: user.email
+            },
+        });
+    } catch (error) {
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
+    }
+};
 
 exports.geo_location_by_bounds = async (req, res, next) => {
     const { userID } = req.session
@@ -446,24 +373,6 @@ exports.geo_location_by_bounds = async (req, res, next) => {
         });
     } catch (error) {
         Sentry.captureException(error);
-        return res.status(400).json({ error })
+        return res.status(400).json({ error });
     }
 };
-
-// exports.geo_all = async (req, res, next) => {
-//     try {
-//         const result = await Geo.find({}, 'location.coordinates properties.averageRating')
-//         res.send(result)
-//     } catch (error) {
-//         res.status(400).json({ error })
-//     }
-// };
-
-// not used
-
-// exports.geo_delete = function (req, res) {
-//     Geo.findByIdAndRemove(req.params.id, function (err) {
-//         if (err) return next(err);
-//         res.send('Deleted successfully!');
-//     })
-// };
