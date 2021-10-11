@@ -218,11 +218,20 @@ exports.geo_location = async (req, res, next) => {
         ]}) : null;
 
         const { properties } = result;
+        const { ratingIDs } = properties;
+
+        const timeline = await Rating.find({
+            '_id': { $in: ratingIDs }
+        }, 'timeline averageRating');
+
         const props = {
             ...properties,
             isRated: user ? true : false,
-            geoID
+            timeline,
+            geoID,
         };
+
+        delete props['ratingIDs'];
 
         return res.json({
             error: null,

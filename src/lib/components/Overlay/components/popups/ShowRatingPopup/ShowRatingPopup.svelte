@@ -81,20 +81,20 @@
 
         console.log(data)
         const { properties } = data;
+        const { timeline, isRated, geoID, numberOfPersonalExperience } = properties;
         loadedRating = properties['rating'];
-
-        const ratingObj = properties.rating;
-        const { finalRating } = getFinalRating(ratingObj);
+        const { finalRating } = getFinalRating(loadedRating);
+        console.log(timeline)
 
         appStateStore.update(state => ({ ...state, showRating: [ lat, lng ] }));
 
-        isAlreadyRatedByThisUser = properties.isRated;
+        isAlreadyRatedByThisUser = isRated;
         currentLatLng = { lng, lat };
-        commentGeoID = properties.geoID;
+        commentGeoID = geoID;
         averageRating = roundToTen(finalRating);
         numberOfUsers = properties.numberOfUsers;
         numberOfComments = properties.numberOfComments;
-        personalExperiencePercent = Math.floor(properties.numberOfPersonalExperience / properties.numberOfUsers * 100);
+        personalExperiencePercent = Math.floor(numberOfPersonalExperience / properties.numberOfUsers * 100);
 
         // update comments if they opened
         if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data !== commentGeoID)

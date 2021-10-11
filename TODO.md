@@ -1,11 +1,14 @@
 # To do:
 
 - add timelines at showRating popup
+- add input to specify year into quiz
 - add lint check
 - add shortcut key tips for desktop
 - fix share rating for first time users
-- restyle filters
+- add possibility to edit ratings
+- sent letter to users asking to edit their rating's timelines
 - move blog to svelte
+- restyle filters
 
 # Org stuff
 
