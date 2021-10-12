@@ -1,0 +1,7 @@
+ignoreFiles = """
+.github/
+docs/
+src/lib/external/
+src/lib/external/**
+src/configs/env.js
+"""

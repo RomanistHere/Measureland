@@ -78,7 +78,6 @@ app.use(session({
         // domain: isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV,
         maxAge: 1209600000 // two weeks
     },
-    name: process.env.SESSION_SECRET
 }));
 app.use(cors({
     origin: isProd ? [process.env.CORS_PATH, new RegExp(process.env.CORS_REGEX)] : process.env.CORS_PATH_DEV,

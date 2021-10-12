@@ -129,6 +129,7 @@ exports.geo_add = async (req, res, next) => {
                 }, {
                     $set: {
                         properties: {
+                            ratingIDs: geo.properties.ratingIDs,
                             rating: newRating,
                             averageRating: finalRating,
                             numberOfComments,
@@ -139,8 +140,6 @@ exports.geo_add = async (req, res, next) => {
                 }, {
                     new: true
                 });
-                console.log(geoUpdated._id)
-                console.log(geo._id)
                 await saveAndUpdateRefs(userID, geoUpdated._id, comment, user.username, averageRating, rating, isPersonalExperience, timeline, userEmail, activeRatings);
 
                 return res.json({
