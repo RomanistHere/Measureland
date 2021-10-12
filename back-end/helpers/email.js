@@ -1,8 +1,11 @@
-require('dotenv').config()
-const mailgun = require("mailgun-js")({
-    apiKey: process.env.MAILGUN_API,
-    domain: process.env.MAILGUN_DOMAIN,
-    host: "api.eu.mailgun.net",
+require('dotenv').config();
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({
+    username: 'api',
+    key: process.env.MAILGUN_API,
+    url: 'https://api.eu.mailgun.net'
 });
 
 const isProd = process.env.IS_PROD === '1';
@@ -194,13 +197,13 @@ const templateFrom = {
 }
 
 exports.sendEmail = async (data) => {
-    const { email, lang, verificationUrl, reason } = data
+    const { email, lang, verificationUrl, reason } = data;
     const mail = {
         to: `${email}`,
         from: templateFrom[lang],
         html: getHTML(reason, verificationUrl, lang),
         subject: templatesSubject[lang][reason]
-    }
+    };
 
-    return await mailgun.messages().send(mail);
+    return await mg.messages.create(process.env.MAILGUN_DOMAIN, mail);
 }
