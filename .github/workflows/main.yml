@@ -1,0 +1,13 @@
+name: site-security-scan
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: OWASP ZAP Full Scan
+      uses: zaproxy/action-full-scan@v0.3.0
