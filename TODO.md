@@ -12,6 +12,7 @@
 
 # Org stuff
 
+- create a DB template with some users and ratings to import
 - write a contribution guide
 - write an article about how awesome svelte is
 - create Measureland discord and some community articles to get started

@@ -3,6 +3,7 @@
     import { getContext, onDestroy } from 'svelte';
     import { json, _, locale } from 'svelte-i18n';
 
+    import Timeline from './Timeline.svelte';
     import PopupTitle from '../PopupTitle.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
     import Spinner from '../../../../ui-elements/Spinner.svelte';
@@ -28,6 +29,7 @@
     let currentLatLng = null;
     let loadedRating = null;
     let circle = null;
+    let timelineData = [];
 
     $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
@@ -84,10 +86,10 @@
         const { timeline, isRated, geoID, numberOfPersonalExperience } = properties;
         loadedRating = properties['rating'];
         const { finalRating } = getFinalRating(loadedRating);
-        console.log(timeline)
 
         appStateStore.update(state => ({ ...state, showRating: [ lat, lng ] }));
 
+        timelineData = timeline;
         isAlreadyRatedByThisUser = isRated;
         currentLatLng = { lng, lat };
         commentGeoID = geoID;
@@ -128,6 +130,8 @@
             {$_('showRatingPopup.shareThisRating')}
         {/if}
     </a>
+
+    <Timeline { timelineData } />
 
     <div class="italic text-sm font-bold" title="{$_('showRatingPopup.howMuchPeople')}">
         {personalExperiencePercent}% {$_('showRatingPopup.ofParticipantsLived')}

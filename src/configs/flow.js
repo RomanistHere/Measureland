@@ -32,7 +32,7 @@ export const flowDictionary = {
     'submitLogin': 's-l', // submit login form
     'trySubmitLogin': 's-l-t', // press "submit" login
     'submitRegister': 's-r', // submit register form
-    'trySubmitLogin': 's-r-t', // press "submit" register
+    'trySubmitRegister': 's-r-t', // press "submit" register
     'successQuiz': 'sc-q', // quiz success
     'successLogin': 'sc-l', // login success
     'successRegister': 'sc-r', // register success

@@ -89,7 +89,7 @@ exports.geo_add = async (req, res, next) => {
         if (!user)
             return res.status(400).json({ error: "User is not found" });
 
-        if (user.properties.activeRatings <= 0 || !user.properties.activeRatings)
+        if (user.usergroup !== 0 && (user.properties.activeRatings <= 0 || !user.properties.activeRatings))
             return res.status(400).json({ error: "No active ratings" });
 
         const geo = await Geo.findOne({
@@ -106,7 +106,7 @@ exports.geo_add = async (req, res, next) => {
 
         const { properties } = body;
         const { rating, averageRating, comment, isPersonalExperience, timeline } = properties;
-        const activeRatings = user.properties.activeRatings;
+        const activeRatings = user.usergroup === 0 ? 99 : user.properties.activeRatings;
         const userID = user._id;
         if (geo) {
             // check if user rated it already
@@ -138,6 +138,8 @@ exports.geo_add = async (req, res, next) => {
                 }, {
                     new: true
                 });
+                console.log(geoUpdated._id)
+                console.log(geo._id)
                 await saveAndUpdateRefs(userID, geoUpdated._id, comment, user.username, averageRating, rating, isPersonalExperience, timeline, userEmail, activeRatings);
 
                 return res.json({
@@ -208,6 +210,8 @@ exports.geo_location = async (req, res, next) => {
 
         if (!result)
             return res.status(400).json({ error: 'Location not found' });
+
+        console.log(result)
 
         const geoID = result._id;
         const user = userID ? await User.findOne({ $and: [
