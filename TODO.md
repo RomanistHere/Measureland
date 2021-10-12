@@ -25,3 +25,4 @@
 
 - Update db (temporarily.js):
 - adjust user.model.js (remove two fields)
+- add link in github

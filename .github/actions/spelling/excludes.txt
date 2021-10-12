@@ -12,6 +12,11 @@ ignore$
 \.min\.
 \.mod$
 \.mp[34]$
-\.png$
 \.wav$
+\.svg$
+# Ignore files ending in...
+\.pdf$
+\.png$
+# Ignore Excel files (`.xsl` and `.xslx`)
+\.xslx?$
 ^\.github/
