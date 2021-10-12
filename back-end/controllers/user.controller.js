@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { v4 } = require('uuid');
 const Sentry = require('@sentry/node');
+const sanitize = require('mongo-sanitize');
 
 const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
@@ -12,7 +13,7 @@ const isProd = process.env.IS_PROD === '1';
 
 exports.user_register = async (req, res) => {
     const { email, lang } = req.body;
-    const isEmailExist = await User.findOne({ email: email });
+    const isEmailExist = await User.findOne({ email: sanitize(email) });
 
     if (isEmailExist)
         return res.status(400).json({ error: 'Email already exists' });
@@ -69,7 +70,7 @@ exports.user_register = async (req, res) => {
 
 exports.user_login = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email }, '-properties.ratingIDs -properties.geoIDs');
+        const user = await User.findOne({ email: sanitize(req.body.email) }, '-properties.ratingIDs -properties.geoIDs');
 
         if (!user)
             return res.status(400).json({ error: "Email is wrong" });
@@ -102,10 +103,10 @@ exports.user_login = async (req, res) => {
 };
 
 exports.user_onboard = async (req, res) => {
-    const { userName, ageGrp, moneyGrp, userID } = req.body
+    const { userName, ageGrp, moneyGrp, userID } = req.body;
     try {
         const update = await User.updateOne(
-            { 'email': userID },
+            { 'email': sanitize(userID) },
             {
                 $set: {
                     'username': userName,
@@ -114,7 +115,7 @@ exports.user_onboard = async (req, res) => {
                     'properties.activeRatings': ageGrp === 2 || ageGrp === 3 ? 4 : 3,
                 }
             }
-        )
+        );
 
         if (update.nModified == 0)
             return res.status(400).json({ error: 'User does not exists' });
@@ -135,7 +136,7 @@ exports.user_onboard = async (req, res) => {
 exports.user_verify = async (req, res) => {
     const urlParams = new URLSearchParams(req.params.token)
     const { token } = Object.fromEntries(urlParams)
-    const userVerification = await UserVerification.findOne({ token: token })
+    const userVerification = await UserVerification.findOne({ token: sanitize(token) })
 
     if (userVerification) {
         const user = await User.findOneAndUpdate({ _id: userVerification.user }, { verified: true })
@@ -169,7 +170,7 @@ exports.user_verify = async (req, res) => {
 
 exports.user_reverify = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ email: sanitize(req.body.email) });
 
         if (!user) {
             return res.status(400).json({ error: "Email is wrong" });
@@ -229,10 +230,10 @@ const updateActiveRatings = user => {
 }
 
 exports.user_check = async (req, res) => {
-    const { userID } = req.session
+    const { userID } = req.session;
 
     try {
-        const user = await User.findOne({ email: userID }, '-properties.ratingIDs -properties.geoIDs');
+        const user = await User.findOne({ email: sanitize(userID) }, '-properties.ratingIDs -properties.geoIDs');
 
         const { shouldUpdate, activeRatings } = updateActiveRatings(user);
 
@@ -277,7 +278,7 @@ exports.user_places = async (req, res) => {
     const { userID } = req.session;
 
     try {
-        const user = await User.findOne({ email: userID }, 'properties.geoIDs');
+        const user = await User.findOne({ email: sanitize(userID) }, 'properties.geoIDs');
 
         if (!user)
             return res.status(400).json({ error: "Couldn't find the user" });
@@ -308,7 +309,7 @@ exports.user_places = async (req, res) => {
 exports.ask_more_ratings = async (req, res) => {
     const { userID } = req.session;
 
-    const user = await User.findOneAndUpdate({ email: userID }, { 'properties.wantMoreRatings': true });
+    const user = await User.findOneAndUpdate({ email: sanitize(userID) }, { 'properties.wantMoreRatings': true });
 
     if (!user)
         return res.status(400).json({ error: "Couldn't find the user" });
@@ -343,7 +344,7 @@ exports.user_logout = async (req, res, next) => {
 exports.user_reset_password = async (req, res, next) => {
     try {
         const userEmail = req.body.email
-        const user = await User.findOne({ email: userEmail });
+        const user = await User.findOne({ email: sanitize(userEmail) });
 
         if (!user)
             return res.status(400).json({ error: "Email is wrong" });
@@ -390,7 +391,7 @@ exports.user_change_password = async (req, res) => {
         return res.status(400).json({ error: 'Password link is invalid or expired' });
 
     try {
-        const passwordReset = await PasswordReset.findOne({ token: token });
+        const passwordReset = await PasswordReset.findOne({ token: sanitize(token) });
         if (!passwordReset)
             return res.status(400).json({ error: 'Password link is invalid or expired' });
 
@@ -440,7 +441,7 @@ exports.user_language = async (req, res) => {
     const { lang } = req.body
     try {
         const update = await User.updateOne(
-            { 'email': req.session.userID },
+            { 'email': sanitize(req.session.userID) },
             {
                 $set: {
                     'properties.lang': lang

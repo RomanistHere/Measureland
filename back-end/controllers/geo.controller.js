@@ -1,4 +1,5 @@
 const Sentry = require('@sentry/node');
+const sanitize = require('mongo-sanitize');
 
 const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
@@ -81,7 +82,7 @@ exports.geo_add = async (req, res, next) => {
     if (!req.session.userID)
         return res.status(400).json({ error: "User is not logged in" });
 
-    const userEmail = req.session.userID;
+    const userEmail = sanitize(req.session.userID);
     body.location.coordinates = [body.location.coordinates[1], body.location.coordinates[0]];
 
     try {
@@ -190,7 +191,7 @@ exports.geo_add = async (req, res, next) => {
 };
 
 exports.geo_location = async (req, res, next) => {
-    const userID = req.session.userID;
+    const userID = sanitize(req.session.userID);
 
     const urlParams = new URLSearchParams(req.params.coords);
     const nearCoords = Object.fromEntries(urlParams);
@@ -252,15 +253,15 @@ exports.geo_location = async (req, res, next) => {
 };
 
 exports.geo_comments = async (req, res, next) => {
-    const userEmail = req.session.userID
+    const userEmail = sanitize(req.session.userID);
 
-    const urlParams = new URLSearchParams(req.params.geoID)
-    const { geoID } = Object.fromEntries(urlParams)
+    const urlParams = new URLSearchParams(req.params.geoID);
+    const { geoID } = Object.fromEntries(urlParams);
 
     try {
-        const comments = await Comment.find({ "geo": geoID })
-        const user = await User.findOne({ email: userEmail })
-        const userID = user ? user._id : 'anon'
+        const comments = await Comment.find({ "geo": sanitize(geoID) });
+        const user = await User.findOne({ email: userEmail });
+        const userID = user ? user._id : 'anon';
 
         const arrayToSend = comments.map(item => {
             return {
@@ -294,7 +295,7 @@ exports.geo_react_comment = async (req, res) => {
     if (!req.session.userID)
         return res.status(400).json({ error: "User is not logged in" });
 
-    const email = req.session.userID;
+    const email = sanitize(req.session.userID);
     const { key, goal } = req.body;
     const property = goal === 'like' ? 'likes' : 'dislikes';
     const propertyOpp = goal === 'like' ? 'dislikes' : 'likes';
@@ -307,7 +308,7 @@ exports.geo_react_comment = async (req, res) => {
 
         const userID = user._id;
         const result = await Comment.findOneAndUpdate({
-            _id: key
+            _id: sanitize(key)
         }, {
             $addToSet: {
                 [property]: userID
@@ -317,7 +318,7 @@ exports.geo_react_comment = async (req, res) => {
         });
 
         const resultRemove = await Comment.findOneAndUpdate({
-            _id: key
+            _id: sanitize(key)
         }, {
             $pull: {
                 [propertyOpp]: userID

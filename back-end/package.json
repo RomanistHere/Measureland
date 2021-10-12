@@ -24,6 +24,7 @@
     "express-session": "^1.17.1",
     "express-slow-down": "^1.4.0",
     "mailgun-js": "^0.22.0",
+    "mongo-sanitize": "^1.1.0",
     "mongoose": "^5.12.3",
     "morgan": "^1.10.0",
     "nodemailer": "^6.5.0",
