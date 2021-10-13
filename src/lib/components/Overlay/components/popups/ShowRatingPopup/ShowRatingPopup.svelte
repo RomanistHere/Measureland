@@ -131,8 +131,6 @@
         {/if}
     </a>
 
-    <Timeline { timelineData } />
-
     <div class="italic text-sm font-bold" title="{$_('showRatingPopup.howMuchPeople')}">
         {personalExperiencePercent}% {$_('showRatingPopup.ofParticipantsLived')}
     </div>
@@ -151,6 +149,8 @@
             <span class="sug-col font-bold text-2xl -md:text-lg">{numberOfComments}</span>
         </div>
     </div>
+
+    <Timeline { timelineData } />
 
     <div class="flex justify-evenly items-center mt-4">
         {#if isUserLoggedIn && isAlreadyRatedByThisUser}

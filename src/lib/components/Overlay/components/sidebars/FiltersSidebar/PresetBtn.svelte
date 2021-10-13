@@ -13,7 +13,8 @@
 
 <a
     href={"#"}
-    class="rounded-md px-2 py-0.5 text-sm mb-1 block {isActive && 'active'}"
+    class="rounded-md px-2 py-0.5 text-sm mb-1 block"
+    class:active={isActive}
     on:click|preventDefault={onPresetBtnClick}
 >
     {presetText}

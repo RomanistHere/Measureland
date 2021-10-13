@@ -97,37 +97,11 @@ const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperi
     });
 }
 
-// const checkIfExist = async (latlng) => {
-//     const url = `${API_URL}/geo/read_same/${new URLSearchParams({ latlng })}`
-//
-//     try {
-//         const resp = await fetch(url, {
-//             method: 'GET',
-//             credentials: 'include',
-//             headers: {
-//                 'Accept': 'application/json',
-//                 'Content-Type': 'application/json'
-//             }
-//         })
-//
-//         return await resp.json()
-//     } catch (e) {
-//         return null
-//     }
-// }
-
 const getSinglePointData = async (latlng) => {
     const url = `${API_URL}/geo/read_loc/${new URLSearchParams({ latlng })}`
 
     return await fetchFunction({ url })
 }
-
-// not used. Fetch all markers
-// const fetchAllData = async () => {
-//     const url = `${API_URL}/geo/read_all`
-//
-//     return await fetchFunction({ url })
-// }
 
 const fetchBoundsData = async (box, zoom, filtersObj = null) => {
     const preparedBox = box.map(item => [item[1], item[0]])
@@ -136,6 +110,12 @@ const fetchBoundsData = async (box, zoom, filtersObj = null) => {
     const url = `${API_URL}/geo/read_bounds/${new URLSearchParams({ bounds, zoom, filters })}`
 
     return await fetchFunction({ url })
+}
+
+const fetchSingleRating = async (ratingID) => {
+    const url = `${API_URL}/geo/read_rating/${new URLSearchParams({ ratingID })}`;
+
+    return await fetchFunction({ url });
 }
 
 // comments
@@ -301,4 +281,5 @@ export {
     reset,
     sendResetPass,
     saveLang,
+    fetchSingleRating,
 }

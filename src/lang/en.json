@@ -203,6 +203,14 @@
         "active": "active",
         "reset": "Reset"
     },
+    "timelinePoint": {
+        "personalExp": "Based on personal experience.",
+        "alienExp": "Based on non-personal experience.",
+        "average": "Average",
+        "report": "Report",
+        "endorse": "Agree",
+        "clickToExpand": "Average rating from the user is {0}. Click to expand."
+    },
     "footer": {
         "version": "Version",
         "termsOfUse": "Terms of use",

@@ -290,6 +290,30 @@ exports.geo_comments = async (req, res, next) => {
     }
 };
 
+exports.geo_rating = async (req, res, next) => {
+    const userEmail = sanitize(req.session.userID);
+
+    const urlParams = new URLSearchParams(req.params.ratingID);
+    const { ratingID } = Object.fromEntries(urlParams);
+
+    try {
+        const ratingData = await Rating.findOne({ "_id": sanitize(ratingID) }, 'rating isPersonalExperience -_id');
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Ratings fetched",
+                userID: userEmail ? userEmail : null,
+                ratingData
+            },
+        })
+    } catch (error) {
+        console.log(error)
+        Sentry.captureException(error);
+        return res.status(400).json({ error })
+    }
+};
+
 exports.geo_react_comment = async (req, res) => {
     if (!req.session.userID)
         return res.status(400).json({ error: "User is not logged in" });
