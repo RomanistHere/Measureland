@@ -2,8 +2,10 @@
     import { fly } from 'svelte/transition';
     import { json, _ } from 'svelte-i18n';
 
-    import { fetchSingleRating } from '../../../../../utilities/api.js';
     import TextButton from '../../../../ui-elements/TextButton.svelte';
+
+    import { fetchSingleRating, reactOnRating } from '../../../../../utilities/api.js';
+    import { showSuccessNotification, openAnotherOverlay, showSomethingWrongNotification, debounce } from '../../../../../utilities/helpers.js';
 
     export let averageRating;
     export let timeline;
@@ -15,20 +17,27 @@
     let showTooltip = false;
     let tooltipTimeout = null;
     let isPersExp = false;
+    let isOwnRating = false;
+    let isAlreadyReported = false;
+    let isAlreadyEndorsed = false;
 
     const handleTimeClick = async () => {
         if (!ratings) {
             const { error, data } = await fetchSingleRating(_id);
 
             if (error) {
-                console.log(error)
+                console.warn(error);
+                showSomethingWrongNotification();
                 return;
             }
 
             const { ratingData } = data;
-            const { rating, isPersonalExperience } = ratingData;
+            const { rating, isPersonalExperience, isReported, isEndorsed, isYours } = ratingData;
             ratings = Object.entries(rating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
             isPersExp = isPersonalExperience;
+            isOwnRating = isYours;
+            isAlreadyReported = isReported;
+            isAlreadyEndorsed = isEndorsed;
             showTooltip = true;
         }
     }
@@ -41,6 +50,37 @@
         clearTimeout(tooltipTimeout);
         showTooltip = true;
     }
+
+    const reportRating = async () => {
+        const { error, data } = await reactOnRating(_id, true);
+
+        if (!error) {
+            isAlreadyReported = true;
+            showSuccessNotification();
+        } else if (error === 'User is not logged in') {
+            openAnotherOverlay('loginPopup');
+        } else {
+            console.warn(error);
+            showSomethingWrongNotification();
+        }
+    }
+
+    const endorseRating = async () => {
+        const { error, data } = await reactOnRating(_id, false);
+
+        if (!error) {
+            isAlreadyEndorsed = true;
+            showSuccessNotification();
+        } else if (error === 'User is not logged in') {
+            openAnotherOverlay('loginPopup');
+        } else {
+            console.warn(error);
+            showSomethingWrongNotification();
+        }
+    }
+
+    const debouncedEndorseRating = debounce(endorseRating, 300);
+    const debouncedReportRating = debounce(reportRating, 300);
 </script>
 
 <a
@@ -76,15 +116,25 @@
                     </div>
                 {/each}
 
-                <TextButton
-                    text={$_('timelinePoint.report')}
-                    className='px-1 font-bold'
-                />
+                {#if isOwnRating}
+                    <span class="font-bold">{$_('timelinePoint.yourRating')}</span>
+                {:else if !isAlreadyReported && !isAlreadyEndorsed}
+                    <TextButton
+                        text={$_('timelinePoint.report')}
+                        className='px-1 font-bold'
+                        action={debouncedReportRating}
+                    />
 
-                <TextButton
-                    text={$_('timelinePoint.endorse')}
-                    className='px-1 font-bold'
-                />
+                    <TextButton
+                        text={$_('timelinePoint.endorse')}
+                        className='px-1 font-bold'
+                        action={debouncedEndorseRating}
+                    />
+                {:else if isAlreadyReported}
+                    {$_('timelinePoint.reported')}
+                {:else if isAlreadyEndorsed}
+                    {$_('timelinePoint.endorsed')}
+                {/if}
             {:else}
                 {$_('timelinePoint.clickToExpand', { values: [averageRating] })}
             {/if}

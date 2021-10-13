@@ -2,14 +2,6 @@ import { get } from 'svelte/store';
 import { appStateStore } from '../../stores/state.js';
 import { API_URL } from '../../configs/env.js';
 
-// TODO: move somewhere else (component)
-// window.addEventListener('error', event => {
-//     if (!state.shouldSendEvent)
-//         return
-//     const { message, filename, lineno, colno, error } = event
-//     navigator.sendBeacon(`${API_URL}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }))
-// })
-
 const sendFeedback = () => {
     const uniqID = state.uniqID
     const length = state.flow.length
@@ -112,10 +104,25 @@ const fetchBoundsData = async (box, zoom, filtersObj = null) => {
     return await fetchFunction({ url })
 }
 
+// ratings
+
 const fetchSingleRating = async (ratingID) => {
     const url = `${API_URL}/geo/read_rating/${new URLSearchParams({ ratingID })}`;
 
     return await fetchFunction({ url });
+}
+
+const reactOnRating = async (ratingID, shouldReport) => {
+    const url = `${API_URL}/geo/react_rating`
+
+    return await fetchFunction({
+        url,
+        method: 'POST',
+        body: JSON.stringify({
+            ratingID,
+            shouldReport
+        })
+    })
 }
 
 // comments
@@ -282,4 +289,5 @@ export {
     sendResetPass,
     saveLang,
     fetchSingleRating,
+    reactOnRating,
 }

@@ -32,7 +32,9 @@ const schema = new Schema({
     timeline: {
         type: Number,
         required: true
-    }
+    },
+    reported: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    endorsed: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 }, {
     timestamps: true
 }).index({ 'geo': 1 });

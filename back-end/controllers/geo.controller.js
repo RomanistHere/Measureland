@@ -211,8 +211,6 @@ exports.geo_location = async (req, res, next) => {
         if (!result)
             return res.status(400).json({ error: 'Location not found' });
 
-        console.log(result)
-
         const geoID = result._id;
         const user = userID ? await User.findOne({ $and: [
             { email: userID },
@@ -290,27 +288,75 @@ exports.geo_comments = async (req, res, next) => {
     }
 };
 
-exports.geo_rating = async (req, res, next) => {
+exports.rating_get = async (req, res, next) => {
     const userEmail = sanitize(req.session.userID);
 
     const urlParams = new URLSearchParams(req.params.ratingID);
     const { ratingID } = Object.fromEntries(urlParams);
 
     try {
-        const ratingData = await Rating.findOne({ "_id": sanitize(ratingID) }, 'rating isPersonalExperience -_id');
+        const rating = await Rating.findOne({ "_id": sanitize(ratingID) });
+        const user = await User.findOne({ email: userEmail });
+        const userID = user ? user._id : 'anon';
+
+        const ratingData = {
+            isYours: user ? (userID.equals(rating.userID) ? true : false) : false,
+            isReported: user ? rating.reported.some(item => item.equals(userID)) : false,
+            isEndorsed: user ? rating.endorsed.some(item => item.equals(userID)) : false,
+            rating: rating.rating,
+            isPersonalExperience: rating.isPersonalExperience,
+        }
 
         return res.json({
             error: null,
             data: {
                 message: "Ratings fetched",
                 userID: userEmail ? userEmail : null,
-                ratingData
+                ratingData,
             },
         })
     } catch (error) {
         console.log(error)
         Sentry.captureException(error);
         return res.status(400).json({ error })
+    }
+};
+
+exports.rating_react = async (req, res) => {
+    if (!req.session.userID)
+        return res.status(400).json({ error: "User is not logged in" });
+
+    const email = sanitize(req.session.userID);
+    const { ratingID, shouldReport } = req.body;
+    const property = shouldReport ? 'reported' : 'endorsed';
+
+    try {
+        const user = await User.findOne({ email: email });
+
+        if (!user)
+            return res.status(400).json({ error: "User not found" });
+
+        const userID = user._id;
+        const result = await Rating.findOneAndUpdate({
+            _id: sanitize(ratingID)
+        }, {
+            $addToSet: {
+                [property]: userID
+            }
+        }, {
+            new: true
+        });
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Reaction successful",
+                userID: user.email
+            },
+        });
+    } catch (error) {
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
     }
 };
 
@@ -353,7 +399,7 @@ exports.geo_react_comment = async (req, res) => {
         return res.json({
             error: null,
             data: {
-                message: "Login successful",
+                message: "Reaction successful",
                 userID: user.email
             },
         });

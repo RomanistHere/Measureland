@@ -205,10 +205,13 @@
     },
     "timelinePoint": {
         "personalExp": "Based on personal experience.",
+        "yourRating": "It's your rating",
         "alienExp": "Based on non-personal experience.",
         "average": "Average",
         "report": "Report",
         "endorse": "Agree",
+        "reported": "Reported, thanks!",
+        "endorsed": "Endorsed, thanks!",
         "clickToExpand": "Average rating from the user is {0}. Click to expand."
     },
     "footer": {
