@@ -5,7 +5,7 @@
     import TextButton from '../../../../ui-elements/TextButton.svelte';
 
     import { fetchSingleRating, reactOnRating } from '../../../../../utilities/api.js';
-    import { showSuccessNotification, openAnotherOverlay, showSomethingWrongNotification, debounce } from '../../../../../utilities/helpers.js';
+    import { showSuccessNotification, openAnotherOverlay, showSomethingWrongNotification, debounce, registerAction } from '../../../../../utilities/helpers.js';
 
     export let averageRating;
     export let timeline;
@@ -14,12 +14,20 @@
 
     $: ratings = null;
 
-    let showTooltip = false;
+    let isRatingExpanded = false;
     let tooltipTimeout = null;
     let isPersExp = false;
     let isOwnRating = false;
     let isAlreadyReported = false;
     let isAlreadyEndorsed = false;
+
+    const resetRatings = ratingID => {
+        // this needed for the case when user clicks
+        // new ratings without closing previous one
+        ratings = null;
+    }
+
+    $: resetRatings(_id);
 
     const handleTimeClick = async () => {
         if (!ratings) {
@@ -38,17 +46,18 @@
             isOwnRating = isYours;
             isAlreadyReported = isReported;
             isAlreadyEndorsed = isEndorsed;
-            showTooltip = true;
+            isRatingExpanded = true;
+            registerAction('fetchRating');
         }
     }
 
     const handleMouseleave = () => {
-        tooltipTimeout = setTimeout(() => { showTooltip = false }, 100);
+        tooltipTimeout = setTimeout(() => { isRatingExpanded = false }, 100);
     }
 
     const handleMouseenter = () => {
         clearTimeout(tooltipTimeout);
-        showTooltip = true;
+        isRatingExpanded = true;
     }
 
     const reportRating = async () => {
@@ -63,6 +72,8 @@
             console.warn(error);
             showSomethingWrongNotification();
         }
+
+        registerAction('reportRating');
     }
 
     const endorseRating = async () => {
@@ -77,6 +88,8 @@
             console.warn(error);
             showSomethingWrongNotification();
         }
+
+        registerAction('endorseRating');
     }
 
     const debouncedEndorseRating = debounce(endorseRating, 300);
@@ -93,7 +106,7 @@
 >
     {timeline}
 
-    {#if showTooltip}
+    {#if isRatingExpanded}
         <div
             class="info__tooltip text-sm w-80 absolute z-1 p-2 rounded-md font-normal glassmorphism cursor-default"
             in:fly="{{ y: 10, duration: 200 }}"

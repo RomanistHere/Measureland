@@ -12,7 +12,7 @@
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { appStateStore, userStateStore, overlayStateStore, isDesktop } from "../../../../../../stores/state.js";
-    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay, centerMap, showSomethingWrongNotification } from '../../../../../utilities/helpers.js';
+    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay, centerMap, showSomethingWrongNotification, registerAction } from '../../../../../utilities/helpers.js';
 
     export let popupData;
 
@@ -50,6 +50,7 @@
                 showSomethingWrongNotification();
             }
         }
+        registerAction('clickCopyURLButton');
     }
 
     const openCommentsSidebar = () =>

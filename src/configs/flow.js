@@ -17,6 +17,11 @@ export const flowDictionary = {
     'quizPopup': 'p-q',
     'registerPopup': 'p-r',
     'showRatingsPopup': 'p-sr',
+    // show rating popup
+    'clickCopyURLButton': 'ccb',
+    'fetchRating': 'fr',
+    'reportRating': 'rr',
+    'endorseRating': 'er',
     // open sidebar
     'commentsSidebar': 's-c',
     'filtersSidebar': 's-f',
