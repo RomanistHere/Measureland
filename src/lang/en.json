@@ -235,6 +235,7 @@
         "title6": "Pick your timeline",
         "title7": "Comment",
         "timelineSelectTitle": "How old the knowledge you based on your answer is? It's important to know how relevant it is.",
+        "yearSelectTitle": "Or pick the approximate year of your last experience.",
         "timelineSelectOption1": "My info is maximum 2 years old (accurate)",
         "timelineSelectOption2": "My info is 2 - 7 years old (somehow accurate)",
         "timelineSelectOption3": "My info is more then 7 years old (not accurate)",

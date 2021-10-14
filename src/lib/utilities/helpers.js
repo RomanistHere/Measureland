@@ -245,6 +245,16 @@ const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false) => {
 const registerAction = action =>
 	flowStore.update(actions => ([ ...actions, flowDictionary[action] ]));
 
+const generateYearsBetween = (startYear, endYear) => {
+    const endDate = endYear || new Date().getFullYear();
+    let years = [];
+    for (var i = startYear; i <= endDate; i++) {
+        years.push(startYear);
+        startYear++;
+    }
+    return years;
+}
+
 export {
     debounce,
     sleep,
@@ -268,4 +278,5 @@ export {
 	getCookie,
 	centerMap,
 	registerAction,
+	generateYearsBetween,
 }

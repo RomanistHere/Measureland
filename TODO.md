@@ -1,7 +1,5 @@
 # To do:
 
-- add timelines at showRating popup
-- add input to specify year into quiz
 - add lint check
 - add shortcut key tips for desktop
 - fix share rating for first time users

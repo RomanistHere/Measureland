@@ -12,7 +12,7 @@
     import Select from '../../../../ui-elements/Select.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
-    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap, showSomethingWrongNotification, registerAction } from "../../../../../utilities/helpers.js";
+    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap, showSomethingWrongNotification, registerAction, generateYearsBetween } from "../../../../../utilities/helpers.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { userStateStore, markerStore, isDesktop } from "../../../../../../stores/state.js";
 
@@ -41,16 +41,22 @@
     $: timelineOptions = [{
         value: timelineStamps[1],
         text: $_('quizPopup.timelineSelectOption1'),
-        selected: timelineStamps[1] == quizState.timeline,
+        selected: timelineStamps[1] >= quizState.timeline && timelineStamps[2] < quizState.timeline,
     }, {
         value: timelineStamps[2],
         text: $_('quizPopup.timelineSelectOption2'),
-        selected: timelineStamps[2] == quizState.timeline,
+        selected: timelineStamps[2] >= quizState.timeline && timelineStamps[3] < quizState.timeline,
     }, {
         value: timelineStamps[3],
         text: $_('quizPopup.timelineSelectOption3'),
-        selected: timelineStamps[3] == quizState.timeline,
+        selected: timelineStamps[3] >= quizState.timeline,
     }];
+
+    $: yearSelectOptions = generateYearsBetween(1980).sort((a, b) => b - a).map(year => ({
+        value: year,
+        text: year,
+        selected: year === quizState.timeline
+    }));
 
     let circle;
     let remainingCommentLength = 330;
@@ -89,7 +95,7 @@
     }
 
     const setTimeline = event => {
-        const timeline = event.target.value;
+        const timeline = Number(event.target.value);
         quizState = { ...quizState, timeline };
     }
 
@@ -296,6 +302,14 @@
             title={$_('quizPopup.timelineSelectTitle')}
             id='timeline-select'
             options={timelineOptions}
+            className='mb-8'
+            on:change={setTimeline}
+        />
+
+        <Select
+            title={$_('quizPopup.yearSelectTitle')}
+            id='year-select'
+            options={yearSelectOptions}
             className='mb-8'
             on:change={setTimeline}
         />
