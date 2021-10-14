@@ -1,4 +1,4 @@
-export const translateDrawRU = () => {
+export const translateDrawRU = L => {
     L.drawLocal.draw.toolbar.buttons.polygon = 'Нарисовать многоугольник (полигон)'
     L.drawLocal.draw.toolbar.buttons.rectangle = 'Нарисовать прямоугольник'
     L.drawLocal.draw.toolbar.buttons.circle = 'Нарисовать круг'

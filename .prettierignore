@@ -1,0 +1,6 @@
+# Ignore everything:
+/*
+/src/lib/external
+
+# Except myapp:
+!/src

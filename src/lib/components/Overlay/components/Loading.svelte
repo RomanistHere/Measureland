@@ -15,7 +15,6 @@
 
     const userInit = async () => {
         const { error, data } = await checkUser();
-        console.log(data)
 
         if (error) {
             console.warn(error);

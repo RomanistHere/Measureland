@@ -1,7 +1,6 @@
 <script>
     import { _ } from 'svelte-i18n';
     import { onMount } from 'svelte';
-    import { get } from 'svelte/store';
     import { fade } from 'svelte/transition';
 
 	import L from 'leaflet';

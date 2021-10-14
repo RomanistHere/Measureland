@@ -139,7 +139,7 @@
         map.addLayer(drawnItems);
         const drawControl = new L.Control.Draw(drawOptions);
         if ($locale === 'ru')
-            translateDrawRU();
+            translateDrawRU(L);
         map.addControl(drawControl);
     }
 

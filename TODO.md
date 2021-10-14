@@ -1,12 +1,12 @@
 # To do:
 
 - add lint check
-- add shortcut key tips for desktop
 - fix share rating for first time users
 - add possibility to edit ratings
 - sent letter to users asking to edit their rating's timelines
 - move blog to svelte
 - restyle filters
+- fix focus states
 
 # Org stuff
 
