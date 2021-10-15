@@ -16,48 +16,48 @@
     import { setCookie, openAnotherOverlay, fillFiltersFromArrOfStrings, registerAction } from '../../../../utilities/helpers.js';
     import { appStateStore } from '../../../../../stores/state.js';
 
-    SwiperCore.use([Mousewheel, Pagination]);
+    SwiperCore.use([ Mousewheel, Pagination ]);
 
     let shouldShowScrollCaption = true;
 
     $: contentSlides = Object.values($json('startScreen.slides')).map(item => ({
-        ...item,
-        action: item.action === 'openFilters'
-            ? () => {
-                if (!$appStateStore.termsOfUseAgreed)
-                    return;
-                closeStartScreen();
-                fillFiltersFromArrOfStrings(['water:5-5']);
-            }
-            : () => {
-                registerAction('startScreenExternalLink');
-                window.open(item.href,'_blank');
-            },
-        disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed
-            ? true
-            : false
+    	...item,
+    	action: 'openFilters' === item.action
+    		? () => {
+    			if (!$appStateStore.termsOfUseAgreed)
+    				return;
+    			closeStartScreen();
+    			fillFiltersFromArrOfStrings([ 'water:5-5' ]);
+    		}
+    		: () => {
+    			registerAction('startScreenExternalLink');
+    			window.open(item.href, '_blank');
+    		},
+    	disabled: 'openFilters' === item.action && !$appStateStore.termsOfUseAgreed
+    		? true
+    		: false,
     }));
 
     $: lastSlideList = Object.values($json('startScreen.lastSlide.list'));
 
     const onSlideChange = () => {
-        shouldShowScrollCaption = false;
-        registerAction('startScreenSlideChange')
-    }
+    	shouldShowScrollCaption = false;
+    	registerAction('startScreenSlideChange');
+    };
 
     const closeStartScreen = () => {
-        if (!$appStateStore.termsOfUseAgreed)
-            return;
-        appStateStore.update(state => ({ ...state, startScreen: false }));
-        setCookie('startScreen', '0', 365);
-    }
+    	if (!$appStateStore.termsOfUseAgreed)
+    		return;
+    	appStateStore.update(state => ({ ...state, startScreen: false }));
+    	setCookie('startScreen', '0', 365);
+    };
 
     const openRegister = () => {
-        if (!$appStateStore.termsOfUseAgreed)
-            return;
-        closeStartScreen();
-        openAnotherOverlay('registerPopup');
-    }
+    	if (!$appStateStore.termsOfUseAgreed)
+    		return;
+    	closeStartScreen();
+    	openAnotherOverlay('registerPopup');
+    };
 </script>
 
 {#if !$appStateStore.termsOfUseAgreed}

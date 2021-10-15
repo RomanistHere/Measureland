@@ -14,27 +14,27 @@
     let spinnerTimeout;
 
     const resetTimers = () => {
-        clearInterval(spinnerInterval);
-        clearTimeout(spinnerTimeout);
-        shouldShowText = false;
-    }
+    	clearInterval(spinnerInterval);
+    	clearTimeout(spinnerTimeout);
+    	shouldShowText = false;
+    };
 
     const updateText = () => {
-        if (!isWithText) {
-            resetTimers();
-            return;
-        }
+    	if (!isWithText) {
+    		resetTimers();
+    		return;
+    	}
 
-        let i = 0;
+    	let i = 0;
 
-        spinnerTimeout = setTimeout(() => {
-            shouldShowText = true;
-            spinnerInterval = setInterval(() => {
-                statusText = $json('spinner.change')[i];
-                i = i >= 2 ? 0 : i + 1;
-            }, 3000);
-        }, 2000);
-    }
+    	spinnerTimeout = setTimeout(() => {
+    		shouldShowText = true;
+    		spinnerInterval = setInterval(() => {
+    			statusText = $json('spinner.change')[i];
+    			i = 2 <= i ? 0 : i + 1;
+    		}, 3000);
+    	}, 2000);
+    };
 
 
     $: updateText(isWithText);

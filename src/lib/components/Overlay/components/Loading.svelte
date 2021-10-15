@@ -13,44 +13,44 @@
     let isError = false;
     let isLoaded = false;
 
-    const userInit = async () => {
-        const { error, data } = await checkUser();
+    const userInit = async() => {
+    	const { error, data } = await checkUser();
 
-        if (error) {
-            console.warn(error);
-            showSomethingWrongNotification();
-            isError = true;
-            if (error === 'Too many requests, please try again later')
-                appStateStore.update(state => ({ ...state, shouldWork: false }));
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    		isError = true;
+    		if ('Too many requests, please try again later' === error)
+    			appStateStore.update(state => ({ ...state, shouldWork: false }));
 
-            return;
-        }
-        const { userID, userName, activeRatings, wantMoreRatings } = data;
-        const shouldSendEvent = browser ? getCookie('shouldSendEvent') !== '0' ? true : false : false;
-        const shouldShowStartScreen = browser ? getCookie('startScreen') !== '0' ? true : false : false;
+    		return;
+    	}
+    	const { userID, userName, activeRatings, wantMoreRatings } = data;
+    	const shouldSendEvent = browser ? '0' !== getCookie('shouldSendEvent') ? true : false : false;
+    	const shouldShowStartScreen = browser ? '0' !== getCookie('startScreen') ? true : false : false;
 
-        isLoaded = true;
-        if (userID) {
-            userStateStore.update(state => ({
-                ...state,
-                userID,
-                activeRatings,
-                userName,
-                wantMoreRatings,
-                shouldSendEvent,
-            }));
-            registerAction('user')
-            // for test purposes
-            // fillDB(20000)
-        }
+    	isLoaded = true;
+    	if (userID) {
+    		userStateStore.update(state => ({
+    			...state,
+    			userID,
+    			activeRatings,
+    			userName,
+    			wantMoreRatings,
+    			shouldSendEvent,
+    		}));
+    		registerAction('user');
+    		// for test purposes
+    		// fillDB(20000)
+    	}
 
-        if (shouldShowStartScreen) {
-            appStateStore.update(state => ({ ...state, startScreen: true }));
-            registerAction('startScreen');
-        }
-    }
+    	if (shouldShowStartScreen) {
+    		appStateStore.update(state => ({ ...state, startScreen: true }));
+    		registerAction('startScreen');
+    	}
+    };
 
-    let promise = userInit();
+    const promise = userInit();
 </script>
 
 {#if !isLoaded}

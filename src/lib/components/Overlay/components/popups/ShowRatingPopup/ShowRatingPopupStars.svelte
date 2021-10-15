@@ -6,7 +6,7 @@
     $: roundedRating = Math.round(rating);
 
     const character = String.fromCharCode('0xE900');
-    const possibleRatingsArr = [5, 4, 3, 2, 1];
+    const possibleRatingsArr = [ 5, 4, 3, 2, 1 ];
 </script>
 
 <div

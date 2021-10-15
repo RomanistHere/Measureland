@@ -4,7 +4,7 @@
     export let text = '';
     export let action;
 
-    const emojIcon = isLike ? '👍': '👎';
+    const emojIcon = isLike ? '👍' : '👎';
 </script>
 
 <a

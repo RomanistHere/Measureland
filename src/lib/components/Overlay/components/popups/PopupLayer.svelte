@@ -1,7 +1,6 @@
 <script>
     import { fly } from 'svelte/transition';
     import { focusTrap } from 'svelte-focus-trap';
-    import { closeOverlays } from '../../../../utilities/helpers.js';
 
     import CloseButton from '../../../ui-elements/CloseButton.svelte';
 
@@ -24,20 +23,20 @@
     export let popupData;
 
     const popupList = {
-        askForMoreRatingsPopup: AskForMoreRatingsPopup,
-        changePasswordPopup: ChangePasswordPopup,
-        checkEmailPopup: CheckEmailPopup,
-        confirmForgotPasswordPopup: ConfirmForgotPasswordPopup,
-        forgotPasswordPopup: ForgotPasswordPopup,
-        howToRatePopup: HowToRatePopup,
-        loggedInPopup: LoggedInPopup,
-        loginPopup: LoginPopup,
-        myPlacesPopup: MyPlacesPopup,
-        onboardingPopup: OnboardingPopup,
-        partnersPopup: PartnersPopup,
-        quizPopup: QuizPopup,
-        registerPopup: RegisterPopup,
-        showRatingsPopup: ShowRatingPopup,
+    	askForMoreRatingsPopup: AskForMoreRatingsPopup,
+    	changePasswordPopup: ChangePasswordPopup,
+    	checkEmailPopup: CheckEmailPopup,
+    	confirmForgotPasswordPopup: ConfirmForgotPasswordPopup,
+    	forgotPasswordPopup: ForgotPasswordPopup,
+    	howToRatePopup: HowToRatePopup,
+    	loggedInPopup: LoggedInPopup,
+    	loginPopup: LoginPopup,
+    	myPlacesPopup: MyPlacesPopup,
+    	onboardingPopup: OnboardingPopup,
+    	partnersPopup: PartnersPopup,
+    	quizPopup: QuizPopup,
+    	registerPopup: RegisterPopup,
+    	showRatingsPopup: ShowRatingPopup,
     };
 
     $: Popup = popupList[popupName];

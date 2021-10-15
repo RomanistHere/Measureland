@@ -12,55 +12,55 @@
     let somethingWrongNotificationTimeout = null;
 
     const stopSomethingWrongTimeout = () => {
-        clearTimeout(somethingWrongNotificationTimeout);
-        somethingWrongNotificationTimeout = null;
-    }
+    	clearTimeout(somethingWrongNotificationTimeout);
+    	somethingWrongNotificationTimeout = null;
+    };
 
     const startSomethingWrongTimeout = () => {
-        somethingWrongNotificationTimeout = setTimeout(() => {
-            notificationsStore.update(state => ({ ...state, somethingWrongNotification: false }));
-            stopSomethingWrongTimeout();
-        }, 2000);
-    }
+    	somethingWrongNotificationTimeout = setTimeout(() => {
+    		notificationsStore.update(state => ({ ...state, somethingWrongNotification: false }));
+    		stopSomethingWrongTimeout();
+    	}, 2000);
+    };
 
     const somethingWrongOnMouseenter = () => {
-        stopSomethingWrongTimeout();
-        somethingWrongNotificationExpanded = true;
-        registerAction('hoverNotification');
-    }
+    	stopSomethingWrongTimeout();
+    	somethingWrongNotificationExpanded = true;
+    	registerAction('hoverNotification');
+    };
 
     const somethingWrongOnMouseleave = () => {
-        startSomethingWrongTimeout();
-        somethingWrongNotificationExpanded = false;
-    }
+    	startSomethingWrongTimeout();
+    	somethingWrongNotificationExpanded = false;
+    };
 
     const somethignWrongOnClick = () => {
-        hideSomethingWrongNotification();
-        registerAction('clickNotification');
-    }
+    	hideSomethingWrongNotification();
+    	registerAction('clickNotification');
+    };
 
     const showAndHideNotifications = ({ successNotification, somethingWrongNotification }) => {
-        if (somethingWrongNotification && !somethingWrongNotificationTimeout) {
-            shouldShowSomethingWrongNotification = true;
-            startSomethingWrongTimeout();
-            registerAction('showNotification');
-        }
+    	if (somethingWrongNotification && !somethingWrongNotificationTimeout) {
+    		shouldShowSomethingWrongNotification = true;
+    		startSomethingWrongTimeout();
+    		registerAction('showNotification');
+    	}
 
-        if (successNotification && !successNotificationTimeout) {
-            shouldShowSuccessNotification = true;
-            successNotificationTimeout = setTimeout(() => {
-                notificationsStore.update(state => ({ ...state, successNotification: false }));
-                clearTimeout(successNotificationTimeout);
-                successNotificationTimeout = null;
-            }, 1000);
-        }
+    	if (successNotification && !successNotificationTimeout) {
+    		shouldShowSuccessNotification = true;
+    		successNotificationTimeout = setTimeout(() => {
+    			notificationsStore.update(state => ({ ...state, successNotification: false }));
+    			clearTimeout(successNotificationTimeout);
+    			successNotificationTimeout = null;
+    		}, 1000);
+    	}
 
-        if (!successNotification)
-            shouldShowSuccessNotification = false;
+    	if (!successNotification)
+    		shouldShowSuccessNotification = false;
 
-        if (!somethingWrongNotification)
-            shouldShowSomethingWrongNotification = false;
-    }
+    	if (!somethingWrongNotification)
+    		shouldShowSomethingWrongNotification = false;
+    };
 
     $: showAndHideNotifications($notificationsStore);
 </script>

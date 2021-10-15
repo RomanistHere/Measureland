@@ -8,19 +8,19 @@
     import { openAnotherOverlay, closeOverlays, registerAction } from "../../../../utilities/helpers.js";
 
     const openFilters = () => {
-        registerAction('filtersNotifcationClick');
-        openAnotherOverlay('filtersSidebar');
-    }
+    	registerAction('filtersNotifcationClick');
+    	openAnotherOverlay('filtersSidebar');
+    };
 
     const resetFilters = () => {
-        registerAction('filtersNotifcationClick');
-        closeOverlays();
-        filtersStore.update(state => ({
-            ...state,
-            isFiltersOn: true,
-            filters: null
-        }));
-    }
+    	registerAction('filtersNotifcationClick');
+    	closeOverlays();
+    	filtersStore.update(state => ({
+    		...state,
+    		isFiltersOn: true,
+    		filters: null,
+    	}));
+    };
 </script>
 
 {#if $shouldShowFiltersNotification}

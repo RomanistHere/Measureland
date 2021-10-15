@@ -12,12 +12,12 @@
     const dispatch = createEventDispatcher();
 
     const handleClick = newRating => {
-        rating = newRating;
-        dispatch('setRating', { rating, key });
-    }
+    	rating = newRating;
+    	dispatch('setRating', { rating, key });
+    };
 
     const character = String.fromCharCode('0xE900');
-    const possibleRatingsArr = [5, 4, 3, 2, 1];
+    const possibleRatingsArr = [ 5, 4, 3, 2, 1 ];
 </script>
 
 <div class="mt-6 relative">
@@ -31,7 +31,7 @@
                 href={"#"}
                 class="leading-none text-4xl mr-2 cursor-pointer s{number}"
                 class:active={rating === number}
-                on:click|preventDefault={(e) => {
+                on:click|preventDefault={e => {
                     handleClick(number);
                     e.currentTarget.blur();
                 }}

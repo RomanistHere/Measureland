@@ -10,7 +10,7 @@
 
 <a href={"#"} class="close_wrap absolute top-7 right-6 leading-3 p-1 {className}" on:click|preventDefault={close}>
     <span class="close w-6 h-6 relative inline-block -lg:w-7 -lg:h-7"></span>
-    {#if $isDesktop && overlayType === 'popup'}
+    {#if $isDesktop && 'popup' === overlayType}
         <span class="absolute left-1/2 -bottom-4 transform -translate-x-1/2 text-sm">esc</span>
     {/if}
 </a>

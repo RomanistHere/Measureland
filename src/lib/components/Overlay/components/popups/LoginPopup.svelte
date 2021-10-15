@@ -7,7 +7,13 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification, registerAction } from "../../../../utilities/helpers.js";
+    import {
+    	openAnotherOverlay,
+    	debounce,
+    	showSuccessNotification,
+    	showSomethingWrongNotification,
+    	registerAction,
+    } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
@@ -26,110 +32,110 @@
 
     const openForgotPasswordPopup = () => openAnotherOverlay('forgotPasswordPopup', { isChangePass: false });
 
-    const resendVerificationLetter = async () => {
-        isError = false;
-        if (!isEmailValid || email.length === 0) {
-            // TODO: focus needed input
-            isError = true;
-            errorType = 'fieldsError';
-            return;
-        }
+    const resendVerificationLetter = async() => {
+    	isError = false;
+    	if (!isEmailValid || 0 === email.length) {
+    		// TODO: focus needed input
+    		isError = true;
+    		errorType = 'fieldsError';
+    		return;
+    	}
 
-        isLoading = true;
-        const { error, data } = await reverify(email);
-        isLoading = false;
+    	isLoading = true;
+    	const { error } = await reverify(email);
+    	isLoading = false;
 
-        if (error) {
-            console.warn(error);
-            isError = true;
-            errorType = 'unrecognizedError';
+    	if (error) {
+    		console.warn(error);
+    		isError = true;
+    		errorType = 'unrecognizedError';
 
-            if (error === 'Email is wrong') {
-                errorType = 'noAccount';
-            } else if (error === 'Already verified') {
-                errorType = 'alreadyVerified';
-            }
+    		if ('Email is wrong' === error) {
+    			errorType = 'noAccount';
+    		} else if ('Already verified' === error) {
+    			errorType = 'alreadyVerified';
+    		}
 
-            showSomethingWrongNotification();
-            return;
-        }
+    		showSomethingWrongNotification();
+    		return;
+    	}
 
-        openAnotherOverlay('checkEmailPopup');
-    }
+    	openAnotherOverlay('checkEmailPopup');
+    };
 
-    const submit = async () => {
-        // TODO: make in more declarative way
-        if (document)
-            document.activeElement.blur();
+    const submit = async() => {
+    	// TODO: make in more declarative way
+    	if (document)
+    		document.activeElement.blur();
 
-        registerAction('trySubmitLogin');
-        isError = false;
-        const isValuesNotEmpty = email.length > 0 && password.length > 0;
-        if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
-            // TODO: focus needed input
-            isError = true;
-            errorType = 'fieldsError';
-            return;
-        }
+    	registerAction('trySubmitLogin');
+    	isError = false;
+    	const isValuesNotEmpty = 0 < email.length && 0 < password.length;
+    	if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
+    		// TODO: focus needed input
+    		isError = true;
+    		errorType = 'fieldsError';
+    		return;
+    	}
 
-        registerAction('submitLogin');
-        isLoading = true;
-        const { error, data } = await login(email, password);
-        isLoading = false;
+    	registerAction('submitLogin');
+    	isLoading = true;
+    	const { error, data } = await login(email, password);
+    	isLoading = false;
 
-        if (error) {
-            console.warn(error);
-            isError = true;
-            errorType = 'unrecognizedError';
+    	if (error) {
+    		console.warn(error);
+    		isError = true;
+    		errorType = 'unrecognizedError';
 
-            if (error === 'Email is wrong') {
-                errorType = 'noAccount';
-            } else if (error === 'User is not verified') {
-                errorType = 'verificationLetter';
-            } else if (error === 'Password is wrong') {
-                errorType = 'wrongPassword';
-            } else if (error === 'Too many requests, please try again later') {
-                errorType = 'manyRequests';
-            }
+    		if ('Email is wrong' === error) {
+    			errorType = 'noAccount';
+    		} else if ('User is not verified' === error) {
+    			errorType = 'verificationLetter';
+    		} else if ('Password is wrong' === error) {
+    			errorType = 'wrongPassword';
+    		} else if ('Too many requests, please try again later' === error) {
+    			errorType = 'manyRequests';
+    		}
 
-            showSomethingWrongNotification();
-            return;
-        }
+    		showSomethingWrongNotification();
+    		return;
+    	}
 
-        const { userID, activeRatings, userName, wantMoreRatings } = data;
+    	const { userID, activeRatings, userName, wantMoreRatings } = data;
 
-        userStateStore.update(state => ({
-            ...state,
-            userID,
-            activeRatings,
-            userName,
-            wantMoreRatings
-        }));
+    	userStateStore.update(state => ({
+    		...state,
+    		userID,
+    		activeRatings,
+    		userName,
+    		wantMoreRatings,
+    	}));
 
-        registerAction('successLogin');
-        openAnotherOverlay('loggedInPopup');
-        showSuccessNotification();
-    }
+    	registerAction('successLogin');
+    	openAnotherOverlay('loggedInPopup');
+    	showSuccessNotification();
+    };
 
     const debouncedSubmit = debounce(() => {
-        if (isSpam) {
-            isError = true;
-            errorType = 'manyAttempts';
-            clearTimeout(isSpam);
-            isSpam = setTimeout(() => {
-                clearTimeout(isSpam);
-                isSpam = null;
-                isError = false;
-            }, 2000);
-            return;
-        }
+    	if (isSpam) {
+    		isError = true;
+    		errorType = 'manyAttempts';
+    		clearTimeout(isSpam);
+    		isSpam = setTimeout(() => {
+    			clearTimeout(isSpam);
+    			isSpam = null;
+    			isError = false;
+    		}, 2000);
+    		return;
+    	}
 
-        isSpam = setTimeout(() => {
-            clearTimeout(isSpam);
-            isSpam = null;
-        }, 2000);
+    	isSpam = setTimeout(() => {
+    		clearTimeout(isSpam);
+    		isSpam = null;
+    	}, 2000);
 
-        submit();
+    	submit();
     }, 200);
 </script>
 
@@ -157,7 +163,7 @@
         {#if isLoading}
             <Spinner />
         {/if}
-        {#if isError && errorType === 'verificationLetter'}
+        {#if isError && 'verificationLetter' === errorType}
             <div class="italic font-bold sug-color">
                 <span class="block text-center">{$_('errors.errorVerification')}</span>
                 <a href={"#"} class="block text-center underline" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>

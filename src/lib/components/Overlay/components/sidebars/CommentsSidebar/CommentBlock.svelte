@@ -1,71 +1,72 @@
 <script>
-    import { _, locale } from 'svelte-i18n';
+    import { _ } from 'svelte-i18n';
 
     import VoteButton from "../../../../ui-elements/VoteButton.svelte";
 
     import { userStateStore } from "../../../../../../stores/state.js";
-    import { openAnotherOverlay, closeOverlay } from "../../../../../utilities/helpers.js";
+    import { openAnotherOverlay, closeOverlay, showSomethingWrongNotification } from "../../../../../utilities/helpers.js";
     import { reactOnComment } from "../../../../../utilities/api.js";
 
     export let data;
 
-    let { isYours, isLiked, isDisliked, rating, comment, username, liked, disliked, id } = data;
+    const { isYours, isLiked, isDisliked, rating, comment, username, id } = data;
+    let { liked, disliked } = data;
     let isLikesDisabled = isLiked || isYours;
     let isDislikesDisabled = isDisliked || isYours;
 
-    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    const isUserLoggedIn = null === $userStateStore.userID ? false : true;
 
-    const likeComment = async () => {
-        if (!isUserLoggedIn) {
-            closeOverlay('sidebar');
-            openAnotherOverlay('loginPopup');
-            return;
-        }
+    const likeComment = async() => {
+    	if (!isUserLoggedIn) {
+    		closeOverlay('sidebar');
+    		openAnotherOverlay('loginPopup');
+    		return;
+    	}
 
-        if (isLikesDisabled)
-            return;
+    	if (isLikesDisabled)
+    		return;
 
-        if (isDislikesDisabled) {
-            isDislikesDisabled = false;
-            disliked -= 1;
-        }
+    	if (isDislikesDisabled) {
+    		isDislikesDisabled = false;
+    		disliked = disliked - 1;
+    	}
 
-        liked += 1;
-        isLikesDisabled = true;
+    	liked = liked + 1;
+    	isLikesDisabled = true;
 
-        const { error, data } = await reactOnComment('like', id);
-        if (error) {
-            console.warn(error);
-            alert('error');
-            return;
-        }
-    }
+    	const { error } = await reactOnComment('like', id);
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    		return;
+    	}
+    };
 
-    const dislikeComment = async () => {
-        if (!isUserLoggedIn) {
-            closeOverlay('sidebar');
-            openAnotherOverlay('loginPopup');
-            return;
-        }
+    const dislikeComment = async() => {
+    	if (!isUserLoggedIn) {
+    		closeOverlay('sidebar');
+    		openAnotherOverlay('loginPopup');
+    		return;
+    	}
 
-        if (isDislikesDisabled)
-            return;
+    	if (isDislikesDisabled)
+    		return;
 
-        if (isLikesDisabled) {
-            isLikesDisabled = false;
-            liked -= 1;
-        }
+    	if (isLikesDisabled) {
+    		isLikesDisabled = false;
+    		liked = liked - 1;
+    	}
 
-        disliked += 1;
-        isDislikesDisabled = true;
+    	disliked = disliked + 1;
+    	isDislikesDisabled = true;
 
-        const { error, data } = await reactOnComment('dislike', id);
-        if (error) {
-            console.warn(error);
-            alert('error');
-            return;
-        }
-    }
+    	const { error } = await reactOnComment('dislike', id);
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    		return;
+    	}
+    };
 </script>
 
 <li

@@ -1,6 +1,6 @@
 <script>
     import { page } from '$app/stores';
-	import { _ } from 'svelte-i18n';
+    import { _ } from 'svelte-i18n';
 
     import OG from './OG.svelte';
     import Twitter from './Twitter.svelte';

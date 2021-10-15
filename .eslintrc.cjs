@@ -1,15 +1,15 @@
 module.exports = {
 	root: true,
 	extends: ['eslint:recommended'],
-	plugins: ['svelte3', 'html'],
+	plugins: ['svelte3'],
 	overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
 	parserOptions: {
 		sourceType: 'module',
-		ecmaVersion: 2019
+		ecmaVersion: 2021,
 	},
 	env: {
 		browser: true,
-		es2017: true,
+		es2021: true,
 		node: true
 	},
 	rules: {
@@ -18,7 +18,7 @@ module.exports = {
 		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
 		"nonblock-statement-body-position": [2, "below"],
 		"indent": [2, "tab"],
-		"func-style": [2, "expression", { "allowArrowFunctions": true }],
+		"func-style": [1, "expression", { "allowArrowFunctions": true }],
 		"no-console": 1,
 		"no-debugger": 2,
 		"no-alert": 2,
@@ -38,7 +38,7 @@ module.exports = {
 		"no-unreachable": 2,
 		"no-eval": 2,
 		"no-implied-eval": 2,
-		"no-lonely-if": 2,
+		"no-lonely-if": 1,
 		"array-callback-return": 1,
 		"block-scoped-var": 1,
 		"eqeqeq": [2, "smart"],
@@ -83,14 +83,14 @@ module.exports = {
 		"jsx-quotes": [1, "prefer-single"],
 		"keyword-spacing": [2, { "before": true, "after": true }],
 		"max-depth": [1, 5],
-		"max-len": [2, { "code": 120, "tabWidth": 4, "ignoreUrls": true }],
+		"max-len": [2, { "code": 140, "tabWidth": 4, "ignoreUrls": true }],
 		"max-nested-callbacks": [2, 2],
 		"no-mixed-spaces-and-tabs": [2, "smart-tabs"],
 		"no-multiple-empty-lines": [2, { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
 		"no-nested-ternary": 1,
 		"no-ternary": 0,
 		"no-trailing-spaces": 2,
-		"no-unneeded-ternary": 2,
+		"no-unneeded-ternary": 0,
 		"one-var": [2, "never"],
 		"operator-assignment": [1, "never"],
 		"padded-blocks": [2, "never"],
@@ -108,6 +108,7 @@ module.exports = {
 		"prefer-arrow-callback": 1,
 		"prefer-const": 2,
 		"prefer-template": 2,
-		"template-curly-spacing": [2, "never"]
+		"template-curly-spacing": [2, "never"],
+        "no-unused-vars": 1
 	}
 };

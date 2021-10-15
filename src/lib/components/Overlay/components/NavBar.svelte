@@ -6,116 +6,123 @@
     import UserProfileIcon from '../../inline-images/UserProfileIcon.svelte';
     import DropdownMenu from '../../ui-elements/DropdownMenu.svelte';
 
-    import { openAnotherOverlay, setCookie, showSuccessNotification, showSomethingWrongNotification, closeOverlays, registerAction } from '../../../utilities/helpers.js';
+    import {
+    	openAnotherOverlay,
+    	setCookie,
+    	showSuccessNotification,
+    	showSomethingWrongNotification,
+    	closeOverlays,
+    	registerAction,
+    } from '../../../utilities/helpers.js';
     import { saveLang, logout } from '../../../utilities/api.js';
     import { appStateStore, userStateStore } from "../../../../stores/state.js";
 
     let profileDropDownOpen = false;
 
-    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: isUserLoggedIn = null !== $userStateStore.userID;
 
     $: dropdownData = [{
-        text: $_('menuSidebar.logout'),
-        action: async (e) => {
-            e.preventDefault();
-            profileDropDownOpen = false;
-            closeOverlays();
-            const { error, data } = await logout();
+    	text: $_('menuSidebar.logout'),
+    	action: async e => {
+    		e.preventDefault();
+    		profileDropDownOpen = false;
+    		closeOverlays();
+    		const { error } = await logout();
 
-            if (!error) {
-                userStateStore.update(state => ({
-                    ...state,
-                    userID: null,
-                    activeRatings: 3,
-                    userName: 'Аноним',
-                    wantMoreRatings: false
-                }));
-                showSuccessNotification();
-                registerAction('navbarLogout');
-            } else {
-                console.warn(error)
-                showSomethingWrongNotification();
-            }
-        }
+    		if (!error) {
+    			userStateStore.update(state => ({
+    				...state,
+    				userID: null,
+    				activeRatings: 3,
+    				userName: 'Аноним',
+    				wantMoreRatings: false,
+    			}));
+    			showSuccessNotification();
+    			registerAction('navbarLogout');
+    		} else {
+    			console.warn(error);
+    			showSomethingWrongNotification();
+    		}
+    	},
     }, {
-        text: $_('menuSidebar.myRatings'),
-        action: (e) => {
-            e.preventDefault();
-            profileDropDownOpen = false;
-            openAnotherOverlay('myPlacesPopup');
-        }
+    	text: $_('menuSidebar.myRatings'),
+    	action: e => {
+    		e.preventDefault();
+    		profileDropDownOpen = false;
+    		openAnotherOverlay('myPlacesPopup');
+    	},
     }, {
-        text: $_('menuSidebar.changePassword'),
-        action: (e) => {
-            e.preventDefault();
-            profileDropDownOpen = false;
-            openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
-        }
+    	text: $_('menuSidebar.changePassword'),
+    	action: e => {
+    		e.preventDefault();
+    		profileDropDownOpen = false;
+    		openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
+    	},
     }];
 
     const closeStartScreen = () => {
-        const { termsOfUseAgreed, startScreen } = $appStateStore;
-        if (!startScreen || !termsOfUseAgreed)
-            return;
+    	const { termsOfUseAgreed, startScreen } = $appStateStore;
+    	if (!startScreen || !termsOfUseAgreed)
+    		return;
 
-        appStateStore.update(state => ({ ...state, startScreen: false }));
-        setCookie('startScreen', '0', 365);
-        registerAction('navbarButtons');
-    }
+    	appStateStore.update(state => ({ ...state, startScreen: false }));
+    	setCookie('startScreen', '0', 365);
+    	registerAction('navbarButtons');
+    };
 
     const openRegister = () => {
-        if (!$appStateStore.termsOfUseAgreed)
-            return;
-        closeStartScreen();
-        openAnotherOverlay('registerPopup');
-    }
+    	if (!$appStateStore.termsOfUseAgreed)
+    		return;
+    	closeStartScreen();
+    	openAnotherOverlay('registerPopup');
+    };
 
     const openLogin = () => {
-        if (!$appStateStore.termsOfUseAgreed)
-            return;
-        closeStartScreen();
-        openAnotherOverlay('loginPopup');
-    }
+    	if (!$appStateStore.termsOfUseAgreed)
+    		return;
+    	closeStartScreen();
+    	openAnotherOverlay('loginPopup');
+    };
 
     let isLeftHovered = false;
     const handleMouseenterLeft = () => {
-        isLeftHovered = true;
-    }
+    	isLeftHovered = true;
+    };
     const handleMouseleaveLeft = () => {
-        isLeftHovered = false;
-    }
+    	isLeftHovered = false;
+    };
 
     let isRightHovered = false;
     const handleMouseenterRight = () => {
-        isRightHovered = true;
-    }
+    	isRightHovered = true;
+    };
     const handleMouseleaveRight = () => {
-        isRightHovered = false;
-    }
+    	isRightHovered = false;
+    };
 
     let isCenterHovered = false;
     const handleMouseenterCenter = () => {
-        isCenterHovered = true;
-    }
+    	isCenterHovered = true;
+    };
     const handleMouseleaveCenter = () => {
-        isCenterHovered = false;
-    }
+    	isCenterHovered = false;
+    };
 
-    const changeLanguage = async () => {
-        const nextLang = $locale === 'ru' ? 'en' : 'ru';
-        locale.set(nextLang);
-        if (typeof window !== 'undefined') {
-            const url = new URL(window.location.href);
-            url.pathname = `/${nextLang}/`;
-            window.history.replaceState(null, null, url);
+    const changeLanguage = async() => {
+    	const nextLang = 'ru' === $locale ? 'en' : 'ru';
+    	locale.set(nextLang);
+    	if ('undefined' !== typeof window) {
+    		const url = new URL(window.location.href);
+    		url.pathname = `/${nextLang}/`;
+    		window.history.replaceState(null, null, url);
 
-            if (isUserLoggedIn)
-                await saveLang(nextLang);
+    		if (isUserLoggedIn)
+    			await saveLang(nextLang);
 
-            showSuccessNotification();
-            registerAction('navbarLanguage');
-        };
-    }
+    		showSuccessNotification();
+    		registerAction('navbarLanguage');
+    	}
+    };
 </script>
 
 <nav class="transition-all fixed flex z-5 justify-center inset-x-4 top-4 h-14 -lg:hidden">
@@ -152,16 +159,16 @@
             on:mouseleave={handleMouseleaveRight}
         >
             <a class="block mx-4 p-2" href={'#'} on:click|preventDefault={changeLanguage}>
-                <span class:underline={$locale === 'ru'}>RU</span>
+                <span class:underline={'ru' === $locale}>RU</span>
                 /
-                <span class:underline={$locale === 'en'}>EN</span>
+                <span class:underline={'en' === $locale}>EN</span>
             </a>
             {#if isUserLoggedIn}
                 <a
                     href={"#"}
                     class="flex items-center relative"
-                    on:blur={() => {setTimeout(() => {profileDropDownOpen = false}, 200)}}
-                    on:click={(e) => {
+                    on:blur={() => { setTimeout(() => { profileDropDownOpen = false }, 200) }}
+                    on:click={e => {
                         e.preventDefault();
                         profileDropDownOpen = !profileDropDownOpen;
                     }}

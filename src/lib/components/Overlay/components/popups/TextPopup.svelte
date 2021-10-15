@@ -1,6 +1,4 @@
 <script>
-    import { _ } from 'svelte-i18n';
-
     import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 

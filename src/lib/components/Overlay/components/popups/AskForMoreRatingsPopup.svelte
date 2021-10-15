@@ -34,7 +34,7 @@
     </p>
 
     <p class="my-2">
-        {#if $locale === 'en'}
+        {#if 'en' === $locale}
             {$_('askForMoreRatingsPopup.youCanTryFasten')}
             <TextLink
                 href="mailto:{appInfo.supportEmail}"

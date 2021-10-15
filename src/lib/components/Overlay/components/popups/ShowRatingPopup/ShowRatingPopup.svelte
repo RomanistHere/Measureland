@@ -1,10 +1,10 @@
 <script>
     import { browser } from '$app/env';
-    import { getContext, onDestroy } from 'svelte';
+    import { onDestroy } from 'svelte';
     import { json, _, locale } from 'svelte-i18n';
+    import L from 'leaflet';
 
     import Timeline from './Timeline.svelte';
-    import PopupTitle from '../PopupTitle.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
     import Spinner from '../../../../ui-elements/Spinner.svelte';
     import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
@@ -12,12 +12,19 @@
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
     import { appStateStore, userStateStore, overlayStateStore, isDesktop } from "../../../../../../stores/state.js";
-    import { getFinalRating, roundToTen, roundToFifthDecimal, openAnotherOverlay, centerMap, showSomethingWrongNotification, registerAction } from '../../../../../utilities/helpers.js';
+    import {
+    	getFinalRating,
+    	roundToTen,
+    	openAnotherOverlay,
+    	centerMap,
+    	showSomethingWrongNotification,
+    	registerAction,
+    } from '../../../../../utilities/helpers.js';
 
     export let popupData;
 
     const map = $mapReference;
-	const geocodeService = $geocodeServiceReference;
+    const geocodeService = $geocodeServiceReference;
 
     let isAlreadyRatedByThisUser = false;
     let averageRating = '';
@@ -32,85 +39,85 @@
     let timelineData = [];
 
     $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
-    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: isUserLoggedIn = null === $userStateStore.userID ? false : true;
     // complexity because of translation
-    $: criteriaArray = loadedRating === null
-        ? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
-        : Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
+    $: criteriaArray = null === loadedRating
+    	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
+    	: Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
 
     const copyShareRatingURL = () => {
-        if (browser && !shouldShowURLCopySuccess) {
-            const shareRatingURL = new URL(window.location.href).toString();
-            try {
-                navigator.clipboard.writeText(shareRatingURL);
-                shouldShowURLCopySuccess = true;
-                setTimeout(() => { shouldShowURLCopySuccess = false }, 1000);
-            } catch (e) {
-                console.warn(e);
-                showSomethingWrongNotification();
-            }
-        }
-        registerAction('clickCopyURLButton');
-    }
+    	if (browser && !shouldShowURLCopySuccess) {
+    		const shareRatingURL = new URL(window.location.href).toString();
+    		try {
+    			navigator.clipboard.writeText(shareRatingURL);
+    			shouldShowURLCopySuccess = true;
+    			setTimeout(() => { shouldShowURLCopySuccess = false }, 1000);
+    		} catch (e) {
+    			console.warn(e);
+    			showSomethingWrongNotification();
+    		}
+    	}
+    	registerAction('clickCopyURLButton');
+    };
 
     const openCommentsSidebar = () =>
-        openAnotherOverlay('commentsSidebar', commentGeoID);
+    	openAnotherOverlay('commentsSidebar', commentGeoID);
 
-    const fetchData = async ({ lng, lat }) => {
-        geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
-            if (error) {
-                console.warn(error);
-                return;
-            }
-            approximateAdress = result.address.LongLabel;
-        });
-        // TODO:
-        // $('.rate__popup').focus()
-        if (circle)
-            map.removeLayer(circle);
+    const fetchData = async({ lng, lat }) => {
+    	geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
+    		if (error) {
+    			console.warn(error);
+    			return;
+    		}
+    		approximateAdress = result.address.LongLabel;
+    	});
+    	// TODO:
+    	// $('.rate__popup').focus()
+    	if (circle)
+    		map.removeLayer(circle);
 
-        circle = L.circle({ lng, lat }, 300, { color: '#007097' });
+    	circle = L.circle({ lng, lat }, 300, { color: '#007097' });
 
-        circle.addTo(map);
-        centerMap(map, lat, lng, $isDesktop);
+    	circle.addTo(map);
+    	centerMap(map, lat, lng, $isDesktop);
 
-        const { error, data } = await getSinglePointData([ lng, lat ]);
+    	const { error, data } = await getSinglePointData([ lng, lat ]);
 
-        if (error) {
-            console.warn(error);
-            showSomethingWrongNotification();
-            return;
-        }
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    		return;
+    	}
 
-        console.log(data)
-        const { properties } = data;
-        const { timeline, isRated, geoID, numberOfPersonalExperience } = properties;
-        loadedRating = properties['rating'];
-        const { finalRating } = getFinalRating(loadedRating);
+    	console.log(data);
+    	const { properties } = data;
+    	const { timeline, isRated, geoID, numberOfPersonalExperience } = properties;
+    	loadedRating = properties['rating'];
+    	const { finalRating } = getFinalRating(loadedRating);
 
-        appStateStore.update(state => ({ ...state, showRating: [ lat, lng ] }));
+    	appStateStore.update(state => ({ ...state, showRating: [ lat, lng ] }));
 
-        timelineData = timeline;
-        isAlreadyRatedByThisUser = isRated;
-        currentLatLng = { lng, lat };
-        commentGeoID = geoID;
-        averageRating = roundToTen(finalRating);
-        numberOfUsers = properties.numberOfUsers;
-        numberOfComments = properties.numberOfComments;
-        personalExperiencePercent = Math.floor(numberOfPersonalExperience / properties.numberOfUsers * 100);
+    	timelineData = timeline;
+    	isAlreadyRatedByThisUser = isRated;
+    	currentLatLng = { lng, lat };
+    	commentGeoID = geoID;
+    	averageRating = roundToTen(finalRating);
+    	numberOfUsers = properties.numberOfUsers;
+    	numberOfComments = properties.numberOfComments;
+    	personalExperiencePercent = Math.floor(numberOfPersonalExperience / properties.numberOfUsers * 100);
 
-        // update comments if they opened
-        if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data !== commentGeoID)
-            openAnotherOverlay('commentsSidebar', commentGeoID);
-    }
+    	// update comments if they opened
+    	if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data !== commentGeoID)
+    		openAnotherOverlay('commentsSidebar', commentGeoID);
+    };
 
     $: promise = fetchData(popupData);
 
     onDestroy(() => {
-        appStateStore.update(state => ({ ...state, showRating: false }));
-        map.removeLayer(circle);
-        circle = null;
-    })
+    	appStateStore.update(state => ({ ...state, showRating: false }));
+    	map.removeLayer(circle);
+    	circle = null;
+    });
 </script>
 
 <div class="max-w-lg w-full">

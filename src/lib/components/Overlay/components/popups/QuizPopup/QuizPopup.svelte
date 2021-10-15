@@ -1,6 +1,7 @@
 <script>
     import { _, json } from 'svelte-i18n';
     import { onMount, onDestroy } from 'svelte';
+    import L from 'leaflet';
 
     import PopupTitle from '../PopupTitle.svelte';
     import QuizItem from './QuizItem.svelte';
@@ -12,51 +13,43 @@
     import Select from '../../../../ui-elements/Select.svelte';
 
     import { saveToDB } from "../../../../../utilities/api.js";
-    import { getFinalRating, roundToTen, openAnotherOverlay, showSuccessNotification, closeOverlays, roundToFifthDecimal, debounce, centerMap, showSomethingWrongNotification, registerAction, generateYearsBetween } from "../../../../../utilities/helpers.js";
-    import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
+    import {
+    	getFinalRating,
+    	roundToTen,
+    	openAnotherOverlay,
+    	showSuccessNotification,
+    	closeOverlays,
+    	roundToFifthDecimal,
+    	debounce,
+    	centerMap,
+    	showSomethingWrongNotification,
+    	registerAction,
+    	generateYearsBetween,
+    } from "../../../../../utilities/helpers.js";
+    import { mapReference } from "../../../../../../stores/references.js";
     import { userStateStore, markerStore, isDesktop } from "../../../../../../stores/state.js";
 
     export let popupData;
 
     $: errorsObj = $json('errors');
     $: criteriaObj = $json('criteria');
-    $: quizArray = Object.keys(criteriaObj).map((key, i) => ({
-        title: criteriaObj[key]['title'],
-        tooltip: criteriaObj[key]['tooltip'],
-        caption: criteriaObj[key]['caption'],
-        rating: null,
-        key,
+    $: quizArray = Object.keys(criteriaObj).map(key => ({
+    	title: criteriaObj[key]['title'],
+    	tooltip: criteriaObj[key]['tooltip'],
+    	caption: criteriaObj[key]['caption'],
+    	rating: null,
+    	key,
     }));
 
-    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: isUserLoggedIn = null === $userStateStore.userID ? false : true;
     $: currentStage = 1;
 
     const currentYear = new Date().getFullYear();
     const timelineStamps = {
-        1: currentYear,
-        2: currentYear - 4,
-        3: currentYear - 10,
+    	1: currentYear,
+    	2: currentYear - 4,
+    	3: currentYear - 10,
     };
-
-    $: timelineOptions = [{
-        value: timelineStamps[1],
-        text: $_('quizPopup.timelineSelectOption1'),
-        selected: timelineStamps[1] >= quizState.timeline && timelineStamps[2] < quizState.timeline,
-    }, {
-        value: timelineStamps[2],
-        text: $_('quizPopup.timelineSelectOption2'),
-        selected: timelineStamps[2] >= quizState.timeline && timelineStamps[3] < quizState.timeline,
-    }, {
-        value: timelineStamps[3],
-        text: $_('quizPopup.timelineSelectOption3'),
-        selected: timelineStamps[3] >= quizState.timeline,
-    }];
-
-    $: yearSelectOptions = generateYearsBetween(1980).sort((a, b) => b - a).map(year => ({
-        value: year,
-        text: year,
-        selected: year === quizState.timeline
-    }));
 
     let circle;
     let remainingCommentLength = 330;
@@ -64,158 +57,177 @@
     let isLoading = false;
     let isError = false;
     let quizState = {
-        ratings: {},
-        comment: null,
-        isPersonalExperience: false,
-        timeline: new Date().getFullYear() - 4,
+    	ratings: {},
+    	comment: null,
+    	isPersonalExperience: false,
+    	timeline: new Date().getFullYear() - 4,
     };
+
+    $: timelineOptions = [{
+    	value: timelineStamps[1],
+    	text: $_('quizPopup.timelineSelectOption1'),
+    	selected: timelineStamps[1] >= quizState.timeline && timelineStamps[2] < quizState.timeline,
+    }, {
+    	value: timelineStamps[2],
+    	text: $_('quizPopup.timelineSelectOption2'),
+    	selected: timelineStamps[2] >= quizState.timeline && timelineStamps[3] < quizState.timeline,
+    }, {
+    	value: timelineStamps[3],
+    	text: $_('quizPopup.timelineSelectOption3'),
+    	selected: timelineStamps[3] >= quizState.timeline,
+    }];
+
+    $: yearSelectOptions = generateYearsBetween(1980).sort((a, b) => b - a).map(year => ({
+    	value: year,
+    	text: year,
+    	selected: year === quizState.timeline,
+    }));
 
     const map = $mapReference;
     const maxCommentLength = 330;
-	const geocodeService = $geocodeServiceReference;
 
     const nextStage = () => {
-        currentStage += 1;
-        isError = false;
-    }
+    	currentStage = currentStage + 1;
+    	isError = false;
+    };
     const prevStage = () => {
-        currentStage -= 1;
-        isError = false;
-    }
+    	currentStage = currentStage - 1;
+    	isError = false;
+    };
 
     const updateComment = e => {
-        const comment = e.target.value;
-        remainingCommentLength = 330 - comment.length;
-        quizState = { ...quizState, comment };
-    }
+    	const comment = e.target.value;
+    	remainingCommentLength = 330 - comment.length;
+    	quizState = { ...quizState, comment };
+    };
 
     const changePersonalExperience = isPersonalExperience => {
-        nextStage();
-        quizState = { ...quizState, isPersonalExperience };
-    }
+    	nextStage();
+    	quizState = { ...quizState, isPersonalExperience };
+    };
 
     const setTimeline = event => {
-        const timeline = Number(event.target.value);
-        quizState = { ...quizState, timeline };
-    }
+    	const timeline = Number(event.target.value);
+    	quizState = { ...quizState, timeline };
+    };
 
     const setRating = event => {
-        const { key, rating } = event.detail;
-        for (let i = 0; i < quizArray.length; i++) {
-            const item = quizArray[i];
-            if (item.key === key)
-                item.rating = rating;
-        }
+    	const { key, rating } = event.detail;
+    	for (let i = 0; i < quizArray.length; i++) {
+    		const item = quizArray[i];
+    		if (item.key === key)
+    			item.rating = rating;
+    	}
 
-        quizState = {
-            ...quizState,
-            ratings: {
-                ...quizState.ratings,
-                [key]: rating
-            }
-        }
-    }
+    	quizState = {
+    		...quizState,
+    		ratings: {
+    			...quizState.ratings,
+    			[key]: rating,
+    		},
+    	};
+    };
 
     const checkAndGetData = rating => {
-        const { finalRating, answersNumber } = getFinalRating(rating)
+    	const { finalRating, answersNumber } = getFinalRating(rating);
 
-        return {
-            isDataValid: answersNumber === 11 ? true : false,
-            averageRating: roundToTen(finalRating)
-        }
-    }
+    	return {
+    		isDataValid: 11 === answersNumber ? true : false,
+    		averageRating: roundToTen(finalRating),
+    	};
+    };
 
-    const submit = async () => {
-        registerAction('trySubmitQuiz');
-        errorType = null;
-        isError = false;
-        isLoading = true;
-        const { isDataValid, averageRating } = checkAndGetData(quizState.ratings);
-        if (!isDataValid) {
-            // TODO: later forward to non rated field
-            errorType = 'rateEveryField';
-            isLoading = false;
-            isError = true;
-            return
-        }
+    const submit = async() => {
+    	registerAction('trySubmitQuiz');
+    	errorType = null;
+    	isError = false;
+    	isLoading = true;
+    	const { isDataValid, averageRating } = checkAndGetData(quizState.ratings);
+    	if (!isDataValid) {
+    		// TODO: later forward to non rated field
+    		errorType = 'rateEveryField';
+    		isLoading = false;
+    		isError = true;
+    		return;
+    	}
 
-        const currentCoords = [ roundToFifthDecimal(popupData.lat), roundToFifthDecimal(popupData.lng) ];
+    	const currentCoords = [ roundToFifthDecimal(popupData.lat), roundToFifthDecimal(popupData.lng) ];
 
-        try {
-            registerAction('submitQuiz');
-            const { ratings, comment, isPersonalExperience, timeline } = quizState;
-            const { error, data } = await saveToDB(currentCoords, ratings, averageRating, comment, isPersonalExperience, timeline);
-            isLoading = false;
-            console.log(error, data)
+    	try {
+    		registerAction('submitQuiz');
+    		const { ratings, comment, isPersonalExperience, timeline } = quizState;
+    		const { error, data } = await saveToDB(currentCoords, ratings, averageRating, comment, isPersonalExperience, timeline);
+    		isLoading = false;
+    		console.log(error, data);
 
-            if (error === 'Nearby place is already rated') {
-                errorType = 'nearbyPlaceAlreadyRated';
-                isError = true;
-                return;
-            } else if (error === 'No active ratings') {
-                errorType = 'youRateTooOften';
-                isError = true;
-                return;
-            } else if (error === 'User is not logged in') {
-                errorType = 'sessionExpired';
-                isError = true;
-                return;
-            } else if (error) {
-                console.warn(error);
-                errorType = 'unrecognizedError';
-                isError = true;
-                showSomethingWrongNotification();
-                return;
-            }
+    		if ('Nearby place is already rated' === error) {
+    			errorType = 'nearbyPlaceAlreadyRated';
+    			isError = true;
+    			return;
+    		} else if ('No active ratings' === error) {
+    			errorType = 'youRateTooOften';
+    			isError = true;
+    			return;
+    		} else if ('User is not logged in' === error) {
+    			errorType = 'sessionExpired';
+    			isError = true;
+    			return;
+    		} else if (error) {
+    			console.warn(error);
+    			errorType = 'unrecognizedError';
+    			isError = true;
+    			showSomethingWrongNotification();
+    			return;
+    		}
 
-            const isUpdated = data.message === 'Rating updated' ? true : false;
-            if (isUpdated) {
-                const { coords, averageRating } = data;
-                markerStore.update(state => ({
-                    ...state,
-                    markersToRemove: [ ...state.markersToRemove, { coords: currentCoords } ],
-                    markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating } ],
-                }));
-            } else {
-                markerStore.update(state => ({
-                    ...state,
-                    markersToAdd: [ ...state.markersToAdd, { coords: currentCoords.reverse(), rating: averageRating } ],
-                }));
-            }
+    		const isUpdated = 'Rating updated' === data.message ? true : false;
+    		if (isUpdated) {
+    			const { coords, averageRating } = data;
+    			markerStore.update(state => ({
+    				...state,
+    				markersToRemove: [ ...state.markersToRemove, { coords: currentCoords }],
+    				markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating }],
+    			}));
+    		} else {
+    			markerStore.update(state => ({
+    				...state,
+    				markersToAdd: [ ...state.markersToAdd, { coords: currentCoords.reverse(), rating: averageRating }],
+    			}));
+    		}
 
-            registerAction('successQuiz');
-            userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
-            closeOverlays();
-            showSuccessNotification();
-        } catch (e) {
-            console.warn(e);
-            errorType = 'unrecognizedError';
-            isError = true;
-            isLoading = false;
-            showSomethingWrongNotification();
-        }
-    }
+    		registerAction('successQuiz');
+    		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
+    		closeOverlays();
+    		showSuccessNotification();
+    	} catch (e) {
+    		console.warn(e);
+    		errorType = 'unrecognizedError';
+    		isError = true;
+    		isLoading = false;
+    		showSomethingWrongNotification();
+    	}
+    };
 
     const debouncedSubmit = debounce(submit, 300);
 
     const addCircle = () => {
-        const { lat, lng } = popupData;
-        circle = L.circle(popupData, 200, { color: '#007097' });
+    	const { lat, lng } = popupData;
+    	circle = L.circle(popupData, 200, { color: '#007097' });
 
-        circle.addTo(map);
+    	circle.addTo(map);
 
-        centerMap(map, lat, lng, $isDesktop, true);
-    }
+    	centerMap(map, lat, lng, $isDesktop, true);
+    };
 
     const removeCircle = () =>
-        map.removeLayer(circle);
+    	map.removeLayer(circle);
 
     onMount(addCircle);
     onDestroy(removeCircle);
 </script>
 
 <div class="max-w-sm w-full">
-    {#if currentStage === 1}
+    {#if 1 === currentStage}
         <p class="my-4">
             {$_('quizPopup.soYouWantToRate')}
         </p>
@@ -229,7 +241,7 @@
         <p class="text-xs text-center my-4">
             {$_('quizPopup.beSincere')}
         </p>
-    {:else if currentStage === 2}
+    {:else if 2 === currentStage}
         <p class="my-4">
             {$_('quizPopup.tenCriteria')}
             <strong class="underline font-normal">{$_('quizPopup.tenCriteriaStrong')}</strong>:
@@ -244,7 +256,7 @@
             on:setRating={setRating}
             { ...quizArray[1] }
         />
-    {:else if currentStage === 3}
+    {:else if 3 === currentStage}
         <PopupTitle title={$_('quizPopup.title3')} />
 
         <QuizItem
@@ -261,7 +273,7 @@
             on:setRating={setRating}
             { ...quizArray[4] }
         />
-    {:else if currentStage === 4}
+    {:else if 4 === currentStage}
         <PopupTitle title={$_('quizPopup.title4')} />
 
         <QuizItem
@@ -278,7 +290,7 @@
             on:setRating={setRating}
             { ...quizArray[7] }
         />
-    {:else if currentStage === 5}
+    {:else if 5 === currentStage}
         <PopupTitle title={$_('quizPopup.title5')} />
 
         <QuizItem
@@ -295,7 +307,7 @@
             on:setRating={setRating}
             { ...quizArray[10] }
         />
-    {:else if currentStage === 6}
+    {:else if 6 === currentStage}
         <PopupTitle title={$_('quizPopup.title6')} />
 
         <Select
@@ -313,7 +325,7 @@
             className='mb-8'
             on:change={setTimeline}
         />
-    {:else if currentStage === 7}
+    {:else if 7 === currentStage}
         <PopupTitle title={$_('quizPopup.title7')} />
 
         <p class="my-4">
@@ -334,7 +346,7 @@
         <div class="flex justify-center items-center h-24 relative w-full">
             {#if isLoading}
                 <Spinner />
-            {:else if isError && errorType === 'youRateTooOften'}
+            {:else if isError && 'youRateTooOften' === errorType}
                 <div class="italic font-bold sug-color text-center">
                     {$_('errors.youRateTooOften')}
                     <TextLink
@@ -353,7 +365,7 @@
     {/if}
 
     <div class="flex justify-evenly items-center my-4">
-        {#if isUserLoggedIn && currentStage === 1}
+        {#if isUserLoggedIn && 1 === currentStage}
             <PrimaryButton
                 action={() => { changePersonalExperience(false) }}
                 text={$_('quizPopup.noPersonalExperienceBtn')}
@@ -362,7 +374,7 @@
                 action={() => { changePersonalExperience(true) }}
                 text={$_('quizPopup.yesPersonalExperienceBtn')}
             />
-        {:else if currentStage === 1}
+        {:else if 1 === currentStage}
             <PrimaryButton
                 action={() => { openAnotherOverlay('loginPopup') }}
                 text={$_('quizPopup.loginBtn')}
@@ -372,7 +384,7 @@
                 action={prevStage}
                 text={$_('quizPopup.backBtn')}
             />
-            {#if currentStage === 7}
+            {#if 7 === currentStage}
                 <PrimaryButton
                     action={debouncedSubmit}
                     text={$_('quizPopup.submitBtn')}

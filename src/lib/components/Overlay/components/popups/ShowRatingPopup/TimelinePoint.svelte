@@ -5,7 +5,13 @@
     import TextButton from '../../../../ui-elements/TextButton.svelte';
 
     import { fetchSingleRating, reactOnRating } from '../../../../../utilities/api.js';
-    import { showSuccessNotification, openAnotherOverlay, showSomethingWrongNotification, debounce, registerAction } from '../../../../../utilities/helpers.js';
+    import {
+    	showSuccessNotification,
+    	openAnotherOverlay,
+    	showSomethingWrongNotification,
+    	debounce,
+    	registerAction,
+    } from '../../../../../utilities/helpers.js';
 
     export let averageRating;
     export let timeline;
@@ -22,75 +28,75 @@
     let isAlreadyEndorsed = false;
 
     const resetRatings = ratingID => {
-        // this needed for the case when user clicks
-        // new ratings without closing previous one
-        ratings = null;
-    }
+    	// this needed for the case when user clicks
+    	// new ratings without closing previous one
+    	ratings = null;
+    };
 
     $: resetRatings(_id);
 
-    const handleTimeClick = async () => {
-        if (!ratings) {
-            const { error, data } = await fetchSingleRating(_id);
+    const handleTimeClick = async() => {
+    	if (!ratings) {
+    		const { error, data } = await fetchSingleRating(_id);
 
-            if (error) {
-                console.warn(error);
-                showSomethingWrongNotification();
-                return;
-            }
+    		if (error) {
+    			console.warn(error);
+    			showSomethingWrongNotification();
+    			return;
+    		}
 
-            const { ratingData } = data;
-            const { rating, isPersonalExperience, isReported, isEndorsed, isYours } = ratingData;
-            ratings = Object.entries(rating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
-            isPersExp = isPersonalExperience;
-            isOwnRating = isYours;
-            isAlreadyReported = isReported;
-            isAlreadyEndorsed = isEndorsed;
-            isRatingExpanded = true;
-            registerAction('fetchRating');
-        }
-    }
+    		const { ratingData } = data;
+    		const { rating, isPersonalExperience, isReported, isEndorsed, isYours } = ratingData;
+    		ratings = Object.entries(rating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
+    		isPersExp = isPersonalExperience;
+    		isOwnRating = isYours;
+    		isAlreadyReported = isReported;
+    		isAlreadyEndorsed = isEndorsed;
+    		isRatingExpanded = true;
+    		registerAction('fetchRating');
+    	}
+    };
 
     const handleMouseleave = () => {
-        tooltipTimeout = setTimeout(() => { isRatingExpanded = false }, 100);
-    }
+    	tooltipTimeout = setTimeout(() => { isRatingExpanded = false }, 100);
+    };
 
     const handleMouseenter = () => {
-        clearTimeout(tooltipTimeout);
-        isRatingExpanded = true;
-    }
+    	clearTimeout(tooltipTimeout);
+    	isRatingExpanded = true;
+    };
 
-    const reportRating = async () => {
-        const { error, data } = await reactOnRating(_id, true);
+    const reportRating = async() => {
+    	const { error } = await reactOnRating(_id, true);
 
-        if (!error) {
-            isAlreadyReported = true;
-            showSuccessNotification();
-        } else if (error === 'User is not logged in') {
-            openAnotherOverlay('loginPopup');
-        } else {
-            console.warn(error);
-            showSomethingWrongNotification();
-        }
+    	if (!error) {
+    		isAlreadyReported = true;
+    		showSuccessNotification();
+    	} else if ('User is not logged in' === error) {
+    		openAnotherOverlay('loginPopup');
+    	} else {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    	}
 
-        registerAction('reportRating');
-    }
+    	registerAction('reportRating');
+    };
 
-    const endorseRating = async () => {
-        const { error, data } = await reactOnRating(_id, false);
+    const endorseRating = async() => {
+    	const { error } = await reactOnRating(_id, false);
 
-        if (!error) {
-            isAlreadyEndorsed = true;
-            showSuccessNotification();
-        } else if (error === 'User is not logged in') {
-            openAnotherOverlay('loginPopup');
-        } else {
-            console.warn(error);
-            showSomethingWrongNotification();
-        }
+    	if (!error) {
+    		isAlreadyEndorsed = true;
+    		showSuccessNotification();
+    	} else if ('User is not logged in' === error) {
+    		openAnotherOverlay('loginPopup');
+    	} else {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    	}
 
-        registerAction('endorseRating');
-    }
+    	registerAction('endorseRating');
+    };
 
     const debouncedEndorseRating = debounce(endorseRating, 300);
     const debouncedReportRating = debounce(reportRating, 300);
@@ -149,7 +155,7 @@
                     {$_('timelinePoint.endorsed')}
                 {/if}
             {:else}
-                {$_('timelinePoint.clickToExpand', { values: [averageRating] })}
+                {$_('timelinePoint.clickToExpand', { values: [ averageRating ] })}
             {/if}
         </div>
     {/if}

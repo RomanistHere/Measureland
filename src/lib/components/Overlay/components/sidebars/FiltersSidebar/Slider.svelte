@@ -7,7 +7,7 @@
     const dispatch = createEventDispatcher();
 
     export let className;
-    export let start = [1, 5];
+    export let start = [ 1, 5 ];
     export let connect = true;
     // export let margin;
     // export let limit;
@@ -20,8 +20,8 @@
     // export let animationDuration = 300;
     // export let keyboardSupport = true;
     export let range = {
-        min: 1,
-        max: 5
+    	min: 1,
+    	max: 5,
     };
     // export let behaviour = 'tap';
 
@@ -29,53 +29,53 @@
     export const getApi = () => slider.noUiSlider;
 
     onMount(() => {
-        noUiSlider.create(slider, {
-            start,
-            connect,
-            // margin,
-            // limit,
-            // padding,
-            step,
-            // orientation,
-            // direction,
-            // tooltips,
-            // animate,
-            // animationDuration,
-            // keyboardSupport,
-            // behaviour,
-            range
-        });
+    	noUiSlider.create(slider, {
+    		start,
+    		connect,
+    		// margin,
+    		// limit,
+    		// padding,
+    		step,
+    		// orientation,
+    		// direction,
+    		// tooltips,
+    		// animate,
+    		// animationDuration,
+    		// keyboardSupport,
+    		// behaviour,
+    		range,
+    	});
 
-        slider.noUiSlider.on(
-            'update',
-            (values, handle, unencoded, tap, positions) =>
-                dispatch('update', { values, handle, unencoded, tap, positions })
-        );
-        // slider.noUiSlider.on(
-        //     'slide',
-        //     (values, handle, unencoded, tap, positions) =>
-        //         dispatch('slide', { values, handle, unencoded, tap, positions })
-        // );
-        // slider.noUiSlider.on(
-        //     'set',
-        //     (values, handle, unencoded, tap, positions) =>
-        //         dispatch('set', { values, handle, unencoded, tap, positions })
-        // );
-        // slider.noUiSlider.on(
-        //     'change',
-        //     (values, handle, unencoded, tap, positions) =>
-        //         dispatch('change', { values, handle, unencoded, tap, positions })
-        // );
-        // slider.noUiSlider.on(
-        //     'start',
-        //     (values, handle, unencoded, tap, positions) =>
-        //         dispatch('start', { values, handle, unencoded, tap, positions })
-        // );
-        slider.noUiSlider.on(
-            'end',
-            (values, handle, unencoded, tap, positions) =>
-                dispatch('end', { values, handle, unencoded, tap, positions })
-        );
+    	slider.noUiSlider.on(
+    		'update',
+    		(values, handle, unencoded, tap, positions) =>
+    			dispatch('update', { values, handle, unencoded, tap, positions }),
+    	);
+    	// slider.noUiSlider.on(
+    	//     'slide',
+    	//     (values, handle, unencoded, tap, positions) =>
+    	//         dispatch('slide', { values, handle, unencoded, tap, positions })
+    	// );
+    	// slider.noUiSlider.on(
+    	//     'set',
+    	//     (values, handle, unencoded, tap, positions) =>
+    	//         dispatch('set', { values, handle, unencoded, tap, positions })
+    	// );
+    	// slider.noUiSlider.on(
+    	//     'change',
+    	//     (values, handle, unencoded, tap, positions) =>
+    	//         dispatch('change', { values, handle, unencoded, tap, positions })
+    	// );
+    	// slider.noUiSlider.on(
+    	//     'start',
+    	//     (values, handle, unencoded, tap, positions) =>
+    	//         dispatch('start', { values, handle, unencoded, tap, positions })
+    	// );
+    	slider.noUiSlider.on(
+    		'end',
+    		(values, handle, unencoded, tap, positions) =>
+    			dispatch('end', { values, handle, unencoded, tap, positions }),
+    	);
     });
 </script>
 

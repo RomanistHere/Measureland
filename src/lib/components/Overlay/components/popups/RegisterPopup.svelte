@@ -7,7 +7,13 @@
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification, showSomethingWrongNotification, registerAction } from "../../../../utilities/helpers.js";
+    import {
+    	openAnotherOverlay,
+    	debounce,
+    	showSuccessNotification,
+    	showSomethingWrongNotification,
+    	registerAction,
+    } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
 
     $: errorsObj = $json('errors');
@@ -26,74 +32,74 @@
 
     const openLoginPopup = () => openAnotherOverlay('loginPopup');
 
-    const submit = async () => {
-        // TODO: make in more declarative way
-        if (document)
-            document.activeElement.blur();
+    const submit = async() => {
+    	// TODO: make in more declarative way
+    	if (document)
+    		document.activeElement.blur();
 
-        registerAction('trySubmitRegister');
-        isError = false;
-        shouldShowMatchError = false;
-        const isValuesNotEmpty = email.length > 0 && password.length > 0 && passwordConfirm.length > 0;
-        if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid || !isPasswordConfirmValid) {
-            // TODO: focus needed input
-            isError = true;
-            errorType = 'fieldsError';
+    	registerAction('trySubmitRegister');
+    	isError = false;
+    	shouldShowMatchError = false;
+    	const isValuesNotEmpty = 0 < email.length && 0 < password.length && 0 < passwordConfirm.length;
+    	if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid || !isPasswordConfirmValid) {
+    		// TODO: focus needed input
+    		isError = true;
+    		errorType = 'fieldsError';
 
-            return;
-        } else if (password !== passwordConfirm) {
-            // TODO: focus needed input
-            shouldShowMatchError = true;
-            isError = true;
-            errorType = 'fieldsError';
+    		return;
+    	} else if (password !== passwordConfirm) {
+    		// TODO: focus needed input
+    		shouldShowMatchError = true;
+    		isError = true;
+    		errorType = 'fieldsError';
 
-            return;
-        }
+    		return;
+    	}
 
-        registerAction('submitRegister');
-        isLoading = true;
-        const { error, data } = await register(email, password, $locale);
-        isLoading = false;
+    	registerAction('submitRegister');
+    	isLoading = true;
+    	const { error } = await register(email, password, $locale);
+    	isLoading = false;
 
-        if (error) {
-            console.warn(error);
-            isError = true;
-            errorType = 'unrecognizedError';
+    	if (error) {
+    		console.warn(error);
+    		isError = true;
+    		errorType = 'unrecognizedError';
 
-            if (error === 'Email already exists') {
-                errorType = 'accountExists';
-            } else if (error === 'Too many requests, please try again later') {
-                errorType = 'manyRequests';
-            }
+    		if ('Email already exists' === error) {
+    			errorType = 'accountExists';
+    		} else if ('Too many requests, please try again later' === error) {
+    			errorType = 'manyRequests';
+    		}
 
-            showSomethingWrongNotification();
-            return;
-        }
+    		showSomethingWrongNotification();
+    		return;
+    	}
 
-        registerAction('successRegister');
-        openAnotherOverlay('checkEmailPopup');
-        showSuccessNotification();
-    }
+    	registerAction('successRegister');
+    	openAnotherOverlay('checkEmailPopup');
+    	showSuccessNotification();
+    };
 
     const debouncedSubmit = debounce(() => {
-        if (isSpam) {
-            isError = true;
-            errorType = 'manyAttempts';
-            clearTimeout(isSpam);
-            isSpam = setTimeout(() => {
-                clearTimeout(isSpam);
-                isSpam = null;
-                isError = false;
-            }, 2000);
-            return;
-        }
+    	if (isSpam) {
+    		isError = true;
+    		errorType = 'manyAttempts';
+    		clearTimeout(isSpam);
+    		isSpam = setTimeout(() => {
+    			clearTimeout(isSpam);
+    			isSpam = null;
+    			isError = false;
+    		}, 2000);
+    		return;
+    	}
 
-        isSpam = setTimeout(() => {
-            clearTimeout(isSpam);
-            isSpam = null;
-        }, 2000);
+    	isSpam = setTimeout(() => {
+    		clearTimeout(isSpam);
+    		isSpam = null;
+    	}, 2000);
 
-        submit();
+    	submit();
     }, 200);
 </script>
 

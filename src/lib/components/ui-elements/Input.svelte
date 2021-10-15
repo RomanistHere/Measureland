@@ -16,39 +16,39 @@
     let hasTypingStarted = false;
 
     const validateEmail = email =>
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
+    	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
 
     const validatePass = pass =>
-        pass.length > 6 && pass.length < 255;
+    	6 < pass.length && 255 > pass.length;
 
     const changeInputType = () =>
-        shouldShowPassword = !shouldShowPassword;
+    	(shouldShowPassword = !shouldShowPassword);
 
     const onBlur = e => {
-        isInputActive = false;
-        value = e.currentTarget.value;
+    	isInputActive = false;
+    	value = e.currentTarget.value;
 
-        if (type === 'email') {
-            value = value.toLowerCase();
-            isInputValid = validateEmail(value);
-        } else if (type === 'password') {
-            isInputValid = validatePass(value);
-        }
-    }
+    	if ('email' === type) {
+    		value = value.toLowerCase();
+    		isInputValid = validateEmail(value);
+    	} else if ('password' === type) {
+    		isInputValid = validatePass(value);
+    	}
+    };
 
     const onInput = e => {
-        isInputValid = false;
-        shouldShowMatchError = false;
-        hasTypingStarted = true;
-        isInputActive = true;
-        value = e.currentTarget.value;
-    }
+    	isInputValid = false;
+    	shouldShowMatchError = false;
+    	hasTypingStarted = true;
+    	isInputActive = true;
+    	value = e.currentTarget.value;
+    };
 </script>
 
 <div class="relative">
     <label for={id} class="mt-8 relative block font-bold sug-color">
         <span>{title}</span>
-        {#if type === 'password'}
+        {#if 'password' === type}
             <TextButton
                 className="absolute right-0 bottom-0 text-sm px-1 rounded-md"
                 action={changeInputType}
@@ -78,9 +78,9 @@
 
     <span class="absolute right-0 -bottom-6 text-sm">
         {#if !isInputValid && !isInputActive}
-            {#if type === 'email'}
+            {#if 'email' === type}
                 {$_('input.emailError')}
-            {:else if type === 'password'}
+            {:else if 'password' === type}
                 {$_('input.passwordError')}
             {/if}
         {/if}

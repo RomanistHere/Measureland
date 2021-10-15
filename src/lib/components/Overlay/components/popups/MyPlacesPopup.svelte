@@ -10,50 +10,48 @@
     import { geocodeServiceReference } from "../../../../../stores/references.js";
     import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
-    export let sidebarData;
-
     const geocodeService = $geocodeServiceReference;
 
     const openShowRatingsPopup = (lat, lng) =>
-        openAnotherOverlay('showRatingsPopup', { lat, lng });
+    	openAnotherOverlay('showRatingsPopup', { lat, lng });
 
-    const fetchData = async (geoID) => {
-        const { error, data } = await fetchRatedPlace();
+    const fetchData = async() => {
+    	const { error, data } = await fetchRatedPlace();
 
-        if (error) {
-            console.warn(error);
-            showSomethingWrongNotification();
-            return [];
-        }
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    		return [];
+    	}
 
-        const { places } = data;
+    	const { places } = data;
 
-        const array = await await Promise.all(places.map(async ({ location }) => {
-            const { coordinates } = location;
-            const [ lng, lat ] = coordinates;
+    	const array = await await Promise.all(places.map(async({ location }) => {
+    		const { coordinates } = location;
+    		const [ lng, lat ] = coordinates;
 
-            const getAddress = () => new Promise((resolve, reject) => {
-                geocodeService.reverse().latlng({ lat, lng }).language($locale).run((error, result) => {
-                    if (error)
-                        reject(error);
+    		const getAddress = () => new Promise((resolve, reject) => {
+    			geocodeService.reverse().latlng({ lat, lng }).language($locale).run((err, result) => {
+    				if (err)
+    					reject(err);
 
-                    resolve(result.address.LongLabel);
-                });
-            });
-            const address = await getAddress();
+    				resolve(result.address.LongLabel);
+    			});
+    		});
+    		const address = await getAddress();
 
-            return ({
-                lang: $locale,
-                lat,
-                lng,
-                address: address ? address : $_('myPlacesPopup.defaultAdress'),
-            });
-        }));
+    		return ({
+    			lang: $locale,
+    			lat,
+    			lng,
+    			address: address ? address : $_('myPlacesPopup.defaultAdress'),
+    		});
+    	}));
 
-        return array;
-    }
+    	return array;
+    };
 
-    let promise = fetchData(sidebarData);
+    const promise = fetchData();
 </script>
 
 <div class="max-w-sm w-full">
@@ -63,7 +61,7 @@
         <PopupTitle title={$_('myPlacesPopup.title')} />
 
         <ul class="max-h-96 overflow-y-auto mt-2 list-inside list-decimal py-2">
-            {#if array.length === 0}
+            {#if 0 === array.length}
                 <span>{$_('myPlacesPopup.youHaveNotRated')}</span>
             {:else}
                 {#each array as { lang, lat, lng, address }}

@@ -8,7 +8,7 @@
     export let isActive = false;
 
     const onPresetBtnClick = () =>
-        dispatch('presetClick', { presetNumber });
+    	dispatch('presetClick', { presetNumber });
 </script>
 
 <a

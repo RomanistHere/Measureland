@@ -3,7 +3,6 @@
 
     import PopupTitle from './PopupTitle.svelte';
     import Select from '../../../ui-elements/Select.svelte';
-    import InputSimple from '../../../ui-elements/InputSimple.svelte';
     import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
     import FormButton from '../../../ui-elements/FormButton.svelte';
 
@@ -11,90 +10,89 @@
     import { onboard } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
-    let defaultName = $_('onboardingPopup.defaultName');
-    let email = '';
-    let password = '';
+    const defaultName = $_('onboardingPopup.defaultName');
+    
     let isSpam = null;
     let onboardingState = {
-        name: defaultName,
-        ageGrp: 1,
-        moneyGrp: 1
+    	name: defaultName,
+    	ageGrp: 1,
+    	moneyGrp: 1,
     };
 
     const ageOptions = [{
-        text: $_('onboardingPopup.ageOption1'),
-        selected: false,
-    },{
-        text: $_('onboardingPopup.ageOption2'),
-        selected: true,
-    },{
-        text: $_('onboardingPopup.ageOption3'),
-        selected: false,
-    },{
-        text: $_('onboardingPopup.ageOption4'),
-        selected: false,
+    	text: $_('onboardingPopup.ageOption1'),
+    	selected: false,
+    }, {
+    	text: $_('onboardingPopup.ageOption2'),
+    	selected: true,
+    }, {
+    	text: $_('onboardingPopup.ageOption3'),
+    	selected: false,
+    }, {
+    	text: $_('onboardingPopup.ageOption4'),
+    	selected: false,
     }];
 
     const incomeOptions = [{
-        text: $_('onboardingPopup.incomeOption1'),
-        selected: false,
-    },{
-        text: $_('onboardingPopup.incomeOption2'),
-        selected: true,
-    },{
-        text: $_('onboardingPopup.incomeOption3'),
-        selected: false,
+    	text: $_('onboardingPopup.incomeOption1'),
+    	selected: false,
+    }, {
+    	text: $_('onboardingPopup.incomeOption2'),
+    	selected: true,
+    }, {
+    	text: $_('onboardingPopup.incomeOption3'),
+    	selected: false,
     }];
 
     const handleSelect = (event, key) => {
-        const value = Number(event.target.value);
-        onboardingState = { ...onboardingState, [key]: value };
-    }
+    	const value = Number(event.target.value);
+    	onboardingState = { ...onboardingState, [key]: value };
+    };
 
     const handleInput = e => {
-        const value = e.currentTarget.value;
-        onboardingState = { ...onboardingState, name: value };
-        userStateStore.update(state => ({ ...state, userName: value }));
-    }
+    	const value = e.currentTarget.value;
+    	onboardingState = { ...onboardingState, name: value };
+    	userStateStore.update(state => ({ ...state, userName: value }));
+    };
 
-    const submit = async () => {
-        const { name, ageGrp, moneyGrp } = onboardingState;
-        const userName = name.trim() === '' ? defaultName : name;
+    const submit = async() => {
+    	const { name, ageGrp, moneyGrp } = onboardingState;
+    	const userName = '' === name.trim() ? defaultName : name;
 
-        if (userName === defaultName && ageGrp === 1 && moneyGrp === 1) {
-            showSuccessNotification();
-            closeOverlay('popup');
-            return
-        }
+    	if (userName === defaultName && 1 === ageGrp && 1 === moneyGrp) {
+    		showSuccessNotification();
+    		closeOverlay('popup');
+    		return;
+    	}
 
-        const { error } = await onboard(userName, ageGrp, moneyGrp, $userStateStore.userID);
+    	const { error } = await onboard(userName, ageGrp, moneyGrp, $userStateStore.userID);
 
-        if (error) {
-            console.warn(error)
-            showSomethingWrongNotification();
-            return;
-        }
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    		return;
+    	}
 
-        showSuccessNotification();
-        closeOverlay('popup');
-    }
+    	showSuccessNotification();
+    	closeOverlay('popup');
+    };
 
     const debouncedSubmit = debounce(() => {
-        if (isSpam) {
-            clearTimeout(isSpam);
-            isSpam = setTimeout(() => {
-                clearTimeout(isSpam);
-                isSpam = null;
-            }, 2000);
-            return;
-        }
+    	if (isSpam) {
+    		clearTimeout(isSpam);
+    		isSpam = setTimeout(() => {
+    			clearTimeout(isSpam);
+    			isSpam = null;
+    		}, 2000);
+    		return;
+    	}
 
-        isSpam = setTimeout(() => {
-            clearTimeout(isSpam);
-            isSpam = null;
-        }, 2000);
+    	isSpam = setTimeout(() => {
+    		clearTimeout(isSpam);
+    		isSpam = null;
+    	}, 2000);
 
-        submit();
+    	submit();
     }, 200);
 </script>
 
@@ -109,18 +107,18 @@
         options={ageOptions}
         id='age-select'
         title={$_('onboardingPopup.yourAgeGroup')}
-        on:change={(e) => { handleSelect(e, 'ageGrp') }}
+        on:change={e => { handleSelect(e, 'ageGrp') }}
     />
 
     <Select
         options={incomeOptions}
         id='money-select'
         title={$_('onboardingPopup.incomeLevel')}
-        on:change={(e) => { handleSelect(e, 'moneyGrp') }}
+        on:change={e => { handleSelect(e, 'moneyGrp') }}
     />
 
     <InputGroupSimple
-        title={$_('onboardingPopup.yourName', { values: [defaultName] })}
+        title={$_('onboardingPopup.yourName', { values: [ defaultName ] })}
         on:change={handleInput}
         placeholder="{defaultName}"
         autocomplete="username"

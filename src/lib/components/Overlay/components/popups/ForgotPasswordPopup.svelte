@@ -26,62 +26,62 @@
 
     const openRegisterPopup = () => openAnotherOverlay('registerPopup');
 
-    const submit = async () => {
-        // TODO: make in more declarative way
-        if (document)
-            document.activeElement.blur();
+    const submit = async() => {
+    	// TODO: make in more declarative way
+    	if (document)
+    		document.activeElement.blur();
 
-        isError = false;
-        const isValuesNotEmpty = email.length > 0;
-        if (!isValuesNotEmpty || !isEmailValid) {
-            // TODO: focus needed input
-            isError = true;
-            errorType = 'fieldsError';
-            return;
-        }
+    	isError = false;
+    	const isValuesNotEmpty = 0 < email.length;
+    	if (!isValuesNotEmpty || !isEmailValid) {
+    		// TODO: focus needed input
+    		isError = true;
+    		errorType = 'fieldsError';
+    		return;
+    	}
 
-        isLoading = true;
-        const { error, data } = await sendResetPass(email);
-        isLoading = false;
+    	isLoading = true;
+    	const { error } = await sendResetPass(email);
+    	isLoading = false;
 
-        if (error) {
-            console.warn(error);
-            isError = true;
-            errorType = 'unrecognizedError';
+    	if (error) {
+    		console.warn(error);
+    		isError = true;
+    		errorType = 'unrecognizedError';
 
-            if (error === 'Email is wrong') {
-                errorType = 'noAccount';
-            } else if (error === 'Too many requests, please try again later') {
-                errorType = 'manyRequests';
-            }
+    		if ('Email is wrong' === error) {
+    			errorType = 'noAccount';
+    		} else if ('Too many requests, please try again later' === error) {
+    			errorType = 'manyRequests';
+    		}
 
-            showSomethingWrongNotification();
-            return;
-        }
+    		showSomethingWrongNotification();
+    		return;
+    	}
 
-        showSuccessNotification();
-        openAnotherOverlay('confirmForgotPasswordPopup');
-    }
+    	showSuccessNotification();
+    	openAnotherOverlay('confirmForgotPasswordPopup');
+    };
 
     const debouncedSubmit = debounce(() => {
-        if (isSpam) {
-            isError = true;
-            errorType = 'manyAttempts';
-            clearTimeout(isSpam);
-            isSpam = setTimeout(() => {
-                clearTimeout(isSpam);
-                isSpam = null;
-                isError = false;
-            }, 2000);
-            return;
-        }
+    	if (isSpam) {
+    		isError = true;
+    		errorType = 'manyAttempts';
+    		clearTimeout(isSpam);
+    		isSpam = setTimeout(() => {
+    			clearTimeout(isSpam);
+    			isSpam = null;
+    			isError = false;
+    		}, 2000);
+    		return;
+    	}
 
-        isSpam = setTimeout(() => {
-            clearTimeout(isSpam);
-            isSpam = null;
-        }, 2000);
+    	isSpam = setTimeout(() => {
+    		clearTimeout(isSpam);
+    		isSpam = null;
+    	}, 2000);
 
-        submit();
+    	submit();
     }, 200);
 </script>
 

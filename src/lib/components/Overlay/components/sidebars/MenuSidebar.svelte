@@ -5,157 +5,165 @@
     import SidebarBlock from './SidebarBlock.svelte';
     import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
 
-    import { openAnotherOverlay, closeOverlays, showSuccessNotification, showSomethingWrongNotification, setCookie, closeOverlay, registerAction } from '../../../../utilities/helpers.js';
+    import {
+    	openAnotherOverlay,
+    	closeOverlays,
+    	showSuccessNotification,
+    	showSomethingWrongNotification,
+    	setCookie,
+    	closeOverlay,
+    	registerAction,
+    } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
     import { APP_VERSION } from '../../../../../configs/env.js';
     import { userStateStore, isDesktop } from "../../../../../stores/state.js";
 
-    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
-    $: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
+    $: isUserLoggedIn = null === $userStateStore.userID ? false : true;
+    $: shouldUserHaveMoreRatingsBtn = 5 >= $userStateStore.activeRatings;
     $: isUserAskedForMoreRatings = $userStateStore.wantMoreRatings;
 
     $: dataTopBlock = {
-        title: $_('menuSidebar.titleTop'),
-        list: [{
-            text: $_('menuSidebar.loginOrRegister'),
-            shouldShow: !isUserLoggedIn,
-            href: '#',
-            onClick: (e) => {
-                e.preventDefault();
-                closeOverlay('sidebar');
-                openAnotherOverlay('loginPopup');
-            }
-        }, {
-            text: $_('menuSidebar.logout'),
-            shouldShow: isUserLoggedIn,
-            href: '#',
-            onClick: async (e) => {
-                e.preventDefault();
-                closeOverlays();
-                const { error, data } = await logout();
-                if (!error) {
-                    userStateStore.update(state => ({
-                        ...state,
-                        userID: null,
-                        activeRatings: 3,
-                        userName: 'Аноним',
-                        wantMoreRatings: false
-                    }));
-                    showSuccessNotification();
-                    registerAction('logoutMobile');
-                } else {
-                    console.warn(error)
-                    showSomethingWrongNotification();
-                }
-            }
-        }, {
-            text: $_('menuSidebar.myRatings'),
-            shouldShow: isUserLoggedIn,
-            href: '#',
-            onClick: (e) => {
-                e.preventDefault();
-                closeOverlay('sidebar');
-                openAnotherOverlay('myPlacesPopup');
-            }
-        }, {
-            text: $_('menuSidebar.changePassword'),
-            shouldShow: isUserLoggedIn,
-            href: '#',
-            onClick: (e) => {
-                e.preventDefault();
-                closeOverlay('sidebar');
-                openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
-            }
-        }, {
-            text: $_('menuSidebar.changeLanguage'),
-            shouldShow: true,
-            href: `#`,
-            onClick: async (e) => {
-                e.preventDefault();
-                const nextLang = $locale === 'ru' ? 'en' : 'ru';
-                locale.set(nextLang);
-                if (typeof window !== 'undefined') {
-                    const url = new URL(window.location.href);
-                    url.pathname = `/${nextLang}`;
-                    window.history.replaceState(null, null, url);
-                    if (isUserLoggedIn)
-                        await saveLang(nextLang);
-                    showSuccessNotification();
-                    registerAction('changeLanguageMobile');
-                };
-            }
-        },]
+    	title: $_('menuSidebar.titleTop'),
+    	list: [{
+    		text: $_('menuSidebar.loginOrRegister'),
+    		shouldShow: !isUserLoggedIn,
+    		href: '#',
+    		onClick: e => {
+    			e.preventDefault();
+    			closeOverlay('sidebar');
+    			openAnotherOverlay('loginPopup');
+    		},
+    	}, {
+    		text: $_('menuSidebar.logout'),
+    		shouldShow: isUserLoggedIn,
+    		href: '#',
+    		onClick: async e => {
+    			e.preventDefault();
+    			closeOverlays();
+    			const { error } = await logout();
+    			if (!error) {
+    				userStateStore.update(state => ({
+    					...state,
+    					userID: null,
+    					activeRatings: 3,
+    					userName: 'Аноним',
+    					wantMoreRatings: false,
+    				}));
+    				showSuccessNotification();
+    				registerAction('logoutMobile');
+    			} else {
+    				console.warn(error);
+    				showSomethingWrongNotification();
+    			}
+    		},
+    	}, {
+    		text: $_('menuSidebar.myRatings'),
+    		shouldShow: isUserLoggedIn,
+    		href: '#',
+    		onClick: e => {
+    			e.preventDefault();
+    			closeOverlay('sidebar');
+    			openAnotherOverlay('myPlacesPopup');
+    		},
+    	}, {
+    		text: $_('menuSidebar.changePassword'),
+    		shouldShow: isUserLoggedIn,
+    		href: '#',
+    		onClick: e => {
+    			e.preventDefault();
+    			closeOverlay('sidebar');
+    			openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
+    		},
+    	}, {
+    		text: $_('menuSidebar.changeLanguage'),
+    		shouldShow: true,
+    		href: `#`,
+    		onClick: async e => {
+    			e.preventDefault();
+    			const nextLang = 'ru' === $locale ? 'en' : 'ru';
+    			locale.set(nextLang);
+    			if ('undefined' !== typeof window) {
+    				const url = new URL(window.location.href);
+    				url.pathname = `/${nextLang}`;
+    				window.history.replaceState(null, null, url);
+    				if (isUserLoggedIn)
+    					await saveLang(nextLang);
+    				showSuccessNotification();
+    				registerAction('changeLanguageMobile');
+    			}
+    		},
+    	}],
     };
 
     $: dataBottomBlock = {
-        title: $_('menuSidebar.titleBot'),
-        list: [{
-            text: $_('menuSidebar.ourPartners'),
-            href: '#',
-            onClick: (e) => {
-                e.preventDefault();
-                if (!$isDesktop)
-                    closeOverlay('sidebar');
-                openAnotherOverlay('partnersPopup');
-            }
-        }, {
-            text: $_('menuSidebar.ourGuideBook'),
-            href: 'blog/tutorial/',
-        }, {
-            text: $_('menuSidebar.aboutUs'),
-            href: 'blog/about-us/',
-        }, {
-            text: $_('menuSidebar.support'),
-            href: 'blog/support/',
-        }, {
-            text: $_('menuSidebar.blog'),
-            href: 'blog/',
-        }]
+    	title: $_('menuSidebar.titleBot'),
+    	list: [{
+    		text: $_('menuSidebar.ourPartners'),
+    		href: '#',
+    		onClick: e => {
+    			e.preventDefault();
+    			if (!$isDesktop)
+    				closeOverlay('sidebar');
+    			openAnotherOverlay('partnersPopup');
+    		},
+    	}, {
+    		text: $_('menuSidebar.ourGuideBook'),
+    		href: 'blog/tutorial/',
+    	}, {
+    		text: $_('menuSidebar.aboutUs'),
+    		href: 'blog/about-us/',
+    	}, {
+    		text: $_('menuSidebar.support'),
+    		href: 'blog/support/',
+    	}, {
+    		text: $_('menuSidebar.blog'),
+    		href: 'blog/',
+    	}],
     };
 
-    $: if ($locale === 'ru') {
-        dataBottomBlock = {
-            ...dataBottomBlock,
-            list: [
-                {
-                    text: $_('menuSidebar.newsTelegram'),
-                    href: 'https://t.me/measureland_ru',
-                }, {
-                    text: $_('menuSidebar.checkList'),
-                    href: 'blog/universal-guide/',
-                },
-                ...dataBottomBlock.list,
-            ]
-        }
+    $: if ('ru' === $locale) {
+    	dataBottomBlock = {
+    		...dataBottomBlock,
+    		list: [
+    			{
+    				text: $_('menuSidebar.newsTelegram'),
+    				href: 'https://t.me/measureland_ru',
+    			}, {
+    				text: $_('menuSidebar.checkList'),
+    				href: 'blog/universal-guide/',
+    			},
+    			...dataBottomBlock.list,
+    		],
+    	};
     }
 
     const toggleSendingEvents = () => {
-        if (!browser)
-            return;
-        const shouldSendEvent = !$userStateStore.shouldSendEvent;
-        setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
-        userStateStore.update(state => ({ ...state, shouldSendEvent }));
-    }
+    	if (!browser)
+    		return;
+    	const shouldSendEvent = !$userStateStore.shouldSendEvent;
+    	setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
+    	userStateStore.update(state => ({ ...state, shouldSendEvent }));
+    };
 
-    const askForMoreRatings = async () => {
-        if (!$isDesktop)
-            closeOverlay('sidebar');
-        openAnotherOverlay('askForMoreRatingsPopup');
-        userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
-        const { error } = await askMoreRatings();
-        closeOverlay('sidebar');
-        if (error) {
-            console.warn(error)
-            showSomethingWrongNotification();
-        } else
-            showSuccessNotification();
-    }
+    const askForMoreRatings = async() => {
+    	if (!$isDesktop)
+    		closeOverlay('sidebar');
+    	openAnotherOverlay('askForMoreRatingsPopup');
+    	userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
+    	const { error } = await askMoreRatings();
+    	closeOverlay('sidebar');
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    	} else
+    		showSuccessNotification();
+    };
 
     const openHowToRatePopup = () => {
-        if (!$isDesktop)
-            closeOverlay('sidebar');
-        openAnotherOverlay('howToRatePopup');
-    }
+    	if (!$isDesktop)
+    		closeOverlay('sidebar');
+    	openAnotherOverlay('howToRatePopup');
+    };
 </script>
 
 <div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4 relative">

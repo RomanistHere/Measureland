@@ -8,7 +8,7 @@
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
     import FiltersNotification from './components/notifications/FiltersNotification.svelte';
-	import CornerNotification from './components/notifications/CornerNotification.svelte';
+    import CornerNotification from './components/notifications/CornerNotification.svelte';
     import BurgerButton from '../ui-elements/BurgerButton.svelte';
     import Loading from './components/Loading.svelte';
     import NavBar from './components/NavBar.svelte';
@@ -22,72 +22,72 @@
     let StartScreen;
 
     const handleKeydown = event => {
-        const key = event.key;
-        // console.log(key);
-        if ((popupActive || sidebarActive) && key === 'Escape')
-            closeOverlays();
-    }
+    	const key = event.key;
+    	// console.log(key);
+    	if ((popupActive || sidebarActive) && 'Escape' === key)
+    		closeOverlays();
+    };
 
     const checkIsOpen = state => {
-        let openOverlays = [];
-        for (let [key, value] of Object.entries(state)) {
-            const { isOpen, data, type } = value;
-            if (isOpen)
-                openOverlays.push({ key, data, type });
-        }
+    	let openOverlays = [];
+    	for (const [ key, value ] of Object.entries(state)) {
+    		const { isOpen, data, type } = value;
+    		if (isOpen)
+    			openOverlays.push({ key, data, type });
+    	}
 
-        if (openOverlays.length >= 2 && openOverlays[0].type === openOverlays[1].type) {
-            throw new Error(`Can't open two or more modals at once`);
-        }
+    	if (2 <= openOverlays.length && openOverlays[0].type === openOverlays[1].type) {
+    		throw new Error(`Can't open two or more modals at once`);
+    	}
 
-        if (openOverlays.length === 1 && openOverlays[0].key === 'commentsSidebar') {
-            // close sidebar if only comments is opened (expected behaviour: user closes rating)
-            openOverlays = [];
-            closeOverlays();
-        }
+    	if (1 === openOverlays.length && 'commentsSidebar' === openOverlays[0].key) {
+    		// close sidebar if only comments is opened (expected behaviour: user closes rating)
+    		openOverlays = [];
+    		closeOverlays();
+    	}
 
-        return openOverlays;
-    }
+    	return openOverlays;
+    };
 
     const manageOverlay = ({ key, data, type }) => {
-        if (type === 'sidebar') {
-            sidebarName = key;
-            sidebarData = data;
-            sidebarActive = true;
-        } else if (type === 'popup') {
-            popupName = key;
-            popupData = data;
-            popupActive = true;
-        }
+    	if ('sidebar' === type) {
+    		sidebarName = key;
+    		sidebarData = data;
+    		sidebarActive = true;
+    	} else if ('popup' === type) {
+    		popupName = key;
+    		popupData = data;
+    		popupActive = true;
+    	}
 
-        if (popupActive || sidebarActive)
-            appStateStore.update(state => ({ ...state, openModal: true }));
-        else
-            appStateStore.update(state => ({ ...state, openModal: false }));
-    }
+    	if (popupActive || sidebarActive)
+    		appStateStore.update(state => ({ ...state, openModal: true }));
+    	else
+    		appStateStore.update(state => ({ ...state, openModal: false }));
+    };
 
     const manageOverlays = openOverlays => {
-        sidebarActive = false;
-        popupActive = false;
+    	sidebarActive = false;
+    	popupActive = false;
 
-        if (openOverlays.length === 0)
-            return;
+    	if (0 === openOverlays.length)
+    		return;
 
-        for (let i = 0; i < openOverlays.length; i++)
-            manageOverlay(openOverlays[i]);
-    }
+    	for (let i = 0; i < openOverlays.length; i++)
+    		manageOverlay(openOverlays[i]);
+    };
 
     const toggleSideBar = () => sidebarActive
-        ? closeOverlay('sidebar')
-        : openAnotherOverlay('menuSidebar');
+    	? closeOverlay('sidebar')
+    	: openAnotherOverlay('menuSidebar');
 
     $: dataOpen = checkIsOpen($overlayStateStore);
     $: manageOverlays(dataOpen);
 
-    onMount(async () => {
-		const module = await import('./components/StartScreen/StartScreen.svelte');
-		StartScreen = module.default;
-	});
+    onMount(async() => {
+	const module = await import('./components/StartScreen/StartScreen.svelte');
+	StartScreen = module.default;
+});
 </script>
 
 <!-- // show loader while user data is loading -->

@@ -1,13 +1,18 @@
 <script>
-    import { _, json, locale } from 'svelte-i18n';
+    import { _, json } from 'svelte-i18n';
 
     import Input from '../../../ui-elements/Input.svelte';
     import Spinner from '../../../ui-elements/Spinner.svelte';
-    import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
     import FormButton from '../../../ui-elements/FormButton.svelte';
     import PopupTitle from './PopupTitle.svelte';
 
-    import { openAnotherOverlay, debounce, showSuccessNotification, closeOverlays, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
+    import {
+    	openAnotherOverlay,
+    	debounce,
+    	showSuccessNotification,
+    	closeOverlays,
+    	showSomethingWrongNotification,
+    } from "../../../../utilities/helpers.js";
     import { reset } from "../../../../utilities/api.js";
 
     export let popupData;
@@ -24,77 +29,75 @@
     let isSpam = null;
     let shouldShowMatchError = false;
 
-    const openLoginPopup = () => openAnotherOverlay('loginPopup');
-
     const resendLink = () => openAnotherOverlay('forgotPasswordPopup');
 
-    const submit = async () => {
-        // TODO: make in more declarative way
-        if (document)
-            document.activeElement.blur();
+    const submit = async() => {
+    	// TODO: make in more declarative way
+    	if (document)
+    		document.activeElement.blur();
 
-        isError = false;
-        shouldShowMatchError = false;
-        const isValuesNotEmpty = password.length > 0 && passwordConfirm.length > 0;
-        if (!isValuesNotEmpty || !isPasswordValid || !isPasswordConfirmValid) {
-            // TODO: focus needed input
-            isError = true;
-            errorType = 'fieldsError';
+    	isError = false;
+    	shouldShowMatchError = false;
+    	const isValuesNotEmpty = 0 < password.length && 0 < passwordConfirm.length;
+    	if (!isValuesNotEmpty || !isPasswordValid || !isPasswordConfirmValid) {
+    		// TODO: focus needed input
+    		isError = true;
+    		errorType = 'fieldsError';
 
-            return;
-        } else if (password !== passwordConfirm) {
-            // TODO: focus needed input
-            shouldShowMatchError = true;
-            isError = true;
-            errorType = 'fieldsError';
+    		return;
+    	} else if (password !== passwordConfirm) {
+    		// TODO: focus needed input
+    		shouldShowMatchError = true;
+    		isError = true;
+    		errorType = 'fieldsError';
 
-            return;
-        }
+    		return;
+    	}
 
-        isLoading = true;
-        const { error, data } = await reset(password, popupData);
-        isLoading = false;
+    	isLoading = true;
+    	const { error } = await reset(password, popupData);
+    	isLoading = false;
 
-        if (error) {
-            console.warn(error);
-            isError = true;
-            errorType = 'unrecognizedError';
+    	if (error) {
+    		console.warn(error);
+    		isError = true;
+    		errorType = 'unrecognizedError';
 
-            if (error === 'Matches old password') {
-                errorType = 'samePass';
-            } else if (error === 'Too many requests, please try again later') {
-                errorType = 'manyRequests';
-            } else if (error === 'Password link is invalid or expired') {
-                errorType = 'linkExpired';
-            }
+    		if ('Matches old password' === error) {
+    			errorType = 'samePass';
+    		} else if ('Too many requests, please try again later' === error) {
+    			errorType = 'manyRequests';
+    		} else if ('Password link is invalid or expired' === error) {
+    			errorType = 'linkExpired';
+    		}
 
-            showSomethingWrongNotification();
-            return;
-        }
+    		showSomethingWrongNotification();
+    		return;
+    	}
 
-        closeOverlays();
-        showSuccessNotification();
-    }
+    	closeOverlays();
+    	showSuccessNotification();
+    };
 
     const debouncedSubmit = debounce(() => {
-        if (isSpam) {
-            isError = true;
-            errorType = 'manyAttempts';
-            clearTimeout(isSpam);
-            isSpam = setTimeout(() => {
-                clearTimeout(isSpam);
-                isSpam = null;
-                isError = false;
-            }, 2000);
-            return;
-        }
+    	if (isSpam) {
+    		isError = true;
+    		errorType = 'manyAttempts';
+    		clearTimeout(isSpam);
+    		isSpam = setTimeout(() => {
+    			clearTimeout(isSpam);
+    			isSpam = null;
+    			isError = false;
+    		}, 2000);
+    		return;
+    	}
 
-        isSpam = setTimeout(() => {
-            clearTimeout(isSpam);
-            isSpam = null;
-        }, 2000);
+    	isSpam = setTimeout(() => {
+    		clearTimeout(isSpam);
+    		isSpam = null;
+    	}, 2000);
 
-        submit();
+    	submit();
     }, 200);
 </script>
 
@@ -123,7 +126,7 @@
         {#if isLoading}
             <Spinner />
         {/if}
-        {#if isError && errorType === 'linkExpired'}
+        {#if isError && 'linkExpired' === errorType}
             <div class="italic font-bold sug-color">
                 <span class="block text-center">{$_('errors.linkExpired')}</span>
                 <a href={"#"} class="block text-center underline" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>

@@ -1,5 +1,4 @@
 <script>
-    import L from 'leaflet';
     import * as ELG from 'esri-leaflet-geocoder';
     import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
     import { _ } from 'svelte-i18n';
@@ -15,17 +14,17 @@
     geocodeServiceReference.set(geocodeService);
 
     const searchControl = new ELG.geosearch({
-        providers: [
-            ELG.arcgisOnlineProvider({
-                apikey: esriApiKey
-            })
-        ],
-        placeholder: $_('_.searchPlaceholder'),
-        useMapBounds: false,
+    	providers: [
+    		ELG.arcgisOnlineProvider({
+    			apikey: esriApiKey,
+    		}),
+    	],
+    	placeholder: $_('_.searchPlaceholder'),
+    	useMapBounds: false,
     }).addTo(map);
 
     searchControl.on('results', data => {
-        registerAction('mapSearch');
-        map.setView(data.results[0].latlng, 17);
+    	registerAction('mapSearch');
+    	map.setView(data.results[0].latlng, 17);
     });
 </script>

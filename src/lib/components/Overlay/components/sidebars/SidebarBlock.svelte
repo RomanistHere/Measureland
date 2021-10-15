@@ -4,10 +4,10 @@
     export let className = '';
 
     $: list = list.map(item => ({
-        ...item,
-        shouldShow: item.shouldShow === undefined || item.shouldShow === true ? true : false,
-        target: item.targetBlank === false || item.href === '#' ? null : '_blank',
-    }))
+    	...item,
+    	shouldShow: item.shouldShow === undefined || true === item.shouldShow ? true : false,
+    	target: false === item.targetBlank || '#' === item.href ? null : '_blank',
+    }));
 </script>
 
 <div class="mb-8 {className}">

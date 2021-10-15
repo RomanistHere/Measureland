@@ -3,123 +3,128 @@ import { overlayStateDefault } from '../constants/overlayStateDefault.js';
 import { flowDictionary } from '../../configs/flow.js';
 
 const debounce = (func, wait, immediate) => {
-	var timeout
+	let timeout;
 	return function() {
-		var context = this, args = arguments
-		var later = function() {
-			timeout = null
-			if (!immediate) func.apply(context, args)
-		}
-		var callNow = immediate && !timeout
-		clearTimeout(timeout)
-		timeout = setTimeout(later, wait)
-		if (callNow) func.apply(context, args)
-	}
-}
+		const context = this; const args = arguments;
+		const later = function() {
+			timeout = null;
+			if (!immediate)
+				func.apply(context, args);
+		};
+		const callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow)
+			func.apply(context, args);
+	};
+};
 
 const sleep = milliseconds =>
-    new Promise(resolve => setTimeout(resolve, milliseconds));
+	new Promise(resolve => setTimeout(resolve, milliseconds));
 
 const getAverageRating = array =>
-    array.reduce((acc, c) => acc + c.options.rating, 0) / array.length
+	array.reduce((acc, c) => acc + c.options.rating, 0) / array.length;
 
 const splitString = (str, key) =>
-    str.split(key)
+	str.split(key);
 
 const roundToFifthDecimal = number =>
-    Math.round(10000 * number) / 10000
+	Math.round(10000 * number) / 10000;
 
 const roundToFifthDecimalLatLng = ({ lat, lng }) =>
-    ({ lat: roundToFifthDecimal(lat), lng: roundToFifthDecimal(lng) });
+	({ lat: roundToFifthDecimal(lat), lng: roundToFifthDecimal(lng) });
 
 const roundToTen = number =>
-    Math.round(10 * number) / 10
+	Math.round(10 * number) / 10;
 
 const roundToInt = number =>
-    Math.round(number)
+	Math.round(number);
 
 const getColor = rating => {
-    if (rating >= 4) {
-        return 'green'
-    } else if (rating >= 3) {
-        return 'yellow'
-    } else {
-        return 'red'
-    }
-}
+	if (4 <= rating) {
+		return 'green';
+	} else if (3 <= rating) {
+		return 'yellow';
+	} else {
+		return 'red';
+	}
+};
 
-const additionalProps = ['pets', 'kids', 'parking']
+const additionalProps = [ 'pets', 'kids', 'parking' ];
 
 const checkAdditionalProp = prop =>
-    additionalProps.some(item => prop === item)
+	additionalProps.some(item => prop === item);
 
-const getFinalRating = (obj) => {
-    const keys = Object.keys(obj)
-    let mainAsnwersCounter = 0
-    let additionalAsnwersCounter = 0
-    let sumMain = 0
-    let sumAdditional = 0
+const getFinalRating = obj => {
+	const keys = Object.keys(obj);
+	let mainAsnwersCounter = 0;
+	let additionalAsnwersCounter = 0;
+	let sumMain = 0;
+	let sumAdditional = 0;
 
-    for (let i = 0; i < keys.length; i++) {
-        const key = keys[i]
-        const val = obj[key]
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i];
+		const val = obj[key];
 
-        if (val === null)
-            continue
+		if (null === val)
+			continue;
 
-        // check what value the property is going to have. Distribution is 75% for main props and 25 for additional ones
-        const isAdditionalProp = checkAdditionalProp(key)
-        if (isAdditionalProp) {
-            sumAdditional = sumAdditional + val
-            additionalAsnwersCounter++
-        } else {
-            sumMain = sumMain + val
-            mainAsnwersCounter++
-        }
-    }
+		// check what value the property is going to have. Distribution is 75% for main props and 25 for additional ones
+		const isAdditionalProp = checkAdditionalProp(key);
+		if (isAdditionalProp) {
+			sumAdditional = sumAdditional + val;
+			additionalAsnwersCounter++;
+		} else {
+			sumMain = sumMain + val;
+			mainAsnwersCounter++;
+		}
+	}
 
-    const mainPart = mainAsnwersCounter !== 0
-        ? sumMain / mainAsnwersCounter
-        : 0 // 75%
-    const additionalPart = additionalAsnwersCounter !== 0
-        ? sumAdditional / additionalAsnwersCounter
-        : 0 // 25%
-    const finalRating = additionalPart !== 0
-        ? (mainPart * 3 + additionalPart) / 4
-        : mainPart // if no additional ratings
+	const mainPart = 0 !== mainAsnwersCounter
+		? sumMain / mainAsnwersCounter
+		: 0; // 75%
+	const additionalPart = 0 !== additionalAsnwersCounter
+		? sumAdditional / additionalAsnwersCounter
+		: 0; // 25%
+	const finalRating = 0 !== additionalPart
+		? (mainPart * 3 + additionalPart) / 4
+		: mainPart; // if no additional ratings
 
-    return {
-        answersNumber: mainAsnwersCounter + additionalAsnwersCounter,
-        finalRating: finalRating,
-    }
-}
+	return {
+		answersNumber: mainAsnwersCounter + additionalAsnwersCounter,
+		finalRating,
+	};
+};
+
+const registerAction = action =>
+	flowStore.update(actions => ([ ...actions, flowDictionary[action] ]));
 
 const closeOverlaysWithSameType = (overlayType, state) => {
-    let isModalOpen = false;
+	let isModalOpen = false;
 
-    const keysArray = Object.keys(state);
-    const length = keysArray.length;
+	const keysArray = Object.keys(state);
+	const length = keysArray.length;
 
-    for (let i = 0; i < length; i++) {
-        const { type, isOpen } = state[keysArray[i]];
-        if (overlayType === type && isOpen) {
-            // mutation here should be faster and has no consequences
-            state[keysArray[i]].isOpen = false;
-        } else {
-            // check if any of other modals are open
-            if (isOpen)
-                isModalOpen = true;
-        }
-    }
+	for (let i = 0; i < length; i++) {
+		const { type, isOpen } = state[keysArray[i]];
+		if (overlayType === type && isOpen) {
+			// mutation here should be faster and has no consequences
+			state[keysArray[i]].isOpen = false;
+		} else {
+			// check if any of other modals are open
+			if (isOpen)
+				isModalOpen = true;
+		}
+	}
 
-    return {
-        newState: state,
-        isModalOpen,
-    };
-}
+	return {
+		newState: state,
+		isModalOpen,
+	};
+};
 
 const openAnotherOverlay = (overlayName = null, data = {}) => {
-    try {
+	try {
 		overlayStateStore.update(state => {
 	        const overlayType = state[overlayName]['type'];
 	        const { newState } = closeOverlaysWithSameType(overlayType, state);
@@ -129,25 +134,25 @@ const openAnotherOverlay = (overlayName = null, data = {}) => {
 	} catch (e) {
 		console.warn('Define popup in constatns/overlayStateDefault.js');
 	}
-}
+};
 
 const closeOverlay = (overlayType = null) => {
-    if (overlayType) {
-        overlayStateStore.update(state => {
-            const { newState, isModalOpen } = closeOverlaysWithSameType(overlayType, state);
+	if (overlayType) {
+		overlayStateStore.update(state => {
+			const { newState, isModalOpen } = closeOverlaysWithSameType(overlayType, state);
 
-            if (!isModalOpen)
-                appStateStore.update(state => ({ ...state, openModal: false }));
+			if (!isModalOpen)
+				appStateStore.update(appState => ({ ...appState, openModal: false }));
 
-            return ({ ...newState });
-        });
+			return ({ ...newState });
+		});
 		registerAction(`cl-${overlayType}`);
-    } else {
-        overlayStateStore.update(state => overlayStateDefault);
-        appStateStore.update(state => ({ ...state, openModal: false }));
+	} else {
+		overlayStateStore.update(() => overlayStateDefault);
+		appStateStore.update(state => ({ ...state, openModal: false }));
 		registerAction(`cl`);
-    }
-}
+	}
+};
 
 const closeOverlays = () => closeOverlay();
 
@@ -160,15 +165,16 @@ const showSomethingWrongNotification = () =>
 const hideSomethingWrongNotification = () =>
 	notificationsStore.update(state => ({ ...state, somethingWrongNotification: false }));
 
-const objToString = (object) => {
-    let str = ''
-    for (let k in object) {
-        if (object.hasOwnProperty(k)) {
-            str += k + ':' + object[k] + ','
-        }
-    }
-    return str.slice(0, -1)
-}
+const objToString = object => {
+	let str = '';
+	for (const k in object) {
+		// eslint-disable-next-line no-prototype-builtins
+		if (object.hasOwnProperty(k)) {
+			str = `${str}${k}:${object[k]},`;
+		}
+	}
+	return str.slice(0, -1);
+};
 
 const fillFiltersFromArrOfStrings = (arrOfStrings, refs = null) => {
 	let obj;
@@ -176,12 +182,12 @@ const fillFiltersFromArrOfStrings = (arrOfStrings, refs = null) => {
 	// probably refactor to something less complicated
 	for (let k = 0; k < arrOfStrings.length; k++) {
 		const string = arrOfStrings[k];
-		const [key, valString] = string.split(':');
+		const [ key, valString ] = string.split(':');
 		const values = valString.split('-');
-		const rangeArr = [Number(values[0]), Number(values[1])];
+		const rangeArr = [ Number(values[0]), Number(values[1]) ];
 		obj = {
 			...obj,
-			[key]: valString
+			[key]: valString,
 		};
 
 		// if we didn't need obj, loop over refs would give more performance
@@ -199,31 +205,33 @@ const fillFiltersFromArrOfStrings = (arrOfStrings, refs = null) => {
 	filtersStore.update(state => ({
 		...state,
 		isFiltersOn: true,
-		filters: { ...obj }
+		filters: { ...obj },
 	}));
-}
+};
 
 const setCookie = (cname, cvalue, exdays) => {
-    const d = new Date()
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000))
-    const expires = 'expires=' + d.toUTCString()
-    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
-}
+	const d = new Date();
+	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	const expires = `expires=${d.toUTCString()}`;
+	document.cookie = `${cname}=${cvalue};${expires};path=/`;
+};
 
-const getCookie = (cname) => {
-    const name = cname + '='
-    const ca = document.cookie.split(';')
-    for(let i = 0; i < ca.length; i++) {
-        let c = ca[i]
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1)
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length)
-        }
-    }
-    return ''
-}
+const getCookie = cname => {
+	const name = `${cname}=`;
+	const ca = document.cookie.split(';');
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		// eslint-disable-next-line eqeqeq
+		while (' ' == c.charAt(0)) {
+			c = c.substring(1);
+		}
+		// eslint-disable-next-line eqeqeq
+		if (0 == c.indexOf(name)) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return '';
+};
 
 const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false) => {
 	const bounds = map.getBounds();
@@ -232,43 +240,41 @@ const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false) => {
 	const distanceBetweenEdgesOfScreen = roundToFifthDecimal(Math.abs(east - west));
 	const currentZoom = map.getZoom();
 	const zoom = zoomClosely
-		? currentZoom <= 14 ? 15 : currentZoom
-		: currentZoom <= 12 ? 13 : currentZoom;
+		? 14 >= currentZoom ? 15 : currentZoom
+		: 12 >= currentZoom ? 13 : currentZoom;
 
 	// center in left half of the screen for desktop
 	map.setView({
 		lng: isDesktop ? lng + distanceBetweenEdgesOfScreen / (4 * map.getZoomScale(zoom)) : lng,
-		lat
+		lat,
 	}, zoom);
-}
-
-const registerAction = action =>
-	flowStore.update(actions => ([ ...actions, flowDictionary[action] ]));
+};
 
 const generateYearsBetween = (startYear, endYear) => {
-    const endDate = endYear || new Date().getFullYear();
-    let years = [];
-    for (var i = startYear; i <= endDate; i++) {
-        years.push(startYear);
-        startYear++;
-    }
-    return years;
-}
+	let startDate = startYear;
+	const endDate = endYear || new Date().getFullYear();
+	const years = [];
+	for (let i = startDate; i <= endDate; i++) {
+		years.push(startDate);
+		startDate++;
+	}
+	return years;
+};
 
 export {
-    debounce,
-    sleep,
-    getAverageRating,
-    splitString,
-    roundToFifthDecimal,
+	debounce,
+	sleep,
+	getAverageRating,
+	splitString,
+	roundToFifthDecimal,
 	roundToFifthDecimalLatLng,
-    roundToTen,
-    roundToInt,
-    getColor,
-    getFinalRating,
-    openAnotherOverlay,
-    closeOverlay,
-    closeOverlays,
+	roundToTen,
+	roundToInt,
+	getColor,
+	getFinalRating,
+	openAnotherOverlay,
+	closeOverlay,
+	closeOverlays,
 	showSuccessNotification,
 	showSomethingWrongNotification,
 	hideSomethingWrongNotification,
@@ -279,4 +285,4 @@ export {
 	centerMap,
 	registerAction,
 	generateYearsBetween,
-}
+};

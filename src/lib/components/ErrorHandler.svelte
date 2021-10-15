@@ -4,15 +4,15 @@
     import { showSomethingWrongNotification } from "../utilities/helpers.js";
 
     const handleErrors = event => {
-        showSomethingWrongNotification();
+    	showSomethingWrongNotification();
 
-        if (!$userStateStore.shouldSendEvent)
-            return;
+    	if (!$userStateStore.shouldSendEvent)
+    		return;
 
-        const { message, filename, lineno, colno, error } = event;
-        navigator.sendBeacon(`${API_URL}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }));
-        return true;
-    }
+    	const { message, filename, lineno, colno, error } = event;
+    	navigator.sendBeacon(`${API_URL}/flow/error`, new URLSearchParams({ message, filename, lineno, colno, error }));
+    	return true;
+    };
 </script>
 
 <svelte:window

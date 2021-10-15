@@ -10,9 +10,9 @@
     export let sidebarData;
 
     const sidebarList = {
-        commentsSidebar: CommentsSidebar,
-        filtersSidebar: FiltersSidebar,
-        menuSidebar: MenuSidebar,
+    	commentsSidebar: CommentsSidebar,
+    	filtersSidebar: FiltersSidebar,
+    	menuSidebar: MenuSidebar,
     };
 
     $: Sidebar = sidebarList[sidebarName];

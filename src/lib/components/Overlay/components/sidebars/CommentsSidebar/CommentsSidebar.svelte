@@ -9,17 +9,17 @@
 
     export let sidebarData;
 
-    const fetchData = async (geoID) => {
-        const { error, data } = await fetchComments(geoID);
+    const fetchData = async geoID => {
+    	const { error, data } = await fetchComments(geoID);
 
-        if (error) {
-            console.warn(error)
-            showSomethingWrongNotification();
-            return [];
-        }
+    	if (error) {
+    		console.warn(error);
+    		showSomethingWrongNotification();
+    		return [];
+    	}
 
-        return data;
-    }
+    	return data;
+    };
 
     $: promise = fetchData(sidebarData);
 </script>
