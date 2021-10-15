@@ -1,7 +1,6 @@
 <script>
     import { _, json } from 'svelte-i18n';
     import { onMount, onDestroy } from 'svelte';
-    import L from 'leaflet';
 
     import PopupTitle from '../PopupTitle.svelte';
     import QuizItem from './QuizItem.svelte';
@@ -213,6 +212,7 @@
 
     const addCircle = () => {
     	const { lat, lng } = popupData;
+    	// eslint-disable-next-line no-undef
     	circle = L.circle(popupData, 200, { color: '#007097' });
 
     	circle.addTo(map);

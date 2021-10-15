@@ -1,6 +1,5 @@
 # To do:
 
-- add lint check
 - fix share rating for first time users
 - add possibility to edit ratings
 - sent letter to users asking to edit their rating's timelines
@@ -22,5 +21,5 @@
 # With the next release
 
 - Update db (temporarily.js):
-- adjust user.model.js (remove two fields)
-- add link in github
+- adjust user.model.js after db update (remove two fields)
+- add link to measureland in github

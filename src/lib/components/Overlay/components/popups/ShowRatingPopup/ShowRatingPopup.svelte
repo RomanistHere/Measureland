@@ -2,7 +2,6 @@
     import { browser } from '$app/env';
     import { onDestroy } from 'svelte';
     import { json, _, locale } from 'svelte-i18n';
-    import L from 'leaflet';
 
     import Timeline from './Timeline.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
@@ -72,11 +71,11 @@
     		}
     		approximateAdress = result.address.LongLabel;
     	});
-    	// TODO:
-    	// $('.rate__popup').focus()
+
     	if (circle)
     		map.removeLayer(circle);
 
+    	// eslint-disable-next-line no-undef
     	circle = L.circle({ lng, lat }, 300, { color: '#007097' });
 
     	circle.addTo(map);
@@ -89,7 +88,7 @@
     		showSomethingWrongNotification();
     		return;
     	}
-    
+
     	const { properties } = data;
     	const { timeline, isRated, geoID, numberOfPersonalExperience } = properties;
     	loadedRating = properties['rating'];
