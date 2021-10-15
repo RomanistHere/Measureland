@@ -12,6 +12,7 @@
     	showSuccessNotification,
     	closeOverlays,
     	showSomethingWrongNotification,
+    	logError,
     } from "../../../../utilities/helpers.js";
     import { reset } from "../../../../utilities/api.js";
 
@@ -59,7 +60,7 @@
     	isLoading = false;
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		isError = true;
     		errorType = 'unrecognizedError';
 

@@ -73,7 +73,6 @@ module.exports = {
 		"no-shadow-restricted-names": 1,
 		"no-shadow": 1,
 		"no-undef": [2, { typeof: true }],
-		"no-use-before-define": 1,
 		"array-bracket-spacing": [2, "always", { "objectsInArrays": false, "arraysInArrays": false }],
 		"block-spacing": [2, "always"],
 		"camelcase": [2, { "properties": "always" }],

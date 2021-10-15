@@ -13,6 +13,7 @@
     	showSomethingWrongNotification,
     	closeOverlays,
     	registerAction,
+    	logError,
     } from '../../../utilities/helpers.js';
     import { saveLang, logout } from '../../../utilities/api.js';
     import { appStateStore, userStateStore } from "../../../../stores/state.js";
@@ -40,7 +41,7 @@
     			showSuccessNotification();
     			registerAction('navbarLogout');
     		} else {
-    			console.warn(error);
+    			logError(error);
     			showSomethingWrongNotification();
     		}
     	},

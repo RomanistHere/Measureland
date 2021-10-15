@@ -6,12 +6,18 @@
     import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
     import FormButton from '../../../ui-elements/FormButton.svelte';
 
-    import { closeOverlay, showSuccessNotification, debounce, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
+    import {
+    	closeOverlay,
+    	showSuccessNotification,
+    	debounce,
+    	showSomethingWrongNotification,
+    	logError,
+    } from "../../../../utilities/helpers.js";
     import { onboard } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
     const defaultName = $_('onboardingPopup.defaultName');
-    
+
     let isSpam = null;
     let onboardingState = {
     	name: defaultName,
@@ -68,7 +74,7 @@
     	const { error } = await onboard(userName, ageGrp, moneyGrp, $userStateStore.userID);
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		return;
     	}

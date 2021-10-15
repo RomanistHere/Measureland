@@ -11,6 +11,7 @@
     	showSomethingWrongNotification,
     	debounce,
     	registerAction,
+    	logError,
     } from '../../../../../utilities/helpers.js';
 
     export let averageRating;
@@ -27,6 +28,7 @@
     let isAlreadyReported = false;
     let isAlreadyEndorsed = false;
 
+    // eslint-disable-next-line no-unused-vars
     const resetRatings = ratingID => {
     	// this needed for the case when user clicks
     	// new ratings without closing previous one
@@ -40,7 +42,7 @@
     		const { error, data } = await fetchSingleRating(_id);
 
     		if (error) {
-    			console.warn(error);
+    			logError(error);
     			showSomethingWrongNotification();
     			return;
     		}
@@ -75,7 +77,7 @@
     	} else if (error === 'User is not logged in') {
     		openAnotherOverlay('loginPopup');
     	} else {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     	}
 
@@ -91,7 +93,7 @@
     	} else if (error === 'User is not logged in') {
     		openAnotherOverlay('loginPopup');
     	} else {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     	}
 

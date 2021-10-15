@@ -5,7 +5,7 @@
     import Spinner from '../../../../ui-elements/Spinner.svelte';
 
     import { fetchComments } from "../../../../../utilities/api.js";
-    import { showSomethingWrongNotification } from '../../../../../utilities/helpers.js';
+    import { showSomethingWrongNotification, logError } from '../../../../../utilities/helpers.js';
 
     export let sidebarData;
 
@@ -13,7 +13,7 @@
     	const { error, data } = await fetchComments(geoID);
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		return [];
     	}

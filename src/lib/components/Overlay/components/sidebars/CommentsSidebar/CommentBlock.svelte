@@ -4,7 +4,12 @@
     import VoteButton from "../../../../ui-elements/VoteButton.svelte";
 
     import { userStateStore } from "../../../../../../stores/state.js";
-    import { openAnotherOverlay, closeOverlay, showSomethingWrongNotification } from "../../../../../utilities/helpers.js";
+    import {
+    	openAnotherOverlay,
+    	closeOverlay,
+    	showSomethingWrongNotification,
+    	logError,
+    } from "../../../../../utilities/helpers.js";
     import { reactOnComment } from "../../../../../utilities/api.js";
 
     export let data;
@@ -36,7 +41,7 @@
 
     	const { error } = await reactOnComment('like', id);
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		return;
     	}
@@ -62,7 +67,7 @@
 
     	const { error } = await reactOnComment('dislike', id);
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		return;
     	}

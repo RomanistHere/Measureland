@@ -18,6 +18,7 @@
     	debounce,
     	showSomethingWrongNotification,
     	registerAction,
+    	logError,
     } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
@@ -246,7 +247,7 @@
     			: currentScreenPoly;
     		return queryPolygon;
     	} catch (e) {
-    		console.warn(e);
+    		logError(e);
     		showSomethingWrongNotification();
     		return currentScreenPoly;
     	}
@@ -326,7 +327,7 @@
     		showSomethingWrongNotification();
     		return;
     	} else if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		return;
     	}
@@ -353,7 +354,7 @@
     				: currentScreenPoly;
     		}
     	} catch (e) {
-    		console.warn(e);
+    		logError(e);
     		showSomethingWrongNotification();
     	}
 

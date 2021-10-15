@@ -95,7 +95,7 @@
     		}));
     	}
 
-    	const reset = refs.map(({ ref }) => { ref.setSlider([ 1, 5 ]) });
+    	refs.forEach(({ ref }) => { ref.setSlider([ 1, 5 ]) });
     	registerAction('filtersReset');
     };
     const debouncedResetFilters = debounce(resetFilters, 300);

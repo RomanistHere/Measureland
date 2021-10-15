@@ -6,7 +6,7 @@
     import TextButton from '../../../ui-elements/TextButton.svelte';
 
     import { fetchRatedPlace } from "../../../../utilities/api.js";
-    import { openAnotherOverlay, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
+    import { openAnotherOverlay, showSomethingWrongNotification, logError } from "../../../../utilities/helpers.js";
     import { geocodeServiceReference } from "../../../../../stores/references.js";
     import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
@@ -19,7 +19,7 @@
     	const { error, data } = await fetchRatedPlace();
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		return [];
     	}

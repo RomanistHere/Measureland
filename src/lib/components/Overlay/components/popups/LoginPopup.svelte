@@ -13,6 +13,7 @@
     	showSuccessNotification,
     	showSomethingWrongNotification,
     	registerAction,
+    	logError,
     } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
@@ -46,7 +47,7 @@
     	isLoading = false;
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		isError = true;
     		errorType = 'unrecognizedError';
 
@@ -84,7 +85,7 @@
     	isLoading = false;
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		isError = true;
     		errorType = 'unrecognizedError';
 

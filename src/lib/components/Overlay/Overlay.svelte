@@ -1,6 +1,5 @@
 <script>
     import { onMount } from 'svelte';
-    import { browser } from '$app/env';
 
     import { overlayStateStore, appStateStore, appWidth } from '../../../stores/state.js';
     import { closeOverlays, openAnotherOverlay, closeOverlay } from '../../utilities/helpers.js';

@@ -6,7 +6,7 @@
     import TextLink from '../../ui-elements/TextLink.svelte';
 
     import { checkUser } from "../../../utilities/api.js";
-    import { getCookie, showSomethingWrongNotification, registerAction } from "../../../utilities/helpers.js";
+    import { getCookie, showSomethingWrongNotification, registerAction, logError } from "../../../utilities/helpers.js";
     import { userStateStore, appStateStore } from "../../../../stores/state.js";
     import { appInfo } from '../../../../configs/index.js';
 
@@ -17,7 +17,7 @@
     	const { error, data } = await checkUser();
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		isError = true;
     		if (error === 'Too many requests, please try again later')
@@ -50,6 +50,7 @@
     	}
     };
 
+    // eslint-disable-next-line no-unused-vars
     const promise = userInit();
 </script>
 

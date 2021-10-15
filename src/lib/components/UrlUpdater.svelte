@@ -9,6 +9,7 @@
     	objToString,
     	fillFiltersFromArrOfStrings,
     	showSomethingWrongNotification,
+    	logError,
     } from "../utilities/helpers.js";
     import { verifyUser } from "../utilities/api.js";
 
@@ -99,8 +100,8 @@
     		const { error, data } = await verifyUser(token);
 
     		if (error) {
-    			console.warn(error);
-    			console.warn('Token might be expired');
+    			logError(error);
+    			logError('Token might be expired');
     			showSomethingWrongNotification();
     			return;
     		}

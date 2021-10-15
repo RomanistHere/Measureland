@@ -13,6 +13,7 @@
     	setCookie,
     	closeOverlay,
     	registerAction,
+    	logError,
     } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
     import { APP_VERSION } from '../../../../../configs/env.js';
@@ -52,7 +53,7 @@
     				showSuccessNotification();
     				registerAction('logoutMobile');
     			} else {
-    				console.warn(error);
+    				logError(error);
     				showSomethingWrongNotification();
     			}
     		},
@@ -153,7 +154,7 @@
     	const { error } = await askMoreRatings();
     	closeOverlay('sidebar');
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     	} else
     		showSuccessNotification();

@@ -7,9 +7,15 @@
     import 'leaflet-draw/dist/leaflet.draw.css';
     import { locale } from 'svelte-i18n';
 
-    import { mapReference, geocodeServiceReference } from '../../../../../stores/references.js';
+    import { mapReference } from '../../../../../stores/references.js';
     import { appStateStore } from '../../../../../stores/state.js';
-    import { roundToFifthDecimal, roundToTen, debounce, showSomethingWrongNotification } from "../../../../utilities/helpers.js";
+    import {
+    	roundToFifthDecimal,
+    	roundToTen,
+    	debounce,
+    	showSomethingWrongNotification,
+    	logError,
+    } from "../../../../utilities/helpers.js";
     import { translateDrawRU } from './drawLocalization.js';
 
     export let mapClickRefFuntcion;
@@ -101,7 +107,7 @@
     			});
     			delete shape['properties'];
     		} catch (error) {
-    			console.warn(error);
+    			logError(error);
     			showSomethingWrongNotification();
     		}
     	}
@@ -115,7 +121,7 @@
     	const urlString = encodeURIComponent(string);
 
     	if (urlString.length >= 2000) {
-    		console.warn('URL length is too long');
+    		logError('URL length is too long');
     		showSomethingWrongNotification();
     		return;
     	}

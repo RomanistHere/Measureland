@@ -19,6 +19,11 @@ const debounce = (func, wait, immediate) => {
 	};
 };
 
+const logError = error => {
+	// eslint-disable-next-line no-console
+	console.warn(error);
+};
+
 const sleep = milliseconds =>
 	new Promise(resolve => setTimeout(resolve, milliseconds));
 
@@ -132,7 +137,7 @@ const openAnotherOverlay = (overlayName = null, data = {}) => {
 	    });
 		registerAction(overlayName);
 	} catch (e) {
-		console.warn('Define popup in constatns/overlayStateDefault.js');
+		logError('Define popup in constatns/overlayStateDefault.js');
 	}
 };
 
@@ -285,4 +290,5 @@ export {
 	centerMap,
 	registerAction,
 	generateYearsBetween,
+	logError,
 };

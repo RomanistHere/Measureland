@@ -19,6 +19,7 @@
     	centerMap,
     	showSomethingWrongNotification,
     	registerAction,
+    	logError,
     } from '../../../../../utilities/helpers.js';
 
     export let popupData;
@@ -53,7 +54,7 @@
     			shouldShowURLCopySuccess = true;
     			setTimeout(() => { shouldShowURLCopySuccess = false }, 1000);
     		} catch (e) {
-    			console.warn(e);
+    			logError(e);
     			showSomethingWrongNotification();
     		}
     	}
@@ -66,7 +67,7 @@
     const fetchData = async({ lng, lat }) => {
     	geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
     		if (error) {
-    			console.warn(error);
+    			logError(error);
     			return;
     		}
     		approximateAdress = result.address.LongLabel;
@@ -84,12 +85,11 @@
     	const { error, data } = await getSinglePointData([ lng, lat ]);
 
     	if (error) {
-    		console.warn(error);
+    		logError(error);
     		showSomethingWrongNotification();
     		return;
     	}
-
-    	console.log(data);
+    
     	const { properties } = data;
     	const { timeline, isRated, geoID, numberOfPersonalExperience } = properties;
     	loadedRating = properties['rating'];

@@ -25,6 +25,7 @@
     	showSomethingWrongNotification,
     	registerAction,
     	generateYearsBetween,
+    	logError,
     } from "../../../../../utilities/helpers.js";
     import { mapReference } from "../../../../../../stores/references.js";
     import { userStateStore, markerStore, isDesktop } from "../../../../../../stores/state.js";
@@ -158,7 +159,7 @@
     		const { ratings, comment, isPersonalExperience, timeline } = quizState;
     		const { error, data } = await saveToDB(currentCoords, ratings, averageRating, comment, isPersonalExperience, timeline);
     		isLoading = false;
-    		console.log(error, data);
+    		logError(error, data);
 
     		if (error === 'Nearby place is already rated') {
     			errorType = 'nearbyPlaceAlreadyRated';
@@ -173,7 +174,7 @@
     			isError = true;
     			return;
     		} else if (error) {
-    			console.warn(error);
+    			logError(error);
     			errorType = 'unrecognizedError';
     			isError = true;
     			showSomethingWrongNotification();
@@ -200,7 +201,7 @@
     		closeOverlays();
     		showSuccessNotification();
     	} catch (e) {
-    		console.warn(e);
+    		logError(e);
     		errorType = 'unrecognizedError';
     		isError = true;
     		isLoading = false;
