@@ -53,4 +53,4 @@ export const shouldShowFiltersNotification = derived(filtersStore, $filtersStore
 
 export const appWidth = writable(0);
 
-export const isDesktop = derived(appWidth, $appWidth => 1024 <= $appWidth);
+export const isDesktop = derived(appWidth, $appWidth => $appWidth >= 1024);

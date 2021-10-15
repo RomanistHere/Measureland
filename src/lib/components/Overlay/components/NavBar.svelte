@@ -19,7 +19,7 @@
 
     let profileDropDownOpen = false;
 
-    $: isUserLoggedIn = null !== $userStateStore.userID;
+    $: isUserLoggedIn = $userStateStore.userID !== null;
 
     $: dropdownData = [{
     	text: $_('menuSidebar.logout'),
@@ -109,9 +109,9 @@
     };
 
     const changeLanguage = async() => {
-    	const nextLang = 'ru' === $locale ? 'en' : 'ru';
+    	const nextLang = $locale === 'ru' ? 'en' : 'ru';
     	locale.set(nextLang);
-    	if ('undefined' !== typeof window) {
+    	if (typeof window !== 'undefined') {
     		const url = new URL(window.location.href);
     		url.pathname = `/${nextLang}/`;
     		window.history.replaceState(null, null, url);
@@ -159,9 +159,9 @@
             on:mouseleave={handleMouseleaveRight}
         >
             <a class="block mx-4 p-2" href={'#'} on:click|preventDefault={changeLanguage}>
-                <span class:underline={'ru' === $locale}>RU</span>
+                <span class:underline={$locale === 'ru'}>RU</span>
                 /
-                <span class:underline={'en' === $locale}>EN</span>
+                <span class:underline={$locale === 'en'}>EN</span>
             </a>
             {#if isUserLoggedIn}
                 <a

@@ -15,10 +15,10 @@
     		if (prevElem === curElem) {
     			multiplier++;
     			if (length === i + 1) {
-    				flowString = 1 < multiplier ? `${flowString}${prevElem}*${multiplier}` : `${flowString}${prevElem}`;
+    				flowString = multiplier > 1 ? `${flowString}${prevElem}*${multiplier}` : `${flowString}${prevElem}`;
     			}
     		} else {
-    			flowString = 1 < multiplier ? `${flowString}${prevElem}*${multiplier},` : `${flowString}${prevElem},`;
+    			flowString = multiplier > 1 ? `${flowString}${prevElem}*${multiplier},` : `${flowString}${prevElem},`;
     			prevElem = curElem;
     			multiplier = 1;
     			if (length === i + 1) {
@@ -26,12 +26,12 @@
     			}
     		}
     	}
-    	10 < flowString.length && navigator.sendBeacon(`${API_URL}/flow/add`, new URLSearchParams({ flowString, uniqID }));
+    	flowString.length > 10 && navigator.sendBeacon(`${API_URL}/flow/add`, new URLSearchParams({ flowString, uniqID }));
     };
 
     onMount(() => {
     	document.addEventListener('visibilitychange', () => {
-    		if ('hidden' === document.visibilityState && $userStateStore.shouldSendEvent) {
+    		if (document.visibilityState === 'hidden' && $userStateStore.shouldSendEvent) {
     			sendFeedback();
     		}
     	});

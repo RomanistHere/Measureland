@@ -39,9 +39,9 @@
     let timelineData = [];
 
     $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
-    $: isUserLoggedIn = null === $userStateStore.userID ? false : true;
+    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     // complexity because of translation
-    $: criteriaArray = null === loadedRating
+    $: criteriaArray = loadedRating === null
     	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
     	: Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
 

@@ -61,7 +61,7 @@
         <PopupTitle title={$_('myPlacesPopup.title')} />
 
         <ul class="max-h-96 overflow-y-auto mt-2 list-inside list-decimal py-2">
-            {#if 0 === array.length}
+            {#if array.length === 0}
                 <span>{$_('myPlacesPopup.youHaveNotRated')}</span>
             {:else}
                 {#each array as { lang, lat, lng, address }}

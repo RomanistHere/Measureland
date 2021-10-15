@@ -18,8 +18,8 @@
     import { APP_VERSION } from '../../../../../configs/env.js';
     import { userStateStore, isDesktop } from "../../../../../stores/state.js";
 
-    $: isUserLoggedIn = null === $userStateStore.userID ? false : true;
-    $: shouldUserHaveMoreRatingsBtn = 5 >= $userStateStore.activeRatings;
+    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
     $: isUserAskedForMoreRatings = $userStateStore.wantMoreRatings;
 
     $: dataTopBlock = {
@@ -80,9 +80,9 @@
     		href: `#`,
     		onClick: async e => {
     			e.preventDefault();
-    			const nextLang = 'ru' === $locale ? 'en' : 'ru';
+    			const nextLang = $locale === 'ru' ? 'en' : 'ru';
     			locale.set(nextLang);
-    			if ('undefined' !== typeof window) {
+    			if (typeof window !== 'undefined') {
     				const url = new URL(window.location.href);
     				url.pathname = `/${nextLang}`;
     				window.history.replaceState(null, null, url);
@@ -121,7 +121,7 @@
     	}],
     };
 
-    $: if ('ru' === $locale) {
+    $: if ($locale === 'ru') {
     	dataBottomBlock = {
     		...dataBottomBlock,
     		list: [

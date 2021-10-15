@@ -14,7 +14,7 @@
     let isLikesDisabled = isLiked || isYours;
     let isDislikesDisabled = isDisliked || isYours;
 
-    const isUserLoggedIn = null === $userStateStore.userID ? false : true;
+    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
     const likeComment = async() => {
     	if (!isUserLoggedIn) {

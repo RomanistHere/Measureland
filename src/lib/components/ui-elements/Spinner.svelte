@@ -31,7 +31,7 @@
     		shouldShowText = true;
     		spinnerInterval = setInterval(() => {
     			statusText = $json('spinner.change')[i];
-    			i = 2 <= i ? 0 : i + 1;
+    			i = i >= 2 ? 0 : i + 1;
     		}, 3000);
     	}, 2000);
     };

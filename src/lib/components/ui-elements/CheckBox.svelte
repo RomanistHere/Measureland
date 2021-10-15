@@ -7,7 +7,7 @@
     export let checked = false;
     export let className = null;
 
-    const isLink = 0 < textLink.length;
+    const isLink = textLink.length > 0;
 </script>
 
 <label class="{className} relative block pl-8 py-0.5 select-none cursor-pointer">

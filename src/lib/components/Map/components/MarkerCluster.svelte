@@ -151,17 +151,17 @@
     	const toAddArrayLength = markersToAdd.length;
     	const toRemoveArrayLength = markersToRemove.length;
 
-    	if (0 === toAddArrayLength && 0 === toRemoveArrayLength)
+    	if (toAddArrayLength === 0 && toRemoveArrayLength === 0)
     		return;
 
-    	if (0 !== toRemoveArrayLength) {
+    	if (toRemoveArrayLength !== 0) {
     		for (let i = 0; i < toRemoveArrayLength; i++) {
     			const { coords } = markersToAdd[i];
     			removeMarker(coords);
     		}
     	}
 
-    	if (0 !== toAddArrayLength) {
+    	if (toAddArrayLength !== 0) {
     		for (let i = 0; i < toAddArrayLength; i++) {
     			const { coords, rating } = markersToAdd[i];
     			addMarker(coords, rating);
@@ -241,7 +241,7 @@
 
     const getQueryPolygon = (visitedPoly, currentScreenPoly) => {
     	try {
-    		const queryPolygon = null !== visitedPoly && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
+    		const queryPolygon = visitedPoly !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
     			? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
     			: currentScreenPoly;
     		return queryPolygon;
@@ -321,7 +321,7 @@
     	const { error, data } = await fetchBoundsData(query, zoom, filters);
     	// console.timeEnd('fetch new data')
 
-    	if ('Too many requests, please try again later' === error) {
+    	if (error === 'Too many requests, please try again later') {
     		appStateStore.update(state => ({ ...state, shouldWork: false }));
     		showSomethingWrongNotification();
     		return;
@@ -348,7 +348,7 @@
 
     	try {
     		if (!$filtersStore.isFiltersOn) {
-    			visitedPoly = null !== visitedPoly
+    			visitedPoly = visitedPoly !== null
     				? PolyBool.union(visitedPoly, queryPolygon)
     				: currentScreenPoly;
     		}
@@ -369,7 +369,7 @@
     	if (!isFiltersOn)
     		return;
 
-    	if (null === filters)
+    	if (filters === null)
     		filtersStore.update(state => ({ ...state, isFiltersOn: false }));
 
     	getNewData();

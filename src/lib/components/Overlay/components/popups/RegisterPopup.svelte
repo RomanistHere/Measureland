@@ -40,7 +40,7 @@
     	registerAction('trySubmitRegister');
     	isError = false;
     	shouldShowMatchError = false;
-    	const isValuesNotEmpty = 0 < email.length && 0 < password.length && 0 < passwordConfirm.length;
+    	const isValuesNotEmpty = email.length > 0 && password.length > 0 && passwordConfirm.length > 0;
     	if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid || !isPasswordConfirmValid) {
     		// TODO: focus needed input
     		isError = true;
@@ -66,9 +66,9 @@
     		isError = true;
     		errorType = 'unrecognizedError';
 
-    		if ('Email already exists' === error) {
+    		if (error === 'Email already exists') {
     			errorType = 'accountExists';
-    		} else if ('Too many requests, please try again later' === error) {
+    		} else if (error === 'Too many requests, please try again later') {
     			errorType = 'manyRequests';
     		}
 

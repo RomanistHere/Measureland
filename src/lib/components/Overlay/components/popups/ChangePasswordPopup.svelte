@@ -38,7 +38,7 @@
 
     	isError = false;
     	shouldShowMatchError = false;
-    	const isValuesNotEmpty = 0 < password.length && 0 < passwordConfirm.length;
+    	const isValuesNotEmpty = password.length > 0 && passwordConfirm.length > 0;
     	if (!isValuesNotEmpty || !isPasswordValid || !isPasswordConfirmValid) {
     		// TODO: focus needed input
     		isError = true;
@@ -63,11 +63,11 @@
     		isError = true;
     		errorType = 'unrecognizedError';
 
-    		if ('Matches old password' === error) {
+    		if (error === 'Matches old password') {
     			errorType = 'samePass';
-    		} else if ('Too many requests, please try again later' === error) {
+    		} else if (error === 'Too many requests, please try again later') {
     			errorType = 'manyRequests';
-    		} else if ('Password link is invalid or expired' === error) {
+    		} else if (error === 'Password link is invalid or expired') {
     			errorType = 'linkExpired';
     		}
 
@@ -126,7 +126,7 @@
         {#if isLoading}
             <Spinner />
         {/if}
-        {#if isError && 'linkExpired' === errorType}
+        {#if isError && errorType === 'linkExpired'}
             <div class="italic font-bold sug-color">
                 <span class="block text-center">{$_('errors.linkExpired')}</span>
                 <a href={"#"} class="block text-center underline" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>

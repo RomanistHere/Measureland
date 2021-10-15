@@ -66,7 +66,7 @@
     		drawnItems.addLayer(layer);
     		const shape = layer.toGeoJSON();
 
-    		if ('circle' === type) {
+    		if (type === 'circle') {
     			const radius = layer.getRadius();
     			shape.properties.radius = roundToTen(radius);
     		}
@@ -93,7 +93,7 @@
     };
 
     const addToCommongGeoJSON = shape => {
-    	if ('Point' !== shape.geometry.type) {
+    	if (shape.geometry.type !== 'Point') {
     		try {
     			shape.geometry.coordinates[0] = shape.geometry.coordinates[0].map(coordsArr => {
     				const [ lat, lng ] = coordsArr;
@@ -106,7 +106,7 @@
     		}
     	}
 
-    	if (null === shapesGeoJSON['features'])
+    	if (shapesGeoJSON['features'] === null)
     		shapesGeoJSON['features'] = [ shape ];
     	else
     		shapesGeoJSON = concatGeoJSON(shapesGeoJSON, shape);
@@ -114,7 +114,7 @@
     	const string = JSON.stringify(shapesGeoJSON);
     	const urlString = encodeURIComponent(string);
 
-    	if (2000 <= urlString.length) {
+    	if (urlString.length >= 2000) {
     		console.warn('URL length is too long');
     		showSomethingWrongNotification();
     		return;
@@ -138,7 +138,7 @@
     	};
     	map.addLayer(drawnItems);
     	const drawControl = new L.Control.Draw(drawOptions);
-    	if ('ru' === $locale)
+    	if ($locale === 'ru')
     		translateDrawRU(L);
     	map.addControl(drawControl);
     };

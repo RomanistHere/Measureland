@@ -57,9 +57,9 @@
 
     const submit = async() => {
     	const { name, ageGrp, moneyGrp } = onboardingState;
-    	const userName = '' === name.trim() ? defaultName : name;
+    	const userName = name.trim() === '' ? defaultName : name;
 
-    	if (userName === defaultName && 1 === ageGrp && 1 === moneyGrp) {
+    	if (userName === defaultName && ageGrp === 1 && moneyGrp === 1) {
     		showSuccessNotification();
     		closeOverlay('popup');
     		return;

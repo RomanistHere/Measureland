@@ -41,7 +41,7 @@
     	key,
     }));
 
-    $: isUserLoggedIn = null === $userStateStore.userID ? false : true;
+    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: currentStage = 1;
 
     const currentYear = new Date().getFullYear();
@@ -132,7 +132,7 @@
     	const { finalRating, answersNumber } = getFinalRating(rating);
 
     	return {
-    		isDataValid: 11 === answersNumber ? true : false,
+    		isDataValid: answersNumber === 11 ? true : false,
     		averageRating: roundToTen(finalRating),
     	};
     };
@@ -160,15 +160,15 @@
     		isLoading = false;
     		console.log(error, data);
 
-    		if ('Nearby place is already rated' === error) {
+    		if (error === 'Nearby place is already rated') {
     			errorType = 'nearbyPlaceAlreadyRated';
     			isError = true;
     			return;
-    		} else if ('No active ratings' === error) {
+    		} else if (error === 'No active ratings') {
     			errorType = 'youRateTooOften';
     			isError = true;
     			return;
-    		} else if ('User is not logged in' === error) {
+    		} else if (error === 'User is not logged in') {
     			errorType = 'sessionExpired';
     			isError = true;
     			return;
@@ -180,7 +180,7 @@
     			return;
     		}
 
-    		const isUpdated = 'Rating updated' === data.message ? true : false;
+    		const isUpdated = data.message === 'Rating updated' ? true : false;
     		if (isUpdated) {
     			const { coords, averageRating } = data;
     			markerStore.update(state => ({
@@ -227,7 +227,7 @@
 </script>
 
 <div class="max-w-sm w-full">
-    {#if 1 === currentStage}
+    {#if currentStage === 1}
         <p class="my-4">
             {$_('quizPopup.soYouWantToRate')}
         </p>
@@ -241,7 +241,7 @@
         <p class="text-xs text-center my-4">
             {$_('quizPopup.beSincere')}
         </p>
-    {:else if 2 === currentStage}
+    {:else if currentStage === 2}
         <p class="my-4">
             {$_('quizPopup.tenCriteria')}
             <strong class="underline font-normal">{$_('quizPopup.tenCriteriaStrong')}</strong>:
@@ -256,7 +256,7 @@
             on:setRating={setRating}
             { ...quizArray[1] }
         />
-    {:else if 3 === currentStage}
+    {:else if currentStage === 3}
         <PopupTitle title={$_('quizPopup.title3')} />
 
         <QuizItem
@@ -273,7 +273,7 @@
             on:setRating={setRating}
             { ...quizArray[4] }
         />
-    {:else if 4 === currentStage}
+    {:else if currentStage === 4}
         <PopupTitle title={$_('quizPopup.title4')} />
 
         <QuizItem
@@ -290,7 +290,7 @@
             on:setRating={setRating}
             { ...quizArray[7] }
         />
-    {:else if 5 === currentStage}
+    {:else if currentStage === 5}
         <PopupTitle title={$_('quizPopup.title5')} />
 
         <QuizItem
@@ -307,7 +307,7 @@
             on:setRating={setRating}
             { ...quizArray[10] }
         />
-    {:else if 6 === currentStage}
+    {:else if currentStage === 6}
         <PopupTitle title={$_('quizPopup.title6')} />
 
         <Select
@@ -325,7 +325,7 @@
             className='mb-8'
             on:change={setTimeline}
         />
-    {:else if 7 === currentStage}
+    {:else if currentStage === 7}
         <PopupTitle title={$_('quizPopup.title7')} />
 
         <p class="my-4">
@@ -346,7 +346,7 @@
         <div class="flex justify-center items-center h-24 relative w-full">
             {#if isLoading}
                 <Spinner />
-            {:else if isError && 'youRateTooOften' === errorType}
+            {:else if isError && errorType === 'youRateTooOften'}
                 <div class="italic font-bold sug-color text-center">
                     {$_('errors.youRateTooOften')}
                     <TextLink
@@ -365,7 +365,7 @@
     {/if}
 
     <div class="flex justify-evenly items-center my-4">
-        {#if isUserLoggedIn && 1 === currentStage}
+        {#if isUserLoggedIn && currentStage === 1}
             <PrimaryButton
                 action={() => { changePersonalExperience(false) }}
                 text={$_('quizPopup.noPersonalExperienceBtn')}
@@ -374,7 +374,7 @@
                 action={() => { changePersonalExperience(true) }}
                 text={$_('quizPopup.yesPersonalExperienceBtn')}
             />
-        {:else if 1 === currentStage}
+        {:else if currentStage === 1}
             <PrimaryButton
                 action={() => { openAnotherOverlay('loginPopup') }}
                 text={$_('quizPopup.loginBtn')}
@@ -384,7 +384,7 @@
                 action={prevStage}
                 text={$_('quizPopup.backBtn')}
             />
-            {#if 7 === currentStage}
+            {#if currentStage === 7}
                 <PrimaryButton
                     action={debouncedSubmit}
                     text={$_('quizPopup.submitBtn')}

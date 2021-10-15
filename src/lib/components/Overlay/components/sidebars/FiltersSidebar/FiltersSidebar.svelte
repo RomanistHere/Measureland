@@ -12,7 +12,7 @@
     $: filters = Object.keys(criteria).map((key, i) => ({
     	title: criteria[key]['title'],
     	tooltip: criteria[key]['tooltip'],
-    	isShortDesc: 0 === i ? false : true,
+    	isShortDesc: i === 0 ? false : true,
     	key,
     	start: $filtersStore.filters && $filtersStore.filters[key]
     		? [ Number($filtersStore.filters[key].split('-')[0]), Number($filtersStore.filters[key].split('-')[1]) ]
@@ -86,7 +86,7 @@
     ];
 
     const resetFilters = shouldGetNewData => {
-    	if (false !== shouldGetNewData) {
+    	if (shouldGetNewData !== false) {
     		presets = presets.map(item => ({ ...item, isActive: false }));
     		filtersStore.update(state => ({
     			...state,

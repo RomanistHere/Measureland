@@ -16,7 +16,7 @@
         {$_('loggedInPopup.activeRatingsRemaining')}: {$userStateStore.activeRatings}.
     </p>
 
-    {#if 5 >= $userStateStore.activeRatings}
+    {#if $userStateStore.activeRatings <= 5}
         <p class="my-3">
             <TextLink
                 href="blog/how-to-become-citizen/"

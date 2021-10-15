@@ -9,7 +9,7 @@
 
     <ul class="max-h-96 overflow-y-auto">
         {#each $json('partnersPopup.list') as item, i}
-            {#if 0 !== i}
+            {#if i !== 0}
                 <hr />
             {/if}
 

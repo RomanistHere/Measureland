@@ -39,10 +39,10 @@
     			},
     		};
 
-    		if (1 === leftVal && 5 === rightVal)
+    		if (leftVal === 1 && rightVal === 5)
     			delete newState.filters[key];
 
-    		if (0 === Object.keys(newState.filters).length)
+    		if (Object.keys(newState.filters).length === 0)
     			newState = { ...newState, filters: null };
 
     		return newState;

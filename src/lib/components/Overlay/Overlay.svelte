@@ -24,7 +24,7 @@
     const handleKeydown = event => {
     	const key = event.key;
     	// console.log(key);
-    	if ((popupActive || sidebarActive) && 'Escape' === key)
+    	if ((popupActive || sidebarActive) && key === 'Escape')
     		closeOverlays();
     };
 
@@ -36,11 +36,11 @@
     			openOverlays.push({ key, data, type });
     	}
 
-    	if (2 <= openOverlays.length && openOverlays[0].type === openOverlays[1].type) {
+    	if (openOverlays.length >= 2 && openOverlays[0].type === openOverlays[1].type) {
     		throw new Error(`Can't open two or more modals at once`);
     	}
 
-    	if (1 === openOverlays.length && 'commentsSidebar' === openOverlays[0].key) {
+    	if (openOverlays.length === 1 && openOverlays[0].key === 'commentsSidebar') {
     		// close sidebar if only comments is opened (expected behaviour: user closes rating)
     		openOverlays = [];
     		closeOverlays();
@@ -50,11 +50,11 @@
     };
 
     const manageOverlay = ({ key, data, type }) => {
-    	if ('sidebar' === type) {
+    	if (type === 'sidebar') {
     		sidebarName = key;
     		sidebarData = data;
     		sidebarActive = true;
-    	} else if ('popup' === type) {
+    	} else if (type === 'popup') {
     		popupName = key;
     		popupData = data;
     		popupActive = true;
@@ -70,7 +70,7 @@
     	sidebarActive = false;
     	popupActive = false;
 
-    	if (0 === openOverlays.length)
+    	if (openOverlays.length === 0)
     		return;
 
     	for (let i = 0; i < openOverlays.length; i++)

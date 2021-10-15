@@ -68,7 +68,7 @@ module.exports = {
 		"no-useless-concat": 2,
 		"no-void": 1,
 		"no-with": 1,
-		"yoda": [1, "always"],
+		"yoda": [1, "never"],
 		"no-catch-shadow": 1,
 		"no-shadow-restricted-names": 1,
 		"no-shadow": 1,

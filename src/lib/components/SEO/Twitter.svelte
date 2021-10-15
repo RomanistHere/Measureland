@@ -16,8 +16,8 @@
     {#if imageSrc}
         <meta name="twitter:image" content={imageSrc} />
     {/if}
-    {#if isArticle && 0 < timeToRead}
+    {#if isArticle && timeToRead > 0}
         <meta name="twitter:label2" content="Est. reading time" />
-        <meta name="twitter:data2" content={1 !== timeToRead ? `${timeToRead} minutes` : '1 minute'} />
+        <meta name="twitter:data2" content={timeToRead !== 1 ? `${timeToRead} minutes` : '1 minute'} />
     {/if}
 </svelte:head>

@@ -19,7 +19,7 @@
     	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
 
     const validatePass = pass =>
-    	6 < pass.length && 255 > pass.length;
+    	pass.length > 6 && pass.length < 255;
 
     const changeInputType = () =>
     	(shouldShowPassword = !shouldShowPassword);
@@ -28,10 +28,10 @@
     	isInputActive = false;
     	value = e.currentTarget.value;
 
-    	if ('email' === type) {
+    	if (type === 'email') {
     		value = value.toLowerCase();
     		isInputValid = validateEmail(value);
-    	} else if ('password' === type) {
+    	} else if (type === 'password') {
     		isInputValid = validatePass(value);
     	}
     };
@@ -48,7 +48,7 @@
 <div class="relative">
     <label for={id} class="mt-8 relative block font-bold sug-color">
         <span>{title}</span>
-        {#if 'password' === type}
+        {#if type === 'password'}
             <TextButton
                 className="absolute right-0 bottom-0 text-sm px-1 rounded-md"
                 action={changeInputType}
@@ -78,9 +78,9 @@
 
     <span class="absolute right-0 -bottom-6 text-sm">
         {#if !isInputValid && !isInputActive}
-            {#if 'email' === type}
+            {#if type === 'email'}
                 {$_('input.emailError')}
-            {:else if 'password' === type}
+            {:else if type === 'password'}
                 {$_('input.passwordError')}
             {/if}
         {/if}

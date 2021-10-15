@@ -22,7 +22,7 @@
 
     $: contentSlides = Object.values($json('startScreen.slides')).map(item => ({
     	...item,
-    	action: 'openFilters' === item.action
+    	action: item.action === 'openFilters'
     		? () => {
     			if (!$appStateStore.termsOfUseAgreed)
     				return;
@@ -33,7 +33,7 @@
     			registerAction('startScreenExternalLink');
     			window.open(item.href, '_blank');
     		},
-    	disabled: 'openFilters' === item.action && !$appStateStore.termsOfUseAgreed
+    	disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed
     		? true
     		: false,
     }));

@@ -34,7 +34,7 @@
 
     const resendVerificationLetter = async() => {
     	isError = false;
-    	if (!isEmailValid || 0 === email.length) {
+    	if (!isEmailValid || email.length === 0) {
     		// TODO: focus needed input
     		isError = true;
     		errorType = 'fieldsError';
@@ -50,9 +50,9 @@
     		isError = true;
     		errorType = 'unrecognizedError';
 
-    		if ('Email is wrong' === error) {
+    		if (error === 'Email is wrong') {
     			errorType = 'noAccount';
-    		} else if ('Already verified' === error) {
+    		} else if (error === 'Already verified') {
     			errorType = 'alreadyVerified';
     		}
 
@@ -70,7 +70,7 @@
 
     	registerAction('trySubmitLogin');
     	isError = false;
-    	const isValuesNotEmpty = 0 < email.length && 0 < password.length;
+    	const isValuesNotEmpty = email.length > 0 && password.length > 0;
     	if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
     		// TODO: focus needed input
     		isError = true;
@@ -88,13 +88,13 @@
     		isError = true;
     		errorType = 'unrecognizedError';
 
-    		if ('Email is wrong' === error) {
+    		if (error === 'Email is wrong') {
     			errorType = 'noAccount';
-    		} else if ('User is not verified' === error) {
+    		} else if (error === 'User is not verified') {
     			errorType = 'verificationLetter';
-    		} else if ('Password is wrong' === error) {
+    		} else if (error === 'Password is wrong') {
     			errorType = 'wrongPassword';
-    		} else if ('Too many requests, please try again later' === error) {
+    		} else if (error === 'Too many requests, please try again later') {
     			errorType = 'manyRequests';
     		}
 
@@ -163,7 +163,7 @@
         {#if isLoading}
             <Spinner />
         {/if}
-        {#if isError && 'verificationLetter' === errorType}
+        {#if isError && errorType === 'verificationLetter'}
             <div class="italic font-bold sug-color">
                 <span class="block text-center">{$_('errors.errorVerification')}</span>
                 <a href={"#"} class="block text-center underline" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>

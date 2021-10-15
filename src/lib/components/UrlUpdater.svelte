@@ -12,12 +12,12 @@
     } from "../utilities/helpers.js";
     import { verifyUser } from "../utilities/api.js";
 
-    $: if ('undefined' !== typeof window) {
+    $: if (typeof window !== 'undefined') {
     	updateURL($appStateStore, $filtersStore);
     }
 
     const checkIfMapLoaded = () =>
-    	null === $mapReference ? false : true;
+    	$mapReference === null ? false : true;
 
     const updateURL = ({ center, zoom, openModal, showRating, shades }, { isFiltersOn, filters }) => {
     	const [ lat, lng ] = center;
@@ -110,7 +110,7 @@
     		openAnotherOverlay('onboardingPopup');
     	}
 
-    	if (passToken && 25 <= passToken.length) {
+    	if (passToken && passToken.length >= 25) {
     		url.searchParams.delete('reset_pass_token');
     		openAnotherOverlay('changePasswordPopup', passToken);
     	}
@@ -119,7 +119,7 @@
     	window.history.replaceState(null, null, url);
     };
 
-    if ('undefined' !== typeof window) {
+    if (typeof window !== 'undefined') {
     	updateAppStateFromURL();
     }
 </script>

@@ -72,7 +72,7 @@
     	if (!error) {
     		isAlreadyReported = true;
     		showSuccessNotification();
-    	} else if ('User is not logged in' === error) {
+    	} else if (error === 'User is not logged in') {
     		openAnotherOverlay('loginPopup');
     	} else {
     		console.warn(error);
@@ -88,7 +88,7 @@
     	if (!error) {
     		isAlreadyEndorsed = true;
     		showSuccessNotification();
-    	} else if ('User is not logged in' === error) {
+    	} else if (error === 'User is not logged in') {
     		openAnotherOverlay('loginPopup');
     	} else {
     		console.warn(error);

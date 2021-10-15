@@ -41,9 +41,9 @@ const roundToInt = number =>
 	Math.round(number);
 
 const getColor = rating => {
-	if (4 <= rating) {
+	if (rating >= 4) {
 		return 'green';
-	} else if (3 <= rating) {
+	} else if (rating >= 3) {
 		return 'yellow';
 	} else {
 		return 'red';
@@ -66,7 +66,7 @@ const getFinalRating = obj => {
 		const key = keys[i];
 		const val = obj[key];
 
-		if (null === val)
+		if (val === null)
 			continue;
 
 		// check what value the property is going to have. Distribution is 75% for main props and 25 for additional ones
@@ -80,13 +80,13 @@ const getFinalRating = obj => {
 		}
 	}
 
-	const mainPart = 0 !== mainAsnwersCounter
+	const mainPart = mainAsnwersCounter !== 0
 		? sumMain / mainAsnwersCounter
 		: 0; // 75%
-	const additionalPart = 0 !== additionalAsnwersCounter
+	const additionalPart = additionalAsnwersCounter !== 0
 		? sumAdditional / additionalAsnwersCounter
 		: 0; // 25%
-	const finalRating = 0 !== additionalPart
+	const finalRating = additionalPart !== 0
 		? (mainPart * 3 + additionalPart) / 4
 		: mainPart; // if no additional ratings
 
@@ -222,11 +222,11 @@ const getCookie = cname => {
 	for (let i = 0; i < ca.length; i++) {
 		let c = ca[i];
 		// eslint-disable-next-line eqeqeq
-		while (' ' == c.charAt(0)) {
+		while (c.charAt(0) == ' ') {
 			c = c.substring(1);
 		}
 		// eslint-disable-next-line eqeqeq
-		if (0 == c.indexOf(name)) {
+		if (c.indexOf(name) == 0) {
 			return c.substring(name.length, c.length);
 		}
 	}
@@ -240,8 +240,8 @@ const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false) => {
 	const distanceBetweenEdgesOfScreen = roundToFifthDecimal(Math.abs(east - west));
 	const currentZoom = map.getZoom();
 	const zoom = zoomClosely
-		? 14 >= currentZoom ? 15 : currentZoom
-		: 12 >= currentZoom ? 13 : currentZoom;
+		? currentZoom <= 14 ? 15 : currentZoom
+		: currentZoom <= 12 ? 13 : currentZoom;
 
 	// center in left half of the screen for desktop
 	map.setView({

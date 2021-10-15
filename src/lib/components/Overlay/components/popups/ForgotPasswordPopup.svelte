@@ -32,7 +32,7 @@
     		document.activeElement.blur();
 
     	isError = false;
-    	const isValuesNotEmpty = 0 < email.length;
+    	const isValuesNotEmpty = email.length > 0;
     	if (!isValuesNotEmpty || !isEmailValid) {
     		// TODO: focus needed input
     		isError = true;
@@ -49,9 +49,9 @@
     		isError = true;
     		errorType = 'unrecognizedError';
 
-    		if ('Email is wrong' === error) {
+    		if (error === 'Email is wrong') {
     			errorType = 'noAccount';
-    		} else if ('Too many requests, please try again later' === error) {
+    		} else if (error === 'Too many requests, please try again later') {
     			errorType = 'manyRequests';
     		}
 

@@ -20,14 +20,14 @@
     		console.warn(error);
     		showSomethingWrongNotification();
     		isError = true;
-    		if ('Too many requests, please try again later' === error)
+    		if (error === 'Too many requests, please try again later')
     			appStateStore.update(state => ({ ...state, shouldWork: false }));
 
     		return;
     	}
     	const { userID, userName, activeRatings, wantMoreRatings } = data;
-    	const shouldSendEvent = browser ? '0' !== getCookie('shouldSendEvent') ? true : false : false;
-    	const shouldShowStartScreen = browser ? '0' !== getCookie('startScreen') ? true : false : false;
+    	const shouldSendEvent = browser ? getCookie('shouldSendEvent') !== '0' ? true : false : false;
+    	const shouldShowStartScreen = browser ? getCookie('startScreen') !== '0' ? true : false : false;
 
     	isLoaded = true;
     	if (userID) {

@@ -22,7 +22,7 @@ const fetchFunction = async({ url, method, credentials, headers, body }) => {
 
 	// console.log(url, method, credentials, headers, body)
 	try {
-		const resp = 'POST' === newMethod
+		const resp = newMethod === 'POST'
 			? await fetch(url, {
 				method: newMethod,
 				credentials: newCredentials,
