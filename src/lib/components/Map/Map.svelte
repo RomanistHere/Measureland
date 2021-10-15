@@ -16,41 +16,41 @@
     let map;
 
     const onMapClick = e =>
-        openAnotherOverlay('quizPopup', e.latlng);
+    	openAnotherOverlay('quizPopup', e.latlng);
 
-    const createMap = (node) => {
-        const { zoom, center } = $appStateStore;
+    const createMap = node => {
+    	const { zoom, center } = $appStateStore;
 
-        const map = L.map(node, {
-            center: center || [53.8, 27.5],
-            minZoom: 4,
-            zoom: zoom || 7,
-            preferCanvas: true,
-            worldCopyJump: true,
-            bounceAtZoomLimits: false,
-        });
+    	const mapObj = L.map(node, {
+    		center: center || [ 53.8, 27.5 ],
+    		minZoom: 4,
+    		zoom: zoom || 7,
+    		preferCanvas: true,
+    		worldCopyJump: true,
+    		bounceAtZoomLimits: false,
+    	});
 
-        L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            subdomains: ['a','b','c']
-        }).addTo(map);
+    	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    		subdomains: [ 'a', 'b', 'c' ],
+    	}).addTo(mapObj);
 
-        map.zoomControl.setPosition('bottomleft');
+    	mapObj.zoomControl.setPosition('bottomleft');
 
-        map.on('click', onMapClick);
+    	mapObj.on('click', onMapClick);
 
-        return map;
-    }
+    	return mapObj;
+    };
 
     const mapAction = wrap => {
-        map = createMap(wrap);
-        mapReference.set(map);
-        return {
-            destroy: () => {
-                map.remove();
-            },
-        };
-    }
+    	map = createMap(wrap);
+    	mapReference.set(map);
+    	return {
+    		destroy: () => {
+    			map.remove();
+    		},
+    	};
+    };
 </script>
 
 {#if $appStateStore.shouldWork}
