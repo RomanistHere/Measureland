@@ -1,5 +1,6 @@
 # To do:
 
+- emoj???
 - fix share rating for first time users
 - add possibility to edit ratings
 - sent letter to users asking to edit their rating's timelines

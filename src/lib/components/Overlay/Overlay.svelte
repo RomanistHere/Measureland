@@ -84,9 +84,9 @@
     $: manageOverlays(dataOpen);
 
     onMount(async() => {
-	const module = await import('./components/StartScreen/StartScreen.svelte');
-	StartScreen = module.default;
-});
+    	const module = await import('./components/StartScreen/StartScreen.svelte');
+    	StartScreen = module.default;
+    });
 </script>
 
 <!-- // show loader while user data is loading -->

@@ -1,6 +1,6 @@
 <script>
     import { page } from '$app/stores';
-    import { _ } from 'svelte-i18n';
+    import { _, json } from 'svelte-i18n';
 
     import OG from './OG.svelte';
     import Twitter from './Twitter.svelte';
@@ -69,8 +69,23 @@
     { timeToRead }
 />
 
-<head class="flex justify-center items-center absolute -top-20">
+<head class="flex justify-center items-center absolute -top-20 -z-5">
+    <!-- // testing purposes. Check if crawlers get it -->
     <h1 class="text-bold px-4 w-96">
         {description}
     </h1>
+
+    <div class="opacity-20">
+        {#each Object.values($json('startScreen.slides')) as { title, text1, text2 }}
+            <h2>
+                {title}
+            </h2>
+            <p>
+                {text1}
+            </p>
+            <p>
+                {text2}
+            </p>
+        {/each}
+    </div>
 </head>
