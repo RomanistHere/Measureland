@@ -24,6 +24,9 @@ const logError = error => {
 	console.warn(error);
 };
 
+const convertMetersToRadian = meters =>
+	meters / 6378100;
+
 const sleep = milliseconds =>
 	new Promise(resolve => setTimeout(resolve, milliseconds));
 
@@ -238,15 +241,17 @@ const getCookie = cname => {
 	return '';
 };
 
-const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false) => {
+const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false, zoomLevel = null) => {
 	const bounds = map.getBounds();
 	const east = roundToFifthDecimal(bounds.getEast());
 	const west = roundToFifthDecimal(bounds.getWest());
 	const distanceBetweenEdgesOfScreen = roundToFifthDecimal(Math.abs(east - west));
 	const currentZoom = map.getZoom();
-	const zoom = zoomClosely
-		? currentZoom <= 14 ? 15 : currentZoom
-		: currentZoom <= 12 ? 13 : currentZoom;
+	const zoom = zoomLevel && currentZoom >= zoomLevel
+		? zoomLevel
+		: zoomClosely
+			? currentZoom <= 14 ? 15 : currentZoom
+			: currentZoom <= 12 ? 13 : currentZoom;
 
 	// center in left half of the screen for desktop
 	map.setView({
@@ -291,4 +296,5 @@ export {
 	registerAction,
 	generateYearsBetween,
 	logError,
+	convertMetersToRadian,
 };

@@ -1,6 +1,7 @@
 import { get } from 'svelte/store';
 import { appStateStore } from '../../stores/state.js';
 import { API_URL } from '../../configs/env.js';
+import { convertMetersToRadian } from './helpers.js';
 
 const fetchFunction = async({ url, method, credentials, headers, body }) => {
 	if (!url)
@@ -65,6 +66,13 @@ const saveToDB = async(coords, rating, averageRating, comment, isPersonalExperie
 
 const getSinglePointData = async latlng => {
 	const url = `${API_URL}/geo/read_loc/${new URLSearchParams({ latlng })}`;
+
+	return await fetchFunction({ url });
+};
+
+const getNearbyPointData = async(coords, radiusInMeters) => {
+	const radius = convertMetersToRadian(radiusInMeters);
+	const url = `${API_URL}/geo/read_nearby/${new URLSearchParams({ coords, radius })}`;
 
 	return await fetchFunction({ url });
 };
@@ -246,6 +254,7 @@ const saveLang = async lang => {
 export {
 	saveToDB,
 	getSinglePointData,
+	getNearbyPointData,
 	fetchBoundsData,
 	fetchComments,
 	reactOnComment,

@@ -39,6 +39,11 @@ export const overlayStateDefault = {
 		type: 'popup',
 		data: {},
 	},
+	nearbyPopup: {
+		isOpen: false,
+		type: 'popup',
+		data: {},
+	},
 	quizPopup: {
 		isOpen: false,
 		type: 'popup',

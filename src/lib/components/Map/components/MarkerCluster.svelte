@@ -9,7 +9,7 @@
     import "../../../external/supercluster.js";
 
     import { userStateStore, appStateStore, filtersStore, markerStore } from "../../../../stores/state.js";
-    import { mapReference } from "../../../../stores/references.js";
+    import { mapReference, markersReference } from "../../../../stores/references.js";
     import {
 	    roundToFifthDecimal,
     	roundToFifthDecimalLatLng,
@@ -27,7 +27,7 @@
     let visitedPoly = null;
     let cachedData = [];
     let usedBounds = [];
-    let index;
+    let clusterLayer;
     let isLoading = false;
 
     const getIcon = rating =>
@@ -91,17 +91,18 @@
     	const bounds = map.getBounds();
     	const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
     	const zoom = map.getZoom();
-    	const clusters = index.getClusters(bbox, zoom);
+    	const clusters = clusterLayer.getClusters(bbox, zoom);
 
     	clusterMarkers.clearLayers();
     	clusterMarkers.addData(clusters);
+    	markersReference.set(clusterLayer);
     };
 
     clusterMarkers.on('click', e => {
     	const clusterId = e.layer.feature.properties.cluster_id;
     	const center = e.latlng;
     	if (clusterId) {
-    		const expansionZoom = index.getClusterExpansionZoom(clusterId);
+    		const expansionZoom = clusterLayer.getClusterExpansionZoom(clusterId);
     		map.setView(center, expansionZoom);
     	}
     });
@@ -109,7 +110,7 @@
     const clusterData = (geoData = null) => {
     	const data = geoData || cachedData;
 	       // eslint-disable-next-line  no-undef
-    	index = new Supercluster({
+    	clusterLayer = new Supercluster({
     		// log: true,
     		radius: 150,
     		minPoints: 2,

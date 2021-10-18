@@ -17,6 +17,7 @@
     import RegisterPopup from './RegisterPopup.svelte';
     import PartnersPopup from './PartnersPopup.svelte';
     import MyPlacesPopup from './MyPlacesPopup.svelte';
+    import NearbyPopup from './NearbyPopup.svelte';
     import LoginPopup from './LoginPopup.svelte';
 
     export let popupName;
@@ -32,6 +33,7 @@
     	loggedInPopup: LoggedInPopup,
     	loginPopup: LoginPopup,
     	myPlacesPopup: MyPlacesPopup,
+    	nearbyPopup: NearbyPopup,
     	onboardingPopup: OnboardingPopup,
     	partnersPopup: PartnersPopup,
     	quizPopup: QuizPopup,

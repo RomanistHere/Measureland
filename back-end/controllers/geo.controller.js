@@ -249,6 +249,49 @@ exports.geo_location = async (req, res, next) => {
     }
 };
 
+exports.geo_location_nearby = async (req, res, next) => {
+    const { userID } = req.session;
+    const urlParams = new URLSearchParams(req.params.coords);
+    const { coords, radius } = Object.fromEntries(urlParams);
+    const arr = coords.split(',').map(Number).reverse();
+
+    try {
+        const geos = await Geo.find(
+            {
+                "location": {
+                    $geoWithin: {
+                        $centerSphere: [ [ ...arr ], radius ]
+                    }
+                }
+            },
+            'properties.ratingIDs',
+        );
+
+        const ratingIDs = geos.map(geo => geo.properties.ratingIDs).flat();
+
+        const ratings = await Rating.find(
+            {
+                _id : {
+                    $in : [ ...ratingIDs ]
+                }
+            },
+            'rating reported timeline -_id',
+        );
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Nearby locations found",
+                userID: userID ? userID : null,
+                ratings
+            },
+        });
+    } catch (error) {
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
+    }
+};
+
 exports.geo_comments = async (req, res, next) => {
     const userEmail = sanitize(req.session.userID);
 

@@ -1,6 +1,13 @@
 # To do:
 
 - emoj???
+- show nearby rating
+    - best parameter around
+    - worst one
+    - average rating
+    - choose radius
+- Structure single rating description
+- login via Telegram
 - fix share rating for first time users
 - add possibility to edit ratings
 - sent letter to users asking to edit their rating's timelines

@@ -7,6 +7,7 @@
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
     import Spinner from '../../../../ui-elements/Spinner.svelte';
     import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
+    import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
 
     import { getSinglePointData } from "../../../../../utilities/api.js";
     import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
@@ -42,7 +43,7 @@
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     // complexity because of translation
     $: criteriaArray = loadedRating === null
-    	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, key, rating: 0 }))
+    	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, rating: 0 }))
     	: Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
 
     const copyShareRatingURL = () => {
@@ -160,6 +161,7 @@
     <Timeline { timelineData } />
 
     <div class="flex justify-evenly items-center mt-4">
+        <SecondaryButton text='Данные по округе' action={() => openAnotherOverlay('nearbyPopup', currentLatLng)} />
         {#if isUserLoggedIn && isAlreadyRatedByThisUser}
             <PrimaryButton text={$_('showRatingPopup.youHaveAlreadyRated')} disabled={true} />
         {:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
