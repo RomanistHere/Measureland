@@ -262,6 +262,21 @@
         "addNewRating": "Add new rating",
         "loginAndRate": "Login and rate"
     },
+    "nearbyPopup": {
+        "title": "Nearby ratings",
+        "selectTitle": "Proximity radius is changable",
+        "averageRating": "Average regional score",
+        "numberOfRatings": "Number of ratings",
+        "noData": "No other data around.",
+        "secondTitle": "Interesting stuff around:",
+        "usersRated_single": "user rated",
+        "usersRated_other": "users rated",
+        "as": "as",
+        "selectOption1": "800 m",
+        "selectOption2": "1.2 km",
+        "selectOption3": "2 km",
+        "selectOption4": "10 km"
+    },
     "howToRatePopup": {
         "soYouWantTo": "So you want to measure land",
         "gifAltText": "tutorial gif",

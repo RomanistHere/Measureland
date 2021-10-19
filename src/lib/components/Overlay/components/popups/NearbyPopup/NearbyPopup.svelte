@@ -1,0 +1,232 @@
+<script>
+    import { browser } from '$app/env';
+    import { onMount, onDestroy } from 'svelte';
+    import { _, json } from 'svelte-i18n';
+
+    import UserProfileIcon from '../../../../inline-images/UserProfileIcon.svelte';
+    import Spinner from '../../../../ui-elements/Spinner.svelte';
+    import Select from '../../../../ui-elements/Select.svelte';
+    import PopupTitle from '../PopupTitle.svelte';
+
+    import { getNearbyPointData } from "../../../../../utilities/api.js";
+    import { mapReference, markersReference } from "../../../../../../stores/references.js";
+    import { isDesktop } from "../../../../../../stores/state.js";
+    import {
+    	roundToTen,
+    	openAnotherOverlay,
+    	centerMap,
+    	showSomethingWrongNotification,
+    	registerAction,
+    	logError,
+    } from '../../../../../utilities/helpers.js';
+    import { generateSmartReport } from './generateSmartReport.js';
+
+    export let popupData;
+
+    let circle = null;
+    let averageNearbyRating = null;
+    let numberOfRatings = null;
+    let isLoading = true;
+    let isData = true;
+
+    const map = $mapReference;
+
+    $: ratingsGood = [];
+    $: ratingsBad = [];
+    $: radiusOptions = [{
+    	value: 800,
+    	zoomLevel: 15,
+    	text: $_('nearbyPopup.selectOption1'),
+    	selected: true,
+    }, {
+    	value: 1200,
+    	zoomLevel: 14,
+    	text: $_('nearbyPopup.selectOption2'),
+    	selected: false,
+    }, {
+    	value: 2000,
+    	zoomLevel: 14,
+    	text: $_('nearbyPopup.selectOption3'),
+    	selected: false,
+    }, {
+    	value: 10000,
+    	zoomLevel: 12,
+    	text: $_('nearbyPopup.selectOption4'),
+    	selected: false,
+    }];
+
+    const loadData = async({ lat, lng }, radiusParam = null) => {
+    	const clusterLayer = $markersReference;
+    	const radius = radiusParam || radiusOptions[0]['value'];
+
+    	// eslint-disable-next-line no-undef
+    	const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
+    	// eslint-disable-next-line no-undef
+    	const bounds = L.rectangle(squareBounds).getBounds();
+    	const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
+    	const clusters = clusterLayer.getClusters(bbox, 20);
+
+    	if (!clusters || clusters.length === 1) {
+    		averageNearbyRating = null;
+            numberOfRatings = null;
+    		isData = false;
+    		isLoading = false;
+    		return;
+    	}
+
+    	const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
+    	averageNearbyRating = roundToTen(average);
+        numberOfRatings = clusters.length;
+
+    	if (radius >= 5000) {
+    		return;
+    	}
+
+    	isLoading = true;
+    	const { data, error } = await getNearbyPointData([ lat, lng ], radius);
+    	isLoading = false;
+    	isData = true;
+
+    	if (error) {
+    		logError(error);
+    		isData = false;
+    		showSomethingWrongNotification();
+    	}
+
+    	const { ratings } = data;
+
+    	if (!ratings || ratings.length === 1) {
+    		averageNearbyRating = null;
+            numberOfRatings = null;
+    		isData = false;
+    		return;
+    	}
+
+    	const { bestRatings, worstRatings } = generateSmartReport(ratings);
+
+        numberOfRatings = ratings.length;
+
+    	ratingsGood = bestRatings.map(({ key, value, numberOfUsers }) => ({
+    		title: $_(`criteria.${key}.title`),
+    		numberOfUsers,
+    		value,
+    	}));
+
+    	ratingsBad = worstRatings.map(({ key, value, numberOfUsers }) => ({
+    		title: $_(`criteria.${key}.title`),
+    		numberOfUsers,
+    		value,
+    	}));
+    };
+
+    const removeCircle = () => {
+    	map.removeLayer(circle);
+    	circle = null;
+    };
+
+    const drawCircle = ({ lat, lng }, radius = null) => {
+    	const { zoomLevel } = radiusOptions.find(({ selected }) => selected === true);
+    	// eslint-disable-next-line no-undef
+    	circle = L.circle({ lng, lat }, radius || radiusOptions[0]['value'], { color: '#007097' });
+
+    	circle.addTo(map);
+    	centerMap(map, lat, lng, $isDesktop, false, zoomLevel);
+    };
+
+    const handleSelect = event => {
+    	const newValue = Number(event.target.value);
+    	radiusOptions.forEach(item => {
+    		if (item.value === newValue) {
+    			item.selected = true;
+    		} else {
+    			item.selected = false;
+    		}
+    	});
+
+    	removeCircle();
+    	drawCircle(popupData, newValue);
+    	loadData(popupData, newValue);
+    };
+
+    onMount(() => {
+    	drawCircle(popupData);
+    	loadData(popupData);
+    });
+
+    onDestroy(removeCircle);
+</script>
+
+<div class="max-w-sm w-full">
+    <strong>
+        {#if averageNearbyRating}
+            {$_('nearbyPopup.averageRating')}: {averageNearbyRating}.
+            {$_('nearbyPopup.numberOfRatings')}: {numberOfRatings}
+        {:else}
+            {$_('nearbyPopup.noData')}
+        {/if}
+    </strong>
+
+    <Select
+        title={$_('nearbyPopup.selectTitle')}
+        id='radius-select'
+        options={radiusOptions}
+        className='mb-6'
+        on:change={handleSelect}
+    />
+
+    {#if isLoading}
+        <Spinner
+            className='absolute'
+        />
+    {:else if isData}
+        <PopupTitle title={$_('nearbyPopup.secondTitle')} />
+        <ul class="my-4">
+            {#each ratingsGood as { title, numberOfUsers, value }}
+                <li>
+                    {numberOfUsers}
+                    {#if numberOfUsers === 1}
+                        {$_('nearbyPopup.usersRated_single')}
+                    {:else}
+                        {$_('nearbyPopup.usersRated_other')}
+                    {/if}
+                    <strong>
+                        {title}
+                    </strong>
+                        {$_('nearbyPopup.as')}
+                    <strong>
+                        {value}
+                    </strong>
+                </li>
+            {/each}
+        </ul>
+
+        <PopupTitle title={$_('nearbyPopup.thirdTitle')} />
+        <ul class="my-2">
+            {#each ratingsBad as { title, numberOfUsers, value }}
+                <li>
+                    {numberOfUsers}
+                    {#if numberOfUsers === 1}
+                        {$_('nearbyPopup.usersRated_single')}
+                    {:else}
+                        {$_('nearbyPopup.usersRated_other')}
+                    {/if}
+                    <strong>
+                        {title}
+                    </strong>
+                        {$_('nearbyPopup.as')}
+                    <strong>
+                        {value}
+                    </strong>
+                </li>
+            {/each}
+        </ul>
+    {:else}
+
+    {/if}
+</div>
+
+<style>
+    strong {
+        color: var(--active-color);
+    }
+</style>

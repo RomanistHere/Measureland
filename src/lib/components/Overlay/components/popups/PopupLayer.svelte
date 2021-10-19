@@ -9,6 +9,7 @@
     import AskForMoreRatingsPopup from './AskForMoreRatingsPopup.svelte';
     import ChangePasswordPopup from './ChangePasswordPopup.svelte';
     import ForgotPasswordPopup from './ForgotPasswordPopup.svelte';
+    import NearbyPopup from './NearbyPopup/NearbyPopup.svelte';
     import CheckEmailPopup from './CheckEmailPopup.svelte';
     import OnboardingPopup from './OnboardingPopup.svelte';
     import QuizPopup from './QuizPopup/QuizPopup.svelte';
@@ -17,7 +18,6 @@
     import RegisterPopup from './RegisterPopup.svelte';
     import PartnersPopup from './PartnersPopup.svelte';
     import MyPlacesPopup from './MyPlacesPopup.svelte';
-    import NearbyPopup from './NearbyPopup.svelte';
     import LoginPopup from './LoginPopup.svelte';
 
     export let popupName;

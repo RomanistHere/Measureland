@@ -261,6 +261,22 @@
         "addNewRating": "Добавить свою оценку",
         "loginAndRate": "Войти и добавить оценку"
     },
+    "nearbyPopup": {
+        "title": "Оценки поблизости",
+        "selectTitle": "Можешь изменить радиус окрестности",
+        "averageRating": "Средняя по округе",
+        "numberOfRatings": "Количество оценок",
+        "noData": "Других данных поблизости нет.",
+        "secondTitle": "Приятного в округе:",
+        "thirdTitle": "Неприятного в округе:",
+        "usersRated_single": "польз. оценил",
+        "usersRated_other": "польз. оценили",
+        "as": "на",
+        "selectOption1": "800 м",
+        "selectOption2": "1.2 км",
+        "selectOption3": "2 км",
+        "selectOption4": "10 км"
+    },
     "howToRatePopup": {
         "soYouWantTo": "Как поставить отметку",
         "gifAltText": "гифка с показом",

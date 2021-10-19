@@ -1,8 +1,19 @@
 <script>
     export let width = '25';
+    export let className = '';
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve" {width}>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="1.1"
+    x="0px" y="0px"
+    viewBox="0 0 1000 1000"
+    enable-background="new 0 0 1000 1000"
+    xml:space="preserve"
+    {width}
+    class={className}
+>
     <g>
         <path d="M497.3,703.9"/>
         <path d="M201.8,474.2c-2.7,0-4.8,0.4-6.4,1.1c2.2-0.7,4.6-1.1,7.1-1.1H201.8L201.8,474.2z M940.7,768.6c0.1-1.4,0.2-2.7,0.5-4C940.9,765.2,940.8,766.4,940.7,768.6L940.7,768.6z M990,224.8c0-0.1,0-0.1,0-0.2v-0.6C990,224.2,990,224.5,990,224.8L990,224.8z M940.7,224.7c0,0.1,0,0.1,0,0.2c0-0.3,0-0.6,0-0.9V224.7L940.7,224.7z"/>
