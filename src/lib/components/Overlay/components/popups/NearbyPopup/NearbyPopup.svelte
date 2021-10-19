@@ -237,18 +237,11 @@
                 {/each}
             </div>
         {/if}
-    {:else}
-
     {/if}
 </div>
 
 <style>
     strong {
         color: var(--active-color);
-    }
-
-    .badge {
-        background-color: #fcd9f6;
-        transition: background-color .5s, color .5s;
     }
 </style>

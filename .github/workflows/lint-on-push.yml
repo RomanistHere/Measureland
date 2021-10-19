@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+            node-version: '16'
+      - name: Check version
+        run: node -v
       - name: Installing node_modules
         run: npm install
       - name: Running ESLint
