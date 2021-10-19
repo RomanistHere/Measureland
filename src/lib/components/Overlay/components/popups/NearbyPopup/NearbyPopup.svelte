@@ -7,6 +7,7 @@
     import Spinner from '../../../../ui-elements/Spinner.svelte';
     import Select from '../../../../ui-elements/Select.svelte';
     import PopupTitle from '../PopupTitle.svelte';
+    import Badge from './Badge.svelte';
 
     import { getNearbyPointData } from "../../../../../utilities/api.js";
     import { mapReference, markersReference } from "../../../../../../stores/references.js";
@@ -20,6 +21,7 @@
     	logError,
     } from '../../../../../utilities/helpers.js';
     import { generateSmartReport } from './generateSmartReport.js';
+    import { generateBadges } from './generateBadges.js';
 
     export let popupData;
 
@@ -33,6 +35,7 @@
 
     $: ratingsGood = [];
     $: ratingsBad = [];
+    $: badges = [];
     $: radiusOptions = [{
     	value: 800,
     	zoomLevel: 15,
@@ -117,6 +120,8 @@
     		numberOfUsers,
     		value,
     	}));
+
+        badges = generateBadges(bestRatings, worstRatings, numberOfRatings);
     };
 
     const removeCircle = () => {
@@ -201,7 +206,7 @@
         </ul>
 
         <PopupTitle title={$_('nearbyPopup.thirdTitle')} />
-        <ul class="my-2">
+        <ul class="my-4">
             {#each ratingsBad as { title, numberOfUsers, value }}
                 <li>
                     {numberOfUsers}
@@ -220,6 +225,18 @@
                 </li>
             {/each}
         </ul>
+
+        {#if badges && badges.length > 0}
+            <PopupTitle title={$_('nearbyPopup.fourthTitle')} />
+            <div class="my-4 flex justify-left flex-wrap">
+                {#each badges as { key, isGood }}
+                    <Badge
+                        {key}
+                        {isGood}
+                    />
+                {/each}
+            </div>
+        {/if}
     {:else}
 
     {/if}
@@ -228,5 +245,10 @@
 <style>
     strong {
         color: var(--active-color);
+    }
+
+    .badge {
+        background-color: #fcd9f6;
+        transition: background-color .5s, color .5s;
     }
 </style>

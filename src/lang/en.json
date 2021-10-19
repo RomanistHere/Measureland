@@ -56,6 +56,116 @@
             "caption": "1 - sad, 5 - terrific"
         }
     },
+    "badges": {
+        "good": {
+            "air": {
+                "title": "fresh air",
+                "description": "No one promises mountain air, but Measuremen are generally happy with the air around here."
+            },
+            "water": {
+                "title": "clean water",
+                "description": "Water quality is something inhabitants are proud of."
+            },
+            "logistic": {
+                "title": "bread and circuses",
+                "description": "Infrastructure is great, everything you need at your fingertips."
+            },
+            "transport": {
+                "title": "excelent location",
+                "description": "A great place to start heading wherever you want to go."
+            },
+            "noize": {
+                "title": "silent hills",
+                "description": "Word is, one can enjoy the silence somewhere here."
+            },
+            "clean": {
+                "title": "nice",
+                "description": "It's nice! What more did you expect?"
+            },
+            "chill": {
+                "title": "let's walk",
+                "description": "Up for a bit of nature? Consider this neighbourhood."
+            },
+            "safety": {
+                "title": "safe",
+                "description": "Measuremen used to feel comfortable and safe in this district."
+            },
+            "pets": {
+                "title": "I've a dog and a cat and...",
+                "description": "You don't? Well, this should be a good place to start."
+            },
+            "kids": {
+                "title": "parent-friendly",
+                "description": "Used to worry about your kid? Everyone here knows how it feel."
+            },
+            "parking": {
+                "title": "car paradise",
+                "description": "Impossible badge to achieve in a city. Means no problems with parking."
+            },
+            "paired_nature": {
+                "title": "the basis of life",
+                "description": "Nice air and water conditions."
+            },
+            "paired_infrastructure": {
+                "title": "center of the world",
+                "description": "Great location and infrastructure. Easy to start your jorney but why bother if everything's already here."
+            },
+            "paired_dogs": {
+                "title": "dog owner's paradise",
+                "description": "People and dog walking areas."
+            },
+            "paired_walk": {
+                "title": "walk and breathe",
+                "description": "Good air and places to enjoy it."
+            }
+        },
+        "bad": {
+            "air": {
+                "title": "can't breathe",
+                "description": "There are people who aren't satifsied with the smells in the air."
+            },
+            "water": {
+                "title": "bad water",
+                "description": "Reports say that there are problems with water. It can reduce the quality of life."
+            },
+            "logistic": {
+                "title": "not much to do",
+                "description": "No bread and no circuses."
+            },
+            "transport": {
+                "title": "no transport",
+                "description": "Getting started from this place can be a problem."
+            },
+            "noize": {
+                "title": "bustling",
+                "description": "Something is constanly prevents inhabitants from enjoying the silence."
+            },
+            "clean": {
+                "title": "messy",
+                "description": "Measuremen don't like how a lot around here looks."
+            },
+            "chill": {
+                "title": "concrete jungle",
+                "description": "Not a lot of places to walk and enjoy the nature."
+            },
+            "safety": {
+                "title": "not safe",
+                "description": "Some reports shows lack of safety."
+            },
+            "pets": {
+                "title": "no pets",
+                "description": "People around here are not ready for domestic animals."
+            },
+            "kids": {
+                "title": "kids are problem",
+                "description": "Measuremen think that rising a child here could be hard."
+            },
+            "parking": {
+                "title": "playground is a parking",
+                "description": "Ratings indicate serious problems with parking places."
+            }
+        }
+    },
     "startScreen": {
         "firstSlide": {
             "titleLow": "Welcome to",
@@ -240,7 +350,7 @@
         "timelineSelectOption2": "My info is 2 - 7 years old (somehow accurate)",
         "timelineSelectOption3": "My info is more then 7 years old (not accurate)",
         "isThereAnythingToAdd": "Is there anything you'd like to add?",
-        "textAreaPlaceholder": "Extremely friendly and clean neighborhood!",
+        "textAreaPlaceholder": "Extremely friendly and clean neighbourhood!",
         "noPersonalExperienceBtn": "No, I don't",
         "yesPersonalExperienceBtn": "Yes, I lived here",
         "loginBtn": "Login and rate",
@@ -264,11 +374,13 @@
     },
     "nearbyPopup": {
         "title": "Nearby ratings",
-        "selectTitle": "Proximity radius is changable",
+        "selectTitle": "Proximity distance (radius) is changable",
         "averageRating": "Average regional score",
         "numberOfRatings": "Number of ratings",
         "noData": "No other data around.",
-        "secondTitle": "Interesting stuff around:",
+        "secondTitle": "Good stuff around:",
+        "thirdTitle": "Bad stuff around:",
+        "fourthTitle": "Wisdom's of the crowd decision:",
         "usersRated_single": "user rated",
         "usersRated_other": "users rated",
         "as": "as",

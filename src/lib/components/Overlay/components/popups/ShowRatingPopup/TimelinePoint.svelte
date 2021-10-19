@@ -106,7 +106,7 @@
 
 <a
     href={"#"}
-    class="rounded-md px-2 py-0.5 text-sm mb-1 block relative block z-5"
+    class="rounded-md px-2 py-0.5 text-sm mb-1 block relative z-5"
     class:active={isActive}
     on:mouseenter={handleMouseenter}
     on:mouseleave={handleMouseleave}
