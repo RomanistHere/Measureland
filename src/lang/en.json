@@ -368,7 +368,8 @@
         "usersRated": "Users rated",
         "comments": "Comments",
         "howMuchPeople": "How much people are actually lived here",
-        "youHaveAlreadyRated": "You have already rated this place",
+        "showNearbyRatings": "Check nearby ratings",
+        "youHaveAlreadyRated": "Already rated by you",
         "addNewRating": "Add new rating",
         "loginAndRate": "Login and rate"
     },

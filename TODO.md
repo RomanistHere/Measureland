@@ -1,12 +1,6 @@
 # To do:
 
 - emoj???
-- show nearby rating
-    - best parameter around
-    - worst one
-    - average rating
-    - choose radius
-    - fix button sizes
 - Structure single rating description
 - login via Telegram
 - fix share rating for first time users
@@ -16,6 +10,11 @@
 - restyle filters
 - fix focus states
 - limit API use to website only
+- submit am improvement
+
+# Later
+
+- more badges
 
 # Org stuff
 

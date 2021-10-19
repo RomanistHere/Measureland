@@ -161,7 +161,7 @@
     <Timeline { timelineData } />
 
     <div class="flex justify-evenly items-center mt-4">
-        <SecondaryButton text='Данные по округе' action={() => openAnotherOverlay('nearbyPopup', currentLatLng)} />
+        <SecondaryButton text={$_('showRatingPopup.showNearbyRatings')} action={() => openAnotherOverlay('nearbyPopup', currentLatLng)} />
         {#if isUserLoggedIn && isAlreadyRatedByThisUser}
             <PrimaryButton text={$_('showRatingPopup.youHaveAlreadyRated')} disabled={true} />
         {:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
