@@ -20,11 +20,11 @@
     };
 
     const generateBadge = (key, isGood) => {
-        const prop = isGood ? 'good' : 'bad';
-        const data = $json('badges')[prop][key];
-        title = data.title;
-        description = data.description;
-    }
+    	const prop = isGood ? 'good' : 'bad';
+    	const data = $json('badges')[prop][key];
+    	title = data.title;
+    	description = data.description;
+    };
 
     $: generateBadge(key, isGood);
 </script>

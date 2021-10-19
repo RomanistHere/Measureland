@@ -71,7 +71,7 @@
 
     	if (!clusters || clusters.length === 1) {
     		averageNearbyRating = null;
-            numberOfRatings = null;
+    		numberOfRatings = null;
     		isData = false;
     		isLoading = false;
     		return;
@@ -79,7 +79,7 @@
 
     	const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
     	averageNearbyRating = roundToTen(average);
-        numberOfRatings = clusters.length;
+    	numberOfRatings = clusters.length;
 
     	if (radius >= 5000) {
     		return;
@@ -100,14 +100,14 @@
 
     	if (!ratings || ratings.length === 1) {
     		averageNearbyRating = null;
-            numberOfRatings = null;
+    		numberOfRatings = null;
     		isData = false;
     		return;
     	}
 
     	const { bestRatings, worstRatings } = generateSmartReport(ratings);
 
-        numberOfRatings = ratings.length;
+    	numberOfRatings = ratings.length;
 
     	ratingsGood = bestRatings.map(({ key, value, numberOfUsers }) => ({
     		title: $_(`criteria.${key}.title`),
@@ -121,7 +121,7 @@
     		value,
     	}));
 
-        badges = generateBadges(bestRatings, worstRatings, numberOfRatings);
+    	badges = generateBadges(bestRatings, worstRatings, numberOfRatings);
     };
 
     const removeCircle = () => {

@@ -102,19 +102,19 @@
                 "title": "car paradise",
                 "description": "Impossible badge to achieve in a city. Means no problems with parking."
             },
-            "paired_nature": {
+            "pairedNature": {
                 "title": "the basis of life",
                 "description": "Nice air and water conditions."
             },
-            "paired_infrastructure": {
+            "pairedInfrastructure": {
                 "title": "center of the world",
                 "description": "Great location and infrastructure. Easy to start your jorney but why bother if everything's already here."
             },
-            "paired_dogs": {
+            "pairedDogs": {
                 "title": "dog owner's paradise",
                 "description": "People and dog walking areas."
             },
-            "paired_walk": {
+            "pairedWalk": {
                 "title": "walk and breathe",
                 "description": "Good air and places to enjoy it."
             }
