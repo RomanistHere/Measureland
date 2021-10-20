@@ -1,36 +1,50 @@
-import preprocess from "svelte-preprocess";
+import { mdsvex } from 'mdsvex';
+import mdsvexConfig from './mdsvex.config.js';
+import preprocess from 'svelte-preprocess';
 /** @type {import('@sveltejs/kit').Config} */
 import adapter from '@sveltejs/adapter-static';
 
-const handleError = ({ status, path, referrer, referenceType }) => {
-	console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ''}`);
+const handleError = ({
+	status,
+	path,
+	referrer,
+	referenceType,
+}) => {
+	console.warn(
+		`${status} ${path}${
+			referrer
+				? ` (${referenceType} from ${referrer})`
+				: ''
+		}`
+	);
 };
 
 const config = {
-    // ssr: true
-    kit: {
+	extensions: ['.svelte', ...mdsvexConfig.extensions],
+
+	// ssr: true
+	kit: {
 		target: '#svelte',
 		adapter: adapter({
 			pages: 'dist',
 			assets: 'dist',
-			fallback: null
+			fallback: null,
 		}),
 		prerender: {
 			crawl: true,
 			enabled: true,
-			entries: [
-				'*',
-				'/ru',
-				'/en'
-			],
-			onError: handleError
+			entries: ['*', '/ru', '/en'],
+			onError: handleError,
 		},
-		trailingSlash: 'always'
+		trailingSlash: 'always',
 	},
 
-    preprocess: [preprocess({
-        postcss: true
-    })]
+	preprocess: [
+		preprocess({
+			postcss: true,
+		}),
+		mdsvex(mdsvexConfig),
+	],
 };
 
 export default config;
