@@ -43,42 +43,44 @@ export const generateSmartReport = ratings => {
 			continue;
 
 		for (const [ key, value ] of Object.entries(rating)) {
-			if (value > highestRating.value) {
-				highestRating = {
-					key,
-					value,
-					numberOfUsers: 1,
-				};
-			} else if (value === highestRating.value && key === highestRating.key) {
-				highestRating = {
-					...highestRating,
-					numberOfUsers: highestRating.numberOfUsers + 1,
-				};
-			} else if (value > secondHighestRating.value) {
-				secondHighestRating = {
-					key,
-					value,
-					numberOfUsers: 1,
-				};
-			} else if (value === secondHighestRating.value && key === secondHighestRating.key) {
-				secondHighestRating = {
-					...secondHighestRating,
-					numberOfUsers: secondHighestRating.numberOfUsers + 1,
-				};
-			} else if (value > thirdHighestRating.value) {
-				thirdHighestRating = {
-					key,
-					value,
-					numberOfUsers: 1,
-				};
-			} else if (value === thirdHighestRating.value && key === thirdHighestRating.key) {
-				thirdHighestRating = {
-					...thirdHighestRating,
-					numberOfUsers: thirdHighestRating.numberOfUsers + 1,
-				};
+			if (value > 3) {
+				if (value > highestRating.value) {
+					highestRating = {
+						key,
+						value,
+						numberOfUsers: 1,
+					};
+				} else if (value === highestRating.value && key === highestRating.key) {
+					highestRating = {
+						...highestRating,
+						numberOfUsers: highestRating.numberOfUsers + 1,
+					};
+				} else if (value > secondHighestRating.value) {
+					secondHighestRating = {
+						key,
+						value,
+						numberOfUsers: 1,
+					};
+				} else if (value === secondHighestRating.value && key === secondHighestRating.key) {
+					secondHighestRating = {
+						...secondHighestRating,
+						numberOfUsers: secondHighestRating.numberOfUsers + 1,
+					};
+				} else if (value > thirdHighestRating.value) {
+					thirdHighestRating = {
+						key,
+						value,
+						numberOfUsers: 1,
+					};
+				} else if (value === thirdHighestRating.value && key === thirdHighestRating.key) {
+					thirdHighestRating = {
+						...thirdHighestRating,
+						numberOfUsers: thirdHighestRating.numberOfUsers + 1,
+					};
+				}
 			}
 
-			if (value > thirdLowestRating.value)
+			if (value > thirdLowestRating.value || value >= 4)
 				continue;
 
 			if (value < lowestRating.value) {

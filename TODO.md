@@ -1,20 +1,18 @@
 # To do:
 
-- emoj???
-- Structure single rating description
-- login via Telegram
-- fix share rating for first time users
-- add possibility to edit ratings from my ratings panel
+- add possibility to edit rating date from my ratings panel
 - sent letter to users asking to edit their rating's timelines
 - move blog to svelte
 - restyle filters
 - fix focus states
 - limit API use to website only
 - submit am improvement
+- login via Telegram
 
 # Later
 
 - more badges
+- share nearby API public
 
 # Org stuff
 

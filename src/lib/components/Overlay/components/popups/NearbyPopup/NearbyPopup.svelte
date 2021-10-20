@@ -184,47 +184,51 @@
             className='absolute'
         />
     {:else if isData}
-        <PopupTitle title={$_('nearbyPopup.secondTitle')} />
-        <ul class="my-4">
-            {#each ratingsGood as { title, numberOfUsers, value }}
-                <li>
-                    {numberOfUsers}
-                    {#if numberOfUsers === 1}
-                        {$_('nearbyPopup.usersRated_single')}
-                    {:else}
-                        {$_('nearbyPopup.usersRated_other')}
-                    {/if}
-                    <strong>
-                        {title}
-                    </strong>
-                        {$_('nearbyPopup.as')}
-                    <strong>
-                        {value}
-                    </strong>
-                </li>
-            {/each}
-        </ul>
+        {#if ratingsGood.length > 0}
+            <PopupTitle title={$_('nearbyPopup.secondTitle')} />
+            <ul class="my-4">
+                {#each ratingsGood as { title, numberOfUsers, value }}
+                    <li>
+                        {numberOfUsers}
+                        {#if numberOfUsers === 1}
+                            {$_('nearbyPopup.usersRated_single')}
+                        {:else}
+                            {$_('nearbyPopup.usersRated_other')}
+                        {/if}
+                        <strong>
+                            {title}
+                        </strong>
+                            {$_('nearbyPopup.as')}
+                        <strong>
+                            {value}
+                        </strong>
+                    </li>
+                {/each}
+            </ul>
+        {/if}
 
-        <PopupTitle title={$_('nearbyPopup.thirdTitle')} />
-        <ul class="my-4">
-            {#each ratingsBad as { title, numberOfUsers, value }}
-                <li>
-                    {numberOfUsers}
-                    {#if numberOfUsers === 1}
-                        {$_('nearbyPopup.usersRated_single')}
-                    {:else}
-                        {$_('nearbyPopup.usersRated_other')}
-                    {/if}
-                    <strong>
-                        {title}
-                    </strong>
-                        {$_('nearbyPopup.as')}
-                    <strong>
-                        {value}
-                    </strong>
-                </li>
-            {/each}
-        </ul>
+        {#if ratingsBad.length > 0}
+            <PopupTitle title={$_('nearbyPopup.thirdTitle')} />
+            <ul class="my-4">
+                {#each ratingsBad as { title, numberOfUsers, value }}
+                    <li>
+                        {numberOfUsers}
+                        {#if numberOfUsers === 1}
+                            {$_('nearbyPopup.usersRated_single')}
+                        {:else}
+                            {$_('nearbyPopup.usersRated_other')}
+                        {/if}
+                        <strong>
+                            {title}
+                        </strong>
+                            {$_('nearbyPopup.as')}
+                        <strong>
+                            {value}
+                        </strong>
+                    </li>
+                {/each}
+            </ul>
+        {/if}
 
         {#if badges && badges.length > 0}
             <PopupTitle title={$_('nearbyPopup.fourthTitle')} />

@@ -121,15 +121,16 @@
             out:fly="{{ y: -10, duration: 200 }}"
         >
             {#if ratings}
-                <span class="font-bold">
+                <div class="font-bold">
                     {#if isPersExp}
                         {$_('timelinePoint.personalExp')}
                     {:else}
                         {$_('timelinePoint.alienExp')}
                     {/if}
-                    {$_('timelinePoint.average')}:
-                    {averageRating}
-                </span>
+                    <p>
+                        {$_('timelinePoint.average')}: {averageRating}
+                    </p>
+                </div>
                 {#each ratings as { title, rating }}
                     <div class="my-2">
                         {title}:
