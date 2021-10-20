@@ -1,9 +1,7 @@
 <script>
-    import { browser } from '$app/env';
     import { onMount, onDestroy } from 'svelte';
-    import { _, json } from 'svelte-i18n';
+    import { _ } from 'svelte-i18n';
 
-    import UserProfileIcon from '../../../../inline-images/UserProfileIcon.svelte';
     import Spinner from '../../../../ui-elements/Spinner.svelte';
     import Select from '../../../../ui-elements/Select.svelte';
     import PopupTitle from '../PopupTitle.svelte';
@@ -14,7 +12,6 @@
     import { isDesktop } from "../../../../../../stores/state.js";
     import {
     	roundToTen,
-    	openAnotherOverlay,
     	centerMap,
     	showSomethingWrongNotification,
     	registerAction,
@@ -151,6 +148,7 @@
     	removeCircle();
     	drawCircle(popupData, newValue);
     	loadData(popupData, newValue);
+    	registerAction(`nearbySelect-${newValue}`);
     };
 
     onMount(() => {

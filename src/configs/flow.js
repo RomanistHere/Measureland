@@ -22,6 +22,12 @@ export const flowDictionary = {
 	'fetchRating': 'fr',
 	'reportRating': 'rr',
 	'endorseRating': 'er',
+	// nearby ratings popup
+	'nearbySelect-800': 'ns-sm',
+	'nearbySelect-1200': 'ns-md',
+	'nearbySelect-2000': 'ns-lg',
+	'nearbySelect-10000': 'ns-xl',
+	'hoverBadge': 'hb',
 	// open sidebar
 	'commentsSidebar': 's-c',
 	'filtersSidebar': 's-f',

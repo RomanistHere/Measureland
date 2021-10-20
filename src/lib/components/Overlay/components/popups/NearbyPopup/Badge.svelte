@@ -1,6 +1,8 @@
 <script>
     import { fly } from 'svelte/transition';
-    import { json, _ } from 'svelte-i18n';
+    import { json } from 'svelte-i18n';
+
+    import { registerAction } from '../../../../../utilities/helpers.js';
 
     export let key;
     export let isGood;
@@ -17,11 +19,12 @@
     const handleMouseenter = () => {
     	clearTimeout(tooltipTimeout);
     	isRatingExpanded = true;
+    	registerAction('hoverBadge');
     };
 
-    const generateBadge = (key, isGood) => {
-    	const prop = isGood ? 'good' : 'bad';
-    	const data = $json('badges')[prop][key];
+    const generateBadge = (keyProp, isGoodCondition) => {
+    	const prop = isGoodCondition ? 'good' : 'bad';
+    	const data = $json('badges')[prop][keyProp];
     	title = data.title;
     	description = data.description;
     };
