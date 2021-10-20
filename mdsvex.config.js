@@ -7,6 +7,10 @@ const config = {
 
 	remarkPlugins: [],
 	rehypePlugins: [],
+
+	layout: {
+		article: "./src/lib/components/Blog/Article/Article.svelte",
+	}
 };
 
 export default config;

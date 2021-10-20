@@ -3,6 +3,7 @@
 	import { addMessages, init, _ } from 'svelte-i18n';
 	import { page } from '$app/stores';
 	import 'esri-leaflet-geocoder/dist/img/search.png';
+	import '/static/styles/general.css';
 
 	import SEO from '../../lib/components/SEO/SEO.svelte';
 	import UrlUpdater from '../../lib/components/UrlUpdater.svelte';

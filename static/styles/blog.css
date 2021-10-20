@@ -69,6 +69,14 @@ ul {
     list-style: square;
 }
 
+a {
+    text-decoration: underline;
+}
+
+hr {
+    margin: 0.5rem 0;
+}
+
 /* // golden type ratio // */
 
 .grt {
@@ -81,6 +89,7 @@ ul {
 	font-size: 41px;
 	line-height: 64px;
 	margin-bottom: 33px;
+    font-weight: bold;
 }
 .grt .title {
 	font-size: 52px;
@@ -92,18 +101,21 @@ ul {
 	line-height: 51px;
 	margin-top: 53px;
 	margin-bottom: 20px;
+    font-weight: bold;
 }
 .grt h3 {
 	font-size: 25px;
 	line-height: 41px;
 	margin-top: 33px;
 	margin-bottom: 12px;
+    font-weight: bold;
 }
 .grt h4 {
 	font-size: 20px;
 	line-height: 33px;
 	font-weight: bold;
 	margin-bottom: 7px;
+    font-weight: bold;
 }
 .grt p, .grt ul, .grt ol, .grt blockquote, .grt pre, .grt .alert, .grt .note, .grt .box, .grt .footnotes {
 	margin-bottom: 33px;
@@ -177,6 +189,7 @@ ul {
     margin: 0 auto;
     padding-top: 62px;
     padding-bottom: 62px;
+    box-sizing: content-box;
 }
 
 .article__date {
