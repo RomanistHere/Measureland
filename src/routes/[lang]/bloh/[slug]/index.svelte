@@ -40,18 +40,30 @@
 
     	return {
     		props: {
-    			page: neededPost.postData.default,
-    			metadata: neededPost.postData.metadata,
+    			content: neededPost.postData.default,
     		},
     	};
     }
 </script>
 
 <script>
-    export let page;
-    export let metadata;
+    import { addMessages, init } from 'svelte-i18n';
+    import { page } from '$app/stores';
 
-    console.log(metadata);
+    export let content;
+
+    import en from '../../../../lang/en.json';
+    import ru from '../../../../lang/ru.json';
+
+    const lang = $page.params.lang;
+
+    addMessages('en', en);
+    addMessages('ru', ru);
+
+    init({
+    	initialLocale: lang,
+    	fallbackLocale: 'en',
+    });
 </script>
 
-<svelte:component this={page}/>
+<svelte:component this={content}/>

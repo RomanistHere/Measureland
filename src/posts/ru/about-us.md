@@ -2,7 +2,7 @@
 slug: about-us
 title: О нас. Причины посетить Измерию и наши цели.
 date: 2021-05-09
-description: "try out"
+description: "Причины посетить Измерию и наши цели"
 tags: [tags]
 layout: article
 author: RomanistHere

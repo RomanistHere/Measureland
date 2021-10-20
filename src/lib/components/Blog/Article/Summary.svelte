@@ -1,10 +1,12 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     export let text;
 </script>
 
 <div class="note">
     <h3>
-        Summary (tldr):
+        {$_('blog.summary')}
     </h3>
 
     <p>

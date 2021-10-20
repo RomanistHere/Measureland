@@ -550,5 +550,8 @@
         "keywords": "Measureland, rate, Non-commerical, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
         "subject": "Help people to find the best place to stay at or live in.",
         "author": "Roman Smunyov"
+    },
+    "blog": {
+        "summary": "Summary (tldr):"
     }
 }

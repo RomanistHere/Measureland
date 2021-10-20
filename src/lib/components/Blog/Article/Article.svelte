@@ -1,5 +1,6 @@
 <script>
     import '/static/styles/blog.css';
+    import { locale } from 'svelte-i18n';
 
     import EndCaption from './EndCaption.svelte';
     import Footer from './Footer.svelte';
