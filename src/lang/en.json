@@ -552,6 +552,18 @@
         "author": "Roman Smunyov"
     },
     "blog": {
-        "summary": "Summary (tldr):"
+        "summary": "Summary (tldr):",
+        "endCpation": {
+            "text1": "Our project is open-source, you can leave your questions or suggestions in the",
+            "textLink1": "GitHub",
+            "text2": "repository, simply mail it:",
+            "text3": "or write to",
+            "textLink3": "our Telegram bot."
+        },
+        "footer": {
+            "lastChanges": "Last changes:",
+            "copyright1": "for Measureland ©",
+            "copyright2": "All rights reserved."
+        }
     }
 }

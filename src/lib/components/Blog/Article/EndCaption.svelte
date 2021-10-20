@@ -1,19 +1,26 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     import { appInfo } from '../../../../configs/index.js';
 
     const gihubLink = appInfo.github;
-    const supportEmail = appInfo.github;
+    const supportEmail = appInfo.supportEmail;
+    const telegramLink = appInfo.telegramBot;
 </script>
 
 <hr>
 
 <p>
-    Our project is open-source, you can leave your questions or suggestions in the
+    {$_('blog.endCpation.text1')}
     <a href="{gihubLink}" class="article__link" target="_blank" rel="noopener">
-        GitHub
+        {$_('blog.endCpation.textLink1')}
     </a>
-    repository or simply mail it:
+    {$_('blog.endCpation.text2')}
     <a href="mailto:{supportEmail}" class="article__link">
-        support@measureland.org
+        {supportEmail}
+    </a>
+    {$_('blog.endCpation.text3')}
+    <a href="{telegramLink}" class="article__link" target="_blank" rel="noopener">
+        {$_('blog.endCpation.textLink3')}
     </a>
 </p>

@@ -5,7 +5,7 @@ date: 2021-05-09
 description: "Reasons to visit Measureland and our goals"
 tags: [tags]
 layout: article
-author: RomanistHere
+author: Roman Smunyov
 ---
 
 <script>
