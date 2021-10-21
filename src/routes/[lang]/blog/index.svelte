@@ -8,21 +8,19 @@
 
     for (const path in enPosts) {
     	const postData = enPosts[path];
-    	const { slug } = postData.metadata;
-    	const post = { postData, slug };
+    	const { metadata } = postData;
     	posts = {
     		...posts,
-    		'en': [ ...posts.en, post ],
+    		'en': [ ...posts.en, metadata ],
     	};
     }
 
     for (const path in ruPosts) {
     	const postData = ruPosts[path];
-    	const { slug } = postData.metadata;
-    	const post = { postData, slug };
+    	const { metadata } = postData;
     	posts = {
     		...posts,
-    		'ru': [ ...posts.ru, post ],
+    		'ru': [ ...posts.ru, metadata ],
     	};
     }
 
@@ -46,9 +44,25 @@
 </script>
 
 <script>
+    import { addMessages, init } from 'svelte-i18n';
+    import { page } from '$app/stores';
+
+    import Blog from '../../../lib/components/Blog/Blog.svelte';
+
     export let postsArray;
 
-    console.log(postsArray);
+    import en from '../../../lang/en.json';
+    import ru from '../../../lang/ru.json';
+
+    const lang = $page.params.lang;
+
+    addMessages('en', en);
+    addMessages('ru', ru);
+
+    init({
+    	initialLocale: lang,
+    	fallbackLocale: 'en',
+    });
 </script>
 
-<!-- <svelte:component this={postsArray}/> -->
+<Blog {postsArray} />

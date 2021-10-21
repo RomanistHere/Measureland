@@ -1,8 +1,8 @@
 ---
 slug: about-us
-title: О нас.
+title: О нас. Причины посетить Измерию и наши цели.
 date: 2021-05-09
-description: Причины посетить Измерию и наши цели.
+description: Какие проблемы решает Измерия.
 tags: [tags]
 layout: article
 author: Роман Смунёв

@@ -1,8 +1,7 @@
 <script>
     import { _ } from 'svelte-i18n';
 
-    import FlagRU from '../../inline-images/FlagRU.svelte';
-    import FlagGB from '../../inline-images/FlagGB.svelte';
+    import ChangeLanguage from '../ChangeLanguage.svelte';
 
     export let slug;
     export let isAnotherLang = true;
@@ -20,18 +19,8 @@
 </nav>
 
 {#if isAnotherLang}
-    <aside class="aside">
-        <a
-            href="../../../ru/blog/{slug}/"
-            class="w-14 h-8 inline-block rounded-md overflow-hidden"
-        >
-            <FlagRU className="w-full h-full" />
-        </a>
-        <a
-            href="../../../en/blog/{slug}/"
-            class="w-14 h-8 inline-block rounded-md overflow-hidden"
-        >
-            <FlagGB className="w-full h-full" />
-        </a>
-    </aside>
+    <ChangeLanguage
+        hrefEN='../../../en/blog/{slug}/'
+        hrefRU='../../../ru/blog/{slug}/'
+    />
 {/if}
