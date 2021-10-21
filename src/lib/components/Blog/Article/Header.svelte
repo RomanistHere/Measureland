@@ -5,6 +5,7 @@
     import FlagGB from '../../inline-images/FlagGB.svelte';
 
     export let slug;
+    export let isAnotherLang = true;
 </script>
 
 <nav class="article__nav">
@@ -18,17 +19,19 @@
     </a>
 </nav>
 
-<aside class="aside">
-    <a
-        href="../../../ru/blog/{slug}/"
-        class="w-14 h-8 inline-block rounded-md overflow-hidden"
-    >
-        <FlagRU className="w-full h-full" />
-    </a>
-    <a
-        href="../../../en/blog/{slug}/"
-        class="w-14 h-8 inline-block rounded-md overflow-hidden"
-    >
-        <FlagGB className="w-full h-full" />
-    </a>
-</aside>
+{#if isAnotherLang}
+    <aside class="aside">
+        <a
+            href="../../../ru/blog/{slug}/"
+            class="w-14 h-8 inline-block rounded-md overflow-hidden"
+        >
+            <FlagRU className="w-full h-full" />
+        </a>
+        <a
+            href="../../../en/blog/{slug}/"
+            class="w-14 h-8 inline-block rounded-md overflow-hidden"
+        >
+            <FlagGB className="w-full h-full" />
+        </a>
+    </aside>
+{/if}

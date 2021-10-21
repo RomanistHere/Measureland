@@ -2,6 +2,7 @@
     import { _ } from 'svelte-i18n';
 
     export let text;
+    export let text2;
 </script>
 
 <div class="note">
@@ -12,6 +13,12 @@
     <p>
         {text}
     </p>
+
+    {#if text2}
+        <p>
+            {text2}
+        </p>
+    {/if}
 </div>
 
 <style>

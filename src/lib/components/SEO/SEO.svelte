@@ -25,6 +25,7 @@
     export let twitterUsername = appInfo.twitterID;
     export let timeToRead;
 
+    export let isAnotherLang = true;
     const lang = $page.params.lang;
     const altLang = lang === 'en' ? 'ru' : 'en';
     const altPath = $page.path.replace(lang, altLang);
@@ -51,8 +52,10 @@
     <meta name="keywords" content={keywords} />
     <meta name="subject" content={subject} />
 
-    <link rel="alternate" hreflang={lang} href={url} />
-    <link rel="alternate" hreflang={altLang} href={altUrl} />
+    {#if isAnotherLang}
+        <link rel="alternate" hreflang={lang} href={url} />
+        <link rel="alternate" hreflang={altLang} href={altUrl} />
+    {/if}
 
     <!-- <script defer data-domain="measureland.org" src="https://plausible.io/js/plausible.js"></script> -->
 

@@ -14,6 +14,7 @@
     export let slug;
     export let tags;
     export let description;
+    export let isAnotherLang = true;
 </script>
 
 <SEO
@@ -22,9 +23,10 @@
     isArticle={true}
     pageTitle={title}
     author={author}
+    {isAnotherLang}
 />
 
-<Header {slug} />
+<Header {slug} {isAnotherLang} />
 
 <main class="article__wrap grt">
     <Title {title} />
