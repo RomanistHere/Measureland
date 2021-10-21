@@ -20,6 +20,7 @@
 - write a contribution guide
 - write an article about how awesome svelte is
 - create Measureland discord and some community articles to get started
+- pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
 
 # Stuff to remember and check later
 

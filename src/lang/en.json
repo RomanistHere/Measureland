@@ -564,6 +564,12 @@
             "lastChanges": "Last changes:",
             "copyright1": "for Measureland ©",
             "copyright2": "All rights reserved."
+        },
+        "navbar": {
+            "text1": "Back to",
+            "textLink1": "Blog",
+            "text2": "or return in",
+            "textLink2": "Measureland"
         }
     }
 }

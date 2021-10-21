@@ -15,12 +15,15 @@
 </div>
 
 <style>
-    .note {
-        background-color: var(--gentle-color);
-    }
-
     h3 {
         margin-top: 0;
         font-size: 100%;
+    }
+
+    .note {
+        background-color: rgba(163, 255, 209, 0.75);
+        backdrop-filter: blur(5px) saturate(180%);
+        -webkit-backdrop-filter: blur(5px) saturate(180%);
+        border-radius: 0.375rem;
     }
 </style>

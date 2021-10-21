@@ -27,3 +27,14 @@
         </span>
     </p>
 </footer>
+
+<div class="article__nav article__nav-bottom">
+    {$_('blog.navbar.text1')}
+    <a class="article__link aside__link" href="../">
+        {$_('blog.navbar.textLink1')}
+    </a>
+    {$_('blog.navbar.text2')}
+    <a class="article__link aside__link" href="../../">
+        {$_('blog.navbar.textLink2')}
+    </a>
+</div>

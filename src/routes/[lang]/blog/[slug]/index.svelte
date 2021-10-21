@@ -1,6 +1,7 @@
 <script context="module">
     const ruPosts = import.meta.globEager(`../../../../posts/ru/*.md`);
     const enPosts = import.meta.globEager(`../../../../posts/en/*.md`);
+
     let posts = {
     	'ru': [],
     	'en': [],

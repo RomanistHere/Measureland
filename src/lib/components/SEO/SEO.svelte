@@ -10,6 +10,7 @@
 
     export let keywords = $_('SEO.keywords');
     export let subject = $_('SEO.subject');
+    export let isApp = true;
 
     export let isArticle = false;
     export let isSquareImage = false;
@@ -23,6 +24,11 @@
     export let author = $_('SEO.author');
     export let twitterUsername = appInfo.twitterID;
     export let timeToRead;
+
+    const lang = $page.params.lang;
+    const altLang = lang === 'en' ? 'ru' : 'en';
+    const altPath = $page.path.replace(lang, altLang);
+    const altUrl = `${$page.host}${altPath}`;
 </script>
 
 <svelte:head>
@@ -44,6 +50,9 @@
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     <meta name="subject" content={subject} />
+
+    <link rel="alternate" hreflang={lang} href={url} />
+    <link rel="alternate" hreflang={altLang} href={altUrl} />
 
     <!-- <script defer data-domain="measureland.org" src="https://plausible.io/js/plausible.js"></script> -->
 
@@ -69,23 +78,25 @@
     { timeToRead }
 />
 
-<head class="flex justify-center items-center absolute -top-20 -z-5">
-    <!-- // testing purposes. Check if crawlers get it -->
-    <h1 class="text-bold px-4 w-96">
-        {description}
-    </h1>
+{#if isApp}
+    <header class="flex justify-center items-center absolute -top-20 -z-5">
+        <!-- // testing purposes. Check if crawlers get it -->
+        <h1 class="text-bold px-4 w-96">
+            {description}
+        </h1>
 
-    <div class="opacity-20">
-        {#each Object.values($json('startScreen.slides')) as { title, text1, text2 }}
-            <h2>
-                {title}
-            </h2>
-            <p>
-                {text1}
-            </p>
-            <p>
-                {text2}
-            </p>
-        {/each}
-    </div>
-</head>
+        <div class="opacity-20">
+            {#each Object.values($json('startScreen.slides')) as { title, text1, text2 }}
+                <h2>
+                    {title}
+                </h2>
+                <p>
+                    {text1}
+                </p>
+                <p>
+                    {text2}
+                </p>
+            {/each}
+        </div>
+    </header>
+{/if}
