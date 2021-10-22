@@ -6,7 +6,7 @@
     import Twitter from './Twitter.svelte';
 
     import { appInfo } from '../../../configs/index.js';
-    import { API_DOMAIN } from '../../../configs/env.js';
+    import { API_DOMAIN, WEB_DOMAIN } from '../../../configs/env.js';
 
     export let keywords = $_('SEO.keywords');
     export let subject = $_('SEO.subject');
@@ -19,7 +19,7 @@
     export let pageTitle = '';
     export let siteTitle = $_('SEO.title');
     export let imageSrc;
-    export let url = `${$page.host}${$page.path}`;
+    export let url = `${$page.host || WEB_DOMAIN}${$page.path}`;
 
     export let author = $_('SEO.author');
     export let twitterUsername = appInfo.twitterID;
@@ -29,7 +29,7 @@
     const lang = $page.params.lang;
     const altLang = lang === 'en' ? 'ru' : 'en';
     const altPath = $page.path.replace(lang, altLang);
-    const altUrl = `${$page.host}${altPath}`;
+    const altUrl = `${$page.host || WEB_DOMAIN}${altPath}`;
 </script>
 
 <svelte:head>
