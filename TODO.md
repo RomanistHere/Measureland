@@ -2,7 +2,6 @@
 
 - add possibility to edit rating date from my ratings panel
 - sent letter to users asking to edit their rating's timelines
-- move blog to svelte
 - restyle filters
 - fix focus states
 - limit API use to website only
@@ -21,6 +20,7 @@
 - write an article about how awesome svelte is
 - create Measureland discord and some community articles to get started
 - pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
+- best city guide (100$/50$/25$ pool).
 
 # Stuff to remember and check later
 

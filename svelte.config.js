@@ -10,13 +10,7 @@ const handleError = ({
 	referrer,
 	referenceType,
 }) => {
-	console.warn(
-		`${status} ${path}${
-			referrer
-				? ` (${referenceType} from ${referrer})`
-				: ''
-		}`
-	);
+	console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ''}`);
 };
 
 const config = {
