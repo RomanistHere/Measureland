@@ -32,7 +32,7 @@ export const getGuides = lang => {
 	return posts;
 };
 
-export const getSingleGuide = (lang, slug) => {
+export const getSingleGuide = (lang, slugTest) => {
 	const postsData = lang === 'ru' ? getGuidesRU() : getGuidesEN();
 
 	let posts = [];
@@ -45,7 +45,7 @@ export const getSingleGuide = (lang, slug) => {
 	}
 
 	return posts.find(p =>
-		p.slug.toLowerCase() === slug.toLowerCase());
+		p.slug.toLowerCase() === slugTest.toLowerCase());
 };
 
 export const getPosts = lang => {
@@ -62,7 +62,7 @@ export const getPosts = lang => {
 	return posts;
 };
 
-export const getSinglePost = (lang, slug) => {
+export const getSinglePost = (lang, slugTest) => {
 	const postsData = lang === 'ru' ? getPostsRU() : getPostsEN();
 
 	let posts = [];
@@ -75,7 +75,7 @@ export const getSinglePost = (lang, slug) => {
 	}
 
 	return posts.find(p =>
-		p.slug.toLowerCase() === slug.toLowerCase());
+		p.slug.toLowerCase() === slugTest.toLowerCase());
 };
 
 export const getArray = (blogOrGuides, lang) => {

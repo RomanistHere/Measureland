@@ -28,9 +28,11 @@ isAnotherLang: false
 ### Как отправить.
 Тут есть три способа:
 
-- <a href="mailto:support@measureland.org" class="article__link">Отправь нам письмо</a> с документом или ссылкой. Просим не отправлять простым текстом, что бы он не превратился в кашу.
+- <a href="mailto:support@measureland.org" class="article__link">Отправь нам письмо</a> с PDF/текстовым документом или ссылкой. Просим не отправлять простым текстом, что бы он не превратился в кашу.
 - Открой issue на <a href="https://github.com/RomanistHere/Measureland/issues" class="article__link" target="_blank" rel="noopener">GitHub</a>. Для этого может понадобиться аккаунт.
-- Есть познания в HTML? <a href="https://github.com/RomanistHere/Measureland/tree/master/blog" class="article__link" target="_blank" rel="noopener">Структура блога</a> легка для понимания, создай pull request :)
+- Есть познания в HTML или Markdown? <a href="https://github.com/RomanistHere/Measureland/tree/master/blog" class="article__link" target="_blank" rel="noopener">Структура блога</a> легка для понимания, создай pull request :)
 
 ### Награда.
-Мы собираемся разработать систему наград в будущем. Например, Измеряне, которым понравилась твоя статья смогут послать тебе награду. Мы тоже не забудем о твоём участии!
+Мы собираемся разработать систему наград в будущем. Например, Измеряне, которым понравилась твоя статья смогут отблагодарить тебя.
+
+Мы, со своей стороны, тоже не забудем о твоём участии! Периодически мы будем проводить всяческие конкурсы с призами. Активные участники нашего сообщества не останутся без внимания.

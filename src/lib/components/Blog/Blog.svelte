@@ -4,6 +4,7 @@
     import ChangeLanguage from './ChangeLanguage.svelte';
 
     export let postsArray;
+    export let blogOrGuides;
 </script>
 
 <nav class="article__nav">
@@ -14,12 +15,12 @@
 </nav>
 
 <ChangeLanguage
-    hrefEN='../../en/blog/'
-    hrefRU='../../ru/blog/'
+    hrefEN='../../en/{blogOrGuides}/'
+    hrefRU='../../ru/{blogOrGuides}/'
 />
 
 <main class="article__wrap blog grt">
-    <h1 class="blog__title">Документы и статьи</h1>
+    <h1 class="blog__title">{$_(`blog.${blogOrGuides}Title`)}</h1>
 
     <ul class="blog__list">
         {#each postsArray as { slug, date, description, title }}

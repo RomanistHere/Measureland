@@ -15,6 +15,7 @@
     	return {
     		props: {
     			postsArray,
+    			blogOrGuides,
     		},
     	};
     }
@@ -24,6 +25,10 @@
     import Blog from '../../../lib/components/Blog/Blog.svelte';
 
     export let postsArray;
+    export let blogOrGuides;
 </script>
 
-<Blog {postsArray} />
+<Blog
+    {postsArray}
+    {blogOrGuides}
+/>
