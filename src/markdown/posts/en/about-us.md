@@ -3,7 +3,7 @@ slug: about-us
 title: About us. Reasons to visit Measureland and our goals.
 date: 2021-05-09
 description: Reasons to visit Measureland and our goals
-tags: [starters]
+tags: [starters, dev_imp]
 layout: article
 author: Roman Smunyov
 ---
