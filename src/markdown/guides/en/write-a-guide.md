@@ -3,7 +3,7 @@ slug: write-a-guide
 title: How to write and submit a guide in Measureland.
 date: 2021-05-19
 description: Follow a few easy steps and share your experience with Measuremen. Get a reward!
-tags: [starters]
+tags: [starters, dev_imp]
 layout: article
 author: Roman Smunyov
 ---

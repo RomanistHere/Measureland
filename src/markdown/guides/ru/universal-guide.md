@@ -3,7 +3,7 @@ slug: universal-guide
 title: Универсальный гайд по съёму жилья.
 date: 2021-07-11
 description: Чек-лист арендатора или на что обращать внимание при аренде жилья.
-tags: [starters]
+tags: [starters, dev_imp]
 layout: article
 author: Роман Смунёв
 ---

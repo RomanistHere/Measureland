@@ -3,7 +3,7 @@ slug: write-a-guide
 title: Как создать свой гайд в Измерии.
 date: 2021-05-15
 description: Всего пара простых шагов - и ты сможешь разделить свой опыт с другими Измерянами. Награда прилагается!
-tags: [starters]
+tags: [starters, dev_imp]
 layout: article
 author: Роман Смунёв
 isAnotherLang: false

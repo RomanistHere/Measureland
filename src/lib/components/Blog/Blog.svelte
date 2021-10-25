@@ -2,9 +2,13 @@
     import { _ } from 'svelte-i18n';
 
     import ChangeLanguage from './ChangeLanguage.svelte';
+    import SEO from '../SEO/SEO.svelte';
 
     export let postsArray;
     export let blogOrGuides;
+
+    $: title = $_(`blog.${blogOrGuides}Page.title`);
+    $: description = $_(`blog.${blogOrGuides}Page.description`);
 
     // sort important posts (with "dev_imp" tag) by date
     $: importantPosts = postsArray
@@ -17,6 +21,13 @@
     // make important posts to top
     $: posts = [ ...importantPosts, ...alphabeticalPosts ];
 </script>
+
+<SEO
+    isApp={false}
+    description={description}
+    isArticle={false}
+    pageTitle={title}
+/>
 
 <nav class="article__nav">
     {$_('blog.navbar.text1')}

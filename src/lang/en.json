@@ -572,6 +572,14 @@
             "textLink2": "Measureland"
         },
         "blogTitle": "Learn more about us.",
-        "guidesTitle": "City guides."
+        "guidesTitle": "City guides.",
+        "blogPage": {
+            "title": "Measureland blog.",
+            "description": "Learn more about us. 👋 Articles to answer your questions and guide through the service."
+        },
+        "guidesPage": {
+            "title": "Meaureland City guides.",
+            "description": "How to find the best city and neighbourhood. Local guides. 🏙 🏰 🗽"
+        }
     }
 }
