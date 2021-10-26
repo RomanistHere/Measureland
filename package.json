@@ -42,6 +42,6 @@
 		"polybooljs": "^1.2.0",
 		"svelte-focus-trap": "^1.2.0",
 		"svelte-i18n": "^3.3.13",
-		"swiper": "^7.0.6"
+		"swiper": "^7.0.8"
 	}
 }
