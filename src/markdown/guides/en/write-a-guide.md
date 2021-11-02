@@ -6,6 +6,7 @@ description: Follow a few easy steps and share your experience with Measuremen. 
 tags: [starters, dev_imp]
 layout: article
 author: Roman Smunyov
+isGuide: true
 ---
 
 ### How to write.

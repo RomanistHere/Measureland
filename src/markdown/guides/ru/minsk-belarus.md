@@ -6,6 +6,7 @@ description: Разбираем основные моменты, на котор
 tags: [starters]
 layout: article
 author: Роман Смунёв
+isGuide: true
 ---
 
 <script>

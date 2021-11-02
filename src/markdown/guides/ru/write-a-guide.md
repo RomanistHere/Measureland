@@ -7,6 +7,7 @@ tags: [starters, dev_imp]
 layout: article
 author: Роман Смунёв
 isAnotherLang: false
+isGuide: true
 ---
 
 ### Как написать.

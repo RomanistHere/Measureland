@@ -568,6 +568,7 @@
         "navbar": {
             "text1": "Back to",
             "textLink1": "Blog",
+            "textLink1Alter": "Guides",
             "text2": "or return in",
             "textLink2": "Measureland"
         },

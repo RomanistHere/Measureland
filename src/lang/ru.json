@@ -571,6 +571,7 @@
         "navbar": {
             "text1": "Перейти",
             "textLink1": "к Блогу",
+            "textLink1Alter": "к Гайдам",
             "text2": "или",
             "textLink2": "в Измерию"
         },

@@ -6,6 +6,7 @@ description: Measureland points out the important things when staying in the cit
 tags: [starters]
 layout: article
 author: Roman Smunyov
+isGuide: true
 ---
 
 <script>
@@ -19,7 +20,7 @@ author: Roman Smunyov
 - It is usually safe to walk alone both at day and at night.
 - Not a lot of people would be able to help you if you get lost because only the younger generation speaks English, not free, though.
 - Going through Minsk will take about:
-- 
+-
     - Less than an hour by car (up to 1.5h with traffic jams)
     - 1 - 2 hours by public transport
     - 40 min on the subway

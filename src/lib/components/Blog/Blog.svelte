@@ -2,6 +2,7 @@
     import { _ } from 'svelte-i18n';
 
     import ChangeLanguage from './ChangeLanguage.svelte';
+    import Back from './Back.svelte';
     import SEO from '../SEO/SEO.svelte';
 
     export let postsArray;
@@ -29,12 +30,7 @@
     pageTitle={title}
 />
 
-<nav class="article__nav">
-    {$_('blog.navbar.text1')}
-    <a class="article__link aside__link" href="../">
-        {$_('blog.navbar.textLink2')}
-    </a>
-</nav>
+<Back backLevel={1} />
 
 <ChangeLanguage
     hrefEN='../../en/{blogOrGuides}/'

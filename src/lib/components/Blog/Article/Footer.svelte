@@ -1,10 +1,13 @@
 <script>
     import { _, locale } from 'svelte-i18n';
 
+    import Back from '../Back.svelte';
+
     import { appInfo } from '../../../../configs/index.js';
 
     export let date;
     export let author = appInfo.authorName;
+    export let isGuide = false;
 
     const langCode = $locale === 'ru' && 'ru-RU';
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -28,13 +31,8 @@
     </p>
 </footer>
 
-<div class="article__nav article__nav-bottom">
-    {$_('blog.navbar.text1')}
-    <a class="article__link aside__link" href="../">
-        {$_('blog.navbar.textLink1')}
-    </a>
-    {$_('blog.navbar.text2')}
-    <a class="article__link aside__link" href="../../">
-        {$_('blog.navbar.textLink2')}
-    </a>
-</div>
+<Back
+    backLevel={2}
+    {isGuide}
+    className='article__nav-bottom'
+/>

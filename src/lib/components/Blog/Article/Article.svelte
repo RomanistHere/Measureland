@@ -15,6 +15,7 @@
     export let tags;
     export let description;
     export let isAnotherLang = true;
+    export let isGuide = false;
 </script>
 
 <SEO
@@ -26,7 +27,11 @@
     {isAnotherLang}
 />
 
-<Header {slug} {isAnotherLang} />
+<Header
+    {slug}
+    {isAnotherLang}
+    {isGuide}
+/>
 
 <main class="article__wrap grt">
     <Title {title} />
@@ -38,5 +43,9 @@
         <EndCaption />
     </article>
 
-    <Footer {date} {author} />
+    <Footer
+        {date}
+        {author}
+        {isGuide}
+    />
 </main>
