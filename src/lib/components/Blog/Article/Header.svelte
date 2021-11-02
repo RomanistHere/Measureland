@@ -5,13 +5,15 @@
     export let slug;
     export let isAnotherLang = true;
     export let isGuide = false;
+
+    const parentSlug = isGuide ? 'guides' : 'blog';
 </script>
 
-<Back backLevel={2} {isGuide} />
+<Back {isGuide} />
 
 {#if isAnotherLang}
     <ChangeLanguage
-        hrefEN='../../../en/blog/{slug}/'
-        hrefRU='../../../ru/blog/{slug}/'
+        hrefEN='../../../en/{parentSlug}/{slug}/'
+        hrefRU='../../../ru/{parentSlug}/{slug}/'
     />
 {/if}

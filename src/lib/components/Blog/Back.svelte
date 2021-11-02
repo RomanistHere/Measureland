@@ -7,7 +7,7 @@
 </script>
 
 {#if backLevel === 2}
-    <nav class="article__nav {className}">
+    <nav class="absolute left-0 top-0 p-4 text-xl -md:static -md:text-base {className}">
         {$_('blog.navbar.text1')}
         <a class="article__link aside__link" href="../">
             {#if !isGuide}
@@ -22,7 +22,7 @@
         </a>
     </nav>
 {:else if backLevel === 1}
-    <nav class="article__nav">
+    <nav class="absolute left-0 top-0 p-4 text-xl -md:static -md:text-base">
         {$_('blog.navbar.text1')}
         <a class="article__link aside__link" href="../">
             {$_('blog.navbar.textLink2')}

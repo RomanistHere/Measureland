@@ -32,7 +32,6 @@
 </footer>
 
 <Back
-    backLevel={2}
     {isGuide}
     className='article__nav-bottom'
 />
