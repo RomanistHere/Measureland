@@ -103,10 +103,10 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-    <PopupTitle title='Password change' />
+    <PopupTitle title={$_('confirmNewPasswordPopup.title')} />
 
     <Input
-        title='Type new password here'
+        title={$_('confirmNewPasswordPopup.input1Title')}
         type='password'
         id='new-password-reset'
         bind:value={password}
@@ -115,7 +115,7 @@
     />
 
     <Input
-        title='Repeat the password'
+        title={$_('confirmNewPasswordPopup.input2Title')}
         type='password'
         id='repeat-new-password-reset'
         bind:value={passwordConfirm}
@@ -140,6 +140,6 @@
     </div>
 
     <div class="flex justify-evenly items-center">
-        <FormButton text='Change the password' action={debouncedSubmit} />
+        <FormButton text={$_('confirmNewPasswordPopup.submitBtn')} action={debouncedSubmit} />
     </div>
 </form>

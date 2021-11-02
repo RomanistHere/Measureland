@@ -36,6 +36,9 @@ const fetchFunction = async({ url, method, credentials, headers, body }) => {
 				headers: newHeaders,
 			});
 
+		if (resp.status === 404)
+			return ({ error: '404. No response from the server.' });
+
 		return await resp.json();
 	} catch (e) {
 		return ({ error: e });
@@ -172,6 +175,20 @@ const onboard = async(userName, ageGrp, moneyGrp, userID) => {
 	});
 };
 
+const sendFeedback = async({ heading, comment }, userID) => {
+	const url = `${API_URL}/user/feedback`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			heading,
+			comment,
+			userID,
+		}),
+	});
+};
+
 const verifyUser = async token => {
 	const url = `${API_URL}/user/verify/${new URLSearchParams({ token })}`;
 
@@ -272,4 +289,5 @@ export {
 	saveLang,
 	fetchSingleRating,
 	reactOnRating,
+	sendFeedback,
 };

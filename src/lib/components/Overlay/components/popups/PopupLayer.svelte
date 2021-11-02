@@ -18,6 +18,7 @@
     import RegisterPopup from './RegisterPopup.svelte';
     import PartnersPopup from './PartnersPopup.svelte';
     import MyPlacesPopup from './MyPlacesPopup.svelte';
+    import FeedbackPopup from './FeedbackPopup.svelte';
     import LoginPopup from './LoginPopup.svelte';
 
     export let popupName;
@@ -28,6 +29,7 @@
     	changePasswordPopup: ChangePasswordPopup,
     	checkEmailPopup: CheckEmailPopup,
     	confirmForgotPasswordPopup: ConfirmForgotPasswordPopup,
+    	feedbackPopup: FeedbackPopup,
     	forgotPasswordPopup: ForgotPasswordPopup,
     	howToRatePopup: HowToRatePopup,
     	loggedInPopup: LoggedInPopup,

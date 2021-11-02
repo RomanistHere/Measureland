@@ -462,6 +462,12 @@
         "title": "Change password (through email)",
         "mainBtn": "Send me the link"
     },
+    "confirmNewPasswordPopup": {
+        "title": "Password change",
+        "input1Title": "Type new password here",
+        "input2Title": "Repeat the password",
+        "submitBtn": "Change the password"
+    },
     "confirmForgotPasswordPopup": {
         "title": "Check your email",
         "text": "We sent a letter to the given email. By clicking the link inside you'll get to the new password form. Once you submit new password, old one stops to work",
@@ -489,6 +495,14 @@
         "orOurTelegramBot": " - or our Telegram bot: ",
         "weWillRespond": " - we will respond ASAP.",
         "mainBtn": "Understood"
+    },
+    "feedbackPopup": {
+        "title": "Feedback",
+        "inputTitle": "Define what is it what you want to talk about. Something like 'Suggestion' or 'Fix' should be fine.",
+        "inputPlaceholder": "I have a suggestion!",
+        "text": "Please, tell us more.",
+        "textAreaPlaceholder": "It would be nice if you added a few more points into the quiz. Like internet quality or cultural life.",
+        "submitBtn": "Send the feedback"
     },
     "input": {
         "showOrHide": "Show/Hide",

@@ -184,7 +184,7 @@
 
                     {#if profileDropDownOpen}
                         <DropdownMenu
-                            className='right-0 w-48 top-10 mt-2'
+                            className='-right-4 w-48 top-10 mt-2'
                             { dropdownData }
                         />
                     {/if}

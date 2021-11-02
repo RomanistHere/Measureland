@@ -1,6 +1,5 @@
 <script>
     import '/static/styles/blog.css';
-    import { locale } from 'svelte-i18n';
 
     import EndCaption from './EndCaption.svelte';
     import Footer from './Footer.svelte';
@@ -12,7 +11,6 @@
     export let date;
     export let author;
     export let slug;
-    export let tags;
     export let description;
     export let isAnotherLang = true;
     export let isGuide = false;
