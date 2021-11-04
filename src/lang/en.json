@@ -276,6 +276,7 @@
         "toggleOff": "OFF",
         "filters": "Filters",
         "ratePlace": "Rate a place",
+        "feedbackPopup": "Send feedback",
         "ratePlaceAvailable": "available",
         "needMoreRatings": "I need more ratings!",
         "requestProcessing": "Request processing",

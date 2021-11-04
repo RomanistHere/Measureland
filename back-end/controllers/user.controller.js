@@ -7,6 +7,7 @@ const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
 const UserVerification = require('../models/token.model');
 const PasswordReset = require('../models/password-reset.model');
+const Feedback = require('../models/feedback.model');
 
 const { sendEmail } = require('../helpers/email');
 const isProd = process.env.IS_PROD === '1';
@@ -52,7 +53,7 @@ exports.user_register = async (req, res) => {
             token: token
         }, {
             upsert: true
-        })
+        });
 
         return res.json({
             error: null,
@@ -128,6 +129,36 @@ exports.user_onboard = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
+    }
+};
+
+exports.user_feedback = async (req, res) => {
+    const { userID } = req.session;
+    const { heading, comment, email } = req.body;
+
+    if (!userID || userID !== email)
+        return res.status(400).json({ error: "User is not recognized" });
+
+    try {
+        const newFeedback = new Feedback({
+            email: sanitize(email),
+            heading: sanitize(heading),
+            comment: sanitize(comment),
+        });
+
+        const savedFeedback = await newFeedback.save();
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Feedback successful",
+                userID
+            },
+        });
+    } catch (error) {
+        console.log(error)
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }

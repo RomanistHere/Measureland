@@ -45,6 +45,7 @@ router.post('/reverify', hardLimiter, user_controller.user_reverify);
 router.post('/language', mediumLimiter, user_controller.user_language);
 router.post('/reset_pass', mediumLimiter, user_controller.user_reset_password);
 router.post('/change_pass', mediumLimiter, user_controller.user_change_password);
+router.post('/feedback', mediumLimiter, user_controller.user_feedback);
 
 router.get('/verify/:token', mediumLimiter, user_controller.user_verify);
 router.get('/check_user', mediumLimiter, user_controller.user_check);

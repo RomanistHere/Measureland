@@ -165,6 +165,12 @@
     		closeOverlay('sidebar');
     	openAnotherOverlay('howToRatePopup');
     };
+
+    const openFeedbackPopup = () => {
+    	if (!$isDesktop)
+    		closeOverlay('sidebar');
+    	openAnotherOverlay('feedbackPopup');
+    };
 </script>
 
 <div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4 relative">
@@ -174,7 +180,11 @@
         <h2 class="font-bold px-8 text-xl">{$_('menuSidebar.titleMid')}</h2>
         <ul class="mt-2">
             <li>
-                <a href={"#"} class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click|preventDefault={toggleSendingEvents}>
+                <a
+                    href={"#"}
+                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    on:click|preventDefault={toggleSendingEvents}
+                >
                     {$_('menuSidebar.sendCrashReports')}:
                     {#if $userStateStore.shouldSendEvent}
                         {$_('menuSidebar.toggleOn')}
@@ -184,10 +194,20 @@
                 </a>
             </li>
             <li>
-                <a href={"#"} class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}>{$_('menuSidebar.filters')}</a>
+                <a
+                    href={"#"}
+                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
+                >
+                    {$_('menuSidebar.filters')}
+                </a>
             </li>
             <li>
-                <a href={"#"} class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click|preventDefault={openHowToRatePopup}>
+                <a
+                    href={"#"}
+                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    on:click|preventDefault={openHowToRatePopup}
+                >
                     {$_('menuSidebar.ratePlace')}
                     {#if isUserLoggedIn}
                         <div class="inline-block text-sm settings__available">
@@ -195,6 +215,15 @@
                           <span class="settings__highlight settings__highlight-small">{$userStateStore.activeRatings}</span>)
                         </div>
                     {/if}
+                </a>
+            </li>
+            <li>
+                <a
+                    href={"#"}
+                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    on:click|preventDefault={openFeedbackPopup}
+                >
+                    {$_('menuSidebar.feedbackPopup')}
                 </a>
             </li>
         </ul>

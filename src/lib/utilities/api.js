@@ -184,7 +184,7 @@ const sendFeedback = async({ heading, comment }, userID) => {
 		body: JSON.stringify({
 			heading,
 			comment,
-			userID,
+			email: userID,
 		}),
 	});
 };

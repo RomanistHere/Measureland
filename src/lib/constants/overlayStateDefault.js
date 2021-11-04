@@ -30,7 +30,7 @@ export const overlayStateDefault = {
 		data: {},
 	},
 	feedbackPopup: {
-		isOpen: true,
+		isOpen: false,
 		type: 'popup',
 		data: {},
 	},
