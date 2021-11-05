@@ -182,7 +182,7 @@
             <li>
                 <a
                     href={"#"}
-                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    class="block px-8 link text-lg leading-9"
                     on:click|preventDefault={toggleSendingEvents}
                 >
                     {$_('menuSidebar.sendCrashReports')}:
@@ -196,7 +196,7 @@
             <li>
                 <a
                     href={"#"}
-                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    class="block px-8 link text-lg leading-9"
                     on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
                 >
                     {$_('menuSidebar.filters')}
@@ -205,7 +205,7 @@
             <li>
                 <a
                     href={"#"}
-                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    class="block px-8 link text-lg leading-9"
                     on:click|preventDefault={openHowToRatePopup}
                 >
                     {$_('menuSidebar.ratePlace')}
@@ -220,7 +220,7 @@
             <li>
                 <a
                     href={"#"}
-                    class="block px-8 link text-xl leading-10 -2xl:leading-9 -2xl:text-lg"
+                    class="block px-8 link text-lg leading-9"
                     on:click|preventDefault={openFeedbackPopup}
                 >
                     {$_('menuSidebar.feedbackPopup')}

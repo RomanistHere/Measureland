@@ -5,8 +5,8 @@
 - restyle filters
 - fix focus states
 - limit API use to website only
-- submit am improvement
 - login via Telegram
+- mention feedback form at the support page
 
 # Later
 

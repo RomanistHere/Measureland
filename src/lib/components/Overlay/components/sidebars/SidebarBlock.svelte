@@ -16,7 +16,7 @@
         {#each list as { text, shouldShow, onClick, href, target }, i}
             {#if shouldShow}
                 <li>
-                    <a { href } { target } class="block px-8 text-xl leading-10 -2xl:leading-9 -2xl:text-lg" on:click={onClick}>{text}</a>
+                    <a { href } { target } class="block px-8 text-lg leading-9" on:click={onClick}>{text}</a>
                 </li>
             {/if}
     	{/each}
