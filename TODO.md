@@ -7,6 +7,7 @@
 - limit API use to website only
 - login via Telegram
 - mention feedback form at the support page
+- community page
 
 # Later
 

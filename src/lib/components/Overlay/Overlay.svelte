@@ -12,6 +12,8 @@
     import Loading from './components/Loading.svelte';
     import NavBar from './components/NavBar.svelte';
 
+    export let mainScreen = true;
+
     let popupActive = false;
     let popupName;
     let popupData;
@@ -96,16 +98,18 @@
     <PopupLayer { popupName } { popupData } />
 {/if}
 
-{#if sidebarActive}
-    <SidebarLayer { sidebarName } { sidebarData } />
-{/if}
+{#if mainScreen}
+    {#if sidebarActive}
+        <SidebarLayer { sidebarName } { sidebarData } />
+    {/if}
 
-<BurgerButton
-    action={toggleSideBar}
-/>
+    <BurgerButton
+        action={toggleSideBar}
+    />
 
-{#if $appStateStore.startScreen}
-    <svelte:component this={StartScreen}/>
+    {#if $appStateStore.startScreen}
+        <svelte:component this={StartScreen}/>
+    {/if}
 {/if}
 
 <NavBar />

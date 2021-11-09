@@ -130,12 +130,12 @@
     <ul class="m-0 px-4 w-full flex justify-between">
         <li class="m-0 p-0 list-none flex items-center justify-center">
             <a
-                href="/"
+                href="/{$locale}/"
                 class="flex flex-wrap justify-center items-center decoration-none font-bold text-lg"
                 on:mouseenter={handleMouseenterLeft}
                 on:mouseleave={handleMouseleaveLeft}
             >
-                <img src="../images/favicon.svg" alt="{$_('navBar.logoAlt')}" class="transition-all" width='40'>
+                <img src="/images/favicon.svg" alt="{$_('navBar.logoAlt')}" class="transition-all" width='40'>
                 <span class="ml-4">
                     {$_('navBar.logoTitle')}
                 </span>
