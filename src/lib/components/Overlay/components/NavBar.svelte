@@ -114,7 +114,10 @@
     	locale.set(nextLang);
     	if (typeof window !== 'undefined') {
     		const url = new URL(window.location.href);
-    		url.pathname = `/${nextLang}/`;
+
+    		const pathSplit = url.pathname.split('/');
+    		pathSplit[1] = nextLang;
+    		url.pathname = pathSplit.join('/');
     		window.history.replaceState(null, null, url);
 
     		if (isUserLoggedIn)

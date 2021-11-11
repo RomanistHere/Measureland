@@ -5,6 +5,37 @@
 	import SEO from '../../../lib/components/SEO/SEO.svelte';
 	import Overlay from '../../../lib/components/Overlay/Overlay.svelte';
 	import GlassGroup from '../../../lib/components/ui-elements/GlassGroup.svelte';
+
+	const newsArray = [{
+		title: 'City guides contest',
+		text: 'Share experience of finding appartment in your city. Prize pool: 1st place - 100$, 2nd place - 50$, 3rd place - 25$',
+		link: '/en/blog/city-guides-contest/',
+	}, {
+		title: 'Open collective launch',
+		text: 'Transparent finance handling platform. Check where the money comes from and what are spent on.',
+		link: 'https://opencollective.com/measureland',
+	}, {
+		title: 'Community page launch',
+		text: 'Why do we need it and what are planes on it?',
+		link: '/en/blog/community-launch/',
+	}];
+
+	const communitiesArray = [{
+		text: 'News in Telegram',
+		link: 'https://t.me/measureland',
+	}, {
+		text: 'Group in Telegram',
+		link: 'https://t.me/measureland',
+	}, {
+		text: 'Discord',
+		link: 'https://t.me/measureland',
+	}, {
+		text: 'Open collective',
+		link: 'https://opencollective.com/measureland',
+	}, {
+		text: 'LinkedIn company profile',
+		link: 'https://linkedin.com/company/74987928/',
+	}];
 </script>
 
 <SEO
@@ -17,22 +48,30 @@
 
 <section></section>
 
-<div class="relative page p-4 flex flex-wrap justify-between">
-    <h1 class="text-center pt-4 pb-8 text-5xl font-bold w-full">
+<div class="relative page">
+    <h1 class="text-center pt-4 pb-8 text-5xl font-bold">
         This page is about you guys! 😎
     </h1>
 
-	<h2 class="w-full pb-8 text-xl text-center px-60">
-		Measureland is absolutely community driven. We want to be as 🧊 transparent as we can. You can find here <strong>information about everything</strong>: our funding, code, third-party tools we use, what we're working on - and most important - <strong>influence that</strong> ⚖️. Meet the members of our community - become one!
+	<h2 class="pb-8 text-xl text-center px-60">
+		Measureland is absolutely community driven. We want to be as 🧊 transparent as we can. You can find here <strong>information about everything</strong>: our funding, code, third-party tools we use, what we're working on - and most important - <strong>influence that</strong> ⚖️. Meet the members of our community - and become one!
 	</h2>
 
-	<GlassGroup title="What you've been up to lately 👩‍🚀" />
+	<div class="flex justify-between">
+		<div class="w-1/3 m-4">
+			<GlassGroup title="What we've been up to lately 👩‍🚀" list={newsArray} />
 
-	<GlassGroup title="What we're working on 💻" />
+			<GlassGroup title="Most active members 🏆" />
+		</div>
 
-	<GlassGroup title="Meet together 📅" />
+		<div class="w-1/3 m-4">
+			<GlassGroup title="What we're working on 💻" />
+		</div>
 
-	<GlassGroup title="Most active members 🏆" />
+		<div class="w-1/3 m-4">
+			<GlassGroup title="Meet together 📅" list={communitiesArray} />
+		</div>
+	</div>
 </div>
 
 <Overlay mainScreen={false} />
@@ -53,8 +92,6 @@
     }
 
 	.page {
-        /* background-color: var(--bg-color-add-non-transparent);
-        top: var(--navbar-height); */
         top: var(--distance-top);
     }
 
