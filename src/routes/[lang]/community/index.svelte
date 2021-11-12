@@ -36,6 +36,17 @@
 		text: 'LinkedIn company profile',
 		link: 'https://linkedin.com/company/74987928/',
 	}];
+
+	const membersArray = [{
+		title: 'Roman Smunyov (RomanistHere)',
+		text: 'Creator',
+		link: 'https://romanisthere.github.io/',
+	}, {
+		title: 'Igor Denisevich',
+	}, {
+		title: 'Polina Kasterova',
+		text: 'Inspiration',
+	}];
 </script>
 
 <SEO
@@ -61,7 +72,7 @@
 		<div class="w-1/3 m-4">
 			<GlassGroup title="What we've been up to lately 👩‍🚀" list={newsArray} />
 
-			<GlassGroup title="Most active members 🏆" />
+			<GlassGroup title="Most active members 🏆" list={membersArray}/>
 		</div>
 
 		<div class="w-1/3 m-4">

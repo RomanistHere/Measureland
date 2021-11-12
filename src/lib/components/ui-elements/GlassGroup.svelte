@@ -64,7 +64,12 @@
         border: 2px solid var(--active-color);
     }
 
+    .link {
+        transition: background-color .2s, color .2s;
+    }
+
     .link:hover {
-        text-decoration: underline;
+        background-color: var(--active-color);
+        color: white;
     }
 </style>
