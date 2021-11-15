@@ -47,6 +47,24 @@
 		title: 'Polina Kasterova',
 		text: 'Inspiration',
 	}];
+
+	const tasksArray = [{
+		title: 'Sign in and sign up with Telegram',
+		text: "We don't trust other platforms with our users data.",
+	}, {
+		title: 'Dark mode',
+	}, {
+		title: 'External API',
+		text: 'Get data from the Measureland server based on coordinates.',
+	}, {
+		title: 'Redesign the blog page',
+	}, {
+		title: 'Create a profile page',
+		text: 'A possibility to change personal info and check stats.',
+	}, {
+		title: 'Redesign the map',
+		text: "We're on our way to find our visual style.",
+	}];
 </script>
 
 <SEO
@@ -65,7 +83,7 @@
     </h1>
 
 	<h2 class="pb-8 text-xl text-center px-60">
-		Measureland is absolutely community driven. We want to be as 🧊 transparent as we can. You can find here <strong>information about everything</strong>: our funding, code, third-party tools we use, what we're working on - and most important - <strong>influence that</strong> ⚖️. Meet the members of our community - and become one!
+		Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here <strong>information about everything</strong>: our code, funding, tasks, social life - and most important - <strong>influence that</strong> ⚖️. Meet the members of our community - and become one!
 	</h2>
 
 	<div class="flex justify-between">
@@ -76,7 +94,7 @@
 		</div>
 
 		<div class="w-1/3 m-4">
-			<GlassGroup title="What we're working on 💻" />
+			<GlassGroup title="What we're working on 💻" list={tasksArray} />
 		</div>
 
 		<div class="w-1/3 m-4">
