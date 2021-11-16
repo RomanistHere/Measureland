@@ -60,7 +60,7 @@
 		id: '2',
 	}, {
 		title: 'External API',
-		text: 'Get data from the Measureland server based on coordinates.',
+		text: 'Get data from the Measureland server via coordinates.',
 		id: '3',
 	}, {
 		title: 'Redesign the blog page',

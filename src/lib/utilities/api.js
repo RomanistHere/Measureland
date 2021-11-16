@@ -281,6 +281,12 @@ const voteForTask = async(goal, key) => {
 	});
 };
 
+const checkVotes = async id => {
+	const url = `${API_URL}/user/read_votes/${new URLSearchParams({ id })}`;
+
+	return await fetchFunction({ url });
+};
+
 export {
 	saveToDB,
 	getSinglePointData,
@@ -304,4 +310,5 @@ export {
 	reactOnRating,
 	sendFeedback,
 	voteForTask,
+	checkVotes,
 };

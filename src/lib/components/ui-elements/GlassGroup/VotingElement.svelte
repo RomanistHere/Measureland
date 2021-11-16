@@ -1,4 +1,6 @@
 <script>
+    import { onMount } from "svelte";
+
     import VoteButton from "../VoteButton.svelte";
 
     import { userStateStore } from "../../../../stores/state.js";
@@ -8,7 +10,7 @@
     	logError,
     } from "../../../utilities/helpers.js";
 
-    import { voteForTask } from "../../../utilities/api.js";
+    import { voteForTask, checkVotes } from "../../../utilities/api.js";
 
     export let title = '';
     export let text = '';
@@ -70,6 +72,27 @@
     		return;
     	}
     };
+
+    onMount(async() => {
+    	const { error, data } = await checkVotes(id);
+    	if (error) {
+    		logError(error);
+    		showSomethingWrongNotification();
+    		return;
+    	}
+
+    	const { info, message } = data;
+
+    	if (message === 'No task with the given ID')
+    		return;
+
+    	const { liked, disliked, isLiked, isDisliked } = info;
+    
+    	upvoted = liked;
+    	downvoted = disliked;
+    	isUpvoted = isLiked;
+    	isDownvoted = isDisliked;
+    });
 </script>
 
 <div class="block p-2">

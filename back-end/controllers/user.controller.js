@@ -8,6 +8,7 @@ const User = require('../models/user.model');
 const UserVerification = require('../models/token.model');
 const PasswordReset = require('../models/password-reset.model');
 const Feedback = require('../models/feedback.model');
+const Task = require('../models/task.model');
 
 const { sendEmail } = require('../helpers/email');
 const isProd = process.env.IS_PROD === '1';
@@ -493,5 +494,93 @@ exports.user_language = async (req, res) => {
     } catch (error) {
         Sentry.captureException(error);
         return res.status(400).json({ error });
+    }
+};
+
+exports.vote_for_task = async (req, res) => {
+    if (!req.session.userID)
+        return res.status(400).json({ error: "User is not logged in" });
+
+    const email = sanitize(req.session.userID);
+    const { key, goal } = req.body;
+    const property = goal === 'upvote' ? 'upvotes' : 'downvotes';
+    const propertyOpp = goal === 'upvote' ? 'downvotes' : 'upvotes';
+
+    try {
+        const user = await User.findOne({ email: email });
+
+        if (!user)
+            return res.status(400).json({ error: "User not found" });
+
+        const userID = user._id;
+        const result = await Task.findOneAndUpdate({
+            key: sanitize(key)
+        }, {
+            $addToSet: {
+                [property]: userID
+            }
+        }, {
+            new: true,
+            upsert: true
+        });
+
+        const resultRemove = await Task.findOneAndUpdate({
+            key: sanitize(key)
+        }, {
+            $pull: {
+                [propertyOpp]: userID
+            }
+        }, {
+            new: true,
+            upsert: true
+        });
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Reaction successful",
+                userID: user.email
+            },
+        });
+    } catch (error) {
+        console.log(error)
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
+    }
+};
+
+exports.read_votes = async (req, res, next) => {
+    const userEmail = sanitize(req.session.userID);
+
+    const urlParams = new URLSearchParams(req.params.id);
+    const { id } = Object.fromEntries(urlParams);
+
+    try {
+        const task = await Task.findOne({ "key": sanitize(id) });
+
+        if (!task)
+            return res.json({ error: null, data: { message: "No task with the given ID" }, })
+
+        const user = await User.findOne({ email: userEmail });
+        const userID = user ? user._id : 'anon';
+
+        const dataToSend = {
+            isLiked: user ? task.upvotes.some(item => item.equals(userID)) : false,
+            isDisliked: user ? task.downvotes.some(item => item.equals(userID)) : false,
+            liked: task.upvotes.length,
+            disliked: task.downvotes.length,
+        }
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Votes fetched",
+                userID: userID ? userID : null,
+                info: dataToSend
+            },
+        })
+    } catch (error) {
+        Sentry.captureException(error);
+        return res.status(400).json({ error })
     }
 };

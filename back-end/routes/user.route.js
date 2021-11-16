@@ -46,11 +46,13 @@ router.post('/language', mediumLimiter, user_controller.user_language);
 router.post('/reset_pass', mediumLimiter, user_controller.user_reset_password);
 router.post('/change_pass', mediumLimiter, user_controller.user_change_password);
 router.post('/feedback', mediumLimiter, user_controller.user_feedback);
+router.post('/tasks_vote', mediumLimiter, user_controller.vote_for_task);
 
 router.get('/verify/:token', mediumLimiter, user_controller.user_verify);
 router.get('/check_user', mediumLimiter, user_controller.user_check);
 router.get('/read_places', mediumLimiter, user_controller.user_places);
 router.get('/ask_more_ratings', mediumLimiter, user_controller.ask_more_ratings);
+router.get('/read_votes/:id', user_controller.read_votes);
 
 router.delete('/logout', mediumLimiter, user_controller.user_logout);
 
