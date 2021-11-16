@@ -268,6 +268,19 @@ const saveLang = async lang => {
 	});
 };
 
+const voteForTask = async(goal, key) => {
+	const url = `${API_URL}/user/tasks_vote`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			key,
+			goal,
+		}),
+	});
+};
+
 export {
 	saveToDB,
 	getSinglePointData,
@@ -290,4 +303,5 @@ export {
 	fetchSingleRating,
 	reactOnRating,
 	sendFeedback,
+	voteForTask,
 };

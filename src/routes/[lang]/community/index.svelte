@@ -4,7 +4,7 @@
 
 	import SEO from '../../../lib/components/SEO/SEO.svelte';
 	import Overlay from '../../../lib/components/Overlay/Overlay.svelte';
-	import GlassGroup from '../../../lib/components/ui-elements/GlassGroup.svelte';
+	import GlassGroup from '../../../lib/components/ui-elements/GlassGroup/GlassGroup.svelte';
 
 	const newsArray = [{
 		title: 'City guides contest',
@@ -45,25 +45,34 @@
 		title: 'Igor Denisevich',
 	}, {
 		title: 'Polina Kasterova',
-		text: 'Inspiration',
+		text: 'Inspiration, help with promoting',
+	}, {
+		title: 'Alex Starinsky and Co',
+		text: 'Design ideas and help',
 	}];
 
 	const tasksArray = [{
 		title: 'Sign in and sign up with Telegram',
 		text: "We don't trust other platforms with our users data.",
+		id: '1',
 	}, {
 		title: 'Dark mode',
+		id: '2',
 	}, {
 		title: 'External API',
 		text: 'Get data from the Measureland server based on coordinates.',
+		id: '3',
 	}, {
 		title: 'Redesign the blog page',
+		id: '4',
 	}, {
 		title: 'Create a profile page',
 		text: 'A possibility to change personal info and check stats.',
+		id: '5',
 	}, {
 		title: 'Redesign the map',
 		text: "We're on our way to find our visual style.",
+		id: '6',
 	}];
 </script>
 
@@ -83,22 +92,35 @@
     </h1>
 
 	<h2 class="pb-8 text-xl text-center px-60">
-		Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here <strong>information about everything</strong>: our code, funding, tasks, social life - and most important - <strong>influence that</strong> ⚖️. Meet the members of our community - and become one!
+		Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here <strong>information about everything</strong>: our code, funding, tasks, social life - and most important - <strong>influence&nbsp;that</strong> ⚖️. Meet the members of our community - and become one!
 	</h2>
 
 	<div class="flex justify-between">
 		<div class="w-1/3 m-4">
-			<GlassGroup title="What we've been up to lately 👩‍🚀" list={newsArray} />
+			<GlassGroup
+				title="What we've been up to lately 👩‍🚀"
+				list={newsArray}
+			/>
 
-			<GlassGroup title="Most active members 🏆" list={membersArray}/>
+			<GlassGroup
+				title="Most active members 🏆"
+				list={membersArray}
+			/>
 		</div>
 
 		<div class="w-1/3 m-4">
-			<GlassGroup title="What we're working on 💻" list={tasksArray} />
+			<GlassGroup
+				title="What we're working on 💻"
+				list={tasksArray}
+				type='vote'
+			/>
 		</div>
 
 		<div class="w-1/3 m-4">
-			<GlassGroup title="Meet together 📅" list={communitiesArray} />
+			<GlassGroup
+				title="Meet together 📅"
+				list={communitiesArray}
+			/>
 		</div>
 	</div>
 </div>
@@ -106,6 +128,12 @@
 <Overlay mainScreen={false} />
 
 <style>
+	:global(#svelte),
+	:global(body),
+	:global(html) {
+		overflow: unset;
+	}
+
     section {
 		position: fixed;
         background:

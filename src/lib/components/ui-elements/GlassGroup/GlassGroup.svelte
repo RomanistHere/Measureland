@@ -1,24 +1,9 @@
 <script>
+    import VotingElement from './VotingElement.svelte';
+
     export let title = '';
-    export let list = [{
-    	title: 'New super puper',
-    	text: 'It is super puper new somthing. I just writing this text to fill an example.',
-    	link: '#',
-    }, {
-    	title: 'New super puper opas',
-    	text: 'It is super puper new somthing. I just writing this text to fill an example.',
-    }, {
-    	title: 'Old puper',
-    	text: 'It is not super puper new somthing, so you know. I just writing this text to fill an example.',
-    	link: '#',
-    }, {
-    	title: 'New super puper opas',
-    	text: 'It is super puper new somthing. I just writing this text to fill an example.',
-    }, {
-    	title: 'Old puper',
-    	text: 'It is not super puper new somthing, so you know. I just writing this text to fill an example.',
-    	link: '#',
-    }];
+    export let type = 'links';
+    export let list = [];
 </script>
 
 <div class="glassmorphism px-4 py-2 mb-8">
@@ -27,9 +12,15 @@
     </h3>
 
     <ul>
-        {#each list as { title, text, link }}
+        {#each list as { title, text, link, id }}
             <li class="my-4 rounded-md">
-                {#if link}
+                {#if type === 'vote'}
+                    <VotingElement
+                        {title}
+                        {text}
+                        {id}
+                    />
+                {:else if link}
                     <a href={link} class="link block p-2" target="_blank" rel="noopener">
                         {#if title}
                             <h4 class="font-bold">{title}</h4>
@@ -39,14 +30,14 @@
                         {/if}
                     </a>
                 {:else}
-                    <span class="block p-2">
+                    <div class="block p-2">
                         {#if title}
                             <h4 class="font-bold">{title}</h4>
                         {/if}
                         {#if text}
                             <p>{text}</p>
                         {/if}
-                    </span>
+                    </div>
                 {/if}
             </li>
         {/each}
@@ -54,12 +45,6 @@
 </div>
 
 <style>
-    :global(#svelte),
-    :global(body),
-    :global(html) {
-        overflow: unset;
-    }
-
     li {
         border: 2px solid var(--active-color);
     }

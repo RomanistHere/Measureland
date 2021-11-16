@@ -65,7 +65,7 @@
     $: showAndHideNotifications($notificationsStore);
 </script>
 
-<div class="right-4 absolute flex flex-col z-4">
+<div class="right-4 fixed flex flex-col z-4">
     {#if shouldShowSuccessNotification}
         <SuccessNotification />
     {/if}
