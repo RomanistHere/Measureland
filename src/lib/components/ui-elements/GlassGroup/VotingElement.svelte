@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onMount, createEventDispatcher } from "svelte";
 
     import VoteButton from "../VoteButton.svelte";
 
@@ -16,12 +16,22 @@
     export let text = '';
     export let id = null;
 
+    const dispatch = createEventDispatcher();
+
     let upvoted = 0;
     let downvoted = 0;
     let isUpvoted = false;
     let isDownvoted = false;
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+
+    const updateNumbers = () => {
+    	dispatch('updateNumbers', {
+    		upvoted,
+    		downvoted,
+    		id,
+    	});
+    };
 
     const upvote = async() => {
     	if (!isUserLoggedIn) {
@@ -46,6 +56,8 @@
     		showSomethingWrongNotification();
     		return;
     	}
+
+    	updateNumbers();
     };
 
     const downvote = async() => {
@@ -71,6 +83,8 @@
     		showSomethingWrongNotification();
     		return;
     	}
+
+    	updateNumbers();
     };
 
     onMount(async() => {
@@ -87,11 +101,13 @@
     		return;
 
     	const { liked, disliked, isLiked, isDisliked } = info;
-    
+
     	upvoted = liked;
     	downvoted = disliked;
     	isUpvoted = isLiked;
     	isDownvoted = isDisliked;
+
+    	updateNumbers();
     });
 </script>
 

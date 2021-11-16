@@ -1,9 +1,42 @@
 <script>
+    import { flip } from "svelte/animate";
+
     import VotingElement from './VotingElement.svelte';
+    import PrimaryButton from '../PrimaryButton.svelte';
+
+    import { openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
 
     export let title = '';
     export let type = 'links';
     export let list = [];
+
+    const sortList = () => {
+    	list = list.sort((a, b) => {
+    		const diffA = a.upvoted || 0 - a.downvoted || 0;
+    		const diffB = b.upvoted || 0 - b.downvoted || 0;
+    		return diffB - diffA;
+    	});
+    };
+
+    const debouncedSorting = debounce(sortList, 200);
+
+    const updateNumbers = event => {
+    	const { id, upvoted, downvoted } = event.detail;
+
+    	for (let i = 0; i < list.length; i++) {
+    		const curID = list[i].id;
+    		if (id === curID) {
+    			list[i] = {
+    				...list[i],
+    				upvoted,
+    				downvoted,
+    			};
+    			break;
+    		}
+    	}
+
+    	debouncedSorting();
+    };
 </script>
 
 <div class="glassmorphism px-4 py-2 mb-8">
@@ -12,13 +45,14 @@
     </h3>
 
     <ul>
-        {#each list as { title, text, link, id }}
-            <li class="my-4 rounded-md">
+        {#each list as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
+            <li class="my-4 rounded-md glassmorphism" animate:flip>
                 {#if type === 'vote'}
                     <VotingElement
                         {title}
                         {text}
                         {id}
+                        on:updateNumbers={updateNumbers}
                     />
                 {:else if link}
                     <a href={link} class="link block p-2" target="_blank" rel="noopener">
@@ -42,6 +76,14 @@
             </li>
         {/each}
     </ul>
+
+    {#if type === 'vote'}
+        <PrimaryButton
+            text="Submit your suggestion"
+            className="text-center block px-10 mb-2"
+            action={() => { openAnotherOverlay('feedbackPopup') }}
+        />
+    {/if}
 </div>
 
 <style>
