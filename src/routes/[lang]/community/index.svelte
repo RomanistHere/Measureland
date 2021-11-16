@@ -95,7 +95,7 @@
 		Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here <strong>information about everything</strong>: our code, funding, tasks, social life - and most important - <strong>influence&nbsp;that</strong> ⚖️. Meet the members of our community - and become one!
 	</h2>
 
-	<div class="flex justify-between -lg:block -lg:pb-4">
+	<div class="flex justify-between -lg:block">
 		<div class="w-1/3 m-4 -lg:w-auto">
 			<GlassGroup
 				title="What we've been up to lately 👩‍🚀"
@@ -123,9 +123,16 @@
 			/>
 		</div>
 	</div>
+
+	<a href="../" class="hidden -lg:block underline text-right mx-4 pb-4">
+		Back to Measureland
+	</a>
 </div>
 
-<Overlay mainScreen={false} />
+<Overlay
+	mainScreen={false}
+	hiddenLoading={true}
+/>
 
 <style>
 	:global(#svelte),

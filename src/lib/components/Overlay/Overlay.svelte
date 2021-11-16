@@ -13,6 +13,7 @@
     import NavBar from './components/NavBar.svelte';
 
     export let mainScreen = true;
+    export let hiddenLoading = false;
 
     let popupActive = false;
     let popupName;
@@ -92,7 +93,9 @@
 </script>
 
 <!-- // show loader while user data is loading -->
-<Loading />
+{#if !hiddenLoading}
+    <Loading />
+{/if}
 
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />

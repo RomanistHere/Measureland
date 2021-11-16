@@ -22,6 +22,7 @@
     let downvoted = 0;
     let isUpvoted = false;
     let isDownvoted = false;
+    let isError = false;
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
@@ -52,6 +53,7 @@
 
     	const { error } = await voteForTask('upvote', id);
     	if (error) {
+    		isError = true;
     		logError(error);
     		showSomethingWrongNotification();
     		return;
@@ -79,6 +81,7 @@
 
     	const { error } = await voteForTask('downvote', id);
     	if (error) {
+    		isError = true;
     		logError(error);
     		showSomethingWrongNotification();
     		return;
@@ -90,6 +93,7 @@
     onMount(async() => {
     	const { error, data } = await checkVotes(id);
     	if (error) {
+    		isError = true;
     		logError(error);
     		showSomethingWrongNotification();
     		return;
@@ -119,18 +123,20 @@
         <p>{text}</p>
     {/if}
 
-    <div>
-        <VoteButton
-            isLike={true}
-            isDisabled={isUpvoted}
-            action={upvote}
-            text={upvoted}
-        />
-        <VoteButton
-            isLike={false}
-            isDisabled={isDownvoted}
-            action={downvote}
-            text={downvoted}
-        />
+    {#if !isError}
+        <div>
+            <VoteButton
+                isLike={true}
+                isDisabled={isUpvoted}
+                action={upvote}
+                text={upvoted}
+            />
+            <VoteButton
+                isLike={false}
+                isDisabled={isDownvoted}
+                action={downvote}
+                text={downvoted}
+            />
+        </div>
+    {/if}
     </div>
-</div>
