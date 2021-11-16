@@ -87,16 +87,16 @@
 <section></section>
 
 <div class="relative page">
-    <h1 class="text-center pt-4 pb-8 text-5xl font-bold">
+    <h1 class="text-center pt-4 pb-8 px-4 text-5xl font-bold -md:text-4xl -md:pt-8">
         This page is about you guys! 😎
     </h1>
 
-	<h2 class="pb-8 text-xl text-center px-60">
+	<h2 class="pb-8 text-xl text-center px-60 -lg:px-4 -md:text-lg -md:pb-4">
 		Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here <strong>information about everything</strong>: our code, funding, tasks, social life - and most important - <strong>influence&nbsp;that</strong> ⚖️. Meet the members of our community - and become one!
 	</h2>
 
-	<div class="flex justify-between">
-		<div class="w-1/3 m-4">
+	<div class="flex justify-between -lg:block -lg:pb-4">
+		<div class="w-1/3 m-4 -lg:w-auto">
 			<GlassGroup
 				title="What we've been up to lately 👩‍🚀"
 				list={newsArray}
@@ -108,7 +108,7 @@
 			/>
 		</div>
 
-		<div class="w-1/3 m-4">
+		<div class="w-1/3 m-4 -lg:w-auto">
 			<GlassGroup
 				title="What we're working on 💻"
 				list={tasksArray}
@@ -116,7 +116,7 @@
 			/>
 		</div>
 
-		<div class="w-1/3 m-4">
+		<div class="w-1/3 m-4 -lg:w-auto">
 			<GlassGroup
 				title="Meet together 📅"
 				list={communitiesArray}

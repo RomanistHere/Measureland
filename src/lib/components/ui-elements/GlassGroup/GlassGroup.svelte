@@ -40,7 +40,7 @@
 </script>
 
 <div class="glassmorphism px-4 py-2 mb-8">
-    <h3 class="text-2xl pt-4">
+    <h3 class="text-2xl pt-4 -md:text-lg">
         {title}
     </h3>
 
@@ -91,12 +91,14 @@
         border: 2px solid var(--active-color);
     }
 
-    .link {
-        transition: background-color .2s, color .2s;
-    }
+    @media (hover: hover) and (pointer: fine) {
+        .link {
+            transition: background-color .2s, color .2s;
+        }
 
-    .link:hover {
-        background-color: var(--active-color);
-        color: white;
+        .link:hover {
+            background-color: var(--active-color);
+            color: white;
+        }
     }
 </style>
