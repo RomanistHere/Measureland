@@ -597,5 +597,95 @@
             "title": "Meaureland City guides.",
             "description": "How to find the best city and neighbourhood. Local guides. 🏙 🏰 🗽"
         }
+    },
+    "commuinty": {
+        "title": "This page is about you guys!",
+        "titleEmoj": "😎",
+        "subtitlePart1": "Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here ",
+        "subtitleStrong1": "information about everything:",
+        "subtitlePart2": "our code, funding, tasks, social life - and most important - ",
+        "subtitleStrong2": "influence that",
+        "subtitlePart3": "⚖️. Meet the members of our community - and become one!",
+        "titleSEO": "Measureland community",
+        "descriptionSEO": "It's about us.",
+        "linkBack": "Back to Measureland",
+        "submitSuggestionBtn": "Submit your suggestion",
+        "news": {
+            "title": "What we've been up to lately 👩‍🚀",
+            "list": [{
+        		"title": "City guides contest",
+        		"text": "Share experience of finding appartment in your city. Prize pool: 1st place - 100$, 2nd place - 50$, 3rd place - 25$",
+        		"link": "/en/blog/city-guides-contest/"
+        	}, {
+        		"title": "Open collective launch",
+        		"text": "Transparent finance handling platform. Check where the money comes from and what are spent on.",
+        		"link": "https://opencollective.com/measureland"
+        	}, {
+        		"title": "Community page launch",
+        		"text": "Why do we need it and what are planes on it?",
+        		"link": "/en/blog/community-launch/"
+        	}]
+        },
+        "members": {
+            "title": "Most active members 🏆",
+            "list": [{
+        		"title": "Roman Smunyov (RomanistHere)",
+        		"text": "Creator",
+        		"link": "https://romanisthere.github.io/"
+        	}, {
+        		"title": "Igor Denisevich"
+        	}, {
+        		"title": "Polina Kasterova",
+        		"text": "Inspiration, help with promoting"
+        	}, {
+        		"title": "Alex Starinsky and Co",
+        		"text": "Design ideas and help"
+        	}]
+        },
+        "tasks": {
+            "title": "What we're working on 💻",
+            "list": [{
+        		"title": "Sign in and sign up with Telegram",
+        		"text": "We don't trust other platforms with our users data.",
+        		"id": "1"
+        	}, {
+        		"title": "Dark mode",
+        		"id": "2"
+        	}, {
+        		"title": "External API",
+        		"text": "Get data from the Measureland server via coordinates.",
+        		"id": "3"
+        	}, {
+        		"title": "Redesign the blog page",
+        		"id": "4"
+        	}, {
+        		"title": "Create a profile page",
+        		"text": "A possibility to change personal info and check stats.",
+        		"id": "5"
+        	}, {
+        		"title": "Redesign the map",
+        		"text": "We're on our way to find our visual style.",
+        		"id": "6"
+        	}]
+        },
+        "communities": {
+            "title": "Meet and communicate 📅",
+            "list": [{
+        		"text": "News in Telegram",
+        		"link": "https://t.me/measureland"
+        	}, {
+        		"text": "Group in Telegram",
+        		"link": "https://t.me/measureland"
+        	}, {
+        		"text": "Discord",
+        		"link": "https://t.me/measureland"
+        	}, {
+        		"text": "Open collective",
+        		"link": "https://opencollective.com/measureland"
+        	}, {
+        		"text": "LinkedIn company profile",
+        		"link": "https://linkedin.com/company/74987928/"
+        	}]
+        }
     }
 }

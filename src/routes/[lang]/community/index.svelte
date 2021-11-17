@@ -1,84 +1,15 @@
 <script>
-	import { _ } from 'svelte-i18n';
+	import { _, json } from 'svelte-i18n';
 	import '/static/styles/general.css';
 
 	import SEO from '../../../lib/components/SEO/SEO.svelte';
 	import Overlay from '../../../lib/components/Overlay/Overlay.svelte';
 	import GlassGroup from '../../../lib/components/ui-elements/GlassGroup/GlassGroup.svelte';
-
-	const newsArray = [{
-		title: 'City guides contest',
-		text: 'Share experience of finding appartment in your city. Prize pool: 1st place - 100$, 2nd place - 50$, 3rd place - 25$',
-		link: '/en/blog/city-guides-contest/',
-	}, {
-		title: 'Open collective launch',
-		text: 'Transparent finance handling platform. Check where the money comes from and what are spent on.',
-		link: 'https://opencollective.com/measureland',
-	}, {
-		title: 'Community page launch',
-		text: 'Why do we need it and what are planes on it?',
-		link: '/en/blog/community-launch/',
-	}];
-
-	const communitiesArray = [{
-		text: 'News in Telegram',
-		link: 'https://t.me/measureland',
-	}, {
-		text: 'Group in Telegram',
-		link: 'https://t.me/measureland',
-	}, {
-		text: 'Discord',
-		link: 'https://t.me/measureland',
-	}, {
-		text: 'Open collective',
-		link: 'https://opencollective.com/measureland',
-	}, {
-		text: 'LinkedIn company profile',
-		link: 'https://linkedin.com/company/74987928/',
-	}];
-
-	const membersArray = [{
-		title: 'Roman Smunyov (RomanistHere)',
-		text: 'Creator',
-		link: 'https://romanisthere.github.io/',
-	}, {
-		title: 'Igor Denisevich',
-	}, {
-		title: 'Polina Kasterova',
-		text: 'Inspiration, help with promoting',
-	}, {
-		title: 'Alex Starinsky and Co',
-		text: 'Design ideas and help',
-	}];
-
-	const tasksArray = [{
-		title: 'Sign in and sign up with Telegram',
-		text: "We don't trust other platforms with our users data.",
-		id: '1',
-	}, {
-		title: 'Dark mode',
-		id: '2',
-	}, {
-		title: 'External API',
-		text: 'Get data from the Measureland server via coordinates.',
-		id: '3',
-	}, {
-		title: 'Redesign the blog page',
-		id: '4',
-	}, {
-		title: 'Create a profile page',
-		text: 'A possibility to change personal info and check stats.',
-		id: '5',
-	}, {
-		title: 'Redesign the map',
-		text: "We're on our way to find our visual style.",
-		id: '6',
-	}];
 </script>
 
 <SEO
-    pageTitle='Measureland community.'
-    description="It's about us."
+    pageTitle={$_('commuinty.titleSEO')}
+    description={$_('commuinty.descriptionSEO')}
     imageSrc='https://measureland.org/images/PWA-icon-512x512.png'
 	imageAltText={$_('SEO.imageAltText')}
     isApp={false}
@@ -87,45 +18,56 @@
 <section></section>
 
 <div class="relative page">
-    <h1 class="text-center pt-4 pb-8 px-4 text-5xl font-bold -md:text-4xl -md:pt-8">
-        This page is about you guys! 😎
+    <h1 class="text-center pt-4 pb-8 px-4 text-5xl -md:text-4xl -md:pt-8">
+        <strong>
+			{$_('commuinty.title')}
+		</strong>
+		{$_('commuinty.titleEmoj')}
     </h1>
 
 	<h2 class="pb-8 text-xl text-center px-60 -lg:px-4 -md:text-lg -md:pb-4">
-		Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here <strong>information about everything</strong>: our code, funding, tasks, social life - and most important - <strong>influence&nbsp;that</strong> ⚖️. Meet the members of our community - and become one!
+		{$_('commuinty.subtitlePart1')}
+		<strong>
+			{$_('commuinty.subtitleStrong1')}
+		</strong>
+		{$_('commuinty.subtitlePart2')}
+		<strong class="whitespace-nowrap">
+			{$_('commuinty.subtitleStrong2')}
+		</strong>
+		{$_('commuinty.subtitlePart3')}
 	</h2>
 
 	<div class="flex justify-between -lg:block">
 		<div class="w-1/3 m-4 -lg:w-auto">
 			<GlassGroup
-				title="What we've been up to lately 👩‍🚀"
-				list={newsArray}
+				title={$_('commuinty.news.title')}
+				list={$json('commuinty.news.list')}
 			/>
 
 			<GlassGroup
-				title="Most active members 🏆"
-				list={membersArray}
+				title={$_('commuinty.members.title')}
+				list={$json('commuinty.members.list')}
 			/>
 		</div>
 
 		<div class="w-1/3 m-4 -lg:w-auto">
 			<GlassGroup
-				title="What we're working on 💻"
-				list={tasksArray}
+				title={$_('commuinty.tasks.title')}
+				list={$json('commuinty.tasks.list')}
 				type='vote'
 			/>
 		</div>
 
 		<div class="w-1/3 m-4 -lg:w-auto">
 			<GlassGroup
-				title="Meet together 📅"
-				list={communitiesArray}
+				title={$_('commuinty.communities.title')}
+				list={$json('commuinty.communities.list')}
 			/>
 		</div>
 	</div>
 
 	<a href="../" class="hidden -lg:block underline text-right mx-4 pb-4">
-		Back to Measureland
+		{$_('commuinty.linkBack')}
 	</a>
 </div>
 

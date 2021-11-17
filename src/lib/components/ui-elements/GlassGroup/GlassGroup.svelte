@@ -1,4 +1,5 @@
 <script>
+    import { _ } from 'svelte-i18n';
     import { flip } from "svelte/animate";
 
     import VotingElement from './VotingElement.svelte';
@@ -79,7 +80,7 @@
 
     {#if type === 'vote'}
         <PrimaryButton
-            text="Submit your suggestion"
+            text={$_('commuinty.submitSuggestionBtn')}
             className="text-center block px-10 mb-2"
             action={() => { openAnotherOverlay('feedbackPopup') }}
         />
