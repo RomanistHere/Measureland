@@ -33,3 +33,11 @@
 <svelte:component this={Map}/>
 
 <Overlay />
+
+<style>
+	:global(#svelte),
+	:global(body),
+	:global(html) {
+		overflow: hidden;
+	}
+</style>

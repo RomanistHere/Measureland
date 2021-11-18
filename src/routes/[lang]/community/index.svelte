@@ -82,12 +82,6 @@
 />
 
 <style>
-	:global(#svelte),
-	:global(body),
-	:global(html) {
-		overflow: unset;
-	}
-
     section {
 		position: fixed;
         background:
