@@ -18,6 +18,8 @@
     import { saveLang, logout } from '../../../utilities/api.js';
     import { appStateStore, userStateStore } from "../../../../stores/state.js";
 
+    export let mainScreen = true;
+
     let profileDropDownOpen = false;
 
     $: isUserLoggedIn = $userStateStore.userID !== null;
@@ -45,21 +47,21 @@
     			showSomethingWrongNotification();
     		}
     	},
-    }, {
+    }, (mainScreen && {
     	text: $_('menuSidebar.myRatings'),
     	action: e => {
     		e.preventDefault();
     		profileDropDownOpen = false;
     		openAnotherOverlay('myPlacesPopup');
     	},
-    }, {
+    }), {
     	text: $_('menuSidebar.changePassword'),
     	action: e => {
     		e.preventDefault();
     		profileDropDownOpen = false;
     		openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
     	},
-    }];
+    }].filter(Boolean);
 
     const closeStartScreen = () => {
     	const { termsOfUseAgreed, startScreen } = $appStateStore;

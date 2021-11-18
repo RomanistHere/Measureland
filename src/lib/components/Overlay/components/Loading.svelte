@@ -10,6 +10,8 @@
     import { userStateStore, appStateStore } from "../../../../stores/state.js";
     import { appInfo } from '../../../../configs/index.js';
 
+    export let hiddenLoading = false;
+
     let isError = false;
     let isLoaded = false;
 
@@ -54,7 +56,7 @@
     const promise = userInit();
 </script>
 
-{#if !isLoaded}
+{#if !isLoaded && !hiddenLoading}
     <Spinner
         className="fixed z-3 inset-0"
         isWithText={!isError}

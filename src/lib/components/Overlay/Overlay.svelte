@@ -93,9 +93,7 @@
 </script>
 
 <!-- // show loader while user data is loading -->
-{#if !hiddenLoading}
-    <Loading />
-{/if}
+<Loading {hiddenLoading} />
 
 {#if popupActive}
     <PopupLayer { popupName } { popupData } />
@@ -115,7 +113,7 @@
     {/if}
 {/if}
 
-<NavBar />
+<NavBar {mainScreen} />
 
 <FiltersNotification />
 <CornerNotification />

@@ -8,13 +8,15 @@
 - login via Telegram
 - mention feedback form at the support page
 - check links community page
+- add ratings if previous ones approved enough
+- ::selection styles
 
 # Articles
 
 - city-guides contest
 - why we picked svelte
 - community page launch
-- update technical documentation (github wiki)
+- before the release: update technical documentation (github wiki)
 
 # Later
 
@@ -24,11 +26,7 @@
 # Org stuff
 
 - create a DB template with some users and ratings to import
-- write a contribution guide
-- write an article about how awesome svelte is
-- create some community articles to get started
 - pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
-- best city guide (100$/50$/25$ pool).
 
 # Stuff to remember and check later
 
@@ -39,3 +37,14 @@
 - Update db (temporarily.js):
 - adjust user.model.js after db update (remove two fields)
 - add link to measureland in github
+
+# Updates description
+
+- Major design update
+- Add timeline to the rating for more precise results
+- See nearby rating average with stats and badges
+- New community page
+- Feedback popup
+- Moving to Svelte
+- Open collective launch
+- City-guides contest
