@@ -8,6 +8,7 @@ const User = require('../models/user.model');
 const UserVerification = require('../models/token.model');
 const PasswordReset = require('../models/password-reset.model');
 const Feedback = require('../models/feedback.model');
+const Rating = require('../models/rating.model');
 const Task = require('../models/task.model');
 
 const { sendEmail } = require('../helpers/email');
@@ -64,7 +65,6 @@ exports.user_register = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }
@@ -159,7 +159,6 @@ exports.user_feedback = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }
@@ -300,7 +299,6 @@ exports.user_check = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error);
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }
@@ -310,7 +308,7 @@ exports.user_places = async (req, res) => {
     const { userID } = req.session;
 
     try {
-        const user = await User.findOne({ email: sanitize(userID) }, 'properties.geoIDs');
+        const user = await User.findOne({ email: sanitize(userID) }, 'properties.geoIDs properties.ratingIDs');
 
         if (!user)
             return res.status(400).json({ error: "Couldn't find the user" });
@@ -321,18 +319,45 @@ exports.user_places = async (req, res) => {
                     $in: user.properties.geoIDs
                 }
             },
-            'location.coordinates -_id'
+            'location.coordinates'
         );
+
+        const ratings = await Rating.find(
+            {
+                _id: {
+                    $in: user.properties.ratingIDs
+                }
+            },
+            'timeline geoID'
+        );
+
+        const places = geo.map(({ location, _id }) => {
+            let ratingObj = {};
+            for (let i = 0; i < ratings.length; i++) {
+                const rating = ratings[i];
+                if (_id.equals(rating.geoID)) {
+                    ratingObj = {
+                        ratingID: rating._id,
+                        timeline: rating.timeline
+                    };
+                    break;
+                }
+            }
+
+            return ({
+                location,
+                ratingObj
+            })
+        })
 
         return res.json({
             error: null,
             data: {
                 message: "Rated places",
-                places: geo
+                places
             },
         });
     } catch (error) {
-        console.log(error);
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }
@@ -543,7 +568,6 @@ exports.vote_for_task = async (req, res) => {
             },
         });
     } catch (error) {
-        console.log(error)
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }
@@ -582,5 +606,28 @@ exports.read_votes = async (req, res, next) => {
     } catch (error) {
         Sentry.captureException(error);
         return res.status(400).json({ error })
+    }
+};
+
+exports.update_rating_year = async (req, res) => {
+    if (!req.session.userID)
+        return res.status(400).json({ error: "User is not logged in" });
+
+    const email = sanitize(req.session.userID);
+    const { id, newValue } = req.body;
+
+    try {
+        const rating = await Rating.findOneAndUpdate({ _id: sanitize(id) }, { 'timeline': newValue });
+
+        return res.json({
+            error: null,
+            data: {
+                message: "Rating updated",
+                userID: req.session.userID
+            },
+        });
+    } catch (error) {
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
     }
 };

@@ -12,6 +12,7 @@
     import NearbyPopup from './NearbyPopup/NearbyPopup.svelte';
     import CheckEmailPopup from './CheckEmailPopup.svelte';
     import OnboardingPopup from './OnboardingPopup.svelte';
+    import ChangeYearPopup from './ChangeYearPopup.svelte';
     import QuizPopup from './QuizPopup/QuizPopup.svelte';
     import HowToRatePopup from './HowToRatePopup.svelte';
     import LoggedInPopup from './LoggedInPopup.svelte';
@@ -27,6 +28,7 @@
     const popupList = {
     	askForMoreRatingsPopup: AskForMoreRatingsPopup,
     	changePasswordPopup: ChangePasswordPopup,
+    	changeYearPopup: ChangeYearPopup,
     	checkEmailPopup: CheckEmailPopup,
     	confirmForgotPasswordPopup: ConfirmForgotPasswordPopup,
     	feedbackPopup: FeedbackPopup,

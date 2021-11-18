@@ -201,7 +201,7 @@ const checkUser = async() => {
 	return await fetchFunction({ url });
 };
 
-const fetchRatedPlace = async() => {
+const fetchRatedPlaces = async() => {
 	const url = `${API_URL}/user/read_places`;
 
 	return await fetchFunction({ url });
@@ -287,6 +287,19 @@ const checkVotes = async id => {
 	return await fetchFunction({ url });
 };
 
+const updateRatingYear = async(id, newValue) => {
+	const url = `${API_URL}/user/update_rating_year`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			id,
+			newValue,
+		}),
+	});
+};
+
 export {
 	saveToDB,
 	getSinglePointData,
@@ -299,7 +312,7 @@ export {
 	onboard,
 	verifyUser,
 	checkUser,
-	fetchRatedPlace,
+	fetchRatedPlaces,
 	askMoreRatings,
 	logout,
 	reverify,
@@ -311,4 +324,5 @@ export {
 	sendFeedback,
 	voteForTask,
 	checkVotes,
+	updateRatingYear,
 };

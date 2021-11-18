@@ -505,6 +505,12 @@
         "textAreaPlaceholder": "It would be nice if you added a few more points into the quiz. Like internet quality or cultural life.",
         "submitBtn": "Send the feedback"
     },
+    "changeYearPopup": {
+        "title": "Change the relevant year",
+        "selectTitle": "Pick the approximate year, your rating you rating was relevant at the given address: «{address}»",
+        "submitBtn": "Save new date",
+        "warning": "New date should be different"
+    },
     "input": {
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",
