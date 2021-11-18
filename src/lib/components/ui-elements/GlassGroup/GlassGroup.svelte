@@ -6,10 +6,13 @@
     import PrimaryButton from '../PrimaryButton.svelte';
 
     import { openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
+    import { userStateStore } from "../../../../stores/state.js";
 
     export let title = '';
     export let type = 'links';
     export let list = [];
+
+    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
     const sortList = () => {
     	list = list.sort((a, b) => {
@@ -37,6 +40,15 @@
     	}
 
     	debouncedSorting();
+    };
+
+    const submitFeedback = () => {
+    	if (!isUserLoggedIn) {
+    		openAnotherOverlay('loginPopup');
+    		return;
+    	}
+
+    	openAnotherOverlay('feedbackPopup');
     };
 </script>
 
@@ -82,7 +94,7 @@
         <PrimaryButton
             text={$_('commuinty.submitSuggestionBtn')}
             className="text-center block px-10 mb-2"
-            action={() => { openAnotherOverlay('feedbackPopup') }}
+            action={submitFeedback}
         />
     {/if}
 </div>

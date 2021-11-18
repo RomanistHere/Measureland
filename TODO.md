@@ -7,7 +7,14 @@
 - limit API use to website only
 - login via Telegram
 - mention feedback form at the support page
-- community page
+- check links community page
+
+# Articles
+
+- city-guides contest
+- why we picked svelte
+- community page launch
+- update technical documentation (github wiki)
 
 # Later
 
@@ -19,7 +26,7 @@
 - create a DB template with some users and ratings to import
 - write a contribution guide
 - write an article about how awesome svelte is
-- create Measureland discord and some community articles to get started
+- create some community articles to get started
 - pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
 - best city guide (100$/50$/25$ pool).
 

@@ -614,7 +614,7 @@
             "title": "What we've been up to lately 👩‍🚀",
             "list": [{
         		"title": "City guides contest",
-        		"text": "Share experience of finding appartment in your city. Prize pool: 1st place - 100$, 2nd place - 50$, 3rd place - 25$",
+        		"text": "Share experience of finding appartment in your city. Prize pool 175$",
         		"link": "/en/blog/city-guides-contest/"
         	}, {
         		"title": "Open collective launch",
@@ -675,16 +675,37 @@
         		"link": "https://t.me/measureland"
         	}, {
         		"text": "Group in Telegram",
-        		"link": "https://t.me/measureland"
+        		"link": "https://t.me/joinchat/sw16jwDFfJxhZGVi"
         	}, {
         		"text": "Discord",
-        		"link": "https://t.me/measureland"
+        		"link": "https://discord.gg/PBrXUhqJhC"
         	}, {
         		"text": "Open collective",
         		"link": "https://opencollective.com/measureland"
         	}, {
         		"text": "LinkedIn company profile",
         		"link": "https://linkedin.com/company/74987928/"
+        	}]
+        },
+        "developement": {
+            "title": "Design and developement 📈",
+            "list": [{
+                "title": "We are 14!",
+        		"text": "That's how much people offered help and contributed."
+        	}, {
+                "title": "Why we chose Svelte",
+        		"text": "It's cool because...",
+        		"link": "#"
+        	}, {
+                "title": "Technical documentation",
+        		"text": "How to start contributing to the project.",
+        		"link": "https://github.com/RomanistHere/Measureland/wiki"
+        	}, {
+        		"title": "Discord for developers.",
+        		"link": "https://discord.gg/T6HN8qsDdv"
+        	}, {
+        		"title": "Bugs and suggestions in Telegram.",
+        		"link": "https://t.me/MeasurelandBot"
         	}]
         }
     }

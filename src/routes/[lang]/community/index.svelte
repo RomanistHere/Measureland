@@ -63,6 +63,11 @@
 				title={$_('commuinty.communities.title')}
 				list={$json('commuinty.communities.list')}
 			/>
+
+			<GlassGroup
+				title={$_('commuinty.developement.title')}
+				list={$json('commuinty.developement.list')}
+			/>
 		</div>
 	</div>
 
