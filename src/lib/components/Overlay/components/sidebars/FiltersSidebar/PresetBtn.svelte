@@ -22,9 +22,7 @@
 
 <style>
     a {
-        background-color: #fcd9f6;
-        /* background-color: #fce9a5; */
-        /* background-color: #ddfaff; */
+        background-color: var(--neutral-feeling-color);
         transition: background-color .5s, color .5s;
     }
 

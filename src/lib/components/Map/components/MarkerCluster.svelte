@@ -387,7 +387,7 @@
 
 <style>
     div {
-        text-shadow: 0 0 2px #000;
+        text-shadow: 0 0 2px var(--border-color);
         z-index: 1000;
     }
 </style>

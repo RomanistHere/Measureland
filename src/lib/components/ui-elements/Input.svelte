@@ -108,7 +108,7 @@
 
     .dot-error {
         opacity: 1;
-        background-color: #ffa500;
+        background-color: var(--error-color);
     }
 
     input:focus + .dot {

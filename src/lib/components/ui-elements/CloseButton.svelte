@@ -29,7 +29,7 @@
         border-radius: 100%;
         transform: translate(-50%, -50%);
 
-        background-color: var(--sug-color);
+        background-color: var(--text-color);
         transition: background-color .2s;
     }
 

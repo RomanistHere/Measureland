@@ -25,7 +25,7 @@
     @media (hover: hover) and (pointer: fine) {
         a:hover {
             background-color: var(--active-color);
-            color: #fff;
+            color: var(--text-color-btn);
             text-decoration: none;
         }
     }

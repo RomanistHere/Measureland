@@ -100,7 +100,7 @@
         position: absolute;
         height: 12px;
         width: 1px;
-        background: #dddddd;
+        background: var(--almost-invisible-gray-color);
         left: 10px;
         top: 4px;
     }
@@ -115,6 +115,6 @@
 
     .noUi-handle,
     .noUi-target {
-        border-color: #000;
+        border-color: var(--border-color);
     }
 </style>

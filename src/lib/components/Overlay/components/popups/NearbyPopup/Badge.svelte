@@ -53,12 +53,12 @@
 
 <style>
     span {
-        background-color: #bcedb5;
+        background-color: var(--good-feeling-color);
         transition: background-color .5s, color .5s;
     }
 
     .alert {
-        background-color: #ffbaba;
+        background-color: var(--bad-feeling-color);
     }
 
     span:hover {
