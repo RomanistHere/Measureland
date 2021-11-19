@@ -5,4 +5,5 @@ export const appInfo = {
 	authorName: 'RomanistHere',
 	telegramBot: 'https://t.me/MeasurelandBot',
 	github: 'https://github.com/RomanistHere/Measureland',
+	donationLink: 'https://opencollective.com/measureland',
 };

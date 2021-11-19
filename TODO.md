@@ -1,10 +1,8 @@
 # To do:
 
-- add possibility to edit rating date from my ratings panel
-- sent letter to users asking to edit their rating's timelines
-- restyle filters
+- ? sent letter to users asking to edit their rating's timelines
 - fix focus states
-- limit API use to website only
+- limit API use to website only (block all requests except from static cloudflare page IP)
 - login via Telegram
 - mention feedback form at the support page
 - check links community page
@@ -48,3 +46,4 @@
 - Moving to Svelte
 - Open collective launch
 - City-guides contest
+- Possibility to edit year of the rating

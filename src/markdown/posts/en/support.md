@@ -30,6 +30,6 @@ Right now we don’t have a fancy form, which you could fill with your query, th
     - <a href="https://github.com/RomanistHere/Measureland" class="article__link" target="_blank" rel="noopener">contribute</a>
     - partner up
     - tell about us to your friends
-    - <a href="https://www.donationalerts.com/r/romanisthere" class="article__link" target="_blank" rel="noopener">donate</a>
+    - <a href="https://opencollective.com/measureland" class="article__link" target="_blank" rel="noopener">donate</a>
     - send us "Thank you"
     - rate and <a href="../write-a-guide/" class="article__link">write articles</a> for us

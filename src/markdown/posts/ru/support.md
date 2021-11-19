@@ -30,6 +30,6 @@ author: Роман Смунёв
     - <a href="https://github.com/RomanistHere/Measureland" class="article__link" target="_blank" rel="noopener">пиши с нами код</a>
     - стань нашим партнером
     - расскажи о нас друзьям
-    - <a href="https://www.donationalerts.com/r/romanisthere" class="article__link" target="_blank" rel="noopener">поделись деньгами</a>
+    - <a href="https://opencollective.com/measureland" class="article__link" target="_blank" rel="noopener">поделись деньгами</a>
     - напиши нам "Спасибо"
     - оценивай и <a href="../write-a-guide/" class="article__link">пиши статьи</a> на нашей платформе

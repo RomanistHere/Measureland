@@ -7,6 +7,7 @@
 
     import { filtersStore } from "../../../../../../stores/state.js";
     import { fillFiltersFromArrOfStrings, debounce, registerAction } from '../../../../../utilities/helpers.js';
+    import { appInfo } from '../../../../../../configs/index.js';
 
     $: criteria = $json('criteria');
     $: filters = Object.keys(criteria).map((key, i) => ({
@@ -157,11 +158,10 @@
     <div class="px-8 text-sm -mb-10 -lg:mb-2">
         {$_('filterSidebar.footerText1')}
         <TextLink
-            href="https://www.donationalerts.com/r/romanisthere"
+            href={appInfo.donationLink}
             blank={true}
             text={$_('filterSidebar.footerLink')}
-        />
-        {$_('filterSidebar.footerText2')}
+        />{$_('filterSidebar.footerText2')}
         <span class="text-xs hidden">{$_('filterSidebar.footerTextSmall')}</span>
     </div>
 </div>
