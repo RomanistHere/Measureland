@@ -482,7 +482,8 @@
     "myPlacesPopup": {
         "title": "Your ratings",
         "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",
-        "defaultAdress": "Didn't find address"
+        "defaultAdress": "Didn't find address",
+        "deleteRating": "Delete rating"
     },
     "askForMoreRatingsPopup": {
         "title": "Done",

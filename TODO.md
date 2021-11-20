@@ -1,13 +1,27 @@
 # To do:
 
-- ? sent letter to users asking to edit their rating's timelines
+- delete rating (from my ratings)
 - fix focus states
-- limit API use to website only (block all requests except from static cloudflare page IP)
 - login via Telegram
-- mention feedback form at the support page
-- check links community page
 - add ratings if previous ones approved enough
-- ::selection styles
+- ? sent letter to users asking to edit their rating's timelines
+
+### Pre release
+
+- check links community page
+- limit API use to website only (block all requests except from static cloudflare page IP)
+
+# Later
+
+- more badges
+- share nearby API public
+- redesign blog pages
+- mention feedback form at the support page
+
+# Org stuff
+
+- create a DB template with some users and ratings to import
+- pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
 
 # Articles
 
@@ -15,16 +29,6 @@
 - why we picked svelte
 - community page launch
 - before the release: update technical documentation (github wiki)
-
-# Later
-
-- more badges
-- share nearby API public
-
-# Org stuff
-
-- create a DB template with some users and ratings to import
-- pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
 
 # Stuff to remember and check later
 

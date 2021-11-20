@@ -18,6 +18,8 @@
     const editRatingYear = (timeline, ratingID, address) =>
     	openAnotherOverlay('changeYearPopup', { timeline, ratingID, address });
 
+    const deleteRating = ratingID => null;
+
     const fetchData = async() => {
     	const { error, data } = await fetchRatedPlaces();
 
@@ -71,7 +73,18 @@
                 <span>{$_('myPlacesPopup.youHaveNotRated')}</span>
             {:else}
                 {#each array as { lang, lat, lng, address, ratingID, timeline }}
-                    <li>
+                    <li
+                        class="relative pr-4"
+                        class:hidden={ratingID === null}
+                    >
+                        <a
+                            href="#"
+                            title={$_('myPlacesPopup.deleteRating')}
+                            class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2"
+                            on:click|preventDefault={() => { ratingID = deleteRating(ratingID) }}
+                        >
+                            x
+                        </a>
                         <TextButton
                             href="#"
                             action={() => editRatingYear(timeline, ratingID, address)}
@@ -90,3 +103,23 @@
         </ul>
     {/await}
 </div>
+
+<style>
+    li:hover .hidden {
+        display: block;
+    }
+
+    .delete {
+        color: #ff0000a3;
+        transition: color .2s;
+    }
+
+    .delete:hover {
+        color: #ff0000;
+    }
+
+    :global(.delete:hover + a),
+    :global(.delete:hover + a + a) {
+        color: #ff0000;
+    }
+</style>

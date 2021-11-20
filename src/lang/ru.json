@@ -488,7 +488,8 @@
     "myPlacesPopup": {
         "title": "Твои оценки",
         "youHaveNotRated": "У тебя пока ноль оценок. Найди знакомое место, кликни на карту и оценивай!",
-        "defaultAdress": "Адрес не нашёлся..."
+        "defaultAdress": "Адрес не нашёлся...",
+        "deleteRating": "Удалить рейтинг"
     },
     "askForMoreRatingsPopup": {
         "title": "Готово",
