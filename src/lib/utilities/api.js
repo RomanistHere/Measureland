@@ -300,6 +300,12 @@ const updateRatingYear = async(id, newValue) => {
 	});
 };
 
+const deleteUserRating = async ratingID => {
+	const url = `${API_URL}/user/delete_rating/${new URLSearchParams({ ratingID })}`;
+
+	return await fetchFunction({ url, method: 'DELETE' });
+};
+
 export {
 	saveToDB,
 	getSinglePointData,
@@ -325,4 +331,5 @@ export {
 	voteForTask,
 	checkVotes,
 	updateRatingYear,
+	deleteUserRating,
 };

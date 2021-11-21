@@ -56,5 +56,6 @@ router.get('/ask_more_ratings', mediumLimiter, user_controller.ask_more_ratings)
 router.get('/read_votes/:id', user_controller.read_votes);
 
 router.delete('/logout', mediumLimiter, user_controller.user_logout);
+router.delete('/delete_rating/:ratingID', hardLimiter, user_controller.user_delete_rating);
 
 module.exports = router;

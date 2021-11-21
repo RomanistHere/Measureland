@@ -5,7 +5,7 @@
     import Spinner from '../../../ui-elements/Spinner.svelte';
     import TextButton from '../../../ui-elements/TextButton.svelte';
 
-    import { fetchRatedPlaces } from "../../../../utilities/api.js";
+    import { fetchRatedPlaces, deleteUserRating } from "../../../../utilities/api.js";
     import { openAnotherOverlay, showSomethingWrongNotification, logError } from "../../../../utilities/helpers.js";
     import { geocodeServiceReference } from "../../../../../stores/references.js";
     import { WEB_DOMAIN } from '../../../../../configs/env.js';
@@ -18,7 +18,17 @@
     const editRatingYear = (timeline, ratingID, address) =>
     	openAnotherOverlay('changeYearPopup', { timeline, ratingID, address });
 
-    const deleteRating = ratingID => null;
+    const deleteRating = async ratingID => {
+    	const { error } = await deleteUserRating(ratingID);
+
+    	if (error) {
+    		logError(error);
+    		showSomethingWrongNotification();
+    		return;
+    	}
+
+    	return null;
+    };
 
     const fetchData = async() => {
     	const { error, data } = await fetchRatedPlaces();
@@ -74,14 +84,14 @@
             {:else}
                 {#each array as { lang, lat, lng, address, ratingID, timeline }}
                     <li
-                        class="relative pr-4"
+                        class="relative pr-4 -lg:pr-6"
                         class:hidden={ratingID === null}
                     >
                         <a
                             href="#"
                             title={$_('myPlacesPopup.deleteRating')}
-                            class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2"
-                            on:click|preventDefault={() => { ratingID = deleteRating(ratingID) }}
+                            class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
+                            on:click|preventDefault={async() => { ratingID = await deleteRating(ratingID) }}
                         >
                             x
                         </a>
@@ -121,5 +131,11 @@
     :global(.delete:hover + a),
     :global(.delete:hover + a + a) {
         color: #ff0000;
+    }
+
+    @media screen and (max-width: 1023px) {
+        li .hidden {
+            display: block;
+        }
     }
 </style>

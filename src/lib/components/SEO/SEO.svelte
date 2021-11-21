@@ -82,7 +82,7 @@
 />
 
 {#if isApp}
-    <header class="flex justify-center items-center absolute -top-20 -z-5">
+    <header class="flex justify-center items-center absolute -top-20 -z-5 w-full left-0">
         <!-- // testing purposes. Check if crawlers get it -->
         <h1 class="text-bold px-4 w-96">
             {description}

@@ -1,10 +1,11 @@
 # To do:
 
-- delete rating (from my ratings)
+- delete rating (from my ratings) (hover on mobiles) (remove icon from map)
 - fix focus states
 - login via Telegram
 - add ratings if previous ones approved enough
 - ? sent letter to users asking to edit their rating's timelines
+- mention most active members of community
 
 ### Pre release
 

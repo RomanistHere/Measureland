@@ -2,15 +2,18 @@ const bcrypt = require('bcryptjs');
 const { v4 } = require('uuid');
 const Sentry = require('@sentry/node');
 const sanitize = require('mongo-sanitize');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
 const UserVerification = require('../models/token.model');
 const PasswordReset = require('../models/password-reset.model');
 const Feedback = require('../models/feedback.model');
+const Comment = require('../models/comment.model');
 const Rating = require('../models/rating.model');
 const Task = require('../models/task.model');
 
+const { getFinalRating, roundToTen } = require('../helpers/index');
 const { sendEmail } = require('../helpers/email');
 const isProd = process.env.IS_PROD === '1';
 
@@ -627,6 +630,84 @@ exports.update_rating_year = async (req, res) => {
             },
         });
     } catch (error) {
+        Sentry.captureException(error);
+        return res.status(400).json({ error });
+    }
+};
+
+const removeRatingFromSum = (geo, rating) => {
+    const minuendObject = geo.properties.rating
+    const { numberOfUsers } = geo.properties
+    const newNumberOfUsers = numberOfUsers - 1
+    let newRating =  {}
+
+    Object.entries(minuendObject).map((item, i) => {
+        const [key, value] = item
+        newRating = { ...newRating, [key]: roundToTen((value * numberOfUsers - rating[key]) / newNumberOfUsers) }
+    })
+
+    return { newRating, newNumberOfUsers }
+}
+
+exports.user_delete_rating = async (req, res) => {
+    if (!req.session.userID)
+        return res.status(400).json({ error: "User is not logged in" });
+
+    const urlParams = new URLSearchParams(req.params.ratingID);
+    const { ratingID } = Object.fromEntries(urlParams);
+
+    try {
+        const { isPersonalExperience, commentID, userID, geoID, rating, averageRating } = await Rating.findOne({ _id: ratingID });
+
+        const commentRemoved = commentID ? await Comment.findOneAndRemove({ _id: commentID }) : null;
+        const geo = await Geo.findOne({ _id: geoID });
+        const { numberOfUsers, numberOfComments, numberOfPersonalExperience } = geo.properties;
+
+        if (numberOfUsers === 1) {
+            await Geo.findOneAndRemove({ _id: geoID });
+        } else {
+            const user = await User.findOne({ email: req.session.userID });
+            const { ratingIDs, geoIDs } = user.properties;
+
+            const { newRating, newNumberOfUsers } = removeRatingFromSum(geo, rating);
+            const { finalRating } = getFinalRating(newRating);
+
+            const ratingRemoved = await Rating.findOneAndRemove({ _id: ratingID });
+            const geoRemoved = await Geo.findOneAndUpdate(
+            { _id: geoID },
+            {
+                $set: {
+                    'properties.rating': newRating,
+                    'properties.numberOfUsers': newNumberOfUsers,
+                    'properties.averageRating': finalRating,
+                    'properties.numberOfComments': commentID ? numberOfComments - 1 : numberOfComments,
+                    'properties.numberOfPersonalExperience': isPersonalExperience ? numberOfPersonalExperience - 1 : numberOfPersonalExperience,
+                }
+            }, {
+                new: false
+            });
+        }
+
+        const resultRemove = await User.findOneAndUpdate(
+        {
+            email: req.session.userID
+        }, {
+            $pull: {
+                'properties.geoIDs': new ObjectId(geoID),
+                'properties.ratingIDs': new ObjectId(ratingID)
+            }
+        }, {
+            new: false
+        })
+
+        return res.json({
+            error: null,
+            data: {
+                message: 'success'
+            },
+        });
+    } catch (error) {
+        console.log(error);
         Sentry.captureException(error);
         return res.status(400).json({ error });
     }
