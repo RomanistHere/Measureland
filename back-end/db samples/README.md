@@ -12,3 +12,5 @@ Now if you did everything correctly, after launching front-end server you will b
 - example1@email.com/1234567
 - example2@email.com/1234567
 - example3@email.com/1234567
+
+Read how to run the whole project: https://github.com/RomanistHere/Measureland/wiki/How-to-run-the-project
