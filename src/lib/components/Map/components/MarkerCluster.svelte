@@ -134,7 +134,6 @@
     	};
 
     	cachedData = [ ...cachedData, newPoint ];
-    	clusterData();
     };
 
     const removeMarker = coords => {
@@ -158,7 +157,7 @@
 
     	if (toRemoveArrayLength !== 0) {
     		for (let i = 0; i < toRemoveArrayLength; i++) {
-    			const { coords } = markersToAdd[i];
+    			const { coords } = markersToRemove[i];
     			removeMarker(coords);
     		}
     	}
@@ -169,6 +168,8 @@
     			addMarker(coords, rating);
     		}
     	}
+
+    	clusterData();
 
     	markerStore.update(state => ({
     		...state,

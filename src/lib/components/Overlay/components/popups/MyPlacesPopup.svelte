@@ -8,6 +8,7 @@
     import { fetchRatedPlaces, deleteUserRating } from "../../../../utilities/api.js";
     import { openAnotherOverlay, showSomethingWrongNotification, logError } from "../../../../utilities/helpers.js";
     import { geocodeServiceReference } from "../../../../../stores/references.js";
+    import { markerStore } from "../../../../../stores/state.js";
     import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
     const geocodeService = $geocodeServiceReference;
@@ -19,12 +20,29 @@
     	openAnotherOverlay('changeYearPopup', { timeline, ratingID, address });
 
     const deleteRating = async ratingID => {
-    	const { error } = await deleteUserRating(ratingID);
+    	const { error, data } = await deleteUserRating(ratingID);
 
     	if (error) {
     		logError(error);
     		showSomethingWrongNotification();
     		return;
+    	}
+
+    	const { message, coords, averageRating } = data;
+
+    	if (message === 'Rating deleted') {
+    		if (averageRating !== null) {
+    			markerStore.update(state => ({
+    				...state,
+    				markersToRemove: [ ...state.markersToRemove, { coords }],
+    				markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating }],
+    			}));
+    		} else {
+    			markerStore.update(state => ({
+    				...state,
+    				markersToRemove: [ ...state.markersToRemove, { coords }],
+    			}));
+    		}
     	}
 
     	return null;

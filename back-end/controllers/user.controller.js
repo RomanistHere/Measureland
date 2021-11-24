@@ -657,22 +657,20 @@ exports.user_delete_rating = async (req, res) => {
     const { ratingID } = Object.fromEntries(urlParams);
 
     try {
+        let newAverageRating = null;
         const { isPersonalExperience, commentID, userID, geoID, rating, averageRating } = await Rating.findOne({ _id: ratingID });
 
         const commentRemoved = commentID ? await Comment.findOneAndRemove({ _id: commentID }) : null;
         const geo = await Geo.findOne({ _id: geoID });
+        const { coordinates } = geo.location;
         const { numberOfUsers, numberOfComments, numberOfPersonalExperience } = geo.properties;
 
         if (numberOfUsers === 1) {
             await Geo.findOneAndRemove({ _id: geoID });
         } else {
-            const user = await User.findOne({ email: req.session.userID });
-            const { ratingIDs, geoIDs } = user.properties;
-
             const { newRating, newNumberOfUsers } = removeRatingFromSum(geo, rating);
             const { finalRating } = getFinalRating(newRating);
 
-            const ratingRemoved = await Rating.findOneAndRemove({ _id: ratingID });
             const geoRemoved = await Geo.findOneAndUpdate(
             { _id: geoID },
             {
@@ -686,8 +684,11 @@ exports.user_delete_rating = async (req, res) => {
             }, {
                 new: false
             });
+
+            newAverageRating = finalRating;
         }
 
+        const ratingRemoved = await Rating.findOneAndRemove({ _id: ratingID });
         const resultRemove = await User.findOneAndUpdate(
         {
             email: req.session.userID
@@ -703,7 +704,9 @@ exports.user_delete_rating = async (req, res) => {
         return res.json({
             error: null,
             data: {
-                message: 'success'
+                message: 'Rating deleted',
+                coords: coordinates,
+                averageRating: newAverageRating
             },
         });
     } catch (error) {

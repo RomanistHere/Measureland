@@ -185,7 +185,7 @@
     			const { coords, averageRating } = data;
     			markerStore.update(state => ({
     				...state,
-    				markersToRemove: [ ...state.markersToRemove, { coords: currentCoords }],
+    				markersToRemove: [ ...state.markersToRemove, { coords }],
     				markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating }],
     			}));
     		} else {
