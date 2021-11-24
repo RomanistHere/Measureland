@@ -5,6 +5,7 @@
 - run mongodb
 - rename .env-example file to .env
 - set up path to your DB, env-example contains the default one
+- (optional) [import ready-made samples](/db samples)
 - run app.js (`node app.js` or `npm start`)
 - to make emailing work, acquire an account at mailgun and use your sandbox credentials
 
