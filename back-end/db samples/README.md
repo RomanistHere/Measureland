@@ -1,4 +1,4 @@
-# Samples to import in database (with MongoDB Compass)
+### Samples to import in database (with MongoDB Compass)
 
 - after you have [installed MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/), download and install MongoDB Compass
 - [launch the back-end server](../README.md) to form database by path in [your .env file (DEV_DB_PATH)](../.env-example)
