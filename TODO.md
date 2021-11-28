@@ -1,6 +1,5 @@
 # To do:
 
-- delete rating (from my ratings) (hover on mobiles) (remove icon from map)
 - fix focus states
 - login via Telegram
 - add ratings if previous ones approved enough
@@ -21,7 +20,6 @@
 
 # Org stuff
 
-- create a DB template with some users and ratings to import
 - pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
 
 # Articles

@@ -46,4 +46,4 @@ You can leave it here, in the repository or send via email:
 - support@measureland.org - for queries and questions
 - RomanistHere@pm.me - for business ideas, partnership and so on
 
-**[Donate us money](https://www.donationalerts.com/r/romanisthere)**
+**[Support on Open Collective](https://opencollective.com/measureland)** - our expenses are transparent!
