@@ -22,7 +22,7 @@ We could learn and use only part of them, but it's a bit ridiculous to have almo
 
 It all would be likely helpful if we were building a skyscraper and had a team of professionals. But we're building a home, and it's an obvious overkill.
 
-By the way, if there were other skyscrapers around, chances are that ours wouldn't be the best one. Visitors would get stuck in elevators from time to time and wouldn't be happy about it. <a href="https://cscalfani.medium.com/goodbye-object-oriented-programming-a59cda4c0e53" class="article__link" target="_blank" rel="noopener">Sorry OOP</a>.
+By the way, if there were other skyscrapers around, chances are that ours wouldn't be the best one. Visitors would get stuck in elevators from time to time and wouldn't be happy about it. <a href="https://cscalfani.medium.com/goodbye-object-oriented-programming-a59cda4c0e53" class="article__link" target="_blank" rel="noopener">Sorry, OOP</a>.
 
 #### React/Preact.
 
@@ -54,7 +54,7 @@ Our assistant smiles. We open the box and there are a few - well, actually there
 
 #### ... After finishing our home...
 
-Well, it looks okay. There are a few things to fix later, when new instruments arrive. Some tools weren't very handy or comfortable to use - we decide to get back to the store and tell them about it. But otherwise... It felt really nice. Especially for such a small tools-store and for the first experience.
+Well, it looks okay. There are a few things to fix later, when new instruments arrive. Some tools weren't very handy or comfortable to use - we decide to contact the store about it. But otherwise... It felt really nice. Especially for such a small tools-store and for the first experience.
 
 "So, what do you say?" - you ask me.
 
