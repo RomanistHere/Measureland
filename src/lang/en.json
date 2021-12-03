@@ -617,6 +617,7 @@
         "descriptionSEO": "It's about us.",
         "linkBack": "Back to Measureland",
         "submitSuggestionBtn": "Submit your suggestion",
+        "showMoreButton": "Show more...",
         "news": {
             "title": "What we've been up to lately 👩‍🚀",
             "list": [{
@@ -647,6 +648,12 @@
         	}, {
         		"title": "Alex Starinsky and Co",
         		"text": "Design ideas and help"
+        	}, {
+        		"title": "<Username>",
+        		"text": "Rated more than 20 places across 12 countries!"
+        	}, {
+        		"title": "<Username>",
+        		"text": "Invited 15 friends to Measureland."
         	}]
         },
         "tasks": {
@@ -663,7 +670,7 @@
         		"text": "Get data from the Measureland server via coordinates.",
         		"id": "3"
         	}, {
-        		"title": "Redesign the blog page",
+        		"title": "Reply to comments",
         		"id": "4"
         	}, {
         		"title": "Create a profile page",
@@ -673,6 +680,10 @@
         		"title": "Redesign the map",
         		"text": "We're on our way to find our visual style.",
         		"id": "6"
+        	}, {
+        		"title": "Separate city rating",
+        		"text": "Culture, gender equality, multiculturalism, employment opportunities and other general city criteria.",
+        		"id": "7"
         	}]
         },
         "communities": {
@@ -701,8 +712,8 @@
         		"text": "That's how much people offered help and contributed."
         	}, {
                 "title": "Why we chose Svelte",
-        		"text": "It's cool because...",
-        		"link": "#"
+        		"text": "Programming knowledge is not required.",
+        		"link": "/en/blog/why-svelte/"
         	}, {
                 "title": "Technical documentation",
         		"text": "How to start contributing to the project.",

@@ -47,6 +47,7 @@
 			<GlassGroup
 				title={$_('commuinty.members.title')}
 				list={$json('commuinty.members.list')}
+				showedNumber={5}
 			/>
 		</div>
 
@@ -55,6 +56,7 @@
 				title={$_('commuinty.tasks.title')}
 				list={$json('commuinty.tasks.list')}
 				type='vote'
+				showedNumber={5}
 			/>
 		</div>
 

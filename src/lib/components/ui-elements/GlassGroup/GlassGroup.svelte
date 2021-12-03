@@ -4,6 +4,7 @@
 
     import VotingElement from './VotingElement.svelte';
     import PrimaryButton from '../PrimaryButton.svelte';
+    import TextButton from '../TextButton.svelte';
 
     import { openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
     import { userStateStore } from "../../../../stores/state.js";
@@ -11,6 +12,8 @@
     export let title = '';
     export let type = 'links';
     export let list = [];
+    export let showedNumber = 6;
+    export let showMoreNumber = 4;
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
@@ -50,6 +53,10 @@
 
     	openAnotherOverlay('feedbackPopup');
     };
+
+    const showMore = () => {
+    	showedNumber = showedNumber + showMoreNumber;
+    };
 </script>
 
 <div class="glassmorphism px-4 py-2 mb-8">
@@ -58,7 +65,7 @@
     </h3>
 
     <ul>
-        {#each list as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
+        {#each list.slice(0, showedNumber) as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
             <li class="my-4 rounded-md glassmorphism" animate:flip>
                 {#if type === 'vote'}
                     <VotingElement
@@ -89,6 +96,16 @@
             </li>
         {/each}
     </ul>
+
+    {#if list.length > showedNumber}
+        <div class="text-right">
+            <TextButton
+                text={$_('commuinty.showMoreButton')}
+                action={showMore}
+                className="mb-4 inline-block"
+            />
+        </div>
+    {/if}
 
     {#if type === 'vote'}
         <PrimaryButton
