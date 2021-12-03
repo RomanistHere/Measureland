@@ -78,20 +78,15 @@ export const getSinglePost = (lang, slugTest) => {
 		p.slug.toLowerCase() === slugTest.toLowerCase());
 };
 
-export const getArray = (blogOrGuides, lang) => {
-	if (blogOrGuides === 'blog')
-		return getPosts(lang);
-	else if (blogOrGuides === 'guides')
-		return getGuides(lang);
-	else
-		throw new Error('Invalid path');
+export const getArrays = lang => {
+	const postsArray = getPosts(lang);
+	const guidesArray = getGuides(lang);
+
+	return {
+		postsArray,
+		guidesArray,
+	};
 };
 
-export const getSingleInstance = (blogOrGuides, lang, slug) => {
-	if (blogOrGuides === 'blog')
-		return getSinglePost(lang, slug);
-	else if (blogOrGuides === 'guides')
-		return getSingleGuide(lang, slug);
-	else
-		throw new Error('Invalid path');
-};
+export const getSingleInstance = (lang, slug) =>
+	getSinglePost(lang, slug) || getSingleGuide(lang, slug);

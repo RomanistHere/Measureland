@@ -9,7 +9,7 @@ author: Roman Smunyov
 ---
 
 <script>
-    import Summary from "$lib/components/Blog/Article/Summary.svelte";
+    import Summary from "$lib/components/Article/Summary.svelte";
 </script>
 
 ### We believe in Users-are-not-for-sale-web.

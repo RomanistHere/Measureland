@@ -17,7 +17,7 @@ const mediumLimiter = rateLimit({
         errorHandler: console.error.bind(null, 'rate-limit-mongo')
     }),
     windowMs: 20 * 60 * 1000,
-    max: 50,
+    max: 70,
     handler: (req, res) => {
         res.status(429).json({ error: 'Too many requests, please try again later' });
     }

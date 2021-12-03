@@ -15,9 +15,9 @@
     isApp={false}
 />
 
-<section></section>
+<section class="fixed-grad-bg"></section>
 
-<div class="relative page">
+<main class="relative page">
     <h1 class="text-center pt-4 pb-8 px-4 text-5xl -md:text-4xl -md:pt-8">
         <strong>
 			{$_('commuinty.title')}
@@ -76,7 +76,7 @@
 	<a href="../" class="hidden -lg:block underline text-right mx-4 pb-4">
 		{$_('commuinty.linkBack')}
 	</a>
-</div>
+</main>
 
 <Overlay
 	mainScreen={false}
@@ -84,26 +84,12 @@
 />
 
 <style>
-    section {
-		position: fixed;
-        background:
-			radial-gradient(22.66% 33.75% at 74.36% 14.26%, rgba(255, 240, 160, 0.85) 0%, rgba(212, 239, 245, 0) 100%),
-			radial-gradient(41.2% 43.79% at 13.52% 54%, #FFE0FA 0%, rgba(255, 254, 254, 0) 100%),
-			radial-gradient(33.57% 49.54% at 50.03% 94.11%, #FFD8D8 0%, rgba(212, 239, 245, 0) 100%),
-			radial-gradient(26.63% 48.46% at 81.36% 69.46%, #D0CFFF 0%, rgba(212, 239, 245, 0) 100%),
-			radial-gradient(23.18% 29.66% at 33.76% 31.67%, #C9FFC8 0%, #D4EFF5 100%);
-        height: 100%;
-        width: 100%;
-		top: 0;
-		left: 0;
-    }
-
-	.page {
+	main {
         top: var(--distance-top);
     }
 
     @media screen and (max-width: 766px) {
-        .page {
+        main {
             top: 0;
         }
     }

@@ -2,8 +2,8 @@
     import { getSingleInstance } from '../../../../markdown/prepareMarkdown.js';
 
     export function load({ page }) {
-    	const { lang, slug, blogOrGuides } = page.params;
-    	const neededPost = getSingleInstance(blogOrGuides, lang, slug);
+    	const { lang, slug } = page.params;
+    	const neededPost = getSingleInstance(lang, slug);
 
     	if (!neededPost) {
     		return {

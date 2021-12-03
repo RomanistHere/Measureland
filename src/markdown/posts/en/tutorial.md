@@ -9,7 +9,7 @@ author: Roman Smunyov
 ---
 
 <script>
-    import Summary from "$lib/components/Blog/Article/Summary.svelte";
+    import Summary from "$lib/components/Article/Summary.svelte";
 </script>
 
 This article is going to cover everything you want to know about Measureland.

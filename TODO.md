@@ -1,7 +1,9 @@
 # To do:
 
-- fix focus states
 - rework blog page
+- back from blog page mobile
+- fix feedback form (not logged in users)
+- fix focus states
 - add ratings if previous ones approved enough
 - ? sent letter to users asking to edit their rating's timelines
 - mention most active members of community

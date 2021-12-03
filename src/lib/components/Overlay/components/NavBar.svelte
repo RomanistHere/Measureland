@@ -1,5 +1,6 @@
 <script>
     import { _, json, locale } from 'svelte-i18n';
+    import { goto } from '$app/navigation';
 
     import PrimaryButton from '../../ui-elements/PrimaryButton.svelte';
     import SecondaryButton from '../../ui-elements/SecondaryButton.svelte';
@@ -120,7 +121,7 @@
     		const pathSplit = url.pathname.split('/');
     		pathSplit[1] = nextLang;
     		url.pathname = pathSplit.join('/');
-    		window.history.replaceState(null, null, url);
+    		await goto(url, { replaceState: true });
 
     		if (isUserLoggedIn)
     			await saveLang(nextLang);
@@ -129,6 +130,17 @@
     		registerAction('navbarLanguage');
     	}
     };
+
+    // fix for developement (items duplicated due to SvelteKit's or i18n's fault)
+    const removeDuplicates = arrOfObjects => {
+    	const jsonObject = arrOfObjects.map(JSON.stringify);
+    	const uniqueSet = new Set(jsonObject);
+    	const uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+
+    	return uniqueArray;
+    };
+
+    $: navLinks = removeDuplicates($json('navBar.links'));
 </script>
 
 <nav class="transition-all fixed flex z-5 justify-center inset-x-4 top-4 h-14 -lg:hidden">
@@ -152,7 +164,7 @@
             on:mouseleave={handleMouseleaveCenter}
         >
             <ul>
-                {#each $json('navBar.links') as { text, url }}
+                {#each navLinks as { text, url }}
                     <li class="inline-block">
                         <a class="block mx-4 p-2 hover:underline" target="_blank" href={url}>{text}</a>
                     </li>

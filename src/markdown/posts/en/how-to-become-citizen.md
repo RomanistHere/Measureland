@@ -9,7 +9,7 @@ author: Roman Smunyov
 ---
 
 <script>
-    import Summary from "$lib/components/Blog/Article/Summary.svelte";
+    import Summary from "$lib/components/Article/Summary.svelte";
 </script>
 
 ### Why there are limits and how to deal with it.

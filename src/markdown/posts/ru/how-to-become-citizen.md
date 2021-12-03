@@ -9,7 +9,7 @@ author: Роман Смунёв
 ---
 
 <script>
-    import Summary from "$lib/components/Blog/Article/Summary.svelte";
+    import Summary from "$lib/components/Article/Summary.svelte";
 </script>
 
 ## Зачем нужны ограничения и что делать.
