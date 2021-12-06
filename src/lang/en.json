@@ -587,13 +587,8 @@
             "copyright1": "for Measureland ©",
             "copyright2": "All rights reserved."
         },
-        "navbar": {
-            "text1": "Back to",
-            "textLink1": "Blog",
-            "textLink1Alter": "Guides",
-            "text2": "or return in",
-            "textLink2": "Measureland"
-        },
+        "searchPlaceholder": "Search for a city...",
+        "searchNoSuccess": "We couldn't find it.",
         "blogTitle": "Learn more about us.",
         "guidesTitle": "City guides.",
         "blogPage": {

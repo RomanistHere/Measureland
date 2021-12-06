@@ -5,6 +5,7 @@
     import VotingElement from './VotingElement.svelte';
     import PrimaryButton from '../PrimaryButton.svelte';
     import TextButton from '../TextButton.svelte';
+    import SearchInput from '../SearchInput.svelte';
 
     import { openAnotherOverlay, debounce } from "../../../utilities/helpers.js";
     import { userStateStore } from "../../../../stores/state.js";
@@ -14,8 +15,11 @@
     export let list = [];
     export let showedNumber = 6;
     export let showMoreNumber = 4;
+    export let isSearchAvailable = false;
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: searchArr = [];
+    $: searchString = '';
 
     const sortList = () => {
     	list = list.sort((a, b) => {
@@ -57,6 +61,18 @@
     const showMore = () => {
     	showedNumber = showedNumber + showMoreNumber;
     };
+
+    const searchSubstring = e => {
+    	const { value } = e.target;
+    	searchString = value.trim();
+
+    	if (searchString.length === 0) {
+    		searchArr = [];
+    		return;
+    	}
+
+    	searchArr = list.filter(item => item.title.toLowerCase().includes(value.toLowerCase()));
+    };
 </script>
 
 <div class="glassmorphism px-4 py-2 mb-8">
@@ -64,37 +80,79 @@
         {title}
     </h3>
 
+    {#if isSearchAvailable}
+        <SearchInput
+            placeholder={$_('blog.searchPlaceholder')}
+            on:input={searchSubstring}
+            autocomplete={true}
+        />
+    {/if}
+
     <ul>
-        {#each list.slice(0, showedNumber) as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
-            <li class="my-4 rounded-md glassmorphism" animate:flip>
-                {#if type === 'vote'}
-                    <VotingElement
-                        {title}
-                        {text}
-                        {id}
-                        on:updateNumbers={updateNumbers}
-                    />
-                {:else if link}
-                    <a href={link} class="link block p-2" target="_blank" rel="noopener">
-                        {#if title}
-                            <h4 class="font-bold">{title}</h4>
-                        {/if}
-                        {#if text}
-                            <p>{text}</p>
-                        {/if}
-                    </a>
-                {:else}
+        {#if searchString.length === 0}
+            {#each list.slice(0, showedNumber) as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
+                <li class="my-4 rounded-md glassmorphism" animate:flip>
+                    {#if type === 'vote'}
+                        <VotingElement
+                            {title}
+                            {text}
+                            {id}
+                            on:updateNumbers={updateNumbers}
+                        />
+                    {:else if link}
+                        <a href={link} class="link block p-2" target="_blank" rel="noopener">
+                            {#if title}
+                                <h4 class="font-bold">{title}</h4>
+                            {/if}
+                            {#if text}
+                                <p>{text}</p>
+                            {/if}
+                        </a>
+                    {:else}
+                        <div class="block p-2">
+                            {#if title}
+                                <h4 class="font-bold">{title}</h4>
+                            {/if}
+                            {#if text}
+                                <p>{text}</p>
+                            {/if}
+                        </div>
+                    {/if}
+                </li>
+            {/each}
+        {:else}
+            {#each searchArr.slice(0, showedNumber) as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
+                <li class="my-4 rounded-md glassmorphism" animate:flip>
+                    {#if link}
+                        <a href={link} class="link block p-2" target="_blank" rel="noopener">
+                            {#if title}
+                                <h4 class="font-bold">{title}</h4>
+                            {/if}
+                            {#if text}
+                                <p>{text}</p>
+                            {/if}
+                        </a>
+                    {:else}
+                        <div class="block p-2">
+                            {#if title}
+                                <h4 class="font-bold">{title}</h4>
+                            {/if}
+                            {#if text}
+                                <p>{text}</p>
+                            {/if}
+                        </div>
+                    {/if}
+                </li>
+            {/each}
+
+            {#if searchArr.length === 0}
+                <li class="my-4 rounded-md glassmorphism">
                     <div class="block p-2">
-                        {#if title}
-                            <h4 class="font-bold">{title}</h4>
-                        {/if}
-                        {#if text}
-                            <p>{text}</p>
-                        {/if}
+                        <p>{$_('blog.searchNoSuccess')}</p>
                     </div>
-                {/if}
-            </li>
-        {/each}
+                </li>
+            {/if}
+        {/if}
     </ul>
 
     {#if list.length > showedNumber}

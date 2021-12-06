@@ -6,17 +6,15 @@
 
     import EndCaption from './EndCaption.svelte';
     import SEO from '../SEO/SEO.svelte';
-import Overlay from '../Overlay/Overlay.svelte';
+    import Overlay from '../Overlay/Overlay.svelte';
 
     import { appInfo } from '../../../configs/index.js';
 
     export let title;
     export let date;
     export let author = appInfo.authorName;
-    export let slug;
     export let description;
     export let isAnotherLang = true;
-    export let isGuide = false;
 
     const langCode = $locale === 'ru' && 'ru-RU';
     const options = { year: 'numeric', month: 'long', day: 'numeric' };

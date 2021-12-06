@@ -590,13 +590,8 @@
             "copyright1": "для Измерии ©",
             "copyright2": "Все права сохранены."
         },
-        "navbar": {
-            "text1": "Перейти",
-            "textLink1": "к Блогу",
-            "textLink1Alter": "к Гайдам",
-            "text2": "или",
-            "textLink2": "в Измерию"
-        },
+        "searchPlaceholder": "Найти город...",
+        "searchNoSuccess": "По твоему запросу ничего не нашлось.",
         "blogTitle": "Узнай больше о нас.",
         "guidesTitle": "Руководства по городам.",
         "blogPage": {

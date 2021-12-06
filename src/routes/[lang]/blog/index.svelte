@@ -23,7 +23,7 @@
 </script>
 
 <script>
-    import { _, json } from 'svelte-i18n';
+    import { _ } from 'svelte-i18n';
     import '/static/styles/general.css';
 
     import SEO from '../../../lib/components/SEO/SEO.svelte';
@@ -55,6 +55,10 @@
     };
 </script>
 
+<SEO
+    pageTitle="Blog."
+/>
+
 <section class="fixed-grad-bg"></section>
 
 <main class="relative page">
@@ -67,6 +71,7 @@
 			<GlassGroup
 				title={$_(`blog.guidesTitle`)}
 				list={addLinkToObj(guidesArray)}
+                isSearchAvailable={true}
 			/>
 		</div>
 
