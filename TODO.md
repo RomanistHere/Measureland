@@ -1,6 +1,5 @@
 # To do:
 
-- fix feedback form (not logged in users)
 - fix focus states
 - add ratings if previous ones approved enough
 - ? sent letter to users asking to edit their rating's timelines
@@ -10,6 +9,7 @@
 
 - check links community page
 - limit API use to website only (block all requests except from static cloudflare page IP)
+- check if rate limiter doesn't block based in IP (cloudflare)
 - update preview image and create a few for a blog pages
 
 # Later

@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import { _, json } from 'svelte-i18n';
 
     import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
@@ -13,6 +14,7 @@
     	closeOverlays,
     	showSomethingWrongNotification,
     	logError,
+    	openAnotherOverlay,
     } from "../../../../utilities/helpers.js";
     import { sendFeedback } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
@@ -95,6 +97,11 @@
 
     	submit();
     }, 200);
+
+    onMount(() => {
+    	if ($userStateStore.userID === null)
+    		openAnotherOverlay('loginPopup');
+    });
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
