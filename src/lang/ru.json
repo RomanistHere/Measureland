@@ -577,6 +577,7 @@
         "author": "Роман Смунёв"
     },
     "blog": {
+        "title": "Статьи и руководства. Наш блог.",
         "summary": "Кратко:",
         "endCpation": {
             "text1": "Наш проект - с открытым исходным кодом (open source), все вопросы и предложения можно оставить",
@@ -592,6 +593,7 @@
         },
         "searchPlaceholder": "Найти город...",
         "searchNoSuccess": "По твоему запросу ничего не нашлось.",
+        "linkBack": "Обратно к блогу.",
         "blogTitle": "Узнай больше о нас.",
         "guidesTitle": "Руководства по городам.",
         "blogPage": {
@@ -659,29 +661,41 @@
             "list": [{
         		"title": "Авторизация через Телеграм",
         		"text": "Мы не доверяем другим платформам с данными наших пользователей.",
-        		"id": "1"
+        		"id": "1",
+                "link": "https://github.com/RomanistHere/Measureland/issues/15"
         	}, {
         		"title": "Дарк мод (тёмный режим)",
-        		"id": "2"
+        		"id": "2",
+                "link": "https://github.com/RomanistHere/Measureland/issues/11"
         	}, {
         		"title": "Внешнее АПИ",
         		"text": "Использование ресурсов Измерии на других сервисах.",
-        		"id": "3"
+        		"id": "3",
+                "link": "https://github.com/RomanistHere/Measureland/issues/16"
         	}, {
         		"title": "Переделка (редизайн) блога",
-        		"id": "4"
+        		"id": "4",
+                "link": "https://github.com/RomanistHere/Measureland/issues/13"
         	}, {
         		"title": "Создание личного кабинета",
         		"text": "Для изменение персональных данных и просмотра статистики",
-        		"id": "5"
+        		"id": "5",
+                "link": "https://github.com/RomanistHere/Measureland/issues/14"
         	}, {
         		"title": "Переделка (редизайн) карты",
         		"text": "Улучшение внешнего вида.",
-        		"id": "6"
+        		"id": "6",
+                "link": "https://github.com/RomanistHere/Measureland/issues/12"
         	}, {
         		"title": "Отдельный рейтинг по городу",
                 "text": "Культура, гендерное равенство, мультинациональность, безработица и другие критерии общие для городов.",
-        		"id": "7"
+        		"id": "7",
+                "link": "https://github.com/RomanistHere/Measureland/issues/17"
+        	}, {
+        		"title": "Рейтинговый хитмап",
+        		"text": "5 - зелёный, 1 - красный. Генерировать хитмап согласно оценкам.",
+        		"id": "8",
+                "link": "https://github.com/RomanistHere/Measureland/issues/18"
         	}]
         },
         "communities": {

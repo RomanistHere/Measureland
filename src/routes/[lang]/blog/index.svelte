@@ -56,18 +56,14 @@
 </script>
 
 <SEO
-    pageTitle="Blog."
+    pageTitle={$_(`blog.title`)}
 />
 
 <section class="fixed-grad-bg"></section>
 
 <main class="relative page">
-    <h1 class="text-center pt-4 pb-8 px-4 text-5xl -md:text-4xl -md:pt-8 font-bold">
-		Blog
-    </h1>
-
-	<div class="flex justify-center -lg:block">
-		<div class="w-1/3 m-4 -lg:w-auto">
+	<div class="flex justify-center -lg:block -md:mt-4">
+		<div class="w-1/3 mx-4 -lg:w-auto">
 			<GlassGroup
 				title={$_(`blog.guidesTitle`)}
 				list={addLinkToObj(guidesArray)}
@@ -75,7 +71,7 @@
 			/>
 		</div>
 
-		<div class="w-1/3 m-4 -lg:w-auto">
+		<div class="w-1/3 mx-4 -lg:w-auto">
 			<GlassGroup
 				title={$_(`blog.blogTitle`)}
 				list={addLinkToObj(postsArray)}

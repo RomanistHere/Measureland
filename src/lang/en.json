@@ -574,6 +574,7 @@
         "author": "Roman Smunyov"
     },
     "blog": {
+        "title": "Articles and guides. Our Blog.",
         "summary": "Summary (tldr):",
         "endCpation": {
             "text1": "Our project is open-source, you can leave your questions or suggestions in the",
@@ -589,6 +590,7 @@
         },
         "searchPlaceholder": "Search for a city...",
         "searchNoSuccess": "We couldn't find it.",
+        "linkBack": "Back to blog.",
         "blogTitle": "Learn more about us.",
         "guidesTitle": "City guides.",
         "blogPage": {
@@ -656,29 +658,41 @@
             "list": [{
         		"title": "Sign in and sign up with Telegram",
         		"text": "We don't trust other platforms with our users data.",
-        		"id": "1"
+        		"id": "1",
+                "link": "https://github.com/RomanistHere/Measureland/issues/15"
         	}, {
         		"title": "Dark mode",
-        		"id": "2"
+        		"id": "2",
+                "link": "https://github.com/RomanistHere/Measureland/issues/11"
         	}, {
         		"title": "External API",
         		"text": "Get data from the Measureland server via coordinates.",
-        		"id": "3"
+        		"id": "3",
+                "link": "https://github.com/RomanistHere/Measureland/issues/16"
         	}, {
         		"title": "Reply to comments",
-        		"id": "4"
+        		"id": "4",
+                "link": "https://github.com/RomanistHere/Measureland/issues/13"
         	}, {
         		"title": "Create a profile page",
         		"text": "A possibility to change personal info and check stats.",
-        		"id": "5"
+        		"id": "5",
+                "link": "https://github.com/RomanistHere/Measureland/issues/14"
         	}, {
         		"title": "Redesign the map",
         		"text": "We're on our way to find our visual style.",
-        		"id": "6"
+        		"id": "6",
+                "link": "https://github.com/RomanistHere/Measureland/issues/12"
         	}, {
         		"title": "Separate city rating",
         		"text": "Culture, gender equality, multiculturalism, employment opportunities and other general city criteria.",
-        		"id": "7"
+        		"id": "7",
+                "link": "https://github.com/RomanistHere/Measureland/issues/17"
+        	}, {
+        		"title": "Rating heatmap",
+        		"text": "5 - green, 1 - red. Generate a heatmap based on ratings.",
+        		"id": "8",
+                "link": "https://github.com/RomanistHere/Measureland/issues/18"
         	}]
         },
         "communities": {

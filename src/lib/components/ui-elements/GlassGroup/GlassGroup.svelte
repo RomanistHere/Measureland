@@ -17,6 +17,7 @@
     export let showMoreNumber = 4;
     export let isSearchAvailable = false;
 
+    $: list = list.sort((a, b) => new Date(b.date) - new Date(a.date));
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: searchArr = [];
     $: searchString = '';
@@ -96,6 +97,7 @@
                         <VotingElement
                             {title}
                             {text}
+                            {link}
                             {id}
                             on:updateNumbers={updateNumbers}
                         />

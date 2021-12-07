@@ -2,7 +2,7 @@
 slug: why-svelte
 title: Why we picked Svelte over React, Angular, Vue?
 date: 2021-11-29
-description: I compare popular "frameworks" (React, Angular and Svelte) with the building tools and explain why we picked Svelte. Programming knowledge is not required.
+description: We compare popular "frameworks" (React, Angular and Svelte) with the building tools and explain why we picked Svelte. Programming knowledge is not required.
 tags: [technology]
 layout: article
 author: Roman Smunyov

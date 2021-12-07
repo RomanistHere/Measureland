@@ -14,6 +14,7 @@
 
     export let title = '';
     export let text = '';
+    export let link = '';
     export let id = null;
 
     const dispatch = createEventDispatcher();
@@ -116,11 +117,22 @@
 </script>
 
 <div class="block p-2">
-    {#if title}
-        <h4 class="font-bold">{title}</h4>
-    {/if}
-    {#if text}
-        <p>{text}</p>
+    {#if link}
+        <a href={link} class="link inline-block" target="_blank" rel="noopener">
+            {#if title}
+                <h4 class="font-bold">{title}</h4>
+            {/if}
+            {#if text}
+                <p>{text}</p>
+            {/if}
+        </a>
+    {:else}
+        {#if title}
+            <h4 class="font-bold">{title}</h4>
+        {/if}
+        {#if text}
+            <p>{text}</p>
+        {/if}
     {/if}
 
     {#if !isError}
@@ -139,4 +151,17 @@
             />
         </div>
     {/if}
-    </div>
+</div>
+
+<style>
+    @media (hover: hover) and (pointer: fine) {
+        .link {
+            transition: background-color .2s, color .2s;
+        }
+
+        .link:hover {
+            background-color: var(--active-color);
+            color: white;
+        }
+    }
+</style>

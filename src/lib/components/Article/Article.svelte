@@ -66,6 +66,10 @@
 
 <div class="static w-full h-2"></div>
 
+<a href="../" class="hidden relative -lg:block underline text-right mx-4 pb-4">
+    {$_('blog.linkBack')}
+</a>
+
 <Overlay
 	mainScreen={false}
 	hiddenLoading={true}

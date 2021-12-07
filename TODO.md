@@ -1,7 +1,5 @@
 # To do:
 
-- rework blog page
-- back from blog page mobile
 - fix feedback form (not logged in users)
 - fix focus states
 - add ratings if previous ones approved enough
