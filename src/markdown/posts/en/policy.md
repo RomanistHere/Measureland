@@ -1,7 +1,8 @@
 ---
 slug: policy
 title: Measureland Constitution. Part II. Privacy policy.
-date: 2021-10-22
+firstDate: 2021-04-01
+date: 2021-12-08
 description: We believe in Users-are-not-for-sale-web.
 tags: [docs, starters]
 layout: article
@@ -9,6 +10,7 @@ author: Roman Smunyov
 ---
 
 <script>
+    import TextLink from "$lib/components/ui-elements/TextLink.svelte";
     import Summary from "$lib/components/Article/Summary.svelte";
 </script>
 
@@ -34,10 +36,10 @@ Here we describe what we do with your data in the vastness of Measureland.
 **We may.** In our case they are used for smoother user experience or not used at all. In any case, we don’t store any valuable data there.
 
 ### Do we sell or share your data with anyone?
-**No.** We don’t sell users data to anyone or use any third-party technologies that could do it. If you think that third-party we use went down a crooked path, please, <a href="mailto:support@measureland.org" class="article__link">contact us</a>.
+**No.** We don’t sell users data to anyone or use any third-party technologies that could do it. If you think that third-party we use went down a crooked path, please, <TextLink href="mailto:support@measureland.org" text="contact us" />.
 
 ### How is the service being supported then?
-**Measureland is financed by its developer RomanistHere (Roman Smunyov).** We don’t intend to make money from it, though in the future we can announce some monetization strategy. If you want to support this project, <a href="mailto:support@measureland.org" class="article__link">contact us</a>.
+**Measureland is financed by its developer RomanistHere (Roman Smunyov).** We don’t intend to make money from it, though in the future we can announce some monetization strategy. If you want to support our project, we're are on <TextLink href="https://opencollective.com/measureland" blank={true} text="Open Collective" /> - it's the most transparent way to do so.
 
 ### Are we going to change this policy?
 **Probable.** Growth of the service could lead to changes, but don’t worry, we will notify you before it happens (in case of major changes) via email.

@@ -2,7 +2,7 @@
 slug: how-to-become-citizen
 title: Measureland Advisory. How to remove limitations.
 firstDate: 2021-04-04
-date: 2021-12-07
+date: 2021-12-08
 description: Why there are limits and how to deal with it.
 tags: [starters]
 layout: article
@@ -30,4 +30,4 @@ There are two different errors.
 
 ### What to do.
 - **"Too many attempts"**. This error doesn't depend on whether you passed verification or not. If you send more requests then we're expecting in the certain time range, service will stop working for you. Now you can take a break and wait a bit. 20 minutes should do it. Or you can <TextLink href="mailto:support@measureland.org" text="contact us" /> - we'll try to help.
-- **"You rate too often"** issue could be resolved by sending us a message <TextLink href="mailto:support@measureland.org" text="via email" />, <TextLink href="https://t.me/MeasurelandBot" blank={true} text="Telegram" /> or <TextLink href="https://discord.gg/PBrXUhqJhC" blank={true} text="in Discord" /> and tell us how much ratings you need. Once we see it and review, we'll be more than happy to increase your number of available ratings so you can share your experience with us.
+- **"You rate too often"** issue could be resolved by sending us a message <TextLink href="mailto:support@measureland.org" text="via email" />, <TextLink href="https://t.me/MeasurelandBot" blank={true} text="Telegram" /> or <TextLink href="https://discord.gg/PBrXUhqJhC" blank={true} text="in Discord" /> and telling us how much ratings you need. Once we see it and review, we'll be more than happy to increase your number of available ratings so you can share your experience with Measuremen.

@@ -1,7 +1,8 @@
 ---
 slug: tutorial
 title: Measureland Advisory. Our guide book (tutorial).
-date: 2021-05-19
+firstDate: 2021-05-19
+date: 2021-12-08
 description: The article is going to cover everything you want to know about Measureland.
 tags: [starters]
 layout: article
@@ -9,7 +10,13 @@ author: Roman Smunyov
 ---
 
 <script>
+    import TextLink from "$lib/components/ui-elements/TextLink.svelte";
+    import TextButton from "$lib/components/ui-elements/TextButton.svelte";
+    import { openAnotherOverlay } from '$lib/utilities/helpers.js';
     import Summary from "$lib/components/Article/Summary.svelte";
+
+    const feedbackPopupName = 'feedbackPopup';
+    const textButton = 'submit special form';
 </script>
 
 This article is going to cover everything you want to know about Measureland.
@@ -21,7 +28,7 @@ This article is going to cover everything you want to know about Measureland.
 ### So you want to rate a place.
 To do so you need to be registered and logged in. Once you're ready, find the area you want to measure and click it. There is no need to be super accurate, there is no goal to rate every building in the world. More like to get a general vision of every neighborhood, block and district.
 
-There are 11 points you need to measure in order to submit your rating. It's important to rate every one of them even if you're not sure. <a href="https://en.wikipedia.org/wiki/Wisdom_of_the_crowd" class="article__link" target="_blank" rel="noopener">Take a wild guess!</a>
+There are 11 points you need to measure in order to submit your rating. It's important to rate every one of them even if you're not sure. <TextLink href="https://en.wikipedia.org/wiki/Wisdom_of_the_crowd" blank={true} text="Take a wild guess!" />
 
 The last three points are marked as additional. They aren't that significant and have lower value in the final rating. But some of us are going to find it useful, so evaluate it as well.
 
@@ -30,9 +37,9 @@ Comments are not necessary but can be extremely useful. We plan to reward the mo
 ### I can't!
 There are a few reasons you can't rate a place. There should be an error indicating what's wrong. For example:
 
-- **"Too many attempts"** or **"You rate too often"** are about exceeding the limits of usage. See <a href="../how-to-become-citizen/" class="article__link">how to resolve</a> these issues.
+- **"Too many attempts"** or **"You rate too often"** are about exceeding the limits of usage. See <TextLink href="../how-to-become-citizen/" text="how to resolve" /> these issues.
 - **"Nearby place is already rated by you"** happens when you try to rate the place within a short distance from one already measured by you.
-- **In other cases it's most likely our bad.** We're sorry. Read the error description, try to reload the page or check it later.
+- **In other cases it's most likely our bad.** We're sorry. Read the error description, try to reload the page, check it later or <TextButton text={textButton} action={() => { openAnotherOverlay(feedbackPopupName) }} />.
 
 
 ### Share it.

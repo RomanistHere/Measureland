@@ -12,7 +12,7 @@ author: Roman Smunyov
 <script>
     import TextLink from "$lib/components/ui-elements/TextLink.svelte";
     import TextButton from "$lib/components/ui-elements/TextButton.svelte";
-    import { openAnotherOverlay } from '$lib//utilities/helpers.js';
+    import { openAnotherOverlay } from '$lib/utilities/helpers.js';
 </script>
 
 ### How to contact us.
