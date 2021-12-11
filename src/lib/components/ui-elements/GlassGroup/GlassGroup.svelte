@@ -17,7 +17,7 @@
     export let showMoreNumber = 4;
     export let isSearchAvailable = false;
 
-    $: list = list.sort((a, b) => new Date(b.date) - new Date(a.date));
+    $: list = list.sort((a, b) => new Date(b.firstDate) - new Date(a.firstDate));
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: searchArr = [];
     $: searchString = '';

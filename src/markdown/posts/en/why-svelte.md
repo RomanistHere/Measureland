@@ -1,12 +1,17 @@
 ---
 slug: why-svelte
 title: Why we picked Svelte over React, Angular, Vue?
+firstDate: 2021-11-29
 date: 2021-11-29
 description: We compare popular "frameworks" (React, Angular and Svelte) with the building tools and explain why we picked Svelte. Programming knowledge is not required.
 tags: [technology]
 layout: article
 author: Roman Smunyov
 ---
+
+<script>
+    import TextLink from "$lib/components/ui-elements/TextLink.svelte";
+</script>
 
 Programming knowledge is not required. Explanation is in English and by metaphor.
 
@@ -22,7 +27,7 @@ We could learn and use only part of them, but it's a bit ridiculous to have almo
 
 It all would be likely helpful if we were building a skyscraper and had a team of professionals. But we're building a home, and it's an obvious overkill.
 
-By the way, if there were other skyscrapers around, chances are that ours wouldn't be the best one. Visitors would get stuck in elevators from time to time and wouldn't be happy about it. <a href="https://cscalfani.medium.com/goodbye-object-oriented-programming-a59cda4c0e53" class="article__link" target="_blank" rel="noopener">Sorry, OOP</a>.
+By the way, if there were other skyscrapers around, chances are that ours wouldn't be the best one. Visitors would get stuck in elevators from time to time and wouldn't be happy about it. <TextLink href="https://cscalfani.medium.com/goodbye-object-oriented-programming-a59cda4c0e53" blank={true} text="Sorry, OOP" />.
 
 #### React/Preact.
 
@@ -82,11 +87,13 @@ Generally, it can be both helpful and harmful. It's obvious that a system that c
 
 #### Performance.
 
-<a href="https://krausest.github.io/js-framework-benchmark/current.html" class="article__link" target="_blank" rel="noopener">Benchmarks</a>. Svelte is not the fastest one. <a href="https://www.solidjs.com/" class="article__link" target="_blank" rel="noopener">Solid</a>, for example, follows the similar methodology and beats it in most tests. But Svelte is generally fast enough to not care about it. Faster than the most. Hi <a href="https://svelte.dev/blog/virtual-dom-is-pure-overhead" class="article__link" target="_blank" rel="noopener">Virtual DOM</a>!
+<p>
+<TextLink href="https://krausest.github.io/js-framework-benchmark/current.html" blank={true} text="Benchmarks" />. Svelte is not the fastest one. <TextLink href="https://www.solidjs.com/" blank={true} text="Solid" />, for example, follows the similar methodology and beats it in most tests. But Svelte is generally fast enough to not care about it. Faster than the most. Hi, <TextLink href="https://svelte.dev/blog/virtual-dom-is-pure-overhead" blank={true} text="Virtual DOM" />!
+</p>
 
 #### Out-of-box instruments.
 
-SvelteKit: Static site generation and server side rendering, routing, back-end simulation (endpoints). <a href="https://preactjs.com/" class="article__link" target="_blank" rel="noopener">Preact</a> has it as well, though. 
+SvelteKit: Static site generation and server side rendering, routing, back-end simulation (endpoints). <TextLink href="https://preactjs.com/" blank={true} text="Preact" /> has it as well, though. 
 
 Svelte: Nice and handy transitions and animations. CSS and scopes. Cross-component state managing (stores). True reactivity. Compiling to JavaScript.
 
@@ -104,7 +111,7 @@ Small (means there are not many answers at Stack Overflow), but active (means yo
 
 #### Transparency.
 
-Yes. <a href="https://github.com/sveltejs/svelte" class="article__link" target="_blank" rel="noopener">Open-source</a> and <a href="https://opencollective.com/svelte" class="article__link" target="_blank" rel="noopener">non-commercial</a>. Just as I like.
+Yes. <TextLink href="https://github.com/sveltejs/svelte" blank={true} text="Open-source" /> and <TextLink href="https://opencollective.com/svelte" blank={true} text="non-commercial" />. Just as I like.
 
 #### Conclusion.
 

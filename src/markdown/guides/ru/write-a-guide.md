@@ -1,7 +1,8 @@
 ---
 slug: write-a-guide
 title: Как создать свой гайд в Измерии.
-date: 2021-05-15
+firstDate: 2021-05-15
+date: 2021-12-11
 description: Всего пара простых шагов - и ты сможешь разделить свой опыт с другими Измерянами. Награда прилагается!
 tags: [starters, dev_imp]
 layout: article
@@ -9,6 +10,10 @@ author: Роман Смунёв
 isAnotherLang: false
 isGuide: true
 ---
+
+<script>
+    import TextLink from "$lib/components/ui-elements/TextLink.svelte";
+</script>
 
 ### Как написать.
 Здесь всего пару простых пунктов.
@@ -27,11 +32,12 @@ isGuide: true
 В остальном, не стесняйся проявить себя: живость, веселость - всё это только улучшит твоё руководство. Просмотри уже написанные статьи. Мы обязательно укажем тебя как автора (если ты хочешь, конечно). Измерянам точно понравится!
 
 ### Как отправить.
-Тут есть три способа:
+Тут есть четыре главных способа:
 
-- <a href="mailto:support@measureland.org" class="article__link">Отправь нам письмо</a> с PDF/текстовым документом или ссылкой. Просим не отправлять простым текстом, что бы он не превратился в кашу.
-- Открой issue на <a href="https://github.com/RomanistHere/Measureland/issues" class="article__link" target="_blank" rel="noopener">GitHub</a>. Для этого может понадобиться аккаунт.
-- Есть познания в HTML или Markdown? <a href="https://github.com/RomanistHere/Measureland/tree/master/blog" class="article__link" target="_blank" rel="noopener">Структура блога</a> легка для понимания, создай pull request :)
+- <TextLink href="mailto:support@measureland.org" text="Отправь нам письмо" /> с PDF/текстовым документом или ссылкой. Просим не отправлять простым текстом, что бы он не превратился в кашу.
+- Открой issue на <TextLink href="https://github.com/RomanistHere/Measureland/issues" blank={true} text="GitHub" />. Для этого может понадобиться аккаунт.
+- Есть познания в HTML или Markdown? <TextLink href="https://github.com/RomanistHere/Measureland/tree/master/src/markdown/guides/ru" blank={true} text="Структура блога" /> легка для понимания, создай pull request :)
+- Социальные сети: поделись своим текстом <TextLink href="https://discord.gg/mBgnBprBBb" blank={true} text="в Дискорде" /> или <TextLink href="https://t.me/+Ly_l3iBXCQhmZGM6" blank={true} text="Телеграме" />
 
 ### Награда.
 Мы собираемся разработать систему наград в будущем. Например, Измеряне, которым понравилась твоя статья смогут отблагодарить тебя.

@@ -1,13 +1,18 @@
 ---
 slug: universal-guide
 title: Универсальный гайд по съёму жилья.
-date: 2021-07-11
+firstDate: 2021-07-11
+date: 2021-12-11
 description: Чек-лист арендатора или на что обращать внимание при аренде жилья.
 tags: [starters, dev_imp]
 layout: article
 author: Роман Смунёв
 isGuide: true
 ---
+
+<script>
+    import TextLink from "$lib/components/ui-elements/TextLink.svelte";
+</script>
 
 Список вещей, которые стоит проверить перед заселением, чтобы не пожалеть после. Мы не будем предлагать проверять каждый стул и шкафчик в доме, советуем ориентироваться на уровень собственной дотошности.
 
@@ -29,7 +34,7 @@ isGuide: true
 - **Плита.** Мы упомянем только то, что плит бывает немало видов, отличаются внешне они совсем незначительно, а вот в использовании довольно сильно, помни про это.
 
 ### Вода
-В некоторых городах вода может быть хлорирована в разных частях города. Многим людям это грозит сильным зудом и неприятных запахом от чая. Мы думаем (но не проверяли), что для любого города можно найти сервис, в котором можно будет проверить адрес и узнать воду заранее. Обычно её качество одинаково внутри района. Ссылки на сервисы: <a href="https://minskvodokanal.by/water/home/" class="article__link" target="_blank" rel="noopener">Минск</a>, <a href="https://www.mosvodokanal.ru/forpeople/waterquality.php" class="article__link" target="_blank" rel="noopener">Москва</a>
+В некоторых городах вода может быть хлорирована в разных частях города. Многим людям это грозит сильным зудом и неприятных запахом от чая. Мы думаем (но не проверяли), что для любого города можно найти сервис, в котором можно будет проверить адрес и узнать воду заранее. Обычно её качество одинаково внутри района. Ссылки на сервисы: <TextLink href="https://minskvodokanal.by/water/home/" blank={true} text="Минск" />, <TextLink href="https://www.mosvodokanal.ru/forpeople/waterquality.php" blank={true} text="Москва" />.
 
 ### Другие вещи
 - **Входная дверь.** Послушай будет ли слышно обычный разговор за дверью (или включи музыку на телефоне). Если всё отчётливо слышно, вам будет удобно переговариваться с соседями и проводить общие музыкальные вечера. Сарказм.
@@ -50,7 +55,7 @@ isGuide: true
 - Возьми с собой человека, который сможет тебе помочь. Советом или вопросом - неважно, больше глаз будет преимуществом в этом деле.
 - Помни что не все люди в мире честные.
 - Попробуй поторговаться. За спрос не бьют в нос.
-- <a href="https://duckduckgo.com/?q=%D1%81%D0%BE%D0%B2%D0%B5%D1%82%D1%8B+%D0%BF%D0%BE+%D1%81%D1%8A%D0%B5%D0%BC%D1%83+%D0%B6%D0%B8%D0%BB%D1%8C%D1%8F&atb=v231-1&ia=web" class="article__link" target="_blank" rel="noopener">Изучи другие материалы.</a>
+- <TextLink href="https://duckduckgo.com/?q=%D1%81%D0%BE%D0%B2%D0%B5%D1%82%D1%8B+%D0%BF%D0%BE+%D1%81%D1%8A%D0%B5%D0%BC%D1%83+%D0%B6%D0%B8%D0%BB%D1%8C%D1%8F&atb=v231-1&ia=web" blank={true} text="Изучи другие материалы." />
 
 ### Хочешь что-то добавить?
-Пиши нам на почту: <a href="mailto:support@measureland.org" class="article__link">support@measureland.org</a> или используй <a href="https://github.com/RomanistHere/Measureland" class="article__link" target="_blank" rel="noopener">гитхаб</a>.
+Пиши нам <TextLink href="mailto:support@measureland.org" text="на почту" />, <TextLink href="https://t.me/MeasurelandBot" blank={true} text="Телеграм боту" /> или используй <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/markdown/guides/ru/universal-guide.md" blank={true} text="Гитхаб" />.

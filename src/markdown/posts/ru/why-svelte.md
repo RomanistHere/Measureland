@@ -1,12 +1,17 @@
 ---
 slug: why-svelte
 title: Почему мы выбрали Svelte, а не React или Angular?
+firstDate: 2021-11-30
 date: 2021-11-30
 description: Мы сравниваем популярные "фреймворки" с инструментами для строительства и объясняю почему мы выбрали Svelte. Знание программирования не обязательно.
 tags: [technology]
 layout: article
 author: Роман Смунёв
 ---
+
+<script>
+    import TextLink from "$lib/components/ui-elements/TextLink.svelte";
+</script>
 
 Знание программирования не обязательно. Попробуем разобраться с помощью аналогии.
 
@@ -22,7 +27,7 @@ author: Роман Смунёв
 
 Это всё возможно и было бы полезно, если бы мы строили небоскрёбы и имели большую команду, но для обычного дома (даже многоэтажного) мы решаем что это чересчур.
 
-Стоит заметить, что если бы мы имели большую команду и строили небоскрёбы, они, скорее всего, не были бы лучшими в округе. Посетители бы застревали в лифтах, путались бы в этажах и т.д. <a href="https://cscalfani.medium.com/goodbye-object-oriented-programming-a59cda4c0e53" class="article__link" target="_blank" rel="noopener">Прости, ООП...</a>.
+Стоит заметить, что если бы мы имели большую команду и строили небоскрёбы, они, скорее всего, не были бы лучшими в округе. Посетители бы застревали в лифтах, путались бы в этажах и т.д. <TextLink href="https://cscalfani.medium.com/goodbye-object-oriented-programming-a59cda4c0e53" blank={true} text="Прости, ООП... (англ)" />
 
 #### React/Preact (Реакт и Преакт).
 
@@ -80,11 +85,13 @@ author: Роман Смунёв
 
 #### Производительность.
 
-<p><a href="https://krausest.github.io/js-framework-benchmark/current.html" class="article__link" target="_blank" rel="noopener">Сравнение (бенчмарки)</a>. Svelte не самый быстрый. <a href="https://www.solidjs.com/" class="article__link" target="_blank" rel="noopener">Solid</a>, например, похож (по способу работы) на Svelte, и обгоняет его в скорости во многих тестах. Но Svelte достаточно быстрый, чтобы не переживать об этом. Быстрее большинства. Передаю привет <a href="https://svelte.dev/blog/virtual-dom-is-pure-overhead" class="article__link" target="_blank" rel="noopener">Virtual DOM</a>! (англ)</p>
+<p>
+<TextLink href="https://krausest.github.io/js-framework-benchmark/current.html" blank={true} text="Сравнение (бенчмарки)" />. Svelte не самый быстрый. <TextLink href="https://www.solidjs.com/" blank={true} text="Solid (Солид)" />, например, похож (по способу работы) на Svelte, и обгоняет его в скорости во многих тестах. Но Svelte достаточно быстрый, чтобы не переживать об этом. Быстрее большинства. Передаю привет <TextLink href="https://svelte.dev/blog/virtual-dom-is-pure-overhead" blank={true} text="Virtual DOM (англ)" />!
+</p>
 
 #### Инструменты из коробки.
 
-SvelteKit: Генерация статичных страниц, роунтинг, симуляция бэкенда. <a href="https://preactjs.com/" class="article__link" target="_blank" rel="noopener">Preact</a> тоже имеет данные опции. 
+SvelteKit: Генерация статичных страниц, роунтинг, симуляция бэкенда. <TextLink href="https://preactjs.com/" blank={true} text="Preact" /> тоже имеет данные опции. 
 
 Svelte: Крутые и полезные утилиты для анимаций и транзишнов. Скоупинг ЦСС (по модулям). Управление состоянием (state) приложения. Реактивность. Компиляция в обычный JS.
 
@@ -102,7 +109,7 @@ JS-в-HTML ощущается гораздо приятнее и удобнее 
 
 #### Прозрачность.
 
-Да. <a href="https://github.com/sveltejs/svelte" class="article__link" target="_blank" rel="noopener">Открытый код</a> и <a href="https://opencollective.com/svelte" class="article__link" target="_blank" rel="noopener">отсутствие жажды наживы</a>. Всё как я люблю.
+Да. <TextLink href="https://github.com/sveltejs/svelte" blank={true} text="Открытый код" /> и <TextLink href="https://opencollective.com/svelte" blank={true} text="отсутствие жажды наживы" />. Всё как я люблю.
 
 #### Заключение.
 
