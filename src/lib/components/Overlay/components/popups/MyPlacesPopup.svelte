@@ -59,7 +59,7 @@
 
     	const { places } = data;
 
-    	const array = await await Promise.all(places.map(async({ location, ratingObj }) => {
+    	const array = await Promise.all(places.map(async({ location, ratingObj }) => {
     		const { ratingID, timeline } = ratingObj;
     		const { coordinates } = location;
     		const [ lng, lat ] = coordinates;

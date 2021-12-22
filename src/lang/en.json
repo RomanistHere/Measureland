@@ -71,7 +71,7 @@
                 "description": "Infrastructure is great, everything you need at your fingertips."
             },
             "transport": {
-                "title": "excelent location",
+                "title": "excellent location",
                 "description": "A great place to start heading wherever you want to go."
             },
             "noize": {
@@ -108,7 +108,7 @@
             },
             "pairedInfrastructure": {
                 "title": "center of the world",
-                "description": "Great location and infrastructure. Easy to start your jorney but why bother if everything's already here."
+                "description": "Great location and infrastructure. Easy to start your journey but why bother if everything's already here."
             },
             "pairedDogs": {
                 "title": "dog owner's paradise",
@@ -122,7 +122,7 @@
         "bad": {
             "air": {
                 "title": "can't breathe",
-                "description": "There are people who aren't satifsied with the smells in the air."
+                "description": "There are people who aren't satisfied with the smells in the air."
             },
             "water": {
                 "title": "bad water",
@@ -138,7 +138,7 @@
             },
             "noize": {
                 "title": "bustling",
-                "description": "Something is constanly prevents inhabitants from enjoying the silence."
+                "description": "Something is constantly prevents inhabitants from enjoying the silence."
             },
             "clean": {
                 "title": "messy",
@@ -164,6 +164,38 @@
                 "title": "playground is a parking",
                 "description": "Ratings indicate serious problems with parking places."
             }
+        }
+    },
+    "tags": {
+        "comfort": {
+            "title": "comfort",
+            "description": "Positive effect. Increases general level of comfort",
+            "isGood": true
+        },
+        "discomfort": {
+            "title": "discomfort",
+            "description": "Negative effect. Decreases general level of comfort",
+            "isBad": true
+        },
+        "quiet": {
+            "title": "quiet",
+            "description": "Neutral effect. Doesn't trouble anyone by level of noise",
+            "isNeutral": true
+        },
+        "noisy": {
+            "title": "noisy",
+            "description": "Negative effect. Noticeable level of noise",
+            "isBad": true
+        },
+        "smells": {
+            "title": "smells",
+            "description": "Negative effect. May emit odors",
+            "isBad": true
+        },
+        "nice": {
+            "title": "nice",
+            "description": "Positive effect. Pleasure to look at",
+            "isGood": true
         }
     },
     "startScreen": {
@@ -228,7 +260,7 @@
                 "text": "Find the rest at our blog",
                 "url": "/en/blog/"
             }],
-            "title": "And this is only the beggining"
+            "title": "And this is only the beginning"
         },
         "scrollToLearnMode": "Scroll to learn more",
         "checkboxText": "By using Measureland I agree with",
@@ -376,7 +408,7 @@
     },
     "nearbyPopup": {
         "title": "Nearby ratings",
-        "selectTitle": "Proximity distance (radius) is changable",
+        "selectTitle": "Proximity distance (radius) is changeable",
         "averageRating": "Average regional score",
         "numberOfRatings": "Number of ratings",
         "noData": "No other data around.",
@@ -440,9 +472,9 @@
     "onboardingPopup": {
         "defaultName": "Anonym",
         "title": "Thank you for registration!",
-        "caption": "You'll help us by answering this two simple questions (deafault values applied if skipped), and we would help you if you were looking for a new place to live in the future :)",
+        "caption": "You'll help us by answering this two simple questions (default values applied if skipped), and we would help you if you were looking for a new place to live in the future :)",
         "yourAgeGroup": "Your age group:",
-        "ageOption1": "Yonger than 25 years",
+        "ageOption1": "Younger than 25 years",
         "ageOption2": "25 - 40 years",
         "ageOption3": "41 - 55 years",
         "ageOption4": "Older than 55 years",
@@ -569,7 +601,7 @@
         "title": "Welcome to Measureland",
         "description": "Looking to buy a house, rent an apartment or searching for a place to stay? Check the neighbourhood first!",
         "imageAltText": "Measureland icon (a little house)",
-        "keywords": "Measureland, rate, Non-commerical, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
+        "keywords": "Measureland, rate, Non-commercial, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
         "subject": "Help people to find the best place to stay at or live in.",
         "author": "Roman Smunyov"
     },
@@ -598,7 +630,7 @@
             "description": "Learn more about us. 👋 Articles to answer your questions and guide through the service."
         },
         "guidesPage": {
-            "title": "Meaureland City guides.",
+            "title": "Measureland City guides.",
             "description": "How to find the best city and neighbourhood. Local guides. 🏙 🏰 🗽"
         }
     },
@@ -619,7 +651,7 @@
             "title": "What we've been up to lately 👩‍🚀",
             "list": [{
         		"title": "City guides contest",
-        		"text": "Share experience of finding appartment in your city. Prize pool 175$",
+        		"text": "Share experience of finding apartment in your city. Prize pool 175$",
         		"link": "/en/blog/city-guides-contest/"
         	}, {
         		"title": "Open collective launch",
@@ -715,7 +747,7 @@
         	}]
         },
         "developement": {
-            "title": "Design and developement 📈",
+            "title": "Design and development 📈",
             "list": [{
                 "title": "We are 14!",
         		"text": "That's how much people offered help and contributed."

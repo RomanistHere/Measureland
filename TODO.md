@@ -2,7 +2,7 @@
 
 - fix focus states
 - add ratings if previous ones approved enough
-- ? sent letter to users asking to edit their rating's timelines
+- new secret feature
 - mention most active members of community
 
 ### Pre release

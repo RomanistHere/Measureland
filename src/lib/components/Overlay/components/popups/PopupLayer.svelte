@@ -4,6 +4,7 @@
 
     import CloseButton from '../../../ui-elements/CloseButton.svelte';
 
+    import AttentionPlacesPopup from './AttentionPlacesPopup/AttentionPlacesPopup.svelte';
     import ConfirmForgotPasswordPopup from './ConfirmForgotPasswordPopup.svelte';
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
     import AskForMoreRatingsPopup from './AskForMoreRatingsPopup.svelte';
@@ -27,6 +28,7 @@
 
     const popupList = {
     	askForMoreRatingsPopup: AskForMoreRatingsPopup,
+    	attentionPlacesPopup: AttentionPlacesPopup,
     	changePasswordPopup: ChangePasswordPopup,
     	changeYearPopup: ChangeYearPopup,
     	checkEmailPopup: CheckEmailPopup,

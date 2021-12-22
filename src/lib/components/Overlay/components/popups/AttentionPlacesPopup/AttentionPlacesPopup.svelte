@@ -1,0 +1,192 @@
+<script>
+	import { _, locale } from 'svelte-i18n';
+	import { onDestroy } from 'svelte';
+
+	import PopupTitle from '../PopupTitle.svelte';
+	import Tag from "./Tag.svelte";
+	import Spinner from '../../../../ui-elements/Spinner.svelte';
+	import VoteButton from '../../../../ui-elements/VoteButton.svelte';
+	// import TextButton from '../../../../ui-elements/TextButton.svelte';
+
+	// import { fetchAttentionInfo } from "../../../../utilities/api.js";
+	import {
+		openAnotherOverlay,
+		// showSomethingWrongNotification,
+		logError,
+		closeOverlay, centerMap,
+	} from "../../../../../utilities/helpers.js";
+	import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
+	import { reactOnComment } from "$lib/utilities/api.js";
+	import { appStateStore, isDesktop, userStateStore } from "../../../../../../stores/state.js";
+
+	const map = $mapReference;
+	const geocodeService = $geocodeServiceReference;
+
+	export let popupData;
+
+	let likes = 0;
+	let dislikes = 0;
+	let isLikesDisabled = true;
+	let isDislikesDisabled = true;
+	let circle = null;
+
+	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
+	$: isUserLoggedIn = $userStateStore.userID !== null;
+
+	const endorseRelevant = async() => {
+		if (!isUserLoggedIn) {
+			closeOverlay('sidebar');
+			openAnotherOverlay('loginPopup');
+			return;
+		}
+
+		if (isLikesDisabled)
+			return;
+
+		if (isDislikesDisabled) {
+			isDislikesDisabled = false;
+			dislikes = dislikes - 1;
+		}
+
+		likes = likes + 1;
+		isLikesDisabled = true;
+
+		// const { error } = await reactOnComment('like', id);
+		// if (error) {
+		// 	logError(error);
+		// 	showSomethingWrongNotification();
+		// 	return;
+		// }
+	};
+
+	const endorseIrrelevant = async() => {
+		if (!isUserLoggedIn) {
+			closeOverlay('sidebar');
+			openAnotherOverlay('loginPopup');
+			return;
+		}
+
+		if (isDislikesDisabled)
+			return;
+
+		if (isLikesDisabled) {
+			isLikesDisabled = false;
+			likes = likes - 1;
+		}
+
+		dislikes = dislikes + 1;
+		isDislikesDisabled = true;
+
+		// const { error } = await reactOnComment('like', id);
+		// if (error) {
+		// 	logError(error);
+		// 	showSomethingWrongNotification();
+		// 	return;
+		// }
+	};
+
+	const openCommentsSidebar = () =>
+		openAnotherOverlay('commentsSidebar', {});
+
+	const fetchData = async({ lng, lat }) => {
+		geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
+			if (error) {
+				logError(error);
+				return;
+			}
+			approximateAdress = result.address.LongLabel;
+		});
+
+		if (circle)
+			map.removeLayer(circle);
+
+		// eslint-disable-next-line no-undef
+		circle = L.circle({ lng, lat }, 300, { color: '#007097' });
+
+		circle.addTo(map);
+		centerMap(map, lat, lng, $isDesktop);
+		// const { error, data } = await fetchAttentionInfo();
+
+		// if (error) {
+		// 	logError(error);
+		// 	showSomethingWrongNotification();
+		// 	return [];
+		// }
+
+		const data = {
+			title: 'Гипермаркет',
+			description: `Огромный гипермаркет, в котором можно купить почти всё что угодно.
+			Конечно, иногда от него несёт какой-то фигнёй, да и с местами проблемы.
+			Но в целом скорее плюс чем минус`,
+			tags: [ 'comfort', 'noisy', 'smells', 'quiet' ],
+			likes: 6,
+			dislikes: 2,
+			isLikesDisabled: false,
+			isDislikesDisabled: false,
+		};
+
+		likes = data.likes;
+		dislikes = data.dislikes;
+		isLikesDisabled = data.isLikesDisabled;
+		isDislikesDisabled = data.isDislikesDisabled;
+
+		return data;
+	};
+
+	const promise = fetchData(popupData);
+
+	onDestroy(() => {
+		appStateStore.update(state => ({ ...state, showRating: false }));
+		map.removeLayer(circle);
+		circle = null;
+	});
+</script>
+
+<div class="max-w-sm w-full">
+	{#await promise}
+		<Spinner isWithText={true} className="absolute w-full h-full inset-0 z-5" />
+	{:then { title, description, tags }}
+		<PopupTitle title={title} />
+
+		<p class="my-4 italic text-sm font-bold -md:px-10">
+			{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
+		</p>
+
+		<div class="flex mt-4 flex-wrap">
+			{#each tags as tag}
+				<Tag
+					key={tag}
+				/>
+			{/each}
+		</div>
+
+		<p class="my-4">
+			{description}
+		</p>
+
+		<div class="flex justify-between">
+			<VoteButton
+				isLike={true}
+				isDisabled={isLikesDisabled}
+				action={endorseRelevant}
+				text='{likes} - relevant'
+			/>
+
+			<VoteButton
+				isLike={false}
+				isDisabled={isDislikesDisabled}
+				action={endorseIrrelevant}
+				text='{dislikes} - irrelevant'
+			/>
+		</div>
+
+<!--		<div>-->
+<!--			<a href={"#"} class="underline" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:-->
+<!--			<span class="sug-col font-bold text-2xl -md:text-lg">12</span>-->
+<!--		</div>-->
+	{/await}
+</div>
+
+<style>
+
+</style>

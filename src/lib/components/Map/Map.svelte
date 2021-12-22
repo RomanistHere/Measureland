@@ -3,6 +3,7 @@
     import L from 'leaflet';
     import 'leaflet/dist/leaflet.css';
 
+    import AttentionPlaces from './components/AttentionPlaces.svelte';
     import MarkerCluster from './components/MarkerCluster.svelte';
     import GeoSearch from './components/GeoSearch.svelte';
     import Draw from './components/Draw/Draw.svelte';
@@ -57,6 +58,7 @@
     <div use:mapAction class="w-full h-full">
         {#if map}
             <MarkerCluster />
+            <AttentionPlaces />
             <GeoSearch />
             <Draw mapClickRefFuntcion={onMapClick} />
         {/if}

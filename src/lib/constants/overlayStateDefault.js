@@ -34,6 +34,11 @@ export const overlayStateDefault = {
 		type: 'popup',
 		data: {},
 	},
+	attentionPlacesPopup: {
+		isOpen: false,
+		type: 'popup',
+		data: {},
+	},
 	feedbackPopup: {
 		isOpen: false,
 		type: 'popup',
