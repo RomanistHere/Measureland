@@ -6,6 +6,7 @@
 
     import PopupLayer from './components/popups/PopupLayer.svelte';
     import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
+    import DialogLayer from './components/dialogs/DialogLayer.svelte';
     import FiltersNotification from './components/notifications/FiltersNotification.svelte';
     import CornerNotification from './components/notifications/CornerNotification.svelte';
     import BurgerButton from '../ui-elements/BurgerButton.svelte';
@@ -21,12 +22,15 @@
     let sidebarActive = false;
     let sidebarName;
     let sidebarData;
+    let dialogActive = false;
+    let dialogName;
+    let dialogData;
     let StartScreen;
 
     const handleKeydown = event => {
     	const key = event.key;
     	// console.log(key);
-    	if ((popupActive || sidebarActive) && key === 'Escape')
+    	if ((popupActive || sidebarActive || dialogActive) && key === 'Escape')
     		closeOverlays();
     };
 
@@ -57,12 +61,16 @@
     		sidebarData = data;
     		sidebarActive = true;
     	} else if (type === 'popup') {
-    		popupName = key;
-    		popupData = data;
-    		popupActive = true;
-    	}
+		    popupName = key;
+		    popupData = data;
+		    popupActive = true;
+	    } else if (type === 'dialog') {
+		    dialogName = key;
+		    dialogData = data;
+		    dialogActive = true;
+	    }
 
-    	if (popupActive || sidebarActive)
+    	if (popupActive || sidebarActive || dialogActive)
     		appStateStore.update(state => ({ ...state, openModal: true }));
     	else
     		appStateStore.update(state => ({ ...state, openModal: false }));
@@ -70,7 +78,8 @@
 
     const manageOverlays = openOverlays => {
     	sidebarActive = false;
-    	popupActive = false;
+	    popupActive = false;
+	    dialogActive = false;
 
     	if (openOverlays.length === 0)
     		return;
@@ -96,7 +105,11 @@
 <Loading {hiddenLoading} />
 
 {#if popupActive}
-    <PopupLayer { popupName } { popupData } />
+	<PopupLayer { popupName } { popupData } />
+{/if}
+
+{#if dialogActive}
+	<DialogLayer { dialogName } { dialogData } />
 {/if}
 
 {#if mainScreen}

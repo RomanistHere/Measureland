@@ -130,7 +130,13 @@
 		isLikesDisabled = data.isLikesDisabled;
 		isDislikesDisabled = data.isDislikesDisabled;
 
-		return data;
+		const { title, description, tags } = data;
+
+		return {
+			title,
+			description,
+			tags,
+		};
 	};
 
 	const promise = fetchData(popupData);

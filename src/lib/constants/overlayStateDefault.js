@@ -104,4 +104,9 @@ export const overlayStateDefault = {
 		type: 'sidebar',
 		data: {},
 	},
+	onMapClickDialog: {
+		isOpen: false,
+		type: 'dialog',
+		data: {},
+	},
 };

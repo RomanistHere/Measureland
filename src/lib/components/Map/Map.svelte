@@ -17,7 +17,7 @@
     let map;
 
     const onMapClick = e =>
-    	openAnotherOverlay('quizPopup', e.latlng);
+    	openAnotherOverlay('onMapClickDialog', e.latlng);
 
     const createMap = node => {
     	const { zoom, center } = $appStateStore;
