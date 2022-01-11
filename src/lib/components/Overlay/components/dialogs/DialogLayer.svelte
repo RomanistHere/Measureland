@@ -33,9 +33,9 @@
 
 <style>
 	.dark-glass {
-		background-color: rgb(0,0,0); /* Fallback color */
-		backdrop-filter: blur(5px);
-		-webkit-backdrop-filter: blur(5px);
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: rgb(255, 255, 255); /* Fallback color */
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+		background-color: rgba(255, 255, 255, 0.1);
 	}
 </style>

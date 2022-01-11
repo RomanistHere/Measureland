@@ -544,6 +544,21 @@
         "submitBtn": "Save new date",
         "warning": "New date should be different"
     },
+    "addAttentionPlacePopup": {
+        "title": "Add the Point of interest",
+        "inputTitle": "Pick the name that reflects what you want to describe most, for example «Central park» or «Biggest hypermarket»",
+        "inputPlaceholder": "Example: small park with a lake.",
+        "text": "Now describe the place. Try pros and cons. Goal is to show why it's important to know about it beforehand while looking for a new place to stay or live.",
+        "textAreaPlaceholder": "Breath of fresh air and the rest for eyesight. Clean green island with a lot of benches, playgrounds and cycleways...",
+        "submitBtn": "Submit"
+    },
+    "onMapClickDialog": {
+        "title": "What do you want to do?",
+        "option1": "Rate a place (water / air quality and so on)",
+        "option1Alt": "Rate-a-place icon",
+        "option2": "Add a point of interest (park, construction, etc.)",
+        "option2Alt": "Point of interest icon"
+    },
     "input": {
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",

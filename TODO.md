@@ -4,6 +4,7 @@
 - add ratings if previous ones approved enough
 - new secret feature
 - mention most active members of community
+- set up colors in tailwind config
 
 ### Pre release
 

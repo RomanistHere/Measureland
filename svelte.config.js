@@ -27,7 +27,7 @@ const config = {
 		prerender: {
 			crawl: true,
 			enabled: true,
-			entries: ['*', '/ru/', '/en/'],
+			entries: [ '*', '/ru/', '/en/' ],
 			onError: handleError,
 		},
 		trailingSlash: 'always',

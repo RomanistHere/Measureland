@@ -106,21 +106,21 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('feedbackPopup.title')} />
+	<PopupTitle title={$_('addAttentionPlacePopup.title')} />
 
 	<InputGroupSimple
-		title={$_('feedbackPopup.inputTitle')}
+		title={$_('addAttentionPlacePopup.inputTitle')}
 		on:change={updateInputValue}
-		placeholder={$_('feedbackPopup.inputPlaceholder')}
-		autocomplete="feedback"
+		placeholder={$_('addAttentionPlacePopup.inputPlaceholder')}
+		autocomplete="point of interest"
 	/>
 
 	<p class="my-4">
-		{$_('feedbackPopup.text')}
+		{$_('addAttentionPlacePopup.text')}
 	</p>
 
 	<Textarea
-		placeholder={$_('feedbackPopup.textAreaPlaceholder')}
+		placeholder={$_('addAttentionPlacePopup.textAreaPlaceholder')}
 		maxlength="{1400}"
 		on:input={updateTextareaValue}
 		className='mt-0'
@@ -138,6 +138,6 @@
 	</div>
 
 	<div class="flex justify-evenly items-center">
-		<FormButton text={$_('feedbackPopup.submitBtn')} action={debouncedSubmit} />
+		<FormButton text={$_('addAttentionPlacePopup.submitBtn')} action={debouncedSubmit} />
 	</div>
 </form>

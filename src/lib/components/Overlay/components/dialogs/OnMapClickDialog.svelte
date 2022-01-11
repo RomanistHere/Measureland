@@ -1,5 +1,5 @@
 <script>
-	import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
+	import { _ } from 'svelte-i18n';
 
 	import { closeOverlay, openAnotherOverlay } from "$lib/utilities/helpers.js";
 
@@ -12,36 +12,53 @@
 </script>
 
 <h3 class="text-2xl -md:text-lg">
-	Что ты собираешься сделать?
+	{$_('onMapClickDialog.title')}
 </h3>
 
 <div class="flex -mx-1 mt-4">
 	<a
 		href={'#'}
-		class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1"
+		class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
 		on:click|preventDefault|stopPropagation={() => { openPopup('quizPopup') }}
 	>
 		<div class="text-center">
 			<img
 				src="/images/rating_icon.svg"
-				alt="Иконка оценки места"
+				alt={$_('onMapClickDialog.option1Alt')}
 				class="h-24 inline-block my-2"
 			>
 		</div>
-		Оценить место для жизни (кач-во воды, воздуха и т.д.)
+		{$_('onMapClickDialog.option1')}
 	</a>
 	<a
 		href={'#'}
-		class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1"
-		on:click|preventDefault|stopPropagation={() => { openPopup('attentionPlacesPopup') }}
+		class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
+		on:click|preventDefault|stopPropagation={() => { openPopup('addAttentionPlacePopup') }}
 	>
 		<div class="text-center">
 			<img
 				src="/images/attention.svg"
-				alt="Иконка примечательного места"
+				alt={$_('onMapClickDialog.option2Alt')}
 				class="h-24 inline-block my-2"
 			>
 		</div>
-		Добавить примечательное место (парк, стройку и т.п.)
+		{$_('onMapClickDialog.option2')}
 	</a>
 </div>
+
+<style>
+	@media (hover: hover) and (pointer: fine) {
+		a:hover {
+			background-color: var(--active-color);
+			color: var(--side-bg-color);
+		}
+
+		img {
+			transition: transform ease .5s;
+		}
+
+		a:hover img {
+			transform: translateY(-5px);
+		}
+	}
+</style>
