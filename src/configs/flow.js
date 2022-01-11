@@ -1,5 +1,5 @@
 export const flowDictionary = {
-	'cl': 'cl', // clase all
+	'cl': 'cl', // close all
 	'cl-popup': 'clp', // close current popup
 	'cl-sidebar': 'cls', // close current sidebar
 	// open popup
@@ -28,6 +28,7 @@ export const flowDictionary = {
 	'nearbySelect-2000': 'ns-lg',
 	'nearbySelect-10000': 'ns-xl',
 	'hoverBadge': 'hb',
+	'hoverTag': 'ht',
 	// open sidebar
 	'commentsSidebar': 's-c',
 	'filtersSidebar': 's-f',

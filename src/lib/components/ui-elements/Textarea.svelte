@@ -6,7 +6,7 @@
 
 <div class="relative">
     <textarea
-        class="w-full h-40 p-2 rounded-md {className}"
+        class="w-full h-40 p-2 rounded-md text-base {className}"
         { placeholder }
         maxlength={maxCommentLength}
         on:input

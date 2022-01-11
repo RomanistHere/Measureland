@@ -2,7 +2,7 @@
 	import { fly } from 'svelte/transition';
 	import { json } from 'svelte-i18n';
 
-	import { registerAction } from '../../../../../utilities/helpers.js';
+	import { registerAction } from '../../utilities/helpers.js';
 
 	export let key;
 

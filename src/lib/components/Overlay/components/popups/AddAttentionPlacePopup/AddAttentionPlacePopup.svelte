@@ -126,6 +126,10 @@
 		className='mt-0'
 	/>
 
+	<p class="my-4">
+		Now (optionally) pick some tags that fit it.
+	</p>
+
 	<div class="relative flex justify-center items-center h-28">
 		{#if isLoading}
 			<Spinner />

@@ -3,7 +3,7 @@
 	import { onDestroy } from 'svelte';
 
 	import PopupTitle from '../PopupTitle.svelte';
-	import Tag from "./Tag.svelte";
+	import Tag from "../../../../ui-elements/Tag.svelte";
 	import Spinner from '../../../../ui-elements/Spinner.svelte';
 	import VoteButton from '../../../../ui-elements/VoteButton.svelte';
 	// import TextButton from '../../../../ui-elements/TextButton.svelte';

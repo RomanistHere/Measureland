@@ -548,7 +548,7 @@
         "title": "Add the Point of interest",
         "inputTitle": "Pick the name that reflects what you want to describe most, for example «Central park» or «Biggest hypermarket»",
         "inputPlaceholder": "Example: small park with a lake.",
-        "text": "Now describe the place. Try pros and cons. Goal is to show why it's important to know about it beforehand while looking for a new place to stay or live.",
+        "text": "Now describe the place. Try pros and cons. Goal is to show why it's important to know about it beforehand while house searching.",
         "textAreaPlaceholder": "Breath of fresh air and the rest for eyesight. Clean green island with a lot of benches, playgrounds and cycleways...",
         "submitBtn": "Submit"
     },
