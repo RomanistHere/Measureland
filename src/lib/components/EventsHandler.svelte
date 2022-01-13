@@ -30,10 +30,14 @@
     };
 
     onMount(() => {
-    	document.addEventListener('visibilitychange', () => {
-    		if (document.visibilityState === 'hidden' && $userStateStore.shouldSendEvent) {
-    			sendFeedback();
-    		}
-    	});
+	    const onVisibilityChange = () => {
+		    if (document.visibilityState === 'hidden' && $userStateStore.shouldSendEvent) {
+			    sendFeedback();
+		    }
+	    };
+
+    	document.addEventListener('visibilitychange', onVisibilityChange);
+
+	return () => document.removeEventListener('visibilitychange', onVisibilityChange);
     });
 </script>

@@ -6,6 +6,7 @@
 	import Textarea from '../../../../ui-elements/Textarea.svelte';
 	import Spinner from '../../../../ui-elements/Spinner.svelte';
 	import FormButton from '../../../../ui-elements/FormButton.svelte';
+	import TagsInput from '../../../../ui-elements/TagsInput.svelte';
 	import PopupTitle from '../PopupTitle.svelte';
 
 	import {
@@ -25,6 +26,7 @@
 	let errorType = '';
 	let isLoading = false;
 	let isSpam = null;
+	let listOfTags = [];
 	let attentionPlaceState = {
 		title: '',
 		comment: '',
@@ -39,6 +41,18 @@
 	const updateTextareaValue = e => {
 		const { value } = e.target;
 		attentionPlaceState = { ...attentionPlaceState, comment: value };
+	};
+	
+	const updateListOfTags = e => {
+		const newTag = e.detail;
+		if (listOfTags.includes(newTag))
+			return;
+		listOfTags = [ ...listOfTags, newTag ];
+	};
+	
+	const removeTagFromList = e => {
+		const key = e.detail;
+		listOfTags = listOfTags.filter(item => item !== key);
 	};
 
 	const submit = async() => {
@@ -126,9 +140,11 @@
 		className='mt-0'
 	/>
 
-	<p class="my-4">
-		Now (optionally) pick some tags that fit it.
-	</p>
+	<TagsInput
+		{ listOfTags }
+		on:addNewTag={updateListOfTags}
+		on:removeTag={removeTagFromList}
+	/>
 
 	<div class="relative flex justify-center items-center h-28">
 		{#if isLoading}

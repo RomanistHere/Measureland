@@ -43,12 +43,13 @@
 	class:neutral={isNeutral}
 	on:mouseenter={handleMouseenter}
 	on:mouseleave={handleMouseleave}
+	on:click
 >
     {title}
 
 	{#if isExpanded}
         <div
-	        class="info__tooltip text-sm w-60 absolute z-1 p-2 left-1/2 transform -translate-x-1/2 rounded-md font-normal glassmorphism"
+	        class="info__tooltip text-sm w-60 absolute z-1 p-2 left-1/2 transform -translate-x-1/2 rounded-md font-normal glassmorphism pointer-events-none"
 	        in:fly="{{ y: 10, duration: 200 }}"
 	        out:fly="{{ y: -10, duration: 200 }}"
         >
