@@ -106,7 +106,7 @@
                         class:hidden={ratingID === null}
                     >
                         <a
-                            href="#"
+                            href={"#"}
                             title={$_('myPlacesPopup.deleteRating')}
                             class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
                             on:click|preventDefault={async() => { ratingID = await deleteRating(ratingID) }}

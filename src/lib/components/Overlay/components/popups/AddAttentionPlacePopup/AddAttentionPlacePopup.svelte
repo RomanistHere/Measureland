@@ -26,7 +26,6 @@
 	let errorType = '';
 	let isLoading = false;
 	let isSpam = null;
-	let listOfTags = [];
 	let attentionPlaceState = {
 		title: '',
 		comment: '',
@@ -45,14 +44,14 @@
 	
 	const updateListOfTags = e => {
 		const newTag = e.detail;
-		if (listOfTags.includes(newTag))
+		if (attentionPlaceState.tags.includes(newTag))
 			return;
-		listOfTags = [ ...listOfTags, newTag ];
+		attentionPlaceState = { ...attentionPlaceState, tags: [ ...attentionPlaceState.tags, newTag ] };
 	};
 	
 	const removeTagFromList = e => {
 		const key = e.detail;
-		listOfTags = listOfTags.filter(item => item !== key);
+		attentionPlaceState = { ...attentionPlaceState, tags: attentionPlaceState.tags.filter(item => item !== key) };
 	};
 
 	const submit = async() => {
@@ -62,7 +61,7 @@
 
 		isError = false;
 
-		const isValuesNotEmpty = attentionPlaceState.comment.length > 0 && attentionPlaceState.title.length > 0;
+		const isValuesNotEmpty = attentionPlaceState.comment.length > 0 && attentionPlaceState.title.length > 2;
 		if (!isValuesNotEmpty) {
 			// TODO: focus needed input
 			isError = true;
@@ -141,7 +140,7 @@
 	/>
 
 	<TagsInput
-		{ listOfTags }
+		listOfTags={attentionPlaceState.tags}
 		on:addNewTag={updateListOfTags}
 		on:removeTag={removeTagFromList}
 	/>

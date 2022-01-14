@@ -5,6 +5,7 @@
 	import { registerAction } from '../../utilities/helpers.js';
 
 	export let key;
+	export let clickable = false;
 
 	let isExpanded = false;
 	let isNeutral = true;
@@ -41,6 +42,7 @@
 	class:alert={isBad}
 	class:good={isGood}
 	class:neutral={isNeutral}
+	class:cursor-pointer={clickable}
 	on:mouseenter={handleMouseenter}
 	on:mouseleave={handleMouseleave}
 	on:click
