@@ -28,7 +28,7 @@
 	let isSpam = null;
 	let attentionPlaceState = {
 		title: '',
-		comment: '',
+		description: '',
 		tags: [],
 	};
 
@@ -39,7 +39,7 @@
 
 	const updateTextareaValue = e => {
 		const { value } = e.target;
-		attentionPlaceState = { ...attentionPlaceState, comment: value };
+		attentionPlaceState = { ...attentionPlaceState, description: value };
 	};
 	
 	const updateListOfTags = e => {
@@ -61,7 +61,7 @@
 
 		isError = false;
 
-		const isValuesNotEmpty = attentionPlaceState.comment.length > 0 && attentionPlaceState.title.length > 2;
+		const isValuesNotEmpty = attentionPlaceState.description.length > 0 && attentionPlaceState.title.length > 2;
 		if (!isValuesNotEmpty) {
 			// TODO: focus needed input
 			isError = true;
