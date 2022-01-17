@@ -4,16 +4,18 @@
     export let className = '';
 </script>
 
-<input
-    class="mt-4 p-2 w-full rounded-md shadow {className}"
-    type="text"
-    { autocomplete }
-    { placeholder }
-    on:change
->
-
-<span class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-20 opacity-0"></span>
-<span class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-20 opacity-0"></span>
+<div class="relative">
+	<input
+		class="mt-4 p-2 w-full rounded-md shadow {className}"
+		type="text"
+		{ autocomplete }
+		{ placeholder }
+		on:change
+	>
+	
+	<span class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-8 opacity-0"></span>
+	<span class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-8 opacity-0"></span>
+</div>
 
 <style>
     input {

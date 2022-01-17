@@ -110,6 +110,32 @@ const reactOnRating = async(ratingID, shouldReport) => {
 	});
 };
 
+// POIs
+
+const savePOIToDB = async(coords, props) => {
+	const url = `${API_URL}/poi/add`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			properties: { ...props },
+			location: {
+				type: 'Point',
+				coordinates: [ ...coords ],
+			},
+		}),
+	});
+};
+
+const fetchPOIsBounds = async(box, zoom) => {
+	const preparedBox = box.map(item => [ item[1], item[0] ]);
+	const bounds = JSON.stringify(preparedBox);
+	const url = `${API_URL}/poi/read_bounds/${new URLSearchParams({ bounds, zoom })}`;
+
+	return await fetchFunction({ url });
+};
+
 // comments
 
 const fetchComments = async geoID => {
@@ -332,4 +358,6 @@ export {
 	checkVotes,
 	updateRatingYear,
 	deleteUserRating,
+	savePOIToDB,
+	fetchPOIsBounds,
 };

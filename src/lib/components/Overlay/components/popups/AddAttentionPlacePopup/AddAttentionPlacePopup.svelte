@@ -8,19 +8,21 @@
 	import FormButton from '../../../../ui-elements/FormButton.svelte';
 	import TagsInput from '../../../../ui-elements/TagsInput.svelte';
 	import PopupTitle from '../PopupTitle.svelte';
-
+	
 	import {
 		debounce,
 		showSuccessNotification,
 		closeOverlays,
 		showSomethingWrongNotification,
 		logError,
-		openAnotherOverlay,
+		openAnotherOverlay, roundToFifthDecimal,
 	} from "../../../../../utilities/helpers.js";
-	import { sendFeedback } from "../../../../../utilities/api.js";
+	import { savePOIToDB } from "../../../../../utilities/api.js";
 	import { userStateStore } from "../../../../../../stores/state.js";
 
 	$: errorsObj = $json('errors');
+	
+	export let popupData;
 
 	let isError = false;
 	let errorType = '';
@@ -69,9 +71,11 @@
 
 			return;
 		}
+	
+		const currentCoords = [ roundToFifthDecimal(popupData.lng), roundToFifthDecimal(popupData.lat) ];
 
 		isLoading = true;
-		const { error } = await sendFeedback(attentionPlaceState, $userStateStore.userID);
+		const { error } = await savePOIToDB(currentCoords, attentionPlaceState);
 		isLoading = false;
 
 		if (error) {

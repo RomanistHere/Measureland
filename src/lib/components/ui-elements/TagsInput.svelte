@@ -1,12 +1,11 @@
 <script>
 	import { fly } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
-	
 	import { _, json } from 'svelte-i18n';
 	
-	const dispatch = createEventDispatcher();
-	
 	import Tag from './Tag.svelte';
+	
+	const dispatch = createEventDispatcher();
 
 	export let listOfTags = [];
 	
@@ -36,7 +35,7 @@
 		<a
 			href={"#"}
 			class="mr-3"
-			on:click|preventDefault={ removeTag(tagKey) }
+			on:click|preventDefault={() => { removeTag(tagKey) }}
 		>
 			x
 		</a>

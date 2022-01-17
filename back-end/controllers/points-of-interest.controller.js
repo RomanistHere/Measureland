@@ -11,7 +11,6 @@ exports.POI_add = async(req, res, next) => {
 		return res.status(400).json({ error: "User is not logged in" });
 
 	const userEmail = sanitize(req.session.userID);
-	body.location.coordinates = [ body.location.coordinates[1], body.location.coordinates[0] ];
 
 	try {
 		const user = await User.findOne({ email: userEmail });
@@ -37,6 +36,7 @@ exports.POI_add = async(req, res, next) => {
 		const { title, description, tags } = properties;
 		const activeRatings = user.usergroup === 0 ? 99 : user.properties.activeRatings;
 		const userID = user._id;
+
 		if (pointOfInterest) {
 			return res.status(400).json({ error: "Too close to existing Point of interest." });
 		}
