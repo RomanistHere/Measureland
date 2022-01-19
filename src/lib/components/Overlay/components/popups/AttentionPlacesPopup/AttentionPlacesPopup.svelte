@@ -8,15 +8,14 @@
 	import VoteButton from '../../../../ui-elements/VoteButton.svelte';
 	// import TextButton from '../../../../ui-elements/TextButton.svelte';
 
-	// import { fetchAttentionInfo } from "../../../../utilities/api.js";
+	import { getSinglePointOfInterest } from "../../../../../utilities/api.js";
 	import {
 		openAnotherOverlay,
-		// showSomethingWrongNotification,
+		showSomethingWrongNotification,
 		logError,
 		closeOverlay, centerMap,
 	} from "../../../../../utilities/helpers.js";
 	import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
-	import { reactOnComment } from "$lib/utilities/api.js";
 	import { appStateStore, isDesktop, userStateStore } from "../../../../../../stores/state.js";
 
 	const map = $mapReference;
@@ -105,32 +104,21 @@
 
 		circle.addTo(map);
 		centerMap(map, lat, lng, $isDesktop);
-		// const { error, data } = await fetchAttentionInfo();
+		const { error, data } = await getSinglePointOfInterest([ lng, lat ]);
 
-		// if (error) {
-		// 	logError(error);
-		// 	showSomethingWrongNotification();
-		// 	return [];
-		// }
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+			return [];
+		}
+	
+		const { properties } = data;
+		const { title, description, tags, isYourPOI } = properties;
 
-		const data = {
-			title: 'Гипермаркет',
-			description: `Огромный гипермаркет, в котором можно купить почти всё что угодно.
-			Конечно, иногда от него несёт какой-то фигнёй, да и с местами проблемы.
-			Но в целом скорее плюс чем минус`,
-			tags: [ 'comfort', 'noisy', 'smells', 'quiet' ],
-			likes: 6,
-			dislikes: 2,
-			isLikesDisabled: false,
-			isDislikesDisabled: false,
-		};
-
-		likes = data.likes;
-		dislikes = data.dislikes;
-		isLikesDisabled = data.isLikesDisabled;
-		isDislikesDisabled = data.isDislikesDisabled;
-
-		const { title, description, tags } = data;
+		likes = properties.likes;
+		dislikes = properties.dislikes;
+		isLikesDisabled = isYourPOI;
+		isDislikesDisabled = isYourPOI;
 
 		return {
 			title,

@@ -12,13 +12,15 @@
     import { mapReference, markersReference } from "../../../../stores/references.js";
     import {
 	    roundToFifthDecimal,
-    	roundToFifthDecimalLatLng,
-    	roundToInt,
-    	openAnotherOverlay,
-    	debounce,
-    	showSomethingWrongNotification,
-    	registerAction,
-    	logError,
+	    roundToFifthDecimalLatLng,
+	    roundToInt,
+	    openAnotherOverlay,
+	    debounce,
+	    showSomethingWrongNotification,
+	    registerAction,
+	    logError,
+	    getBoundsData,
+	    getScreenData,
     } from "../../../utilities/helpers.js";
     import { fetchBoundsData } from "../../../utilities/api.js";
 
@@ -88,9 +90,8 @@
     }).addTo(map);
 
     const updateClusters = () => {
-    	const bounds = map.getBounds();
-    	const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
-    	const zoom = map.getZoom();
+	    const { east, north, south, west, zoom } = getBoundsData(map);
+    	const bbox = [ west, south, east, north ];
     	const clusters = clusterLayer.getClusters(bbox, zoom);
 
     	clusterMarkers.clearLayers();
@@ -259,22 +260,9 @@
     	registerAction('mapLoadData');
     	// console.warn('____________new_try____________')
     	// console.time('preparations')
-    	const bounds = map.getBounds();
-    	const zoom = map.getZoom();
-    	const center = roundToFifthDecimalLatLng(bounds.getCenter());
-    	const east = roundToFifthDecimal(bounds.getEast());
-    	const north = roundToFifthDecimal(bounds.getNorth());
-    	const west = roundToFifthDecimal(bounds.getWest());
-    	const south = roundToFifthDecimal(bounds.getSouth());
+	    const { center, zoom, currentScreenPoly } = getScreenData(map);
 
     	updateState(center, zoom);
-
-    	const currentScreenPoly = {
-    		regions: [
-    			[[ north, west ], [ north, east ], [ south, east ], [ south, west ]],
-    		],
-    		inverted: false,
-    	};
 
     	const queryPolygon = getQueryPolygon(visitedPoly, currentScreenPoly);
 

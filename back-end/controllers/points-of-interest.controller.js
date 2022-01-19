@@ -3,6 +3,8 @@ const Sentry = require('@sentry/node');
 
 const PointOfInterest = require('../models/point-of-interest.model');
 const User = require('../models/user.model');
+const Geo = require("../models/geo.model");
+const Rating = require("../models/rating.model");
 
 exports.POI_add = async(req, res, next) => {
 	const { body } = req;
@@ -107,6 +109,58 @@ exports.POI_get_by_bounds = async(req, res, next) => {
 				message: "POI locations fetched",
 				userID: userID ? userID : null,
 				result,
+			},
+		});
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
+exports.POI_get_single = async(req, res, next) => {
+	const userID = sanitize(req.session.userID);
+
+	const urlParams = new URLSearchParams(req.params.coords);
+	const nearCoords = Object.fromEntries(urlParams);
+	const arr = nearCoords.latlng.split(',').map(Number);
+	try {
+		const result = await PointOfInterest.findOne({
+			"location": {
+				$near: {
+					$geometry: {
+						type: "Point",
+						coordinates: [ ...arr ],
+					},
+					$maxDistance: 50,
+				},
+			},
+		}, '-location');
+
+		if (!result)
+			return res.status(400).json({ error: 'Point of interest not found' });
+
+		const isYourPOI = userID ? await User.findOne({ $and: [
+			{ email: userID },
+			{ 'properties.POIIDs': {
+				$in: [ result._id ],
+			} },
+		] }) : null;
+
+		const { title, description, tags, likes, dislikes } = result;
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Point of interest found",
+				userID: userID ? userID : null,
+				properties: {
+					title,
+					description,
+					tags,
+					isYourPOI,
+					likes: likes.length,
+					dislikes: dislikes.length,
+				},
 			},
 		});
 	} catch (error) {

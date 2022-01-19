@@ -272,6 +272,46 @@ const generateYearsBetween = (startYear, endYear) => {
 	return years;
 };
 
+const getBoundsData = map => {
+	const bounds = map.getBounds();
+	const zoom = map.getZoom();
+	const center = roundToFifthDecimalLatLng(bounds.getCenter());
+	const east = roundToFifthDecimal(bounds.getEast());
+	const north = roundToFifthDecimal(bounds.getNorth());
+	const west = roundToFifthDecimal(bounds.getWest());
+	const south = roundToFifthDecimal(bounds.getSouth());
+
+	return {
+		zoom,
+		center,
+		east,
+		north,
+		west,
+		south,
+	};
+};
+
+const getScreenData = map => {
+	const { zoom, center, east, north, south, west } = getBoundsData(map);
+
+	const currentScreenPoly = {
+		regions: [
+			[[ north, west ], [ north, east ], [ south, east ], [ south, west ]],
+		],
+		inverted: false,
+	};
+
+	return {
+		zoom,
+		center,
+		east,
+		north,
+		west,
+		south,
+		currentScreenPoly,
+	};
+};
+
 export {
 	debounce,
 	sleep,
@@ -298,4 +338,6 @@ export {
 	generateYearsBetween,
 	logError,
 	convertMetersToRadian,
+	getBoundsData,
+	getScreenData,
 };

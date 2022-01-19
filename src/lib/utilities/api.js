@@ -136,6 +136,12 @@ const fetchPOIsBounds = async(box, zoom) => {
 	return await fetchFunction({ url });
 };
 
+const getSinglePointOfInterest = async latlng => {
+	const url = `${API_URL}/poi/read_single/${new URLSearchParams({ latlng })}`;
+
+	return await fetchFunction({ url });
+};
+
 // comments
 
 const fetchComments = async geoID => {
@@ -360,4 +366,5 @@ export {
 	deleteUserRating,
 	savePOIToDB,
 	fetchPOIsBounds,
+	getSinglePointOfInterest,
 };
