@@ -4,14 +4,14 @@
 
     import CloseButton from '../../../ui-elements/CloseButton.svelte';
 
-    import AddAttentionPlacePopup from './AddAttentionPlacePopup/AddAttentionPlacePopup.svelte';
-    import AttentionPlacesPopup from './AttentionPlacesPopup/AttentionPlacesPopup.svelte';
+    import PointOfInterestPopup from './PointOfInterestPopup/PointOfInterestPopup.svelte';
     import ConfirmForgotPasswordPopup from './ConfirmForgotPasswordPopup.svelte';
     import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
     import AskForMoreRatingsPopup from './AskForMoreRatingsPopup.svelte';
     import ChangePasswordPopup from './ChangePasswordPopup.svelte';
     import ForgotPasswordPopup from './ForgotPasswordPopup.svelte';
     import NearbyPopup from './NearbyPopup/NearbyPopup.svelte';
+    import AddPOIPopup from './AddPOIPopup/AddPOIPopup.svelte';
     import CheckEmailPopup from './CheckEmailPopup.svelte';
     import OnboardingPopup from './OnboardingPopup.svelte';
     import ChangeYearPopup from './ChangeYearPopup.svelte';
@@ -29,8 +29,8 @@
 
     const popupList = {
     	askForMoreRatingsPopup: AskForMoreRatingsPopup,
-    	attentionPlacesPopup: AttentionPlacesPopup,
-	    addAttentionPlacePopup: AddAttentionPlacePopup,
+	    pointOfInterestPopup: PointOfInterestPopup,
+	    addPOIPopup: AddPOIPopup,
     	changePasswordPopup: ChangePasswordPopup,
     	changeYearPopup: ChangeYearPopup,
     	checkEmailPopup: CheckEmailPopup,

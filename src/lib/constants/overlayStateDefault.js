@@ -34,12 +34,12 @@ export const overlayStateDefault = {
 		type: 'popup',
 		data: {},
 	},
-	attentionPlacesPopup: {
+	pointOfInterestPopup: {
 		isOpen: false,
 		type: 'popup',
 		data: {},
 	},
-	addAttentionPlacePopup: {
+	addPOIPopup: {
 		isOpen: false,
 		type: 'popup',
 		data: {},

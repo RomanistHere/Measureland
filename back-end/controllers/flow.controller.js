@@ -6,9 +6,18 @@ const ErrorFlow = require('../models/error-flow.model');
 
 exports.flow_add = async(req, res, next) => {
 	const { flowString, uniqID } = req.body;
+	const sanitizedID = sanitize(uniqID);
 
 	try {
-		const newFlow = await AnonymFlow.findOneAndUpdate({ uniqID }, { flow: sanitize(flowString), uniqID }, { new: true, upsert: true });
+		const newFlow = await AnonymFlow.findOneAndUpdate({
+			uniqID: sanitizedID,
+		}, {
+			flow: sanitize(flowString),
+			uniqID: sanitizedID,
+		}, {
+			new: true,
+			upsert: true,
+		});
 
 		return res.json({
 			error: null,

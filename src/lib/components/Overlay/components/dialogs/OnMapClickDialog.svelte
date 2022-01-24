@@ -33,7 +33,7 @@
 	<a
 		href={'#'}
 		class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
-		on:click|preventDefault|stopPropagation={() => { openPopup('addAttentionPlacePopup') }}
+		on:click|preventDefault|stopPropagation={() => { openPopup('addPOIPopup') }}
 	>
 		<div class="text-center">
 			<img

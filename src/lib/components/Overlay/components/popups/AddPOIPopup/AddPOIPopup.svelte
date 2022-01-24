@@ -28,7 +28,7 @@
 	let errorType = '';
 	let isLoading = false;
 	let isSpam = null;
-	let attentionPlaceState = {
+	let pointOfInterestState = {
 		title: '',
 		description: '',
 		tags: [],
@@ -36,24 +36,24 @@
 
 	const updateInputValue = e => {
 		const { value } = e.target;
-		attentionPlaceState = { ...attentionPlaceState, title: value };
+		pointOfInterestState = { ...pointOfInterestState, title: value };
 	};
 
 	const updateTextareaValue = e => {
 		const { value } = e.target;
-		attentionPlaceState = { ...attentionPlaceState, description: value };
+		pointOfInterestState = { ...pointOfInterestState, description: value };
 	};
 	
 	const updateListOfTags = e => {
 		const newTag = e.detail;
-		if (attentionPlaceState.tags.includes(newTag))
+		if (pointOfInterestState.tags.includes(newTag))
 			return;
-		attentionPlaceState = { ...attentionPlaceState, tags: [ ...attentionPlaceState.tags, newTag ] };
+		pointOfInterestState = { ...pointOfInterestState, tags: [ ...pointOfInterestState.tags, newTag ] };
 	};
 	
 	const removeTagFromList = e => {
 		const key = e.detail;
-		attentionPlaceState = { ...attentionPlaceState, tags: attentionPlaceState.tags.filter(item => item !== key) };
+		pointOfInterestState = { ...pointOfInterestState, tags: pointOfInterestState.tags.filter(item => item !== key) };
 	};
 
 	const submit = async() => {
@@ -63,7 +63,7 @@
 
 		isError = false;
 
-		const isValuesNotEmpty = attentionPlaceState.description.length > 0 && attentionPlaceState.title.length > 2;
+		const isValuesNotEmpty = pointOfInterestState.description.length > 0 && pointOfInterestState.title.length > 2;
 		if (!isValuesNotEmpty) {
 			// TODO: focus needed input
 			isError = true;
@@ -75,7 +75,7 @@
 		const currentCoords = [ roundToFifthDecimal(popupData.lng), roundToFifthDecimal(popupData.lat) ];
 
 		isLoading = true;
-		const { error } = await savePOIToDB(currentCoords, attentionPlaceState);
+		const { error } = await savePOIToDB(currentCoords, pointOfInterestState);
 		isLoading = false;
 
 		if (error) {
@@ -123,28 +123,28 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('addAttentionPlacePopup.title')} />
+	<PopupTitle title={$_('addPOIPopup.title')} />
 
 	<InputGroupSimple
-		title={$_('addAttentionPlacePopup.inputTitle')}
+		title={$_('addPOIPopup.inputTitle')}
 		on:change={updateInputValue}
-		placeholder={$_('addAttentionPlacePopup.inputPlaceholder')}
+		placeholder={$_('addPOIPopup.inputPlaceholder')}
 		autocomplete="point of interest"
 	/>
 
 	<p class="my-4">
-		{$_('addAttentionPlacePopup.text')}
+		{$_('addPOIPopup.text')}
 	</p>
 
 	<Textarea
-		placeholder={$_('addAttentionPlacePopup.textAreaPlaceholder')}
+		placeholder={$_('addPOIPopup.textAreaPlaceholder')}
 		maxlength="{1400}"
 		on:input={updateTextareaValue}
 		className='mt-0'
 	/>
 
 	<TagsInput
-		listOfTags={attentionPlaceState.tags}
+		listOfTags={pointOfInterestState.tags}
 		on:addNewTag={updateListOfTags}
 		on:removeTag={removeTagFromList}
 	/>
@@ -161,6 +161,6 @@
 	</div>
 
 	<div class="flex justify-evenly items-center">
-		<FormButton text={$_('addAttentionPlacePopup.submitBtn')} action={debouncedSubmit} />
+		<FormButton text={$_('addPOIPopup.submitBtn')} action={debouncedSubmit} />
 	</div>
 </form>

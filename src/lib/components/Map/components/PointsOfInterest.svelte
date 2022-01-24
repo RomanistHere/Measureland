@@ -26,7 +26,7 @@
 	let pointsOfInterestLayer;
 
 	const initPointOfInterestPopup = ({ latlng }) =>
-		openAnotherOverlay('attentionPlacesPopup', latlng);
+		openAnotherOverlay('pointOfInterestPopup', latlng);
 
 	const icon = L.icon({
 		iconUrl: `../images/attention.svg`,

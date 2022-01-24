@@ -553,7 +553,7 @@
         "submitBtn": "Save new date",
         "warning": "New date should be different"
     },
-    "addAttentionPlacePopup": {
+    "addPOIPopup": {
         "title": "Add the Point of interest",
         "inputTitle": "Pick the name that reflects what you want to describe most, for example «Central park» or «Biggest hypermarket»",
         "inputPlaceholder": "Example: small park with a lake.",
