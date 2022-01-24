@@ -12,35 +12,35 @@
 		"prepare": "husky install"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^13.2.1",
-		"@commitlint/config-conventional": "^13.2.0",
+		"@commitlint/cli": "^16.1.0",
+		"@commitlint/config-conventional": "^16.0.0",
 		"@sveltejs/adapter-static": "^1.0.0-next.18",
 		"@sveltejs/kit": "next",
-		"autoprefixer": "^10.4.0",
-		"cssnano": "^5.0.8",
-		"eslint-config-prettier": "^8.1.0",
+		"autoprefixer": "^10.4.2",
+		"cssnano": "^5.0.16",
+		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^4.0.0",
-		"eslint-plugin-svelte3": "^3.2.1",
-		"husky": "^7.0.2",
+		"eslint-plugin-svelte3": "^3.4.0",
+		"husky": "^7.0.4",
 		"mdsvex": "^0.9.8",
-		"postcss": "^8.4.4",
-		"postcss-load-config": "^3.1.0",
-		"prettier": "~2.2.1",
-		"prettier-plugin-svelte": "^2.2.0",
-		"svelte": "^3.34.0",
-		"svelte-preprocess": "^4.9.4",
-		"tailwindcss": "^3.0.1"
+		"postcss": "^8.4.5",
+		"postcss-load-config": "^3.1.1",
+		"prettier": "~2.5.1",
+		"prettier-plugin-svelte": "^2.6.0",
+		"svelte": "^3.46.2",
+		"svelte-preprocess": "^4.10.2",
+		"tailwindcss": "^3.0.15"
 	},
 	"type": "module",
 	"dependencies": {
-		"eslint": "^8.0.1",
+		"eslint": "^8.7.0",
 		"esri-leaflet-geocoder": "^3.1.1",
 		"leaflet": "^1.7.1",
-		"leaflet-draw": "^0.4.14",
-		"nouislider": "^15.4.0",
+		"leaflet-draw": "^1.0.4",
+		"nouislider": "^15.5.1",
 		"polybooljs": "^1.2.0",
 		"svelte-focus-trap": "^1.2.0",
 		"svelte-i18n": "^3.3.13",
-		"swiper": "^7.0.6"
+		"swiper": "^7.4.1"
 	}
 }
