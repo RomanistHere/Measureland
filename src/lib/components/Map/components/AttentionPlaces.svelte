@@ -8,18 +8,24 @@
 	
 	import { mapReference, markersReference } from "../../../../stores/references.js";
 	import {
-		debounce, getBoundsData,
-		getScreenData, logError,
-		openAnotherOverlay, roundToInt,
+		debounce,
+		getBoundsData,
+		getScreenData,
+		getMapZoom,
+		logError,
+		openAnotherOverlay,
 		showSomethingWrongNotification,
 	} from "$lib/utilities/helpers.js";
 	import { fetchPOIsBounds } from "$lib/utilities/api.js";
 	import { appStateStore } from "../../../../stores/state.js";
+	
+	// Mostly this file is a weak (simpler) copy of ./MarkerCluster.svelte
+	// If (when) this feature is out of beta, extract logic from both files
 
 	const map = $mapReference;
-	let clusterLayer;
+	let pointsOfInterestLayer;
 
-	const initShowRatingPopup = ({ latlng }) =>
+	const initPointOfInterestPopup = ({ latlng }) =>
 		openAnotherOverlay('attentionPlacesPopup', latlng);
 
 	const icon = L.icon({
@@ -31,13 +37,13 @@
 	const createClusterIcon = (feature, latlng) => {
 		const marker = L.marker(latlng, {
 			icon,
-			title: `Hello`,
+			title: $_('POIs.iconTitle'),
 			riseOnHover: true,
 		});
 	
 		if (!feature.properties.cluster) {
 			// single point
-			marker.on('click', initShowRatingPopup);
+			marker.on('click', initPointOfInterestPopup);
 		}
 	
 		return marker;
@@ -47,14 +53,23 @@
 		pointToLayer: createClusterIcon,
 	}).addTo(map);
 	
+	clusterMarkers.on('click', e => {
+		const clusterId = e.layer.feature.properties.cluster_id;
+		const center = e.latlng;
+		if (clusterId) {
+			const expansionZoom = pointsOfInterestLayer.getClusterExpansionZoom(clusterId);
+			map.setView(center, expansionZoom);
+		}
+	});
+	
 	const updateClusters = () => {
 		const { east, north, south, west, zoom } = getBoundsData(map);
 		const bbox = [ west, south, east, north ];
-		const clusters = clusterLayer.getClusters(bbox, zoom);
+		const clusters = pointsOfInterestLayer.getClusters(bbox, zoom);
 	
 		clusterMarkers.clearLayers();
 		clusterMarkers.addData(clusters);
-		markersReference.set(clusterLayer);
+		markersReference.set(pointsOfInterestLayer);
 	};
 	
 	const addDataAndDisplay = data => {
@@ -76,11 +91,12 @@
 			return newObj;
 		});
 		// eslint-disable-next-line  no-undef
-		clusterLayer = new Supercluster({
+		pointsOfInterestLayer = new Supercluster({
 			// log: true,
-			radius: 150,
-			minPoints: 2,
-			minZoom: 4,
+			radius: 100,
+			minPoints: 3,
+			minZoom: 13,
+			maxZoom: 18,
 		}).load(geoData);
 	
 		updateClusters();
@@ -107,14 +123,34 @@
 		addDataAndDisplay(result);
 	};
 	
-	const destroyPOIs = () => {
-		console.log('destroy');
+	const debouncedLoading = debounce(loadPOIs, 300);
+	const destroyPOIs = () => clusterMarkers.clearLayers();
+	
+	const checkTogglePOIs = ({ zoom, shouldShowPOIs }) => {
+		if (shouldShowPOIs && zoom >= 13) {
+			loadPOIs();
+		} else {
+			destroyPOIs();
+		}
 	};
 	
+	$: checkTogglePOIs($appStateStore);
+	
 	map.on('moveend', () => {
-		debounce(loadPOIs, 300);
+		const zoom = getMapZoom(map);
+		if (zoom < 13) {
+			destroyPOIs();
+			return;
+		}
+		debouncedLoading();
+	});
+	
+	onMount(() => {
+		const zoom = getMapZoom(map);
+		if (zoom >= 13) {
+			loadPOIs();
+		}
 	
 		return () => { destroyPOIs() };
 	});
-	onMount(loadPOIs);
 </script>

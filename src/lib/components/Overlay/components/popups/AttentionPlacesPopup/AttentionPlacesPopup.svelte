@@ -27,6 +27,7 @@
 	let dislikes = 0;
 	let isLikesDisabled = true;
 	let isDislikesDisabled = true;
+	let isOwnPOI = false;
 	let circle = null;
 
 	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
@@ -119,6 +120,7 @@
 		dislikes = properties.dislikes;
 		isLikesDisabled = isYourPOI;
 		isDislikesDisabled = isYourPOI;
+		isOwnPOI = isYourPOI;
 
 		return {
 			title,
@@ -127,10 +129,9 @@
 		};
 	};
 
-	const promise = fetchData(popupData);
+	$: promise = fetchData(popupData);
 
 	onDestroy(() => {
-		appStateStore.update(state => ({ ...state, showRating: false }));
 		map.removeLayer(circle);
 		circle = null;
 	});
@@ -145,14 +146,17 @@
 		<p class="my-4 italic text-sm font-bold -md:px-10">
 			{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
 		</p>
-
-		<div class="flex mt-4 flex-wrap">
-			{#each tags as tag}
-				<Tag
-					key={tag}
-				/>
-			{/each}
-		</div>
+		
+		{#if tags.length > 0 || isOwnPOI}
+			<div class="flex mt-4 flex-wrap">
+				{#if isOwnPOI}
+					<Tag key="own" />
+				{/if}
+				{#each tags as tag}
+					<Tag key={tag} />
+				{/each}
+			</div>
+		{/if}
 
 		<p class="my-4">
 			{description}
@@ -163,14 +167,14 @@
 				isLike={true}
 				isDisabled={isLikesDisabled}
 				action={endorseRelevant}
-				text='{likes} - relevant'
+				text="{likes} - {$_('pointOfInterestPopup.relevant')}"
 			/>
 
 			<VoteButton
 				isLike={false}
 				isDisabled={isDislikesDisabled}
 				action={endorseIrrelevant}
-				text='{dislikes} - irrelevant'
+				text="{dislikes} - {$_('pointOfInterestPopup.irrelevant')}"
 			/>
 		</div>
 

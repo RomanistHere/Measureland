@@ -196,6 +196,11 @@
             "title": "nice",
             "description": "Positive effect. Pleasure to look at",
             "isGood": true
+        },
+        "own": {
+            "title": "mine",
+            "description": "You made it, so can't endorse it",
+            "isNeutral": true
         }
     },
     "startScreen": {
@@ -279,6 +284,9 @@
         "titleSingle": "This place's average rating's about",
         "titleGrp": "This group of places average rating's about"
     },
+    "POIs": {
+        "iconTitle": "Point of Interest"
+    },
     "navBar": {
         "logoTitle": "Measureland",
         "logoAlt": "Measureland logo",
@@ -306,6 +314,7 @@
         "sendCrashReports": "Send crash reports",
         "toggleOn": "ON",
         "toggleOff": "OFF",
+        "POIs": "Points of Interest",
         "filters": "Filters",
         "ratePlace": "Rate a place",
         "feedbackPopup": "Send feedback",
@@ -551,6 +560,10 @@
         "text": "Now describe the place. Try pros and cons. Goal is to show why it's important to know about it beforehand while house searching.",
         "textAreaPlaceholder": "Breath of fresh air and the rest for eyesight. Clean green island with a lot of benches, playgrounds and cycleways...",
         "submitBtn": "Submit"
+    },
+    "pointOfInterestPopup": {
+        "relevant": "relevant",
+        "irrelevant": "irrelevant"
     },
     "onMapClickDialog": {
         "title": "What do you want to do?",

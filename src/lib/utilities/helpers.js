@@ -272,9 +272,11 @@ const generateYearsBetween = (startYear, endYear) => {
 	return years;
 };
 
+const getMapZoom = map => map.getZoom();
+
 const getBoundsData = map => {
 	const bounds = map.getBounds();
-	const zoom = map.getZoom();
+	const zoom = getMapZoom(map);
 	const center = roundToFifthDecimalLatLng(bounds.getCenter());
 	const east = roundToFifthDecimal(bounds.getEast());
 	const north = roundToFifthDecimal(bounds.getNorth());
@@ -338,6 +340,7 @@ export {
 	generateYearsBetween,
 	logError,
 	convertMetersToRadian,
+	getMapZoom,
 	getBoundsData,
 	getScreenData,
 };

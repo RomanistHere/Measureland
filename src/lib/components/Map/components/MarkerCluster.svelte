@@ -116,6 +116,7 @@
     		radius: 150,
     		minPoints: 2,
     		minZoom: 4,
+		    maxZoom: 18,
     	}).load(data);
 
     	updateClusters();

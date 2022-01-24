@@ -17,7 +17,7 @@
     } from '../../../../utilities/helpers.js';
     import { logout, saveLang, askMoreRatings } from '../../../../utilities/api.js';
     import { APP_VERSION } from '../../../../../configs/env.js';
-    import { userStateStore, isDesktop } from "../../../../../stores/state.js";
+    import { appStateStore, userStateStore, isDesktop } from "../../../../../stores/state.js";
 
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
     $: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
@@ -138,6 +138,9 @@
     	};
     }
 
+    const togglePOIs = () =>
+	    appStateStore.update(state => ({ ...state, shouldShowPOIs: !state.shouldShowPOIs }));
+
     const toggleSendingEvents = () => {
     	if (!browser)
     		return;
@@ -193,6 +196,20 @@
                     {/if}
                 </a>
             </li>
+	        <li>
+		        <a
+			        href={"#"}
+			        class="block px-8 link text-lg leading-9"
+			        on:click|preventDefault={togglePOIs}
+		        >
+			        {$_('menuSidebar.POIs')}:
+			        {#if $appStateStore.shouldShowPOIs}
+				        {$_('menuSidebar.toggleOn')}
+			        {:else}
+				        {$_('menuSidebar.toggleOff')}
+			        {/if}
+		        </a>
+	        </li>
             <li>
                 <a
                     href={"#"}

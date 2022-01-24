@@ -25,6 +25,7 @@
     	const mapObj = L.map(node, {
     		center: center || [ 53.8, 27.5 ],
     		minZoom: 4,
+		    maxZoom: 18,
     		zoom: zoom || 7,
     		preferCanvas: true,
     		worldCopyJump: true,
