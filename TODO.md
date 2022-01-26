@@ -3,6 +3,10 @@
 - fix focus states
 - add ratings if previous ones approved enough (add karma)
 - new secret feature
+  - react on POI
+  - comments
+  - delete POI
+  - add POI to nearby popup
 - mention most active members of community
 - set up colors in tailwind config
 
@@ -14,6 +18,13 @@
 - update preview image and create a few for a blog pages
 - links to documentation:
   - https://github.com/mapbox/supercluster
+  - https://svelte.dev/
+  - https://leafletjs.com/
+  - https://tailwindcss.com/
+  - https://refreshless.com/nouislider/
+  - https://swiperjs.com/svelte
+  - https://github.com/velipso/polybooljs
+  - https://github.com/kaisermann/svelte-i18n
 
 # Later
 

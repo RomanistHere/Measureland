@@ -21,7 +21,7 @@
 
     const isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
-    const likeComment = async() => {
+    const likeComment = async () => {
     	if (!isUserLoggedIn) {
     		closeOverlay('sidebar');
     		openAnotherOverlay('loginPopup');
@@ -47,7 +47,7 @@
     	}
     };
 
-    const dislikeComment = async() => {
+    const dislikeComment = async () => {
     	if (!isUserLoggedIn) {
     		closeOverlay('sidebar');
     		openAnotherOverlay('loginPopup');

@@ -102,7 +102,7 @@
 		updateClusters();
 	};
 	
-	const loadPOIs = async() => {
+	const loadPOIs = async () => {
 		const { zoom, currentScreenPoly } = getScreenData(map);
 		const queryBounds = currentScreenPoly.regions[0];
 	

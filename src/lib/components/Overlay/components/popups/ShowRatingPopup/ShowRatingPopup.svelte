@@ -64,7 +64,7 @@
     const openCommentsSidebar = () =>
     	openAnotherOverlay('commentsSidebar', commentGeoID);
 
-    const fetchData = async({ lng, lat }) => {
+    const fetchData = async ({ lng, lat }) => {
     	geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
     		if (error) {
     			logError(error);

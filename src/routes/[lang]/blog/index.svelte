@@ -1,7 +1,7 @@
 <script context="module">
     import { getArrays } from '../../../markdown/prepareMarkdown.js';
 
-    export function load({ page }) {
+    export function load ({ page }) {
     	const { lang } = page.params;
     	const { postsArray, guidesArray } = getArrays(lang);
 

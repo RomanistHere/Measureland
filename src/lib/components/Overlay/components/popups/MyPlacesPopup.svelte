@@ -48,7 +48,7 @@
     	return null;
     };
 
-    const fetchData = async() => {
+    const fetchData = async () => {
     	const { error, data } = await fetchRatedPlaces();
 
     	if (error) {
@@ -59,7 +59,7 @@
 
     	const { places } = data;
 
-    	const array = await Promise.all(places.map(async({ location, ratingObj }) => {
+    	const array = await Promise.all(places.map(async ({ location, ratingObj }) => {
     		const { ratingID, timeline } = ratingObj;
     		const { coordinates } = location;
     		const [ lng, lat ] = coordinates;
@@ -109,7 +109,7 @@
                             href={"#"}
                             title={$_('myPlacesPopup.deleteRating')}
                             class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
-                            on:click|preventDefault={async() => { ratingID = await deleteRating(ratingID) }}
+                            on:click|preventDefault={async () => { ratingID = await deleteRating(ratingID) }}
                         >
                             x
                         </a>

@@ -61,7 +61,7 @@
     	userStateStore.update(state => ({ ...state, userName: value }));
     };
 
-    const submit = async() => {
+    const submit = async () => {
     	const { name, ageGrp, moneyGrp } = onboardingState;
     	const userName = name.trim() === '' ? defaultName : name;
 

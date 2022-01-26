@@ -137,7 +137,7 @@
     	};
     };
 
-    const submit = async() => {
+    const submit = async () => {
     	registerAction('trySubmitQuiz');
     	errorType = null;
     	isError = false;

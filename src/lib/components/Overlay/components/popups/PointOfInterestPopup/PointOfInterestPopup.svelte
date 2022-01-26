@@ -8,12 +8,13 @@
 	import VoteButton from '../../../../ui-elements/VoteButton.svelte';
 	// import TextButton from '../../../../ui-elements/TextButton.svelte';
 
-	import { getSinglePointOfInterest } from "../../../../../utilities/api.js";
+	import { getSinglePointOfInterest, reactOnPOI } from "../../../../../utilities/api.js";
 	import {
 		openAnotherOverlay,
 		showSomethingWrongNotification,
 		logError,
-		closeOverlay, centerMap,
+		closeOverlay,
+		centerMap,
 	} from "../../../../../utilities/helpers.js";
 	import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
 	import { appStateStore, isDesktop, userStateStore } from "../../../../../../stores/state.js";
@@ -29,18 +30,19 @@
 	let isDislikesDisabled = true;
 	let isOwnPOI = false;
 	let circle = null;
+	let pointID = null;
 
 	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 
-	const endorseRelevant = async() => {
+	const endorseRelevant = async () => {
 		if (!isUserLoggedIn) {
 			closeOverlay('sidebar');
 			openAnotherOverlay('loginPopup');
 			return;
 		}
 
-		if (isLikesDisabled)
+		if (isLikesDisabled || !pointID)
 			return;
 
 		if (isDislikesDisabled) {
@@ -51,22 +53,22 @@
 		likes = likes + 1;
 		isLikesDisabled = true;
 
-		// const { error } = await reactOnComment('like', id);
-		// if (error) {
-		// 	logError(error);
-		// 	showSomethingWrongNotification();
-		// 	return;
-		// }
+		const { error } = await reactOnPOI('upvote', pointID);
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+			return;
+		}
 	};
 
-	const endorseIrrelevant = async() => {
+	const endorseIrrelevant = async () => {
 		if (!isUserLoggedIn) {
 			closeOverlay('sidebar');
 			openAnotherOverlay('loginPopup');
 			return;
 		}
 
-		if (isDislikesDisabled)
+		if (isDislikesDisabled || !pointID)
 			return;
 
 		if (isLikesDisabled) {
@@ -76,19 +78,19 @@
 
 		dislikes = dislikes + 1;
 		isDislikesDisabled = true;
-
-		// const { error } = await reactOnComment('like', id);
-		// if (error) {
-		// 	logError(error);
-		// 	showSomethingWrongNotification();
-		// 	return;
-		// }
+	
+		const { error } = await reactOnPOI('downvote', pointID);
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+			return;
+		}
 	};
 
 	const openCommentsSidebar = () =>
 		openAnotherOverlay('commentsSidebar', {});
 
-	const fetchData = async({ lng, lat }) => {
+	const fetchData = async ({ lng, lat }) => {
 		geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
 			if (error) {
 				logError(error);
@@ -114,13 +116,14 @@
 		}
 	
 		const { properties } = data;
-		const { title, description, tags, isYourPOI } = properties;
+		const { title, description, tags, isYourPOI, isLiked, isDisliked } = properties;
 
 		likes = properties.likes;
 		dislikes = properties.dislikes;
-		isLikesDisabled = isYourPOI;
-		isDislikesDisabled = isYourPOI;
+		isLikesDisabled = isYourPOI || isLiked;
+		isDislikesDisabled = isYourPOI || isDisliked;
 		isOwnPOI = isYourPOI;
+		pointID = properties.pointID;
 
 		return {
 			title,

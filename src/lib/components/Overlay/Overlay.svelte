@@ -95,7 +95,7 @@
     $: dataOpen = checkIsOpen($overlayStateStore);
     $: manageOverlays(dataOpen);
 
-    onMount(async() => {
+    onMount(async () => {
     	const module = await import('./components/StartScreen/StartScreen.svelte');
     	StartScreen = module.default;
     });

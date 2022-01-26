@@ -37,7 +37,7 @@
 
     $: resetRatings(_id);
 
-    const handleTimeClick = async() => {
+    const handleTimeClick = async () => {
     	if (!ratings) {
     		const { error, data } = await fetchSingleRating(_id);
 
@@ -68,7 +68,7 @@
     	isRatingExpanded = true;
     };
 
-    const reportRating = async() => {
+    const reportRating = async () => {
     	const { error } = await reactOnRating(_id, true);
 
     	if (!error) {
@@ -84,7 +84,7 @@
     	registerAction('reportRating');
     };
 
-    const endorseRating = async() => {
+    const endorseRating = async () => {
     	const { error } = await reactOnRating(_id, false);
 
     	if (!error) {

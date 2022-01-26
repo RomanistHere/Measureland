@@ -29,7 +29,7 @@
     	newTimeline = timeline;
     };
 
-    const submit = async() => {
+    const submit = async () => {
     	if (newTimeline === popupData.timeline) {
     		return;
     	}

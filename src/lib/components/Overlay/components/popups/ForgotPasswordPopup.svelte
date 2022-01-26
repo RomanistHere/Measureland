@@ -32,7 +32,7 @@
 
     const openRegisterPopup = () => openAnotherOverlay('registerPopup');
 
-    const submit = async() => {
+    const submit = async () => {
     	// TODO: make in more declarative way
     	if (document)
     		document.activeElement.blur();

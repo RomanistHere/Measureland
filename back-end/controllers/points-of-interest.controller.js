@@ -3,8 +3,7 @@ const Sentry = require('@sentry/node');
 
 const PointOfInterest = require('../models/point-of-interest.model');
 const User = require('../models/user.model');
-const Geo = require("../models/geo.model");
-const Rating = require("../models/rating.model");
+const Comment = require("../models/comment.model");
 
 exports.POI_add = async(req, res, next) => {
 	const { body } = req;
@@ -117,6 +116,20 @@ exports.POI_get_by_bounds = async(req, res, next) => {
 	}
 };
 
+const getRelations = async (userID, POIID, likes, dislikes) => {
+	if (!userID)
+		return { isYourPOI: null, isLiked: null, isDisliked: null };
+
+	const { _id, properties } = await User.findOne({ email: userID }, 'properties.POIIDs');
+	const { POIIDs } = properties;
+
+	return {
+		isYourPOI: POIIDs.some(item => item.equals(POIID)),
+		isLiked: likes.some(item => item.equals(_id)),
+		isDisliked: dislikes.some(item => item.equals(_id)),
+	};
+};
+
 exports.POI_get_single = async(req, res, next) => {
 	const userID = sanitize(req.session.userID);
 
@@ -139,14 +152,8 @@ exports.POI_get_single = async(req, res, next) => {
 		if (!result)
 			return res.status(400).json({ error: 'Point of interest not found' });
 
-		const isYourPOI = userID ? await User.findOne({ $and: [
-			{ email: userID },
-			{ 'properties.POIIDs': {
-				$in: [ result._id ],
-			} },
-		] }) : null;
-
-		const { title, description, tags, likes, dislikes } = result;
+		const { title, description, tags, likes, dislikes, _id } = result;
+		const { isYourPOI, isLiked, isDisliked } = await getRelations(userID, result._id, likes, dislikes);
 
 		return res.json({
 			error: null,
@@ -158,9 +165,61 @@ exports.POI_get_single = async(req, res, next) => {
 					description,
 					tags,
 					isYourPOI,
+					isLiked,
+					isDisliked,
+					pointID: _id,
 					likes: likes.length,
 					dislikes: dislikes.length,
 				},
+			},
+		});
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
+exports.POI_react = async(req, res) => {
+	if (!req.session.userID)
+		return res.status(400).json({ error: "User is not logged in" });
+
+	const email = sanitize(req.session.userID);
+	const { pointID, isUpvote } = req.body;
+	const property = isUpvote ? 'likes' : 'dislikes';
+	const propertyOpp = isUpvote ? 'dislikes' : 'likes';
+
+	try {
+		const user = await User.findOne({ email });
+
+		if (!user)
+			return res.status(400).json({ error: "User not found" });
+
+		const userID = user._id;
+		const result = await PointOfInterest.findOneAndUpdate({
+			_id: sanitize(pointID),
+		}, {
+			$addToSet: {
+				[property]: userID,
+			},
+		}, {
+			new: true,
+		});
+
+		const resultRemove = await PointOfInterest.findOneAndUpdate({
+			_id: sanitize(pointID),
+		}, {
+			$pull: {
+				[propertyOpp]: userID,
+			},
+		}, {
+			new: true,
+		});
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Reaction successful",
+				userID: user.email,
 			},
 		});
 	} catch (error) {

@@ -56,7 +56,7 @@
     	}
     };
 
-    const updateAppStateFromURL = async() => {
+    const updateAppStateFromURL = async () => {
     	const url = new URL(window.location.href);
     	const lat = url.searchParams.get('lat');
     	const lng = url.searchParams.get('lng');

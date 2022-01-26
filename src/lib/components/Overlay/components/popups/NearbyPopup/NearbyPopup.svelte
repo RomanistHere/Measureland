@@ -55,7 +55,7 @@
     	selected: false,
     }];
 
-    const loadData = async({ lat, lng }, radiusParam = null) => {
+    const loadData = async ({ lat, lng }, radiusParam = null) => {
     	const clusterLayer = $markersReference;
     	const radius = radiusParam || radiusOptions[0]['value'];
 

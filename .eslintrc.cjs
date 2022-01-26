@@ -95,7 +95,7 @@ module.exports = {
 		"padded-blocks": [2, "never"],
 		"quote-props": [2, "consistent"],
 		"semi-spacing": [2, { "before": false, "after": true }],
-		"space-before-function-paren": [2, "never"],
+		"space-before-function-paren": [2, "always"],
 		"space-in-parens": [2, "never"],
 		"space-infix-ops": 2,
 		"spaced-comment": [2, "always"],

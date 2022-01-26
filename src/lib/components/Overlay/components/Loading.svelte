@@ -15,7 +15,7 @@
     let isError = false;
     let isLoaded = false;
 
-    const userInit = async() => {
+    const userInit = async () => {
     	const { error, data } = await checkUser();
 
     	if (error) {

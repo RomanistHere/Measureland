@@ -33,7 +33,7 @@
 
     const openForgotPasswordPopup = () => openAnotherOverlay('forgotPasswordPopup', { isChangePass: false });
 
-    const resendVerificationLetter = async() => {
+    const resendVerificationLetter = async () => {
     	isError = false;
     	if (!isEmailValid || email.length === 0) {
     		// TODO: focus needed input
@@ -64,7 +64,7 @@
     	openAnotherOverlay('checkEmailPopup');
     };
 
-    const submit = async() => {
+    const submit = async () => {
     	// TODO: make in more declarative way
     	if (document)
     		document.activeElement.blur();

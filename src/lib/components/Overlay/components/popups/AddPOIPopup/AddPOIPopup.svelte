@@ -56,7 +56,7 @@
 		pointOfInterestState = { ...pointOfInterestState, tags: pointOfInterestState.tags.filter(item => item !== key) };
 	};
 
-	const submit = async() => {
+	const submit = async () => {
 		// TODO: make in more declarative way
 		if (document)
 			document.activeElement.blur();

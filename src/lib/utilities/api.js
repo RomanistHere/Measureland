@@ -3,7 +3,7 @@ import { appStateStore } from '../../stores/state.js';
 import { API_URL } from '../../configs/env.js';
 import { convertMetersToRadian } from './helpers.js';
 
-const fetchFunction = async({ url, method, credentials, headers, body }) => {
+const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 	if (!url)
 		return ({ error: 'Not valid URL' });
 
@@ -45,7 +45,7 @@ const fetchFunction = async({ url, method, credentials, headers, body }) => {
 	}
 };
 
-const saveToDB = async(coords, rating, averageRating, comment, isPersonalExperience, timeline) => {
+const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperience, timeline) => {
 	const url = `${API_URL}/geo/add`;
 
 	return await fetchFunction({
@@ -73,14 +73,14 @@ const getSinglePointData = async latlng => {
 	return await fetchFunction({ url });
 };
 
-const getNearbyPointData = async(coords, radiusInMeters) => {
+const getNearbyPointData = async (coords, radiusInMeters) => {
 	const radius = convertMetersToRadian(radiusInMeters);
 	const url = `${API_URL}/geo/read_nearby/${new URLSearchParams({ coords, radius })}`;
 
 	return await fetchFunction({ url });
 };
 
-const fetchBoundsData = async(box, zoom, filtersObj = null) => {
+const fetchBoundsData = async (box, zoom, filtersObj = null) => {
 	const preparedBox = box.map(item => [ item[1], item[0] ]);
 	const bounds = JSON.stringify(preparedBox);
 	const filters = JSON.stringify(filtersObj);
@@ -97,7 +97,7 @@ const fetchSingleRating = async ratingID => {
 	return await fetchFunction({ url });
 };
 
-const reactOnRating = async(ratingID, shouldReport) => {
+const reactOnRating = async (ratingID, shouldReport) => {
 	const url = `${API_URL}/geo/react_rating`;
 
 	return await fetchFunction({
@@ -112,7 +112,7 @@ const reactOnRating = async(ratingID, shouldReport) => {
 
 // POIs
 
-const savePOIToDB = async(coords, props) => {
+const savePOIToDB = async (coords, props) => {
 	const url = `${API_URL}/poi/add`;
 
 	return await fetchFunction({
@@ -128,7 +128,7 @@ const savePOIToDB = async(coords, props) => {
 	});
 };
 
-const fetchPOIsBounds = async(box, zoom) => {
+const fetchPOIsBounds = async (box, zoom) => {
 	const preparedBox = box.map(item => [ item[1], item[0] ]);
 	const bounds = JSON.stringify(preparedBox);
 	const url = `${API_URL}/poi/read_bounds/${new URLSearchParams({ bounds, zoom })}`;
@@ -142,6 +142,19 @@ const getSinglePointOfInterest = async latlng => {
 	return await fetchFunction({ url });
 };
 
+const reactOnPOI = async (goal, pointID) => {
+	const url = `${API_URL}/poi/react`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			pointID,
+			isUpvote: goal === 'upvote',
+		}),
+	});
+};
+
 // comments
 
 const fetchComments = async geoID => {
@@ -150,7 +163,7 @@ const fetchComments = async geoID => {
 	return await fetchFunction({ url });
 };
 
-const reactOnComment = async(goal, key) => {
+const reactOnComment = async (goal, key) => {
 	const url = `${API_URL}/geo/react_comment`;
 
 	return await fetchFunction({
@@ -165,7 +178,7 @@ const reactOnComment = async(goal, key) => {
 
 // users
 
-const register = async(email, password, lang) => {
+const register = async (email, password, lang) => {
 	const url = `${API_URL}/user/register`;
 
 	return await fetchFunction({
@@ -179,7 +192,7 @@ const register = async(email, password, lang) => {
 	});
 };
 
-const login = async(email, password) => {
+const login = async (email, password) => {
 	const url = `${API_URL}/user/login`;
 
 	return await fetchFunction({
@@ -192,7 +205,7 @@ const login = async(email, password) => {
 	});
 };
 
-const onboard = async(userName, ageGrp, moneyGrp, userID) => {
+const onboard = async (userName, ageGrp, moneyGrp, userID) => {
 	const url = `${API_URL}/user/onboard`;
 
 	return await fetchFunction({
@@ -207,7 +220,7 @@ const onboard = async(userName, ageGrp, moneyGrp, userID) => {
 	});
 };
 
-const sendFeedback = async({ heading, comment }, userID) => {
+const sendFeedback = async ({ heading, comment }, userID) => {
 	const url = `${API_URL}/user/feedback`;
 
 	return await fetchFunction({
@@ -227,25 +240,25 @@ const verifyUser = async token => {
 	return await fetchFunction({ url });
 };
 
-const checkUser = async() => {
+const checkUser = async () => {
 	const url = `${API_URL}/user/check_user`;
 
 	return await fetchFunction({ url });
 };
 
-const fetchRatedPlaces = async() => {
+const fetchRatedPlaces = async () => {
 	const url = `${API_URL}/user/read_places`;
 
 	return await fetchFunction({ url });
 };
 
-const askMoreRatings = async() => {
+const askMoreRatings = async () => {
 	const url = `${API_URL}/user/ask_more_ratings`;
 
 	return await fetchFunction({ url });
 };
 
-const logout = async() => {
+const logout = async () => {
 	const url = `${API_URL}/user/logout`;
 
 	return await fetchFunction({ url, method: 'DELETE' });
@@ -263,7 +276,7 @@ const reverify = async email => {
 	});
 };
 
-const reset = async(password, token) => {
+const reset = async (password, token) => {
 	const url = `${API_URL}/user/change_pass`;
 
 	return await fetchFunction({
@@ -300,7 +313,7 @@ const saveLang = async lang => {
 	});
 };
 
-const voteForTask = async(goal, key) => {
+const voteForTask = async (goal, key) => {
 	const url = `${API_URL}/user/tasks_vote`;
 
 	return await fetchFunction({
@@ -319,7 +332,7 @@ const checkVotes = async id => {
 	return await fetchFunction({ url });
 };
 
-const updateRatingYear = async(id, newValue) => {
+const updateRatingYear = async (id, newValue) => {
 	const url = `${API_URL}/user/update_rating_year`;
 
 	return await fetchFunction({
@@ -367,4 +380,5 @@ export {
 	savePOIToDB,
 	fetchPOIsBounds,
 	getSinglePointOfInterest,
+	reactOnPOI,
 };

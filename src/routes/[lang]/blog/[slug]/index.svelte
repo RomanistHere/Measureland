@@ -1,7 +1,7 @@
 <script context="module">
     import { getSingleInstance } from '../../../../markdown/prepareMarkdown.js';
 
-    export function load({ page }) {
+    export function load ({ page }) {
     	const { lang, slug } = page.params;
     	const neededPost = getSingleInstance(lang, slug);
 

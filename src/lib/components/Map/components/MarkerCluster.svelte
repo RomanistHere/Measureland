@@ -257,7 +257,7 @@
     	}
     };
 
-    const getNewData = async() => {
+    const getNewData = async () => {
     	registerAction('mapLoadData');
     	// console.warn('____________new_try____________')
     	// console.time('preparations')

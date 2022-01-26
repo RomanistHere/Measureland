@@ -35,7 +35,7 @@
     	});
     };
 
-    const upvote = async() => {
+    const upvote = async () => {
     	if (!isUserLoggedIn) {
     		openAnotherOverlay('loginPopup');
     		return;
@@ -63,7 +63,7 @@
     	updateNumbers();
     };
 
-    const downvote = async() => {
+    const downvote = async () => {
     	if (!isUserLoggedIn) {
     		openAnotherOverlay('loginPopup');
     		return;
@@ -91,7 +91,7 @@
     	updateNumbers();
     };
 
-    onMount(async() => {
+    onMount(async () => {
     	const { error, data } = await checkVotes(id);
     	if (error) {
     		isError = true;

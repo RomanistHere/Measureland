@@ -57,11 +57,13 @@
 			on:mouseleave={handleMouseleave}
 		>
 			{#each Object.keys($json('tags')) as tagKey}
-				<Tag
-					key={tagKey}
-					clickable={true}
-					on:click={() => { addTag(tagKey) }}
-				/>
+				{#if tagKey !== 'own'}
+					<Tag
+						key={tagKey}
+						clickable={true}
+						on:click={() => { addTag(tagKey) }}
+					/>
+				{/if}
 			{/each}
 			
 			<p class="text-sm">

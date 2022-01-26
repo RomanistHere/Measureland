@@ -12,7 +12,7 @@
 
 	let Map;
 
-	onMount(async() => {
+	onMount(async () => {
 		const module = await import('../../lib/components/Map/Map.svelte');
 		Map = module.default;
 	});

@@ -112,7 +112,7 @@
     	isCenterHovered = false;
     };
 
-    const changeLanguage = async() => {
+    const changeLanguage = async () => {
     	const nextLang = $locale === 'ru' ? 'en' : 'ru';
     	locale.set(nextLang);
     	if (typeof window !== 'undefined') {

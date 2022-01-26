@@ -149,7 +149,7 @@
     	userStateStore.update(state => ({ ...state, shouldSendEvent }));
     };
 
-    const askForMoreRatings = async() => {
+    const askForMoreRatings = async () => {
     	if (!$isDesktop)
     		closeOverlay('sidebar');
     	openAnotherOverlay('askForMoreRatingsPopup');
