@@ -119,8 +119,9 @@
 		}
 	
 		const { result } = data;
+		const filteredData = result.filter(item => item.isAdequate);
 	
-		addDataAndDisplay(result);
+		addDataAndDisplay(filteredData);
 	};
 	
 	const debouncedLoading = debounce(loadPOIs, 300);

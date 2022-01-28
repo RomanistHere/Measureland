@@ -5,6 +5,8 @@ const PointOfInterest = require('../models/point-of-interest.model');
 const User = require('../models/user.model');
 const CommentPOI = require("../models/comment-POI.model");
 
+const { LIMIT_OF_POI_DISLIKES } = require('../config');
+
 exports.POI_add = async (req, res) => {
 	const { body } = req;
 
@@ -99,7 +101,7 @@ exports.POI_get_by_bounds = async (req, res) => {
 					},
 				},
 			},
-			'location.coordinates properties.averageRating',
+			'location.coordinates isAdequate',
 		);
 
 		return res.json({
@@ -215,6 +217,14 @@ exports.POI_react = async (req, res) => {
 		}, {
 			new: true,
 		});
+
+		if (resultRemove.dislikes.length > LIMIT_OF_POI_DISLIKES) {
+			await PointOfInterest.findOneAndUpdate({
+				_id: sanitize(pointID),
+			}, {
+				isAdequate: false,
+			});
+		}
 
 		return res.json({
 			error: null,

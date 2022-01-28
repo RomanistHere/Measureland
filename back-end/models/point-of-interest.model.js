@@ -14,6 +14,10 @@ const schema = new Schema({
 		type: String,
 		required: true,
 	},
+	isAdequate: {
+		type: Boolean,
+		default: true,
+	},
 	tags: {
 		type: [ String ],
 	},
