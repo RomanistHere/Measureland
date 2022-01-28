@@ -89,7 +89,7 @@
 	};
 	
 	const openCommentsSidebar = () =>
-		openAnotherOverlay('commentsSidebar', {});
+		openAnotherOverlay('commentsSidebar', { id: pointID, type: 'POI' });
 	
 	const openAddCommentPopup = () =>
 		openAnotherOverlay('addCommentPOI', { pointID });

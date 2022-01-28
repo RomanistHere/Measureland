@@ -169,6 +169,25 @@ const addCommentPOI = async (pointID, comment, username) => {
 	});
 };
 
+const fetchCommentsPOI = async pointID => {
+	const url = `${API_URL}/poi/read_comments/${new URLSearchParams({ pointID })}`;
+
+	return await fetchFunction({ url });
+};
+
+const reactOnCommentPOI = async (goal, key) => {
+	const url = `${API_URL}/poi/react_comment`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			key,
+			goal,
+		}),
+	});
+};
+
 // comments
 
 const fetchComments = async geoID => {
@@ -396,4 +415,6 @@ export {
 	getSinglePointOfInterest,
 	reactOnPOI,
 	addCommentPOI,
+	fetchCommentsPOI,
+	reactOnCommentPOI,
 };

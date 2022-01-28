@@ -281,6 +281,91 @@ exports.POI_add_comment = async (req, res) => {
 	}
 };
 
+exports.POI_get_comments = async (req, res) => {
+	const userEmail = sanitize(req.session.userID);
+
+	const urlParams = new URLSearchParams(req.params.pointID);
+	const { pointID } = Object.fromEntries(urlParams);
+
+	try {
+		const comments = await CommentPOI.find({ "point": sanitize(pointID) });
+		const user = await User.findOne({ email: userEmail });
+		const userID = user ? user._id : 'anon';
+
+		const arrayToSend = comments.map(item => ({
+			isYours: user ? (Boolean(userID.equals(item.user))) : false,
+			isLiked: user ? item.likes.some(i => i.equals(userID)) : false,
+			isDisliked: user ? item.dislikes.some(i => i.equals(userID)) : false,
+			comment: item.comment,
+			username: item.username,
+			liked: item.likes.length,
+			disliked: item.dislikes.length,
+			id: item._id,
+		}));
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Comments fetched",
+				userID: userID ? userID : null,
+				array: arrayToSend,
+			},
+		});
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
+exports.POI_react_comment = async (req, res) => {
+	if (!req.session.userID)
+		return res.status(400).json({ error: "User is not logged in" });
+
+	const email = sanitize(req.session.userID);
+	const { key, goal } = req.body;
+	const property = goal === 'like' ? 'likes' : 'dislikes';
+	const propertyOpp = goal === 'like' ? 'dislikes' : 'likes';
+
+	try {
+		const user = await User.findOne({ email });
+
+		if (!user)
+			return res.status(400).json({ error: "User not found" });
+
+		const userID = user._id;
+		const result = await CommentPOI.findOneAndUpdate({
+			_id: sanitize(key),
+		}, {
+			$addToSet: {
+				[property]: userID,
+			},
+		}, {
+			new: true,
+		});
+
+		const resultRemove = await CommentPOI.findOneAndUpdate({
+			_id: sanitize(key),
+		}, {
+			$pull: {
+				[propertyOpp]: userID,
+			},
+		}, {
+			new: true,
+		});
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Reaction successful",
+				userID: user.email,
+			},
+		});
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
 exports.POI_delete = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });

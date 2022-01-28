@@ -9,7 +9,7 @@
 
 <a
     href={"#"}
-    class="inline-block mr-2 font-bold text-lg transition-transform origin-left"
+    class="inline-block mr-4 font-bold text-lg transition-transform origin-left"
     class:scale-125={isDisabled}
     on:click|preventDefault={action}
 >

@@ -10,8 +10,12 @@
     	showSomethingWrongNotification,
     	logError,
     } from "../../../../../utilities/helpers.js";
-    import { reactOnComment } from "../../../../../utilities/api.js";
+    import {
+	    reactOnComment,
+	    reactOnCommentPOI,
+    } from "../../../../../utilities/api.js";
 
+    export let type;
     export let data;
 
     const { isYours, isLiked, isDisliked, rating, comment, username, id } = data;
@@ -19,7 +23,12 @@
     let isLikesDisabled = isLiked || isYours;
     let isDislikesDisabled = isDisliked || isYours;
 
-    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    const isUserLoggedIn = $userStateStore.userID !== null;
+    const reactOnCommentsObj = {
+	    'POI': reactOnCommentPOI,
+	    'rating': reactOnComment,
+    };
+    const react = reactOnCommentsObj[type];
 
     const likeComment = async () => {
     	if (!isUserLoggedIn) {
@@ -39,7 +48,7 @@
     	liked = liked + 1;
     	isLikesDisabled = true;
 
-    	const { error } = await reactOnComment('like', id);
+    	const { error } = await react('like', id);
     	if (error) {
     		logError(error);
     		showSomethingWrongNotification();
@@ -65,7 +74,7 @@
     	disliked = disliked + 1;
     	isDislikesDisabled = true;
 
-    	const { error } = await reactOnComment('dislike', id);
+    	const { error } = await react('dislike', id);
     	if (error) {
     		logError(error);
     		showSomethingWrongNotification();
@@ -83,7 +92,9 @@
         {#if isYours}
             ({$_('_.user')})
         {/if}
-        <span class="italic opacity-60 text-sm">{$_('_.commentConnector')} {rating}</span>
+	    {#if type === 'rating'}
+            <span class="italic opacity-60 text-sm">{$_('_.commentConnector')} {rating}</span>
+	    {/if}
     </p>
 
     <p class="my-2">{comment}</p>

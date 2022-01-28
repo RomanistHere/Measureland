@@ -4,13 +4,19 @@
     import CommentBlock from './CommentBlock.svelte';
     import Spinner from '../../../../ui-elements/Spinner.svelte';
 
-    import { fetchComments } from "../../../../../utilities/api.js";
+    import { fetchComments, fetchCommentsPOI } from "../../../../../utilities/api.js";
     import { showSomethingWrongNotification, logError } from '../../../../../utilities/helpers.js';
 
     export let sidebarData;
 
-    const fetchData = async geoID => {
-    	const { error, data } = await fetchComments(geoID);
+    const loadCommentsObj = {
+	    'POI': fetchCommentsPOI,
+	    'rating': fetchComments,
+    };
+
+    const fetchData = async ({ id, type }) => {
+	    const loadComments = loadCommentsObj[type];
+	    const { error, data } = await loadComments(id);
 
     	if (error) {
     		logError(error);
@@ -31,7 +37,10 @@
     {:then response}
         <ul class="mt-2">
             {#each response.array.sort((a, b) => b.liked - a.liked) as data}
-                <CommentBlock { data } />
+                <CommentBlock
+	                { data }
+	                type={sidebarData.type}
+                />
             {/each}
         </ul>
     {/await}

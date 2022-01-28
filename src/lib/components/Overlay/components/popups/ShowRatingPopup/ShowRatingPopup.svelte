@@ -62,7 +62,7 @@
     };
 
     const openCommentsSidebar = () =>
-    	openAnotherOverlay('commentsSidebar', commentGeoID);
+    	openAnotherOverlay('commentsSidebar', { id: commentGeoID, type: 'rating' });
 
     const fetchData = async ({ lng, lat }) => {
     	geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
@@ -107,7 +107,7 @@
     	personalExperiencePercent = Math.floor(numberOfPersonalExperience / properties.numberOfUsers * 100);
 
     	// update comments if they opened
-    	if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data !== commentGeoID)
+    	if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data.id !== commentGeoID)
 		    openCommentsSidebar();
     };
 

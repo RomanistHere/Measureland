@@ -5,9 +5,11 @@ const POI_controller = require('../controllers/points-of-interest.controller');
 router.post('/add', POI_controller.POI_add);
 router.post('/react', POI_controller.POI_react);
 router.post('/add_comment', POI_controller.POI_add_comment);
+router.post('/react_comment', POI_controller.POI_react_comment);
 
 router.get('/read_bounds/:coords', POI_controller.POI_get_by_bounds);
 router.get('/read_single/:coords', POI_controller.POI_get_single);
+router.get('/read_comments/:pointID', POI_controller.POI_get_comments);
 
 // todo
 // router.delete('/delete_point/:pointID', POI_controller.POI_delete);
