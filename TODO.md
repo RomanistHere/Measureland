@@ -3,7 +3,6 @@
 - fix focus states
 - add ratings if previous ones approved enough (add karma)
 - new secret feature
-  - react on POI
   - comments
   - delete POI
   - add POI to nearby popup
@@ -30,7 +29,6 @@
 
 - more badges
 - share nearby API public
-- redesign blog pages
 - mention feedback form at the support page
 - login via Telegram
 - fix workers (?)

@@ -108,7 +108,7 @@
 
     	// update comments if they opened
     	if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data !== commentGeoID)
-    		openAnotherOverlay('commentsSidebar', commentGeoID);
+		    openCommentsSidebar();
     };
 
     $: promise = fetchData(popupData);

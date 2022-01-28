@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const router = require("express").Router();
 const MongoLimitStore = require('rate-limit-mongo');
 const rateLimit = require("express-rate-limit");
@@ -10,32 +10,32 @@ const dev_db_url = process.env.DEV_DB_PATH;
 const mongoDB = isProd && process.env.MONGODB_URI ? process.env.MONGODB_URI : dev_db_url;
 
 const mediumLimiter = rateLimit({
-    store: new MongoLimitStore({
-        uri: mongoDB,
-        expireTimeMs: 20 * 60 * 1000,
-        collectionName: 'expressRateUser',
-        errorHandler: console.error.bind(null, 'rate-limit-mongo')
-    }),
-    windowMs: 20 * 60 * 1000,
-    max: 70,
-    handler: (req, res) => {
-        res.status(429).json({ error: 'Too many requests, please try again later' });
-    }
+	store: new MongoLimitStore({
+		uri: mongoDB,
+		expireTimeMs: 20 * 60 * 1000,
+		collectionName: 'expressRateUser',
+		errorHandler: console.error.bind(null, 'rate-limit-mongo'),
+	}),
+	windowMs: 20 * 60 * 1000,
+	max: 80,
+	handler: (req, res) => {
+		res.status(429).json({ error: 'Too many requests, please try again later' });
+	},
 });
 
 const hardLimiter = rateLimit({
-    store: new MongoLimitStore({
-        uri: mongoDB,
-        expireTimeMs: 20 * 60 * 1000,
-        collectionName: 'expressRateUser',
-        errorHandler: console.error.bind(null, 'rate-limit-mongo')
-    }),
-    windowMs: 20 * 60 * 1000,
-    max: 30,
-    // skipFailedRequests: true,
-    handler: (req, res) => {
-        res.status(429).json({ error: 'Too many requests, please try again later' });
-    }
+	store: new MongoLimitStore({
+		uri: mongoDB,
+		expireTimeMs: 20 * 60 * 1000,
+		collectionName: 'expressRateUser',
+		errorHandler: console.error.bind(null, 'rate-limit-mongo'),
+	}),
+	windowMs: 20 * 60 * 1000,
+	max: 40,
+	// skipFailedRequests: true,
+	handler: (req, res) => {
+		res.status(429).json({ error: 'Too many requests, please try again later' });
+	},
 });
 
 router.post('/register', hardLimiter, user_controller.user_register);

@@ -19,7 +19,7 @@ const getNewRating = (rating, numberOfUsers, quizRating) => {
 	}, {});
 };
 
-const saveComment = async(comment, userID, geoID, username, rating) =>
+const saveComment = async (comment, userID, geoID, username, rating) =>
 	await new Comment({
 		user: userID,
 		geo: geoID,
@@ -28,7 +28,7 @@ const saveComment = async(comment, userID, geoID, username, rating) =>
 		rating,
 	}).save();
 
-const saveRating = async(userID, commentID, geoID, rating, averageRating, isPersonalExperience, timeline) =>
+const saveRating = async (userID, commentID, geoID, rating, averageRating, isPersonalExperience, timeline) =>
 	await new Rating({
 		userID,
 		commentID,
@@ -39,7 +39,7 @@ const saveRating = async(userID, commentID, geoID, rating, averageRating, isPers
 		timeline,
 	}).save();
 
-const addGeoToUser = async(userEmail, ratingID, geoID, activeRatings) =>
+const addGeoToUser = async (userEmail, ratingID, geoID, activeRatings) =>
 	await User.findOneAndUpdate({
 		email: userEmail,
 	}, {
@@ -54,7 +54,7 @@ const addGeoToUser = async(userEmail, ratingID, geoID, activeRatings) =>
 		new: true,
 	});
 
-const addRatingRefToGeo = async(geoID, ratingID) =>
+const addRatingRefToGeo = async (geoID, ratingID) =>
 	await Geo.findOneAndUpdate({
 		_id: geoID,
 	}, {
@@ -65,7 +65,7 @@ const addRatingRefToGeo = async(geoID, ratingID) =>
 		new: true,
 	});
 
-const saveAndUpdateRefs = async(userID, geoID, comment, username, averageRating, rating, isPersonalExperience, timeline, userEmail, activeRatings) => {
+const saveAndUpdateRefs = async (userID, geoID, comment, username, averageRating, rating, isPersonalExperience, timeline, userEmail, activeRatings) => {
 	const commentSaved = comment ? await saveComment(comment, userID, geoID, username, averageRating) : null;
 	const commentID = commentSaved ? commentSaved._id : null;
 
@@ -76,7 +76,7 @@ const saveAndUpdateRefs = async(userID, geoID, comment, username, averageRating,
 	const geoUpdatedSecondTime = await addRatingRefToGeo(geoID, ratingID);
 };
 
-exports.geo_add = async(req, res, next) => {
+exports.geo_add = async (req, res, next) => {
 	const { body } = req;
 
 	if (!req.session.userID)
@@ -189,7 +189,7 @@ exports.geo_add = async(req, res, next) => {
 	}
 };
 
-exports.geo_location = async(req, res, next) => {
+exports.geo_location = async (req, res, next) => {
 	const userID = sanitize(req.session.userID);
 
 	const urlParams = new URLSearchParams(req.params.coords);
@@ -249,7 +249,7 @@ exports.geo_location = async(req, res, next) => {
 	}
 };
 
-exports.geo_location_nearby = async(req, res, next) => {
+exports.geo_location_nearby = async (req, res, next) => {
 	const { userID } = req.session;
 	const urlParams = new URLSearchParams(req.params.coords);
 	const { coords, radius } = Object.fromEntries(urlParams);
@@ -292,7 +292,7 @@ exports.geo_location_nearby = async(req, res, next) => {
 	}
 };
 
-exports.geo_comments = async(req, res, next) => {
+exports.geo_comments = async (req, res, next) => {
 	const userEmail = sanitize(req.session.userID);
 
 	const urlParams = new URLSearchParams(req.params.geoID);
@@ -329,7 +329,7 @@ exports.geo_comments = async(req, res, next) => {
 	}
 };
 
-exports.rating_get = async(req, res, next) => {
+exports.rating_get = async (req, res, next) => {
 	const userEmail = sanitize(req.session.userID);
 
 	const urlParams = new URLSearchParams(req.params.ratingID);
@@ -363,7 +363,7 @@ exports.rating_get = async(req, res, next) => {
 	}
 };
 
-exports.rating_react = async(req, res) => {
+exports.rating_react = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
@@ -401,7 +401,7 @@ exports.rating_react = async(req, res) => {
 	}
 };
 
-exports.geo_react_comment = async(req, res) => {
+exports.geo_react_comment = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
@@ -450,7 +450,7 @@ exports.geo_react_comment = async(req, res) => {
 	}
 };
 
-exports.geo_location_by_bounds = async(req, res, next) => {
+exports.geo_location_by_bounds = async (req, res, next) => {
 	const { userID } = req.session;
 	const urlParams = new URLSearchParams(req.params.coords);
 	const { bounds, zoom, filters } = Object.fromEntries(urlParams);

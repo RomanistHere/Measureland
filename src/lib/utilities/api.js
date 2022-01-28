@@ -155,6 +155,20 @@ const reactOnPOI = async (goal, pointID) => {
 	});
 };
 
+const addCommentPOI = async (pointID, comment, username) => {
+	const url = `${API_URL}/poi/add_comment`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			pointID,
+			comment,
+			username,
+		}),
+	});
+};
+
 // comments
 
 const fetchComments = async geoID => {
@@ -381,4 +395,5 @@ export {
 	fetchPOIsBounds,
 	getSinglePointOfInterest,
 	reactOnPOI,
+	addCommentPOI,
 };

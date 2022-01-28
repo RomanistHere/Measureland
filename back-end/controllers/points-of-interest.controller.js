@@ -3,9 +3,9 @@ const Sentry = require('@sentry/node');
 
 const PointOfInterest = require('../models/point-of-interest.model');
 const User = require('../models/user.model');
-const Comment = require("../models/comment.model");
+const CommentPOI = require("../models/comment-POI.model");
 
-exports.POI_add = async(req, res, next) => {
+exports.POI_add = async (req, res) => {
 	const { body } = req;
 
 	if (!req.session.userID)
@@ -84,7 +84,7 @@ exports.POI_add = async(req, res, next) => {
 	}
 };
 
-exports.POI_get_by_bounds = async(req, res, next) => {
+exports.POI_get_by_bounds = async (req, res) => {
 	const { userID } = req.session;
 	const urlParams = new URLSearchParams(req.params.coords);
 	const { bounds, zoom } = Object.fromEntries(urlParams);
@@ -130,7 +130,7 @@ const getRelations = async (userID, POIID, likes, dislikes) => {
 	};
 };
 
-exports.POI_get_single = async(req, res, next) => {
+exports.POI_get_single = async (req, res) => {
 	const userID = sanitize(req.session.userID);
 
 	const urlParams = new URLSearchParams(req.params.coords);
@@ -152,7 +152,7 @@ exports.POI_get_single = async(req, res, next) => {
 		if (!result)
 			return res.status(400).json({ error: 'Point of interest not found' });
 
-		const { title, description, tags, likes, dislikes, _id } = result;
+		const { title, description, tags, likes, dislikes, _id, commentIDs } = result;
 		const { isYourPOI, isLiked, isDisliked } = await getRelations(userID, result._id, likes, dislikes);
 
 		return res.json({
@@ -170,6 +170,7 @@ exports.POI_get_single = async(req, res, next) => {
 					pointID: _id,
 					likes: likes.length,
 					dislikes: dislikes.length,
+					comments: commentIDs.length,
 				},
 			},
 		});
@@ -179,7 +180,7 @@ exports.POI_get_single = async(req, res, next) => {
 	}
 };
 
-exports.POI_react = async(req, res) => {
+exports.POI_react = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
@@ -223,6 +224,72 @@ exports.POI_react = async(req, res) => {
 			},
 		});
 	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
+exports.POI_add_comment = async (req, res) => {
+	if (!req.session.userID)
+		return res.status(400).json({ error: "User is not logged in" });
+
+	const userID = sanitize(req.session.userID);
+	const { pointID, comment, username } = req.body;
+
+	try {
+		const user = await User.findOne({ email: userID });
+		if (!user)
+			return res.status(400).json({ error: "User is not found" });
+
+		const commentSaved = await new CommentPOI({
+			user: user._id,
+			point: sanitize(pointID),
+			username: sanitize(username),
+			comment: sanitize(comment),
+		}).save();
+
+		const pointUpdated = await PointOfInterest.findOneAndUpdate({
+			_id: sanitize(pointID),
+		}, {
+			$addToSet: {
+				'commentIDs': commentSaved._id,
+			},
+		}, {
+			new: true,
+		});
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Comment added",
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		Sentry.captureException(error);
+		return res.status(400).json({ error: "Could not add a comment" });
+	}
+};
+
+exports.POI_delete = async (req, res) => {
+	if (!req.session.userID)
+		return res.status(400).json({ error: "User is not logged in" });
+
+	const urlParams = new URLSearchParams(req.params.pointID);
+	const { pointID } = Object.fromEntries(urlParams);
+
+	try {
+		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: pointID });
+		console.log(pointRemoved);
+
+		return res.json({
+			error: null,
+			data: {
+				message: 'Point of Interest deleted',
+			},
+		});
+	} catch (error) {
+		console.log(error);
 		Sentry.captureException(error);
 		return res.status(400).json({ error });
 	}

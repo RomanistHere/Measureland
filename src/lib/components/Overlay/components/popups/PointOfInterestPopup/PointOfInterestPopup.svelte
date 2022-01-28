@@ -6,7 +6,7 @@
 	import Tag from "../../../../ui-elements/Tag.svelte";
 	import Spinner from '../../../../ui-elements/Spinner.svelte';
 	import VoteButton from '../../../../ui-elements/VoteButton.svelte';
-	// import TextButton from '../../../../ui-elements/TextButton.svelte';
+	import TextButton from '../../../../ui-elements/TextButton.svelte';
 
 	import { getSinglePointOfInterest, reactOnPOI } from "../../../../../utilities/api.js";
 	import {
@@ -17,7 +17,7 @@
 		centerMap,
 	} from "../../../../../utilities/helpers.js";
 	import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
-	import { appStateStore, isDesktop, userStateStore } from "../../../../../../stores/state.js";
+	import { isDesktop, userStateStore } from "../../../../../../stores/state.js";
 
 	const map = $mapReference;
 	const geocodeService = $geocodeServiceReference;
@@ -26,6 +26,7 @@
 
 	let likes = 0;
 	let dislikes = 0;
+	let numberOfComments = 0;
 	let isLikesDisabled = true;
 	let isDislikesDisabled = true;
 	let isOwnPOI = false;
@@ -86,9 +87,12 @@
 			return;
 		}
 	};
-
+	
 	const openCommentsSidebar = () =>
 		openAnotherOverlay('commentsSidebar', {});
+	
+	const openAddCommentPopup = () =>
+		openAnotherOverlay('addCommentPOI', { pointID });
 
 	const fetchData = async ({ lng, lat }) => {
 		geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
@@ -116,7 +120,7 @@
 		}
 	
 		const { properties } = data;
-		const { title, description, tags, isYourPOI, isLiked, isDisliked } = properties;
+		const { title, description, tags, isYourPOI, isLiked, isDisliked, comments } = properties;
 
 		likes = properties.likes;
 		dislikes = properties.dislikes;
@@ -124,6 +128,7 @@
 		isDislikesDisabled = isYourPOI || isDisliked;
 		isOwnPOI = isYourPOI;
 		pointID = properties.pointID;
+		numberOfComments = comments;
 
 		return {
 			title,
@@ -181,13 +186,26 @@
 			/>
 		</div>
 
-<!--		<div>-->
-<!--			<a href={"#"} class="underline" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:-->
-<!--			<span class="sug-col font-bold text-2xl -md:text-lg">12</span>-->
-<!--		</div>-->
+		<div class="flex justify-between items-end mt-4">
+			<div>
+				<a
+					href={"#"}
+					class="underline"
+					class:opacity-40={numberOfComments === 0}
+					class:pointer-events-none={numberOfComments === 0}
+					on:click|preventDefault={openCommentsSidebar}
+				>
+					{$_('showRatingPopup.comments')}
+				</a>:
+				<span class="sug-col font-bold leading-3 text-2xl -md:text-lg">
+					{numberOfComments}
+				</span>
+			</div>
+			
+			<TextButton
+				text="Добавить комментарий 💬"
+				action={openAddCommentPopup}
+			/>
+		</div>
 	{/await}
 </div>
-
-<style>
-
-</style>

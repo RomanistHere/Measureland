@@ -272,6 +272,11 @@ const generateYearsBetween = (startYear, endYear) => {
 	return years;
 };
 
+const blurCurrentInput = () => {
+	if (document)
+		document.activeElement.blur();
+};
+
 const getMapZoom = map => map.getZoom();
 
 const getBoundsData = map => {
@@ -343,4 +348,5 @@ export {
 	getMapZoom,
 	getBoundsData,
 	getScreenData,
+	blurCurrentInput,
 };

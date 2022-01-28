@@ -22,12 +22,14 @@
     import PartnersPopup from './PartnersPopup.svelte';
     import MyPlacesPopup from './MyPlacesPopup.svelte';
     import FeedbackPopup from './FeedbackPopup.svelte';
+    import AddCommentPOI from './AddCommentPOI.svelte';
     import LoginPopup from './LoginPopup.svelte';
 
     export let popupName;
     export let popupData;
 
     const popupList = {
+	    addCommentPOI: AddCommentPOI,
     	askForMoreRatingsPopup: AskForMoreRatingsPopup,
 	    pointOfInterestPopup: PointOfInterestPopup,
 	    addPOIPopup: AddPOIPopup,
