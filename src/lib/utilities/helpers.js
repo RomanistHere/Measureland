@@ -141,7 +141,7 @@ const openAnotherOverlay = (overlayName = null, data = {}) => {
 		registerAction(overlayName);
 	} catch (e) {
 		logError(e);
-		logError('Define popup in constants/overlayStateDefault.js');
+		logError('Suggested solution: define popup in constants/overlayStateDefault.js');
 	}
 };
 

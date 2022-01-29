@@ -17,7 +17,7 @@
 		centerMap,
 	} from "../../../../../utilities/helpers.js";
 	import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
-	import { isDesktop, userStateStore } from "../../../../../../stores/state.js";
+	import { isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
 
 	const map = $mapReference;
 	const geocodeService = $geocodeServiceReference;
@@ -32,9 +32,11 @@
 	let isOwnPOI = false;
 	let circle = null;
 	let pointID = null;
+	let currentCoords = { lat: 0, lng: 0 };
 
 	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
 	$: isUserLoggedIn = $userStateStore.userID !== null;
+	$: promise = null;
 
 	const endorseRelevant = async () => {
 		if (!isUserLoggedIn) {
@@ -91,6 +93,11 @@
 	const openCommentsSidebar = () =>
 		openAnotherOverlay('commentsSidebar', { id: pointID, type: 'POI' });
 	
+	const checkCommentsRelevanceAndOpen = () => {
+		if (!$overlayStateStore.commentsSidebar.isOpen)
+			openCommentsSidebar();
+	};
+	
 	const openAddCommentPopup = () =>
 		openAnotherOverlay('addCommentPOI', { pointID });
 
@@ -129,6 +136,10 @@
 		isOwnPOI = isYourPOI;
 		pointID = properties.pointID;
 		numberOfComments = comments;
+	
+		// update comments if they opened
+		if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data.id !== pointID)
+			openCommentsSidebar();
 
 		return {
 			title,
@@ -137,7 +148,11 @@
 		};
 	};
 
-	$: promise = fetchData(popupData);
+	// need to check in order not to do unnecessary requests.
+	$: if (currentCoords.lat !== popupData.lat && currentCoords.lng !== popupData.lng) {
+		promise = fetchData(popupData);
+		currentCoords = { ...popupData };
+	}
 
 	onDestroy(() => {
 		map.removeLayer(circle);
@@ -193,7 +208,7 @@
 					class="underline"
 					class:opacity-40={numberOfComments === 0}
 					class:pointer-events-none={numberOfComments === 0}
-					on:click|preventDefault={openCommentsSidebar}
+					on:click|preventDefault={checkCommentsRelevanceAndOpen}
 				>
 					{$_('showRatingPopup.comments')}
 				</a>:

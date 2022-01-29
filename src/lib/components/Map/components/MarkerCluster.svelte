@@ -12,7 +12,6 @@
     import { mapReference, markersReference } from "../../../../stores/references.js";
     import {
 	    roundToFifthDecimal,
-	    roundToFifthDecimalLatLng,
 	    roundToInt,
 	    openAnotherOverlay,
 	    debounce,
@@ -354,7 +353,8 @@
     	addDataAndDisplay(result);
     };
 
-    map.on('moveend', debounce(getNewData, 300));
+    // don't use native "moveend" event, it triggers on every button click in popups
+    map.on('move', debounce(getNewData, 300));
     onMount(getNewData);
 
     const subscribeToFiltersChanges = ({ isFiltersOn, filters }) => {

@@ -38,9 +38,11 @@
     let loadedRating = null;
     let circle = null;
     let timelineData = [];
+    let currentCoords = { lat: 0, lng: 0 };
 
     $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
     $: isUserLoggedIn = $userStateStore.userID !== null;
+    $: promise = null;
     // complexity because of translation
     $: criteriaArray = loadedRating === null
     	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, rating: 0 }))
@@ -63,6 +65,11 @@
 
     const openCommentsSidebar = () =>
     	openAnotherOverlay('commentsSidebar', { id: commentGeoID, type: 'rating' });
+
+    const checkCommentsRelevanceAndOpen = () => {
+	    if (!$overlayStateStore.commentsSidebar.isOpen)
+		    openCommentsSidebar();
+    };
 
     const fetchData = async ({ lng, lat }) => {
     	geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
@@ -111,7 +118,11 @@
 		    openCommentsSidebar();
     };
 
-    $: promise = fetchData(popupData);
+    // need to check in order not to do unnecessary requests.
+    $: if (currentCoords.lat !== popupData.lat && currentCoords.lng !== popupData.lng) {
+	    promise = fetchData(popupData);
+	    currentCoords = { ...popupData };
+    }
 
     onDestroy(() => {
     	appStateStore.update(state => ({ ...state, showRating: false }));
@@ -153,7 +164,7 @@
             <span class="sug-col font-bold text-2xl -md:text-lg">{numberOfUsers}</span>
         </div>
         <div>
-            <a href={"#"} class="underline" on:click|preventDefault={openCommentsSidebar}>{$_('showRatingPopup.comments')}</a>:
+            <a href={"#"} class="underline" on:click|preventDefault={checkCommentsRelevanceAndOpen}>{$_('showRatingPopup.comments')}</a>:
             <span class="sug-col font-bold text-2xl -md:text-lg">{numberOfComments}</span>
         </div>
     </div>
@@ -165,9 +176,9 @@
         {#if isUserLoggedIn && isAlreadyRatedByThisUser}
             <PrimaryButton text={$_('showRatingPopup.youHaveAlreadyRated')} disabled={true} />
         {:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
-            <PrimaryButton text='{$_('showRatingPopup.addNewRating')}' action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
+            <PrimaryButton text={$_('showRatingPopup.addNewRating')} action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
         {:else}
-            <PrimaryButton text='{$_('showRatingPopup.loginAndRate')}' action={() => openAnotherOverlay('loginPopup')} />
+            <PrimaryButton text={$_('showRatingPopup.loginAndRate')} action={() => openAnotherOverlay('loginPopup')} />
         {/if}
     </div>
 

@@ -24,6 +24,7 @@
 
 	const map = $mapReference;
 	let pointsOfInterestLayer;
+	let currentCenter = [ 0, 0 ];
 
 	const initPointOfInterestPopup = ({ latlng }) =>
 		openAnotherOverlay('pointOfInterestPopup', latlng);
@@ -103,7 +104,6 @@
 	};
 	
 	const loadPOIs = async () => {
-		console.log('heh');
 		const { zoom, currentScreenPoly } = getScreenData(map);
 		const queryBounds = currentScreenPoly.regions[0];
 	
@@ -128,9 +128,13 @@
 	const debouncedLoading = debounce(loadPOIs, 300);
 	const destroyPOIs = () => clusterMarkers.clearLayers();
 	
-	const checkTogglePOIs = ({ zoom, shouldShowPOIs }) => {
+	const checkTogglePOIs = ({ zoom, shouldShowPOIs, center }) => {
 		if (shouldShowPOIs && zoom >= 13) {
+			if (currentCenter[0] === center[0] && currentCenter[1] === center[1])
+				return;
+	
 			debouncedLoading();
+			currentCenter = [ ...center ];
 		} else {
 			destroyPOIs();
 		}
@@ -138,14 +142,15 @@
 	
 	$: checkTogglePOIs($appStateStore);
 	
-	map.on('moveend', () => {
+	// don't use native "moveend" event, it triggers on every button click in popups
+	map.on('move', debounce(() => {
 		const zoom = getMapZoom(map);
 		if (zoom < 13) {
 			destroyPOIs();
 			return;
 		}
 		debouncedLoading();
-	});
+	}, 300));
 	
 	onMount(() => {
 		const zoom = getMapZoom(map);
