@@ -8,12 +8,12 @@
     import PopupTitle from './PopupTitle.svelte';
 
     import {
-    	openAnotherOverlay,
-    	debounce,
-    	showSuccessNotification,
-    	showSomethingWrongNotification,
-    	registerAction,
-    	logError,
+	    openAnotherOverlay,
+	    debounce,
+	    showSuccessNotification,
+	    showSomethingWrongNotification,
+	    registerAction,
+	    logError, getErrorType,
     } from "../../../../utilities/helpers.js";
     import { login, reverify } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
@@ -49,13 +49,7 @@
     	if (error) {
     		logError(error);
     		isError = true;
-    		errorType = 'unrecognizedError';
-
-    		if (error === 'Email is wrong') {
-    			errorType = 'noAccount';
-    		} else if (error === 'Already verified') {
-    			errorType = 'alreadyVerified';
-    		}
+    		errorType = getErrorType(error);
 
     		showSomethingWrongNotification();
     		return;
@@ -87,17 +81,7 @@
     	if (error) {
     		logError(error);
     		isError = true;
-    		errorType = 'unrecognizedError';
-
-    		if (error === 'Email is wrong') {
-    			errorType = 'noAccount';
-    		} else if (error === 'User is not verified') {
-    			errorType = 'verificationLetter';
-    		} else if (error === 'Password is wrong') {
-    			errorType = 'wrongPassword';
-    		} else if (error === 'Too many requests, please try again later') {
-    			errorType = 'manyRequests';
-    		}
+    		errorType = getErrorType(error);
 
     		showSomethingWrongNotification();
     		return;

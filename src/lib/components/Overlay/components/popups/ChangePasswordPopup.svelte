@@ -7,12 +7,13 @@
     import PopupTitle from './PopupTitle.svelte';
 
     import {
-    	openAnotherOverlay,
-    	debounce,
-    	showSuccessNotification,
-    	closeOverlays,
-    	showSomethingWrongNotification,
-    	logError,
+	    openAnotherOverlay,
+	    debounce,
+	    showSuccessNotification,
+	    closeOverlays,
+	    showSomethingWrongNotification,
+	    logError,
+	    getErrorType,
     } from "../../../../utilities/helpers.js";
     import { reset } from "../../../../utilities/api.js";
 
@@ -62,15 +63,7 @@
     	if (error) {
     		logError(error);
     		isError = true;
-    		errorType = 'unrecognizedError';
-
-    		if (error === 'Matches old password') {
-    			errorType = 'samePass';
-    		} else if (error === 'Too many requests, please try again later') {
-    			errorType = 'manyRequests';
-    		} else if (error === 'Password link is invalid or expired') {
-    			errorType = 'linkExpired';
-    		}
+    		errorType = getErrorType(error);
 
     		showSomethingWrongNotification();
     		return;

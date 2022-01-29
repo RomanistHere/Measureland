@@ -8,11 +8,11 @@
     import PopupTitle from './PopupTitle.svelte';
 
     import {
-    	openAnotherOverlay,
-    	debounce,
-    	showSuccessNotification,
-    	showSomethingWrongNotification,
-    	logError,
+	    openAnotherOverlay,
+	    debounce,
+	    showSuccessNotification,
+	    showSomethingWrongNotification,
+	    logError, getErrorType,
     } from "../../../../utilities/helpers.js";
     import { sendResetPass } from "../../../../utilities/api.js";
 
@@ -53,13 +53,7 @@
     	if (error) {
     		logError(error);
     		isError = true;
-    		errorType = 'unrecognizedError';
-
-    		if (error === 'Email is wrong') {
-    			errorType = 'noAccount';
-    		} else if (error === 'Too many requests, please try again later') {
-    			errorType = 'manyRequests';
-    		}
+    		errorType = getErrorType(error);
 
     		showSomethingWrongNotification();
     		return;

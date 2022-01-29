@@ -1,18 +1,25 @@
 # To do:
 
 - fix focus states
-- add ratings if previous ones approved enough (add karma)
-- new secret feature
-  - comments
-  - delete POI
-  - add POI to nearby popup
-- mention most active members of community
 - set up colors in tailwind config
+- new secret feature
+  - comments (limit number of comments)
+  - add POIs to nearby popup
+  - show my POIs
+  - delete POI
+- karma
+  - save list of ids of whom you endorse
+  - on every like/dislike comment or POI add/remove user karma
+  - every 5 karma adds/removes 1 action point
+  - every +20 karma gains one token
+- fix issue with fetch data when click on comments
+- registerAction('POIs');
 
 ### Pre release
 
 - check links community page
-- limit API use to website only (block all requests except from static cloudflare page IP)
+- mention most active members of community
+- limit API uses to website only (block all requests except from static cloudflare page IP)
 - check if rate limiter doesn't block based in IP (cloudflare)
 - update preview image and create a few for a blog pages
 - links to documentation:
@@ -29,7 +36,6 @@
 
 - more badges
 - share nearby API public
-- mention feedback form at the support page
 - login via Telegram
 - fix workers (?)
 - ask users to highlight areas in the city with something nice, like best quality of water

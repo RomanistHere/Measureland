@@ -15,7 +15,9 @@
 		closeOverlays,
 		showSomethingWrongNotification,
 		logError,
-		openAnotherOverlay, roundToFifthDecimal,
+		openAnotherOverlay,
+		roundToFifthDecimal,
+		getErrorType,
 	} from "../../../../../utilities/helpers.js";
 	import { savePOIToDB } from "../../../../../utilities/api.js";
 	import { userStateStore } from "../../../../../../stores/state.js";
@@ -81,16 +83,13 @@
 		if (error) {
 			logError(error);
 			isError = true;
-			errorType = 'unrecognizedError';
-
-			if (error === 'Too many requests, please try again later') {
-				errorType = 'manyRequests';
-			}
+			errorType = getErrorType(error);
 
 			showSomethingWrongNotification();
 			return;
 		}
-
+	
+		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 		closeOverlays();
 		showSuccessNotification();
 	};

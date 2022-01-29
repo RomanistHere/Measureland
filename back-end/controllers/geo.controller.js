@@ -91,7 +91,7 @@ exports.geo_add = async (req, res, next) => {
 			return res.status(400).json({ error: "User is not found" });
 
 		if (user.usergroup !== 0 && (user.properties.activeRatings <= 0 || !user.properties.activeRatings))
-			return res.status(400).json({ error: "No active ratings" });
+			return res.status(400).json({ error: "No actions remaining" });
 
 		const geo = await Geo.findOne({
 			"location": {

@@ -277,6 +277,24 @@ const blurCurrentInput = () => {
 		document.activeElement.blur();
 };
 
+const errorObj = {
+	'Already verified': 'alreadyVerified',
+	'Email already exists': 'accountExists',
+	'Email is wrong': 'noAccount',
+	'Matches old password': 'samePass',
+	'No actions remaining': 'youRateTooOften',
+	'Password is wrong': 'wrongPassword',
+	'Password link is invalid or expired': 'linkExpired',
+	'Too many requests, please try again later': 'manyRequests',
+	'User is not logged in': 'sessionExpired',
+	'User is not verified': 'verificationLetter',
+};
+
+const getErrorType = error => {
+	const errorFromObj = errorObj[error];
+	return errorFromObj ? errorFromObj : 'unrecognizedError';
+};
+
 const getMapZoom = map => map.getZoom();
 
 const getBoundsData = map => {
@@ -349,4 +367,5 @@ export {
 	getBoundsData,
 	getScreenData,
 	blurCurrentInput,
+	getErrorType,
 };

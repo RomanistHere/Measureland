@@ -164,7 +164,7 @@
     			errorType = 'nearbyPlaceAlreadyRated';
     			isError = true;
     			return;
-    		} else if (error === 'No active ratings') {
+    		} else if (error === 'No actions remaining') {
     			errorType = 'youRateTooOften';
     			isError = true;
     			return;

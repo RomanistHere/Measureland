@@ -9,12 +9,13 @@
     import PopupTitle from './PopupTitle.svelte';
 
     import {
-    	debounce,
-    	showSuccessNotification,
-    	closeOverlays,
-    	showSomethingWrongNotification,
-    	logError,
-    	openAnotherOverlay,
+	    debounce,
+	    showSuccessNotification,
+	    closeOverlays,
+	    showSomethingWrongNotification,
+	    logError,
+	    openAnotherOverlay,
+	    getErrorType,
     } from "../../../../utilities/helpers.js";
     import { sendFeedback } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
@@ -63,11 +64,7 @@
     	if (error) {
     		logError(error);
     		isError = true;
-    		errorType = 'unrecognizedError';
-
-    		if (error === 'Too many requests, please try again later') {
-    			errorType = 'manyRequests';
-    		}
+    		errorType = getErrorType(error);
 
     		showSomethingWrongNotification();
     		return;

@@ -8,12 +8,12 @@
     import PopupTitle from './PopupTitle.svelte';
 
     import {
-    	openAnotherOverlay,
-    	debounce,
-    	showSuccessNotification,
-    	showSomethingWrongNotification,
-    	registerAction,
-    	logError,
+	    openAnotherOverlay,
+	    debounce,
+	    showSuccessNotification,
+	    showSomethingWrongNotification,
+	    registerAction,
+	    logError, getErrorType,
     } from "../../../../utilities/helpers.js";
     import { register } from "../../../../utilities/api.js";
 
@@ -65,13 +65,7 @@
     	if (error) {
     		logError(error);
     		isError = true;
-    		errorType = 'unrecognizedError';
-
-    		if (error === 'Email already exists') {
-    			errorType = 'accountExists';
-    		} else if (error === 'Too many requests, please try again later') {
-    			errorType = 'manyRequests';
-    		}
+    		errorType = getErrorType(error);
 
     		showSomethingWrongNotification();
     		return;

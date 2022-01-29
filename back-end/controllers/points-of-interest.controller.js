@@ -21,7 +21,7 @@ exports.POI_add = async (req, res) => {
 			return res.status(400).json({ error: "User is not found" });
 
 		if (user.usergroup !== 0 && (user.properties.activeRatings <= 0 || !user.properties.activeRatings))
-			return res.status(400).json({ error: "No active ratings" });
+			return res.status(400).json({ error: "No actions remaining" });
 
 		const pointOfInterest = await PointOfInterest.findOne({
 			"location": {
@@ -243,13 +243,16 @@ exports.POI_add_comment = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const userID = sanitize(req.session.userID);
+	const userEmail = sanitize(req.session.userID);
 	const { pointID, comment, username } = req.body;
 
 	try {
-		const user = await User.findOne({ email: userID });
+		const user = await User.findOne({ email: userEmail });
 		if (!user)
 			return res.status(400).json({ error: "User is not found" });
+
+		if (user.usergroup !== 0 && (user.properties.activeRatings <= 0 || !user.properties.activeRatings))
+			return res.status(400).json({ error: "No actions remaining" });
 
 		const commentSaved = await new CommentPOI({
 			user: user._id,
@@ -263,6 +266,16 @@ exports.POI_add_comment = async (req, res) => {
 		}, {
 			$addToSet: {
 				'commentIDs': commentSaved._id,
+			},
+		}, {
+			new: true,
+		});
+
+		await User.findOneAndUpdate({
+			email: userEmail,
+		}, {
+			$set: {
+				'properties.activeRatings': user.properties.activeRatings - 1,
 			},
 		}, {
 			new: true,

@@ -103,6 +103,7 @@
 	};
 	
 	const loadPOIs = async () => {
+		console.log('heh');
 		const { zoom, currentScreenPoly } = getScreenData(map);
 		const queryBounds = currentScreenPoly.regions[0];
 	
@@ -129,7 +130,7 @@
 	
 	const checkTogglePOIs = ({ zoom, shouldShowPOIs }) => {
 		if (shouldShowPOIs && zoom >= 13) {
-			loadPOIs();
+			debouncedLoading();
 		} else {
 			destroyPOIs();
 		}
@@ -149,7 +150,7 @@
 	onMount(() => {
 		const zoom = getMapZoom(map);
 		if (zoom >= 13) {
-			loadPOIs();
+			debouncedLoading();
 		}
 	
 		return () => { destroyPOIs() };
