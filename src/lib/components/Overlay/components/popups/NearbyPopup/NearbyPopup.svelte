@@ -8,7 +8,7 @@
     import Badge from './Badge.svelte';
 
     import { getNearbyPointData } from "../../../../../utilities/api.js";
-    import { mapReference, markersReference } from "../../../../../../stores/references.js";
+    import { mapReference, markersReference, poiReference } from "../../../../../../stores/references.js";
     import { isDesktop } from "../../../../../../stores/state.js";
     import {
     	roundToTen,
@@ -25,6 +25,7 @@
     let circle = null;
     let averageNearbyRating = null;
     let numberOfRatings = null;
+    let numberOfPOIs = null;
     let isLoading = true;
     let isData = true;
 
@@ -56,6 +57,7 @@
     }];
 
     const loadData = async ({ lat, lng }, radiusParam = null) => {
+	    const pointsOfInterestLayer = $poiReference;
     	const clusterLayer = $markersReference;
     	const radius = radiusParam || radiusOptions[0]['value'];
 
@@ -64,7 +66,9 @@
     	// eslint-disable-next-line no-undef
     	const bounds = L.rectangle(squareBounds).getBounds();
     	const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
-    	const clusters = clusterLayer.getClusters(bbox, 20);
+	    const clusters = clusterLayer.getClusters(bbox, 20);
+	    const pointsOfInterest = pointsOfInterestLayer.getClusters(bbox, 20);
+	    numberOfPOIs = pointsOfInterest.length;
 
     	if (!clusters || clusters.length === 1) {
     		averageNearbyRating = null;
@@ -110,13 +114,13 @@
     		title: $_(`criteria.${key}.title`),
     		numberOfUsers,
     		value,
-    	}));
+    	})).sort((a, b) => b.numberOfUsers - a.numberOfUsers);
 
     	ratingsBad = worstRatings.map(({ key, value, numberOfUsers }) => ({
     		title: $_(`criteria.${key}.title`),
     		numberOfUsers,
     		value,
-    	}));
+    	})).sort((a, b) => b.numberOfUsers - a.numberOfUsers);
 
     	badges = generateBadges(bestRatings, worstRatings, numberOfRatings);
     };
@@ -239,6 +243,10 @@
                 {/each}
             </div>
         {/if}
+	
+	    {#if numberOfPOIs > 0}
+		    <PopupTitle title="{numberOfPOIs} points of interest" />
+	    {/if}
     {/if}
 </div>
 

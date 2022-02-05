@@ -6,7 +6,7 @@
 	// Supercluster is changed on our side, so we can't use npm's one
 	import "../../../external/supercluster.js";
 	
-	import { mapReference, markersReference } from "../../../../stores/references.js";
+	import { mapReference, poiReference } from "../../../../stores/references.js";
 	import {
 		debounce,
 		getBoundsData,
@@ -70,7 +70,7 @@
 	
 		clusterMarkers.clearLayers();
 		clusterMarkers.addData(clusters);
-		markersReference.set(pointsOfInterestLayer);
+		poiReference.set(pointsOfInterestLayer);
 	};
 	
 	const addDataAndDisplay = data => {
