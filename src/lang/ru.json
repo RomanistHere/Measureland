@@ -278,7 +278,8 @@
         "searchPlaceholder": "Поиск по местам и адресам"
     },
     "loading": {
-        "geo": "Загружаем..."
+        "geo": "Загружаем...",
+        "fail": "Не доступно :("
     },
     "clusters": {
         "titleSingle": "Средний рейтинг этого места примерно",
@@ -412,7 +413,12 @@
         "showNearbyRatings": "Посмотреть что рядом",
         "youHaveAlreadyRated": "Уже оценено",
         "addNewRating": "Добавить оценку",
-        "loginAndRate": "Войти и оценить"
+        "loginAndRate": "Войти и оценить",
+        "tabRatingsBtn": "Оценки",
+        "tabMeasurementsBtn": "Измерения (бета)",
+        "airQualityLoadedTitle": "Чистота воздуха по",
+        "descriptionOWM": "Данные основаны на среднем индексе чистоты воздуха за год: openweathermap.org",
+        "descriptionWAQI": "Данные основаны на последнем замерении индекса чистоты воздуха: waqi.info"
     },
     "nearbyPopup": {
         "title": "Оценки поблизости",

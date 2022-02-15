@@ -31,7 +31,7 @@ const config = {
 				'100': '25rem',
 			},
 			colors: {
-				'active': '#ffa500',
+				'active': '#4682B4',
 			},
 		},
 	},

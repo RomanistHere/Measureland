@@ -6,6 +6,7 @@
 
     import Timeline from './Timeline.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
+    import ShowLoadedRatingPopupItem from './ShowLoadedRatingPopupItem.svelte';
     import Spinner from '../../../../ui-elements/Spinner.svelte';
     import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
     import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
@@ -35,6 +36,7 @@
     let numberOfComments = '';
     let personalExperiencePercent = 100;
     let shouldShowURLCopySuccess = false;
+    let isAirQualityDataLoaded = false;
     let commentGeoID = null;
     let currentLatLng = null;
     let loadedRating = null;
@@ -46,6 +48,7 @@
     $: isUserLoggedIn = $userStateStore.userID !== null;
     $: promise = null;
     $: averageAQI = null;
+    $: averageWAQI = null;
     // complexity because of translation
     $: criteriaArray = loadedRating === null
     	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, rating: 0 }))
@@ -80,6 +83,9 @@
 
     const switchTabToMeasurements = () => {
 	    openedTab = 'measurements';
+	    if (!isAirQualityDataLoaded) {
+		    getAirQualityData();
+	    }
     };
 
     const fetchData = async ({ lng, lat }) => {
@@ -135,30 +141,54 @@
 	    currentCoords = { ...popupData };
     }
 
-    onMount(async () => {
-	    // const data = await fetch(`https://api.waqi.info/feed/geo:${popupData.lat};${popupData.lng}/?token=dae93ad4b135f627cf146b641b1820ab0395d9c8`);
-	    // const parsedData = await data.json();
-	    // const aqi = parsedData.data.aqi;
-	    // console.log(parsedData)
-	    // console.log(aqi);
-	    // const anotherData = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${popupData.lat}&lon=${popupData.lng}&appid=1387a4c3445d5f7c3e3d3793eb75cb53`);
-	    // const parsedData2 = await anotherData.json();
-	    // const aqi2 = parsedData2.list[0].main.aqi;
-	    // console.log(parsedData2);
-	    // console.log(aqi2);
+    const getaverageWAQI = aqiVal => {
+	    if (aqiVal < 50) {
+		    return 5;
+	    } else if (aqiVal < 100) {
+		    return 4;
+	    } else if (aqiVal < 150) {
+		    return 3;
+	    } else if (aqiVal < 200) {
+		    return 2;
+	    } else {
+		    return 1;
+	    }
+    };
 
+    const getAirQualityData = async () => {
+	    const { lat, lng } = popupData;
+	    // todo: probably simplify, we need to get previous year in UNIX
 	    const prevYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
 	    const prevYearUnix = Math.floor(prevYear.getTime() / 1000);
-	    // todo: move somewhere else
-	    const apiKey = '1387a4c3445d5f7c3e3d3793eb75cb53';
-	    const histData = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${popupData.lat}&lon=${popupData.lng}&start=${prevYearUnix}&end=${Date.now()}&appid=${apiKey}`);
-	    const histDataParsed = await histData.json();
-	    const sum = histDataParsed.list.reduce((a, item) => a + item.main.aqi, 0);
-	    // 1 - good, 5 - bad
-	    const averageAirPollution = Math.round(sum / histDataParsed.list.length);
-	    // convert to 1 - bad, 5 good
-	    averageAQI = [ 5, 4, 3, 2, 1 ][averageAirPollution - 1];
-    });
+	    // todo: reset and move somewhere else
+	    const apiOWMKey = '1387a4c3445d5f7c3e3d3793eb75cb53';
+	    const apiWaqiKey = 'dae93ad4b135f627cf146b641b1820ab0395d9c8';
+	    try {
+		    const data = await fetch(`https://api.waqi.info/feed/geo:${lat};${lng}/?token=${apiWaqiKey}`);
+		    const parsedData = await data.json();
+		    const aqi = parsedData.data.aqi;
+		    averageWAQI = getaverageWAQI(aqi);
+	    } catch (e) {
+		    logError(e);
+		    averageWAQI = 'unavailable';
+		    isAirQualityDataLoaded = false;
+	    }
+
+	    try {
+		    const histData = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lng}&start=${prevYearUnix}&end=${Date.now()}&appid=${apiOWMKey}`);
+		    const histDataParsed = await histData.json();
+		    const sum = histDataParsed.list.reduce((a, item) => a + item.main.aqi, 0);
+		    // 1 - good, 5 - bad
+		    const averageAirPollution = Math.round(sum / histDataParsed.list.length);
+		    // convert to 1 - bad, 5 good
+		    averageAQI = [ 5, 4, 3, 2, 1 ][averageAirPollution - 1];
+		    isAirQualityDataLoaded = true;
+	    } catch (e) {
+		    logError(e);
+		    averageAQI = 'unavailable';
+		    isAirQualityDataLoaded = false;
+	    }
+    };
 
     onDestroy(() => {
     	appStateStore.update(state => ({ ...state, showRating: false }));
@@ -179,8 +209,10 @@
 			class="inline-block origin-right transition-transform"
 			class:text-active={openedTab === 'ratings'}
 			class:scale-125={openedTab === 'ratings'}
+			class:font-bold={openedTab === 'ratings'}
+			class:underline={openedTab === 'ratings'}
 		>
-			Оценки
+			{$_('showRatingPopup.tabRatingsBtn')}
 		</a>
 		|
 		<a
@@ -189,8 +221,10 @@
 			class="inline-block origin-left transition-transform"
 			class:text-active={openedTab === 'measurements'}
 			class:scale-125={openedTab === 'measurements'}
+			class:font-bold={openedTab === 'measurements'}
+			class:underline={openedTab === 'measurements'}
 		>
-			Измерения
+			{$_('showRatingPopup.tabMeasurementsBtn')}
 		</a>
 	</div>
 	
@@ -208,10 +242,19 @@
 				class="absolute inset-x-0 -top-3"
 				transition:fade
 			>
-				<ShowRatingPopupItem
-					title="Чистота воздуха"
-					tooltip="Данные основаны на среднем индексе чистоты воздуха за год: openweathermap.org"
+				<ShowLoadedRatingPopupItem
+					title={$_('showRatingPopup.airQualityLoadedTitle')}
+					linkText="openweathermap.org"
+					link="https://openweathermap.org/api/air-pollution"
+					tooltip={$_('showRatingPopup.descriptionOWM')}
 					rating={averageAQI}
+				/>
+				<ShowLoadedRatingPopupItem
+					title={$_('showRatingPopup.airQualityLoadedTitle')}
+					linkText="waqi.info"
+					link="https://waqi.info/"
+					tooltip={$_('showRatingPopup.descriptionWAQI')}
+					rating={averageWAQI}
 				/>
 			</div>
 		{/if}

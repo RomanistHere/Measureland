@@ -278,7 +278,8 @@
         "searchPlaceholder": "Search for places or addresses"
     },
     "loading": {
-        "geo": "Loading..."
+        "geo": "Loading...",
+        "fail": "Unavailable :("
     },
     "clusters": {
         "titleSingle": "This place's average rating's about",
@@ -413,7 +414,12 @@
         "showNearbyRatings": "Check nearby ratings",
         "youHaveAlreadyRated": "Already rated by you",
         "addNewRating": "Add new rating",
-        "loginAndRate": "Login and rate"
+        "loginAndRate": "Login and rate",
+        "tabRatingsBtn": "Ratings",
+        "tabMeasurementsBtn": "Measurements (Beta)",
+        "airQualityLoadedTitle": "Air quality index",
+        "descriptionOWM": "Data's based on average air quality for the last year: openweathermap.org",
+        "descriptionWAQI": "Data's based on the last air quality check: waqi.info"
     },
     "nearbyPopup": {
         "title": "Nearby ratings",
