@@ -26,7 +26,13 @@ const config = {
 			},
 			fontFamily: {
 				sans: ['"Nunito"', 'sans-serif']
-		    }
+		    },
+			height: {
+				'100': '25rem',
+			},
+			colors: {
+				'active': '#ffa500',
+			},
 		},
 	},
 	plugins: [],

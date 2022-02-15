@@ -1,7 +1,8 @@
 <script>
     import { browser } from '$app/env';
-    import { onDestroy } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import { json, _, locale } from 'svelte-i18n';
+    import { fade } from 'svelte/transition';
 
     import Timeline from './Timeline.svelte';
     import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
@@ -28,6 +29,7 @@
     const geocodeService = $geocodeServiceReference;
 
     let isAlreadyRatedByThisUser = false;
+    let openedTab = 'ratings';
     let averageRating = '';
     let numberOfUsers = '';
     let numberOfComments = '';
@@ -43,6 +45,7 @@
     $: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
     $: isUserLoggedIn = $userStateStore.userID !== null;
     $: promise = null;
+    $: averageAQI = null;
     // complexity because of translation
     $: criteriaArray = loadedRating === null
     	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, rating: 0 }))
@@ -69,6 +72,14 @@
     const checkCommentsRelevanceAndOpen = () => {
 	    if (!$overlayStateStore.commentsSidebar.isOpen)
 		    openCommentsSidebar();
+    };
+
+    const switchTabToRatings = () => {
+	    openedTab = 'ratings';
+    };
+
+    const switchTabToMeasurements = () => {
+	    openedTab = 'measurements';
     };
 
     const fetchData = async ({ lng, lat }) => {
@@ -124,6 +135,31 @@
 	    currentCoords = { ...popupData };
     }
 
+    onMount(async () => {
+	    // const data = await fetch(`https://api.waqi.info/feed/geo:${popupData.lat};${popupData.lng}/?token=dae93ad4b135f627cf146b641b1820ab0395d9c8`);
+	    // const parsedData = await data.json();
+	    // const aqi = parsedData.data.aqi;
+	    // console.log(parsedData)
+	    // console.log(aqi);
+	    // const anotherData = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${popupData.lat}&lon=${popupData.lng}&appid=1387a4c3445d5f7c3e3d3793eb75cb53`);
+	    // const parsedData2 = await anotherData.json();
+	    // const aqi2 = parsedData2.list[0].main.aqi;
+	    // console.log(parsedData2);
+	    // console.log(aqi2);
+
+	    const prevYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+	    const prevYearUnix = Math.floor(prevYear.getTime() / 1000);
+	    // todo: move somewhere else
+	    const apiKey = '1387a4c3445d5f7c3e3d3793eb75cb53';
+	    const histData = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${popupData.lat}&lon=${popupData.lng}&start=${prevYearUnix}&end=${Date.now()}&appid=${apiKey}`);
+	    const histDataParsed = await histData.json();
+	    const sum = histDataParsed.list.reduce((a, item) => a + item.main.aqi, 0);
+	    // 1 - good, 5 - bad
+	    const averageAirPollution = Math.round(sum / histDataParsed.list.length);
+	    // convert to 1 - bad, 5 good
+	    averageAQI = [ 5, 4, 3, 2, 1 ][averageAirPollution - 1];
+    });
+
     onDestroy(() => {
     	appStateStore.update(state => ({ ...state, showRating: false }));
     	map.removeLayer(circle);
@@ -135,12 +171,51 @@
     <p class="mb-4 text-center italic text-base font-bold -md:px-10">
         {$_('showRatingPopup.approximateAddress')}: {approximateAdress}
     </p>
-
-    <ul>
-        {#each criteriaArray as item}
-            <ShowRatingPopupItem { ...item } />
-        {/each}
-    </ul>
+	
+	<div class="text-center -mt-2">
+		<a
+			href={"#"}
+			on:click|preventDefault={switchTabToRatings}
+			class="inline-block origin-right transition-transform"
+			class:text-active={openedTab === 'ratings'}
+			class:scale-125={openedTab === 'ratings'}
+		>
+			Оценки
+		</a>
+		|
+		<a
+			href={"#"}
+			on:click|preventDefault={switchTabToMeasurements}
+			class="inline-block origin-left transition-transform"
+			class:text-active={openedTab === 'measurements'}
+			class:scale-125={openedTab === 'measurements'}
+		>
+			Измерения
+		</a>
+	</div>
+	
+	<div class="relative">
+		<ul
+			class:opacity-0={openedTab === 'measurements'}
+			class="transition-opacity"
+		>
+			{#each criteriaArray as item}
+				<ShowRatingPopupItem { ...item } />
+			{/each}
+		</ul>
+		{#if openedTab === 'measurements'}
+			<div
+				class="absolute inset-x-0 -top-3"
+				transition:fade
+			>
+				<ShowRatingPopupItem
+					title="Чистота воздуха"
+					tooltip="Данные основаны на среднем индексе чистоты воздуха за год: openweathermap.org"
+					rating={averageAQI}
+				/>
+			</div>
+		{/if}
+	</div>
 
     <a href={"#"} class="block text-right my-4 underline" on:click|preventDefault={copyShareRatingURL}>
         {#if shouldShowURLCopySuccess}

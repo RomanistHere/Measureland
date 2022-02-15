@@ -14,6 +14,8 @@
   - every +20 karma gains one token
 - fix issue with fetch data when click on comments
 - registerAction('POIs');
+- https://waqi.info/#/c/53.83/27.602/11z
+- https://aqicn.org/map/world
 
 ### Pre release
 
@@ -22,6 +24,7 @@
 - limit API uses to website only (block all requests except from static cloudflare page IP)
 - check if rate limiter doesn't block based in IP (cloudflare)
 - update preview image and create a few for a blog pages
+- regenerate api keys, delete old ones
 - links to documentation:
   - https://github.com/mapbox/supercluster
   - https://svelte.dev/
