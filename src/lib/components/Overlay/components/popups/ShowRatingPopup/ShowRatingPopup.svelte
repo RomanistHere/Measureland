@@ -12,7 +12,7 @@
     import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
 
     import { getSinglePointData } from "../../../../../utilities/api.js";
-    import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
+    import { mapReference } from "../../../../../../stores/references.js";
     import { appStateStore, userStateStore, overlayStateStore, isDesktop } from "../../../../../../stores/state.js";
     import {
     	getFinalRating,
@@ -27,7 +27,6 @@
     export let popupData;
 
     const map = $mapReference;
-    const geocodeService = $geocodeServiceReference;
 
     let isAlreadyRatedByThisUser = false;
     let openedTab = 'ratings';
@@ -41,6 +40,7 @@
     let currentLatLng = null;
     let loadedRating = null;
     let circle = null;
+    let country = null;
     let timelineData = [];
     let currentCoords = { lat: 0, lng: 0 };
 
@@ -49,6 +49,7 @@
     $: promise = null;
     $: averageAQI = null;
     $: averageWAQI = null;
+    $: averageSafetyValue = null;
     // complexity because of translation
     $: criteriaArray = loadedRating === null
     	? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, rating: 0 }))
@@ -89,13 +90,12 @@
     };
 
     const fetchData = async ({ lng, lat }) => {
-    	geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
-    		if (error) {
-    			logError(error);
-    			return;
-    		}
-    		approximateAdress = result.address.LongLabel;
-    	});
+	    const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=pk.5898de479bcc688559fd050896450d49&lat=${lat}&lon=${lng}&format=json&accept-language=${$locale}`);
+	    const { address } = await geoCoding.json();
+	    const { road, city } = address;
+	    const regionNamesInEnglish = new Intl.DisplayNames([ 'en' ], { type: 'region' });
+	    approximateAdress = `${road || ''}, ${address.house_number || ''}. ${city || ''}, ${address.country || ''}`;
+	    country = regionNamesInEnglish.of(address.country_code.toUpperCase());
 
     	if (circle)
     		map.removeLayer(circle);
@@ -155,7 +155,29 @@
 	    }
     };
 
+    const getDisasterRisk = riskValue => {
+	    if (riskValue < 3.37) {
+		    return 5;
+	    } else if (riskValue < 5.5) {
+		    return 4;
+	    } else if (riskValue < 7.12) {
+		    return 3;
+	    } else if (riskValue < 10.3) {
+		    return 2;
+	    } else {
+		    return 1;
+	    }
+    };
+
     const getAirQualityData = async () => {
+	    const wikiParams = new URLSearchParams({
+		    origin: "*",
+		    action: "parse",
+		    page: "List_of_countries_by_natural_disaster_risk",
+		    format: "json",
+		    section: "3",
+	    });
+	    const wikiUrl = `https://en.wikipedia.org/w/api.php?${wikiParams}`;
 	    const { lat, lng } = popupData;
 	    // todo: probably simplify, we need to get previous year in UNIX
 	    const prevYear = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
@@ -172,6 +194,17 @@
 		    logError(e);
 		    averageWAQI = 'unavailable';
 		    isAirQualityDataLoaded = false;
+	    }
+
+	    try {
+		    const req = await fetch(wikiUrl);
+		    const json = await req.json();
+		    const text = json.parse.text["*"];
+		    const foundCountry = text.split(`title="${country}">${country}</a>`)[1];
+		    const extractedNumber = parseFloat(foundCountry.match(/[\d\\.]+/));
+		    averageSafetyValue = getDisasterRisk(extractedNumber);
+	    } catch (e) {
+		    logError(e);
 	    }
 
 	    try {
@@ -255,6 +288,13 @@
 					link="https://waqi.info/"
 					tooltip={$_('showRatingPopup.descriptionWAQI')}
 					rating={averageWAQI}
+				/>
+				<ShowLoadedRatingPopupItem
+					title="Natural disaster safety"
+					linkText="wikipedia.org"
+					link="https://en.wikipedia.org/wiki/List_of_countries_by_natural_disaster_risk"
+					tooltip={$_('showRatingPopup.descriptionWAQI')}
+					rating={averageSafetyValue}
 				/>
 			</div>
 		{/if}
