@@ -181,31 +181,54 @@
         {$_('showRatingPopup.approximateAddress')}: {approximateAdress}
     </p>
 	
-	<div class="text-center -mt-2">
+	<div class="text-center py-1 -mt-2 bg-black text-white flex justify-evenly rounded-md">
 		<a
 			href={"#"}
 			on:click|preventDefault={switchTabToRatings}
-			class="inline-block origin-right transition-transform"
-			class:text-active={openedTab === 'ratings'}
-			class:scale-125={openedTab === 'ratings'}
-			class:font-bold={openedTab === 'ratings'}
-			class:underline={openedTab === 'ratings'}
+			class="inline-block py-1 px-12 rounded-md transition-transform duration-300 delay-100"
+			class:bg-active={openedTab === 'ratings'}
+			class:underline={openedTab !== 'ratings'}
+			class:hover:scale-105={openedTab !== 'ratings'}
 		>
 			{$_('showRatingPopup.tabRatingsBtn')}
 		</a>
-		|
 		<a
 			href={"#"}
 			on:click|preventDefault={switchTabToMeasurements}
-			class="inline-block origin-left transition-transform"
-			class:text-active={openedTab === 'measurements'}
-			class:scale-125={openedTab === 'measurements'}
-			class:font-bold={openedTab === 'measurements'}
-			class:underline={openedTab === 'measurements'}
+			class="inline-block py-1 px-12 rounded-md transition-transform duration-300 delay-100"
+			class:bg-active={openedTab === 'measurements'}
+			class:underline={openedTab !== 'measurements'}
+			class:hover:scale-105={openedTab !== 'measurements'}
 		>
 			{$_('showRatingPopup.tabMeasurementsBtn')}
 		</a>
 	</div>
+	
+<!--	<div class="text-center -mt-2">-->
+<!--		<a-->
+<!--			href={"#"}-->
+<!--			on:click|preventDefault={switchTabToRatings}-->
+<!--			class="inline-block origin-right transition-transform"-->
+<!--			class:text-active={openedTab === 'ratings'}-->
+<!--			class:scale-125={openedTab === 'ratings'}-->
+<!--			class:font-bold={openedTab === 'ratings'}-->
+<!--			class:underline={openedTab === 'ratings'}-->
+<!--		>-->
+<!--			{$_('showRatingPopup.tabRatingsBtn')}-->
+<!--		</a>-->
+<!--		|-->
+<!--		<a-->
+<!--			href={"#"}-->
+<!--			on:click|preventDefault={switchTabToMeasurements}-->
+<!--			class="inline-block origin-left transition-transform"-->
+<!--			class:text-active={openedTab === 'measurements'}-->
+<!--			class:scale-125={openedTab === 'measurements'}-->
+<!--			class:font-bold={openedTab === 'measurements'}-->
+<!--			class:underline={openedTab === 'measurements'}-->
+<!--		>-->
+<!--			{$_('showRatingPopup.tabMeasurementsBtn')}-->
+<!--		</a>-->
+<!--	</div>-->
 	
 	<div class="relative">
 		<ul

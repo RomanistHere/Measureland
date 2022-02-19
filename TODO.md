@@ -16,6 +16,8 @@
 
 ### Pre release
 
+- Test with https://github.com/nolanlawson/fuite
+- Check https://developers.google.com/search/docs/advanced/appearance/title-link
 - Rename support to the ministry of complaints
 - check links community page
 - mention most active members of community
