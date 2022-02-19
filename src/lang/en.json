@@ -21,7 +21,7 @@
             "caption": "1 - poor, 5 - nice"
         },
         "noize": {
-            "title": "Light and noise pollution",
+            "title": "No light and noise pollution",
             "tooltip": "How much noise and light disturbs. 1 - disturbs strongly, 5 - does not disturb.",
             "caption": "1 - noizy, 5 - quietly"
         },

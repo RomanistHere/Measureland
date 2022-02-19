@@ -12,13 +12,11 @@
   - on every like/dislike comment or POI add/remove user karma
   - every 5 karma adds/removes 1 action point
   - every +20 karma gains one token
-- fix issue with fetch data when click on comments
 - registerAction('POIs');
-- https://waqi.info/#/c/53.83/27.602/11z
-- https://aqicn.org/map/world
 
 ### Pre release
 
+- Rename support to the ministry of complaints
 - check links community page
 - mention most active members of community
 - limit API uses to website only (block all requests except from static cloudflare page IP)
@@ -56,7 +54,6 @@
 # Stuff to remember and check later
 
 - Content security policy. Svelte should introduce something to remove script and css 'unsafe-inline' property with the release.
-- Rename support to the ministry of complaints
 
 # With the next release
 
@@ -65,6 +62,7 @@
 - add link to measureland in github
 - write to wiki with questions about development and monetization.
 - add measureland to my projects in portfolio
+- write to everyone!
 
 # Updates description
 
@@ -77,3 +75,6 @@
 - Open collective launch
 - City-guides contest
 - Possibility to edit year of the rating
+- Possibility to remove ratings
+- Add point of interest
+- Add measurements to the ratings (from external APIs)
