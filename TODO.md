@@ -24,7 +24,7 @@
 - limit API uses to website only (block all requests except from static cloudflare page IP)
 - check if rate limiter doesn't block based in IP (cloudflare)
 - update preview image and create a few for a blog pages
-- regenerate api keys, delete old ones
+- regenerate api keys, move to env, move old ones into env example
 - links to documentation:
   - https://github.com/mapbox/supercluster
   - https://svelte.dev/

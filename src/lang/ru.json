@@ -418,7 +418,9 @@
         "tabMeasurementsBtn": "Измерения (бета)",
         "airQualityLoadedTitle": "Чистота воздуха по",
         "descriptionOWM": "Данные основаны на среднем индексе чистоты воздуха за год: openweathermap.org",
-        "descriptionWAQI": "Данные основаны на последнем замерении индекса чистоты воздуха: waqi.info"
+        "descriptionWAQI": "Данные основаны на последнем замерении индекса чистоты воздуха: waqi.info",
+        "naturalDisasterTitle": "Защищённость от бедствий",
+        "descriptionNaturalDisaster": "Вероятность природных катастроф (1 - высокая, 5 - низкая) согласно индексу стихийных бедствий: wikipedia.org"
     },
     "nearbyPopup": {
         "title": "Оценки поблизости",
