@@ -88,7 +88,7 @@ module.exports = {
 		"no-multiple-empty-lines": [2, { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
 		"no-nested-ternary": 1,
 		"no-ternary": 0,
-		"no-trailing-spaces": 2,
+		"no-trailing-spaces": [2, { "skipBlankLines": true }],
 		"no-unneeded-ternary": 0,
 		"one-var": [2, "never"],
 		"operator-assignment": [1, "never"],
