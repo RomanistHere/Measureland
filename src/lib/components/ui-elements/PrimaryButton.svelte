@@ -7,7 +7,7 @@
 
 <a
     href={"#"}
-    class="text-base lg:text-lg rounded-md py-2 px-8 {className}"
+    class="text-base lg:text-lg text-center rounded-md py-2 px-8 -md:px-4 {className}"
     class:cursor-default={disabled}
     class:opacity-60={disabled}
     on:click|preventDefault={action}

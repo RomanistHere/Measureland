@@ -183,7 +183,7 @@
 		{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
 	</p>
 
-	<div class="text-center py-1 -mt-2 bg-text text-white flex justify-evenly rounded-md">
+	<div class="text-center py-1 md:-mt-2 bg-text text-white flex justify-evenly rounded-md">
 		<a
 			href={"#"}
 			on:click|preventDefault={switchTabToRatings}
@@ -282,14 +282,20 @@
 			action={() => openAnotherOverlay('nearbyPopup', currentLatLng)}
 		/>
 		{#if isUserLoggedIn && isAlreadyRatedByThisUser}
-			<PrimaryButton text={$_('showRatingPopup.youHaveAlreadyRated')} disabled={true} />
+			<PrimaryButton
+				text={$_('showRatingPopup.youHaveAlreadyRated')}
+				disabled={true}
+			/>
 		{:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
 			<PrimaryButton
 				text={$_('showRatingPopup.addNewRating')}
                 action={() => openAnotherOverlay('quizPopup', currentLatLng)}
 			/>
 		{:else}
-			<PrimaryButton text={$_('showRatingPopup.loginAndRate')} action={() => openAnotherOverlay('loginPopup')} />
+			<PrimaryButton
+				text={$_('showRatingPopup.loginAndRate')}
+				action={() => openAnotherOverlay('loginPopup')}
+			/>
 		{/if}
 	</div>
 

@@ -55,7 +55,7 @@
 </script>
 
 <div
-    class="glassmorphism z-2 inset-4 left-1/2 fixed flex justify-center items-center flex-wrap -lg:left-4 -md:inset-0 -md:rounded-none px-4 py-6 overflow-auto"
+    class="glassmorphism z-2 inset-4 left-1/2 fixed flex justify-center items-center flex-wrap -lg:left-4 -md:inset-0 -md:rounded-none px-4 py-12 overflow-auto"
     use:focusTrap
     in:fly="{{ y: 80, duration: 300 }}"
     out:fly="{{ y: -80, duration: 300 }}"

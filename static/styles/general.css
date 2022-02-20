@@ -172,3 +172,9 @@ textarea {
         font-size: 14px;
     }
 }
+
+@media screen and (max-width: 359px) {
+    html {
+        font-size: 12px;
+    }
+}

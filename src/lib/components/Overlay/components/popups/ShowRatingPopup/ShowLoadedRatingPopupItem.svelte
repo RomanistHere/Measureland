@@ -13,7 +13,7 @@
 </script>
 
 <li class="flex items-center justify-between my-3">
-    <h2>
+    <h2 class="w-7/12">
         { title }
 	    {#if link && linkText}
 		    <TextLink
@@ -24,13 +24,15 @@
 	    {/if}
         <Tooltip { tooltip } />
     </h2>
-	{#if !rating}
-		{$_('loading.geo')}
-	{:else if rating === 'unavailable'}
-		{$_('loading.fail')}
-	{:else}
-		<ShowRatingPopupStars { rating } />
-	{/if}
+	<div class="w-5/12 text-right">
+		{#if !rating}
+			{$_('loading.geo')}
+		{:else if rating === 'unavailable'}
+			{$_('loading.fail')}
+		{:else}
+			<ShowRatingPopupStars { rating } />
+		{/if}
+	</div>
 </li>
 
 <style>
