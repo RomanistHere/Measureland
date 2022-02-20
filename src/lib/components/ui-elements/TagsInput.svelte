@@ -4,6 +4,9 @@
 	import { _, json } from 'svelte-i18n';
 	
 	import Tag from './Tag.svelte';
+	import TextButton from "$lib/components/ui-elements/TextButton.svelte";
+	import { isDesktop } from "../../../stores/state.js";
+	import { closeOverlay, openAnotherOverlay } from "$lib/utilities/helpers.js";
 	
 	const dispatch = createEventDispatcher();
 
@@ -27,6 +30,12 @@
 	const removeTag = tagKey => {
 		dispatch('removeTag', tagKey);
 	};
+
+	const openFeedbackPopup = () => {
+		if (!$isDesktop)
+			closeOverlay('popup');
+		openAnotherOverlay('feedbackPopup');
+	};
 </script>
 
 <div class="flex mt-4 flex-wrap relative">
@@ -43,15 +52,15 @@
 
 	<a
 		href={"#"}
-		class="add_input rounded-md px-2 py-0.5 text-sm mb-2 block relative z-5 mr-2"
+		class="bg-active hover:bg-success text-white rounded-md px-2 py-0.5 text-sm mb-2 block relative z-5 mr-2"
 		on:click|preventDefault={showAllTags}
 	>
-		add a tag
+		{$_('tagsInput.title')}
 	</a>
 	
 	{#if isExpanded}
 		<div
-			class="tags_picker rounded-md w-96 absolute z-5 p-2 font-normal flex flex-wrap -top-2 left-0"
+			class="bg-white border-2 border-active rounded-md w-96 absolute z-5 p-2 font-normal flex flex-wrap -top-2 left-0"
 			in:fly="{{ y: 10, duration: 200 }}"
 			out:fly="{{ y: -10, duration: 200 }}"
 			on:mouseleave={handleMouseleave}
@@ -67,26 +76,12 @@
 			{/each}
 			
 			<p class="text-sm">
-				Current number of tags is not big. If you think we need more, use our feedback form to suggest it.
+				{$_('tagsInput.description')}
+				<TextButton
+					text={$_('tagsInput.buttonText')}
+					action={openFeedbackPopup}
+				/>
 			</p>
 		</div>
 	{/if}
 </div>
-
-<style>
-	.add_input {
-		background-color: var(--active-color);
-		color: var(--side-bg-color);
-	}
-	
-	.tags_picker {
-		background-color: var(--side-bg-color);
-		border: 2px solid var(--active-color);
-	}
-
-	@media (hover: hover) and (pointer: fine) {
-		.add_input:hover {
-			background-color: var(--suc-color);
-		}
-	}
-</style>

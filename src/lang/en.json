@@ -569,6 +569,11 @@
         "textAreaPlaceholder": "Breath of fresh air and the rest for eyesight. Clean green island with a lot of benches, playgrounds and cycleways...",
         "submitBtn": "Submit"
     },
+    "tagsInput": {
+        "title": "add a tag",
+        "description": "Current number of tags is limited only by our developers' imagination. If you think we need others, use our form to",
+        "buttonText": "suggest it."
+    },
     "pointOfInterestPopup": {
         "relevant": "relevant",
         "irrelevant": "irrelevant"

@@ -4,7 +4,7 @@
 
 	import { registerAction } from '../../utilities/helpers.js';
 
-	export let key;
+	export let key = null;
 	export let clickable = false;
 
 	let isExpanded = false;
@@ -38,10 +38,10 @@
 </script>
 
 <span
-	class="rounded-md px-2 py-0.5 text-sm mb-2 block relative z-5 mr-2"
-	class:alert={isBad}
-	class:good={isGood}
-	class:neutral={isNeutral}
+	class="rounded-md px-2 py-0.5 text-sm mb-2 block relative z-5 mr-2 transition-colors duration-500 hover:bg-active hover:text-white"
+	class:bg-bad-feeling={isBad}
+	class:bg-good-feeling={isGood}
+	class:bg-neutral-feeling={isNeutral}
 	class:cursor-pointer={clickable}
 	on:mouseenter={handleMouseenter}
 	on:mouseleave={handleMouseleave}
@@ -51,7 +51,7 @@
 
 	{#if isExpanded}
         <div
-	        class="info__tooltip text-sm w-60 absolute z-1 p-2 left-1/2 transform -translate-x-1/2 rounded-md font-normal glassmorphism pointer-events-none"
+	        class="info__tooltip text-black text-sm w-60 absolute z-1 p-2 left-1/2 transform -translate-x-1/2 rounded-md font-normal glassmorphism pointer-events-none"
 	        in:fly="{{ y: 10, duration: 200 }}"
 	        out:fly="{{ y: -10, duration: 200 }}"
         >
@@ -61,30 +61,7 @@
 </span>
 
 <style>
-	span {
-		transition: background-color .5s, color .5s;
-	}
-
-	.alert {
-		background-color: var(--bad-feeling-color);
-	}
-
-	.good {
-		background-color: var(--good-feeling-color);
-	}
-
-	.neutral {
-		background-color: var(--neutral-feeling-color);
-	}
-
-	span:hover {
-		background-color: var(--active-color);
-		color: var(--side-bg-color);
-	}
-
 	.info__tooltip {
-		color: var(--text-color);
-
 		bottom: 160%;
 	}
 
