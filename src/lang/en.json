@@ -416,12 +416,12 @@
         "addNewRating": "Add new rating",
         "loginAndRate": "Login and rate",
         "tabRatingsBtn": "Ratings",
-        "tabMeasurementsBtn": "Measurements (Beta)",
+        "tabMeasurementsBtn": "Measurements and stats",
         "airQualityLoadedTitle": "Air quality index",
         "descriptionOWM": "Data's based on average air quality for the last year: openweathermap.org",
         "descriptionWAQI": "Data's based on the last air quality check: waqi.info",
         "naturalDisasterTitle": "Immunity to natural disasters",
-        "descriptionNaturalDisaster": "Safety based on natural disaster risk (1 - high chance, 5 - low chance), measured in the World Risk Index: wikipedia.org"
+        "descriptionNaturalDisaster": "Safety (by country) based on natural disaster risk (1 - high chance, 5 - low chance), measured in the World Risk Index: wikipedia.org"
     },
     "nearbyPopup": {
         "title": "Nearby ratings",

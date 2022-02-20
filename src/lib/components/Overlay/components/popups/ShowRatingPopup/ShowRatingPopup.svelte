@@ -10,6 +10,7 @@
 	import Spinner from '../../../../ui-elements/Spinner.svelte';
 	import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
 	import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
+	import TextButton from '../../../../ui-elements/TextButton.svelte';
 
 	import { getSinglePointData } from "../../../../../utilities/api.js";
 	import { mapReference } from "../../../../../../stores/references.js";
@@ -55,6 +56,7 @@
 	$: averageAQI = null;
 	$: averageWAQI = null;
 	$: averageSafetyValue = null;
+	$: copyLinkState = shouldShowURLCopySuccess ? $_('showRatingPopup.copied') : $_('showRatingPopup.shareThisRating');
 	// complexity because of translation
 	$: criteriaArray = loadedRating === null
 		? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, rating: 0 }))
@@ -181,24 +183,24 @@
 		{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
 	</p>
 
-	<div class="text-center py-1 -mt-2 bg-black text-white flex justify-evenly rounded-md">
+	<div class="text-center py-1 -mt-2 bg-text text-white flex justify-evenly rounded-md">
 		<a
 			href={"#"}
 			on:click|preventDefault={switchTabToRatings}
-			class="inline-block py-1 px-12 rounded-md transition-transform duration-300 delay-100"
+			class="inline-block py-1 px-12 rounded-md transition-color duration-300 border -md:px-6"
 			class:bg-active={openedTab === 'ratings'}
-			class:underline={openedTab !== 'ratings'}
-			class:hover:scale-105={openedTab !== 'ratings'}
+			class:hover:border-white={openedTab !== 'ratings'}
+			class:border-transparent={openedTab !== 'ratings'}
 		>
 			{$_('showRatingPopup.tabRatingsBtn')}
 		</a>
 		<a
 			href={"#"}
 			on:click|preventDefault={switchTabToMeasurements}
-			class="inline-block py-1 px-12 rounded-md transition-transform duration-300 delay-100"
+			class="inline-block py-1 px-12 rounded-md transition-color duration-300 border -md:px-6"
 			class:bg-active={openedTab === 'measurements'}
-			class:underline={openedTab !== 'measurements'}
-			class:hover:scale-105={openedTab !== 'measurements'}
+			class:hover:border-white={openedTab !== 'measurements'}
+			class:border-transparent={openedTab !== 'measurements'}
 		>
 			{$_('showRatingPopup.tabMeasurementsBtn')}
 		</a>
@@ -243,13 +245,12 @@
 		{/if}
 	</div>
 
-	<a href={"#"} class="block text-right my-4 underline" on:click|preventDefault={copyShareRatingURL}>
-		{#if shouldShowURLCopySuccess}
-			{$_('showRatingPopup.copied')}
-		{:else}
-			{$_('showRatingPopup.shareThisRating')}
-		{/if}
-	</a>
+	<div class="text-right my-4">
+		<TextButton
+			text={copyLinkState}
+			action={copyShareRatingURL}
+		/>
+	</div>
 
 	<div class="italic text-sm font-bold" title="{$_('showRatingPopup.howMuchPeople')}">
 		{personalExperiencePercent}% {$_('showRatingPopup.ofParticipantsLived')}
@@ -265,8 +266,10 @@
 			<span class="sug-col font-bold text-2xl -md:text-lg">{numberOfUsers}</span>
 		</div>
 		<div>
-			<a href={"#"} class="underline"
-			   on:click|preventDefault={checkCommentsRelevanceAndOpen}>{$_('showRatingPopup.comments')}</a>:
+			<TextButton
+				text={$_('showRatingPopup.comments')}
+				action={checkCommentsRelevanceAndOpen}
+			/>:
 			<span class="sug-col font-bold text-2xl -md:text-lg">{numberOfComments}</span>
 		</div>
 	</div>
@@ -274,13 +277,17 @@
 	<Timeline { timelineData } />
 
 	<div class="flex justify-evenly items-center mt-4">
-		<SecondaryButton text={$_('showRatingPopup.showNearbyRatings')}
-		                 action={() => openAnotherOverlay('nearbyPopup', currentLatLng)} />
+		<SecondaryButton
+			text={$_('showRatingPopup.showNearbyRatings')}
+			action={() => openAnotherOverlay('nearbyPopup', currentLatLng)}
+		/>
 		{#if isUserLoggedIn && isAlreadyRatedByThisUser}
 			<PrimaryButton text={$_('showRatingPopup.youHaveAlreadyRated')} disabled={true} />
 		{:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
-			<PrimaryButton text={$_('showRatingPopup.addNewRating')}
-			               action={() => openAnotherOverlay('quizPopup', currentLatLng)} />
+			<PrimaryButton
+				text={$_('showRatingPopup.addNewRating')}
+                action={() => openAnotherOverlay('quizPopup', currentLatLng)}
+			/>
 		{:else}
 			<PrimaryButton text={$_('showRatingPopup.loginAndRate')} action={() => openAnotherOverlay('loginPopup')} />
 		{/if}

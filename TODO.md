@@ -1,7 +1,6 @@
 # To do:
 
 - fix focus states
-- set up colors in tailwind config
 - new secret feature
   - comments (limit number of comments)
   - add POIs to nearby popup

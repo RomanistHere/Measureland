@@ -1,3 +1,17 @@
+const plugin = require('tailwindcss/plugin');
+
+// reference: https://stackoverflow.com/a/67458852/11698825
+const hoverPlugin = plugin(function({ addVariant, e, postcss }) {
+	addVariant('hover', ({ container, separator }) => {
+		const hoverRule = postcss.atRule({ name: 'media', params: '(hover: hover) and (pointer: fine)' });
+		hoverRule.append(container.nodes);
+		container.append(hoverRule);
+		hoverRule.walkRules(rule => {
+			rule.selector = `.${e(`hover${separator}${rule.selector.slice(1)}`)}:hover`
+		});
+	});
+});
+
 const config = {
 	mode: "jit",
 	purge: [
@@ -31,11 +45,22 @@ const config = {
 				'100': '25rem',
 			},
 			colors: {
-				'active': '#4682B4',
+				'active': '#007097',
+				'success': '#146481',
+				'non-active': '#31493c54',
+				'main-bg': '#d4eff5',
+				'add-bg': '#d4eff554',
+				'add-bg-non-tr': '#d4eff554',
+				'text': '#001A23',
+				'good-feeling': '#bcedb5',
+				'neutral-feeling': '#fcd9f6',
+				'bad-feeling': '#ffbaba',
+				'error': '#ffa500',
+				'almost-inv': '#dddddd',
 			},
 		},
 	},
-	plugins: [],
+	plugins: [ hoverPlugin ],
 };
 
 module.exports = config;
