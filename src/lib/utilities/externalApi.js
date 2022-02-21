@@ -1,4 +1,6 @@
 import { logError } from "$lib/utilities/helpers.js";
+import { geocodeServiceReference } from "../../stores/references.js";
+import { get } from 'svelte/store';
 
 const getaverageWAQI = aqiVal => {
 	// based on https://waqi.info/
@@ -90,6 +92,16 @@ const fetchOpenWeather = async (lat, lng) => {
 	}
 };
 
+const getAddressBackUp = (lat, lng, lang) => new Promise((resolve, reject) => {
+	const geocodeService = get(geocodeServiceReference);
+	geocodeService.reverse().latlng({ lat, lng }).language(lang).run((err, result) => {
+		if (err)
+			reject(err);
+
+		resolve(result.address.LongLabel);
+	});
+});
+
 const fetchAddress = async (lat, lng, lang) => {
 	const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=pk.5898de479bcc688559fd050896450d49&lat=${lat}&lon=${lng}&format=json&accept-language=${lang}`);
 	const { address } = await geoCoding.json();
@@ -97,13 +109,30 @@ const fetchAddress = async (lat, lng, lang) => {
 };
 
 const getApproximateAddressAndCountry = async (lat, lng, lang) => {
-	const address = await fetchAddress(lat, lng, lang);
-	const { road, city, country } = address;
-	const regionNamesInEnglish = new Intl.DisplayNames([ 'en' ], { type: 'region' });
-	return {
-		address: `${road || ''}, ${address.house_number || ''}. ${city || ''}, ${country || ''}`,
-		countryInEnglish: regionNamesInEnglish.of(address.country_code.toUpperCase()),
-	};
+	try {
+		const address = await fetchAddress(lat, lng, lang);
+		const { road, city, country } = address;
+		const regionNamesInEnglish = new Intl.DisplayNames([ 'en' ], { type: 'region' });
+		return {
+			address: `${road || ''}, ${address.house_number || ''}. ${city || ''}, ${country || ''}`,
+			countryInEnglish: regionNamesInEnglish.of(address.country_code.toUpperCase()),
+		};
+	} catch (e) {
+		logError('Address fetch failed');
+		logError(e);
+	}
+
+	// if first service is unavailable or limit is reached, try another one
+	try {
+		const addressTry2 = await getAddressBackUp(lat, lng, lang);
+		return {
+			address: addressTry2,
+			countryInEnglish: null,
+		};
+	} catch (e) {
+		logError('Address fetch from backup failed');
+		logError(e);
+	}
 };
 
 export {

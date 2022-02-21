@@ -8,6 +8,7 @@ const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
 const UserVerification = require('../models/token.model');
 const PasswordReset = require('../models/password-reset.model');
+const PointOfInterest = require('../models/point-of-interest.model');
 const Feedback = require('../models/feedback.model');
 const Comment = require('../models/comment.model');
 const Rating = require('../models/rating.model');
@@ -17,7 +18,7 @@ const { getFinalRating, roundToTen } = require('../helpers/index');
 const { sendEmail } = require('../helpers/email');
 const isProd = process.env.IS_PROD === '1';
 
-exports.user_register = async(req, res) => {
+exports.user_register = async (req, res) => {
 	const { email, lang } = req.body;
 	const isEmailExist = await User.findOne({ email: sanitize(email) });
 
@@ -73,7 +74,7 @@ exports.user_register = async(req, res) => {
 	}
 };
 
-exports.user_login = async(req, res) => {
+exports.user_login = async (req, res) => {
 	try {
 		const user = await User.findOne({ email: sanitize(req.body.email) }, '-properties.ratingIDs -properties.geoIDs');
 
@@ -107,7 +108,7 @@ exports.user_login = async(req, res) => {
 	}
 };
 
-exports.user_onboard = async(req, res) => {
+exports.user_onboard = async (req, res) => {
 	const { userName, ageGrp, moneyGrp, userID } = req.body;
 	try {
 		const update = await User.updateOne(
@@ -138,7 +139,7 @@ exports.user_onboard = async(req, res) => {
 	}
 };
 
-exports.user_feedback = async(req, res) => {
+exports.user_feedback = async (req, res) => {
 	const { userID } = req.session;
 	const { heading, comment, email } = req.body;
 
@@ -167,7 +168,7 @@ exports.user_feedback = async(req, res) => {
 	}
 };
 
-exports.user_verify = async(req, res) => {
+exports.user_verify = async (req, res) => {
 	const urlParams = new URLSearchParams(req.params.token);
 	const { token } = Object.fromEntries(urlParams);
 	const userVerification = await UserVerification.findOne({ token: sanitize(token) });
@@ -202,7 +203,7 @@ exports.user_verify = async(req, res) => {
 	}
 };
 
-exports.user_reverify = async(req, res) => {
+exports.user_reverify = async (req, res) => {
 	try {
 		const user = await User.findOne({ email: sanitize(req.body.email) });
 
@@ -263,7 +264,7 @@ const updateActiveRatings = user => {
 	return { shouldUpdate: false, activeRatings };
 };
 
-exports.user_check = async(req, res) => {
+exports.user_check = async (req, res) => {
 	const { userID } = req.session;
 
 	try {
@@ -307,11 +308,11 @@ exports.user_check = async(req, res) => {
 	}
 };
 
-exports.user_places = async(req, res) => {
+exports.user_places = async (req, res) => {
 	const { userID } = req.session;
 
 	try {
-		const user = await User.findOne({ email: sanitize(userID) }, 'properties.geoIDs properties.ratingIDs');
+		const user = await User.findOne({ email: sanitize(userID) }, 'properties.geoIDs properties.ratingIDs properties.POIIDs properties.POICommentIDs');
 
 		if (!user)
 			return res.status(400).json({ error: "Couldn't find the user" });
@@ -353,11 +354,21 @@ exports.user_places = async(req, res) => {
 			});
 		});
 
+		const pois = await PointOfInterest.find(
+			{
+				_id: {
+					$in: user.properties.POIIDs,
+				},
+			},
+			'location.coordinates title',
+		);
+
 		return res.json({
 			error: null,
 			data: {
 				message: "Rated places",
 				places,
+				pois,
 			},
 		});
 	} catch (error) {
@@ -366,7 +377,7 @@ exports.user_places = async(req, res) => {
 	}
 };
 
-exports.ask_more_ratings = async(req, res) => {
+exports.ask_more_ratings = async (req, res) => {
 	const { userID } = req.session;
 
 	const user = await User.findOneAndUpdate({ email: sanitize(userID) }, { 'properties.wantMoreRatings': true });
@@ -382,7 +393,7 @@ exports.ask_more_ratings = async(req, res) => {
 	});
 };
 
-exports.user_logout = async(req, res, next) => {
+exports.user_logout = async (req, res, next) => {
 	if (req.session) {
 		req.session.destroy(err => {
 			if (err) {
@@ -401,7 +412,7 @@ exports.user_logout = async(req, res, next) => {
 	}
 };
 
-exports.user_reset_password = async(req, res, next) => {
+exports.user_reset_password = async (req, res, next) => {
 	try {
 		const userEmail = req.body.email;
 		const user = await User.findOne({ email: sanitize(userEmail) });
@@ -445,7 +456,7 @@ exports.user_reset_password = async(req, res, next) => {
 	}
 };
 
-exports.user_change_password = async(req, res) => {
+exports.user_change_password = async (req, res) => {
 	const { password, token } = req.body;
 	if (!token || token.length < 10)
 		return res.status(400).json({ error: 'Password link is invalid or expired' });
@@ -493,7 +504,7 @@ exports.user_change_password = async(req, res) => {
 	}
 };
 
-exports.user_language = async(req, res) => {
+exports.user_language = async (req, res) => {
 	if (!req.session.userID) {
 		return res.status(400).json({ error: "User is not logged in" });
 	}
@@ -525,7 +536,7 @@ exports.user_language = async(req, res) => {
 	}
 };
 
-exports.vote_for_task = async(req, res) => {
+exports.vote_for_task = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
@@ -576,7 +587,7 @@ exports.vote_for_task = async(req, res) => {
 	}
 };
 
-exports.read_votes = async(req, res, next) => {
+exports.read_votes = async (req, res, next) => {
 	const userEmail = sanitize(req.session.userID);
 
 	const urlParams = new URLSearchParams(req.params.id);
@@ -612,7 +623,7 @@ exports.read_votes = async(req, res, next) => {
 	}
 };
 
-exports.update_rating_year = async(req, res) => {
+exports.update_rating_year = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
@@ -649,7 +660,7 @@ const removeRatingFromSum = (geo, rating) => {
 	return { newRating, newNumberOfUsers };
 };
 
-exports.user_delete_rating = async(req, res) => {
+exports.user_delete_rating = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
@@ -658,7 +669,14 @@ exports.user_delete_rating = async(req, res) => {
 
 	try {
 		let newAverageRating = null;
-		const { isPersonalExperience, commentID, userID, geoID, rating, averageRating } = await Rating.findOne({ _id: ratingID });
+		const {
+		      isPersonalExperience,
+		      commentID,
+		      userID,
+		      geoID,
+		      rating,
+		      averageRating,
+	      } = await Rating.findOne({ _id: ratingID });
 
 		const commentRemoved = commentID ? await Comment.findOneAndRemove({ _id: commentID }) : null;
 		const geo = await Geo.findOne({ _id: geoID });

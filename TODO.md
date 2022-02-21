@@ -75,5 +75,6 @@
 - City-guides contest
 - Possibility to edit year of the rating
 - Possibility to remove ratings
+- Possibility to check / report / endorse a single rating
 - Add point of interest
 - Add measurements to the ratings (from external APIs)

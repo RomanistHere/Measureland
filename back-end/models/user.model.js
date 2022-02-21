@@ -33,6 +33,7 @@ const UserSchema = new Schema({
 		ratingIDs: [{ type: Schema.Types.ObjectId, ref: 'Rating' }],
 		geoIDs: [{ type: Schema.Types.ObjectId, ref: 'Geo' }],
 		POIIDs: [{ type: Schema.Types.ObjectId, ref: 'PointOfInterest' }],
+		POICommentIDs: [{ type: Schema.Types.ObjectId, ref: 'CommentPOI' }],
 		ageGrp: {
 			type: Number,
 			default: 1, // 0 - under 25, 1 - 25-40, 2- 41-55, 3 - 55+

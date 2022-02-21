@@ -261,7 +261,7 @@ exports.POI_add_comment = async (req, res) => {
 			comment: sanitize(comment),
 		}).save();
 
-		const pointUpdated = await PointOfInterest.findOneAndUpdate({
+		await PointOfInterest.findOneAndUpdate({
 			_id: sanitize(pointID),
 		}, {
 			$addToSet: {
@@ -274,6 +274,9 @@ exports.POI_add_comment = async (req, res) => {
 		await User.findOneAndUpdate({
 			email: userEmail,
 		}, {
+			$addToSet: {
+				'properties.POICommentIDs': commentSaved._id,
+			},
 			$set: {
 				'properties.activeRatings': user.properties.activeRatings - 1,
 			},
