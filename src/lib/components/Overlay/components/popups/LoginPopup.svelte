@@ -149,12 +149,12 @@
             <Spinner />
         {/if}
         {#if isError && errorType === 'verificationLetter'}
-            <div class="italic font-bold sug-color">
+            <div class="italic font-bold">
                 <span class="block text-center">{$_('errors.errorVerification')}</span>
                 <a href={"#"} class="block text-center underline" on:click|preventDefault={resendVerificationLetter}>{$_('errors.errorVerificationBtn')}</a>
             </div>
         {:else if isError}
-            <span class="italic font-bold sug-color">
+            <span class="italic font-bold">
                 {errorsObj[errorType]}
             </span>
         {/if}

@@ -2,6 +2,6 @@
     export let title;
 </script>
 
-<h2 class="sug-color mt-4">
+<h2 class="mt-4">
     {title}
 </h2>

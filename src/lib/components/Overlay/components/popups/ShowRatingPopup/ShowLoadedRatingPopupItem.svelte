@@ -24,15 +24,17 @@
 	    {/if}
         <Tooltip { tooltip } />
     </h2>
-	<div class="-md:w-5/12 text-right">
-		{#if !rating}
+	{#if !rating}
+		<p>
 			{$_('loading.geo')}
-		{:else if rating === 'unavailable'}
+		</p>
+	{:else if rating === 'unavailable'}
+		<p>
 			{$_('loading.fail')}
-		{:else}
-			<ShowRatingPopupStars { rating } />
-		{/if}
-	</div>
+		</p>
+	{:else}
+		<ShowRatingPopupStars { rating } />
+	{/if}
 </li>
 
 <style>

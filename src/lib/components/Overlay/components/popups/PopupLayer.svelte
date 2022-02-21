@@ -10,6 +10,7 @@
     import AskForMoreRatingsPopup from './AskForMoreRatingsPopup.svelte';
     import ChangePasswordPopup from './ChangePasswordPopup.svelte';
     import ForgotPasswordPopup from './ForgotPasswordPopup.svelte';
+    import AddCommentPOIPopup from './AddCommentPOIPopup.svelte';
     import NearbyPopup from './NearbyPopup/NearbyPopup.svelte';
     import AddPOIPopup from './AddPOIPopup/AddPOIPopup.svelte';
     import CheckEmailPopup from './CheckEmailPopup.svelte';
@@ -22,14 +23,13 @@
     import PartnersPopup from './PartnersPopup.svelte';
     import MyPlacesPopup from './MyPlacesPopup.svelte';
     import FeedbackPopup from './FeedbackPopup.svelte';
-    import AddCommentPOI from './AddCommentPOI.svelte';
     import LoginPopup from './LoginPopup.svelte';
 
     export let popupName;
     export let popupData;
 
     const popupList = {
-	    addCommentPOI: AddCommentPOI,
+	    addCommentPOIPopup: AddCommentPOIPopup,
     	askForMoreRatingsPopup: AskForMoreRatingsPopup,
 	    pointOfInterestPopup: PointOfInterestPopup,
 	    addPOIPopup: AddPOIPopup,

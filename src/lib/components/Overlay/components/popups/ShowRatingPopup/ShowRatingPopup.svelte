@@ -28,6 +28,7 @@
 		fetchDisasterRisk,
 		fetchWaqi,
 		fetchOpenWeather,
+		getApproximateAddressAndCountry,
 	} from '../../../../../utilities/externalApi.js';
 
 	export let popupData;
@@ -97,12 +98,9 @@
 	};
 
 	const fetchData = async ({ lng, lat }) => {
-		const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=pk.5898de479bcc688559fd050896450d49&lat=${lat}&lon=${lng}&format=json&accept-language=${$locale}`);
-		const { address } = await geoCoding.json();
-		const { road, city } = address;
-		const regionNamesInEnglish = new Intl.DisplayNames([ 'en' ], { type: 'region' });
-		approximateAdress = `${road || ''}, ${address.house_number || ''}. ${city || ''}, ${address.country || ''}`;
-		country = regionNamesInEnglish.of(address.country_code.toUpperCase());
+		const { address, countryInEnglish } = await getApproximateAddressAndCountry(lat, lng, $locale);
+		approximateAdress = address;
+		country = countryInEnglish;
 
 		if (circle)
 			map.removeLayer(circle);

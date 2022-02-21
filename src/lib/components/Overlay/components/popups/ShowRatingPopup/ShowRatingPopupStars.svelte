@@ -1,7 +1,7 @@
 <script>
     import { _ } from 'svelte-i18n';
 
-    export let rating;
+    export let rating = 0;
 
     $: roundedRating = Math.round(rating);
 
@@ -17,7 +17,9 @@
         <span
             class="leading-none text-2xl ml-1"
             class:active={roundedRating === number}
-        >{character}</span>
+        >
+            {character}
+        </span>
     {/each}
 </div>
 

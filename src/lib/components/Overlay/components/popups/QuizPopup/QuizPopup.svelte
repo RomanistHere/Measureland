@@ -348,7 +348,7 @@
             {#if isLoading}
                 <Spinner />
             {:else if isError && errorType === 'youRateTooOften'}
-                <div class="italic font-bold sug-color text-center">
+                <div class="italic font-bold text-center">
                     {$_('errors.youRateTooOften')}
                     <TextLink
                         href="blog/how-to-become-citizen/"
@@ -357,7 +357,7 @@
                     />
                 </div>
             {:else if isError}
-                <div class="italic font-bold sug-color">
+                <div class="italic font-bold">
                     {errorsObj[errorType]}
                 </div>
             {/if}

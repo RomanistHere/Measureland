@@ -121,12 +121,12 @@
             <Spinner />
         {/if}
         {#if isError && errorType === 'linkExpired'}
-            <div class="italic font-bold sug-color">
+            <div class="italic font-bold">
                 <span class="block text-center">{$_('errors.linkExpired')}</span>
                 <a href={"#"} class="block text-center underline" on:click|preventDefault={resendLink}>{$_('errors.linkExpiredLink')}</a>
             </div>
         {:else if isError}
-            <span class="italic font-bold sug-color">
+            <span class="italic font-bold">
                 {errorsObj[errorType]}
             </span>
         {/if}

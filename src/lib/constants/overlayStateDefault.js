@@ -4,7 +4,7 @@ export const overlayStateDefault = {
 		type: 'popup',
 		data: {},
 	},
-	addCommentPOI: {
+	addCommentPOIPopup: {
 		isOpen: false,
 		type: 'popup',
 		data: {},

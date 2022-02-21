@@ -21,7 +21,7 @@
 </script>
 
 <div class="mt-6 relative">
-    <h2 class="sug-color font-bold">
+    <h2 class="font-bold">
         {title}
         <Tooltip { tooltip } />
     </h2>

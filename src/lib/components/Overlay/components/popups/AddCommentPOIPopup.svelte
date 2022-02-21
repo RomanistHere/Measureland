@@ -17,7 +17,7 @@
 		blurCurrentInput,
 		getErrorType,
 	} from "../../../../utilities/helpers.js";
-	import { addCommentPOI, sendFeedback } from "../../../../utilities/api.js";
+	import { addCommentPOI } from "../../../../utilities/api.js";
 	import { userStateStore } from "../../../../../stores/state.js";
 	
 	$: errorsObj = $json('errors');
@@ -95,14 +95,14 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title="Добавление комментария" />
+	<PopupTitle title={$_('addCommentPOIPopup.title')} />
 	
 	<p class="my-4">
-		Комментируй примечательные места, чтобы дополнить информацию или указать на неактуальность оной.
+		{$_('addCommentPOIPopup.description')}
 	</p>
 	
 	<Textarea
-		placeholder="Разделяю негодование автора и хочу добавить, что в последнее время..."
+		placeholder={$_('addCommentPOIPopup.textAreaPlaceholder')}
 		maxlength="{1400}"
 		on:input={updateTextareaValue}
 		className='mt-0'
@@ -113,13 +113,13 @@
 			<Spinner />
 		{/if}
 		{#if isError}
-            <span class="italic font-bold sug-color">
+            <span class="italic font-bold">
                 {errorsObj[errorType]}
             </span>
 		{/if}
 	</div>
 	
 	<div class="flex justify-evenly items-center">
-		<FormButton text="Добавить комментарий" action={debouncedSubmit} />
+		<FormButton text={$_('addCommentPOIPopup.primaryBtnText')} action={debouncedSubmit} />
 	</div>
 </form>

@@ -3,26 +3,15 @@
     export let className = '';
     export let href = '#';
     export let action;
+    export let isDisabled = false;
 </script>
 
 <a
     { href }
-    class="underline {className}"
+    class="underline transition-colors duration-200 hover:bg-active hover:text-white hover:no-underline {className}"
+    class:opacity-40={isDisabled}
+    class:pointer-events-none={isDisabled}
     on:click|preventDefault={action}
 >
     {text}
 </a>
-
-<style>
-    a {
-        transition: background-color .2s, color .2s;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        a:hover {
-            background-color: var(--active-color);
-            color: var(--text-color-btn);
-            text-decoration: none;
-        }
-    }
-</style>

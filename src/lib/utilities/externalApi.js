@@ -90,8 +90,25 @@ const fetchOpenWeather = async (lat, lng) => {
 	}
 };
 
+const fetchAddress = async (lat, lng, lang) => {
+	const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=pk.5898de479bcc688559fd050896450d49&lat=${lat}&lon=${lng}&format=json&accept-language=${lang}`);
+	const { address } = await geoCoding.json();
+	return address;
+};
+
+const getApproximateAddressAndCountry = async (lat, lng, lang) => {
+	const address = await fetchAddress(lat, lng, lang);
+	const { road, city, country } = address;
+	const regionNamesInEnglish = new Intl.DisplayNames([ 'en' ], { type: 'region' });
+	return {
+		address: `${road || ''}, ${address.house_number || ''}. ${city || ''}, ${country || ''}`,
+		countryInEnglish: regionNamesInEnglish.of(address.country_code.toUpperCase()),
+	};
+};
+
 export {
 	fetchDisasterRisk,
 	fetchWaqi,
 	fetchOpenWeather,
+	getApproximateAddressAndCountry,
 };

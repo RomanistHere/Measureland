@@ -102,7 +102,7 @@
             <Spinner />
         {/if}
         {#if isError}
-            <span class="italic font-bold sug-color">
+            <span class="italic font-bold">
                 {errorsObj[errorType]}
             </span>
         {/if}

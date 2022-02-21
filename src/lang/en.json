@@ -576,7 +576,14 @@
     },
     "pointOfInterestPopup": {
         "relevant": "relevant",
-        "irrelevant": "irrelevant"
+        "irrelevant": "irrelevant",
+        "addCommentBtn": "Add comment"
+    },
+    "addCommentPOIPopup": {
+        "title": "Adding your comment",
+        "description": "Do add a comment to share an additional info or point to the non-relevance of the current one.",
+        "textAreaPlaceholder": "I agree with the author, though I'd like to add that there is...",
+        "primaryBtnText": "Submit comment"
     },
     "onMapClickDialog": {
         "title": "What do you want to do?",

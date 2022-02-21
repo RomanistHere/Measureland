@@ -16,13 +16,13 @@
 		closeOverlay,
 		centerMap,
 	} from "../../../../../utilities/helpers.js";
-	import { mapReference, geocodeServiceReference } from "../../../../../../stores/references.js";
+	import { getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
+	import { mapReference } from "../../../../../../stores/references.js";
 	import { isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
 
 	const map = $mapReference;
-	const geocodeService = $geocodeServiceReference;
 
-	export let popupData;
+	export let popupData = {};
 
 	let likes = 0;
 	let dislikes = 0;
@@ -99,16 +99,11 @@
 	};
 	
 	const openAddCommentPopup = () =>
-		openAnotherOverlay('addCommentPOI', { pointID });
+		openAnotherOverlay('addCommentPOIPopup', { pointID });
 
 	const fetchData = async ({ lng, lat }) => {
-		geocodeService.reverse().latlng({ lng, lat }).language($locale).run((error, result) => {
-			if (error) {
-				logError(error);
-				return;
-			}
-			approximateAdress = result.address.LongLabel;
-		});
+		const { address } = await getApproximateAddressAndCountry(lat, lng, $locale);
+		approximateAdress = address;
 
 		if (circle)
 			map.removeLayer(circle);
@@ -203,22 +198,18 @@
 
 		<div class="flex justify-between items-end mt-4">
 			<div>
-				<a
-					href={"#"}
-					class="underline"
-					class:opacity-40={numberOfComments === 0}
-					class:pointer-events-none={numberOfComments === 0}
-					on:click|preventDefault={checkCommentsRelevanceAndOpen}
-				>
-					{$_('showRatingPopup.comments')}
-				</a>:
+				<TextButton
+					text={$_('showRatingPopup.comments')}
+					action={checkCommentsRelevanceAndOpen}
+					isDisabled={numberOfComments === 0}
+				/>:
 				<span class="sug-col font-bold leading-3 text-2xl -md:text-lg">
 					{numberOfComments}
 				</span>
 			</div>
 			
 			<TextButton
-				text="Добавить комментарий 💬"
+				text="{$_('pointOfInterestPopup.addCommentBtn')} 💬"
 				action={openAddCommentPopup}
 			/>
 		</div>

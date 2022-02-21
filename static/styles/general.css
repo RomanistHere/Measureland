@@ -89,6 +89,8 @@ html {
 	--active-color: #007097;
 	--suc-color: #146481;
 	--interesting-color: #663399;
+
+	color: var(--text-color);
 }
 
 body {
@@ -141,11 +143,6 @@ textarea {
 	width: 100%;
 	top: 0;
 	left: 0;
-}
-
-/* // todo: replace */
-.sug-color {
-	color: var(--sug-color);
 }
 
 @media screen and (max-width: 1366px) {

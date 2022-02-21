@@ -46,7 +46,7 @@
 </script>
 
 <div class="relative">
-    <label for={id} class="mt-8 relative block font-bold sug-color">
+    <label for={id} class="mt-8 relative block font-bold">
         <span>{title}</span>
         {#if type === 'password'}
             <TextButton
@@ -56,6 +56,7 @@
             />
         {/if}
     </label>
+    <!-- svelte-ignore a11y-autofocus -->
     <input
         class="mt-4 p-2 w-full rounded-md shadow"
         class:input-valid={isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError}
