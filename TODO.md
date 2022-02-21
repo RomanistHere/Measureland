@@ -2,8 +2,6 @@
 
 - fix focus states
 - new secret feature
-  - comments (limit number of comments)
-  - add POIs to nearby popup
   - show my POIs
   - delete POI
 - karma

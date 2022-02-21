@@ -438,7 +438,8 @@
         "selectOption1": "800 m",
         "selectOption2": "1.2 km",
         "selectOption3": "2 km",
-        "selectOption4": "10 km"
+        "selectOption4": "10 km",
+        "pointsOfInterest": "Points of interest"
     },
     "howToRatePopup": {
         "soYouWantTo": "So you want to measure land",

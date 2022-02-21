@@ -437,7 +437,8 @@
         "selectOption1": "800 м",
         "selectOption2": "1.2 км",
         "selectOption3": "2 км",
-        "selectOption4": "10 км"
+        "selectOption4": "10 км",
+        "pointsOfInterest": "Примечательные места"
     },
     "howToRatePopup": {
         "soYouWantTo": "Как поставить отметку",

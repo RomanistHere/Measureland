@@ -337,6 +337,14 @@ const getScreenData = map => {
 	};
 };
 
+const truncateString = (string, limit) => {
+	if (string.length > limit) {
+		return `${string.substring(0, limit)}...`;
+	} else {
+		return string;
+	}
+};
+
 export {
 	debounce,
 	sleep,
@@ -368,4 +376,5 @@ export {
 	getScreenData,
 	blurCurrentInput,
 	getErrorType,
+	truncateString,
 };

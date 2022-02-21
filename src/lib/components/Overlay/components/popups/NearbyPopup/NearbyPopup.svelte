@@ -1,257 +1,289 @@
 <script>
-    import { onMount, onDestroy } from 'svelte';
-    import { _ } from 'svelte-i18n';
+	import { onMount, onDestroy } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
-    import Spinner from '../../../../ui-elements/Spinner.svelte';
-    import Select from '../../../../ui-elements/Select.svelte';
-    import PopupTitle from '../PopupTitle.svelte';
-    import Badge from './Badge.svelte';
+	import Spinner from '../../../../ui-elements/Spinner.svelte';
+	import Select from '../../../../ui-elements/Select.svelte';
+	import TextButton from "../../../../ui-elements/TextButton.svelte";
+	import Tag from "../../../../ui-elements/Tag.svelte";
+	import PopupTitle from '../PopupTitle.svelte';
+	import Badge from './Badge.svelte';
 
-    import { getNearbyPointData } from "../../../../../utilities/api.js";
-    import { mapReference, markersReference, poiReference } from "../../../../../../stores/references.js";
-    import { isDesktop } from "../../../../../../stores/state.js";
-    import {
-    	roundToTen,
-    	centerMap,
-    	showSomethingWrongNotification,
-    	registerAction,
-    	logError,
-    } from '../../../../../utilities/helpers.js';
-    import { generateSmartReport } from './generateSmartReport.js';
-    import { generateBadges } from './generateBadges.js';
+	import { getNearbyPointData } from "../../../../../utilities/api.js";
+	import { mapReference, markersReference, poiReference } from "../../../../../../stores/references.js";
+	import { isDesktop } from "../../../../../../stores/state.js";
+	import {
+		roundToTen,
+		centerMap,
+		showSomethingWrongNotification,
+		registerAction,
+		logError,
+		openAnotherOverlay,
+		truncateString,
+	} from '../../../../../utilities/helpers.js';
+	import { generateSmartReport } from './generateSmartReport.js';
+	import { generateBadges } from './generateBadges.js';
 
-    export let popupData;
+	export let popupData;
 
-    let circle = null;
-    let averageNearbyRating = null;
-    let numberOfRatings = null;
-    let numberOfPOIs = null;
-    let isLoading = true;
-    let isData = true;
+	let circle = null;
+	let averageNearbyRating = null;
+	let numberOfRatings = null;
+	let numberOfPOIs = null;
+	let isLoading = true;
+	let isData = true;
 
-    const map = $mapReference;
+	const map = $mapReference;
 
-    $: ratingsGood = [];
-    $: ratingsBad = [];
-    $: badges = [];
-    $: radiusOptions = [{
-    	value: 800,
-    	zoomLevel: 15,
-    	text: $_('nearbyPopup.selectOption1'),
-    	selected: true,
-    }, {
-    	value: 1200,
-    	zoomLevel: 14,
-    	text: $_('nearbyPopup.selectOption2'),
-    	selected: false,
-    }, {
-    	value: 2000,
-    	zoomLevel: 14,
-    	text: $_('nearbyPopup.selectOption3'),
-    	selected: false,
-    }, {
-    	value: 10000,
-    	zoomLevel: 12,
-    	text: $_('nearbyPopup.selectOption4'),
-    	selected: false,
-    }];
+	$: pointsOfInterest = [];
+	$: ratingsGood = [];
+	$: ratingsBad = [];
+	$: badges = [];
+	$: radiusOptions = [{
+		value: 800,
+		zoomLevel: 15,
+		text: $_('nearbyPopup.selectOption1'),
+		selected: true,
+	}, {
+		value: 1200,
+		zoomLevel: 14,
+		text: $_('nearbyPopup.selectOption2'),
+		selected: false,
+	}, {
+		value: 2000,
+		zoomLevel: 14,
+		text: $_('nearbyPopup.selectOption3'),
+		selected: false,
+	}, {
+		value: 10000,
+		zoomLevel: 12,
+		text: $_('nearbyPopup.selectOption4'),
+		selected: false,
+	}];
 
-    const loadData = async ({ lat, lng }, radiusParam = null) => {
-	    const pointsOfInterestLayer = $poiReference;
-    	const clusterLayer = $markersReference;
-    	const radius = radiusParam || radiusOptions[0]['value'];
+	const loadData = async ({ lat, lng }, radiusParam = null) => {
+		const pointsOfInterestLayer = $poiReference;
+		const clusterLayer = $markersReference;
+		const radius = radiusParam || radiusOptions[0]['value'];
 
-    	// eslint-disable-next-line no-undef
-    	const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
-    	// eslint-disable-next-line no-undef
-    	const bounds = L.rectangle(squareBounds).getBounds();
-    	const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
-	    const clusters = clusterLayer.getClusters(bbox, 20);
-	    const pointsOfInterest = pointsOfInterestLayer.getClusters(bbox, 20);
-	    numberOfPOIs = pointsOfInterest.length;
+		// eslint-disable-next-line no-undef
+		const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
+		// eslint-disable-next-line no-undef
+		const bounds = L.rectangle(squareBounds).getBounds();
+		const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
+		const clusters = clusterLayer.getClusters(bbox, 20);
+		const pointsOfInterestApprox = pointsOfInterestLayer.getClusters(bbox, 20);
+		numberOfPOIs = pointsOfInterestApprox.length;
 
-    	if (!clusters || clusters.length === 1) {
-    		averageNearbyRating = null;
-    		numberOfRatings = null;
-    		isData = false;
-    		isLoading = false;
-    		return;
-    	}
+		if (!clusters || clusters.length === 1) {
+			averageNearbyRating = null;
+			numberOfRatings = null;
+			isData = false;
+			isLoading = false;
+			return;
+		}
 
-    	const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
-    	averageNearbyRating = roundToTen(average);
-    	numberOfRatings = clusters.length;
+		const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
+		averageNearbyRating = roundToTen(average);
+		numberOfRatings = clusters.length;
 
-    	if (radius >= 5000) {
-    		return;
-    	}
+		if (radius >= 5000) {
+			ratingsBad = [];
+			ratingsGood = [];
+			pointsOfInterest = [];
+			badges = [];
+			numberOfPOIs = null;
+			return;
+		}
 
-    	isLoading = true;
-    	const { data, error } = await getNearbyPointData([ lat, lng ], radius);
-    	isLoading = false;
-    	isData = true;
+		isLoading = true;
+		const { data, error } = await getNearbyPointData([ lat, lng ], radius);
+		isLoading = false;
+		isData = true;
 
-    	if (error) {
-    		logError(error);
-    		isData = false;
-    		showSomethingWrongNotification();
-    	}
+		if (error) {
+			logError(error);
+			isData = false;
+			showSomethingWrongNotification();
+		}
 
-    	const { ratings } = data;
+		const { ratings, pois } = data;
 
-    	if (!ratings || ratings.length === 1) {
-    		averageNearbyRating = null;
-    		numberOfRatings = null;
-    		isData = false;
-    		return;
-    	}
+		if (!pois || ratings.pois === 0) {
+			numberOfPOIs = null;
+		}
 
-    	const { bestRatings, worstRatings } = generateSmartReport(ratings);
+		numberOfPOIs = pois.length;
+		pointsOfInterest = pois;
 
-    	numberOfRatings = ratings.length;
+		if (!ratings || ratings.length === 1) {
+			averageNearbyRating = null;
+			numberOfRatings = null;
+			isData = false;
+			return;
+		}
 
-    	ratingsGood = bestRatings.map(({ key, value, numberOfUsers }) => ({
-    		title: $_(`criteria.${key}.title`),
-    		numberOfUsers,
-    		value,
-    	})).sort((a, b) => b.numberOfUsers - a.numberOfUsers);
+		const { bestRatings, worstRatings } = generateSmartReport(ratings);
 
-    	ratingsBad = worstRatings.map(({ key, value, numberOfUsers }) => ({
-    		title: $_(`criteria.${key}.title`),
-    		numberOfUsers,
-    		value,
-    	})).sort((a, b) => b.numberOfUsers - a.numberOfUsers);
+		numberOfRatings = ratings.length;
 
-    	badges = generateBadges(bestRatings, worstRatings, numberOfRatings);
-    };
+		ratingsGood = bestRatings.map(({ key, value, numberOfUsers }) => ({
+			title: $_(`criteria.${key}.title`),
+			numberOfUsers,
+			value,
+		})).sort((a, b) => b.numberOfUsers - a.numberOfUsers);
 
-    const removeCircle = () => {
-    	map.removeLayer(circle);
-    	circle = null;
-    };
+		ratingsBad = worstRatings.map(({ key, value, numberOfUsers }) => ({
+			title: $_(`criteria.${key}.title`),
+			numberOfUsers,
+			value,
+		})).sort((a, b) => b.numberOfUsers - a.numberOfUsers);
 
-    const drawCircle = ({ lat, lng }, radius = null) => {
-    	const { zoomLevel } = radiusOptions.find(({ selected }) => selected === true);
-    	// eslint-disable-next-line no-undef
-    	circle = L.circle({ lng, lat }, radius || radiusOptions[0]['value'], { color: '#007097' });
+		badges = generateBadges(bestRatings, worstRatings, numberOfRatings);
+	};
 
-    	circle.addTo(map);
-    	centerMap(map, lat, lng, $isDesktop, false, zoomLevel);
-    };
+	const openPOI = ({ coordinates }) => {
+		const [ lng, lat ] = coordinates;
+		openAnotherOverlay('pointOfInterestPopup', { lat, lng });
+	};
 
-    const handleSelect = event => {
-    	const newValue = Number(event.target.value);
-    	radiusOptions.forEach(item => {
-    		if (item.value === newValue) {
-    			item.selected = true;
-    		} else {
-    			item.selected = false;
-    		}
-    	});
+	const removeCircle = () => {
+		map.removeLayer(circle);
+		circle = null;
+	};
 
-    	removeCircle();
-    	drawCircle(popupData, newValue);
-    	loadData(popupData, newValue);
-    	registerAction(`nearbySelect-${newValue}`);
-    };
+	const drawCircle = ({ lat, lng }, radius = null) => {
+		const { zoomLevel } = radiusOptions.find(({ selected }) => selected === true);
+		// eslint-disable-next-line no-undef
+		circle = L.circle({ lng, lat }, radius || radiusOptions[0]['value'], { color: '#007097' });
 
-    onMount(() => {
-    	drawCircle(popupData);
-    	loadData(popupData);
-    });
+		circle.addTo(map);
+		centerMap(map, lat, lng, $isDesktop, false, zoomLevel);
+	};
 
-    onDestroy(removeCircle);
+	const handleSelect = event => {
+		const newValue = Number(event.target.value);
+		radiusOptions.forEach(item => {
+			item.selected = item.value === newValue;
+		});
+
+		removeCircle();
+		drawCircle(popupData, newValue);
+		loadData(popupData, newValue);
+		registerAction(`nearbySelect-${newValue}`);
+	};
+
+	onMount(() => {
+		drawCircle(popupData);
+		loadData(popupData);
+	});
+
+	onDestroy(removeCircle);
 </script>
 
 <div class="max-w-sm w-full">
-    <strong>
-        {#if averageNearbyRating}
-            {$_('nearbyPopup.averageRating')}: {averageNearbyRating}.
-            {$_('nearbyPopup.numberOfRatings')}: {numberOfRatings}
-        {:else}
-            {$_('nearbyPopup.noData')}
-        {/if}
-    </strong>
+	<strong class="text-active">
+		{#if averageNearbyRating}
+			{$_('nearbyPopup.averageRating')}: {averageNearbyRating}.
+			{$_('nearbyPopup.numberOfRatings')}: {numberOfRatings}
+		{:else}
+			{$_('nearbyPopup.noData')}
+		{/if}
+	</strong>
 
-    <Select
-        title={$_('nearbyPopup.selectTitle')}
-        id='radius-select'
-        options={radiusOptions}
-        className='mb-6'
-        on:change={handleSelect}
-    />
+	<Select
+		title={$_('nearbyPopup.selectTitle')}
+		id='radius-select'
+		options={radiusOptions}
+		className='mb-6'
+		on:change={handleSelect}
+	/>
 
-    {#if isLoading}
-        <Spinner
-            className='absolute'
-        />
-    {:else if isData}
-        {#if ratingsGood.length > 0}
-            <PopupTitle title={$_('nearbyPopup.secondTitle')} />
-            <ul class="my-4">
-                {#each ratingsGood as { title, numberOfUsers, value }}
-                    <li>
-                        {numberOfUsers}
-                        {#if numberOfUsers === 1}
-                            {$_('nearbyPopup.usersRated_single')}
-                        {:else}
-                            {$_('nearbyPopup.usersRated_other')}
-                        {/if}
-                        <strong>
-                            {title}
-                        </strong>
-                            {$_('nearbyPopup.as')}
-                        <strong>
-                            {value}
-                        </strong>
-                    </li>
-                {/each}
-            </ul>
-        {/if}
+	{#if isLoading}
+		<Spinner
+			className='absolute'
+		/>
+	{:else if isData}
+		{#if ratingsGood.length > 0}
+			<PopupTitle title={$_('nearbyPopup.secondTitle')} />
+			<ul class="my-4">
+				{#each ratingsGood as { title, numberOfUsers, value }}
+					<li>
+						{numberOfUsers}
+						{#if numberOfUsers === 1}
+							{$_('nearbyPopup.usersRated_single')}
+						{:else}
+							{$_('nearbyPopup.usersRated_other')}
+						{/if}
+						<strong class="text-active">
+							{title}
+						</strong>
+						{$_('nearbyPopup.as')}
+						<strong class="text-active">
+							{value}
+						</strong>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 
-        {#if ratingsBad.length > 0}
-            <PopupTitle title={$_('nearbyPopup.thirdTitle')} />
-            <ul class="my-4">
-                {#each ratingsBad as { title, numberOfUsers, value }}
-                    <li>
-                        {numberOfUsers}
-                        {#if numberOfUsers === 1}
-                            {$_('nearbyPopup.usersRated_single')}
-                        {:else}
-                            {$_('nearbyPopup.usersRated_other')}
-                        {/if}
-                        <strong>
-                            {title}
-                        </strong>
-                            {$_('nearbyPopup.as')}
-                        <strong>
-                            {value}
-                        </strong>
-                    </li>
-                {/each}
-            </ul>
-        {/if}
+		{#if ratingsBad.length > 0}
+			<PopupTitle title={$_('nearbyPopup.thirdTitle')} />
+			<ul class="my-4">
+				{#each ratingsBad as { title, numberOfUsers, value }}
+					<li>
+						{numberOfUsers}
+						{#if numberOfUsers === 1}
+							{$_('nearbyPopup.usersRated_single')}
+						{:else}
+							{$_('nearbyPopup.usersRated_other')}
+						{/if}
+						<strong class="text-active">
+							{title}
+						</strong>
+						{$_('nearbyPopup.as')}
+						<strong class="text-active">
+							{value}
+						</strong>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 
-        {#if badges && badges.length > 0}
-            <PopupTitle title={$_('nearbyPopup.fourthTitle')} />
-            <div class="my-4 flex justify-left flex-wrap">
-                {#each badges as { key, isGood }}
-                    <Badge
-                        {key}
-                        {isGood}
-                    />
-                {/each}
-            </div>
-        {/if}
-	
-	    {#if numberOfPOIs > 0}
-		    <PopupTitle title="{numberOfPOIs} points of interest" />
-	    {/if}
-    {/if}
+		{#if badges && badges.length > 0}
+			<PopupTitle title={$_('nearbyPopup.fourthTitle')} />
+			<div class="my-4 flex justify-left flex-wrap">
+				{#each badges as { key, isGood }}
+					<Badge
+						{key}
+						{isGood}
+					/>
+				{/each}
+			</div>
+		{/if}
+
+		{#if numberOfPOIs > 0}
+			<strong class="text-active">
+				{$_('nearbyPopup.pointsOfInterest')}: {numberOfPOIs}
+			</strong>
+			<ul class="my-4">
+				{#each pointsOfInterest as { title, location, tags }}
+					<li class="list-disc my-2 ml-4">
+						<div class="flex">
+							<TextButton
+								text={truncateString(title, 15)}
+								action={() => { openPOI(location) }}
+								{title}
+							/>
+							<ul class="ml-2 -mb-2 flex flex-wrap">
+								{#each tags as tag}
+									<Tag key={tag} />
+								{/each}
+							</ul>
+						</div>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+	{/if}
 </div>
-
-<style>
-    strong {
-        color: var(--active-color);
-    }
-</style>

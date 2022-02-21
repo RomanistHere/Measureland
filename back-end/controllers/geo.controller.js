@@ -5,6 +5,7 @@ const Geo = require('../models/geo.model');
 const User = require('../models/user.model');
 const Rating = require('../models/rating.model');
 const Comment = require('../models/comment.model');
+const PointOfInterest = require('../models/point-of-interest.model');
 
 const { getFinalRating, roundToTen } = require('../helpers/index');
 
@@ -267,6 +268,17 @@ exports.geo_location_nearby = async (req, res, next) => {
 			'properties.ratingIDs',
 		);
 
+		const pois = await PointOfInterest.find(
+			{
+				"location": {
+					$geoWithin: {
+						$centerSphere: [[ ...arr ], radius ],
+					},
+				},
+			},
+			'title location tags -_id',
+		);
+
 		const ratingIDs = geos.map(geo => geo.properties.ratingIDs).flat();
 
 		const ratings = await Rating.find(
@@ -284,6 +296,7 @@ exports.geo_location_nearby = async (req, res, next) => {
 				message: "Nearby locations found",
 				userID: userID ? userID : null,
 				ratings,
+				pois,
 			},
 		});
 	} catch (error) {
