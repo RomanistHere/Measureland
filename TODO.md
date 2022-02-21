@@ -3,8 +3,7 @@
 - translate my places popup
 - fix focus states
 - new secret feature
-  - show my POIs
-  - delete POI
+  - show and delete POI comments
 - karma
   - save list of ids of whom you endorse
   - on every like/dislike comment or POI add/remove user karma

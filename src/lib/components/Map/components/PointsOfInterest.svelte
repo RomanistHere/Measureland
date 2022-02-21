@@ -17,7 +17,7 @@
 		showSomethingWrongNotification,
 	} from "$lib/utilities/helpers.js";
 	import { fetchPOIsBounds } from "$lib/utilities/api.js";
-	import { appStateStore, poisToDelete } from "../../../../stores/state.js";
+	import { appStateStore, poisStore } from "../../../../stores/state.js";
 	
 	// Mostly this file is a weak (simpler) copy of ./MarkerCluster.svelte
 	// If (when) this feature is out of beta, extract logic from both files
@@ -73,6 +73,33 @@
 		poiReference.set(pointsOfInterestLayer);
 	};
 
+	// addMarker cluster 2.0 version (supercluster)
+	const addMarker = coordsData => {
+		const { points } = $poiReference;
+		const newPoint = {
+			geometry: {
+				coordinates: coordsData,
+				type: 'Point',
+			},
+			properties: {
+				averageRating: 5,
+			},
+			type: "Feature",
+			isAdequate: true,
+		};
+
+		// eslint-disable-next-line  no-undef
+		pointsOfInterestLayer = new Supercluster({
+			// log: true,
+			radius: 150,
+			minPoints: 2,
+			minZoom: 4,
+			maxZoom: 18,
+		}).load([ ...points, newPoint ]);
+
+		updateClusters();
+	};
+
 	const removeMarker = coordsArr => {
 		const { points } = $poiReference;
 		for (let i = 0; i < points.length; i++) {
@@ -94,18 +121,33 @@
 		updateClusters();
 	};
 
-	const deletePOIsExternal = arr => {
-		if (!arr || arr.length === 0)
+	const deletePOIsExternal = ({ markersToAdd, markersToRemove }) => {
+		const toAddArrayLength = markersToAdd.length;
+		const toRemoveArrayLength = markersToRemove.length;
+
+		if (toAddArrayLength === 0 && toRemoveArrayLength === 0)
 			return;
 
-		for (let i = 0; i < arr.length; i++) {
-			removeMarker(arr[i]);
+		if (toRemoveArrayLength !== 0) {
+			for (let i = 0; i < toRemoveArrayLength; i++) {
+				removeMarker(markersToRemove[i]);
+			}
 		}
 
-		poisToDelete.update(state => []);
+		if (toAddArrayLength !== 0) {
+			for (let i = 0; i < toAddArrayLength; i++) {
+				addMarker(markersToAdd[i]);
+			}
+		}
+
+		poisStore.update(state => ({
+			...state,
+			markersToAdd: [],
+			markersToRemove: [],
+		}));
 	};
 
-	$: deletePOIsExternal($poisToDelete);
+	$: deletePOIsExternal($poisStore);
 	
 	const addDataAndDisplay = data => {
 		// console.time('fix geojson')

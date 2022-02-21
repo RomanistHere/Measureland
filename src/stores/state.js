@@ -48,7 +48,10 @@ export const markerStore = writable({
 	markersToRemove: [],
 });
 
-export const poisToDelete = writable([]);
+export const poisStore = writable({
+	markersToAdd: [],
+	markersToRemove: [],
+});
 
 export const overlayStateStore = writable(overlayStateDefault);
 

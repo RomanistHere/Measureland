@@ -20,7 +20,7 @@
 		getErrorType,
 	} from "../../../../../utilities/helpers.js";
 	import { savePOIToDB } from "../../../../../utilities/api.js";
-	import { userStateStore } from "../../../../../../stores/state.js";
+	import { poisStore, userStateStore } from "../../../../../../stores/state.js";
 
 	$: errorsObj = $json('errors');
 	
@@ -88,7 +88,8 @@
 			showSomethingWrongNotification();
 			return;
 		}
-	
+
+		poisStore.update(state => ({ ...state, markersToAdd: [ ...state.markersToAdd, currentCoords ] }));
 		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 		closeOverlays();
 		showSuccessNotification();

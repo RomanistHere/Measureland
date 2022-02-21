@@ -7,7 +7,7 @@
 	import { fetchRatedPlaces, deleteUserRating, deletePOI } from "../../../../utilities/api.js";
 	import { getApproximateAddressAndCountry } from "../../../../utilities/externalApi.js";
 	import { openAnotherOverlay, showSomethingWrongNotification, logError } from "../../../../utilities/helpers.js";
-	import { markerStore, poisToDelete } from "../../../../../stores/state.js";
+	import { markerStore, poisStore } from "../../../../../stores/state.js";
 	import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
 	const openShowRatingsPopup = (lat, lng) =>
@@ -62,7 +62,10 @@
 		const { message, coords } = data;
 
 		if (message === 'Point of Interest deleted') {
-			poisToDelete.update(state => [ ...state, coords ]);
+			poisStore.update(state => ({
+				...state,
+				markersToRemove: [ ...state, coords ],
+			}));
 		}
 		return null;
 	};
@@ -199,7 +202,8 @@
 		color: #ff0000;
 	}
 
-	:global(.delete:hover + a) {
+	:global(.delete:hover + a),
+	:global(.delete:hover + a + a) {
 		color: #ff0000;
 	}
 
