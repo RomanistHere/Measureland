@@ -1,5 +1,6 @@
 # To do:
 
+- translate my places popup
 - fix focus states
 - new secret feature
   - show my POIs

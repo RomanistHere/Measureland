@@ -391,12 +391,13 @@ exports.POI_delete = async (req, res) => {
 
 	try {
 		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: pointID });
-		console.log(pointRemoved);
+		const commentsRemoved = await CommentPOI.deleteMany({ _id: { $in: pointRemoved.commentIDs } });
 
 		return res.json({
 			error: null,
 			data: {
 				message: 'Point of Interest deleted',
+				coords: pointRemoved.location.coordinates,
 			},
 		});
 	} catch (error) {

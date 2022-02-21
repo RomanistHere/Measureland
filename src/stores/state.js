@@ -48,6 +48,8 @@ export const markerStore = writable({
 	markersToRemove: [],
 });
 
+export const poisToDelete = writable([]);
+
 export const overlayStateStore = writable(overlayStateDefault);
 
 export const shouldShowFiltersNotification = derived(filtersStore, $filtersStore => $filtersStore.isFiltersOn);

@@ -1,14 +1,13 @@
 <script>
 	import { _, locale } from 'svelte-i18n';
 
-	import PopupTitle from './PopupTitle.svelte';
 	import Spinner from '../../../ui-elements/Spinner.svelte';
 	import TextButton from '../../../ui-elements/TextButton.svelte';
 
-	import { fetchRatedPlaces, deleteUserRating } from "../../../../utilities/api.js";
+	import { fetchRatedPlaces, deleteUserRating, deletePOI } from "../../../../utilities/api.js";
 	import { getApproximateAddressAndCountry } from "../../../../utilities/externalApi.js";
 	import { openAnotherOverlay, showSomethingWrongNotification, logError } from "../../../../utilities/helpers.js";
-	import { markerStore } from "../../../../../stores/state.js";
+	import { markerStore, poisToDelete } from "../../../../../stores/state.js";
 	import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
 	const openShowRatingsPopup = (lat, lng) =>
@@ -51,6 +50,23 @@
 		openAnotherOverlay('pointOfInterestPopup', { lat, lng });
 	};
 
+	const removePOI = async id => {
+		const { data, error } = await deletePOI(id);
+
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+			return;
+		}
+
+		const { message, coords } = data;
+
+		if (message === 'Point of Interest deleted') {
+			poisToDelete.update(state => [ ...state, coords ]);
+		}
+		return null;
+	};
+
 	const fetchData = async () => {
 		const { error, data } = await fetchRatedPlaces();
 
@@ -61,7 +77,6 @@
 		}
 
 		const { places, pois } = data;
-		console.log(pois);
 
 		const ratings = await Promise.all(places.map(async ({ location, ratingObj }) => {
 			const { ratingID, timeline } = ratingObj;
@@ -93,7 +108,9 @@
 	{#await promise}
 		<Spinner isWithText={true} className="absolute w-full h-full inset-0 z-5" />
 	{:then { ratings, pois }}
-		<PopupTitle title={$_('myPlacesPopup.title')} />
+		<strong class="text-active">
+			{$_('myPlacesPopup.title')}
+		</strong>
 
 		<ul class="max-h-96 overflow-y-auto mt-2 py-2">
 			{#if ratings.length === 0}
@@ -101,7 +118,7 @@
 			{:else}
 				{#each ratings as { lang, lat, lng, address, ratingID, timeline }}
 					<li
-						class="relative pr-4 -lg:pr-6"
+						class="relative pr-4 -lg:pr-6 border-y border-transparent hover:border-active"
 						class:hidden={ratingID === null}
 					>
 						<a
@@ -130,24 +147,30 @@
 			{/if}
 		</ul>
 
-		<PopupTitle title="Points of interest" />
+		<strong class="text-active mt-4 block">
+			Your points of interest
+		</strong>
 
 		<ul class="max-h-96 overflow-y-auto mt-2 py-2">
 			{#if pois.length === 0}
-				<span>{$_('myPlacesPopup.youHaveNotRated')}</span>
+				<span>
+					You haven't added Point of interest yet :(
+				</span>
 			{:else}
 				{#each pois as { _id, title, location }}
 					<li
-						class="relative pr-4 -lg:pr-6"
+						class="relative pr-4 py-1 -lg:pr-6 border-y border-transparent hover:border-active"
+						class:hidden={_id === null}
 					>
-<!--						<a-->
-<!--							href={"#"}-->
-<!--							title={$_('myPlacesPopup.deleteRating')}-->
-<!--							class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"-->
-<!--							on:click|preventDefault={async () => { ratingID = await deleteRating(ratingID) }}-->
-<!--						>-->
-<!--							x-->
-<!--						</a>-->
+						<a
+							href={"#"}
+							title="Delete Point of interest"
+							class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
+							on:click|preventDefault={async () => { _id = await removePOI(_id) }}
+						>
+							x
+						</a>
+<!--						todo: add href when POI can be opened from URL-->
 <!--						href="{WEB_DOMAIN}/{$locale}/?zoom=13&srlat={location.coordinates[1]}&srlng={location.coordinates[0]}"-->
 						<TextButton
 							href="#"
@@ -176,8 +199,7 @@
 		color: #ff0000;
 	}
 
-	:global(.delete:hover + a),
-	:global(.delete:hover + a + a) {
+	:global(.delete:hover + a) {
 		color: #ff0000;
 	}
 

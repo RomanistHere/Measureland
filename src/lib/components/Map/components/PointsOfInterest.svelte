@@ -17,7 +17,7 @@
 		showSomethingWrongNotification,
 	} from "$lib/utilities/helpers.js";
 	import { fetchPOIsBounds } from "$lib/utilities/api.js";
-	import { appStateStore } from "../../../../stores/state.js";
+	import { appStateStore, poisToDelete } from "../../../../stores/state.js";
 	
 	// Mostly this file is a weak (simpler) copy of ./MarkerCluster.svelte
 	// If (when) this feature is out of beta, extract logic from both files
@@ -67,11 +67,45 @@
 		const { east, north, south, west, zoom } = getBoundsData(map);
 		const bbox = [ west, south, east, north ];
 		const clusters = pointsOfInterestLayer.getClusters(bbox, zoom);
-	
+
 		clusterMarkers.clearLayers();
 		clusterMarkers.addData(clusters);
 		poiReference.set(pointsOfInterestLayer);
 	};
+
+	const removeMarker = coordsArr => {
+		const { points } = $poiReference;
+		for (let i = 0; i < points.length; i++) {
+			const { coordinates } = points[i].geometry;
+			if (coordinates[0] === coordsArr[0] && coordinates[1] === coordsArr[1]) {
+				points.splice(i, 1);
+				break;
+			}
+		}
+		// eslint-disable-next-line  no-undef
+		pointsOfInterestLayer = new Supercluster({
+			// log: true,
+			radius: 150,
+			minPoints: 2,
+			minZoom: 4,
+			maxZoom: 18,
+		}).load(points);
+
+		updateClusters();
+	};
+
+	const deletePOIsExternal = arr => {
+		if (!arr || arr.length === 0)
+			return;
+
+		for (let i = 0; i < arr.length; i++) {
+			removeMarker(arr[i]);
+		}
+
+		poisToDelete.update(state => []);
+	};
+
+	$: deletePOIsExternal($poisToDelete);
 	
 	const addDataAndDisplay = data => {
 		// console.time('fix geojson')
