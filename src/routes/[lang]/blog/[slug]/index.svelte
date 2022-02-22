@@ -1,6 +1,7 @@
 <script context="module">
     import { getSingleInstance } from '../../../../markdown/prepareMarkdown.js';
 
+    // eslint-disable-next-line func-style
     export function load ({ page }) {
     	const { lang, slug } = page.params;
     	const neededPost = getSingleInstance(lang, slug);

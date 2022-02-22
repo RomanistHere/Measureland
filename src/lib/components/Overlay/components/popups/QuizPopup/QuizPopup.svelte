@@ -41,7 +41,7 @@
     	key,
     }));
 
-    $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    $: isUserLoggedIn = $userStateStore.userID !== null;
     $: currentStage = 1;
 
     const currentYear = new Date().getFullYear();
@@ -132,7 +132,7 @@
     	const { finalRating, answersNumber } = getFinalRating(rating);
 
     	return {
-    		isDataValid: answersNumber === 11 ? true : false,
+    		isDataValid: answersNumber === 11,
     		averageRating: roundToTen(finalRating),
     	};
     };
@@ -180,13 +180,13 @@
     			return;
     		}
 
-    		const isUpdated = data.message === 'Rating updated' ? true : false;
+    		const isUpdated = data.message === 'Rating updated';
     		if (isUpdated) {
-    			const { coords, averageRating } = data;
+    			const { coords } = data;
     			markerStore.update(state => ({
     				...state,
     				markersToRemove: [ ...state.markersToRemove, { coords }],
-    				markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating }],
+    				markersToAdd: [ ...state.markersToAdd, { coords, rating: data.averageRating }],
     			}));
     		} else {
     			markerStore.update(state => ({

@@ -1,6 +1,7 @@
 <script context="module">
     import { getArrays } from '../../../markdown/prepareMarkdown.js';
 
+    // eslint-disable-next-line func-style
     export function load ({ page }) {
     	const { lang } = page.params;
     	const { postsArray, guidesArray } = getArrays(lang);

@@ -120,6 +120,7 @@ const closeOverlaysWithSameType = (overlayType, state) => {
 			state[keysArray[i]].isOpen = false;
 		} else {
 			// check if any of other modals are open
+			// eslint-disable-next-line no-lonely-if
 			if (isOpen)
 				isModalOpen = true;
 		}
@@ -248,11 +249,15 @@ const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false, zoomLev
 	const west = roundToFifthDecimal(bounds.getWest());
 	const distanceBetweenEdgesOfScreen = roundToFifthDecimal(Math.abs(east - west));
 	const currentZoom = map.getZoom();
+
+	/* eslint-disable no-nested-ternary */
+	// doesn't look better with if/else syntax
 	const zoom = zoomLevel && currentZoom >= zoomLevel
 		? zoomLevel
 		: zoomClosely
 			? currentZoom <= 14 ? 15 : currentZoom
 			: currentZoom <= 12 ? 13 : currentZoom;
+	/* eslint-enable no-nested-ternary */
 
 	// center in left half of the screen for desktop
 	map.setView({

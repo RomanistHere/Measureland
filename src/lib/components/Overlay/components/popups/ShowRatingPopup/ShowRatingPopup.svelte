@@ -60,7 +60,7 @@
 	$: copyLinkState = shouldShowURLCopySuccess ? $_('showRatingPopup.copied') : $_('showRatingPopup.shareThisRating');
 	// complexity because of translation
 	$: criteriaArray = loadedRating === null
-		? Object.entries($json('criteria')).map(([ key, value ]) => ({ ...value, rating: 0 }))
+		? Object.entries($json('criteria')).map(([ , value ]) => ({ ...value, rating: 0 }))
 		: Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
 
 	const copyShareRatingURL = () => {

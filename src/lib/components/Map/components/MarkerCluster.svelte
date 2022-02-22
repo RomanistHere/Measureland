@@ -244,12 +244,11 @@
 		}));
 	};
 
-	const getQueryPolygon = (visitedPoly, currentScreenPoly) => {
+	const getQueryPolygon = (visitedPolyRef, currentScreenPoly) => {
 		try {
-			const queryPolygon = visitedPoly !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
-				? PolyBool.differenceRev(visitedPoly, currentScreenPoly)
+			return visitedPolyRef !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
+				? PolyBool.differenceRev(visitedPolyRef, currentScreenPoly)
 				: currentScreenPoly;
-			return queryPolygon;
 		} catch (e) {
 			logError(e);
 			showSomethingWrongNotification();
@@ -271,17 +270,17 @@
 		if (!queryPolygon.regions[0])
 			return clusterData();
 
-		const getQuery = queryPolygon => {
-			if (queryPolygon.regions[2]) {
+		const getQuery = queryPolygonRef => {
+			if (queryPolygonRef.regions[2]) {
 				return currentScreenPoly.regions[0];
-			} else if (queryPolygon.regions[1]) {
-				const secondRegLength = queryPolygon.regions[1].length;
-				const [ lastElemLat, lastElemLng ] = queryPolygon.regions[0].pop();
-				const [ , lastElemLng2 ] = queryPolygon.regions[1][secondRegLength - 1];
-				const fixedFirstPart = [ ...queryPolygon.regions[0], [ lastElemLat, lastElemLng2 ]];
+			} else if (queryPolygonRef.regions[1]) {
+				const secondRegLength = queryPolygonRef.regions[1].length;
+				const [ lastElemLat, lastElemLng ] = queryPolygonRef.regions[0].pop();
+				const [ , lastElemLng2 ] = queryPolygonRef.regions[1][secondRegLength - 1];
+				const fixedFirstPart = [ ...queryPolygonRef.regions[0], [ lastElemLat, lastElemLng2 ]];
 				const queryPol = [
 					...fixedFirstPart,
-					...queryPolygon.regions[1].reverse(),
+					...queryPolygonRef.regions[1].reverse(),
 					[ lastElemLat + 0.001, lastElemLng2 ],
 					[ lastElemLat + 0.001, lastElemLng ],
 				];

@@ -19,7 +19,6 @@
 		registerAction,
 		logError,
 		openAnotherOverlay,
-		truncateString,
 	} from '../../../../../utilities/helpers.js';
 	import { generateSmartReport } from './generateSmartReport.js';
 	import { generateBadges } from './generateBadges.js';
@@ -270,11 +269,13 @@
 				{#each pointsOfInterest as { title, location, tags }}
 					<li class="list-disc my-2 ml-4">
 						<div class="flex">
-							<TextButton
-								text={truncateString(title, 15)}
-								action={() => { openPOI(location) }}
-								{title}
-							/>
+							<div class="truncate hover:text-white hover:bg-active self-start">
+								<TextButton
+									text={title}
+									action={() => { openPOI(location) }}
+									{title}
+								/>
+							</div>
 							<ul class="ml-2 -mb-2 flex flex-wrap">
 								{#each tags as tag}
 									<Tag key={tag} />

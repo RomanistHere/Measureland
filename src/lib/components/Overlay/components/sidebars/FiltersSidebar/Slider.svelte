@@ -81,20 +81,20 @@
 
 <div class="{className}" bind:this={slider}></div>
 
-<style global>
-    .noUi-horizontal {
+<style>
+	:global(.noUi-horizontal) {
         height: 14px;
     }
 
-    .noUi-horizontal .noUi-handle {
+	:global(.noUi-horizontal .noUi-handle) {
         width: 26px;
         height: 22px;
         right: -12px;
         top: -5px;
     }
 
-    .noUi-handle::after,
-    .noUi-handle::before {
+	:global(.noUi-handle::after),
+    :global(.noUi-handle::before) {
         content: "";
         display: block;
         position: absolute;
@@ -105,16 +105,16 @@
         top: 4px;
     }
 
-    .noUi-handle::after {
+	:global(.noUi-handle::after) {
         left: 13px;
     }
 
-    .noUi-connect {
+	:global(.noUi-connect) {
         background-color: var(--bg-color);
     }
 
-    .noUi-handle,
-    .noUi-target {
+	:global(.noUi-handle),
+    :global(.noUi-target) {
         border-color: var(--border-color);
     }
 </style>
