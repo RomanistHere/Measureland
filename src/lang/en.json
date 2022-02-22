@@ -533,7 +533,12 @@
         "title": "Your ratings",
         "youHaveNotRated": "You have not rated anything yet. Find a familiar place, click the map and rate!",
         "defaultAdress": "Didn't find address",
-        "deleteRating": "Delete rating"
+        "deleteRating": "Delete rating",
+        "titlePOIs": "Your Points of interest (POIs)",
+        "noPOIs": "You haven't added Point of interest yet :(",
+        "deletePOI": "Delete Point of interest",
+        "commentsPOI": "Your comments to POIs",
+        "deleteComment": "Delete comment"
     },
     "askForMoreRatingsPopup": {
         "title": "Done",

@@ -6,7 +6,12 @@
 
 	import { fetchRatedPlaces, deleteUserRating, deletePOI, deleteCommentPOI } from "../../../../utilities/api.js";
 	import { getApproximateAddressAndCountry } from "../../../../utilities/externalApi.js";
-	import { openAnotherOverlay, showSomethingWrongNotification, logError } from "../../../../utilities/helpers.js";
+	import {
+		openAnotherOverlay,
+		showSomethingWrongNotification,
+		logError,
+		closeOverlay,
+	} from "../../../../utilities/helpers.js";
 	import { markerStore, poisStore } from "../../../../../stores/state.js";
 	import { WEB_DOMAIN } from '../../../../../configs/env.js';
 
@@ -35,6 +40,7 @@
 					markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating }],
 				}));
 			} else {
+				closeOverlay('sidebar');
 				markerStore.update(state => ({
 					...state,
 					markersToRemove: [ ...state.markersToRemove, { coords }],
@@ -62,6 +68,7 @@
 		const { message, coords } = data;
 
 		if (message === 'Point of Interest deleted') {
+			closeOverlay('sidebar');
 			poisStore.update(state => ({
 				...state,
 				markersToRemove: [ ...state.markersToRemove, coords ],
@@ -78,6 +85,8 @@
 			showSomethingWrongNotification();
 			return;
 		}
+
+		closeOverlay('sidebar');
 
 		return null;
 	};
@@ -134,7 +143,7 @@
 			{:else}
 				{#each ratings as { lang, lat, lng, address, ratingID, timeline }}
 					<li
-						class="relative pr-4 -lg:pr-6 border-y border-transparent hover:border-active"
+						class="relative pr-4 -lg:pr-6 border-y border-transparent hover:border-active -md:border-active -md:-mt-px -md:py-1"
 						class:hidden={ratingID === null}
 					>
 						<a
@@ -164,24 +173,24 @@
 		</ul>
 
 		<strong class="text-active block mt-6">
-			Your points of interest (POIs)
+			{$_('myPlacesPopup.titlePOIs')}
 		</strong>
 
 		<ul class="max-h-52 overflow-y-auto py-2">
 			{#if !pois || pois.length === 0}
 				<span>
-					You haven't added Point of interest yet :(
+					{$_('myPlacesPopup.noPOIs')}
 				</span>
 			{:else}
 				{#each pois as { _id, title, location }}
 					<li
-						class="relative pr-4 py-1 -lg:pr-6 border-y border-transparent hover:border-active"
+						class="relative pr-4 py-1 -lg:pr-6 border-y border-transparent hover:border-active list-disc list-inside -md:border-active -md:-mt-px"
 						class:hidden={_id === null}
 					>
 						<a
 							href={"#"}
-							title="Delete Point of interest"
-							class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
+							title={$_('myPlacesPopup.deletePOI')}
+							class="py-1 pb-2 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { _id = await removePOI(_id) }}
 						>
 							x
@@ -201,18 +210,18 @@
 
 		{#if !poiComments || poiComments.length !== 0}
 			<strong class="text-active block mt-6">
-				Your POI comments
+				{$_('myPlacesPopup.commentsPOI')}
 			</strong>
 			<ul class="max-h-52 overflow-y-auto mt-2 py-2">
 				{#each poiComments as { _id, comment }}
 					<li
-						class="relative pr-4 -lg:pr-6 border-y border-transparent hover:border-active"
+						class="relative pr-4 -lg:pr-6 border-y border-transparent hover:border-active -md:border-active -md:-mt-px"
 						class:hidden={_id === null}
 					>
 						<a
 							href={"#"}
-							title="Delete comment"
-							class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
+							title={$_('myPlacesPopup.deleteComment')}
+							class="py-1 pb-2 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { _id = await removeCommentPOI(_id) }}
 						>
 							x
