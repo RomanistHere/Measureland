@@ -1,6 +1,5 @@
 # To do:
 
-- translate my places popup
 - fix focus states
 - karma
   - save list of ids of whom you endorse

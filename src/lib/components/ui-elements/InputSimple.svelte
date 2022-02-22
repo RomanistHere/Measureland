@@ -2,41 +2,34 @@
     export let autocomplete;
     export let placeholder;
     export let className = '';
+
+    let ref;
+
+    export const focus = () => {
+	    ref?.focus();
+    };
 </script>
 
 <div class="relative">
 	<input
-		class="mt-4 p-2 w-full rounded-md shadow {className}"
+		class="mt-4 p-2 w-full rounded-md shadow border-2 border-active focus:outline-0 transition-colors duration-100 {className}"
 		type="text"
 		{ autocomplete }
 		{ placeholder }
 		on:change
+		bind:this={ref}
 	>
 	
-	<span class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-8 opacity-0"></span>
-	<span class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-8 opacity-0"></span>
+	<span class="w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-8 opacity-0 bg-active transition-opacity duration-200 delay-100"></span>
+	<span class="w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-8 opacity-0 bg-active transition-opacity duration-200 delay-100"></span>
 </div>
 
 <style>
-    input {
-        border: 2px solid var(--active-color);
-        transition: background-color .1s;
-    }
-
-    input:focus {
-        outline: none;
-    }
-
-    .dot {
-        background-color: var(--active-color);
-        transition: opacity .2s .1s;
-    }
-
-    input:focus + .dot {
+    input:focus + span {
         opacity: 1;
     }
 
-    input:focus + .dot + .dot {
+    input:focus + span + span {
         opacity: 1;
     }
 </style>

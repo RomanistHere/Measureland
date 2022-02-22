@@ -30,6 +30,8 @@
 	let errorType = '';
 	let isLoading = false;
 	let isSpam = null;
+	let inputRef = null;
+	let textAreaRef = null;
 	let pointOfInterestState = {
 		title: '',
 		description: '',
@@ -67,9 +69,13 @@
 
 		const isValuesNotEmpty = pointOfInterestState.description.length > 0 && pointOfInterestState.title.length > 2;
 		if (!isValuesNotEmpty) {
-			// TODO: focus needed input
 			isError = true;
 			errorType = 'fieldsError';
+
+			if (pointOfInterestState.title.length <= 2)
+				inputRef?.focus();
+			else if (pointOfInterestState.description.length === 0)
+				textAreaRef?.focus();
 
 			return;
 		}
@@ -130,6 +136,7 @@
 		on:change={updateInputValue}
 		placeholder={$_('addPOIPopup.inputPlaceholder')}
 		autocomplete="point of interest"
+		bind:this={inputRef}
 	/>
 
 	<p class="my-4">
@@ -141,6 +148,7 @@
 		maxlength="{1400}"
 		on:input={updateTextareaValue}
 		className='mt-0'
+		bind:this={textAreaRef}
 	/>
 
 	<TagsInput

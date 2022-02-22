@@ -29,6 +29,7 @@
 	let isLoading = false;
 	let isSpam = null;
 	let comment = '';
+	let textAreaRef = null;
 	
 	const updateTextareaValue = e => {
 		comment = e.target.value;
@@ -42,7 +43,7 @@
 	
 		const isValuesNotEmpty = comment.length > 2;
 		if (!isValuesNotEmpty) {
-			// TODO: focus needed input
+			textAreaRef?.focus();
 			isError = true;
 			errorType = 'fieldsError';
 	
@@ -106,6 +107,7 @@
 		maxlength="{1400}"
 		on:input={updateTextareaValue}
 		className='mt-0'
+		bind:this={textAreaRef}
 	/>
 	
 	<div class="relative flex justify-center items-center h-28">
