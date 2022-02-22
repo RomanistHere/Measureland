@@ -12,8 +12,6 @@ router.get('/read_single/:coords', POI_controller.POI_get_single);
 router.get('/read_comments/:pointID', POI_controller.POI_get_comments);
 
 router.delete('/delete_point/:pointID', POI_controller.POI_delete);
-
-// todo
-// router.delete('/delete_comment/:commentID', POI_controller.POI_delete_comment);
+router.delete('/delete_comment/:commentID', POI_controller.POI_delete_comment);
 
 module.exports = router;

@@ -9,6 +9,7 @@ const User = require('../models/user.model');
 const UserVerification = require('../models/token.model');
 const PasswordReset = require('../models/password-reset.model');
 const PointOfInterest = require('../models/point-of-interest.model');
+const CommentPOI = require("../models/comment-POI.model");
 const Feedback = require('../models/feedback.model');
 const Comment = require('../models/comment.model');
 const Rating = require('../models/rating.model');
@@ -16,6 +17,7 @@ const Task = require('../models/task.model');
 
 const { getFinalRating, roundToTen } = require('../helpers/index');
 const { sendEmail } = require('../helpers/email');
+
 const isProd = process.env.IS_PROD === '1';
 
 exports.user_register = async (req, res) => {
@@ -363,10 +365,20 @@ exports.user_places = async (req, res) => {
 			'location.coordinates title',
 		);
 
+		const poiComments = await CommentPOI.find(
+			{
+				_id: {
+					$in: user.properties.POICommentIDs,
+				},
+			},
+			'comment',
+		);
+
 		return res.json({
 			error: null,
 			data: {
 				message: "Rated places",
+				poiComments,
 				places,
 				pois,
 			},

@@ -390,7 +390,7 @@ exports.POI_delete = async (req, res) => {
 	const { pointID } = Object.fromEntries(urlParams);
 
 	try {
-		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: pointID });
+		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: sanitize(pointID) });
 		const commentsRemoved = await CommentPOI.deleteMany({ _id: { $in: pointRemoved.commentIDs } });
 
 		return res.json({
@@ -398,6 +398,39 @@ exports.POI_delete = async (req, res) => {
 			data: {
 				message: 'Point of Interest deleted',
 				coords: pointRemoved.location.coordinates,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
+exports.POI_delete_comment = async (req, res) => {
+	if (!req.session.userID)
+		return res.status(400).json({ error: "User is not logged in" });
+
+	const urlParams = new URLSearchParams(req.params.commentID);
+	const { commentID } = Object.fromEntries(urlParams);
+
+	try {
+		const commentsRemoved = await CommentPOI.findOneAndRemove({ _id: sanitize(commentID) });
+
+		await PointOfInterest.findOneAndUpdate({
+			_id: commentsRemoved.point,
+		}, {
+			$pull: {
+				commentIDs: commentID,
+			},
+		}, {
+			new: true,
+		});
+
+		return res.json({
+			error: null,
+			data: {
+				message: 'POI comment deleted',
 			},
 		});
 	} catch (error) {

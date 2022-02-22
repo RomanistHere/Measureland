@@ -4,7 +4,7 @@
 	import Spinner from '../../../ui-elements/Spinner.svelte';
 	import TextButton from '../../../ui-elements/TextButton.svelte';
 
-	import { fetchRatedPlaces, deleteUserRating, deletePOI } from "../../../../utilities/api.js";
+	import { fetchRatedPlaces, deleteUserRating, deletePOI, deleteCommentPOI } from "../../../../utilities/api.js";
 	import { getApproximateAddressAndCountry } from "../../../../utilities/externalApi.js";
 	import { openAnotherOverlay, showSomethingWrongNotification, logError } from "../../../../utilities/helpers.js";
 	import { markerStore, poisStore } from "../../../../../stores/state.js";
@@ -64,9 +64,21 @@
 		if (message === 'Point of Interest deleted') {
 			poisStore.update(state => ({
 				...state,
-				markersToRemove: [ ...state, coords ],
+				markersToRemove: [ ...state.markersToRemove, coords ],
 			}));
 		}
+		return null;
+	};
+
+	const removeCommentPOI = async id => {
+		const { error } = await deleteCommentPOI(id);
+
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+			return;
+		}
+
 		return null;
 	};
 
@@ -79,7 +91,7 @@
 			return [];
 		}
 
-		const { places, pois } = data;
+		const { places, pois, poiComments } = data;
 
 		const ratings = await Promise.all(places.map(async ({ location, ratingObj }) => {
 			const { ratingID, timeline } = ratingObj;
@@ -99,6 +111,7 @@
 		}));
 
 		return {
+			poiComments,
 			ratings,
 			pois,
 		};
@@ -110,13 +123,13 @@
 <div class="max-w-sm w-full">
 	{#await promise}
 		<Spinner isWithText={true} className="absolute w-full h-full inset-0 z-5" />
-	{:then { ratings, pois }}
-		<strong class="text-active">
+	{:then { ratings, pois, poiComments }}
+		<strong class="text-active mt-6">
 			{$_('myPlacesPopup.title')}
 		</strong>
 
-		<ul class="max-h-96 overflow-y-auto mt-2 py-2">
-			{#if ratings.length === 0}
+		<ul class="max-h-52 overflow-y-auto py-2">
+			{#if !ratings || ratings.length === 0}
 				<span>{$_('myPlacesPopup.youHaveNotRated')}</span>
 			{:else}
 				{#each ratings as { lang, lat, lng, address, ratingID, timeline }}
@@ -150,12 +163,12 @@
 			{/if}
 		</ul>
 
-		<strong class="text-active mt-4 block">
-			Your points of interest
+		<strong class="text-active block mt-6">
+			Your points of interest (POIs)
 		</strong>
 
-		<ul class="max-h-96 overflow-y-auto mt-2 py-2">
-			{#if pois.length === 0}
+		<ul class="max-h-52 overflow-y-auto py-2">
+			{#if !pois || pois.length === 0}
 				<span>
 					You haven't added Point of interest yet :(
 				</span>
@@ -185,6 +198,32 @@
 				{/each}
 			{/if}
 		</ul>
+
+		{#if !poiComments || poiComments.length !== 0}
+			<strong class="text-active block mt-6">
+				Your POI comments
+			</strong>
+			<ul class="max-h-52 overflow-y-auto mt-2 py-2">
+				{#each poiComments as { _id, comment }}
+					<li
+						class="relative pr-4 -lg:pr-6 border-y border-transparent hover:border-active"
+						class:hidden={_id === null}
+					>
+						<a
+							href={"#"}
+							title="Delete comment"
+							class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
+							on:click|preventDefault={async () => { _id = await removeCommentPOI(_id) }}
+						>
+							x
+						</a>
+						<p class="py-1 pr-2 truncate" title={comment}>
+							{comment}
+						</p>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 	{/await}
 </div>
 

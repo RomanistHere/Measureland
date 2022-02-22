@@ -194,6 +194,12 @@ const deletePOI = async pointID => {
 	return await fetchFunction({ url, method: 'DELETE' });
 };
 
+const deleteCommentPOI = async commentID => {
+	const url = `${API_URL}/poi/delete_comment/${new URLSearchParams({ commentID })}`;
+
+	return await fetchFunction({ url, method: 'DELETE' });
+};
+
 // comments
 
 const fetchComments = async geoID => {
@@ -424,4 +430,5 @@ export {
 	fetchCommentsPOI,
 	reactOnCommentPOI,
 	deletePOI,
+	deleteCommentPOI,
 };
