@@ -1,139 +1,145 @@
 <script>
-    import { onMount } from "svelte";
-    import { _, json } from 'svelte-i18n';
+	import { onMount } from "svelte";
+	import { _, json } from 'svelte-i18n';
 
-    import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
-    import Textarea from '../../../ui-elements/Textarea.svelte';
-    import Spinner from '../../../ui-elements/Spinner.svelte';
-    import FormButton from '../../../ui-elements/FormButton.svelte';
-    import PopupTitle from './PopupTitle.svelte';
+	import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
+	import Textarea from '../../../ui-elements/Textarea.svelte';
+	import Spinner from '../../../ui-elements/Spinner.svelte';
+	import FormButton from '../../../ui-elements/FormButton.svelte';
+	import PopupTitle from './PopupTitle.svelte';
 
-    import {
-	    debounce,
-	    showSuccessNotification,
-	    closeOverlays,
-	    showSomethingWrongNotification,
-	    logError,
-	    openAnotherOverlay,
-	    getErrorType,
-    } from "../../../../utilities/helpers.js";
-    import { sendFeedback } from "../../../../utilities/api.js";
-    import { userStateStore } from "../../../../../stores/state.js";
+	import {
+		debounce,
+		showSuccessNotification,
+		closeOverlays,
+		showSomethingWrongNotification,
+		logError,
+		openAnotherOverlay,
+		getErrorType, blurCurrentInput,
+	} from "../../../../utilities/helpers.js";
+	import { sendFeedback } from "../../../../utilities/api.js";
+	import { userStateStore } from "../../../../../stores/state.js";
 
-    $: errorsObj = $json('errors');
+	$: errorsObj = $json('errors');
 
-    let isError = false;
-    let errorType = '';
-    let isLoading = false;
-    let isSpam = null;
-    let feedbackState = {
-    	heading: '',
-    	comment: '',
-    };
+	let isError = false;
+	let errorType = '';
+	let isLoading = false;
+	let isSpam = null;
+	let inputRef = null;
+	let textAreaRef = null;
+	let feedbackState = {
+		heading: '',
+		comment: '',
+	};
 
-    const updateInputValue = e => {
-    	const { value } = e.target;
-    	feedbackState = { ...feedbackState, heading: value };
-    };
+	const updateInputValue = e => {
+		const { value } = e.target;
+		feedbackState = { ...feedbackState, heading: value };
+	};
 
-    const updateTextareaValue = e => {
-    	const { value } = e.target;
-    	feedbackState = { ...feedbackState, comment: value };
-    };
+	const updateTextareaValue = e => {
+		const { value } = e.target;
+		feedbackState = { ...feedbackState, comment: value };
+	};
 
-    const submit = async () => {
-    	// TODO: make in more declarative way
-    	if (document)
-    		document.activeElement.blur();
+	const submit = async () => {
+		blurCurrentInput(document);
 
-    	isError = false;
+		isError = false;
 
-    	const isValuesNotEmpty = feedbackState.comment.length > 0 && feedbackState.heading.length > 0;
-    	if (!isValuesNotEmpty) {
-    		// TODO: focus needed input
-    		isError = true;
-    		errorType = 'fieldsError';
+		const isValuesNotEmpty = feedbackState.comment.length > 0 && feedbackState.heading.length > 3;
+		if (!isValuesNotEmpty) {
+			isError = true;
+			errorType = 'fieldsError';
 
-    		return;
-    	}
+			if (feedbackState.heading.length <= 2)
+				inputRef?.focus();
+			else if (feedbackState.comment.length === 0)
+				textAreaRef?.focus();
 
-    	isLoading = true;
-    	const { error } = await sendFeedback(feedbackState, $userStateStore.userID);
-    	isLoading = false;
+			return;
+		}
 
-    	if (error) {
-    		logError(error);
-    		isError = true;
-    		errorType = getErrorType(error);
+		isLoading = true;
+		const { error } = await sendFeedback(feedbackState, $userStateStore.userID);
+		isLoading = false;
 
-    		showSomethingWrongNotification();
-    		return;
-    	}
+		if (error) {
+			logError(error);
+			isError = true;
+			errorType = getErrorType(error);
 
-    	closeOverlays();
-    	showSuccessNotification();
-    };
+			showSomethingWrongNotification();
+			return;
+		}
 
-    const debouncedSubmit = debounce(() => {
-    	if (isSpam) {
-    		isError = true;
-    		errorType = 'manyAttempts';
-    		clearTimeout(isSpam);
-    		isSpam = setTimeout(() => {
-    			clearTimeout(isSpam);
-    			isSpam = null;
-    			isError = false;
-    		}, 2000);
-    		return;
-    	}
+		closeOverlays();
+		showSuccessNotification();
+	};
 
-    	isSpam = setTimeout(() => {
-    		clearTimeout(isSpam);
-    		isSpam = null;
-    	}, 2000);
+	const debouncedSubmit = debounce(() => {
+		if (isSpam) {
+			isError = true;
+			errorType = 'manyAttempts';
+			clearTimeout(isSpam);
+			isSpam = setTimeout(() => {
+				clearTimeout(isSpam);
+				isSpam = null;
+				isError = false;
+			}, 2000);
+			return;
+		}
 
-    	submit();
-    }, 200);
+		isSpam = setTimeout(() => {
+			clearTimeout(isSpam);
+			isSpam = null;
+		}, 2000);
 
-    onMount(() => {
-    	if ($userStateStore.userID === null)
-    		openAnotherOverlay('loginPopup');
-    });
+		submit();
+	}, 200);
+
+	onMount(() => {
+		if ($userStateStore.userID === null)
+			openAnotherOverlay('loginPopup');
+	});
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-    <PopupTitle title={$_('feedbackPopup.title')} />
+	<PopupTitle title={$_('feedbackPopup.title')} />
 
-    <InputGroupSimple
-        title={$_('feedbackPopup.inputTitle')}
-        on:change={updateInputValue}
-        placeholder={$_('feedbackPopup.inputPlaceholder')}
-        autocomplete="feedback"
-    />
+	<InputGroupSimple
+		title={$_('feedbackPopup.inputTitle')}
+		on:change={updateInputValue}
+		placeholder={$_('feedbackPopup.inputPlaceholder')}
+		autocomplete="feedback"
+		bind:this={inputRef}
+	/>
 
-    <p class="my-4">
-        {$_('feedbackPopup.text')}
-    </p>
+	<p class="my-4">
+		{$_('feedbackPopup.text')}
+	</p>
 
-    <Textarea
-        placeholder={$_('feedbackPopup.textAreaPlaceholder')}
-        maxlength="{1400}"
-        on:input={updateTextareaValue}
-        className='mt-0'
-    />
+	<Textarea
+		placeholder={$_('feedbackPopup.textAreaPlaceholder')}
+		maxlength="{1400}"
+		on:input={updateTextareaValue}
+		className='mt-0'
+		bind:this={textAreaRef}
+	/>
 
-    <div class="relative flex justify-center items-center h-28">
-        {#if isLoading}
-            <Spinner />
-        {/if}
-        {#if isError}
+	<div class="relative flex justify-center items-center h-28">
+		{#if isLoading}
+			<Spinner />
+		{/if}
+		{#if isError}
             <span class="italic font-bold">
                 {errorsObj[errorType]}
             </span>
-        {/if}
-    </div>
+		{/if}
+	</div>
 
-    <div class="flex justify-evenly items-center">
-        <FormButton text={$_('feedbackPopup.submitBtn')} action={debouncedSubmit} />
-    </div>
+	<div class="flex justify-evenly items-center">
+		<FormButton text={$_('feedbackPopup.submitBtn')} action={debouncedSubmit} />
+	</div>
 </form>

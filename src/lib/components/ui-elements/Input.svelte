@@ -49,6 +49,9 @@
 		isInputActive = true;
 		value = e.currentTarget.value;
 	};
+
+	$: isError = (!isInputValid && !isInputActive) || shouldShowMatchError;
+	$: isValid = isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError;
 </script>
 
 <div class="relative">
@@ -64,8 +67,10 @@
 	</label>
 	<!-- svelte-ignore a11y-autofocus -->
 	<input
-		class="mt-4 p-2 w-full rounded-md shadow"
-		class:input-valid={isInputValid && hasTypingStarted && !isInputActive && !shouldShowMatchError}
+		class="mt-4 p-2 w-full rounded-md shadow border-2 border-active focus:outline-0 transition-colors duration-100"
+		class:bg-active={isValid}
+		class:text-white={isValid}
+		class:border-error={isError}
 		type={shouldShowPassword ? 'text' : type}
 		id={id}
 		autocomplete={id}
@@ -76,12 +81,14 @@
 	>
 
 	<span
-		class="dot w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-14 opacity-0"
-		class:dot-error={(!isInputValid && !isInputActive) || shouldShowMatchError}
+		class="w-3 h-3 rounded-full absolute -left-6 -md:-left-4 top-14 opacity-0 bg-active transition-opacity duration-200 delay-100"
+		class:opacity-100={isError}
+		class:bg-error={isError}
 	></span>
 	<span
-		class="dot w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-14 opacity-0"
-		class:dot-error={(!isInputValid && !isInputActive) || shouldShowMatchError}
+		class="w-3 h-3 rounded-full absolute -right-6 -md:-right-4 top-14 opacity-0 bg-active transition-opacity duration-200 delay-100"
+		class:opacity-100={isError}
+		class:bg-error={isError}
 	></span>
 
 	<span class="absolute right-0 -bottom-6 text-sm">
@@ -100,36 +107,12 @@
 </div>
 
 <style>
-	input {
-		border: 2px solid var(--active-color);
-		transition: background-color .1s;
-	}
-
-	input:focus {
-		outline: none;
-	}
-
-	.dot {
-		background-color: var(--active-color);
-		transition: opacity .2s .1s;
-	}
-
-	.dot-error {
-		opacity: 1;
-		background-color: var(--error-color);
-	}
-
-	input:focus + .dot {
+	input:focus + span {
 		opacity: 1;
 	}
 
-	input:focus + .dot + .dot {
+	input:focus + span + span {
 		opacity: 1;
-	}
-
-	.input-valid {
-		background-color: var(--active-color);
-		color: var(--side-bg-color);
 	}
 
 	input:-webkit-autofill {

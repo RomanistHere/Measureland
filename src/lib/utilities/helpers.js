@@ -277,7 +277,7 @@ const generateYearsBetween = (startYear, endYear) => {
 	return years;
 };
 
-const blurCurrentInput = () => {
+const blurCurrentInput = document => {
 	if (document)
 		document.activeElement.blur();
 };

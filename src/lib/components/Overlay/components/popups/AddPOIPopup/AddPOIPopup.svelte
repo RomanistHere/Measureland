@@ -8,7 +8,7 @@
 	import FormButton from '../../../../ui-elements/FormButton.svelte';
 	import TagsInput from '../../../../ui-elements/TagsInput.svelte';
 	import PopupTitle from '../PopupTitle.svelte';
-	
+
 	import {
 		debounce,
 		showSuccessNotification,
@@ -18,6 +18,7 @@
 		openAnotherOverlay,
 		roundToFifthDecimal,
 		getErrorType,
+		blurCurrentInput,
 	} from "../../../../../utilities/helpers.js";
 	import { savePOIToDB } from "../../../../../utilities/api.js";
 	import { poisStore, userStateStore } from "../../../../../../stores/state.js";
@@ -61,9 +62,7 @@
 	};
 
 	const submit = async () => {
-		// TODO: make in more declarative way
-		if (document)
-			document.activeElement.blur();
+		blurCurrentInput(document);
 
 		isError = false;
 

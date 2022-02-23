@@ -1,12 +1,15 @@
 # To do:
 
-- fix focus states
 - karma
   - save list of ids of whom you endorse
   - on every like/dislike comment or POI add/remove user karma
   - every 5 karma adds/removes 1 action point
   - every +20 karma gains one token
 - registerAction('POIs');
+- fix:
+  - https://app.snyk.io/org/romanisthere/project/81819901-f54c-44c2-8ed5-39dc0dbb52ff
+  - https://github.com/RomanistHere/Measureland/security/code-scanning
+- limit number of characters in input fields (like POI title)
 
 ### Pre release
 

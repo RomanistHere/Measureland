@@ -8,7 +8,7 @@
     import { closeOverlay, openAnotherOverlay } from "../../../../utilities/helpers.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
-    const isUserLoggedIn = $userStateStore.userID === null ? false : true;
+    const isUserLoggedIn = $userStateStore.userID !== null;
     const closePopup = () => closeOverlay('popup');
     const openLoginPopup = () => openAnotherOverlay('loginPopup');
 </script>
