@@ -6,7 +6,7 @@
 	import Spinner from '../../../ui-elements/Spinner.svelte';
 	import FormButton from '../../../ui-elements/FormButton.svelte';
 	import PopupTitle from './PopupTitle.svelte';
-	
+
 	import {
 		debounce,
 		showSuccessNotification,
@@ -15,7 +15,7 @@
 		logError,
 		openAnotherOverlay,
 		blurCurrentInput,
-		getErrorType,
+		getErrorType, registerAction,
 	} from "../../../../utilities/helpers.js";
 	import { addCommentPOI } from "../../../../utilities/api.js";
 	import { userStateStore } from "../../../../../stores/state.js";
@@ -38,9 +38,9 @@
 	const submit = async () => {
 		const { pointID } = popupData;
 		blurCurrentInput();
-	
+
+		registerAction('trySubmitCommentPOI');
 		isError = false;
-	
 		const isValuesNotEmpty = comment.length > 2;
 		if (!isValuesNotEmpty) {
 			textAreaRef?.focus();
@@ -49,7 +49,8 @@
 	
 			return;
 		}
-	
+
+		registerAction('submitCommentPOI');
 		isLoading = true;
 		const { error } = await addCommentPOI(pointID, comment, $userStateStore.userName);
 		isLoading = false;
@@ -62,7 +63,8 @@
 			showSomethingWrongNotification();
 			return;
 		}
-	
+
+		registerAction('successCommentPOI');
 		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 		closeOverlays();
 		showSuccessNotification();

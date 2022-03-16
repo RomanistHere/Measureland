@@ -6,10 +6,10 @@
   - every 5 karma adds/removes 1 action point
   - every +20 karma gains one token
 - registerAction('POIs');
+- move "L" to store so it won't be undefined
 - fix:
   - https://app.snyk.io/org/romanisthere/project/81819901-f54c-44c2-8ed5-39dc0dbb52ff
   - https://github.com/RomanistHere/Measureland/security/code-scanning
-- limit number of characters in input fields (like POI title)
 
 ### Pre release
 

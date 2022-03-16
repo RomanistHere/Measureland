@@ -29,6 +29,15 @@ export const flowDictionary = {
 	'nearbySelect-10000': 'ns-xl',
 	'hoverBadge': 'hb',
 	'hoverTag': 'ht',
+	// add Point of Interest popup
+	'addTagAddPOI': 'poi-t',
+	'removeTagAddPOI': 'poi-rt',
+	// Point of Interest popup
+	'endorsePOI': 'poi-e',
+	'reportPOI': 'poi-r',
+	// Change year popup
+	'changeYear': 'y-c',
+	'saveNewYear': 'y-s',
 	// open sidebar
 	'commentsSidebar': 's-c',
 	'filtersSidebar': 's-f',
@@ -39,14 +48,24 @@ export const flowDictionary = {
 	'showNotification': 'ssmn', // show something wrong notification
 	'filtersNotifcationClick': 'fnc', // filters notification click
 	// submit forms
-	'submitQuiz': 's-q', // submit quiz
 	'trySubmitQuiz': 's-q-t', // press "submit" quiz
-	'submitLogin': 's-l', // submit login form
-	'trySubmitLogin': 's-l-t', // press "submit" login
-	'submitRegister': 's-r', // submit register form
-	'trySubmitRegister': 's-r-t', // press "submit" register
+	'submitQuiz': 's-q', // submit quiz
 	'successQuiz': 'sc-q', // quiz success
+	// ---
+	'trySubmitAddPOI': 's-a-t', // press "submit" add Point of Interest
+	'submitAddPOI': 's-a', // submit add Point of Interest
+	'successAddPOI': 'sc-a', // add Point of Interest success
+	// ---
+	'trySubmitCommentPOI': 's-a-t', // press "submit" comment for Point of Interest
+	'submitCommentPOI': 's-a', // submit comment for Point of Interest
+	'successCommentPOI': 'sc-a', // comment for Point of Interest success
+	// ---
+	'trySubmitLogin': 's-l-t', // press "submit" login
+	'submitLogin': 's-l', // submit login form
 	'successLogin': 'sc-l', // login success
+	// ---
+	'trySubmitRegister': 's-r-t', // press "submit" register
+	'submitRegister': 's-r', // submit register form
 	'successRegister': 'sc-r', // register success
 	// filters
 	'filter-air': 'f-a',
@@ -74,7 +93,7 @@ export const flowDictionary = {
 	// navbar
 	'navbarButtons': 'n-b', // click from navbar buttons
 	'navbarLanguage': 'n-l', // change language from navbar
-	'navbarLogout': 'n-lt', // logouet desktop (from navbar)
+	'navbarLogout': 'n-lt', // logout desktop (from navbar)
 	// map
 	'mapSearch': 'm-s', // geo search done
 	'mapLoadData': 'm-ld', // load data (move end on map)

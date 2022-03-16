@@ -19,6 +19,7 @@
 		roundToFifthDecimal,
 		getErrorType,
 		blurCurrentInput,
+		registerAction,
 	} from "../../../../../utilities/helpers.js";
 	import { savePOIToDB } from "../../../../../utilities/api.js";
 	import { poisStore, userStateStore } from "../../../../../../stores/state.js";
@@ -54,18 +55,22 @@
 		if (pointOfInterestState.tags.includes(newTag))
 			return;
 		pointOfInterestState = { ...pointOfInterestState, tags: [ ...pointOfInterestState.tags, newTag ] };
+
+		registerAction('addTagAddPOI');
 	};
 	
 	const removeTagFromList = e => {
 		const key = e.detail;
 		pointOfInterestState = { ...pointOfInterestState, tags: pointOfInterestState.tags.filter(item => item !== key) };
+
+		registerAction('removeTagAddPOI');
 	};
 
 	const submit = async () => {
 		blurCurrentInput(document);
 
+		registerAction('trySubmitAddPOI');
 		isError = false;
-
 		const isValuesNotEmpty = pointOfInterestState.description.length > 0 && pointOfInterestState.title.length > 2;
 		if (!isValuesNotEmpty) {
 			isError = true;
@@ -78,7 +83,8 @@
 
 			return;
 		}
-	
+
+		registerAction('submitAddPOI');
 		const currentCoords = [ roundToFifthDecimal(popupData.lng), roundToFifthDecimal(popupData.lat) ];
 
 		isLoading = true;
@@ -98,6 +104,7 @@
 		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 		closeOverlays();
 		showSuccessNotification();
+		registerAction('successAddPOI');
 	};
 
 	const debouncedSubmit = debounce(() => {

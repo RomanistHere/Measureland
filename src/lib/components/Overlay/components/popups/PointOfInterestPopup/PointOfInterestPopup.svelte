@@ -15,6 +15,7 @@
 		logError,
 		closeOverlay,
 		centerMap,
+		registerAction,
 	} from "../../../../../utilities/helpers.js";
 	import { getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
 	import { mapReference } from "../../../../../../stores/references.js";
@@ -62,6 +63,8 @@
 			showSomethingWrongNotification();
 			return;
 		}
+
+		registerAction('endorsePOI');
 	};
 
 	const endorseIrrelevant = async () => {
@@ -88,6 +91,8 @@
 			showSomethingWrongNotification();
 			return;
 		}
+
+		registerAction('reportPOI');
 	};
 	
 	const openCommentsSidebar = () =>
