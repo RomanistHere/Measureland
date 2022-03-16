@@ -114,6 +114,7 @@
 		placeholder={$_('feedbackPopup.inputPlaceholder')}
 		autocomplete="feedback"
 		bind:this={inputRef}
+		maxlength={256}
 	/>
 
 	<p class="my-4">

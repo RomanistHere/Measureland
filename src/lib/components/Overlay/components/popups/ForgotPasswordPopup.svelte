@@ -94,6 +94,7 @@
 		title={$_('forgotPasswordPopup.email')}
 		type='email'
 		id='old-email-restore'
+		maxlength={256}
 		bind:value={email}
 		bind:isInputValid={isEmailValid}
 		bind:this={emailInputRef}

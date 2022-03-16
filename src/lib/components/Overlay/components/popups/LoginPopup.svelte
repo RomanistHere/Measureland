@@ -141,6 +141,7 @@
 		title={$_('loginPopup.email')}
 		type='email'
 		id='current-email'
+		maxlength={256}
 		bind:value={email}
 		bind:isInputValid={isEmailValid}
 		bind:this={emailInputRef}
@@ -150,6 +151,7 @@
 		title={$_('loginPopup.password')}
 		type='password'
 		id='current-password'
+		maxlength={512}
 		bind:value={password}
 		bind:isInputValid={isPasswordValid}
 		bind:this={passInputRef}

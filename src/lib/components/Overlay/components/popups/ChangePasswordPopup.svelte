@@ -107,6 +107,7 @@
 		title={$_('confirmNewPasswordPopup.input1Title')}
 		type='password'
 		id='new-password-reset'
+		maxlength={512}
 		bind:value={password}
 		bind:isInputValid={isPasswordValid}
 		bind:shouldShowMatchError={shouldShowMatchError}
@@ -117,6 +118,7 @@
 		title={$_('confirmNewPasswordPopup.input2Title')}
 		type='password'
 		id='repeat-new-password-reset'
+		maxlength={512}
 		bind:value={passwordConfirm}
 		bind:isInputValid={isPasswordConfirmValid}
 		bind:shouldShowMatchError={shouldShowMatchError}

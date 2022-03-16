@@ -2,6 +2,7 @@
     export let autocomplete;
     export let placeholder;
     export let className = '';
+    export let maxlength = null;
 
     let ref;
 
@@ -16,6 +17,7 @@
 		type="text"
 		{ autocomplete }
 		{ placeholder }
+		{ maxlength }
 		on:change
 		bind:this={ref}
 	>

@@ -136,6 +136,7 @@
 		placeholder={$_('addPOIPopup.inputPlaceholder')}
 		autocomplete="point of interest"
 		bind:this={inputRef}
+		maxlength={256}
 	/>
 
 	<p class="my-4">

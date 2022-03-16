@@ -115,6 +115,7 @@
 		title={$_('registrationPopup.email')}
 		type='email'
 		id='new-email'
+		maxlength={256}
 		bind:value={email}
 		bind:isInputValid={isEmailValid}
 		bind:this={emailInputRef}
@@ -124,6 +125,7 @@
 		title={$_('registrationPopup.password')}
 		type='password'
 		id='new-password'
+		maxlength={512}
 		bind:value={password}
 		bind:isInputValid={isPasswordValid}
 		bind:shouldShowMatchError={shouldShowMatchError}
@@ -134,6 +136,7 @@
 		title={$_('registrationPopup.repeatPassword')}
 		type='password'
 		id='repeat-new-password'
+		maxlength={512}
 		bind:value={passwordConfirm}
 		bind:isInputValid={isPasswordConfirmValid}
 		bind:shouldShowMatchError={shouldShowMatchError}

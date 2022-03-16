@@ -10,6 +10,7 @@
 	export let isInputValid = true;
 	export let autofocus = false;
 	export let shouldShowMatchError = false;
+	export let maxlength = null;
 
 	let shouldShowPassword = false;
 	let isInputActive = false;
@@ -78,6 +79,7 @@
 		on:input={onInput}
 		bind:this={ref}
 		{ autofocus }
+		{ maxlength }
 	>
 
 	<span

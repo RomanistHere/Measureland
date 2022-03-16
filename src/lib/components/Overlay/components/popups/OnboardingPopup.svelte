@@ -128,6 +128,7 @@
         on:change={handleInput}
         placeholder="{defaultName}"
         autocomplete="username"
+        maxlength={64}
     />
 
     <div class="flex justify-evenly items-center mt-8">

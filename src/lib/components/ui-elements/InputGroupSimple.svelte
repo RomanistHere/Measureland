@@ -5,6 +5,7 @@
 	export let title;
 	export let placeholder;
 	export let autocomplete;
+	export let maxlength = null;
 
 	let ref;
 
@@ -19,6 +20,7 @@
 	<InputSimple
 		{ autocomplete }
 		{ placeholder }
+		{ maxlength }
 		on:change
 		bind:this={ref}
 	/>
