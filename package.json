@@ -33,7 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"eslint": "^8.9.0",
+		"eslint": "^8.10.0",
 		"esri-leaflet-geocoder": "^3.1.1",
 		"leaflet": "^1.7.1",
 		"leaflet-draw": "^1.0.4",
