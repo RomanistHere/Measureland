@@ -22,6 +22,8 @@ export const flowDictionary = {
 	'fetchRating': 'fr',
 	'reportRating': 'rr',
 	'endorseRating': 'er',
+	'openRatingsTab': 'rt-sr',
+	'openMeasurementsTab': 'mt-sr',
 	// nearby ratings popup
 	'nearbySelect-800': 'ns-sm',
 	'nearbySelect-1200': 'ns-md',

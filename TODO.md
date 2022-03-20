@@ -7,6 +7,8 @@
   - every +20 karma gains one token
 - registerAction('POIs');
 - move "L" to store so it won't be undefined
+- telegram bot
+- "why report" modal with a few options to chose from
 - fix:
   - https://app.snyk.io/org/romanisthere/project/81819901-f54c-44c2-8ed5-39dc0dbb52ff
   - https://github.com/RomanistHere/Measureland/security/code-scanning
@@ -62,6 +64,7 @@
 - write to wiki with questions about development and monetization.
 - add measureland to my projects in portfolio
 - write to everyone!
+- link communities based on city/country
 
 # Updates description
 

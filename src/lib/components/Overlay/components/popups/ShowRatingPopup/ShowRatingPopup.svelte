@@ -88,6 +88,7 @@
 
 	const switchTabToRatings = () => {
 		openedTab = 'ratings';
+		registerAction('openRatingsTab');
 	};
 
 	const switchTabToMeasurements = () => {
@@ -95,6 +96,7 @@
 		if (!isAirQualityDataLoaded) {
 			getAirQualityData();
 		}
+		registerAction('openMeasurementsTab');
 	};
 
 	const fetchData = async ({ lng, lat }) => {
