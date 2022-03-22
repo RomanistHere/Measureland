@@ -29,6 +29,29 @@ const UserSchema = new Schema({
 		type: Date,
 		default: Date.now(),
 	},
+	karma: {
+		curVal: {
+			type: Number,
+			default: 0,
+		},
+		thresholdVal: {
+			type: Number,
+			default: 0,
+		},
+		activityVal: {
+			type: Number,
+			default: 0, // here karma activity for the last 12 hours should be stored
+		},
+		lastAction: {
+			type: Date,
+			default: Date.now(),
+		},
+	},
+	isSuspicious: {
+		type: Boolean,
+		required: true,
+		default: false,
+	},
 	properties: {
 		ratingIDs: [{ type: Schema.Types.ObjectId, ref: 'Rating' }],
 		geoIDs: [{ type: Schema.Types.ObjectId, ref: 'Geo' }],

@@ -4,7 +4,7 @@ const Geo = require('../models/geo.model');
 
 const { getFinalRating } = require('./index');
 
-exports.fetchAllUsers = async() => {
+exports.fetchAllUsers = async () => {
 	try {
 		const users = await User.find({});
 		for (let i = 0; i < users.length; i++) {
@@ -51,6 +51,8 @@ exports.fetchAllUsers = async() => {
 					'properties.POIIDs': [],
 					'properties.wantMoreRatings': false,
 					'properties.lastRatingsAdded': new Date(),
+					'karma.curVal': 20,
+					'karma.thresholdVal': 20,
 				},
 				$unset: {
 					'properties.ratings': "",

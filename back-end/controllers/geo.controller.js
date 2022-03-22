@@ -7,7 +7,7 @@ const Rating = require('../models/rating.model');
 const Comment = require('../models/comment.model');
 const PointOfInterest = require('../models/point-of-interest.model');
 
-const { getFinalRating, roundToTen } = require('../helpers/index');
+const { getFinalRating, roundToTen, updateKarma } = require('../helpers/index');
 
 const getNewRating = (rating, numberOfUsers, quizRating) => {
 	const newKeys = Object.keys(quizRating);
@@ -400,6 +400,8 @@ exports.rating_react = async (req, res) => {
 		}, {
 			new: true,
 		});
+
+		updateKarma(user._id, result.userID, shouldReport);
 
 		return res.json({
 			error: null,
