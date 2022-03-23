@@ -1,0 +1,101 @@
+.leaflet-top {
+	top: calc(1rem + var(--navbar-height))
+}
+
+.leaflet-left .leaflet-control {
+	margin-left: 1rem;
+}
+
+.leaflet-top .leaflet-control {
+	margin-top: 1rem;
+}
+
+.leaflet-right .leaflet-control {
+	margin-right: 1rem;
+}
+
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 1rem;
+}
+
+.leaflet-container .leaflet-control-attribution {
+	margin: 0;
+}
+
+.leaflet-container {
+	z-index: 1;
+}
+
+.geocoder-control .geocoder-control-input,
+.leaflet-control-zoom {
+	background-color: var(--side-bg-color);
+	border: 1px solid var(--text-color);
+	box-shadow: 0 0 1px var(--text-color);
+}
+
+.leaflet-touch .leaflet-bar a {
+	background-color: transparent;
+}
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border-color: var(--text-color);
+	border-width: 1px;
+}
+
+.leaflet-touch .geocoder-control-suggestion {
+	background-color: var(--bg-color-add-non-transparent);
+}
+
+.leaflet-touch .geocoder-control-suggestion:hover {
+	background-color: var(--side-bg-color);
+	border-color: var(--side-bg-color);
+}
+
+.leaflet-touch .geocoder-control-input {
+	line-height: 34px;
+	background-size: 34px;
+	background-image: url(/node_modules/esri-leaflet-geocoder/dist/img/search@2x.png);
+}
+
+@supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+	.geocoder-control .geocoder-control-input,
+	.leaflet-control-zoom {
+		background-color: var(--side-bg-color);
+		border: 1px solid var(--text-color);
+		backdrop-filter: blur(7px) saturate(180%);
+		-webkit-backdrop-filter: blur(7px) saturate(180%);
+		background-color: rgba(255, 255, 255, 0.75);
+		border: 1px solid var(--text-color);
+		box-shadow: 0 0 1px var(--text-color);
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.leaflet-top {
+		top: 0
+	}
+}
+
+/*// DRAW //*/
+.leaflet-draw-toolbar {
+	margin-top: 0px;
+}
+
+.leaflet-draw-section {
+	background-color: rgba(255, 255, 255, 0.95);
+	border-radius: 0.375rem;
+	margin-top: 1rem;
+}
+
+.leaflet-touch .leaflet-draw-toolbar .leaflet-disabled {
+	opacity: .3;
+}
+
+@supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+	.leaflet-draw-section {
+		backdrop-filter: blur(7px) saturate(180%);
+		-webkit-backdrop-filter: blur(7px) saturate(180%);
+		background-color: rgba(255, 255, 255, 0.75);
+	}
+}

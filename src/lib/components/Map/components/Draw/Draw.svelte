@@ -175,27 +175,3 @@
     const debDrawFromURL = debounce(shades => drawFromURL(shades), 300);
     $: debDrawFromURL($appStateStore.shades);
 </script>
-
-<style>
-	:global(.leaflet-draw-toolbar) {
-        margin-top: 0px;
-    }
-
-	:global(.leaflet-draw-section) {
-        background-color: rgba(255, 255, 255, 0.95);
-        border-radius: 0.375rem;
-        margin-top: 1rem;
-    }
-
-	:global(.leaflet-touch .leaflet-draw-toolbar .leaflet-disabled) {
-        opacity: .3;
-    }
-
-    @supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-	    :global(.leaflet-draw-section) {
-            backdrop-filter: blur(7px) saturate(180%);
-            -webkit-backdrop-filter: blur(7px) saturate(180%);
-            background-color: rgba(255, 255, 255, 0.75);
-        }
-    }
-</style>

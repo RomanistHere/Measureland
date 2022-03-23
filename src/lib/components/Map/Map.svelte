@@ -2,6 +2,7 @@
 	import { _ } from 'svelte-i18n';
 	import L from 'leaflet';
 	import 'leaflet/dist/leaflet.css';
+	import '/static/styles/map.css';
 
 	import PointsOfInterest from './components/PointsOfInterest.svelte';
 	import MarkerCluster from './components/MarkerCluster.svelte';
@@ -90,84 +91,5 @@
 
 	.error_text {
 		width: 30rem;
-	}
-
-	:global(.leaflet-top) {
-		top: calc(1rem + var(--navbar-height))
-	}
-
-	:global(.leaflet-left .leaflet-control) {
-		margin-left: 1rem;
-	}
-
-	:global(.leaflet-top .leaflet-control) {
-		margin-top: 1rem;
-	}
-
-	:global(.leaflet-right .leaflet-control) {
-		margin-right: 1rem;
-	}
-
-	:global(.leaflet-bottom .leaflet-control) {
-		margin-bottom: 1rem;
-	}
-
-	:global(.leaflet-container .leaflet-control-attribution) {
-		margin: 0;
-	}
-
-	:global(.leaflet-container) {
-		z-index: 1;
-	}
-
-	:global(.geocoder-control .geocoder-control-input),
-	:global(.leaflet-control-zoom) {
-		background-color: var(--side-bg-color);
-		border: 1px solid var(--text-color);
-		box-shadow: 0 0 1px var(--text-color);
-	}
-
-	:global(.leaflet-touch .leaflet-bar a) {
-		background-color: transparent;
-	}
-
-	:global(.leaflet-touch .leaflet-control-layers),
-	:global(.leaflet-touch .leaflet-bar) {
-		border-color: var(--text-color);
-		border-width: 1px;
-	}
-
-	:global(.leaflet-touch .geocoder-control-suggestion) {
-		background-color: var(--bg-color-add-non-transparent);
-	}
-
-	:global(.leaflet-touch .geocoder-control-suggestion:hover) {
-		background-color: var(--side-bg-color);
-		border-color: var(--side-bg-color);
-	}
-
-	:global(.leaflet-touch .geocoder-control-input) {
-		line-height: 34px;
-		background-size: 34px;
-		background-image: url(/node_modules/esri-leaflet-geocoder/dist/img/search@2x.png);
-	}
-
-	@supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-		:global(.geocoder-control .geocoder-control-input),
-		:global(.leaflet-control-zoom) {
-			background-color: var(--side-bg-color);
-			border: 1px solid var(--text-color);
-			backdrop-filter: blur(7px) saturate(180%);
-			-webkit-backdrop-filter: blur(7px) saturate(180%);
-			background-color: rgba(255, 255, 255, 0.75);
-			border: 1px solid var(--text-color);
-			box-shadow: 0 0 1px var(--text-color);
-		}
-	}
-
-	@media screen and (max-width: 1023px) {
-		:global(.leaflet-top) {
-			top: 0
-		}
 	}
 </style>

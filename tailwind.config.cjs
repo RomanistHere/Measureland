@@ -14,7 +14,7 @@ const hoverPlugin = plugin(function({ addVariant, e, postcss }) {
 
 const config = {
 	mode: "jit",
-	purge: [
+	content: [
 		"./src/**/*.{html,js,svelte,ts}",
 	],
 	theme: {

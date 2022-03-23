@@ -315,10 +315,12 @@
 		if (error === 'Too many requests, please try again later') {
 			appStateStore.update(state => ({ ...state, shouldWork: false }));
 			showSomethingWrongNotification();
+			isLoading = false;
 			return;
 		} else if (error) {
 			logError(error);
 			showSomethingWrongNotification();
+			isLoading = false;
 			return;
 		}
 
@@ -371,7 +373,7 @@
 
 {#if isLoading}
 	<div
-		class="absolute top-12 left-1/2 transform -translate-x-1/2 italic text-3xl pointer-events-none" transition:fade
+		class="absolute top-20 left-1/2 transform -translate-x-1/2 italic text-3xl pointer-events-none" transition:fade
 	>
 		{$_('loading.geo')}
 	</div>
