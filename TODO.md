@@ -1,11 +1,5 @@
 # To do:
 
-- karma
-  - save list of ids of whom you endorse
-  - on every like/dislike comment or POI add/remove user karma
-  - every 5 karma adds/removes 1 action point
-  - every +20 karma gains one token
-- registerAction('POIs');
 - move "L" to store so it won't be undefined
 - telegram bot
 - "why report" modal with a few options to chose from

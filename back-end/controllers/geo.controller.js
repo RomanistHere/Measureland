@@ -401,7 +401,7 @@ exports.rating_react = async (req, res) => {
 			new: true,
 		});
 
-		updateKarma(user._id, result.userID, shouldReport);
+		await updateKarma(user._id, result.userID, shouldReport);
 
 		return res.json({
 			error: null,
@@ -451,6 +451,8 @@ exports.geo_react_comment = async (req, res) => {
 		}, {
 			new: true,
 		});
+
+		await updateKarma(userID, result.user, goal !== 'like');
 
 		return res.json({
 			error: null,

@@ -50,19 +50,25 @@ exports.roundToTen = number =>
 	Math.round(10 * number) / 10;
 
 const markUserAsSuspicious = async userID => {
-	const user = await User.findOneAndUpdate({ _id: userID }, { isSuspicious: true });
-	console.log(userID);
-	console.log(user);
+	await User.findOneAndUpdate({ _id: userID }, { isSuspicious: true });
 };
 
 const getKarmaActivity = ({ karma }) => {
 	const hours = Math.abs(Date.now() - karma.lastAction) / 36e5;
+	console.log('HOURS: ', hours);
 	return hours > 12 ? 1 : karma.activityVal + 1;
 };
 
 exports.updateKarma = async (givingUserID, gettingUserID, isChangeNegative) => {
-	const givingUser = await User.findOne({ _id: givingUserID }, 'karma');
-	const gettingUser = await User.findOne({ _id: gettingUserID }, 'karma');
+	const givingUser = await User.findOne({ _id: givingUserID }, 'karma usergroup isSuspicious');
+	const gettingUser = await User.findOne({ _id: gettingUserID }, 'karma properties.activeRatings');
+
+	console.log('BEFORE');
+	console.log(givingUser);
+	console.log(gettingUser);
+
+	if (givingUser.isSuspicious)
+		return;
 
 	const givingUserKarmaGrp = givingUser.karma.curVal >= 20 ? 'mid' : 'low';
 	const isGivingUserNewbie = givingUserKarmaGrp === 'low';
@@ -72,7 +78,7 @@ exports.updateKarma = async (givingUserID, gettingUserID, isChangeNegative) => {
 	let numberOfActions = gettingUser.properties.activeRatings;
 	let thresholdVal = gettingUser.karma.thresholdVal;
 
-	if ((isGivingUserNewbie && karmaActivity > 4) || karmaActivity > 12) {
+	if (((isGivingUserNewbie && karmaActivity > 4) || karmaActivity > 12) && givingUser.usergroup !== 0) {
 		await markUserAsSuspicious(givingUserID);
 		return;
 	}
@@ -81,16 +87,19 @@ exports.updateKarma = async (givingUserID, gettingUserID, isChangeNegative) => {
 		? gettingUser.karma.curVal - karmaChange
 		: gettingUser.karma.curVal + karmaChange;
 
+	// every 5 karma change adds or removes one point of action
 	if (newKarmaValue % 5 === 0) {
-		if (gettingUser.karma.thresholdVal === newKarmaValue - 5)
+		if (gettingUser.karma.thresholdVal === newKarmaValue - 5) {
 			numberOfActions = numberOfActions + 1;
-		else if (gettingUser.karma.thresholdVal === newKarmaValue + 5)
+		} else if (gettingUser.karma.thresholdVal === newKarmaValue + 5) {
 			numberOfActions = numberOfActions - 1;
+			await markUserAsSuspicious(gettingUserID);
+		}
 
 		thresholdVal = newKarmaValue;
 	}
 
-	const updatedUser = await User.findOneAndUpdate({
+	await User.findOneAndUpdate({
 		_id: gettingUserID,
 	}, {
 		$set: {
@@ -100,5 +109,28 @@ exports.updateKarma = async (givingUserID, gettingUserID, isChangeNegative) => {
 		},
 	});
 
-	console.log(updatedUser);
+	await User.findOneAndUpdate({
+		_id: givingUserID,
+	}, {
+		$set: {
+			'karma.activityVal': karmaActivity,
+			'karma.lastAction': Date.now(),
+		},
+	});
+
+	// todo remove
+	setTimeout(async () => {
+		const updatedGettingUser = await User.findOne({
+			_id: gettingUserID,
+		});
+
+		const updatedGivingUser = await User.findOne({
+			_id: givingUserID,
+		});
+
+		console.log('AFTER');
+		console.log(updatedGivingUser.karma);
+		console.log(updatedGettingUser.karma);
+		console.log(updatedGettingUser.properties.activeRatings);
+	}, 2000);
 };
