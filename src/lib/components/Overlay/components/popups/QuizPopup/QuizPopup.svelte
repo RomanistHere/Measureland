@@ -26,7 +26,7 @@
     	generateYearsBetween,
     	logError,
     } from "../../../../../utilities/helpers.js";
-    import { mapReference } from "../../../../../../stores/references.js";
+    import { leafletReference, mapReference } from "../../../../../../stores/references.js";
     import { userStateStore, markerStore, isDesktop } from "../../../../../../stores/state.js";
 
     export let popupData;
@@ -83,6 +83,7 @@
     	selected: year === quizState.timeline,
     }));
 
+    const L = $leafletReference;
     const map = $mapReference;
     const maxCommentLength = 330;
 
@@ -212,7 +213,6 @@
 
     const addCircle = () => {
     	const { lat, lng } = popupData;
-    	// eslint-disable-next-line no-undef
     	circle = L.circle(popupData, 200, { color: '#007097' });
 
     	circle.addTo(map);

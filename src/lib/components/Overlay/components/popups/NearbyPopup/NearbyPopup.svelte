@@ -10,7 +10,12 @@
 	import Badge from './Badge.svelte';
 
 	import { getNearbyPointData } from "../../../../../utilities/api.js";
-	import { mapReference, markersReference, poiReference } from "../../../../../../stores/references.js";
+	import {
+		leafletReference,
+		mapReference,
+		markersReference,
+		poiReference,
+	} from "../../../../../../stores/references.js";
 	import { isDesktop } from "../../../../../../stores/state.js";
 	import {
 		roundToTen,
@@ -33,6 +38,7 @@
 	let isData = true;
 
 	const map = $mapReference;
+	const L = $leafletReference;
 
 	$: pointsOfInterest = [];
 	$: ratingsGood = [];
@@ -65,9 +71,7 @@
 		const clusterLayer = $markersReference;
 		const radius = radiusParam || radiusOptions[0]['value'];
 
-		// eslint-disable-next-line no-undef
 		const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
-		// eslint-disable-next-line no-undef
 		const bounds = L.rectangle(squareBounds).getBounds();
 		const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
 		const clusters = clusterLayer.getClusters(bbox, 20);
@@ -153,7 +157,6 @@
 
 	const drawCircle = ({ lat, lng }, radius = null) => {
 		const { zoomLevel } = radiusOptions.find(({ selected }) => selected === true);
-		// eslint-disable-next-line no-undef
 		circle = L.circle({ lng, lat }, radius || radiusOptions[0]['value'], { color: '#007097' });
 
 		circle.addTo(map);

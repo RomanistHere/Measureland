@@ -18,10 +18,11 @@
 		registerAction,
 	} from "../../../../../utilities/helpers.js";
 	import { getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
-	import { mapReference } from "../../../../../../stores/references.js";
+	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
 	import { isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
 
 	const map = $mapReference;
+	const L = $leafletReference;
 
 	export let popupData = {};
 
@@ -113,7 +114,6 @@
 		if (circle)
 			map.removeLayer(circle);
 
-		// eslint-disable-next-line no-undef
 		circle = L.circle({ lng, lat }, 300, { color: '#007097' });
 
 		circle.addTo(map);

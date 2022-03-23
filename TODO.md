@@ -1,6 +1,5 @@
 # To do:
 
-- move "L" to store so it won't be undefined
 - telegram bot
 - "why report" modal with a few options to chose from
 - fix:

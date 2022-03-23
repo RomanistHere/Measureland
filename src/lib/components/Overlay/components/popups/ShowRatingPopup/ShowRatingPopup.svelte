@@ -13,7 +13,7 @@
 	import TextButton from '../../../../ui-elements/TextButton.svelte';
 
 	import { getSinglePointData } from "../../../../../utilities/api.js";
-	import { mapReference } from "../../../../../../stores/references.js";
+	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
 	import { appStateStore, userStateStore, overlayStateStore, isDesktop } from "../../../../../../stores/state.js";
 	import {
 		getFinalRating,
@@ -34,6 +34,7 @@
 	export let popupData;
 
 	const map = $mapReference;
+	const L = $leafletReference;
 
 	let isAlreadyRatedByThisUser = false;
 	let openedTab = 'ratings';
@@ -107,7 +108,6 @@
 		if (circle)
 			map.removeLayer(circle);
 
-		// eslint-disable-next-line no-undef
 		circle = L.circle({ lng, lat }, 300, { color: '#007097' });
 
 		circle.addTo(map);
