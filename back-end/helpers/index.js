@@ -55,17 +55,12 @@ const markUserAsSuspicious = async userID => {
 
 const getKarmaActivity = ({ karma }) => {
 	const hours = Math.abs(Date.now() - karma.lastAction) / 36e5;
-	console.log('HOURS: ', hours);
 	return hours > 12 ? 1 : karma.activityVal + 1;
 };
 
 exports.updateKarma = async (givingUserID, gettingUserID, isChangeNegative) => {
 	const givingUser = await User.findOne({ _id: givingUserID }, 'karma usergroup isSuspicious');
 	const gettingUser = await User.findOne({ _id: gettingUserID }, 'karma properties.activeRatings');
-
-	console.log('BEFORE');
-	console.log(givingUser);
-	console.log(gettingUser);
 
 	if (givingUser.isSuspicious)
 		return;
@@ -117,20 +112,4 @@ exports.updateKarma = async (givingUserID, gettingUserID, isChangeNegative) => {
 			'karma.lastAction': Date.now(),
 		},
 	});
-
-	// todo remove
-	setTimeout(async () => {
-		const updatedGettingUser = await User.findOne({
-			_id: gettingUserID,
-		});
-
-		const updatedGivingUser = await User.findOne({
-			_id: givingUserID,
-		});
-
-		console.log('AFTER');
-		console.log(updatedGivingUser.karma);
-		console.log(updatedGettingUser.karma);
-		console.log(updatedGettingUser.properties.activeRatings);
-	}, 2000);
 };

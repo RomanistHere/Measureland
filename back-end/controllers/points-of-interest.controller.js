@@ -6,6 +6,7 @@ const User = require('../models/user.model');
 const CommentPOI = require("../models/comment-POI.model");
 
 const { LIMIT_OF_POI_DISLIKES } = require('../config');
+const { updateKarma } = require("../helpers/index");
 
 exports.POI_add = async (req, res) => {
 	const { body } = req;
@@ -226,6 +227,8 @@ exports.POI_react = async (req, res) => {
 			});
 		}
 
+		await updateKarma(userID, result.userID, !isUpvote);
+
 		return res.json({
 			error: null,
 			data: {
@@ -368,6 +371,8 @@ exports.POI_react_comment = async (req, res) => {
 		}, {
 			new: true,
 		});
+
+		await updateKarma(userID, result.user, goal !== 'like');
 
 		return res.json({
 			error: null,
