@@ -64,6 +64,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // sessions
 app.use(cookieParser());
 app.use(session({
+	name: 'cookes',
 	secret: process.env.SESSION_SECRET.split(','),
 	resave: false,
 	saveUninitialized: false,
