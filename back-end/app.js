@@ -71,10 +71,10 @@ app.use(session({
 		mongoUrl: mongoDB,
 		touchAfter: 12 * 3600, // twice a day
 	}),
-	proxy: isProd ? true : false,
+	proxy: isProd,
 	cookie: {
-		secure: isProd ? true : false,
-		httpOnly: isProd ? true : true,
+		secure: isProd,
+		httpOnly: isProd,
 		sameSite: true,
 		// domain: isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV,
 		maxAge: 1209600000, // two weeks

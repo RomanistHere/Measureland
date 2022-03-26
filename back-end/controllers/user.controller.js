@@ -471,7 +471,7 @@ exports.user_reset_password = async (req, res, next) => {
 
 exports.user_change_password = async (req, res) => {
 	const { password, token } = req.body;
-	if (!token || token.length < 10)
+	if (!token || sanitize(token).length < 10)
 		return res.status(400).json({ error: 'Password link is invalid or expired' });
 
 	try {
