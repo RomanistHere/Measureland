@@ -6,11 +6,13 @@ const UserSchema = new Schema({
 		unique: true,
 		required: true,
 		trim: true,
+		maxLength: 512,
 	},
 	username: {
 		type: String,
 		trim: true,
 		default: 'Anonym',
+		maxLength: 512,
 	},
 	verified: {
 		type: Boolean,

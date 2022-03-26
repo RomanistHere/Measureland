@@ -9,10 +9,12 @@ const schema = new Schema({
 	title: {
 		type: String,
 		required: true,
+		maxLength: 400,
 	},
 	description: {
 		type: String,
 		required: true,
+		maxLength: 1400,
 	},
 	isAdequate: {
 		type: Boolean,

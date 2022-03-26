@@ -8,6 +8,7 @@ const schema = new Schema({
 	comment: {
 		type: String,
 		required: false,
+		maxLength: 1400,
 	},
 	reportedID: {
 		type: Schema.Types.ObjectId,

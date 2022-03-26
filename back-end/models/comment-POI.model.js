@@ -14,6 +14,7 @@ const schema = new Schema({
 	comment: {
 		type: String,
 		required: true,
+		maxLength: 1400,
 	},
 	username: {
 		type: String,

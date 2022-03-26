@@ -293,6 +293,8 @@
         "logoAlt": "Measureland logo",
         "primaryBtn": "Register",
         "secondaryBtn": "Log in",
+        "account1": "Your account,",
+        "account2": "Click to expand.",
         "links": [{
             "text": "Blog",
             "url": "/en/blog/"

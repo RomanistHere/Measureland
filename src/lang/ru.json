@@ -293,6 +293,8 @@
         "logoAlt": "Измерийский логотип",
         "primaryBtn": "Регистрация",
         "secondaryBtn": "Войти",
+        "account1": "Твой аккаунт,",
+        "account2": "Нажми чтобы посмотреть.",
         "links": [{
             "text": "Блог",
             "url": "/ru/blog/"

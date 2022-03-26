@@ -193,7 +193,7 @@
 					<div class="ml-2 flex">
                         <span
 	                        class="name truncate block mr-1"
-	                        title='Account of {$userStateStore.userName}. Click to expand.'
+	                        title='{$_("navBar.account1")} {$userStateStore.userName}. {$_("navBar.account2")}'
                         >
                             {$userStateStore.userName}
                         </span>

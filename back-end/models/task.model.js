@@ -4,6 +4,7 @@ const schema = new Schema({
 	key: {
 		type: String,
 		required: true,
+		maxLength: 512,
 	},
 	upvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	downvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],

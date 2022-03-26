@@ -1,17 +1,17 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require('mongoose');
 
 const schema = new Schema({
-    flow: {
-        type: String,
-        required: true
-    },
-    uniqID: {
-        type: String
-    }
+	flow: {
+		type: String,
+		required: true,
+	},
+	uniqID: {
+		type: String,
+	},
 }, {
-    timestamps: true
-})
+	timestamps: true,
+});
 
-const AnonymFlow = model('AnonymFlow', schema)
+const AnonymFlow = model('AnonymFlow', schema);
 
-module.exports = AnonymFlow
+module.exports = AnonymFlow;
