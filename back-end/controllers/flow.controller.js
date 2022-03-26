@@ -4,7 +4,7 @@ const sanitize = require('mongo-sanitize');
 const AnonymFlow = require('../models/anonym-flow.model');
 const ErrorFlow = require('../models/error-flow.model');
 
-exports.flow_add = async(req, res, next) => {
+exports.flow_add = async (req, res, next) => {
 	const { flowString, uniqID } = req.body;
 	const sanitizedID = sanitize(uniqID);
 
@@ -33,7 +33,7 @@ exports.flow_add = async(req, res, next) => {
 	}
 };
 
-exports.flow_error = async(req, res, next) => {
+exports.flow_error = async (req, res, next) => {
 	const { body } = req;
 	const { message, filename, lineno, colno, error } = body;
 

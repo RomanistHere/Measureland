@@ -3,26 +3,26 @@ const formData = require('form-data');
 const Mailgun = require('mailgun.js');
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
-    username: 'api',
-    key: process.env.MAILGUN_API,
-    url: 'https://api.eu.mailgun.net'
+	username: 'api',
+	key: process.env.MAILGUN_API,
+	url: 'https://api.eu.mailgun.net',
 });
 
 const isProd = process.env.IS_PROD === '1';
-const siteURL = isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV
+const siteURL = isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV;
 
 const templatesSubject = {
-    'en': {
-        'Verify': `Verify your email address`,
-        'Reset': `Reset password`,
-        'Verified': `Welcome to Measureland`,
-    },
-    'ru': {
-        'Verify': `Подтверждение почты`,
-        'Reset': `Сброс пароля`,
-        'Verified': `Добро пожаловать в Измерию`,
-    }
-}
+	'en': {
+		'Verify': `Verify your email address`,
+		'Reset': `Reset password`,
+		'Verified': `Welcome to Measureland`,
+	},
+	'ru': {
+		'Verify': `Подтверждение почты`,
+		'Reset': `Сброс пароля`,
+		'Verified': `Добро пожаловать в Измерию`,
+	},
+};
 
 const verifiedTemplate =
 `<div>
@@ -97,7 +97,7 @@ const verifiedTemplate =
     <p>
         You can't unsubscribe because it's a single letter to help you get started. We won't send you anything else unless it's super-duper important. Have a nice day and see ya in Measureland!
     </p>
-</div>`
+</div>`;
 
 const verifiedTemplateRus =
 `<div>
@@ -172,38 +172,38 @@ const verifiedTemplateRus =
     <p>
         От этой рассылки нельзя отписаться (unsubscribe), потому что это не рассылка, а единичное письмо. Мы не будем ничего больше посылать, только если что-то супер-пупер важное. Хорошего дня и увидимся в Измерии!
     </p>
-</div>`
+</div>`;
 
 const getHTML = (key, url, lang) => {
-    const templatesHTML = {
-        'en': {
-            'Verify': `Here's your email verification link: <a href="${url}" target="_blank">${url}</a> - click or copy and paste into address bar.`,
-            'Reset': `Here's your link for password changing: <a href="${url}" target="_blank">${url}</a>`,
-            'Verified': verifiedTemplate,
-        },
-        'ru': {
-            'Verify': `Ссылка для верификации: <a href="${url}" target="_blank">${url}</a> - нажми или скопируй и вставь в адресную строку.`,
-            'Reset': `Here's your link for password changing: <a href="${url}" target="_blank">${url}</a>`,
-            'Verified': verifiedTemplateRus,
-        }
-    }
+	const templatesHTML = {
+		'en': {
+			'Verify': `Here's your email verification link: <a href="${url}" target="_blank">${url}</a> - click or copy and paste into address bar.`,
+			'Reset': `Here's your link for password changing: <a href="${url}" target="_blank">${url}</a>`,
+			'Verified': verifiedTemplate,
+		},
+		'ru': {
+			'Verify': `Ссылка для верификации: <a href="${url}" target="_blank">${url}</a> - нажми или скопируй и вставь в адресную строку.`,
+			'Reset': `Here's your link for password changing: <a href="${url}" target="_blank">${url}</a>`,
+			'Verified': verifiedTemplateRus,
+		},
+	};
 
-    return templatesHTML[lang][key]
-}
+	return templatesHTML[lang][key];
+};
 
 const templateFrom = {
-    'en': `Measureland mail service support@${process.env.MAILGUN_DOMAIN}`,
-    'ru': `Измерийская почтовая служба support@${process.env.MAILGUN_DOMAIN}`,
-}
+	'en': `Measureland mail service support@${process.env.MAILGUN_DOMAIN}`,
+	'ru': `Измерийская почтовая служба support@${process.env.MAILGUN_DOMAIN}`,
+};
 
-exports.sendEmail = async (data) => {
-    const { email, lang, verificationUrl, reason } = data;
-    const mail = {
-        to: `${email}`,
-        from: templateFrom[lang],
-        html: getHTML(reason, verificationUrl, lang),
-        subject: templatesSubject[lang][reason]
-    };
+exports.sendEmail = async data => {
+	const { email, lang, verificationUrl, reason } = data;
+	const mail = {
+		to: `${email}`,
+		from: templateFrom[lang],
+		html: getHTML(reason, verificationUrl, lang),
+		subject: templatesSubject[lang][reason],
+	};
 
-    return await mg.messages.create(process.env.MAILGUN_DOMAIN, mail);
-}
+	return await mg.messages.create(process.env.MAILGUN_DOMAIN, mail);
+};
