@@ -119,4 +119,9 @@ export const overlayStateDefault = {
 		type: 'dialog',
 		data: {},
 	},
+	reportReasonDialog: {
+		isOpen: false,
+		type: 'dialog',
+		data: {},
+	},
 };

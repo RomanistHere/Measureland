@@ -598,6 +598,17 @@
         "option2": "Add a point of interest (park, construction, etc.)",
         "option2Alt": "Point of interest icon"
     },
+    "reportReasonDialog": {
+        "title": "Telling us the reason makes your report more effective",
+        "irrelevantProved": "My experience is different (invalid info)",
+        "irrelevantNotProved": "Doesn't look plausible though I can't be sure (invalid info)",
+        "deprecated": "Outdated or deprecated (invalid info)",
+        "behavior": "Aggression, offence, violation of terms",
+        "other": "Other",
+        "textareaTitle": "Could you specify?",
+        "textareaPlaceholder": "Tell us what is wrong here.",
+        "primaryButton": "Submit"
+    },
     "input": {
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",

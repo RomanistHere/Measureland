@@ -5,15 +5,14 @@
 	import CloseButton from '../../../ui-elements/CloseButton.svelte';
 
 	import OnMapClickDialog from './OnMapClickDialog.svelte';
-	import { closeOverlay } from "$lib/utilities/helpers.js";
+	import ReportReasonDialog from './ReportReasonDialog.svelte';
 
 	export let dialogName;
 	export let dialogData;
 
-	const closeDialog = () => closeOverlay('dialog');
-
 	const dialogList = {
 		onMapClickDialog: OnMapClickDialog,
+		reportReasonDialog: ReportReasonDialog,
 	};
 
 	$: Dialog = dialogList[dialogName];
@@ -21,7 +20,6 @@
 
 <div
 	class="dark-glass z-5 inset-0 fixed flex justify-center items-center"
-	on:click={closeDialog}
 	use:focusTrap
 	transition:fade
 >

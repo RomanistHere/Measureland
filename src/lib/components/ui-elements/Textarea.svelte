@@ -1,7 +1,7 @@
 <script>
 	export let maxCommentLength;
-	export let placeholder;
-	export let className;
+	export let placeholder = '';
+	export let className = '';
 
 	let ref;
 
