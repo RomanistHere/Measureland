@@ -48,6 +48,7 @@ router.post('/change_pass', mediumLimiter, user_controller.user_change_password)
 router.post('/feedback', mediumLimiter, user_controller.user_feedback);
 router.post('/tasks_vote', mediumLimiter, user_controller.vote_for_task);
 router.post('/update_rating_year', mediumLimiter, user_controller.update_rating_year);
+router.post('/report_reason', mediumLimiter, user_controller.report_reason);
 
 router.get('/verify/:token', mediumLimiter, user_controller.user_verify);
 router.get('/check_user', mediumLimiter, user_controller.user_check);

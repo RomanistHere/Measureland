@@ -19,7 +19,7 @@
 </script>
 
 <div
-	class="dark-glass z-5 inset-0 fixed flex justify-center items-center"
+	class="dark-glass z-5 inset-0 fixed flex justify-center items-center overflow-auto"
 	use:focusTrap
 	transition:fade
 >

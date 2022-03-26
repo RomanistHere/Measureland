@@ -396,6 +396,21 @@ const deleteUserRating = async ratingID => {
 	return await fetchFunction({ url, method: 'DELETE' });
 };
 
+const reportReason = async (reportedID, type, code, comment = null) => {
+	const url = `${API_URL}/user/report_reason`;
+
+	return await fetchFunction({
+		url,
+		method: 'POST',
+		body: JSON.stringify({
+			reportedID,
+			type,
+			code,
+			comment,
+		}),
+	});
+};
+
 export {
 	saveToDB,
 	getSinglePointData,
@@ -431,4 +446,5 @@ export {
 	reactOnCommentPOI,
 	deletePOI,
 	deleteCommentPOI,
+	reportReason,
 };

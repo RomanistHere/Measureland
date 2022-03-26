@@ -5,7 +5,8 @@
 	import Textarea from '../../../ui-elements/Textarea.svelte';
 	import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
 
-	import { closeOverlay } from "$lib/utilities/helpers.js";
+	import { closeOverlay, logError, showSuccessNotification } from "$lib/utilities/helpers.js";
+	import { reportReason } from "$lib/utilities/api.js";
 
 	export let dialogData;
 
@@ -40,11 +41,15 @@
 	};
 
 	const sendReport = async () => {
-		const { id } = dialogData;
-		console.log(code);
-		console.log(textareaValue);
-		console.log(id);
-		// closeDialog();
+		const { id, type } = dialogData;
+
+		const { error } = await reportReason(id, type, code, textareaValue);
+
+		if (error)
+			logError(error);
+
+		closeDialog();
+		showSuccessNotification();
 	};
 </script>
 

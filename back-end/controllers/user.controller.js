@@ -12,6 +12,7 @@ const PointOfInterest = require('../models/point-of-interest.model');
 const CommentPOI = require("../models/comment-POI.model");
 const Feedback = require('../models/feedback.model');
 const Comment = require('../models/comment.model');
+const Report = require('../models/report.model');
 const Rating = require('../models/rating.model');
 const Task = require('../models/task.model');
 
@@ -737,6 +738,53 @@ exports.user_delete_rating = async (req, res) => {
 				message: 'Rating deleted',
 				coords: coordinates,
 				averageRating: newAverageRating,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
+exports.report_reason = async (req, res) => {
+	if (!req.session.userID)
+		return res.status(400).json({ error: "User is not logged in" });
+
+	const email = sanitize(req.session.userID);
+	const { reportedID, code, comment, type } = req.body;
+
+	try {
+		let reportedUserID = null;
+		const reportingUser = await User.findOne({ email }, '_id');
+
+		if (!reportingUser)
+			return res.status(400).json({ error: "User not found" });
+
+		if (type === 'rating') {
+			const rating = await Rating.findOne({ _id: sanitize(reportedID) }, 'userID');
+			reportedUserID = rating.userID;
+		} else if (type === 'POI') {
+			const poi = await PointOfInterest.findOne({ _id: sanitize(reportedID) }, 'userID');
+			reportedUserID = poi.userID;
+		} else {
+			throw new Error('Unknown type');
+		}
+
+		const newReport = new Report({
+			code,
+			...(comment && { comment }),
+			reportingID: reportingUser._id,
+			reportedID: reportedUserID,
+		});
+
+		const savedReport = await newReport.save();
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Report successful",
+				userID: email,
 			},
 		});
 	} catch (error) {

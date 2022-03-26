@@ -93,6 +93,7 @@
 			return;
 		}
 
+		openAnotherOverlay('reportReasonDialog', { id: pointID, type: 'POI' });
 		registerAction('reportPOI');
 	};
 	

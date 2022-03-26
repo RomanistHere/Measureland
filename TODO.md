@@ -1,7 +1,7 @@
 # To do:
 
 - telegram bot
-- "why report" modal with a few options to chose from
+- max length check comments db sheme
 - fix:
   - https://app.snyk.io/org/romanisthere/project/81819901-f54c-44c2-8ed5-39dc0dbb52ff
   - https://github.com/RomanistHere/Measureland/security/code-scanning

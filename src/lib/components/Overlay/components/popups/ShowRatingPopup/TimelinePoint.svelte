@@ -69,21 +69,20 @@
 	};
 
 	const reportRating = async () => {
-		// const { error } = await reactOnRating(_id, true);
+		registerAction('reportRating');
 
-		openAnotherOverlay('reportReasonDialog', { id: _id });
+		const { error } = await reactOnRating(_id, true);
 
-		// if (!error) {
-		// 	isAlreadyReported = true;
-		// 	showSuccessNotification();
-		// } else if (error === 'User is not logged in') {
-		// 	openAnotherOverlay('loginPopup');
-		// } else {
-		// 	logError(error);
-		// 	showSomethingWrongNotification();
-		// }
-		//
-		// registerAction('reportRating');
+		if (!error) {
+			isAlreadyReported = true;
+			showSuccessNotification();
+			openAnotherOverlay('reportReasonDialog', { id: _id, type: 'rating' });
+		} else if (error === 'User is not logged in') {
+			openAnotherOverlay('loginPopup');
+		} else {
+			logError(error);
+			showSomethingWrongNotification();
+		}
 	};
 
 	const endorseRating = async () => {
