@@ -4,10 +4,11 @@
     export let twitterUsername;
     export let imageSrc;
     export let timeToRead = 0;
+    export let isSquareImage = true;
 </script>
 
 <svelte:head>
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={isSquareImage ? "summary" : "summary_large_image"} />
 
     <meta name="twitter:creator" content={`@${twitterUsername}`} />
     <meta name="twitter:site" content={`@${twitterUsername}`} />

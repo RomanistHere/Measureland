@@ -79,6 +79,7 @@
     { twitterUsername }
     { imageSrc }
     { timeToRead }
+    { isSquareImage }
 />
 
 {#if isApp}
