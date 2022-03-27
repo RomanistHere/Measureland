@@ -29,6 +29,7 @@
 - limit API uses to website only (block all requests except from static cloudflare page IP)
 - check if rate limiter doesn't block based in IP (cloudflare)
 - check links community page
+- check preview images everywhere
 
 # Later
 

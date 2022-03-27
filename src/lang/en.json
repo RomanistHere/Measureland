@@ -734,7 +734,8 @@
         "members": {
             "title": "Most active members 🏆",
             "list": [{
-        		"title": "Igor Denisevich"
+        		"title": "Igor Denisevich",
+                "text": "Ideas, feedback, participation in Open collective"
         	}, {
         		"title": "Polina Kasterova",
         		"text": "Inspiration, help with promoting"
@@ -742,7 +743,7 @@
         		"title": "Alex Starinsky and Co",
         		"text": "Design ideas and help"
         	}, {
-        		"title": "User Бахти",
+        		"title": "Бахти",
         		"text": "Rated more than 20 places across the world!"
         	}]
         },

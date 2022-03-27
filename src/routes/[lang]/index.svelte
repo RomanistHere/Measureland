@@ -18,6 +18,7 @@
 	});
 </script>
 
+<!--todo: update image src-->
 <SEO
     pageTitle={$_('SEO.title')}
     description={$_('SEO.description')}

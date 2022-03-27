@@ -33,9 +33,7 @@
     			registerAction('startScreenExternalLink');
     			window.open(item.href, '_blank');
     		},
-    	disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed
-    		? true
-    		: false,
+    	disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed,
     }));
 
     $: lastSlideList = Object.values($json('startScreen.lastSlide.list'));
