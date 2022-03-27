@@ -2,7 +2,7 @@
 
 ### An open source and not profit oriented social project. Completely free for everyone. Find the best place to live based on community reviews. Leave your ratings and comments to the well-known places. Let's share our experiences and help each other :)
 
-![Measureland example](static/images/example1.jpg)
+![Measureland banner](static/images/preview/rectangle_en_150.jpg)
 
 Minsk, Belarus. Ratings in the image are purely random.
 
