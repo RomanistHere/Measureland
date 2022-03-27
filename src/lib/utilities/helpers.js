@@ -350,6 +350,12 @@ const truncateString = (string, limit) => {
 	}
 };
 
+const getCopyrightYears = () => {
+	const startYear = 2021;
+	const currentYear = new Date().getFullYear();
+	return currentYear === startYear ? currentYear : `${startYear}-${currentYear}`;
+};
+
 export {
 	debounce,
 	sleep,
@@ -382,4 +388,5 @@ export {
 	blurCurrentInput,
 	getErrorType,
 	truncateString,
+	getCopyrightYears,
 };

@@ -9,6 +9,7 @@
     import Overlay from '../Overlay/Overlay.svelte';
 
     import { appInfo } from '../../../configs/index.js';
+    import { getCopyrightYears } from '../../utilities/helpers.js';
 
     export let title;
     export let date;
@@ -18,9 +19,7 @@
 
     const langCode = $locale === 'ru' && 'ru-RU';
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const startYear = 2021;
-    const currentYear = new Date().getFullYear();
-    const yearsCopyright = currentYear === startYear ? currentYear : `${startYear}-${currentYear}`;
+    const yearsCopyright = getCopyrightYears();
 </script>
 
 <SEO

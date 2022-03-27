@@ -1,20 +1,13 @@
 # To do:
 
 - telegram bot
+- update tutorial (add new features)
 
 ### Pre release
 
 - regenerate api keys, move to env, move old ones into env example
-- links to documentation:
-  - https://github.com/mapbox/supercluster
-  - https://leafletjs.com/
-  - https://tailwindcss.com/
-  - https://refreshless.com/nouislider/
-  - https://swiperjs.com/svelte
-  - https://github.com/velipso/polybooljs
-  - https://github.com/kaisermann/svelte-i18n
 - Test with https://github.com/nolanlawson/fuite
-- update terms of use (rules: without politics, hate and so on)
+- go through all the posts and check for mistakes, style
 
 # Articles
 
