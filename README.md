@@ -1,7 +1,5 @@
 # Measureland - An interactive encyclopedia of searching for accommodation.
 
-## Okay, but what does it stand for?
-
 We want to centralise house searching. We want to build a platform, where people would share their opinions about places they lived at. Where real-estate agencies would post (probably for money) trustworthy stats and information. Where opinions would be backed by facts. We want to build the only platform you need to pick better city, better district, better neighborhood to move to or stay at even if you know nothing about it. We want this platform to be transparent and free for everyone.
 
 ![Measureland banner](static/images/preview/rectangle_en_150.jpg)
@@ -50,7 +48,9 @@ If it's something that can interest you, contact via [Telegram](https://t.me/mea
 
 There is a guide on how to start back-end server inside back-end folder README.
 
-We use #Svelte for front-end, links: [tutorial](https://svelte.dev/tutorial), [documentation](https://svelte.dev/docs). SvelteKit for building: [documentation](https://kit.svelte.dev/docs)
+We use Svelte for front-end, links: [tutorial](https://svelte.dev/tutorial), [documentation](https://svelte.dev/docs). SvelteKit for building: [documentation](https://kit.svelte.dev/docs)
+
+Some other tools we use (links to documentation): [leaflet](https://leafletjs.com/), [tailwind](https://tailwindcss.com/docs), [noUiSlider](https://refreshless.com/nouislider/), [swiper](https://swiperjs.com/svelte), [svelte-i18n](https://github.com/kaisermann/svelte-i18n), [polybooljs](https://github.com/velipso/polybooljs)
 
 We suggest naming branches this way:
 

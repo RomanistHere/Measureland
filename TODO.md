@@ -7,7 +7,6 @@
 - regenerate api keys, move to env, move old ones into env example
 - links to documentation:
   - https://github.com/mapbox/supercluster
-  - https://svelte.dev/
   - https://leafletjs.com/
   - https://tailwindcss.com/
   - https://refreshless.com/nouislider/
