@@ -665,15 +665,16 @@
         ]
     },
     "SEO": {
-        "title": "Welcome to Measureland",
-        "description": "Looking to buy a house, rent an apartment or searching for a place to stay? Check the neighbourhood first!",
+        "title": "Measureland - Interactive encyclopedia of searching for the best place to live.",
+        "description": "Check city or neighborhood ratings. Find tips from community on how to find a room or apartment. Looking for air or water quality? We have it!",
         "imageAltText": "Measureland icon (a little house)",
-        "keywords": "Measureland, rate, Non-commercial, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
-        "subject": "Help people to find the best place to stay at or live in.",
+        "keywords": "Measureland, encyclopedia, community based, Non-commercial, Open-source, service, Roman Smunyov, RomanistHere, independent, real estate, map, ratings",
+        "subject": "Free encyclopedia. Help people to find the best place to stay at or live in.",
         "author": "Roman Smunyov"
     },
     "blog": {
-        "title": "Articles and guides. Our Blog.",
+        "title": "Measureland - Articles and guides.",
+        "descriptionSEO": "Latest project news, guides and much more. Find your way through Measureland.",
         "summary": "Summary (tldr):",
         "endCpation": {
             "text1": "Our project is open-source, you can leave your questions or suggestions in the",
@@ -702,6 +703,8 @@
         }
     },
     "commuinty": {
+        "titleSEO": "Measureland - Community",
+        "descriptionSEO": "It's about us. Learn more and join! You can find here our tasks, plans and tips.",
         "title": "This page is about you guys!",
         "titleEmoj": "😎",
         "subtitlePart1": "Measureland is absolutely community driven. We want to be as 🧊 transparent as possible. You can find here ",
@@ -709,8 +712,6 @@
         "subtitlePart2": "our code, funding, tasks, social life - and most important - ",
         "subtitleStrong2": "influence that",
         "subtitlePart3": "⚖️. Meet the members of our community - and become one!",
-        "titleSEO": "Measureland community",
-        "descriptionSEO": "It's about us.",
         "linkBack": "Back to Measureland",
         "submitSuggestionBtn": "Submit your suggestion",
         "showMoreButton": "Show more...",
@@ -733,10 +734,6 @@
         "members": {
             "title": "Most active members 🏆",
             "list": [{
-        		"title": "Roman Smunyov (RomanistHere)",
-        		"text": "Creator",
-        		"link": "https://romanisthere.github.io/"
-        	}, {
         		"title": "Igor Denisevich"
         	}, {
         		"title": "Polina Kasterova",
@@ -745,11 +742,8 @@
         		"title": "Alex Starinsky and Co",
         		"text": "Design ideas and help"
         	}, {
-        		"title": "<Username>",
-        		"text": "Rated more than 20 places across 12 countries!"
-        	}, {
-        		"title": "<Username>",
-        		"text": "Invited 15 friends to Measureland."
+        		"title": "User Бахти",
+        		"text": "Rated more than 20 places across the world!"
         	}]
         },
         "tasks": {

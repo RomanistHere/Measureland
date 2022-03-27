@@ -58,6 +58,7 @@
 
 <SEO
     pageTitle={$_(`blog.title`)}
+	description={$_('blog.descriptionSEO')}
 />
 
 <section class="fixed-grad-bg"></section>

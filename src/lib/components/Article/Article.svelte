@@ -27,7 +27,7 @@
     isApp={false}
     description={description}
     isArticle={true}
-    pageTitle={title}
+    pageTitle="{$_('navBar.logoTitle')} - {title}"
     author={author}
     {isAnotherLang}
 />
