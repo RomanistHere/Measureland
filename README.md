@@ -4,7 +4,7 @@ We want to centralise house searching. We want to build a platform, where people
 
 ![Measureland banner](static/images/preview/rectangle_en_150.jpg)
 
-***The project is unique and doesn't have alternatives (at the moment of writing). We want to solve real problems people (us included) face every day. Especially bad these times. I could call them (times) "dark", a lot of people around abandoned their homes, fled from their countries. And it's very important to help. Showing the spirit is more important than ever. That's why we (mostly just myself, Roman Smunyov) do it. These are times for hope and for help.***
+***The project is unique and doesn't have alternatives (at the moment of writing). We want to solve real problems people (us included) face every day. Especially bad these times. I could call them (times) "dark", a lot of people around abandoned their homes, fled from their countries. And it's very important to help. Showing the spirit is more important than ever. That's why we (mostly just myself, Roman Smunyov) do it. These times are for hope and for help.***
 
 More info is in our [blog](https://measureland.org/blog):
 - [about us](https://measureland.org/blog/about-us)
