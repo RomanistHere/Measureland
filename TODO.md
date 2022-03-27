@@ -4,7 +4,6 @@
 
 ### Pre release
 
-- update preview image and create a few for a blog pages
 - regenerate api keys, move to env, move old ones into env example
 - links to documentation:
   - https://github.com/mapbox/supercluster
@@ -16,6 +15,7 @@
   - https://github.com/velipso/polybooljs
   - https://github.com/kaisermann/svelte-i18n
 - Test with https://github.com/nolanlawson/fuite
+- update terms of use (rules: without politics, hate and so on)
 
 # Articles
 

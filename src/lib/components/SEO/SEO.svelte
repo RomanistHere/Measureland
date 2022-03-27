@@ -13,12 +13,12 @@
     export let isApp = true;
 
     export let isArticle = false;
-    export let isSquareImage = false;
+    export let isSquareImage = true;
     export let imageAltText = '';
     export let description = '';
     export let pageTitle = '';
     export let siteTitle = $_('SEO.title');
-    export let imageSrc;
+    export let imageSrc = 'https://measureland.org/images/preview/square_100.jpg';
     export let url = `${$page.host || WEB_DOMAIN}${$page.path}`;
 
     export let author = $_('SEO.author');

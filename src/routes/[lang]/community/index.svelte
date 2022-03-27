@@ -1,5 +1,5 @@
 <script>
-	import { _, json } from 'svelte-i18n';
+	import { _, json, locale } from 'svelte-i18n';
 	import '/static/styles/general.css';
 
 	import SEO from '../../../lib/components/SEO/SEO.svelte';
@@ -10,7 +10,8 @@
 <SEO
     pageTitle={$_('commuinty.titleSEO')}
     description={$_('commuinty.descriptionSEO')}
-    imageSrc='https://measureland.org/images/PWA-icon-512x512.png'
+	imageSrc='https://measureland.org/images/preview/community_{$locale}_150.jpg'
+	isSquareImage={false}
 	imageAltText={$_('SEO.imageAltText')}
     isApp={false}
 />

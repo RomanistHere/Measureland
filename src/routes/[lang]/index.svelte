@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { _ } from 'svelte-i18n';
+	import { _, locale } from 'svelte-i18n';
 	import 'esri-leaflet-geocoder/dist/img/search.png';
 	import '/static/styles/general.css';
 
@@ -18,11 +18,11 @@
 	});
 </script>
 
-<!--todo: update image src-->
 <SEO
     pageTitle={$_('SEO.title')}
     description={$_('SEO.description')}
-    imageSrc='https://measureland.org/images/PWA-icon-512x512.png'
+    imageSrc='https://measureland.org/images/preview/rectangle_{$locale}_150.jpg'
+	isSquareImage={false}
 	imageAltText={$_('SEO.imageAltText')}
 />
 
