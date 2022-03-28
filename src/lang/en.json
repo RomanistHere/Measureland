@@ -597,7 +597,7 @@
         "title": "What do you want to do?",
         "option1": "Rate a place (water / air quality and so on)",
         "option1Alt": "Rate-a-place icon",
-        "option2": "Add a point of interest (park, construction, etc.)",
+        "option2": "Add Point of Interest (park, construction, etc.)",
         "option2Alt": "Point of interest icon"
     },
     "reportReasonDialog": {

@@ -2,6 +2,10 @@
 
 - telegram bot
 - update tutorial (add new features)
+- update startscreen text to encyclopedia
+- create preview images to tutorial and minsk
+- upload new image in github repo settings
+- add task for converting light pollution image into API
 
 ### Pre release
 
@@ -22,22 +26,7 @@
 - check if rate limiter doesn't block based in IP (cloudflare)
 - check links community page
 - check preview images everywhere
-
-# Later
-
-- more badges
-- share nearby API public
-- login via Telegram
-- fix workers (?)
-- ask users to highlight areas in the city with something nice, like best quality of water
-
-# Org stuff
-
-- pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
-
-# Stuff to remember and check later
-
-- Content security policy. Svelte should introduce something to remove script and css 'unsafe-inline' property with the release.
+- record new gif "how to rate"
 
 # With the next release
 
@@ -64,3 +53,19 @@
 - Possibility to check / report / endorse a single rating
 - Add point of interest
 - Add measurements to the ratings (from external APIs)
+
+# Later
+
+- more badges
+- share nearby API public
+- login via Telegram
+- fix workers (?)
+- ask users to highlight areas in the city with something nice, like best quality of water
+
+# Org stuff
+
+- pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
+
+# Stuff to remember and check later
+
+- Content security policy. Svelte should introduce something to remove script and css 'unsafe-inline' property with the release.
