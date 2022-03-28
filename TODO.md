@@ -1,8 +1,6 @@
 # To do:
 
 - telegram bot
-- update startscreen text to encyclopedia
-- create preview images to tutorial and minsk
 - upload new image in github repo settings
 - add task for converting light pollution image into API
 

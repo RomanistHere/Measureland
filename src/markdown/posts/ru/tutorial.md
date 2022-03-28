@@ -7,6 +7,7 @@ description: Ключевые моменты Измерии. Как? Что? З�
 tags: [starters]
 layout: article
 author: Роман Смунёв
+imageSrc: https://measureland.org/images/preview/tutorial_ru_150.jpg
 ---
 
 <script>

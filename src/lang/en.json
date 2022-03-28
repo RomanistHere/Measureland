@@ -244,7 +244,7 @@
         },
         "lastSlide": {
             "list": [{
-                "text": "Check the Measureland guide book (tutorial)",
+                "text": "Check the Measureland guidebook (tutorial)",
                 "url": "/en/blog/tutorial/"
             },{
                 "text": "Learn more about us",
@@ -324,7 +324,7 @@
         "filters": "Filters",
         "titleBot": "Related",
         "ourPartners": "Our partners",
-        "ourGuideBook": "Our guide book (Tutorial)",
+        "ourGuideBook": "Our guidebook (Tutorial)",
         "paidOptions": "Paid options",
         "aboutUs": "About us",
         "support": "Support",
@@ -460,7 +460,7 @@
         "learnWhyLimitsAddition": "It's free, we just need to confirm you're a nice person :)",
         "hereSomeArticles": "Here are some articles to help you get started or remind about",
         "list": [{
-            "text": "Measureland guide book (tutorial)",
+            "text": "Measureland guidebook (tutorial)",
             "link": "/en/blog/tutorial/"
         }, {
             "text": "Our goals",

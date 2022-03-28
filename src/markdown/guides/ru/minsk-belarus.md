@@ -8,6 +8,7 @@ tags: [starters]
 layout: article
 author: Роман Смунёв
 isGuide: true
+imageSrc: https://measureland.org/images/preview/minsk_ru_150.jpg
 ---
 
 <script>

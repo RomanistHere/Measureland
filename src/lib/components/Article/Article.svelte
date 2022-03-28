@@ -16,6 +16,7 @@
     export let author = appInfo.authorName;
     export let description;
     export let isAnotherLang = true;
+    export let imageSrc;
 
     const langCode = $locale === 'ru' && 'ru-RU';
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -29,6 +30,8 @@
     pageTitle="{$_('navBar.logoTitle')} - {title}"
     author={author}
     {isAnotherLang}
+    {imageSrc}
+    isSquareImage={!imageSrc}
 />
 
 <section class="fixed-grad-bg"></section>

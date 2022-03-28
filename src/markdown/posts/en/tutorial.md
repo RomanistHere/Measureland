@@ -1,12 +1,13 @@
 ---
 slug: tutorial
-title: Measureland Advisory. Our guide book (tutorial).
+title: Measureland Advisory. Our guidebook (tutorial).
 firstDate: 2021-05-19
 date: 2022-03-28
 description: The article is going to cover everything you want to know about Measureland.
 tags: [starters]
 layout: article
 author: Roman Smunyov
+imageSrc: https://measureland.org/images/preview/tutorial_en_150.jpg
 ---
 
 <script>
