@@ -207,31 +207,31 @@
         "firstSlide": {
             "titleLow": "Welcome to",
             "titleBig": "Measureland",
-            "text": "Free service we built to help you share your residential experiences and find the best place 🏡 to rent or buy.",
+            "text": "An interactive encyclopedia of finding the best place to live \uD83C\uDFE1",
             "btn1": "Continue without signing in",
             "btn2": "Create new account"
         },
         "slides": {
             "2": {
                 "title": "We are simple and useful",
-                "text1": "We help people by saving time, energy and reducing the stress 🤯 while looking for a place to stay.",
-                "text2": "Check the districts with good or bad water quality 💧 in the town (by townsman's opionion) in literally one click from now.",
+                "text1": "We help people by saving time, energy and reducing the stress 🤯 while looking for a home.",
+                "text2": "Check the areas with good water quality 💧 in the town (by townsman's opionion) in literally one click from now.",
                 "button": "Check good water around",
                 "href": "",
                 "action": "openFilters"
             },
             "3": {
                 "title": "We are community driven",
-                "text1": "There are no thing like promoted rating or paid review here. Content created for people by people.",
-                "text2": "Become the creator. We will help you 👋",
-                "button": "See our community guides",
-                "href": "https://github.com/RomanistHere/Measureland/wiki/Contributions"
+                "text1": "There are no things like promoted rating or paid review here. Content created for people by people.",
+                "text2": "See what we up to. Influence what we do. Become the creator. We will help you 👋",
+                "button": "Meet our community",
+                "href": "/en/community"
             },
             "4": {
                 "title": "We are non-commercial",
-                "text1": "We would love your support, but making the money is not the goal of this service.",
+                "text1": "We would love your support, but making the money is not the goal of this project.",
                 "text2": "There are more important things in life 🌼",
-                "button": "Support us",
+                "button": "Check our finances",
                 "href": "https://opencollective.com/measureland"
             },
             "5": {
@@ -244,16 +244,13 @@
         },
         "lastSlide": {
             "list": [{
-                "text": "Join our Telegram community",
-                "url": "https://t.me/measureland"
-            },{
                 "text": "Check the Measureland guide book (tutorial)",
                 "url": "/en/blog/tutorial/"
             },{
-                "text": "Learn about us",
+                "text": "Learn more about us",
                 "url": "/en/blog/about-us/"
             },{
-                "text": "Go to the support page",
+                "text": "Go to the support page (FAQ)",
                 "url": "/en/blog/support/"
             },{
                 "text": "See our terms of use",
@@ -265,7 +262,7 @@
                 "text": "Find the rest at our blog",
                 "url": "/en/blog/"
             }],
-            "title": "And this is only the beginning"
+            "title": "And this is only the beginning of the journey"
         },
         "scrollToLearnMode": "Scroll to learn more",
         "checkboxText": "By using Measureland I agree with",

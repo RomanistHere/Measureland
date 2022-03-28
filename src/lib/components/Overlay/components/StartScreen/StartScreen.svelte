@@ -122,14 +122,14 @@
                     <h1 class="lg:text-5xl -lg:text-3xl mb-10 @lg:text-5xl -md:text-2xl">
                         {$_('startScreen.lastSlide.title')}
                     </h1>
-                    <ul>
+                    <ul class="list-inside">
                         {#each lastSlideList as {url, text}}
                             <li>
-                                <TextLink href={url} { text } blank={true} className="text-2xl -md:text-base" />
+                                <TextLink href={url} { text } blank={true} className="text-2xl leading-9 -md:text-base" />
                             </li>
                         {/each}
                     </ul>
-                    <div class="flex items-center justify-left -lg:flex-wrap {!$appStateStore.termsOfUseAgreed && 'opacity-30'}">
+                    <div class="flex items-center justify-left mt-4 -lg:flex-wrap {!$appStateStore.termsOfUseAgreed && 'opacity-30'}">
                         <SecondaryButton
                             text={$_('startScreen.firstSlide.btn1')}
                             className="mr-5 mt-5 -md:text-sm"

@@ -1,7 +1,6 @@
 # To do:
 
 - telegram bot
-- update tutorial (add new features)
 - update startscreen text to encyclopedia
 - create preview images to tutorial and minsk
 - upload new image in github repo settings
@@ -15,9 +14,10 @@
 
 # Articles
 
-- city-guides contest
-- community page launch
-- before the release: update technical documentation (github wiki)
+- city-guides contest 2 lang
+- community page launch 2 lang
+- 2.0 release notes 2 lang
+- before the release: update technical documentation (github wiki) 1 lang
 
 ### Just before release
 
