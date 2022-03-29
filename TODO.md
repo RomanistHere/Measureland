@@ -1,18 +1,17 @@
 # To do:
 
 - telegram bot
-- upload new image in github repo settings
-- add task for converting light pollution image into API
+- go through the tasks on community page
+- regenerate api keys, move to env, move old ones into env example
+- go through all the posts and check for mistakes, style
+- update FAQ (why agencies are gonn be honest - reputation)
 
 ### Pre release
-
-- regenerate api keys, move to env, move old ones into env example
 - Test with https://github.com/nolanlawson/fuite
-- go through all the posts and check for mistakes, style
 
 # Articles
 
-- city-guides contest 2 lang
+- city-guides contest 2 lang - I'll crate a platform where every measuremen would be able to vote
 - community page launch 2 lang
 - 2.0 release notes 2 lang
 - before the release: update technical documentation (github wiki) 1 lang
@@ -35,6 +34,7 @@
 - add measureland to my projects in portfolio
 - write to everyone!
 - link communities based on city/country
+- send why-svelte article to svelte community
 
 # Updates description
 

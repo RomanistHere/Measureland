@@ -2,7 +2,7 @@
 slug: why-svelte
 title: Why we picked Svelte over React, Angular, Vue?
 firstDate: 2021-11-29
-date: 2021-11-29
+date: 2022-03-29
 description: We compare popular "frameworks" (React, Angular and Svelte) with the building tools and explain why we picked Svelte. Programming knowledge is not required.
 tags: [technology]
 layout: article
@@ -31,15 +31,15 @@ By the way, if there were other skyscrapers around, chances are that ours wouldn
 
 #### React/Preact.
 
-Imagine if <s>Apple</s> Facebook made construction tools. All the instruments would look sexy. We'd have a nice small starter pack with "everything we need" to build a home. Everything would look super professional and easy to begin with. We would start to <s>touch</s> show it to our neighbors.
+Imagine if <s>Apple</s> Facebook made construction tools. All the instruments would look sexy. We'd have a nice small starter pack with "everything we need" to build a home. Everything would look super professional and easy to begin with. We would start <s>touchi</s> showing it to our neighbors.
 
-Ok, we got it. Now let's start to build. After a few hours/days it will appear that part of our instruments (almost all, really) lacks something. We will need to return to the store to buy different nails, bigger hammer, right drills and so on. For most of these things we would need to go to other stores, because the official one lacks it. Of course after we have found them - by asking neighbors. Luckily, a lot of them used React too. Some of them started to sell their own tools to guys like us.
+Ok, we got it. Now let's get started. After a few hours/days it would appear that part of our instruments (almost all, really) lacks something. We would need to constantly return to the store to buy different nails, bigger hammer, right drills and so on. For most of these things we would need to go to other stores, because the official one lacks it. Of course after we have found them - by asking neighbors. Luckily, a lot of them used React too. Some of them started to sell their own tools to guys like us.
 
-But the worst thing is, if no one checks on us, the chance of messing up is increasing with every new thing we do. It won't be necessarily noticeable from the start, but be sure, we're gonna pay for this later.
+But the worst thing is - more experienced neighbors told us - if no one checks on us, the chance of messing up is increasing with every new thing we do. It won't be necessarily noticeable from the start, but we're going to pay for this later. A lot of different ways to build plus no official instructions on how to create something more complex than a birdhouse - it confuses us completely.
 
 #### Vue.
 
-I know much less of Vue, so pardon me for missing it - though, you can send me your vision, I'll add it - and let's get to know Svelte.
+I know much less of Vue, so pardon me for missing it - though, you can send me your vision, if it fits, I'll add it - and let's get to know Svelte.
 
 #### Svelte.
 
@@ -57,13 +57,17 @@ Our assistant smiles. We open the box and there are a few - well, actually there
 
 "Sounds reasonable" - we think...
 
+We find instructions pretty clear and easy to follow. Indeed, I wouldn't try to build a skyscraper with it, but for a regular house it's more than enough. Most of the tools are encouraging certain ways of working with them, which we're getting used to soon.
+
 #### ... After finishing our home...
 
 Well, it looks okay. There are a few things to fix later, when new instruments arrive. Some tools weren't very handy or comfortable to use - we decide to contact the store about it. But otherwise... It felt really nice. Especially for such a small tools-store and for the first experience.
 
 "So, what do you say?" - you ask me.
 
-"It was rather enjoyable. We can stick to this Svelte for now, what do you think?" - I reply. Now, what is your answer? :)
+"It was rather enjoyable. We can stick to this Svelte for now, what do you think?" - I reply.
+
+Now, what is your answer? :)
 
 ### JavaScript vs TypeScript.
 
@@ -71,15 +75,15 @@ I hope you understand that I didn't intend to offend anyone. My explanation shou
 
 #### What is JavaScript in the metaphor?
 
-Our hands. We can build everything with but our bare hands. We did it through history. We can make a hummer or use a rock - everything is up to us. It's possible to make a building this way, though not advisable for an average person.
+Our hands. We can build everything with but our bare hands. We did it through history. We can make a hummer or use a rock - everything is up to us. While it's possible to make a building this way, it's not advisable for an average person.
 
 #### And TypeScript...
 
-Augmented Reality headset and gloves connected to each other. This system recognizes what we're doing right now and makes sure we don't make "mistakes". For example, we don't hammer wood nails into anything but wood. Or that we don't saw off a piece of wood with a metal hacksaw. It would be so wrong!
+Augmented Reality headset and gloves connected to each other. This system recognizes what we're doing in real time and makes sure we don't do "mistakes". For example, we don't hammer wood nails into anything but wood. Or that we don't saw off a piece of wood with a metal hacksaw. It would be so wrong!
 
 So sometimes instead of making some elegant and fast solution we find ourselves searching for the right instrument to do the job. Like the manual says. Works best with Angular.
 
-It also checks whether our structure matches the blueprints (we should draw it too). Good if we have accurate drawings. Not so good if our blueprints exist only for show. Having an accurate blueprint, however, is always a good idea if we're building something, doesn't matter Type- or JavaScript.
+It also checks whether our structure matches the blueprints (we should draw it too). Good if we have accurate drawings. Not so good if our blueprints exist only for show. Having an accurate blueprint, however, is always a good idea if we're about to build something, doesn't matter Type- or JavaScript.
 
 Generally, it can be both helpful and harmful. It's obvious that a system that complex can't be without-the-delay fast and sometimes fails. TypeScript's goal is to limit us in use of our tools, limit our imagination. Is it good or bad - only for you to decide.
 
@@ -107,7 +111,7 @@ Not much. It was a bit hard at the start to use let instead of const to achieve 
 
 #### Community.
 
-Small (means there are not many answers at Stack Overflow), but active (means you can ask questions in the Discord and they will be answered).  Just like Measureland, Svelte is community-first, means creators value us and our trust most.
+Small (means there are not many answers at Stack Overflow), but active (means you can ask questions in the Discord and they will be answered). Just like Measureland, Svelte is community-first, means creators value us and our trust most.
 
 #### Transparency.
 
