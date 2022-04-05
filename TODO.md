@@ -4,7 +4,6 @@
 - go through the tasks on community page
 - regenerate api keys, move to env, move old ones into env example
 - go through all the posts and check for mistakes, style
-- update FAQ (why agencies are gonn be honest - reputation, why should I rate something it - help yourself)
 - create template for guide that is not included into articles and should be changed
 
 ### Pre release
