@@ -717,14 +717,14 @@
             "list": [{
         		"title": "City guides contest",
         		"text": "Share experience of finding apartment in your city. Prize pool 175$",
-        		"link": "/en/blog/city-guides-contest/"
+        		"link": "/en/blog/guide-contest/"
         	}, {
         		"title": "Open collective launch",
         		"text": "Transparent finance handling platform. Check where the money comes from and what are spent on.",
         		"link": "https://opencollective.com/measureland"
         	}, {
         		"title": "Community page launch",
-        		"text": "Why do we need it and what are planes on it?",
+        		"text": "Why do we need it and what are plans on it?",
         		"link": "/en/blog/community-launch/"
         	}]
         },
