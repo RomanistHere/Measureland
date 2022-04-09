@@ -3,7 +3,7 @@ slug: policy
 title: Measureland Constitution. Part II. Privacy policy.
 firstDate: 2021-04-01
 date: 2021-12-08
-description: We believe in Users-are-not-for-sale-web.
+description: We believe in Users-are-not-for-sale web.
 tags: [docs, starters]
 layout: article
 author: Roman Smunyov
@@ -14,7 +14,7 @@ author: Roman Smunyov
     import Summary from "$lib/components/Article/Summary.svelte";
 </script>
 
-### We believe in Users-are-not-for-sale-web.
+### We believe in Users-are-not-for-sale web.
 Here we describe what we do with your data in the vastness of Measureland.
 
 <Summary
