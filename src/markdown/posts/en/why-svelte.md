@@ -17,7 +17,7 @@ Programming knowledge is not required. Explanation is in English and by metaphor
 
 ### What are "frameworks" (Svelte, React, Preact, etc.) anyway?
 
-Building an app is not so different from building a house. So imagine us (me and you, my reader) going to build it. That would be my analogy. Logs, planks and other stuff we're going to do it with are HTML and CSS. Frameworks are our sets of tools. Let's see how they differ from this point of view. 
+Building an app is not so different from building a house. So imagine us (me and you, my reader) going to build it. That would be my analogy. Logs, planks and other stuff we're going to do it with are HTML and CSS. Frameworks are our sets of tools. Let's see how they differ from this point of view.
 
 #### Angular.
 
@@ -49,7 +49,7 @@ But we're not that trusting anymore!
 
 "We want to see how many types of drills are in the box!"
 
-Our assistant smiles. We open the box and there are a few - well, actually there are more than in React and less than in Angular. Assistant tells us that these are universal drills - it will be enough to do 80% of work. 
+Our assistant smiles. We open the box and there are a few - well, actually there are more than in React and less than in Angular. Assistant tells us that these are universal drills - it will be enough to do 80% of work.
 
 "Why not 100%?" - we ask in unison.
 
@@ -79,7 +79,7 @@ Our hands. We can build everything with but our bare hands. We did it through hi
 
 #### And TypeScript...
 
-Augmented Reality headset and gloves connected to each other. This system recognizes what we're doing in real time and makes sure we don't do "mistakes". For example, we don't hammer wood nails into anything but wood. Or that we don't saw off a piece of wood with a metal hacksaw. It would be so wrong!
+Augmented Reality headset and gloves connected to each other. This system recognizes what we're doing in real time and makes sure we don't make "mistakes". For example, we don't hammer wood nails into anything but wood. Or that we don't saw off a piece of wood with a metal hacksaw. It would be so wrong!
 
 So sometimes instead of making some elegant and fast solution we find ourselves searching for the right instrument to do the job. Like the manual says. Works best with Angular.
 
@@ -97,13 +97,13 @@ Generally, it can be both helpful and harmful. It's obvious that a system that c
 
 #### Out-of-box instruments.
 
-SvelteKit: Static site generation and server side rendering, routing, back-end simulation (endpoints). <TextLink href="https://preactjs.com/" blank={true} text="Preact" /> has it as well, though. 
+SvelteKit: Static site generation and server side rendering, routing, back-end simulation (endpoints). <TextLink href="https://preactjs.com/" blank={true} text="Preact" /> has it as well, though.
 
 Svelte: Nice and handy transitions and animations. CSS and scopes. Cross-component state managing (stores). True reactivity. Compiling to JavaScript.
 
 #### What else did we like.
 
-JS-in-HTML feels much more convenient and "not heavy" in comparison to the HTML-in-JS scheme. Generally, writing CSS, JS, HTML in the same file feels old-school and modern (with all the features) at the same time. 
+JS-in-HTML feels much more convenient and "not heavy" in comparison to the HTML-in-JS scheme. Generally, writing CSS, JS, HTML in the same file feels old-school and modern (with all the features) at the same time.
 
 #### What did we not like.
 
@@ -111,7 +111,7 @@ Not much. It was a bit hard at the start to use let instead of const to achieve 
 
 #### Community.
 
-Small (means there are not many answers at Stack Overflow), but active (means you can ask questions in the Discord and they will be answered). Just like Measureland, Svelte is community-first, means creators value us and our trust most.
+Small (means there are not many answers at Stack Overflow), but active (means you can ask questions in the Discord and they will be answered). Just like Measureland, Svelte is community-first, meaning creators value us and our trust most.
 
 #### Transparency.
 

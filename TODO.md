@@ -4,15 +4,13 @@
 - go through the tasks on community page
 - regenerate api keys, move to env, move old ones into env example
 - go through all the posts and check for mistakes, style
-- create template for guide that is not included into articles and should be changed
+- 404 for articles (universal guide ru)
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
 
 # Articles
 
-- city-guides contest 2 lang - I'll crate a platform where every measuremen would be able to vote
-- community page launch 2 lang
 - 2.0 release notes 2 lang
 - before the release: update technical documentation (github wiki) 1 lang
 

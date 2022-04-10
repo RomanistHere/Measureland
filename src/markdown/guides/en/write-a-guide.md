@@ -17,7 +17,7 @@ isGuide: true
 ### How to write.
 There are a few key points while writing your own guide to remember.
 
-We support only two languages for now: English and Russian - so we ask to write the guide using one of them. Ideally, we would like to see 2 copies, one in English and one in the local language. English version would be available right after the moderation and deployment, and the local one will be stored and deployed later.
+We support only two languages for now: English and Russian - so we ask to write the guide using one of them. Ideally, we would like to see 2 copies, one in English and one in the local language. The English version would be available right after the moderation and deployment, and the local one will be stored and deployed later.
 
 We want the guide to be well-structured, please, make sure it's divided into logical instances, such as:
 
@@ -37,7 +37,7 @@ There are basically four main ways:
 
 - <TextLink href="mailto:support@measureland.org" text="Send us an email" /> with a pdf or doc or link to an online service. Please, don't copy-paste a plain text, it could be ruined.
 - Open a new issue in <TextLink href="https://github.com/RomanistHere/Measureland/issues" blank={true} text="GitHub" />. You'll need to have an account there.
-- Familiar with HTML or Markdown? <TextLink href="https://github.com/RomanistHere/Measureland/tree/master/src/markdown/guides/en" blank={true} text="Our guides structure" /> is super easy to understand, you'll see. Contribute!
+- Familiar with HTML or Markdown? <TextLink href="https://github.com/RomanistHere/Measureland/tree/master/src/markdown/guides/en" blank={true} text="Our guide structure" /> is super easy to understand, you'll see. Contribute!
 - Social networks: share your writing <TextLink href="https://discord.gg/mBgnBprBBb" blank={true} text="in Discord" /> or <TextLink href="https://t.me/+sw16jwDFfJxhZGVi" blank={true} text="Telegram" />
 
 ### Rewards.

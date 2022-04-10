@@ -17,7 +17,7 @@ imageSrc: https://measureland.org/images/preview/tutorial_en_150.jpg
     import Summary from "$lib/components/Article/Summary.svelte";
 
     const feedbackPopupName = 'feedbackPopup';
-    const textButton = 'submit special form';
+    const textButton = 'submit a special form';
 </script>
 
 This article is going to cover everything you want to know about Measureland.
@@ -57,14 +57,14 @@ After every action your URL is going to change, so if you reload your page, shap
 There is a limit for URLs, 2000 characters, so once you achieve it, you will see a message that will ask you to remove some shapes in order to be able to share it. You can continue to draw, though. But all changes after the error won't be saved.
 
 ### Points of Interest
-There is a new set of objects on map introduced in version 2.0.0 - POIs. Those are marks you want to put on the places important in terms of searching for accommodation. It can be something negative, like some noisy construction site or an air polluting factory or positive, like a quiet and clean alley or a beach. It can also be something in the middle. Something bad for part of people, which can be considered good for others: multi-level parking lot, playground or enormous hypermarket. It's hard to underestimate value of such objects when looking for a home, isn't it?
+There is a new set of objects on map introduced in version 2.0.0 - POIs. Those are marks you want to put on the places important in terms of searching for accommodation. It can be something negative, like some noisy construction site or an air polluting factory or positive, like a quiet and clean alley or a beach. It can also be something in the middle. Something bad for some people, which can be considered good for others: multi-level parking lot, playground or enormous hypermarket. It's hard to underestimate the value of such objects when looking for a home, isn't it?
 
-To add Point of Interest, first thing is to find it on map. Next, click the approximate place and chose *"Add Point of Interest"*. Now, pick the best title possible, let it be short and clean, so everyone can understand what is it without looking into description. And for description, put there relevant information: cons, pros, radius of affecting and so on. Facts are the best! Tags can be useful too.
+To add Point of Interest, the first thing is to find it on the map. Next, click the approximate place and choose *"Add Point of Interest"*. Now, pick the best title possible, let it be short and clean, so everyone can understand what it is without looking into the description. And for description, put there relevant information: cons, pros, radius of affecting and so on. Facts are the best! Tags can be useful too.
 
 ### Endorsements, reports and reputation system
-We introduced reputations system a-ka Karma in 2.0.0. It's hidden from users but is allowing us to have more understanding over what certain users are up to. The system is simple right now, every endorsement adds points and every report removes.
+We introduced a reputation system a-ka Karma in 2.0.0. It's hidden from users but is allowing us to have more understanding over what certain users are up to. The system is simple right now, every endorsement adds points and every report removes.
 
-Useful to understand, that adding a reason while reporting gives it more value, so pick (or draft) one. Thanks :)
+Useful to understand that adding a reason while reporting gives it more value, so pick (or draft) one. Thanks :)
 
 ### How to participate or suggest something?
-Visit our <TextLink href="../../community" blank={false} text="community page" />. You'll find there our current task, have instruments to influence it, suggest your ideas, find a platform to communicate with us and much more!
+Visit our <TextLink href="../../community" blank={false} text="community page" />. You'll find there our current tasks and instruments to influence it, forms to suggest your ideas and much more!

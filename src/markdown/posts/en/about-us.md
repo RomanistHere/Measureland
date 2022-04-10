@@ -14,14 +14,14 @@ author: Roman Smunyov
 </script>
 
 <Summary
-    text="We're unique, cool and free. We're reducing stress and save time. By leaving relevant information you're helping yourself in the future."
+    text="We're unique, cool and free. We reduce stress and save time. By leaving relevant information you're helping yourself in the future."
 />
 
 ### The target audience.
 Almost every one of us at some point in life was, is or going to face difficulties and worries related to finding the best apartment to stay a few nights or picking a new place to live for the rest of our life. Measureland's going to help us choose the best one, reduce stress and save time in any case.
 
 ### What problems Measureland solves.
-Imagine if we wouldn't need to do research, gather the needed information bit by bit from different resources. Wouldn't need to waste our time visiting the place itself. All the information would be structured and centralised: other people ratings, comments, guides where to rent/buy an apartment or home for any town in the world - everything community driven and corruptionless, no paid promotions.
+Imagine if we wouldn't need to do research, gathering the needed information bit by bit from different resources. Wouldn't need to waste our time visiting the place itself. All the information would be structured and centralised: other people ratings, comments, guides where to rent/buy an apartment or home for any town in the world - everything community driven and corruptionless, no paid promotions.
 
 You have just imagined Measureland, an online service I, Roman Smunyov, am willing to build. Register, rate places you lived at, comment, share with your friends, be cool and honest - help the community, and it'll help you back!
 
