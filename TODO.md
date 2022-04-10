@@ -1,9 +1,7 @@
 # To do:
 
 - telegram bot
-- go through the tasks on community page
 - regenerate api keys, move to env, move old ones into env example
-- go through all the posts and check for mistakes, style
 - 404 for articles (universal guide ru)
 
 ### Pre release
