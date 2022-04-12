@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import { _, json } from 'svelte-i18n';
 
 	import InputGroupSimple from '../../../../ui-elements/InputGroupSimple.svelte';
@@ -19,15 +19,17 @@
 		roundToFifthDecimal,
 		getErrorType,
 		blurCurrentInput,
-		registerAction,
+		registerAction, centerMap,
 	} from "../../../../../utilities/helpers.js";
 	import { savePOIToDB } from "../../../../../utilities/api.js";
-	import { poisStore, userStateStore } from "../../../../../../stores/state.js";
+	import { isDesktop, poisStore, userStateStore } from "../../../../../../stores/state.js";
+	import { leafletReference, mapReference } from "../../../../../../stores/references.js";
 
 	$: errorsObj = $json('errors');
 	
 	export let popupData;
 
+	let circle;
 	let isError = false;
 	let errorType = '';
 	let isLoading = false;
@@ -39,6 +41,9 @@
 		description: '',
 		tags: [],
 	};
+
+	const L = $leafletReference;
+	const map = $mapReference;
 
 	const updateInputValue = e => {
 		const { value } = e.target;
@@ -128,10 +133,26 @@
 		submit();
 	}, 200);
 
+	const addCircle = () => {
+		const { lat, lng } = popupData;
+		circle = L.circle(popupData, 200, { color: '#007097' });
+
+		circle.addTo(map);
+
+		centerMap(map, lat, lng, $isDesktop, true);
+	};
+
+	const removeCircle = () =>
+		map.removeLayer(circle);
+
 	onMount(() => {
 		if ($userStateStore.userID === null)
 			openAnotherOverlay('loginPopup');
+		else
+			addCircle();
 	});
+
+	onDestroy(removeCircle);
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>

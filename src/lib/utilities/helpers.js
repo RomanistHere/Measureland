@@ -287,6 +287,7 @@ const errorObj = {
 	'Email already exists': 'accountExists',
 	'Email is wrong': 'noAccount',
 	'Matches old password': 'samePass',
+	'Nearby place is already rated': 'nearbyPlaceAlreadyRated',
 	'No actions remaining': 'youRateTooOften',
 	'Password is wrong': 'wrongPassword',
 	'Password link is invalid or expired': 'linkExpired',

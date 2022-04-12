@@ -2,7 +2,6 @@
 
 - telegram bot
 - regenerate api keys, move to env, move old ones into env example
-- 404 for articles (universal guide ru)
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
@@ -17,11 +16,11 @@
 - https://github.com/RomanistHere/Measureland/security/code-scanning - fix domain and csrf
 - limit API uses to website only (block all requests except from static cloudflare page IP)
 - check if rate limiter doesn't block based in IP (cloudflare)
-- check links community page
 - check preview images everywhere
 - record new gif "how to rate"
 - add images to tutorial
 - add images and video in articles
+- test 404 redirections
 
 # With the next release
 
