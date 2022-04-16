@@ -15,15 +15,12 @@
 
 - https://github.com/RomanistHere/Measureland/security/code-scanning - fix domain and csrf
 - limit API uses to website only (block all requests except from static cloudflare page IP)
-- check if rate limiter doesn't block based in IP (cloudflare)
 - check preview images everywhere
 - add images and video in articles
 - test 404 redirections
 
 # With the next release
 
-- Update db (temporarily.js):
-- adjust user.model.js after db update (remove two fields)
 - add link to measureland in github
 - write to wiki with questions about development and monetization.
 - add measureland to my projects in portfolio

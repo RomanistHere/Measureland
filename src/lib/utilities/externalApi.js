@@ -78,7 +78,7 @@ const fetchOpenWeather = async (lat, lng) => {
 	// todo: reset and move somewhere else
 	const apiOWMKey = '1387a4c3445d5f7c3e3d3793eb75cb53';
 	try {
-		const histData = await fetch(`http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lng}&start=${prevYearUnix}&end=${Date.now()}&appid=${apiOWMKey}`);
+		const histData = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lng}&start=${prevYearUnix}&end=${Date.now()}&appid=${apiOWMKey}`);
 		const histDataParsed = await histData.json();
 		const sum = histDataParsed.list.reduce((a, item) => a + item.main.aqi, 0);
 		// 1 - good, 5 - bad

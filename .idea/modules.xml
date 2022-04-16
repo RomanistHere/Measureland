@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Measureland.iml" filepath="$PROJECT_DIR$/.idea/Measureland.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../backups/.idea/backups.iml" filepath="$PROJECT_DIR$/../backups/.idea/backups.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../configs/.idea/configs.iml" filepath="$PROJECT_DIR$/../configs/.idea/configs.iml" />
     </modules>
   </component>
 </project>

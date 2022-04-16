@@ -22,7 +22,6 @@ const pointsOfInterestRouter = require('./routes/points-of-interest.route');
 const userRouter = require('./routes/user.route');
 const flowRouter = require('./routes/flow.route');
 const winston = require('./helpers/winston');
-const { fetchAllUsers } = require('./helpers/temporarily');
 
 const app = express();
 
@@ -140,5 +139,3 @@ const port = process.env.SERVER_PORT || 3000;
 app.listen(port, () => {
 	console.log(`The server is running on port number ${port}`);
 });
-
-// fetchAllUsers();
