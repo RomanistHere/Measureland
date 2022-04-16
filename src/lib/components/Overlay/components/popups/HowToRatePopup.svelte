@@ -1,5 +1,5 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _, locale } from 'svelte-i18n';
 
     import PopupTitle from './PopupTitle.svelte';
     import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
@@ -16,14 +16,13 @@
 <div class="max-w-sm w-full">
     <PopupTitle title={$_('howToRatePopup.soYouWantTo')} />
 
-    <img src="../images/tutorial_gif.gif" alt="{$_('howToRatePopup.gifAltText')}" class="w-full mt-4" width="410">
+    <img src={`../images/tutorial_gif${$locale === 'en' ? '-en' : ''}.gif`} alt="{$_('howToRatePopup.gifAltText')}" class="w-full mt-4" width="410">
 
     <ul class="my-4 list-inside list-decimal">
         <li>
             {#if isUserLoggedIn}
                 {$_('howToRatePopup.findNeededTown')}
             {:else}
-            <!-- todo: check how to do it in an adequate way -->
                 {$_('howToRatePopup.youNeedTo')}
                 <TextButton
                     text={$_('howToRatePopup.register')}

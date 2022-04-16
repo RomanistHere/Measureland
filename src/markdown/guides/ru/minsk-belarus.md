@@ -14,6 +14,7 @@ imageSrc: https://measureland.org/images/preview/minsk_ru_150.jpg
 <script>
     import TextLink from "$lib/components/ui-elements/TextLink.svelte";
     import Summary from "$lib/components/Article/Summary.svelte";
+    import Image from "$lib/components/Article/Image.svelte";
 </script>
 
 ## Описание.
@@ -26,6 +27,8 @@ imageSrc: https://measureland.org/images/preview/minsk_ru_150.jpg
     - 40 минут на метро
     - 20 минут на электричке
     - И около двух часов на велосипеде
+
+<Image src="minsk_size.jpg" caption="Сравнительные размеры Минска, Москвы и Лондона." alt="Сравнение размеров Минска, Москвы и Лондона на карте." />
 
 <Summary
     text="Жить в центре очень дорого; метро - отличный способ куда-то добраться. Обычно чем дальше от центра и/или станции метро, тем дешевле стоит жильё. Советуем проверять воду."

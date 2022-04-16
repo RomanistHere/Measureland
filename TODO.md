@@ -17,8 +17,6 @@
 - limit API uses to website only (block all requests except from static cloudflare page IP)
 - check if rate limiter doesn't block based in IP (cloudflare)
 - check preview images everywhere
-- record new gif "how to rate"
-- add images to tutorial
 - add images and video in articles
 - test 404 redirections
 

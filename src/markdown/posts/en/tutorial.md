@@ -29,7 +29,7 @@ This article is going to cover everything you want to know about Measureland.
 
 ### So you want to rate a place
 
-<Image src="tutorial_gif-en.gif" caption="All inputs on the image are completely random." />
+<Image src="tutorial_gif-en.gif" caption="All inputs on the image are completely random." alt="Animated example. Rating a place in Measureland." />
 
 To do so you need to be registered and logged in. Once you're ready, find the area you want to measure and click it. There is no need to be super accurate, there is no goal to rate every building in the world. More like to get a general vision of every neighborhood, block and district.
 
@@ -41,7 +41,7 @@ Comments are not necessary but can be extremely useful. We plan to reward the mo
 
 ### I can't!
 
-<Image src="tutorial_error-en.jpg" caption="You can mouseover yellow icon to get additional information." />
+<Image src="tutorial_error-en.jpg" caption="You can mouseover yellow icon to get additional information." alt="Screenshot of error." />
 
 There are a few reasons you can't rate a place. There should be an error indicating what's wrong. For example:
 
@@ -58,7 +58,7 @@ There is also a possibility to highlight and share areas on the map, more about 
 
 ### Drawing tools
 
-<Image src="tutorial_draw-en.jpg" caption="Highlighted areas will persists after reload." />
+<Image src="tutorial_draw-en.jpg" caption="Highlighted areas will persists after reload." alt="Screenshot of highlighted areas." />
 
 Since the 1.1.0 version it's possible to draw shapes on the map and then share results. There are three types of shapes right now: polygon, rectangle and circle. You can find it at the right bottom corner of the screen (three top buttons respectively). You'll find the tips on how to draw once you click any of it. There are two more buttons below: edit and delete.
 
@@ -68,7 +68,7 @@ There is a limit for URLs, 2000 characters, so once you achieve it, you will see
 
 ### Points of Interest
 
-<Image src="tutorial_gif_poi-en.gif" caption="All inputs on the image are completely random." />
+<Image src="tutorial_gif_poi-en.gif" caption="All inputs on the image are completely random." alt="Animated example. Creating new Point of Interest." />
 
 There is a new set of objects on map introduced in version 2.0.0 - POIs. Those are marks you want to put on the places important in terms of searching for accommodation. It can be something negative, like some noisy construction site or an air polluting factory or positive, like a quiet and clean alley or a beach. It can also be something in the middle. Something bad for some people, which can be considered good for others: multi-level parking lot, playground or enormous hypermarket. It's hard to underestimate the value of such objects when looking for a home, isn't it?
 

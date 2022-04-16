@@ -14,6 +14,7 @@ imageSrc: https://measureland.org/images/preview/minsk_en_150.jpg
 <script>
     import Summary from "$lib/components/Article/Summary.svelte";
     import TextLink from "$lib/components/ui-elements/TextLink.svelte";
+    import Image from "$lib/components/Article/Image.svelte";
 </script>
 
 ## Description.
@@ -30,6 +31,7 @@ imageSrc: https://measureland.org/images/preview/minsk_en_150.jpg
     - 20 min by train
     - And about 2 hours riding a bike
 
+<Image src="minsk_size-en.jpg" caption="Compare size of Minsk, London and New York." alt="Compare size of Minsk, London and New York on map." />
 
 <Summary
     text="Taxis are cheap; living in the center is expensive; the subway is one of the fastest ways to go anywhere. Choose a place near your destination."
