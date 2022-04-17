@@ -14,10 +14,7 @@
 ### Just before release
 
 - https://github.com/RomanistHere/Measureland/security/code-scanning - fix domain and csrf
-- limit API uses to website only (block all requests except from static cloudflare page IP)
-- check preview images everywhere
 - add images and video in articles
-- test 404 redirections
 
 # With the next release
 

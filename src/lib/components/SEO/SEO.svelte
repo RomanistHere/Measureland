@@ -57,7 +57,7 @@
         <link rel="alternate" hreflang={altLang} href={altUrl} />
     {/if}
 
-    <!-- <script defer data-domain="measureland.org" src="https://plausible.io/js/plausible.js"></script> -->
+    <script defer data-domain="measureland.org" src="https://plausible.io/js/plausible.js"></script>
 
     <title>{pageTitle}</title>
 </svelte:head>

@@ -76,7 +76,7 @@ app.use(session({
 		secure: isProd,
 		httpOnly: isProd,
 		sameSite: true,
-		// domain: isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV,
+		domain: isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV,
 		maxAge: 1209600000, // two weeks
 	},
 }));

@@ -8,7 +8,7 @@ const schema = new Schema({
 		type: String,
 	},
 	lineno: {
-		type: Number,
+		type: Schema.Types.Mixed,
 	},
 	colno: {
 		type: Number,
