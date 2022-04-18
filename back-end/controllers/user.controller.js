@@ -293,6 +293,9 @@ exports.user_check = async (req, res) => {
 			}
 		}
 
+		if (!req.cookies['csrf-token'])
+			res.cookie('csrf-token', req.csrfToken());
+
 		return res.json({
 			error: null,
 			data: {

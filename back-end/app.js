@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const csurf = require('csurf');
 const cors = require('cors');
 const MongoStore = require('connect-mongo');
 const MongoLimitStore = require('rate-limit-mongo');
@@ -76,7 +77,7 @@ app.use(session({
 		secure: isProd,
 		httpOnly: isProd,
 		sameSite: true,
-		domain: isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV,
+		domain: isProd ? 'measureland.org' : 'localhost',
 		maxAge: 1209600000, // two weeks
 	},
 }));
@@ -84,6 +85,9 @@ app.use(cors({
 	origin: isProd ? [ process.env.CORS_PATH, new RegExp(process.env.CORS_REGEX) ] : process.env.CORS_PATH_DEV,
 	methods: [ 'GET', 'POST', 'DELETE' ],
 	credentials: true, // enable set cookie
+}));
+app.use(csurf({
+	cookie: false,
 }));
 
 const geoLimiter = rateLimit({
@@ -120,6 +124,15 @@ app.use('/api/flow', flowLimiter, flowRouter);
 if (isAdmin) {
 	app.use('/api/admin', adminRouter);
 }
+
+app.use(function (err, req, res, next) {
+	console.log(err.message);
+	if (err.code !== 'EBADCSRFTOKEN')
+		return next(err);
+
+	// handle CSRF token errors here
+	return res.status(403).json({ error: err });
+});
 
 // logging and errors
 if (isProd) {

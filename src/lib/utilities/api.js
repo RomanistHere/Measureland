@@ -1,7 +1,7 @@
 import { get } from 'svelte/store';
 import { appStateStore } from '../../stores/state.js';
 import { API_URL } from '../../configs/env.js';
-import { convertMetersToRadian } from './helpers.js';
+import { convertMetersToRadian, getCookie } from './helpers.js';
 
 const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 	if (!url)
@@ -18,8 +18,12 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 		'Accept': 'application/json',
 		'Content-Type': 'application/json',
 	};
-
-	// console.log(url)
+	const finalHeaders = {
+		...newHeaders,
+		...(newMethod !== 'GET' && typeof document !== 'undefined' && {
+			'csrf-token': getCookie('csrf-token'),
+		}),
+	};
 
 	// console.log(url, method, credentials, headers, body)
 	try {
@@ -27,13 +31,13 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 			? await fetch(url, {
 				method: newMethod,
 				credentials: newCredentials,
-				headers: newHeaders,
+				headers: finalHeaders,
 				body,
 			})
 			: await fetch(url, {
 				method: newMethod,
 				credentials: newCredentials,
-				headers: newHeaders,
+				headers: finalHeaders,
 			});
 
 		if (resp.status === 404)
