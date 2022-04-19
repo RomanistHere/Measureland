@@ -3,6 +3,7 @@
 - telegram bot
 - regenerate api keys, move to env, move old ones into env example
 - add analytics to translation
+- add rate limiter to external api
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
