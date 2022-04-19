@@ -416,6 +416,7 @@ const reportReason = async (reportedID, type, code, comment = null) => {
 };
 
 export {
+	fetchFunction,
 	saveToDB,
 	getSinglePointData,
 	getNearbyPointData,

@@ -2,6 +2,7 @@
 
 - telegram bot
 - regenerate api keys, move to env, move old ones into env example
+- add analytics to translation
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
@@ -13,7 +14,6 @@
 
 ### Just before release
 
-- https://github.com/RomanistHere/Measureland/security/code-scanning - fix domain and csrf
 - add images and video in articles
 
 # With the next release

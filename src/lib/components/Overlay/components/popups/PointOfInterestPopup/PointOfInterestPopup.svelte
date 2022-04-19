@@ -7,6 +7,7 @@
 	import Spinner from '../../../../ui-elements/Spinner.svelte';
 	import VoteButton from '../../../../ui-elements/VoteButton.svelte';
 	import TextButton from '../../../../ui-elements/TextButton.svelte';
+	import SmallButton from '../../../../ui-elements/SmallButton.svelte';
 
 	import { getSinglePointOfInterest, reactOnPOI } from "../../../../../utilities/api.js";
 	import {
@@ -18,6 +19,7 @@
 		registerAction,
 	} from "../../../../../utilities/helpers.js";
 	import { getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
+	import { translateText } from "../../../../../utilities/serverToExternalApi.js";
 	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
 	import { isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
 
@@ -35,10 +37,37 @@
 	let circle = null;
 	let pointID = null;
 	let currentCoords = { lat: 0, lng: 0 };
+	// translation
+	let titleGlob = null;
+	let titleGlobTranslated = null;
+	let descriptionGlob = null;
+	let descriptionGlobTranslated = null;
+	let isTranslated = false;
 
 	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 	$: promise = null;
+
+	const translatePOI = async () => {
+		if (isTranslated) {
+			titleGlobTranslated = null;
+			descriptionGlobTranslated = null;
+			isTranslated = false;
+			return;
+		}
+
+		const { data, error } = await translateText([ titleGlob, descriptionGlob ], 'en-US');
+
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+			return;
+		}
+
+		titleGlobTranslated = data.translation[0].text;
+		descriptionGlobTranslated = data.translation[1].text;
+		isTranslated = true;
+	};
 
 	const endorseRelevant = async () => {
 		if (!isUserLoggedIn) {
@@ -142,6 +171,9 @@
 		if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data.id !== pointID)
 			openCommentsSidebar();
 
+		titleGlob = title;
+		descriptionGlob = description;
+
 		return {
 			title,
 			description,
@@ -165,7 +197,7 @@
 	{#await promise}
 		<Spinner isWithText={true} className="absolute w-full h-full inset-0 z-5" />
 	{:then { title, description, tags }}
-		<PopupTitle title={title} />
+		<PopupTitle title={titleGlobTranslated || title} />
 
 		<p class="my-4 italic text-sm font-bold -md:px-10">
 			{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
@@ -183,7 +215,7 @@
 		{/if}
 
 		<p class="my-4">
-			{description}
+			{descriptionGlobTranslated || description}
 		</p>
 
 		<div class="flex justify-between">
@@ -219,5 +251,14 @@
 				action={openAddCommentPopup}
 			/>
 		</div>
+
+		{#if $locale === 'en'}
+			<div class="mt-4">
+				<SmallButton
+					text={isTranslated ? 'Show original' : 'Translate to English'}
+					on:click={translatePOI}
+				/>
+			</div>
+		{/if}
 	{/await}
 </div>

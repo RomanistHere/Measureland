@@ -22,6 +22,7 @@ const geoRouter = require('./routes/geo.route');
 const pointsOfInterestRouter = require('./routes/points-of-interest.route');
 const userRouter = require('./routes/user.route');
 const flowRouter = require('./routes/flow.route');
+const externalApiRouter = require('./routes/externalApi.route');
 const winston = require('./helpers/winston');
 
 const app = express();
@@ -120,6 +121,7 @@ app.use('/api/geo', geoLimiter, geoRouter);
 app.use('/api/poi', geoLimiter, pointsOfInterestRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);
+app.use('/api/external', externalApiRouter);
 app.use('/api/flow', flowLimiter, flowRouter);
 if (isAdmin) {
 	app.use('/api/admin', adminRouter);

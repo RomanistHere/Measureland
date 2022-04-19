@@ -13,3 +13,4 @@ logs/
 back-end/routes/admin.route.js
 back-end/controllers/admin.controller.js
 back-end/models/admin.model.js
+src/routes/admin
