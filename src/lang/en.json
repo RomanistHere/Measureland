@@ -245,22 +245,22 @@
         "lastSlide": {
             "list": [{
                 "text": "Check the Measureland guidebook (tutorial)",
-                "url": "/en/blog/tutorial/"
+                "url": "blog/tutorial/"
             },{
                 "text": "Learn more about us",
-                "url": "/en/blog/about-us/"
+                "url": "blog/about-us/"
             },{
                 "text": "Go to the support page (FAQ)",
-                "url": "/en/blog/support/"
+                "url": "blog/support/"
             },{
                 "text": "See our terms of use",
-                "url": "/en/blog/terms-of-use/"
+                "url": "blog/terms-of-use/"
             },{
                 "text": "... or privacy policy",
-                "url": "/en/blog/policy/"
+                "url": "blog/policy/"
             },{
                 "text": "Find the rest at our blog",
-                "url": "/en/blog/"
+                "url": "blog/"
             }],
             "title": "And this is only the beginning of the journey"
         },

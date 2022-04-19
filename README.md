@@ -1,17 +1,19 @@
 # Measureland - An interactive encyclopedia of finding the best place to live 🏡.
 
+Check live [https://measureland.org/en/](https://measureland.org/en/)
+
 We want to centralise house searching. We want to build a platform, where people would share their opinions about places they lived at. Where real-estate agencies would post (probably for money) trustworthy stats and information. Where opinions would be backed by facts. We want to build the only platform you need to pick better city, better district, better neighborhood to move to or stay at even if you know nothing about it. We want this platform to be transparent and free for everyone.
 
 ![Measureland banner](static/images/preview/rectangle_en_150.jpg)
 
 ***The project is unique and doesn't have alternatives (at the moment of writing). We want to solve real problems people (us included) face every day. Especially bad these times. I could call them (times) "dark", a lot of people around abandoned their homes, fled from their countries. And it's very important to help. Showing the spirit is more important than ever. That's why we (mostly just myself, Roman Smunyov) do it. These times are for hope and for help.***
 
-More info is in our [blog](https://measureland.org/blog):
-- [about us](https://measureland.org/blog/about-us)
-- [support](https://measureland.org/blog/support)
-- [tutorial](https://measureland.org/blog/tutorial)
-- [terms of use](https://measureland.org/blog/terms-of-use)
-- [privacy policy](https://measureland.org/blog/privacy-policy)
+More info is in our [blog](https://measureland.org/en/blog/):
+- [about us](https://measureland.org/en/blog/about-us/)
+- [support](https://measureland.org/en/blog/support/)
+- [tutorial](https://measureland.org/en/blog/tutorial/)
+- [terms of use](https://measureland.org/en/blog/terms-of-use/)
+- [privacy policy](https://measureland.org/en/blog/policy/)
 
 ## How can you achieve review's trustworthy? Everybody lies, you know.
 
@@ -28,7 +30,7 @@ This list will grow, we have ideas already. For example, we plan to build a syst
 
 ## Technologies we use
 
-We fond of Svelte. Front-end built with Svelte/SvelteKit and Tailwind.
+[We fond of Svelte](https://measureland.org/en/blog/why-svelte/). Front-end built with Svelte/SvelteKit and Tailwind.
 
 Back-end part is Node, Express and MongoDB. Some changes are to be expected there soon.
 

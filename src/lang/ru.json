@@ -245,22 +245,22 @@
         "lastSlide": {
             "list": [{
                 "text": "Пролистай наш путеводитель по Измерии",
-                "url": "/ru/blog/tutorial/"
+                "url": "blog/tutorial/"
             },{
                 "text": "Узнай больше о нас",
-                "url": "/ru/blog/about-us/"
+                "url": "blog/about-us/"
             },{
                 "text": "Напиши в поддержку (FAQ)",
-                "url": "/ru/blog/support/"
+                "url": "blog/support/"
             },{
                 "text": "Изучи наши условия использования",
-                "url": "/ru/blog/terms-of-use/"
+                "url": "blog/terms-of-use/"
             },{
                 "text": "... и политику конфиденциальность",
-                "url": "/ru/blog/policy/"
+                "url": "blog/policy/"
             },{
                 "text": "Найди остальное в нашем блоге",
-                "url": "/ru/blog/"
+                "url": "blog/"
             }],
             "title": "И это только начало"
         },

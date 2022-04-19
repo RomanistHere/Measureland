@@ -6,7 +6,7 @@
 
 <figure class="w-full mb-4">
 	<img
-		src="/static/images/{src}"
+		src="/images/{src}"
 		{alt}
 	>
 	{#if caption}
