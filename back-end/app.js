@@ -124,7 +124,6 @@ app.use('/api/poi', geoLimiter, pointsOfInterestRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);
 app.use('/api/external', externalApiRouter);
-app.use('/api/flow', flowLimiter, flowRouter);
 if (isAdmin) {
 	app.use('/api/admin', adminRouter);
 }
