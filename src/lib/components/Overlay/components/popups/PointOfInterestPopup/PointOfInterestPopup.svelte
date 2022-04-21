@@ -64,6 +64,7 @@
 			return;
 		}
 
+		registerAction('translatePOI');
 		titleGlobTranslated = data.translation[0].text;
 		descriptionGlobTranslated = data.translation[1].text;
 		isTranslated = true;

@@ -1,9 +1,9 @@
 # To do:
 
 - telegram bot
-- regenerate api keys, move to env, move old ones into env example
-- add analytics to translation
+- move external api calls to back-end for the sake of API keys if valuable
 - add rate limiter to external api
+- think about making analytic true by default or keep false
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite

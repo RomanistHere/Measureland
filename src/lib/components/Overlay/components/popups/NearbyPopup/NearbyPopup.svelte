@@ -202,9 +202,9 @@
 	/>
 
 	{#if isLoading}
-		<Spinner
-			className='absolute'
-		/>
+		<div class="h-40 flex justify-center items-center">
+			<Spinner isWithText={true} />
+		</div>
 	{:else if isData}
 		{#if ratingsGood.length > 0}
 			<PopupTitle title={$_('nearbyPopup.secondTitle')} />

@@ -8,6 +8,7 @@
 	import {
 		closeOverlay,
 		logError,
+		registerAction,
 		openAnotherOverlay,
 		showSomethingWrongNotification,
 	} from "../../../../../utilities/helpers.js";
@@ -98,6 +99,7 @@
 			return;
 		}
 
+		registerAction('translateComment');
 		translatedText = translationResponse.data.translation.text;
 		isTranslated = true;
 	};

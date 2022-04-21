@@ -2,6 +2,7 @@ export const flowDictionary = {
 	'cl': 'cl', // close all
 	'cl-popup': 'clp', // close current popup
 	'cl-sidebar': 'cls', // close current sidebar
+	'cl-dialog': 'cld', // close current dialog
 	// open popup
 	'askForMoreRatingsPopup': 'p-afm',
 	'changePasswordPopup': 'p-cp',
@@ -17,6 +18,11 @@ export const flowDictionary = {
 	'quizPopup': 'p-q',
 	'registerPopup': 'p-r',
 	'showRatingsPopup': 'p-sr',
+	'nearbyPopup': 'p-n',
+	'addPOIPopup': 'p-ap',
+	'pointOfInterestPopup': 'p-poi',
+	'addCommentPOIPopup': 'p-ac',
+	'feedbackPopup': 'p-f',
 	// show rating popup
 	'clickCopyURLButton': 'ccb',
 	'fetchRating': 'fr',
@@ -24,6 +30,7 @@ export const flowDictionary = {
 	'endorseRating': 'er',
 	'openRatingsTab': 'rt-sr',
 	'openMeasurementsTab': 'mt-sr',
+	'reportReasonDialog': 'rr-d',
 	// nearby ratings popup
 	'nearbySelect-800': 'ns-sm',
 	'nearbySelect-1200': 'ns-md',
@@ -99,4 +106,10 @@ export const flowDictionary = {
 	// map
 	'mapSearch': 'm-s', // geo search done
 	'mapLoadData': 'm-ld', // load data (move end on map)
+	'onMapClickDialog': 'm-d', // click on map
+	// draw
+	'drawFinished': 'd-f', // finish draw (figure created)
+	// translations
+	'translateComment': 't-c',
+	'translatePOI': 't-poi',
 };

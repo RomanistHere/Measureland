@@ -51,7 +51,7 @@
     {#if shouldShowText}
         {#key statusText}
             <p
-                class="italic absolute inset-x-0 top-1/2 mt-14 text-center"
+                class="italic absolute whitespace-nowrap top-1/2 mt-14 text-center"
                 in:fly={{ y: -20 }}
                 out:fly={{ y: 20 }}
             >
@@ -75,28 +75,28 @@
 
     @keyframes spinner {
         0%, 100% {
-            border-top-color: rgba(212, 239, 245, 1);
-            border-right-color: rgba(212, 239, 245, .66);
-            border-bottom-color: rgba(212, 239, 245, .33);
-            border-left-color: rgba(212, 239, 245, 0);
+            border-top-color: rgba(0, 112, 151, 1);
+            border-right-color: rgba(0, 112, 151, .66);
+            border-bottom-color: rgba(0, 112, 151, .33);
+            border-left-color: rgba(0, 112, 151, 0);
         }
         25% {
-            border-top-color: rgba(212, 239, 245, .66);
-            border-right-color: rgba(212, 239, 245, .33);
-            border-bottom-color: rgba(212, 239, 245, 0);
-            border-left-color: rgba(212, 239, 245, 1);
+            border-top-color: rgba(0, 112, 151, .66);
+            border-right-color: rgba(0, 112, 151, .33);
+            border-bottom-color: rgba(0, 112, 151, 0);
+            border-left-color: rgba(0, 112, 151, 1);
         }
         50% {
-            border-top-color: rgba(212, 239, 245, .33);
-            border-right-color: rgba(212, 239, 245, 0);
-            border-bottom-color: rgba(212, 239, 245, 1);
-            border-left-color: rgba(212, 239, 245, .66);
+            border-top-color: rgba(0, 112, 151, .33);
+            border-right-color: rgba(0, 112, 151, 0);
+            border-bottom-color: rgba(0, 112, 151, 1);
+            border-left-color: rgba(0, 112, 151, .66);
         }
         75% {
-            border-top-color: rgba(212, 239, 245, 0);
-            border-right-color: rgba(212, 239, 245, 1);
-            border-bottom-color: rgba(212, 239, 245, .66);
-            border-left-color: rgba(212, 239, 245, .33);
+            border-top-color: rgba(0, 112, 151, 0);
+            border-right-color: rgba(0, 112, 151, 1);
+            border-bottom-color: rgba(0, 112, 151, .66);
+            border-left-color: rgba(0, 112, 151, .33);
         }
     }
 </style>

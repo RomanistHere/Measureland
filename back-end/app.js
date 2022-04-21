@@ -87,6 +87,19 @@ app.use(cors({
 	methods: [ 'GET', 'POST', 'DELETE' ],
 	credentials: true, // enable set cookie
 }));
+
+const flowLimiter = rateLimit({
+	store: new MongoLimitStore({
+		uri: mongoDB,
+		expireTimeMs: 10 * 60 * 1000,
+		collectionName: 'expressRateFlow',
+		errorHandler: console.error.bind(null, 'rate-limit-mongo'),
+	}),
+	windowMs: 10 * 60 * 1000,
+	max: 20,
+});
+app.use('/api/flow', flowLimiter, flowRouter);
+
 app.use(csurf({
 	cookie: false,
 }));
@@ -103,17 +116,6 @@ const geoLimiter = rateLimit({
 	handler: (req, res) => {
 		res.status(429).json({ error: 'Too many requests, please try again later' });
 	},
-});
-
-const flowLimiter = rateLimit({
-	store: new MongoLimitStore({
-		uri: mongoDB,
-		expireTimeMs: 10 * 60 * 1000,
-		collectionName: 'expressRateFlow',
-		errorHandler: console.error.bind(null, 'rate-limit-mongo'),
-	}),
-	windowMs: 10 * 60 * 1000,
-	max: 20,
 });
 
 // routes

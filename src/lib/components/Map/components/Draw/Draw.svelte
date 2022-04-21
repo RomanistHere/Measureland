@@ -15,6 +15,7 @@
     	debounce,
     	showSomethingWrongNotification,
     	logError,
+	    registerAction,
     } from "../../../../utilities/helpers.js";
     import { translateDrawRU } from './drawLocalization.js';
 
@@ -76,6 +77,8 @@
     			const radius = layer.getRadius();
     			shape.properties.radius = roundToTen(radius);
     		}
+
+		    registerAction('drawFinished');
 
     		addToCommongGeoJSON(shape);
     	});

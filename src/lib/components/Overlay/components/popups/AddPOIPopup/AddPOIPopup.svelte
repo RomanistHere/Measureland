@@ -143,7 +143,7 @@
 	};
 
 	const removeCircle = () =>
-		map.removeLayer(circle);
+		circle && map.removeLayer(circle);
 
 	onMount(() => {
 		if ($userStateStore.userID === null)
