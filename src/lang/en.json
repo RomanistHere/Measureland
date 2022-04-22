@@ -247,10 +247,13 @@
                 "text": "Check the Measureland guidebook (tutorial)",
                 "url": "blog/tutorial/"
             },{
-                "text": "Learn more about us",
+                "text": "Learn about our goals and dreams",
                 "url": "blog/about-us/"
             },{
-                "text": "Go to the support page (FAQ)",
+                "text": "Write a guide and make money",
+                "url": "blog/guide-contest/"
+            },{
+                "text": "Visit support page (FAQ)",
                 "url": "blog/support/"
             },{
                 "text": "See our terms of use",

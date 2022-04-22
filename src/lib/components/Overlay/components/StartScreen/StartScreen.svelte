@@ -69,7 +69,7 @@
     <Swiper
         direction='vertical'
         mousewheel={true}
-        pagination={true}
+        pagination={{ clickable: true }}
         slidesPerView={1}
         on:slideChange={onSlideChange}
     >
