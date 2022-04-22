@@ -207,7 +207,7 @@
         "firstSlide": {
             "titleLow": "Welcome to",
             "titleBig": "Measureland",
-            "text": "An interactive encyclopedia of finding the best place to live \uD83C\uDFE1",
+            "text": "An interactive encyclopedia of finding the best place to live. Your independent housing advisor \uD83C\uDFE1",
             "btn1": "Continue without signing in",
             "btn2": "Create new account"
         },
@@ -215,8 +215,8 @@
             "2": {
                 "title": "We are simple and useful",
                 "text1": "We help people by saving time, energy and reducing the stress 🤯 while looking for a home.",
-                "text2": "Check the areas with good water quality 💧 in the town (by townsman's opionion) in literally one click from now.",
-                "button": "Check good water around",
+                "text2": "Let's imagine that we wanted to check what parts of a city have good water quality \uD83D\uDCA7 It would be just one click from now. That simple. Press the button below.",
+                "button": "See it in action",
                 "href": "",
                 "action": "openFilters"
             },
@@ -627,11 +627,11 @@
     },
     "errors": {
         "limitError": {
-            "textBeforeLink": "You have exceeded our limit of requests. There are",
+            "textBeforeLink": "You have exceeded your limit of requests. There are",
             "textFirstLink": "two options",
-            "textBetweenLinks": ": either you a bad guy who for some reason wants our aimed at our helping people service going down or our system being not ideal. We are strongly believe it's a second one. If you ",
+            "textBetweenLinks": ": either you a bad guy who for some reason wants our people-helping service to go down or our system is being not ideal. We are strongly believe it's a second one. If you ",
             "textSecondLink": "dropped us a message",
-            "textAfterLinks": "we would have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
+            "textAfterLinks": "we would try to help you and have an opportunity to become better. But for now you need to wait a little to enter Measureland again. Sorry for the inconvenience."
         },
         "somethingWentWrong": [
             "Something went wrong",
@@ -737,14 +737,17 @@
         		"title": "Igor Denisevich",
                 "text": "Ideas, feedback, participation in Open collective"
         	}, {
-        		"title": "Polina Kasterova",
-        		"text": "Inspiration, help with promoting"
-        	}, {
+                "title": "Polina Kasterova",
+                "text": "Inspiration, help with promoting, feedback"
+            }, {
+                "title": "Peter Szerzo",
+                "text": "Help with DeepL (automated comments translation), feedback"
+            }, {
+                "title": "Бахти",
+                "text": "Rated more than 20 places across the world!"
+            }, {
         		"title": "Alex Starinsky and Co",
         		"text": "Design ideas and help"
-        	}, {
-        		"title": "Бахти",
-        		"text": "Rated more than 20 places across the world!"
         	}]
         },
         "tasks": {

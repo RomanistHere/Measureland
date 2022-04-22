@@ -4,6 +4,7 @@
 - move external api calls to back-end for the sake of API keys if valuable
 - add rate limiter to external api
 - think about making analytic true by default or keep false
+- clean up CSS
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite

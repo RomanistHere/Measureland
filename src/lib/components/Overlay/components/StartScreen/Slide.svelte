@@ -27,21 +27,3 @@
         {/if}
     </div>
 </section>
-
-<style>
-    /* .slide-1 {
-        background: radial-gradient(46.49% 30.77% at 33.76% 31.67%, #C9FFC8 0%, #D4EFF5 100%);
-    }
-
-    .slide-2 {
-        background: radial-gradient(47.79% 32.75% at 62.27% 67.12%, #D0CFFF 0%, #D4EFF5 100%);
-    }
-
-    .slide-3 {
-        background: radial-gradient(68.08% 39.64% at 31.92% 37.63%, #FFE0FA 0%, #D4EFF5 100%);
-    }
-
-    .slide-4 {
-        background: radial-gradient(43.07% 32.28% at 66.97% 71.42%, #FFD8D8 0%, #D4EFF5 100%);
-    } */
-</style>

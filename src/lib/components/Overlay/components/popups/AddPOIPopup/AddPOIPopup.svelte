@@ -19,7 +19,8 @@
 		roundToFifthDecimal,
 		getErrorType,
 		blurCurrentInput,
-		registerAction, centerMap,
+		registerAction,
+		centerMap,
 	} from "../../../../../utilities/helpers.js";
 	import { savePOIToDB } from "../../../../../utilities/api.js";
 	import { isDesktop, poisStore, userStateStore } from "../../../../../../stores/state.js";
