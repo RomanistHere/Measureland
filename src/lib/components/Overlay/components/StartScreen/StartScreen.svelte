@@ -26,7 +26,6 @@
 	SwiperCore.use([ Mousewheel, Pagination ]);
 
 	let shouldShowScrollCaption = true;
-	const map = $mapReference;
 
 	$: contentSlides = Object.values($json('startScreen.slides')).map(item => ({
 		...item,
@@ -35,7 +34,7 @@
 				if (!$appStateStore.termsOfUseAgreed)
 					return;
 				closeStartScreen();
-				centerMap(map, 53.9, 27.5, $isDesktop);
+				centerMap($mapReference, 53.9, 27.5, $isDesktop);
 				setTimeout(() => {
 					fillFiltersFromArrOfStrings([ 'water:5-5' ]);
 				}, 1000);
