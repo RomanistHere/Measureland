@@ -10,13 +10,13 @@
     }));
 </script>
 
-<div class="mb-8 {className}">
-    <h2 class="font-bold px-8 text-xl">{title}</h2>
-    <ul class="mt-2">
+<div class="mb-6 {className}">
+    <h2 class="font-bold px-8 text-xl underline">{title}</h2>
+    <ul class="mt-1">
         {#each list as { text, shouldShow, onClick, href, target }, i}
             {#if shouldShow}
                 <li>
-                    <a { href } { target } class="block px-8 text-lg leading-9" on:click={onClick}>{text}</a>
+                    <a { href } { target } class="block px-8 text-lg py-2 leading-5" on:click={onClick}>{text}</a>
                 </li>
             {/if}
     	{/each}

@@ -100,6 +100,9 @@
 	$: dataBottomBlock = {
 		title: $_('menuSidebar.titleBot'),
 		list: [{
+			text: $_('menuSidebar.ourGuideBook'),
+			href: 'blog/tutorial/',
+		}, {
 			text: $_('menuSidebar.ourPartners'),
 			href: '#',
 			onClick: e => {
@@ -109,17 +112,8 @@
 				openAnotherOverlay('partnersPopup');
 			},
 		}, {
-			text: $_('menuSidebar.ourGuideBook'),
-			href: 'blog/tutorial/',
-		}, {
 			text: $_('menuSidebar.aboutUs'),
 			href: 'blog/about-us/',
-		}, {
-			text: $_('menuSidebar.support'),
-			href: 'blog/support/',
-		}, {
-			text: $_('menuSidebar.blog'),
-			href: 'blog/',
 		}],
 	};
 
@@ -182,50 +176,13 @@
 <div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4 relative">
 	<SidebarBlock { ...dataTopBlock } className="lg:hidden" />
 
-	<div class="mb-8">
-		<h2 class="font-bold px-8 text-xl">{$_('menuSidebar.titleMid')}</h2>
-		<ul class="mt-2">
+	<div class="mb-6">
+		<h2 class="font-bold px-8 text-xl underline">{$_('menuSidebar.titleMid')}</h2>
+		<ul class="mt-1">
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 link text-lg leading-9"
-					on:click|preventDefault={toggleSendingEvents}
-				>
-					{$_('menuSidebar.sendCrashReports')}:
-					{#if $userStateStore.shouldSendEvent}
-						{$_('menuSidebar.toggleOn')}
-					{:else}
-						{$_('menuSidebar.toggleOff')}
-					{/if}
-				</a>
-			</li>
-			<li>
-				<a
-					href={"#"}
-					class="block px-8 link text-lg leading-9"
-					on:click|preventDefault={togglePOIs}
-				>
-					{$_('menuSidebar.POIs')}:
-					{#if $appStateStore.shouldShowPOIs}
-						{$_('menuSidebar.toggleOn')}
-					{:else}
-						{$_('menuSidebar.toggleOff')}
-					{/if}
-				</a>
-			</li>
-			<li>
-				<a
-					href={"#"}
-					class="block px-8 link text-lg leading-9"
-					on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
-				>
-					{$_('menuSidebar.filters')}
-				</a>
-			</li>
-			<li>
-				<a
-					href={"#"}
-					class="block px-8 link text-lg leading-9"
+					class="block px-8 link text-lg py-2 leading-5"
 					on:click|preventDefault={openHowToRatePopup}
 				>
 					{$_('menuSidebar.ratePlace')}
@@ -242,10 +199,47 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 link text-lg leading-9"
+					class="block px-8 link text-lg py-2 leading-5"
+					on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
+				>
+					{$_('menuSidebar.filters')}
+				</a>
+			</li>
+			<li>
+				<a
+					href={"#"}
+					class="block px-8 link text-lg py-2 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
 					{$_('menuSidebar.feedbackPopup')}
+				</a>
+			</li>
+			<li>
+				<a
+					href={"#"}
+					class="block px-8 link text-lg py-2 leading-5"
+					on:click|preventDefault={togglePOIs}
+				>
+					{$_('menuSidebar.POIs')}:
+					{#if $appStateStore.shouldShowPOIs}
+						{$_('menuSidebar.toggleOn')}
+					{:else}
+						{$_('menuSidebar.toggleOff')}
+					{/if}
+				</a>
+			</li>
+			<li>
+				<a
+					href={"#"}
+					class="block px-8 link text-lg py-2 leading-5"
+					on:click|preventDefault={toggleSendingEvents}
+				>
+					{$_('menuSidebar.sendCrashReports')}:
+					{#if $userStateStore.shouldSendEvent}
+						{$_('menuSidebar.toggleOn')}
+					{:else}
+						{$_('menuSidebar.toggleOff')}
+					{/if}
 				</a>
 			</li>
 		</ul>
