@@ -23,6 +23,7 @@
 		showSomethingWrongNotification,
 		registerAction,
 		logError,
+		closeOverlay,
 	} from '../../../../../utilities/helpers.js';
 	import {
 		fetchDisasterRisk,
@@ -116,6 +117,7 @@
 		const { error, data } = await getSinglePointData([ lng, lat ]);
 
 		if (error) {
+			closeOverlay('popup');
 			logError(error);
 			showSomethingWrongNotification();
 			return;

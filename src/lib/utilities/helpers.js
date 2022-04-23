@@ -244,6 +244,9 @@ const getCookie = cname => {
 };
 
 const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false, zoomLevel = null) => {
+	if (!map)
+		return;
+
 	const bounds = map.getBounds();
 	const east = roundToFifthDecimal(bounds.getEast());
 	const west = roundToFifthDecimal(bounds.getWest());

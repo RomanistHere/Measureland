@@ -3,8 +3,9 @@
 - telegram bot
 - move external api calls to back-end for the sake of API keys if valuable
 - add rate limiter to external api
-- think about making analytic true by default or keep false
 - clean up CSS
+- limit comment length into rating
+- only POIs in nearby popup (currently not counted)
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
@@ -14,13 +15,8 @@
 - 2.0 release notes 2 lang
 - before the release: update technical documentation (github wiki) 1 lang
 
-### Just before release
-
-- add images and video in articles
-
 # With the next release
 
-- add link to measureland in github
 - write to wiki with questions about development and monetization.
 - add measureland to my projects in portfolio
 - write to everyone!
@@ -45,6 +41,7 @@
 
 # Later
 
+- links communities of immigrants for different cities in other platforms
 - more badges
 - share nearby API public
 - login via Telegram
