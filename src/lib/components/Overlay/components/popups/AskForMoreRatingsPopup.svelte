@@ -17,11 +17,10 @@
     <p class="my-2">
         {$_('askForMoreRatingsPopup.weProcessingRequest')}
         <TextLink
-            href={$_('askForMoreRatingsPopup.url')}
+            href="blog/support/#faq-help"
             text={$_('askForMoreRatingsPopup.weProcessingRequestLink')}
             blank={true}
         />
-        {$_('askForMoreRatingsPopup.weProcessingRequestAfterLink')}
     </p>
 
     <p class="my-2">

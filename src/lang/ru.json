@@ -550,14 +550,12 @@
     },
     "askForMoreRatingsPopup": {
         "title": "Готово",
-        "weProcessingRequest": "Мы взяли твой запрос в обработку! Мы пока не можем гарантировать быстрое его разрешение, наша команда очень маленькая, а задач много. Но ты ",
-        "url": "https://www.donationalerts.com/r/measureland",
-        "weProcessingRequestLink": "можешь нам помочь",
-        "weProcessingRequestAfterLink": "- рассчитываем на понимание :)",
+        "weProcessingRequest": "Мы взяли твой запрос в обработку! Мы пока не можем гарантировать быстрое его разрешение, наша команда очень маленькая, а задач много. Узнай, как ты можешь",
+        "weProcessingRequestLink": "помочь нам с развитием.",
         "limitationsExist": "Ограничения на оценки со старта существуют для защиты от спама.",
         "limitationsExistLink": "Узнать больше.",
         "youCanTryFasten": " ",
-        "orOurTelegramBot": "Можешь попробовать ускорить данный процесс написав свою почту нашему Телеграм боту:",
+        "orOurTelegramBot": "Можешь попробовать ускорить данный процесс написав нашему Телеграм боту:",
         "weWillRespond": " ",
         "mainBtn": "Понятно"
     },

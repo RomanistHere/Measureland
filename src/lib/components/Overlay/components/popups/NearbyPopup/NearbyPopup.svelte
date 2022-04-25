@@ -78,7 +78,7 @@
 		const pointsOfInterestApprox = pointsOfInterestLayer.getClusters(bbox, 20);
 		numberOfPOIs = pointsOfInterestApprox.length;
 
-		if (!clusters || clusters.length === 1) {
+		if ((!clusters || clusters.length === 1) && (!pointsOfInterestApprox || numberOfPOIs === 0)) {
 			averageNearbyRating = null;
 			numberOfRatings = null;
 			isData = false;
@@ -122,7 +122,6 @@
 		if (!ratings || ratings.length === 1) {
 			averageNearbyRating = null;
 			numberOfRatings = null;
-			isData = false;
 			return;
 		}
 

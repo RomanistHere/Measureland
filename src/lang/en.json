@@ -544,10 +544,8 @@
     },
     "askForMoreRatingsPopup": {
         "title": "Done",
-        "weProcessingRequest": "We're processing your request now. Can not guarantee to resolve it fast - our team is tiny right now, but the amount of work is tremendous.",
-        "url": "https://opencollective.com/measureland",
-        "weProcessingRequestLink": "You can help",
-        "weProcessingRequestAfterLink": ", though.",
+        "weProcessingRequest": "We're processing your request now. Can not guarantee to resolve it fast - our team is tiny right now, but the workload is huge. Learn how",
+        "weProcessingRequestLink": "you can help",
         "limitationsExist": "These limitations exist as one of the layers of protection.",
         "limitationsExistLink": "Read more.",
         "youCanTryFasten": "You can try to fasten this process, write us an email:",
