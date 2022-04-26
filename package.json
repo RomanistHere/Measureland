@@ -42,7 +42,7 @@
 	"nouislider": "^15.5.1",
 	"polybooljs": "^1.2.0",
 	"svelte-focus-trap": "^1.2.0",
-	"svelte-i18n": "^3.3.13",
+	"svelte-i18n": "^3.4.0",
 	"swiper": "^8.0.6"
   }
 }
