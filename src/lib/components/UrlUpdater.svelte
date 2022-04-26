@@ -20,7 +20,7 @@
     const checkIfMapLoaded = () =>
     	$mapReference === null ? false : true;
 
-    const updateURL = ({ center, zoom, openModal, showRating, shades }, { isFiltersOn, filters }) => {
+    const updateURL = ({ center, zoom, openModal, showRating, showPOI, shades }, { isFiltersOn, filters }) => {
     	const [ lat, lng ] = center;
 
     	const url = new URL(window.location.href);
@@ -38,14 +38,23 @@
     	else
     		url.searchParams.delete('shades');
 
-    	if (showRating) {
-    		const [ srlat, srlng ] = showRating;
-    		url.searchParams.set('srlat', roundToFifthDecimal(srlat));
-    		url.searchParams.set('srlng', roundToFifthDecimal(srlng));
-    	} else {
-    		url.searchParams.delete('srlat');
-    		url.searchParams.delete('srlng');
-    	}
+	    if (showRating) {
+		    const [ srlat, srlng ] = showRating;
+		    url.searchParams.set('srlat', roundToFifthDecimal(srlat));
+		    url.searchParams.set('srlng', roundToFifthDecimal(srlng));
+	    } else {
+		    url.searchParams.delete('srlat');
+		    url.searchParams.delete('srlng');
+	    }
+
+	    if (showPOI) {
+		    const [ splat, splng ] = showPOI;
+		    url.searchParams.set('splat', roundToFifthDecimal(splat));
+		    url.searchParams.set('splng', roundToFifthDecimal(splng));
+	    } else {
+		    url.searchParams.delete('splat');
+		    url.searchParams.delete('splng');
+	    }
 
     	if (openModal) {
     		url.searchParams.set('openModal', true);
@@ -62,8 +71,10 @@
     	const lng = url.searchParams.get('lng');
     	const zoom = url.searchParams.get('zoom');
     	const filters = url.searchParams.get('fi');
-    	const srlat = url.searchParams.get('srlat');
-    	const srlng = url.searchParams.get('srlng');
+	    const srlat = url.searchParams.get('srlat');
+	    const srlng = url.searchParams.get('srlng');
+	    const splat = url.searchParams.get('splat');
+	    const splng = url.searchParams.get('splng');
     	const token = url.searchParams.get('token');
     	const shades = url.searchParams.get('shades');
     	const passToken = url.searchParams.get('reset_pass_token');
@@ -78,17 +89,29 @@
     	if (shades)
     		appStateStore.update(state => ({ ...state, shades }));
 
-    	if (srlat && srlng) {
-    		// open popup only after map is loaded
-    		const interval = setInterval(() => {
-    			const isMapReady = checkIfMapLoaded();
+	    if (srlat && srlng) {
+		    // open popup only after map is loaded
+		    const interval = setInterval(() => {
+			    const isMapReady = checkIfMapLoaded();
 
-    			if (isMapReady) {
-    				openAnotherOverlay('showRatingsPopup', { lat: roundToFifthDecimal(srlat), lng: roundToFifthDecimal(srlng) });
-    				clearInterval(interval);
-    			}
-    		}, 60);
-    	}
+			    if (isMapReady) {
+				    openAnotherOverlay('showRatingsPopup', { lat: roundToFifthDecimal(srlat), lng: roundToFifthDecimal(srlng) });
+				    clearInterval(interval);
+			    }
+		    }, 60);
+	    }
+
+	    if (splat && splng) {
+		    // open popup only after map is loaded
+		    const interval = setInterval(() => {
+			    const isMapReady = checkIfMapLoaded();
+
+			    if (isMapReady) {
+				    openAnotherOverlay('pointOfInterestPopup', { lat: roundToFifthDecimal(splat), lng: roundToFifthDecimal(splng) });
+				    clearInterval(interval);
+			    }
+		    }, 60);
+	    }
 
     	if (filters) {
     		const arrOfStrings = filters.split(',');

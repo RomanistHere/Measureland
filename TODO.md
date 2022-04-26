@@ -5,7 +5,7 @@
 - add rate limiter to external api
 - clean up CSS
 - limit comment length into rating
-- only POIs in nearby popup (currently not counted)
+- add anchors in articles where needed
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
@@ -41,6 +41,7 @@
 
 # Later
 
+- add possibility to remove email from account for privacy's sake
 - links communities of immigrants for different cities in other platforms
 - more badges
 - share nearby API public

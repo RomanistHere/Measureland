@@ -21,7 +21,7 @@
 	import { getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
 	import { translateText } from "../../../../../utilities/serverToExternalApi.js";
 	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
-	import { isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
+	import { appStateStore, isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
 
 	const map = $mapReference;
 	const L = $leafletReference;
@@ -167,6 +167,8 @@
 		isOwnPOI = isYourPOI;
 		pointID = properties.pointID;
 		numberOfComments = comments;
+
+		appStateStore.update(state => ({ ...state, showPOI: [ lat, lng ] }));
 	
 		// update comments if they opened
 		if ($overlayStateStore.commentsSidebar.isOpen && $overlayStateStore.commentsSidebar.data.id !== pointID)
@@ -189,6 +191,7 @@
 	}
 
 	onDestroy(() => {
+		appStateStore.update(state => ({ ...state, showPOI: false }));
 		map.removeLayer(circle);
 		circle = null;
 	});

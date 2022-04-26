@@ -20,6 +20,10 @@ const schema = new Schema({
 		type: String,
 		required: true,
 	},
+	dateCreated: {
+		type: Date,
+		default: Date.now(),
+	},
 	likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	dislikes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 }, {

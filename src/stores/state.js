@@ -23,6 +23,7 @@ export const appStateStore = writable({
 	shouldWork: true,
 	shouldShowPOIs: true,
 	showRating: false,
+	showPOI: false,
 	ratingToSave: null,
 	corrdsToSave: null,
 	// center: [53.9065, 27.6663],
