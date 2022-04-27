@@ -152,6 +152,7 @@
 		const { error, data } = await getSinglePointOfInterest([ lng, lat ]);
 
 		if (error) {
+			closeOverlay('popup');
 			logError(error);
 			showSomethingWrongNotification();
 			return [];

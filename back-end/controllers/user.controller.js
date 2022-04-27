@@ -30,9 +30,7 @@ exports.user_register = async (req, res) => {
 	const password = await bcrypt.hash(req.body.password, salt);
 	const token = v4().toString().replace(/-/g, '');
 	const domain = isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV;
-	const verificationUrl = lang === 'en'
-		? `${domain}?token=${token}`
-		: `${domain}/${lang}/?token=${token}`;
+	const verificationUrl = `${domain}/${lang}/?token=${token}`;
 
 	const user = new User({
 		email,

@@ -56,19 +56,16 @@ const verifiedTemplate =
     </p>
     <ul>
         <li>
-            <a target="_blank" href="${siteURL}/blog/about-us/">About us. Our goals and mission.</a>
+            <a target="_blank" href="${siteURL}/en/blog/about-us/">About us. Our goals and mission.</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/blog/tutorial/">Measureland guide book (tutorial).</a>
+            <a target="_blank" href="${siteURL}/en/blog/tutorial/">Measureland guide book (tutorial).</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/blog/terms-of-use/">Measureland Constitution. Part I. Terms of use.</a>
+            <a target="_blank" href="${siteURL}/en/blog/terms-of-use/">Measureland Constitution. Part I. Terms of use.</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/blog/policy/">Measureland Constitution. Part II. Privacy policy.</a>
-        </li>
-        <li>
-            <a target="_blank" href="${siteURL}/blog/paid-options/">Measureland Constitution. Part III. Paid options.</a>
+            <a target="_blank" href="${siteURL}/en/blog/policy/">Measureland Constitution. Part II. Privacy policy.</a>
         </li>
     </ul>
     <p>
@@ -79,19 +76,22 @@ const verifiedTemplate =
             <a target="_blank" href="mailto:support@measureland.org">Support, questions, feedback: support@measureland.org</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/">Measureland</a>
+            <a target="_blank" href="${siteURL}/en/">Measureland</a>
+        </li>
+        <li>
+            <a target="_blank" href="${siteURL}/en/community/">Community</a>
         </li>
         <li>
             <a target="_blank" href="https://github.com/RomanistHere/Measureland">GitHub</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/blog/policy/">Twitter</a>
+            <a target="_blank" href="https://discord.gg/PBrXUhqJhC">Discord</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/blog/paid-options/">Telegram</a>
+            <a target="_blank" href="https://t.me/measureland">Telegram</a>
         </li>
         <li>
-            <a target="_blank" href="https://www.donationalerts.com/r/romanisthere">Donate</a>
+            <a target="_blank" href="https://opencollective.com/measureland">Open Collective</a>
         </li>
     </ul>
     <p>
@@ -142,9 +142,6 @@ const verifiedTemplateRus =
         <li>
             <a target="_blank" href="${siteURL}/ru/blog/policy/">Конституция Измерии. Конфиденциальность.</a>
         </li>
-        <li>
-            <a target="_blank" href="${siteURL}/ru/blog/paid-options/">Конституция Измерии. Платные опции.</a>
-        </li>
     </ul>
     <p>
         Другие полезные ссылки:
@@ -157,16 +154,19 @@ const verifiedTemplateRus =
             <a target="_blank" href="${siteURL}/ru/">Измерия</a>
         </li>
         <li>
+            <a target="_blank" href="${siteURL}/en/community/">Сообщество</a>
+        </li>
+        <li>
             <a target="_blank" href="https://github.com/RomanistHere/Measureland">GitHub</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/blog/policy/">Twitter</a>
+            <a target="_blank" href="https://t.me/measureland_ru">Телеграм</a>
         </li>
         <li>
-            <a target="_blank" href="${siteURL}/blog/paid-options/">Telegram</a>
+            <a target="_blank" href="https://discord.gg/PBrXUhqJhC">Discord</a>
         </li>
         <li>
-            <a target="_blank" href="https://www.donationalerts.com/r/romanisthere">Донат</a>
+            <a target="_blank" href="https://opencollective.com/measureland">Open Collective</a>
         </li>
     </ul>
     <p>
