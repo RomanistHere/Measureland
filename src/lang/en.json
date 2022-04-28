@@ -593,10 +593,17 @@
     },
     "onMapClickDialog": {
         "title": "What do you want to do?",
+        "subtitleLink": "Learn more",
+        "subtitleText": "about Ratings and Points of Interest.",
         "option1": "Rate a place (water / air quality and so on)",
         "option1Alt": "Rate-a-place icon",
         "option2": "Add Point of Interest (park, construction, etc.)",
-        "option2Alt": "Point of interest icon"
+        "option2Alt": "Point of interest icon",
+        "alternativeTitle": "We detected an unrecognized map click!",
+        "alternativeDesc1": "To leave your mark on the map you will need to get a Measureland residence permit (register and log in).",
+        "alternativeDesc2": "But don't be scared! Email and 2 minutes of your time are all the things you need for that.",
+        "alternativeBtn1": "Register",
+        "alternativeBtn2": "Log in"
     },
     "reportReasonDialog": {
         "title": "Telling us the reason makes your report more effective",

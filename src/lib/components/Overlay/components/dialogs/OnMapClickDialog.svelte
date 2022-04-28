@@ -1,50 +1,117 @@
 <script>
 	import { _ } from 'svelte-i18n';
 
-	import { closeOverlay, openAnotherOverlay } from "$lib/utilities/helpers.js";
+	import { closeOverlay, openAnotherOverlay, registerAction, setCookie } from "$lib/utilities/helpers.js";
+	import { appStateStore, userStateStore } from "../../../../../stores/state.js";
 
 	export let dialogData;
+
+	$: isUserLoggedIn = $userStateStore.userID !== null;
 
 	const openPopup = item => {
 		closeOverlay('dialog');
 		openAnotherOverlay(item, dialogData);
 	};
+
+	const closeStartScreen = () => {
+		const { termsOfUseAgreed, startScreen } = $appStateStore;
+		if (!startScreen || !termsOfUseAgreed)
+			return;
+
+		appStateStore.update(state => ({ ...state, startScreen: false }));
+		setCookie('startScreen', '0', 365);
+		registerAction('dialogCloseStartScreen');
+	};
+
+	const openRegister = () => {
+		if (!$appStateStore.termsOfUseAgreed)
+			return;
+		closeStartScreen();
+		closeOverlay('dialog');
+		openAnotherOverlay('registerPopup');
+		registerAction('dialogRegister');
+	};
+
+	const openLogin = () => {
+		if (!$appStateStore.termsOfUseAgreed)
+			return;
+		closeStartScreen();
+		closeOverlay('dialog');
+		openAnotherOverlay('loginPopup');
+		registerAction('dialogLogin');
+	};
 </script>
 
-<h3 class="text-2xl -md:text-lg">
-	{$_('onMapClickDialog.title')}
-</h3>
+{#if isUserLoggedIn}
+	<h3 class="text-2xl -md:text-lg pr-6">
+		{$_('onMapClickDialog.title')}
+	</h3>
 
-<div class="flex -mx-1 mt-4">
-	<a
-		href={'#'}
-		class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
-		on:click|preventDefault|stopPropagation={() => { openPopup('quizPopup') }}
-	>
-		<div class="text-center">
-			<img
-				src="/images/rating_icon.svg"
-				alt={$_('onMapClickDialog.option1Alt')}
-				class="h-24 inline-block my-2"
-			>
-		</div>
-		{$_('onMapClickDialog.option1')}
-	</a>
-	<a
-		href={'#'}
-		class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
-		on:click|preventDefault|stopPropagation={() => { openPopup('addPOIPopup') }}
-	>
-		<div class="text-center">
-			<img
-				src="/images/attention.svg"
-				alt={$_('onMapClickDialog.option2Alt')}
-				class="h-24 inline-block my-2"
-			>
-		</div>
-		{$_('onMapClickDialog.option2')}
-	</a>
-</div>
+	<p class="mt-2">
+		<a href="blog/tutorial" target="_blank" class="underline">
+			{$_('onMapClickDialog.subtitleLink')}
+		</a>
+		{$_('onMapClickDialog.subtitleText')}
+	</p>
+
+	<div class="flex -mx-1 mt-4">
+		<a
+			href={'#'}
+			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
+			on:click|preventDefault|stopPropagation={() => { openPopup('quizPopup') }}
+		>
+			<div class="text-center">
+				<img
+					src="/images/rating_icon.svg"
+					alt={$_('onMapClickDialog.option1Alt')}
+					class="h-24 inline-block my-2"
+				>
+			</div>
+			{$_('onMapClickDialog.option1')}
+		</a>
+		<a
+			href={'#'}
+			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
+			on:click|preventDefault|stopPropagation={() => { openPopup('addPOIPopup') }}
+		>
+			<div class="text-center">
+				<img
+					src="/images/attention.svg"
+					alt={$_('onMapClickDialog.option2Alt')}
+					class="h-24 inline-block my-2"
+				>
+			</div>
+			{$_('onMapClickDialog.option2')}
+		</a>
+	</div>
+{:else}
+	<h3 class="text-2xl -md:text-lg pr-6">
+		{$_('onMapClickDialog.alternativeTitle')}
+	</h3>
+
+	<p class="mt-2">
+		{$_('onMapClickDialog.alternativeDesc1')}
+	</p>
+	<p>
+		{$_('onMapClickDialog.alternativeDesc2')}
+	</p>
+	<div class="flex -mx-1 mt-4">
+		<a
+			href={'#'}
+			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
+			on:click|preventDefault|stopPropagation={openRegister}
+		>
+			{$_('onMapClickDialog.alternativeBtn1')}
+		</a>
+		<a
+			href={'#'}
+			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
+			on:click|preventDefault|stopPropagation={openLogin}
+		>
+			{$_('onMapClickDialog.alternativeBtn2')}
+		</a>
+	</div>
+{/if}
 
 <style>
 	@media (hover: hover) and (pointer: fine) {

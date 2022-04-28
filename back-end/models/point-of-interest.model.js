@@ -34,13 +34,11 @@ const schema = new Schema({
 			required: true,
 		},
 	},
-	dateCreated: {
-		type: Date,
-		default: Date.now(),
-	},
 	likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	dislikes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	commentIDs: [{ type: Schema.Types.ObjectId, ref: 'CommentPOI' }],
+}, {
+	timestamps: true,
 }).index({ 'location': '2dsphere' });
 
 const PointOfInterest = model('PointOfInterest', schema);

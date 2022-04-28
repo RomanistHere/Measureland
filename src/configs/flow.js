@@ -107,6 +107,10 @@ export const flowDictionary = {
 	'mapSearch': 'm-s', // geo search done
 	'mapLoadData': 'm-ld', // load data (move end on map)
 	'onMapClickDialog': 'm-d', // click on map
+	// dialog
+	'dialogCloseStartScreen': 'd-ss',
+	'dialogRegister': 'd-r',
+	'dialogLogin': 'd-l',
 	// draw
 	'drawFinished': 'd-f', // finish draw (figure created)
 	// translations

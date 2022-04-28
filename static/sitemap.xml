@@ -7,7 +7,7 @@
     xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
     xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
     <url>
-        <loc>https://measureland.org</loc>
+        <loc>https://measureland.org/en/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -19,7 +19,7 @@
         <priority>1.00</priority>
     </url>
     <url>
-        <loc>https://measureland.org/ru</loc>
+        <loc>https://measureland.org/ru/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -32,7 +32,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/community/</loc>
+        <loc>https://measureland.org/en/community/</loc>
         <xhtml:link
                 rel="alternate"
                 hreflang="ru"
@@ -57,7 +57,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/</loc>
+        <loc>https://measureland.org/en/blog/</loc>
         <xhtml:link
                 rel="alternate"
                 hreflang="ru"
@@ -82,7 +82,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/about-us/</loc>
+        <loc>https://measureland.org/en/blog/about-us/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -107,7 +107,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/how-to-become-citizen/</loc>
+        <loc>https://measureland.org/en/blog/how-to-become-citizen/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -132,7 +132,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/minsk-belarus/</loc>
+        <loc>https://measureland.org/en/blog/minsk-belarus/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -157,7 +157,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/policy/</loc>
+        <loc>https://measureland.org/en/blog/policy/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -182,7 +182,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/support/</loc>
+        <loc>https://measureland.org/en/blog/support/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -207,7 +207,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/terms-of-use/</loc>
+        <loc>https://measureland.org/en/blog/terms-of-use/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -232,7 +232,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/tutorial/</loc>
+        <loc>https://measureland.org/en/blog/tutorial/</loc>
         <xhtml:link
             rel="alternate"
             hreflang="ru"
@@ -257,7 +257,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/write-a-guide/</loc>
+        <loc>https://measureland.org/en/blog/write-a-guide/</loc>
         <xhtml:link
                 rel="alternate"
                 hreflang="ru"
@@ -282,7 +282,7 @@
     </url>
 
     <url>
-        <loc>https://measureland.org/blog/why-svelte/</loc>
+        <loc>https://measureland.org/en/blog/why-svelte/</loc>
         <xhtml:link
                 rel="alternate"
                 hreflang="ru"

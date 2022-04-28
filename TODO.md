@@ -4,11 +4,11 @@
 - move external api calls to back-end for the sake of API keys if valuable
 - add rate limiter to external api
 - clean up CSS
-- limit comment length into rating
+- limit comment length in rating and poi submission
 - add anchors in articles where needed
-- update sitemap
 - increase session expiration time
 - redo stats collection on fetch
+- debounce map moving to off click handlers
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
