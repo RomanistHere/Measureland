@@ -605,6 +605,14 @@
         "alternativeBtn1": "Register",
         "alternativeBtn2": "Log in"
     },
+    "warningPoiNearbyDialog": {
+        "title": "Did you check Points of Interest (POIs) nearby?",
+        "multipleDesc": "We have found {numberOfPois} other POIs within a small distance. Are you sure that what you want to add isn't relevant to them?",
+        "singleDec": "We have found 1 other POI within a small distance. Are you sure that what you want to add isn't relevant to it?",
+        "desc": "If so, please, continue to creating a new POI. Otherwise add a comment to the already existing one. Thanks!",
+        "button1": "Add a comment",
+        "button2": "Add new POI"
+    },
     "reportReasonDialog": {
         "title": "Telling us the reason makes your report more effective",
         "irrelevantProved": "My experience is different (invalid info)",

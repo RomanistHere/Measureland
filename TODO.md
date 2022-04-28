@@ -9,6 +9,7 @@
 - increase session expiration time
 - redo stats collection on fetch
 - debounce map moving to off click handlers
+- change x - cross for removal in "my actions" to GarbageCan.svelte
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite

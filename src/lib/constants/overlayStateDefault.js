@@ -124,4 +124,9 @@ export const overlayStateDefault = {
 		type: 'dialog',
 		data: {},
 	},
+	warningPoiNearbyDialog: {
+		isOpen: false,
+		type: 'dialog',
+		data: {},
+	},
 };

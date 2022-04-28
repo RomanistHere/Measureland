@@ -6,6 +6,7 @@
 
 	import OnMapClickDialog from './OnMapClickDialog.svelte';
 	import ReportReasonDialog from './ReportReasonDialog.svelte';
+	import WarningPoiNearbyDialog from './WarningPoiNearbyDialog.svelte';
 
 	export let dialogName;
 	export let dialogData;
@@ -13,6 +14,7 @@
 	const dialogList = {
 		onMapClickDialog: OnMapClickDialog,
 		reportReasonDialog: ReportReasonDialog,
+		warningPoiNearbyDialog: WarningPoiNearbyDialog,
 	};
 
 	$: Dialog = dialogList[dialogName];

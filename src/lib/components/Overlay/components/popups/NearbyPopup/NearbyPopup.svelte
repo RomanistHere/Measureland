@@ -37,9 +37,8 @@
 	let isLoading = true;
 	let isData = true;
 
-	const map = $mapReference;
-	const L = $leafletReference;
-
+	$: map = $mapReference;
+	$: L = $leafletReference;
 	$: pointsOfInterest = [];
 	$: ratingsGood = [];
 	$: ratingsBad = [];

@@ -3,14 +3,35 @@
 
 	import { closeOverlay, openAnotherOverlay, registerAction, setCookie } from "$lib/utilities/helpers.js";
 	import { appStateStore, userStateStore } from "../../../../../stores/state.js";
+	import { poiReference, leafletReference } from "../../../../../stores/references.js";
 
 	export let dialogData;
 
+	$: L = $leafletReference;
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 
 	const openPopup = item => {
 		closeOverlay('dialog');
 		openAnotherOverlay(item, dialogData);
+	};
+
+	const openPOI = () => {
+		const { lat, lng } = dialogData;
+
+		const squareBounds = L.latLng(lat, lng).toBounds(500 * 2);
+		const bounds = L.rectangle(squareBounds).getBounds();
+		const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
+		const pointsOfInterestApprox = $poiReference.getClusters(bbox, 20);
+		const numberOfPOIs = pointsOfInterestApprox.length;
+
+		if (numberOfPOIs === 0) {
+			openPopup('addPOIPopup');
+		} else {
+			openAnotherOverlay('warningPoiNearbyDialog', {
+				latlng: dialogData,
+				closePointsData: pointsOfInterestApprox,
+			});
+		}
 	};
 
 	const closeStartScreen = () => {
@@ -72,7 +93,7 @@
 		<a
 			href={'#'}
 			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
-			on:click|preventDefault|stopPropagation={() => { openPopup('addPOIPopup') }}
+			on:click|preventDefault|stopPropagation={openPOI}
 		>
 			<div class="text-center">
 				<img
