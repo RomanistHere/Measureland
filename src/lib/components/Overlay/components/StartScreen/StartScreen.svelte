@@ -1,5 +1,5 @@
 <script>
-	import { _, json } from 'svelte-i18n';
+	import { _, json, locale } from 'svelte-i18n';
 	import { fade } from 'svelte/transition';
 	import { Swiper, SwiperSlide } from 'swiper/svelte';
 	import SwiperCore, { Mousewheel, Pagination } from 'swiper';
@@ -27,22 +27,42 @@
 
 	let shouldShowScrollCaption = true;
 
-	$: contentSlides = Object.values($json('startScreen.slides')).map(item => ({
-		...item,
-		action: item.action === 'openFilters'
-			? () => {
+	const getSlideAction = ({ action, href }) => {
+		if (action === 'openFilters') {
+			return () => {
 				if (!$appStateStore.termsOfUseAgreed)
 					return;
-				closeStartScreen();
-				centerMap($mapReference, 53.9, 27.5, $isDesktop);
+				if (!$isDesktop)
+					closeStartScreen();
+				centerMap($mapReference, 53.91, 27.55, $isDesktop, false, 12);
 				setTimeout(() => {
 					fillFiltersFromArrOfStrings([ 'water:5-5' ]);
 				}, 1000);
-			}
-			: () => {
+			};
+		} else if (action === 'openNearbyWithPOIs') {
+			return () => {
+				if (!$appStateStore.termsOfUseAgreed)
+					return;
+				if (!$isDesktop)
+					closeStartScreen();
+				const lat = $locale === 'en' ? 54.5219 : 53.9093;
+				const lng = $locale === 'en' ? 18.5488 : 27.52;
+				centerMap($mapReference, lat, lng, $isDesktop, true);
+				setTimeout(() => {
+					openAnotherOverlay('nearbyPopup', { lat, lng });
+				}, 1000);
+			};
+		} else {
+			return () => {
 				registerAction('startScreenExternalLink');
-				window.open(item.href, '_blank');
-			},
+				window.open(href, '_blank');
+			};
+		}
+	};
+
+	$: contentSlides = Object.values($json('startScreen.slides')).map(item => ({
+		...item,
+		action: getSlideAction(item),
 		disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed,
 	}));
 

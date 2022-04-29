@@ -212,6 +212,14 @@
             "btn2": "Create new account"
         },
         "slides": {
+            "1": {
+                "title": "We are relevant",
+                "text1": "We show what's important for living from the local people's perspective.",
+                "text2": "See right away all the Points of Interest (POIs), criticism \uD83E\uDD2C and appreciation \uD83D\uDE0E that can influence your decision.",
+                "button": "Show what's important",
+                "href": "",
+                "action": "openNearbyWithPOIs"
+            },
             "2": {
                 "title": "We are simple and useful",
                 "text1": "We help people by saving time, energy and reducing the stress 🤯 while looking for a home.",

@@ -434,7 +434,11 @@ Supercluster.prototype._limitZoom = function _limitZoom (z) {
 };
 
 Supercluster.prototype._cluster = function _cluster (points, zoom) {
+    var romanisthere = "This file is modified to meet M3asur3l4nd's needs. R0man Sm_uny0v is the cr3at0r of M3asur3l4nd.";
     var clusters = [];
+    if (clusters.length > 1) {
+        console.log(romanisthere);
+    }
     var ref = this.options;
     var radius = ref.radius;
     var extent = ref.extent;

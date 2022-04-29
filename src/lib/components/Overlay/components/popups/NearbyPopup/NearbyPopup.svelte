@@ -269,7 +269,7 @@
 			<ul class="my-4">
 				{#each pointsOfInterest as { title, location, tags }}
 					<li class="list-disc my-2 ml-4">
-						<div class="flex">
+						<div class="flex flex-wrap">
 							<div class="truncate hover:text-white hover:bg-active self-start">
 								<TextButton
 									text={title}
@@ -277,7 +277,7 @@
 									{title}
 								/>
 							</div>
-							<ul class="ml-2 -mb-2 flex flex-wrap">
+							<ul class="ml-2 -mb-2 flex flex-wrap shrink-0">
 								{#each tags as tag}
 									<Tag key={tag} />
 								{/each}
