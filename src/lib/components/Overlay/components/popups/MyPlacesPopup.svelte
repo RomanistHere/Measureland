@@ -3,6 +3,7 @@
 
 	import Spinner from '../../../ui-elements/Spinner.svelte';
 	import TextButton from '../../../ui-elements/TextButton.svelte';
+	import GarbageCan from '../../../inline-images/GarbageCan.svelte';
 
 	import { fetchRatedPlaces, deleteUserRating, deletePOI, deleteCommentPOI } from "../../../../utilities/api.js";
 	import { getApproximateAddressAndCountry } from "../../../../utilities/externalApi.js";
@@ -152,7 +153,7 @@
 							class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { ratingID = await deleteRating(ratingID) }}
 						>
-							x
+							<GarbageCan />
 						</a>
 						<TextButton
 							href="#"
@@ -193,7 +194,7 @@
 							class="py-1 pb-2 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { _id = await removePOI(_id) }}
 						>
-							x
+							<GarbageCan />
 						</a>
 <!--						todo: add href when POI can be opened from URL-->
 <!--						href="{WEB_DOMAIN}/{$locale}/?zoom=13&srlat={location.coordinates[1]}&srlng={location.coordinates[0]}"-->
@@ -224,7 +225,7 @@
 							class="py-1 pb-2 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { _id = await removeCommentPOI(_id) }}
 						>
-							x
+							<GarbageCan />
 						</a>
 						<p class="py-1 pr-2 truncate" title={comment}>
 							{comment}

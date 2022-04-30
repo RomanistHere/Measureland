@@ -9,7 +9,6 @@
 - increase session expiration time
 - redo stats collection on fetch
 - debounce map moving to off click handlers
-- change x - cross for removal in "my actions" to GarbageCan.svelte
 - https://leafletjs.com/examples/map-panes/ - check and probably move to later or create a task
 - https://leafletjs.com/examples/accessibility/
 

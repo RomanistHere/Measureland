@@ -97,8 +97,8 @@ const getAddressBackUp = (lat, lng, lang) => new Promise((resolve, reject) => {
 	geocodeService.reverse().latlng({ lat, lng }).language(lang).run((err, result) => {
 		if (err)
 			reject(err);
-
-		resolve(result.address.LongLabel);
+		if (result && result.address)
+			resolve(result.address.LongLabel);
 	});
 });
 
@@ -111,6 +111,8 @@ const fetchAddress = async (lat, lng, lang) => {
 const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 	try {
 		const address = await fetchAddress(lat, lng, lang);
+		if (!address)
+			throw new Error('Address fetch failed');
 		const { road, city, country } = address;
 		const regionNamesInEnglish = new Intl.DisplayNames([ 'en' ], { type: 'region' });
 		return {
