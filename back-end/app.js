@@ -112,7 +112,7 @@ const geoLimiter = rateLimit({
 		errorHandler: console.error.bind(null, 'rate-limit-mongo'),
 	}),
 	windowMs: 10 * 60 * 1000,
-	max: 150,
+	max: 200,
 	handler: (req, res) => {
 		res.status(429).json({ error: 'Too many requests, please try again later' });
 	},
@@ -123,7 +123,7 @@ app.use('/api/geo', geoLimiter, geoRouter);
 app.use('/api/poi', geoLimiter, pointsOfInterestRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);
-app.use('/api/external', externalApiRouter);
+app.use('/api/external', geoLimiter, externalApiRouter);
 if (isAdmin) {
 	app.use('/api/admin', adminRouter);
 }

@@ -1,8 +1,6 @@
 # To do:
 
 - telegram bot
-- move external api calls to back-end for the sake of API keys if valuable
-- add rate limiter to external api
 - clean up CSS
 - limit comment length in rating and poi submission
 - add anchors in articles where needed
