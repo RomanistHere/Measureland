@@ -196,10 +196,8 @@
 						>
 							<GarbageCan />
 						</a>
-<!--						todo: add href when POI can be opened from URL-->
-<!--						href="{WEB_DOMAIN}/{$locale}/?zoom=13&srlat={location.coordinates[1]}&srlng={location.coordinates[0]}"-->
 						<TextButton
-							href="#"
+							href="{WEB_DOMAIN}/{$locale}/?zoom=13&splat={location.coordinates[1]}&splng={location.coordinates[0]}"
 							action={() => openPOI(location)}
 							text={title}
 							className="py-1"

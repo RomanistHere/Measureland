@@ -204,7 +204,7 @@
 	{:then { title, description, tags }}
 		<PopupTitle title={titleGlobTranslated || title} />
 
-		<p class="my-4 italic text-sm font-bold -md:px-10">
+		<p class="my-4 italic text-sm font-bold">
 			{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
 		</p>
 		

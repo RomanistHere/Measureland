@@ -119,14 +119,14 @@
 	<div class="flex -mx-1 mt-4">
 		<a
 			href={'#'}
-			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
+			class="block w-1/2 text-center rounded-md border border-black p-2 mx-1 transition-colors"
 			on:click|preventDefault|stopPropagation={openRegister}
 		>
 			{$_('onMapClickDialog.alternativeBtn1')}
 		</a>
 		<a
 			href={'#'}
-			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors"
+			class="block w-1/2 text-center rounded-md border border-black p-2 mx-1 transition-colors"
 			on:click|preventDefault|stopPropagation={openLogin}
 		>
 			{$_('onMapClickDialog.alternativeBtn2')}

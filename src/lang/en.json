@@ -474,11 +474,11 @@
             "text": "Measureland guidebook (tutorial)",
             "link": "/en/blog/tutorial/"
         }, {
-            "text": "Our goals",
-            "link": "/en/blog/about-us/"
-        }, {
             "text": "Support",
             "link": "/en/blog/support/"
+        }, {
+            "text": "News in Telegram",
+            "link": "https://t.me/measureland"
         }]
     },
     "loginPopup": {

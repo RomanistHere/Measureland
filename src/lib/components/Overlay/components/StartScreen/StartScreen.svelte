@@ -106,7 +106,7 @@
 		<SwiperSlide>
 			<section class="flex items-center justify-center w-full h-full slide-1 px-10">
 				<div class="max-w-xl">
-					<h1 class="lg:text-6xl -lg:text-5xl -md:text-3xl mb-5">
+					<h1 class="lg:text-6xl -lg:text-5xl -md:text-4xl mb-5">
 						{$_('startScreen.firstSlide.titleLow')}
 						<span class="lg:text-7xl -lg:text-6xl -md:text-5xl font-bold">
                             {$_('startScreen.firstSlide.titleBig')}
@@ -120,7 +120,7 @@
 						textLink={$_('startScreen.checkboxLink')}
 						hrefLink='blog/terms-of-use/'
 						bind:checked={$appStateStore.termsOfUseAgreed}
-						className="mt-5 text-base -md:text-sm"
+						className="mt-5 text-base -md:text-xs"
 					/>
 					<div
 						class="flex items-center justify-left -lg:flex-wrap {!$appStateStore.termsOfUseAgreed && 'opacity-30'}"
@@ -133,7 +133,7 @@
 						/>
 						<PrimaryButton
 							text={$_('startScreen.firstSlide.btn2')}
-							className='block mt-5 -md:text-sm'
+							className='block mt-5 -md:text-sm -md:mt-2'
 							disabled={!$appStateStore.termsOfUseAgreed}
 							action={openRegister}
 						/>
@@ -174,7 +174,7 @@
 						/>
 						<PrimaryButton
 							text={$_('startScreen.firstSlide.btn2')}
-							className='block mt-5 -md:text-sm'
+							className='block mt-5 -md:text-sm -md:mt-2'
 							disabled={!$appStateStore.termsOfUseAgreed}
 							action={openRegister}
 						/>
