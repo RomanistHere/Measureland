@@ -12,7 +12,7 @@
 
 	import { appStateStore } from "../../../stores/state.js";
 	import { mapReference, leafletReference } from "../../../stores/references.js";
-	import { openAnotherOverlay } from '../../utilities/helpers.js';
+	import { openAnotherOverlay, debounce } from '../../utilities/helpers.js';
 	import { appInfo } from '../../../configs/index.js';
 
 	let map;
@@ -40,7 +40,10 @@
 
 		mapObj.zoomControl.setPosition('bottomleft');
 
+		const debouncedAssign = debounce(() => { mapObj.on('click', onMapClick) }, 350);
 		mapObj.on('click', onMapClick);
+		mapObj.on('zoomstart', () => { mapObj.off('click', onMapClick) });
+		mapObj.on('zoomend', debouncedAssign);
 
 		return mapObj;
 	};
