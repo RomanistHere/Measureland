@@ -68,6 +68,11 @@
 				rating,
 			});
 			marker.on('click', initShowRatingPopup);
+			marker.on('keyup', e => {
+				if (e.originalEvent.key === 'Enter') {
+					openAnotherOverlay('showRatingsPopup', e.target._latlng);
+				}
+			});
 			return marker;
 		} else {
 			// cluster
@@ -79,6 +84,11 @@
 				title: `${$_('clusters.titleGrp')} ${rating}`,
 				riseOnHover: true,
 				rating,
+			});
+			marker.on('keyup', e => {
+				if (e.originalEvent.key === 'Enter') {
+					map.zoomIn();
+				}
 			});
 			return marker;
 		}

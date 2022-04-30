@@ -8,9 +8,6 @@
 - add anchors in articles where needed
 - increase session expiration time
 - redo stats collection on fetch
-- debounce map moving to off click handlers
-- https://leafletjs.com/examples/map-panes/ - check and probably move to later or create a task
-- https://leafletjs.com/examples/accessibility/
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
@@ -46,6 +43,8 @@
 
 # Later
 
+- improve accessibility (add a menu with quick actions visible only for tabindex)
+- https://github.com/Leaflet/Leaflet.fullscreen
 - add possibility to remove email from account for privacy's sake
 - links communities of immigrants for different cities in other platforms
 - more badges
@@ -53,6 +52,7 @@
 - login via Telegram
 - fix workers (?)
 - ask users to highlight areas in the city with something nice, like best quality of water
+- https://leafletjs.com/examples/map-panes/
 
 # Org stuff
 

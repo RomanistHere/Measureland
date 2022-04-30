@@ -45,6 +45,17 @@
 		if (!feature.properties.cluster) {
 			// single point
 			marker.on('click', initPointOfInterestPopup);
+			marker.on('keyup', e => {
+				if (e.originalEvent.key === 'Enter') {
+					openAnotherOverlay('pointOfInterestPopup', e.target._latlng);
+				}
+			});
+		} else {
+			marker.on('keyup', e => {
+				if (e.originalEvent.key === 'Enter') {
+					map.zoomIn();
+				}
+			});
 		}
 	
 		return marker;
