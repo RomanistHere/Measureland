@@ -15,14 +15,29 @@
 		openAnotherOverlay(item, dialogData);
 	};
 
-	const openPOI = () => {
-		const { lat, lng } = dialogData;
+	const getNumberOfNearbyPOIs = () => {
+		try {
+			const { lat, lng } = dialogData;
+			const squareBounds = L.latLng(lat, lng).toBounds(500 * 2);
+			const bounds = L.rectangle(squareBounds).getBounds();
+			const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
+			const pointsOfInterestApprox = $poiReference.getClusters(bbox, 20);
+			const numberOfPOIs = pointsOfInterestApprox.length;
 
-		const squareBounds = L.latLng(lat, lng).toBounds(500 * 2);
-		const bounds = L.rectangle(squareBounds).getBounds();
-		const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
-		const pointsOfInterestApprox = $poiReference.getClusters(bbox, 20);
-		const numberOfPOIs = pointsOfInterestApprox.length;
+			return {
+				numberOfPOIs,
+				pointsOfInterestApprox,
+			};
+		} catch (e) {
+			return {
+				numberOfPOIs: 0,
+				pointsOfInterestApprox: [],
+			};
+		}
+	};
+
+	const openPOI = () => {
+		const { numberOfPOIs, pointsOfInterestApprox } = getNumberOfNearbyPOIs();
 
 		if (numberOfPOIs === 0) {
 			openPopup('addPOIPopup');
