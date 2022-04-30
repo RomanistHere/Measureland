@@ -53,7 +53,6 @@
 	};
 
 	let circle;
-	let remainingCommentLength = 330;
 	let errorType = null;
 	let isLoading = false;
 	let isError = false;
@@ -86,7 +85,6 @@
 
 	const L = $leafletReference;
 	const map = $mapReference;
-	const maxCommentLength = 330;
 
 	const nextStage = () => {
 		currentStage = currentStage + 1;
@@ -98,8 +96,7 @@
 	};
 
 	const updateComment = e => {
-		const comment = e.target.value;
-		remainingCommentLength = 330 - comment.length;
+		const comment = e.detail;
 		quizState = { ...quizState, comment };
 	};
 
@@ -324,14 +321,10 @@
 
 		<Textarea
 			placeholder="{$_('quizPopup.textAreaPlaceholder')}"
-			maxlength="{maxCommentLength}"
+			maxlength={330}
 			on:input={updateComment}
 			className='mt-10'
 		/>
-
-		<p>
-			{remainingCommentLength}
-		</p>
 
 		<div class="flex justify-center items-center h-24 relative w-full">
 			{#if isLoading}

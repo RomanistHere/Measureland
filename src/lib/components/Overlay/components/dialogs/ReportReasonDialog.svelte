@@ -37,7 +37,7 @@
 	};
 
 	const handleTextareaChange = e => {
-		textareaValue = e.target.value;
+		textareaValue = e.detail;
 	};
 
 	const sendReport = async () => {
@@ -72,7 +72,7 @@
 		</h2>
 		<Textarea
 			placeholder={$_('reportReasonDialog.textareaPlaceholder')}
-			maxCommentLength={1024}
+			maxlength={600}
 			on:input={handleTextareaChange}
 		/>
 	</RadioGroup>

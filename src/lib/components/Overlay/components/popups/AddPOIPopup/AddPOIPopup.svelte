@@ -52,8 +52,7 @@
 	};
 
 	const updateTextareaValue = e => {
-		const { value } = e.target;
-		pointOfInterestState = { ...pointOfInterestState, description: value };
+		pointOfInterestState = { ...pointOfInterestState, description: e.detail };
 	};
 	
 	const updateListOfTags = e => {
@@ -174,7 +173,7 @@
 
 	<Textarea
 		placeholder={$_('addPOIPopup.textAreaPlaceholder')}
-		maxlength="{1400}"
+		maxlength="{600}"
 		on:input={updateTextareaValue}
 		className='mt-0'
 		bind:this={textAreaRef}

@@ -39,8 +39,7 @@
 	};
 
 	const updateTextareaValue = e => {
-		const { value } = e.target;
-		feedbackState = { ...feedbackState, comment: value };
+		feedbackState = { ...feedbackState, comment: e.detail };
 	};
 
 	const submit = async () => {
@@ -123,7 +122,7 @@
 
 	<Textarea
 		placeholder={$_('feedbackPopup.textAreaPlaceholder')}
-		maxlength="{1400}"
+		maxlength="{800}"
 		on:input={updateTextareaValue}
 		className='mt-0'
 		bind:this={textAreaRef}

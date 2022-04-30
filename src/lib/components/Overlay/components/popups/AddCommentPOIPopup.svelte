@@ -32,7 +32,7 @@
 	let textAreaRef = null;
 	
 	const updateTextareaValue = e => {
-		comment = e.target.value;
+		comment = e.detail;
 	};
 	
 	const submit = async () => {
@@ -106,7 +106,7 @@
 	
 	<Textarea
 		placeholder={$_('addCommentPOIPopup.textAreaPlaceholder')}
-		maxlength="{1400}"
+		maxlength="{330}"
 		on:input={updateTextareaValue}
 		className='mt-0'
 		bind:this={textAreaRef}

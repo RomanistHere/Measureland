@@ -2,8 +2,8 @@
 
 - telegram bot
 - clean up CSS
-- limit comment length in rating and poi submission
 - add anchors in articles where needed
+- bug zoom POI add from far
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
