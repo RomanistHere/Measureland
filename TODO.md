@@ -6,8 +6,6 @@
 - clean up CSS
 - limit comment length in rating and poi submission
 - add anchors in articles where needed
-- increase session expiration time
-- redo stats collection on fetch
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite

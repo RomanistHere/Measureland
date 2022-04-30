@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import { flowStore, userStateStore } from '../../stores/state.js';
 	import { API_URL } from '../../configs/env.js';
+	import { logError } from '../utilities/helpers.js';
 
 	const sendFeedback = () => {
 		const { uniqID } = $userStateStore;
@@ -35,7 +36,11 @@
 	onMount(() => {
 		const onVisibilityChange = () => {
 			if (document.visibilityState === 'hidden' && $userStateStore.shouldSendEvent) {
-				sendFeedback();
+				try {
+					sendFeedback();
+				} catch (error) {
+					logError(error);
+				}
 			}
 		};
 

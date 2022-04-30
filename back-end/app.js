@@ -79,7 +79,7 @@ app.use(session({
 		httpOnly: isProd,
 		sameSite: true,
 		domain: isProd ? 'measureland.org' : 'localhost',
-		maxAge: 1209600000, // two weeks
+		maxAge: 2419200000, // 4 weeks
 	},
 }));
 app.use(cors({
