@@ -25,12 +25,7 @@
 		logError,
 		closeOverlay,
 	} from '../../../../../utilities/helpers.js';
-	import {
-		fetchDisasterRisk,
-		fetchWaqi,
-		fetchOpenWeather,
-		getApproximateAddressAndCountry,
-	} from '../../../../../utilities/externalApi.js';
+	import { fetchDisasterRisk, fetchWaqi, fetchOpenWeather, getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
 
 	export let popupData;
 

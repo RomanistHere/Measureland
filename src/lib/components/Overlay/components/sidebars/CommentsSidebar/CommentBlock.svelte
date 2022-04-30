@@ -13,7 +13,7 @@
 		showSomethingWrongNotification,
 	} from "../../../../../utilities/helpers.js";
 	import { reactOnComment, reactOnCommentPOI } from "../../../../../utilities/api.js";
-	import { translateText } from "../../../../../utilities/serverToExternalApi.js";
+	import { translateText } from "../../../../../utilities/externalApi.js";
 
 	export let type;
 	export let data;

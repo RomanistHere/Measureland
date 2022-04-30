@@ -18,8 +18,7 @@
 		centerMap,
 		registerAction,
 	} from "../../../../../utilities/helpers.js";
-	import { getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
-	import { translateText } from "../../../../../utilities/serverToExternalApi.js";
+	import { translateText, getApproximateAddressAndCountry } from "../../../../../utilities/externalApi.js";
 	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
 	import { appStateStore, isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
 
