@@ -12,6 +12,7 @@ author: Roman Smunyov
 <script>
     import TextLink from "$lib/components/ui-elements/TextLink.svelte";
     import TextButton from "$lib/components/ui-elements/TextButton.svelte";
+    import Image from "$lib/components/Article/Image.svelte";
     import { openAnotherOverlay } from '$lib/utilities/helpers.js';
 </script>
 
@@ -39,7 +40,9 @@ But before you do, please check the section just below. <span id="errors"></span
 ### FAQ.
 
 - **Why should I rate something?** - well, the current state of search for accommodation doesn't fit the 21st century. We're giving it a bit of a push to evolve into something more contemporary. Your honest rating will be: 1) a potential **contribution to your own time and mental health** - and in the end - **to your happiness** (you'll be able to pick the neighborhood based on what's important for you); 2) **an endowment into the future**. Measureland's growth will eventually make some real estate related professions adapt and then evolve, progress.
-
+    
+    <Image src="minsk_water-en.gif" caption="User ratings with filters show pretty accurate water quality distribution in Minsk." alt="Animated image. Applying filters uncovers parts of the city with bad water quality." />
+  
     There are other reasons, like detecting problem areas within the city (with bad water and air quality) or "honesting" of real estate prices - but it's going to be a topic for a separate article in the future. <span id="faq-abuse"></span>
 - **How do you plan to handle real estate workers trying to abuse your service?** - we plan to separate profit oriented users (like agencies) from other Measuremen with a different reputation system. With the growth of our service **agencies will be more interested in their record here rather than in pursuing one-time deal**. User trust will lead them to making more money. Thus, **we will turn chase for money into what's the best for our users**. And I remind you that not everyone puts money over honesty. There are also checks and other anti-spoil mechanics. <span id="faq-faang"></span>
 - **Why do you think Google/Airbnb didn't create it yet? It means it's not needed.** - no it doesn't. Big business pursues big money. They pick an area, create a business plan, estimate profit and only then decide if they want to create (or "adapt") ideas. Measureland started as an idea. **It's hard for business to sell people's opinion**, because it's hardly provable. Companies will have hard times selling something unprovable - they are going to be responsible for it. **We in Measureland sell nothing**. We're building a service to help people and asking nothing in return. <span id="faq-protection"></span>
