@@ -3,6 +3,7 @@
 - telegram bot
 - clean up CSS
 - add anchors in articles where needed
+- add filters to tutorial
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
