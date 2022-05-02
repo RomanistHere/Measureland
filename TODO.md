@@ -4,6 +4,7 @@
 - clean up CSS
 - add anchors in articles where needed
 - add filters to tutorial
+- detect user language for translation
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
