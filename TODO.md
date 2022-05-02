@@ -3,8 +3,7 @@
 - telegram bot
 - clean up CSS
 - add anchors in articles where needed
-- add filters to tutorial
-- detect user language for translation
+- last thing to do is to check all the text again
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
@@ -37,6 +36,7 @@
 - Possibility to check / report / endorse a single rating
 - Add point of interest
 - Add measurements to the ratings (from external APIs)
+- Content translation
 
 # Later
 

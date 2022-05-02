@@ -16,7 +16,8 @@
 		logError,
 		closeOverlay,
 		centerMap,
-		registerAction, shouldTranslate,
+		registerAction,
+		shouldTranslate,
 	} from "../../../../../utilities/helpers.js";
 	import { translateText, getApproximateAddressAndCountry } from "../../../../../utilities/externalApi.js";
 	import { mapReference, leafletReference } from "../../../../../../stores/references.js";

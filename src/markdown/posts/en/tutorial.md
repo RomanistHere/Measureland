@@ -65,9 +65,17 @@ After clicking the existing rating you'll be able to "see what's nearby". Click 
 
 You'll be able to change the radius of "nearby" in this modal. 10 km option is not supposed to show stats and POIs, only average rating.
 
-
 ### Share it
+
 You can easily get the link to the rating by clicking "Share this rating" or copying the URL. URL will always depend on the location you see on the screen. Points of Interest can be shared via copying URL string as well.
+
+### Filters
+
+To open filters you need to click burger-menu on the right top side of a screen and pick "filters" in features. Now you can remove not relevant for you areas. 
+
+<Image src="minsk_water-en.gif" caption="Water quality filter removes problem areas from the map." alt="Animated example. Part of Minsk's ratings dissapear after applying filters." />
+
+It allows to set any range, so you can see what are the worst areas by setting filters to 1-3, for example.
 
 ### Drawing tools
 
