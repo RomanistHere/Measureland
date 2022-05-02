@@ -285,6 +285,10 @@
         "averageRating": "Average rating is",
         "searchPlaceholder": "Search for places or addresses"
     },
+    "translation": {
+        "translateTo": "Translate to English",
+        "showOriginal": "Show original"
+    },
     "loading": {
         "geo": "Loading...",
         "fail": "Unavailable :("

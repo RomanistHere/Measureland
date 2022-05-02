@@ -11,9 +11,11 @@
 		registerAction,
 		openAnotherOverlay,
 		showSomethingWrongNotification,
+		shouldTranslate,
 	} from "../../../../../utilities/helpers.js";
 	import { reactOnComment, reactOnCommentPOI } from "../../../../../utilities/api.js";
 	import { translateText } from "../../../../../utilities/externalApi.js";
+	import { onMount } from "svelte";
 
 	export let type;
 	export let data;
@@ -24,6 +26,7 @@
 	let isDislikesDisabled = isDisliked || isYours;
 	let translatedText = null;
 	let isTranslated = false;
+	let isCommentTheSameLang = true;
 
 	const isUserLoggedIn = $userStateStore.userID !== null;
 	const reactOnCommentsObj = {
@@ -91,7 +94,8 @@
 			return;
 		}
 
-		const translationResponse = await translateText(comment, 'en-US');
+		const languageToTranslateTo = $locale === 'en' ? 'en-US' : 'ru';
+		const translationResponse = await translateText(comment, languageToTranslateTo);
 
 		if (translationResponse.error) {
 			logError(translationResponse.error);
@@ -103,6 +107,10 @@
 		translatedText = translationResponse.data.translation.text;
 		isTranslated = true;
 	};
+
+	onMount(async () => {
+		isCommentTheSameLang = await shouldTranslate(comment, $locale);
+	});
 </script>
 
 <li
@@ -121,10 +129,10 @@
 
 	<p class="my-2">{translatedText || comment}</p>
 
-	{#if $locale === 'en'}
+	{#if !isCommentTheSameLang}
 		<SmallButton
 			on:click={toggleTranslationComment}
-			text={isTranslated ? 'Show original' : 'Translate to English'}
+			text={isTranslated ? $_('translation.showOriginal') : $_('translation.translateTo')}
 		/>
 	{/if}
 

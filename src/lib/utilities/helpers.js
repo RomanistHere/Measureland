@@ -360,6 +360,30 @@ const getCopyrightYears = () => {
 	return currentYear === startYear ? currentYear : `${startYear}-${currentYear}`;
 };
 
+const detectLanguage = async text => {
+	const { francAll } = await import('franc-min');
+
+	const possibleLanguages = francAll(text);
+	let highlyPossibleLanguages = [];
+	for (let i = 0; i < possibleLanguages.length; i++) {
+		const [ lang, possibility ] = possibleLanguages[i];
+		if (possibility > 0.9)
+			highlyPossibleLanguages = [ ...highlyPossibleLanguages, lang ];
+	}
+
+	return highlyPossibleLanguages;
+};
+
+const langTransp = {
+	'ru': 'rus',
+	'en': 'eng',
+};
+
+const shouldTranslate = async (text, currentLang) => {
+	const possibleLanguages = await detectLanguage(text);
+	return possibleLanguages.includes(langTransp[currentLang]);
+};
+
 export {
 	debounce,
 	sleep,
@@ -393,4 +417,5 @@ export {
 	getErrorType,
 	truncateString,
 	getCopyrightYears,
+	shouldTranslate,
 };

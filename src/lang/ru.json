@@ -285,6 +285,10 @@
         "averageRating": "Средняя оценка равна",
         "searchPlaceholder": "Поиск по местам и адресам"
     },
+    "translation": {
+        "translateTo": "Перевести на русский",
+        "showOriginal": "Показать оригинал"
+    },
     "loading": {
         "geo": "Загружаем...",
         "fail": "Не доступно :("

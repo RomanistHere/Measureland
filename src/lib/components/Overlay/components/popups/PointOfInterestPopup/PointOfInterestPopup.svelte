@@ -16,7 +16,7 @@
 		logError,
 		closeOverlay,
 		centerMap,
-		registerAction,
+		registerAction, shouldTranslate,
 	} from "../../../../../utilities/helpers.js";
 	import { translateText, getApproximateAddressAndCountry } from "../../../../../utilities/externalApi.js";
 	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
@@ -42,6 +42,7 @@
 	let descriptionGlob = null;
 	let descriptionGlobTranslated = null;
 	let isTranslated = false;
+	let isCommentTheSameLang = true;
 
 	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
 	$: isUserLoggedIn = $userStateStore.userID !== null;
@@ -55,7 +56,8 @@
 			return;
 		}
 
-		const { data, error } = await translateText([ titleGlob, descriptionGlob ], 'en-US');
+		const languageToTranslateTo = $locale === 'en' ? 'en-US' : 'ru';
+		const { data, error } = await translateText([ titleGlob, descriptionGlob ], languageToTranslateTo);
 
 		if (error) {
 			logError(error);
@@ -188,7 +190,21 @@
 	$: if (currentCoords.lat !== popupData.lat && currentCoords.lng !== popupData.lng) {
 		promise = fetchData(popupData);
 		currentCoords = { ...popupData };
+		titleGlob = null;
+		titleGlobTranslated = null;
+		descriptionGlob = null;
+		descriptionGlobTranslated = null;
+		isTranslated = false;
+		isCommentTheSameLang = true;
 	}
+
+	$: updateShouldTransalteBtns(titleGlob, descriptionGlob);
+	const updateShouldTransalteBtns = async (title, desc) => {
+		if (!desc && !title)
+			return;
+		const stringToCheckLang = desc.length > 15 ? desc : title;
+		isCommentTheSameLang = await shouldTranslate(stringToCheckLang, $locale);
+	};
 
 	onDestroy(() => {
 		appStateStore.update(state => ({ ...state, showPOI: false }));
@@ -256,10 +272,10 @@
 			/>
 		</div>
 
-		{#if $locale === 'en'}
+		{#if !isCommentTheSameLang}
 			<div class="mt-4">
 				<SmallButton
-					text={isTranslated ? 'Show original' : 'Translate to English'}
+					text={isTranslated ? $_('translation.showOriginal') : $_('translation.translateTo')}
 					on:click={translatePOI}
 				/>
 			</div>
