@@ -96,7 +96,15 @@ There is a limit for URLs, 2000 characters, so once you achieve it, you will see
 ### Endorsements, reports and reputation system
 We introduced a reputation system a-ka Karma in 2.0.0. It's hidden from users but is allowing us to have more understanding over what certain users are up to. The system is simple right now, every endorsement adds points and every report removes.
 
-Useful to understand that adding a reason while reporting gives it more value, so pick (or draft) one. Thanks :)
+Useful to understand that adding a reason while reporting gives it more value, so pick (or draft) one. Thanks :) <span id="data-collection"></span>
+
+### Usage and error data collection
+
+By default, we're anonymously collecting some information about what features you use and errors you may encounter. This data collection is connected to the session, not to your account. To disable it, open sidebar, find "Send anonymous error and usage reports" and press it to toggle.
+
+<Image src="tutorial_data_collection-en.jpg" caption="How to open sidebar and disable data collection" alt="Sidebar screenshot." />
+
+You can check a <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/configs/flow.js" blank={true} text="full list" /> of actions we collect, and verify "anonymity" of your data: <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/stores/state.js#L14" blank={true} text="random id generation" />, <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/EventsHandler.svelte#L32" blank={true} text="usage" /> and <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/ErrorHandler.svelte#L15" blank={true} text="error data" />, sent to server, processing <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/back-end/controllers/flow.controller.js" blank={true} text="on the server" /> - there is no info, that can disclose our users.
 
 ### How to participate or suggest something?
 Visit our <TextLink href="../../community" blank={false} text="community page" />. You'll find there our current tasks and instruments to influence it, forms to suggest your ideas and much more!

@@ -23,7 +23,7 @@ Here we describe what we do with your data in the vastness of Measureland.
 
 ### What do we collect?
 - **Information you provide.** Measureland is based on user reviews. Parts of reviews are: ratings, comments, locations - we store it (and display it to other users) on our servers as well as components of user profile: username, email, letters you send to us and so on.
-- **Some of your actions.** By this statement we leave an opportunity to collect some service usage information, but we generally prefer to not track or collect any user actions.
+- **Some of your actions.** By this statement we leave an opportunity to collect some service usage information, but we generally prefer to not track or collect any user actions. <TextLink href="../tutorial/#data-collection" blank={false} text="Learn more." />
 - **Technical details.** We may collect some information about the network connection and hardware.
 
 ### How do we use what we collect?
