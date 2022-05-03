@@ -59,6 +59,7 @@
     use:focusTrap
     in:fly="{{ y: 80, duration: 300 }}"
     out:fly="{{ y: -80, duration: 300 }}"
+    role="dialog"
 >
     <svelte:component this={Popup} { popupData }/>
     <CloseButton overlayType='popup' className='-md:top-3 -md:right-3' />

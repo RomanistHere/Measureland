@@ -24,6 +24,7 @@
 	class="dark-glass z-5 inset-0 fixed flex justify-center items-center overflow-auto"
 	use:focusTrap
 	transition:fade
+	role="dialog"
 >
 	<div class="glassmorphism max-w-lg p-8 -md:px-4 -md:mx-4">
 		<svelte:component this={Dialog} { dialogData }/>

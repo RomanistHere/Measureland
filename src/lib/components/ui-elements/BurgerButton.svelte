@@ -3,7 +3,12 @@
     export let action = () => {};
 </script>
 
-<a href={"#"} class="absolute flex justify-center items-center z-1 popup-shadow glassmorphism {className}" on:click|preventDefault={action}>
+<a
+    href={"#"}
+    class="absolute flex justify-center items-center z-1 popup-shadow glassmorphism w-16 h-16 right-4 {className}"
+    on:click|preventDefault={action}
+    role="combobox"
+>
     <div class="relative">
         <span></span>
     </div>
@@ -12,16 +17,12 @@
 <style>
     a {
         top: var(--distance-top);
-        right: 1rem;
-        width: 64px;
-        height: 64px;
-        /* background-color: var(--side-bg-color); */
         border-radius: 50%;
 
         -webkit-tap-highlight-color: transparent;
 
-        --burger-size: 36px;
-        --layer-height: 8px;
+        --burger-size: 2.4rem;
+        --layer-height: .6rem;
         --distance: calc((var(--burger-size) - (var(--layer-height) * 3)) / 2);
     }
 

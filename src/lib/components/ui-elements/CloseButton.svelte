@@ -8,12 +8,12 @@
     const close = () => closeOverlay(overlayType);
 </script>
 
-<a href={"#"} class="close_wrap absolute top-7 right-6 leading-3 p-1 {className}" on:click|preventDefault={close}>
+<button class="close_wrap absolute top-7 right-6 leading-3 p-1 {className}" on:click={close}>
     <span class="close w-6 h-6 relative inline-block -lg:w-7 -lg:h-7"></span>
     {#if $isDesktop && overlayType === 'popup'}
         <span class="absolute left-1/2 -bottom-4 transform -translate-x-1/2 text-sm">esc</span>
     {/if}
-</a>
+</button>
 
 <style>
     .close::before,
@@ -25,7 +25,7 @@
         height: 3px;
         top: 50%;
         left: 50%;
-        /* border-radius: 5px 0; */
+
         border-radius: 100%;
         transform: translate(-50%, -50%);
 

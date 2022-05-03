@@ -150,7 +150,7 @@
 				on:mouseenter={handleMouseenterLeft}
 				on:mouseleave={handleMouseleaveLeft}
 			>
-				<img src="/images/favicon.svg" alt="{$_('navBar.logoAlt')}" class="transition-all" width='40'>
+				<img src="/images/favicon.svg" alt="{$_('navBar.logoAlt')}" class="transition-all" width='40' height="35">
 				<span class="ml-4">
                     {$_('navBar.logoTitle')}
                 </span>

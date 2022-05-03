@@ -42,6 +42,7 @@
 # Later
 
 - improve accessibility (add a menu with quick actions visible only for tabindex)
+- https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles - apply when possible
 - https://github.com/Leaflet/Leaflet.fullscreen
 - add possibility to remove email from account for privacy's sake
 - links communities of immigrants for different cities in other platforms
