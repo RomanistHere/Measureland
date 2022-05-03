@@ -3,6 +3,7 @@
 - telegram bot
 - clean up CSS
 - add anchors in articles where needed
+- error messages center
 - last thing to do is to check all the text again
 
 ### Pre release
@@ -51,6 +52,12 @@
 - ask users to highlight areas in the city with something nice, like best quality of water
 - https://leafletjs.com/examples/map-panes/
 
+# Translation tools:
+
+- https://support.deepl.com/hc/en-us/articles/360019925819-Confidentiality-of-translations
+- https://github.com/DeepLcom/deepl-node
+- https://github.com/wooorm/franc
+
 # Org stuff
 
 - pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
@@ -58,3 +65,4 @@
 # Stuff to remember and check later
 
 - Content security policy. Svelte should introduce something to remove script and css 'unsafe-inline' property with the release.
+- 

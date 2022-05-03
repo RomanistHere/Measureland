@@ -6,9 +6,9 @@
 </script>
 
 <div class="note">
-    <h3>
+    <strong class="mb-2 mt-1 block">
         {$_('blog.summary')}
-    </h3>
+    </strong>
 
     <p>
         {text}
@@ -22,11 +22,6 @@
 </div>
 
 <style>
-    h3 {
-        margin-top: 0;
-        font-size: 100%;
-    }
-
     .note {
         background-color: rgba(163, 255, 209, 0.75);
         backdrop-filter: blur(5px) saturate(180%);

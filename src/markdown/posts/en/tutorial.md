@@ -2,7 +2,7 @@
 slug: tutorial
 title: Measureland Advisory. Our guidebook (tutorial).
 firstDate: 2021-05-19
-date: 2022-03-28
+date: 2022-05-03
 description: The article is going to cover everything you want to know about Measureland.
 tags: [starters]
 layout: article
@@ -24,7 +24,7 @@ imageSrc: https://measureland.org/images/preview/tutorial_en_150.jpg
 This article is going to cover everything you want to know about Measureland.
 
 <Summary
-    text="Register and verify your email to measure land. Evaluate every point in the quiz, it's important. Comments can be extremely useful."
+    text="Register and verify your email to measure land. Evaluate every point in the quiz, it's important. Comments can be extremely useful. You can filter ratings. Points of Interest (POIs) are valuable places to live next to."
 />
 
 ### So you want to rate a place
@@ -57,6 +57,8 @@ There is a new set of objects on the map introduced in version 2.0.0 - Points of
 
 To add Point of Interest, the first thing is to find it on the map. Next, click the approximate place and choose *"Add Point of Interest"*. Now, pick the best title possible, let it be short and clean, so everyone can understand what it is without looking into the description. And for description, put there relevant information: cons, pros, radius of affecting and so on. Facts are the best! Tags can be useful too.
 
+If you hesitate about whether the object is good enough to be marked as POI on the map, think **how often do you use or pay attention to it, what feelings/emotions does it arouse in you?** If you used to not pay attention to it, or you don't feel anything special about the place - probably it's not the best candidate.
+
 ### Connecting Ratings and POIs
 
 After clicking the existing rating you'll be able to "see what's nearby". Click the button, and it'll show the closest rating's stats and POIs.
@@ -64,6 +66,10 @@ After clicking the existing rating you'll be able to "see what's nearby". Click 
 <Image src="poi_rating_connection-en.gif" caption="See pros and cons right away." alt="Animated example. Open Rating and see POIs nearby." />
 
 You'll be able to change the radius of "nearby" in this modal. 10 km option is not supposed to show stats and POIs, only average rating.
+
+### Edit or delete
+
+Right now you can only edit relevance of your rating. To achieve it, click you profile on the right top side of a screen, chose "My actions" and click on the year next to the needed rating in the newly opened window. If you want to edit comment or change rating for certain criteria - the best way to do would be deleting the current rating or POI and adding a new one. Another option would be writing to <TextLink href="../support" blank={false} text="support" />. Works only on <TextLink href="../../" blank={false} text="main page" />.
 
 ### Share it
 
