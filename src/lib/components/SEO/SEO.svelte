@@ -19,7 +19,7 @@
     export let pageTitle = '';
     export let siteTitle = $_('SEO.title');
     export let imageSrc = 'https://measureland.org/images/preview/square_100.jpg';
-    export let url = `${$page.host || WEB_DOMAIN}${$page.path}`;
+    export let url = `${WEB_DOMAIN}${$page.path}`;
 
     export let author = $_('SEO.author');
     export let twitterUsername = appInfo.twitterID;
@@ -29,7 +29,7 @@
     const lang = $page.params.lang;
     const altLang = lang === 'en' ? 'ru' : 'en';
     const altPath = $page.path.replace(lang, altLang);
-    const altUrl = `${$page.host || WEB_DOMAIN}${altPath}`;
+    const altUrl = `${WEB_DOMAIN}${altPath}`;
 </script>
 
 <svelte:head>

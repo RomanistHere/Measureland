@@ -7,7 +7,7 @@
     href={"#"}
     class="absolute flex justify-center items-center z-1 popup-shadow glassmorphism w-16 h-16 right-4 {className}"
     on:click|preventDefault={action}
-    role="combobox"
+    role="button"
 >
     <div class="relative">
         <span></span>

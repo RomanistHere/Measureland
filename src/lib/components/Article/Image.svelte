@@ -8,6 +8,7 @@
 	<img
 		src="/images/{src}"
 		{alt}
+		width="690"
 	>
 	{#if caption}
 		<figcaption class="text-center text-sm mt-2">
