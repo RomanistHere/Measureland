@@ -3,7 +3,6 @@
 - telegram bot
 - clean up CSS
 - add anchors in articles where needed
-- set width image in articles
 - error messages center
 - last thing to do is to check all the text again
 
