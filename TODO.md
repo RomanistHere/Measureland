@@ -5,9 +5,6 @@
 - add anchors in articles where needed
 - error messages center
 - last thing to do is to check all the text again
-- disable new ratings in zone of military conflicts:
-  - https://en.wikipedia.org/wiki/List_of_ongoing_armed_conflicts
-  - https://en.wikipedia.org/wiki/List_of_proxy_wars#Ongoing_proxy_wars
 
 ### Pre release
 - Test with https://github.com/nolanlawson/fuite
@@ -70,4 +67,3 @@
 # Stuff to remember and check later
 
 - Content security policy. Svelte should introduce something to remove script and css 'unsafe-inline' property with the release.
-- 

@@ -7,17 +7,18 @@
 
 	export let dialogData;
 
+	$: ({ coords, isWar } = dialogData);
 	$: L = $leafletReference;
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 
 	const openPopup = item => {
 		closeOverlay('dialog');
-		openAnotherOverlay(item, dialogData);
+		openAnotherOverlay(item, coords);
 	};
 
 	const getNumberOfNearbyPOIs = () => {
 		try {
-			const { lat, lng } = dialogData;
+			const { lat, lng } = coords;
 			const squareBounds = L.latLng(lat, lng).toBounds(500 * 2);
 			const bounds = L.rectangle(squareBounds).getBounds();
 			const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
@@ -43,7 +44,7 @@
 			openPopup('addPOIPopup');
 		} else {
 			openAnotherOverlay('warningPoiNearbyDialog', {
-				latlng: dialogData,
+				latlng: coords,
 				closePointsData: pointsOfInterestApprox,
 			});
 		}
@@ -82,6 +83,12 @@
 	<h3 class="text-2xl -md:text-lg pr-6">
 		{$_('onMapClickDialog.title')}
 	</h3>
+
+	{#if isWar}
+		<p class="my-2">
+			{$_('onMapClickDialog.warNote')}
+		</p>
+	{/if}
 
 	<p class="mt-2">
 		<a href="blog/tutorial" target="_blank" class="underline">

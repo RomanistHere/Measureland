@@ -14,11 +14,12 @@
 	import { mapReference, leafletReference } from "../../../stores/references.js";
 	import { openAnotherOverlay, debounce } from '../../utilities/helpers.js';
 	import { appInfo } from '../../../configs/index.js';
+	import { militaryConflictCountries } from './objects/militaryConflictCountries.js';
 
 	let map;
 
-	const onMapClick = e =>
-		openAnotherOverlay('onMapClickDialog', e.latlng);
+	const onMapClick = (e, isWar) =>
+		openAnotherOverlay('onMapClickDialog', { coords: e.latlng, isWar });
 
 	const createMap = node => {
 		const { zoom, center } = $appStateStore;
@@ -37,6 +38,21 @@
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			subdomains: [ 'a', 'b', 'c' ],
 		}).addTo(mapObj);
+
+		const conflictAreas = L.geoJson(militaryConflictCountries, {
+			style: {
+				stroke: false,
+				fill: false,
+			},
+		}).addTo(mapObj);
+
+		conflictAreas.eachLayer(function (layer) {
+			layer.on('click', function (e) {
+				mapObj.off('click', onMapClick);
+				onMapClick(e, true);
+				debouncedAssign();
+			});
+		});
 
 		mapObj.zoomControl.setPosition('bottomleft');
 
