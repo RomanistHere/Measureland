@@ -8,6 +8,7 @@ tags: [starters, dev_imp]
 layout: article
 author: Роман Смунёв
 isGuide: true
+isAnotherLang: false
 imageSrc: https://measureland.org/images/preview/universal-tips_en_150.jpg
 ---
 

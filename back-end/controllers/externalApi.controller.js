@@ -1,6 +1,7 @@
 require('dotenv').config();
 const deepl = require('deepl-node');
 const Sentry = require('@sentry/node');
+const sanitize = require("mongo-sanitize");
 
 const authKeyDeepL = process.env.DEEPL_KEY;
 const apiOWMKey = process.env.OPENWEATHERMAP_KEY;
@@ -31,7 +32,7 @@ exports.getOpenWeatherAirPollution = async (req, res) => {
 	const { lat, lng, start, end } = Object.fromEntries(urlParams);
 
 	try {
-		const histData = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lng}&start=${start}&end=${end}&appid=${apiOWMKey}`);
+		const histData = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution/history?lat=${sanitize(lat)}&lon=${sanitize(lng)}&start=${sanitize(start)}&end=${sanitize(end)}&appid=${apiOWMKey}`);
 		const histDataParsed = await histData.json();
 		const sum = histDataParsed.list.reduce((a, item) => a + item.main.aqi, 0);
 		// 1 - good, 5 - bad
@@ -57,7 +58,7 @@ exports.getLocationIqAddress = async (req, res) => {
 	const { lat, lng, lang } = Object.fromEntries(urlParams);
 
 	try {
-		const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=${locationIqKey}&lat=${lat}&lon=${lng}&format=json&accept-language=${lang}`);
+		const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=${locationIqKey}&lat=${sanitize(lat)}&lon=${sanitize(lng)}&format=json&accept-language=${sanitize(lang)}`);
 		const { address } = await geoCoding.json();
 
 		return res.json({

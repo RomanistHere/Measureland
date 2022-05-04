@@ -117,7 +117,7 @@ exports.user_onboard = async (req, res) => {
 					'username': userName,
 					'properties.ageGrp': ageGrp,
 					'properties.moneyGrp': moneyGrp,
-					'properties.activeRatings': ageGrp === 2 || ageGrp === 3 ? 4 : 3,
+					'properties.activeRatings': ageGrp === 2 || ageGrp === 3 ? 7 : 5,
 				},
 			},
 		);

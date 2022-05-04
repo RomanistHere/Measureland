@@ -7,7 +7,6 @@ description: Всего пара простых шагов - и ты сможе�
 tags: [starters, dev_imp]
 layout: article
 author: Роман Смунёв
-isAnotherLang: false
 isGuide: true
 ---
 
