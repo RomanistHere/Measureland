@@ -46,10 +46,11 @@
 			},
 		}).addTo(mapObj);
 
-		conflictAreas.eachLayer(function (layer) {
-			layer.on('click', function (e) {
+		conflictAreas.eachLayer(layer => {
+			layer.on('click', e => {
 				mapObj.off('click', onMapClick);
 				onMapClick(e, true);
+				// without debounce click will propagate and fire the second time
 				debouncedAssign();
 			});
 		});
