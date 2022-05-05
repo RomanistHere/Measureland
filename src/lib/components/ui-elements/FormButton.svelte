@@ -10,7 +10,7 @@
     class="text-base lg:text-lg rounded-md py-2 px-4 bg-active text-white transition-colors {className}"
     class:cursor-default={disabled}
     class:opacity-60={disabled}
-    on:click|preventDefault={action}
+    on:click={action}
 >
     {text}
 </button>

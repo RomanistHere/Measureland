@@ -2,6 +2,7 @@
 
 - telegram bot
 - add anchors in articles where needed
+- add description for csrf error
 - last thing to do is to check all the text again
 
 # Articles
