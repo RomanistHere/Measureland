@@ -811,11 +811,35 @@
         		"id": "7",
                 "link": "https://github.com/RomanistHere/Measureland/issues/17"
         	}, {
-        		"title": "Rating heatmap",
-        		"text": "Additional way to visualise the data.",
-        		"id": "8",
+                "title": "Rating heatmap",
+                "text": "Additional way to visualise the data.",
+                "id": "8",
                 "link": "https://github.com/RomanistHere/Measureland/issues/18"
-        	}]
+            }, {
+                "title": "Keyboard shortcut for sending forms",
+                "text": "Use Ctrl + Enter to send a form.",
+                "id": "9",
+                "link": "https://github.com/RomanistHere/Measureland/issues/34"
+            }, {
+                "title": "Improve Accessibility",
+                "text": "For people with disabilities.",
+                "id": "10",
+                "link": "https://github.com/RomanistHere/Measureland/issues/33"
+            }, {
+                "title": "Remove email from DB (anti-identification protection)",
+                "text": "Add possibility to wipe out email from Measureland's servers.",
+                "id": "11",
+                "link": "https://github.com/RomanistHere/Measureland/issues/32"
+            }, {
+                "title": "3D street views (panorama)",
+                "id": "12",
+                "link": "https://github.com/RomanistHere/Measureland/issues/30"
+            }, {
+                "title": "Registration with phone number",
+                "text": "Instead of / together with email.",
+                "id": "13",
+                "link": "https://github.com/RomanistHere/Measureland/issues/31"
+            }]
         },
         "communities": {
             "title": "Meet and communicate 📅",
