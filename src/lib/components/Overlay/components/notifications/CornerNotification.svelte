@@ -2,8 +2,12 @@
     import SuccessNotification from './SuccessNotification.svelte';
     import SomethingWrongNotification from './SomethingWrongNotification.svelte';
 
-    import { notificationsStore } from '../../../../../stores/state.js';
+    import { appStateStore, notificationsStore, overlayStateStore } from '../../../../../stores/state.js';
     import { hideSomethingWrongNotification, registerAction } from '../../../../utilities/helpers.js';
+
+    $: openedOverlayTypes = Object.values($overlayStateStore).filter(({ isOpen }) => isOpen === true).map(({ type }) => type);
+    $: isPopupOpened = openedOverlayTypes.includes('popup');
+    $: isPopupOrStartScreen = $appStateStore.startScreen || isPopupOpened;
 
     let shouldShowSuccessNotification = false;
     let successNotificationTimeout = null;
@@ -65,7 +69,10 @@
     $: showAndHideNotifications($notificationsStore);
 </script>
 
-<div class="right-4 fixed w-16 flex flex-col z-4">
+<div
+    class="right-4 fixed w-16 flex flex-col z-4"
+    class:mr-4={isPopupOrStartScreen}
+>
     {#if shouldShowSuccessNotification}
         <SuccessNotification />
     {/if}

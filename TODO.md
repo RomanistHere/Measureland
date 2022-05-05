@@ -1,7 +1,6 @@
 # To do:
 
 - telegram bot
-- clean up CSS
 - add anchors in articles where needed
 - error messages center
 - last thing to do is to check all the text again

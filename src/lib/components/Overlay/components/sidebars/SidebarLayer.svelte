@@ -32,14 +32,4 @@
     aside {
         top: var(--distance-top);
     }
-
-    /* aside::-webkit-scrollbar {
-        display: none;
-    } */
-
-    /* @media screen and (max-width: 1023px) {
-        aside {
-            top: var(--navbar-height);
-        }
-    } */
 </style>

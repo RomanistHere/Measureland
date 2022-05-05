@@ -12,22 +12,13 @@
 >
     {#each dropdownData as { text, action }}
         <li>
-            <a class="block px-4 py-4" href={"#"} on:click|preventDefault={action}>{text}</a>
+            <a
+                class="block px-4 py-4 transition-colors hover:bg-active hover:text-white"
+                href={"#"}
+                on:click|preventDefault={action}
+            >
+                {text}
+            </a>
         </li>
     {/each}
 </ul>
-
-<style>
-    a {
-        transition: background-color .2s, color .2s;
-    }
-
-    a:hover {
-        background-color: var(--active-color);
-        color: var(--side-bg-color);
-    }
-
-    ul {
-        transform: translateY(0);
-    }
-</style>

@@ -13,26 +13,12 @@
 
 <a
     href={"#"}
-    class="rounded-md px-2 py-0.5 text-sm mb-1 block"
-    class:active={isActive}
+    class="rounded-md px-2 py-0.5 text-sm mb-1 block duration-500 transition-colors hover:bg-active hover:text-white"
+    class:text-white={isActive}
+    class:bg-active={isActive}
+    class:bg-neutral-feeling={!isActive}
+    class:cursor-default={isActive}
     on:click|preventDefault={onPresetBtnClick}
 >
     {presetText}
 </a>
-
-<style>
-    a {
-        background-color: var(--neutral-feeling-color);
-        transition: background-color .5s, color .5s;
-    }
-
-    .active,
-    a:hover {
-        background-color: var(--active-color);
-        color: var(--side-bg-color);
-    }
-
-    .active {
-        cursor: default;
-    }
-</style>

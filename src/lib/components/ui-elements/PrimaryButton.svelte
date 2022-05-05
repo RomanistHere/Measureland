@@ -5,23 +5,16 @@
     export let disabled = false;
 </script>
 
-<a
-    href={"#"}
-    class="text-base lg:text-lg text-center rounded-md py-2 px-8 -md:px-4 {className}"
+<button
+    class="text-base lg:text-lg text-center rounded-md py-2 px-8 transition-colors bg-active text-white -md:px-4 {className}"
     class:cursor-default={disabled}
     class:opacity-60={disabled}
-    on:click|preventDefault={action}
+    on:click={action}
 >
     {text}
-</a>
+</button>
 
 <style>
-    a {
-        background-color: var(--active-color);
-        color: var(--text-color-btn);
-        transition: background-color .3s;
-    }
-
     /* can be passed from SecondaryButton.svelte */
     .secondary {
         background: none;
@@ -33,7 +26,7 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-        a:not(.secondary):not(.cursor-default):hover {
+        button:not(.secondary):not(.cursor-default):hover {
             background-color: var(--suc-color);
         }
 

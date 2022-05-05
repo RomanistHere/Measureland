@@ -182,7 +182,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 link text-lg py-2 leading-5"
+					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
 					on:click|preventDefault={openHowToRatePopup}
 				>
 					{$_('menuSidebar.ratePlace')}
@@ -199,7 +199,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 link text-lg py-2 leading-5"
+					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
 					on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
 				>
 					{$_('menuSidebar.filters')}
@@ -208,7 +208,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 link text-lg py-2 leading-5"
+					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
 					{$_('menuSidebar.feedbackPopup')}
@@ -217,7 +217,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 link text-lg py-2 leading-5"
+					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
 					on:click|preventDefault={togglePOIs}
 				>
 					{$_('menuSidebar.POIs')}:
@@ -231,7 +231,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 link text-lg py-2 leading-5"
+					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
 					on:click|preventDefault={toggleSendingEvents}
 				>
 					{$_('menuSidebar.sendCrashReports')}:
@@ -264,30 +264,17 @@
 	<footer class="absolute bottom-0 inset-x-0 text-center text-sm py-5 pb-5 -lg:static">
 		<div>
 			<span>{$_('footer.version')}: {APP_VERSION}</span>.
-			<a class="link underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
+			<a class="transition-colors hover:text-white hover:bg-active underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
 		</div>
 		<div>
 			{$_('footer.credits')} (<a
-			class="link underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/"
+			class="transition-colors hover:text-white hover:bg-active underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/"
 		>{$_('footer.creditsLink')}</a>).
 			<br />
 			<a
-				class="link underline" target="_blank" rel="noopener"
+				class="transition-colors hover:text-white hover:bg-active underline" target="_blank" rel="noopener"
 				href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p"
 			>{$_('footer.allRightsReserved')}</a>. {yearsCopyright}.
 		</div>
 	</footer>
 </div>
-
-<style>
-	.link {
-		transition: background-color .2s, color .2s;
-	}
-
-	@media (hover: hover) and (pointer: fine) {
-		.link:hover {
-			background-color: var(--active-color);
-			color: var(--side-bg-color);
-		}
-	}
-</style>

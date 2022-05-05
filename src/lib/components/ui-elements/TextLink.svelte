@@ -12,21 +12,7 @@
     { href }
     { target }
     { rel }
-    class="underline {className}"
+    class="underline transition-colors hover:text-white hover:bg-active hover:no-underline {className}"
 >
     {text}
 </a>
-
-<style>
-    a {
-        transition: background-color .2s, color .2s;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        a:hover {
-            background-color: var(--active-color);
-            color: var(--text-color-btn);
-            text-decoration: none;
-        }
-    }
-</style>

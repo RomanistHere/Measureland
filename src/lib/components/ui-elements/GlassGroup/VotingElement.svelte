@@ -118,7 +118,7 @@
 
 <div class="block p-2">
     {#if link}
-        <a href={link} class="link inline-block" target="_blank" rel="noopener">
+        <a href={link} class="transition-colors hover:bg-active hover:text-white inline-block" target="_blank" rel="noopener">
             {#if title}
                 <h4 class="font-bold">{title}</h4>
             {/if}
@@ -152,16 +152,3 @@
         </div>
     {/if}
 </div>
-
-<style>
-    @media (hover: hover) and (pointer: fine) {
-        .link {
-            transition: background-color .2s, color .2s;
-        }
-
-        .link:hover {
-            background-color: var(--active-color);
-            color: white;
-        }
-    }
-</style>
