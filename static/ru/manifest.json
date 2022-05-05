@@ -1,6 +1,7 @@
 {
-    "name": "Измерия - твой независимый помощник в выборе жилья",
+    "name": "Измерия",
     "short_name": "Измерия",
+    "description": "Интерактивную энциклопедию по поиску лучшего места для жизни. Измерия - твой бесплатный и независимый помощник в выборе жилья.",
     "start_url": "index.html",
     "display": "fullscreen",
     "background_color": "#d4eff5",
@@ -14,10 +15,10 @@
         },
         {
             "src": "/images/PWA-icon-512x512.png",
-            "type": "image/png", "sizes": "512x512"
+            "type": "image/png", "sizes": "513x513"
         },
         {
-            "src": "icons/favicon.svg",
+            "src": "/images/favicon.svg",
             "sizes": "513x513"
         }
     ]

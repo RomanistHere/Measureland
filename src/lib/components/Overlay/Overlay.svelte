@@ -118,7 +118,7 @@
     {/if}
 
     <BurgerButton
-        action={toggleSideBar}
+        on:click={toggleSideBar}
     />
 
     {#if $appStateStore.startScreen}

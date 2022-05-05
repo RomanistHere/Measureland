@@ -19,8 +19,18 @@
 </script>
 
 <svelte:head>
+	<!-- there are 2 versions of PWA for both languages -->
 	<link rel="manifest" href="/{$locale}/manifest.json">
 	<meta name="msapplication-starturl" content="/{$locale}/">
+	<!-- main page should be "overflowed", and these styles should be unmounted when change page -->
+	<style>
+		html,
+		body,
+		#svelte {
+			height: 100%;
+			overflow: hidden;
+		}
+	</style>
 </svelte:head>
 
 <SEO
@@ -39,11 +49,3 @@
 <svelte:component this={Map}/>
 
 <Overlay />
-
-<style>
-	:global(#svelte),
-	:global(body),
-	:global(html) {
-		overflow: hidden;
-	}
-</style>

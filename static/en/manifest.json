@@ -1,6 +1,7 @@
 {
-    "name": "Measureland - Your independent housing advisor",
+    "name": "Measureland",
     "short_name": "Measureland",
+    "description": "An interactive encyclopedia of finding the best place to live. Your independent housing advisor.",
     "start_url": "index.html",
     "display": "fullscreen",
     "background_color": "#d4eff5",
@@ -14,10 +15,10 @@
         },
         {
             "src": "/images/PWA-icon-512x512.png",
-            "type": "image/png", "sizes": "512x512"
+            "type": "image/png", "sizes": "513x513"
         },
         {
-            "src": "icons/favicon.svg",
+            "src": "/images/favicon.svg",
             "sizes": "513x513"
         }
     ]

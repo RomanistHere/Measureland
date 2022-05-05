@@ -63,6 +63,7 @@
 
 <style>
 	div {
+		/* border here not in tw because it rewrites one from glassmorphism */
 		border: 2px solid var(--text-color);
 		pointer-events: all;
 	}

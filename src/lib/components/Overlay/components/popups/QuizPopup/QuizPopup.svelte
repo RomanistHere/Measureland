@@ -382,13 +382,12 @@
 	</div>
 
 	<div class="absolute inset-x-0 bottom-0 h-5">
-		<div class="progress h-full w-0 progress-stage{currentStage}"></div>
+		<div class="progress bg-active h-full w-0 progress-stage{currentStage}"></div>
 	</div>
 </div>
 
 <style>
 	.progress {
-		background-color: var(--active-color);
 		transition: width .5s;
 	}
 

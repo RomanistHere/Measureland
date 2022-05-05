@@ -87,7 +87,7 @@
 		{/if}
 	</div>
 {:else}
-	<section class="fixed inset-0 z-5 flex justify-center items-center">
+	<section class="fixed inset-0 z-5 flex justify-center items-center bg-white">
 		<p class="error_text px-4">
 			{$_('errors.limitError.textBeforeLink')}
 			<TextLink
@@ -105,10 +105,6 @@
 {/if}
 
 <style>
-	section {
-		background-color: var(--side-bg-color);
-	}
-
 	.error_text {
 		width: 30rem;
 	}

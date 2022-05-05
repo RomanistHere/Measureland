@@ -2,6 +2,7 @@
     import { onMount, createEventDispatcher } from 'svelte';
     import noUiSlider from 'nouislider';
     import 'nouislider/dist/nouislider.min.css';
+    import '/static/styles/slider.css';
 
     let slider;
     const dispatch = createEventDispatcher();
@@ -80,41 +81,3 @@
 </script>
 
 <div class="{className}" bind:this={slider}></div>
-
-<style>
-	:global(.noUi-horizontal) {
-        height: 14px;
-    }
-
-	:global(.noUi-horizontal .noUi-handle) {
-        width: 26px;
-        height: 22px;
-        right: -12px;
-        top: -5px;
-    }
-
-	:global(.noUi-handle::after),
-    :global(.noUi-handle::before) {
-        content: "";
-        display: block;
-        position: absolute;
-        height: 12px;
-        width: 1px;
-        background: var(--almost-invisible-gray-color);
-        left: 10px;
-        top: 4px;
-    }
-
-	:global(.noUi-handle::after) {
-        left: 13px;
-    }
-
-	:global(.noUi-connect) {
-        background-color: var(--bg-color);
-    }
-
-	:global(.noUi-handle),
-    :global(.noUi-target) {
-        border-color: var(--border-color);
-    }
-</style>

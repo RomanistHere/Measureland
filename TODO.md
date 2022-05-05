@@ -50,7 +50,6 @@
 - more badges
 - share nearby API public
 - login via Telegram
-- fix workers (?)
 - ask users to highlight areas in the city with something nice, like best quality of water
 - https://leafletjs.com/examples/map-panes/
 

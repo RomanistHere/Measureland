@@ -33,8 +33,8 @@
 </script>
 
 <span
-    class="rounded-md px-2 py-0.5 text-sm mb-2 block relative z-5 mr-1"
-    class:alert={!isGood}
+    class="rounded-md px-2 py-0.5 text-sm mb-2 block relative z-5 mr-1 duration-500 transition-colors bg-good-feeling hover:bg-active hover:text-white"
+    class:bg-bad-feeling={!isGood}
     on:mouseenter={handleMouseenter}
     on:mouseleave={handleMouseleave}
 >
@@ -52,20 +52,6 @@
 </span>
 
 <style>
-    span {
-        background-color: var(--good-feeling-color);
-        transition: background-color .5s, color .5s;
-    }
-
-    .alert {
-        background-color: var(--bad-feeling-color);
-    }
-
-    span:hover {
-        background-color: var(--active-color);
-        color: var(--side-bg-color);
-    }
-
     .info__tooltip {
         color: var(--text-color);
 

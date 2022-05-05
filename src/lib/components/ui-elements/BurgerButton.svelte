@@ -1,21 +1,18 @@
 <script>
     export let className = '';
-    export let action = () => {};
 </script>
 
-<a
-    href={"#"}
+<button
     class="absolute flex justify-center items-center z-1 popup-shadow glassmorphism w-16 h-16 right-4 {className}"
-    on:click|preventDefault={action}
-    role="button"
+    on:click
 >
-    <div class="relative">
-        <span></span>
-    </div>
-</a>
+    <span class="relative">
+        <span class="elem"></span>
+    </span>
+</button>
 
 <style>
-    a {
+    button {
         top: var(--distance-top);
         border-radius: 50%;
 
@@ -26,19 +23,19 @@
         --distance: calc((var(--burger-size) - (var(--layer-height) * 3)) / 2);
     }
 
-    div {
+    button > span {
         width: var(--burger-size);
         height: var(--burger-size);
     }
 
-    div::before,
-    div::after {
+    button > span::before,
+    button > span::after {
         content: '';
     }
 
-    div::before,
-    div::after,
-    span {
+    button > span::before,
+    button > span::after,
+    .elem {
         position: absolute;
 
         width: 100%;
@@ -54,31 +51,31 @@
         transition: transform .2s;
     }
 
-    span {
+    .elem {
         top: calc(var(--layer-height) + var(--distance));
     }
 
-    div::after {
+    button > span::after {
         top: calc((var(--layer-height) + var(--distance)) * 2);
     }
 
     @media (hover: hover) and (pointer: fine) {
-        div:hover::before,
-        div:hover::after {
+        button > span:hover::before,
+        button > span:hover::after {
             transform: translateX(-2px);
         }
 
-        div:hover span {
+        button > span:hover .elem {
             transform: translateX(2px);
         }
     }
 
-    div:active::before,
-    div:active::after {
+    button > span:active::before,
+    button > span:active::after {
         transform: translateX(2px);
     }
 
-    div:active span {
+    button > span:active .elem {
         transform: translateX(-2px);
     }
 </style>

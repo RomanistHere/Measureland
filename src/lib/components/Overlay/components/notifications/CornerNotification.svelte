@@ -65,7 +65,7 @@
     $: showAndHideNotifications($notificationsStore);
 </script>
 
-<div class="right-4 fixed flex flex-col z-4">
+<div class="right-4 fixed w-16 flex flex-col z-4">
     {#if shouldShowSuccessNotification}
         <SuccessNotification />
     {/if}
@@ -83,6 +83,5 @@
 <style>
     div {
         top: calc(1rem + 64px + var(--distance-top));
-        width: 64px;
     }
 </style>

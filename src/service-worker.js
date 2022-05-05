@@ -5,7 +5,6 @@ const CACHED_URLS = build;
 
 // Open cache on install.
 self.addEventListener('install', event => {
-	console.warn('[SERVICE WORKER] installed');
 	event.waitUntil(async function () {
 		const cache = await caches.open(CACHE_NAME);
 
