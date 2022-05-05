@@ -1,0 +1,24 @@
+{
+    "name": "Измерия - твой независимый помощник в выборе жилья",
+    "short_name": "Измерия",
+    "start_url": "index.html",
+    "display": "fullscreen",
+    "background_color": "#d4eff5",
+    "theme_color": "#d4eff5",
+    "orientation": "any",
+    "lang": "ru",
+    "icons": [
+        {
+            "src": "/images/PWA-icon-192x192.png",
+            "type": "image/png", "sizes": "192x192"
+        },
+        {
+            "src": "/images/PWA-icon-512x512.png",
+            "type": "image/png", "sizes": "512x512"
+        },
+        {
+            "src": "icons/favicon.svg",
+            "sizes": "513x513"
+        }
+    ]
+}

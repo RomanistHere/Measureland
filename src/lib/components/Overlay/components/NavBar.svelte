@@ -164,7 +164,12 @@
 			<ul>
 				{#each navLinks as { text, url }}
 					<li class="inline-block">
-						<a class="block mx-4 p-2 hover:underline" target="_blank" href={url}>{text}</a>
+						<a
+							class="block mx-4 p-2 hover:underline"
+							href={url}
+						>
+							{text}
+						</a>
 					</li>
 				{/each}
 			</ul>

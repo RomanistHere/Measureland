@@ -18,6 +18,11 @@
 	});
 </script>
 
+<svelte:head>
+	<link rel="manifest" href="/{$locale}/manifest.json">
+	<meta name="msapplication-starturl" content="/{$locale}/">
+</svelte:head>
+
 <SEO
     pageTitle={$_('SEO.title')}
     description={$_('SEO.description')}

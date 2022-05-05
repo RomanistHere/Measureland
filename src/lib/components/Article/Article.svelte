@@ -36,7 +36,7 @@
 
 <section class="fixed-grad-bg"></section>
 
-<main class="grt static mx-auto glassmorphism box-content mb-4 overflow-hidden">
+<main class="grt static mx-auto glassmorphism box-content mb-4 -lg:m-2 overflow-hidden">
     <h1>
         {title}
     </h1>
@@ -53,10 +53,14 @@
     </span>
 </main>
 
-<footer class="grt static mx-auto glassmorphism box-content mb-2">
+<a href="../" class="hidden relative -lg:block text-xl underline text-right mx-4 py-4">
+    {$_('blog.linkBack')}
+</a>
+
+<footer class="grt static mx-auto glassmorphism box-content mb-2 -lg:m-2">
     <EndCaption />
 
-    <span class="text-center text-base block -mb-4 mt-4">
+    <span class="text-center text-base block -mb-4 mt-4 -md:mb-0">
         {author}
         {$_('blog.footer.copyright1')}
         <span class="desktop">
@@ -68,23 +72,15 @@
 
 <div class="static w-full h-2"></div>
 
-<a href="../" class="hidden relative -lg:block underline text-right mx-4 pb-4">
-    {$_('blog.linkBack')}
-</a>
-
 <Overlay
 	mainScreen={false}
 	hiddenLoading={true}
 />
 
 <style>
-	main {
-        margin-top: var(--distance-top);
-    }
-
-    @media screen and (max-width: 766px) {
+    @media screen and (min-width: 766px) {
         main {
-            margin-top: 0;
+            margin-top: var(--distance-top);
         }
     }
 </style>

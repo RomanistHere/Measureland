@@ -66,7 +66,7 @@
 	/>
 
 	{#if isError}
-		<section class="fixed z-4 flex justify-center items-center inset-0">
+		<section class="fixed z-4 flex justify-center items-center inset-0 -md:px-8">
             <span class="text-xl pt-64">
                 {$_('errors.noResponseFromServer')}
 	            <TextLink

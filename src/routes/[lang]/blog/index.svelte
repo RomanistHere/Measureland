@@ -81,7 +81,7 @@
 		</div>
 	</div>
 
-	<a href="../" class="hidden -lg:block underline text-right mx-4 pb-4">
+	<a href="../" class="hidden -lg:block text-xl underline text-right mx-4 pb-4">
 		{$_('commuinty.linkBack')}
 	</a>
 </main>

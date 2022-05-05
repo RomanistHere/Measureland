@@ -77,7 +77,7 @@
 </script>
 
 <div class="glassmorphism px-4 py-2 mb-8">
-    <h3 class="text-2xl pt-4 -md:text-lg">
+    <h3 class="text-2xl pt-4 -md:text-xl">
         {title}
     </h3>
 
@@ -102,7 +102,7 @@
                             on:updateNumbers={updateNumbers}
                         />
                     {:else if link}
-                        <a href={link} class="link block p-2" target="_blank" rel="noopener">
+                        <a href={link} class="link block p-2" target={link.includes('https://') ? "_blank" : null} rel="noopener">
                             {#if title}
                                 <h4 class="font-bold">{title}</h4>
                             {/if}
@@ -126,7 +126,7 @@
             {#each searchArr.slice(0, showedNumber) as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
                 <li class="my-4 rounded-md glassmorphism" animate:flip>
                     {#if link}
-                        <a href={link} class="link block p-2" target="_blank" rel="noopener">
+                        <a href={link} class="link block p-2" target={link.includes('https://') ? "_blank" : null} rel="noopener">
                             {#if title}
                                 <h4 class="font-bold">{title}</h4>
                             {/if}
