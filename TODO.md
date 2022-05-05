@@ -2,11 +2,7 @@
 
 - telegram bot
 - add anchors in articles where needed
-- error messages center
 - last thing to do is to check all the text again
-
-### Pre release
-- Test with https://github.com/nolanlawson/fuite
 
 # Articles
 

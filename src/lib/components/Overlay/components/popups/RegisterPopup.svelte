@@ -1,8 +1,8 @@
 <script>
-	import { _, json, locale } from 'svelte-i18n';
+	import { _, locale } from 'svelte-i18n';
 
 	import Input from '../../../ui-elements/Input.svelte';
-	import Spinner from '../../../ui-elements/Spinner.svelte';
+	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
 	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
 	import FormButton from '../../../ui-elements/FormButton.svelte';
 	import PopupTitle from './PopupTitle.svelte';
@@ -18,8 +18,6 @@
 		blurCurrentInput,
 	} from "../../../../utilities/helpers.js";
 	import { register } from "../../../../utilities/api.js";
-
-	$: errorsObj = $json('errors');
 
 	let email = '';
 	let password = '';
@@ -143,16 +141,10 @@
 		bind:this={passSecondInputRef}
 	/>
 
-	<div class="relative flex justify-center items-center h-28">
-		{#if isLoading}
-			<Spinner />
-		{/if}
-		{#if isError}
-            <span class="italic font-bold">
-                {errorsObj[errorType]}
-            </span>
-		{/if}
-	</div>
+	<SubmissionState
+		{ isLoading }
+		{ errorType }
+	/>
 
 	<div class="flex justify-evenly items-center">
 		<SecondaryButton text={$_('registrationPopup.goToLoginBtn')} action={openLoginPopup} />

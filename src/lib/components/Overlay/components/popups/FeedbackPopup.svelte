@@ -1,10 +1,10 @@
 <script>
 	import { onMount } from "svelte";
-	import { _, json } from 'svelte-i18n';
+	import { _ } from 'svelte-i18n';
 
 	import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
 	import Textarea from '../../../ui-elements/Textarea.svelte';
-	import Spinner from '../../../ui-elements/Spinner.svelte';
+	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
 	import FormButton from '../../../ui-elements/FormButton.svelte';
 	import PopupTitle from './PopupTitle.svelte';
 
@@ -19,8 +19,6 @@
 	} from "../../../../utilities/helpers.js";
 	import { sendFeedback } from "../../../../utilities/api.js";
 	import { userStateStore } from "../../../../../stores/state.js";
-
-	$: errorsObj = $json('errors');
 
 	let isError = false;
 	let errorType = '';
@@ -128,16 +126,10 @@
 		bind:this={textAreaRef}
 	/>
 
-	<div class="relative flex justify-center items-center h-28">
-		{#if isLoading}
-			<Spinner />
-		{/if}
-		{#if isError}
-            <span class="italic font-bold">
-                {errorsObj[errorType]}
-            </span>
-		{/if}
-	</div>
+	<SubmissionState
+		{ isLoading }
+		{ errorType }
+	/>
 
 	<div class="flex justify-evenly items-center">
 		<FormButton text={$_('feedbackPopup.submitBtn')} action={debouncedSubmit} />

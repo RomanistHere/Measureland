@@ -1,10 +1,10 @@
 <script>
 	import { onDestroy, onMount } from "svelte";
-	import { _, json } from 'svelte-i18n';
+	import { _ } from 'svelte-i18n';
 
 	import InputGroupSimple from '../../../../ui-elements/InputGroupSimple.svelte';
 	import Textarea from '../../../../ui-elements/Textarea.svelte';
-	import Spinner from '../../../../ui-elements/Spinner.svelte';
+	import SubmissionState from '../../../../ui-elements/SubmissionState.svelte';
 	import FormButton from '../../../../ui-elements/FormButton.svelte';
 	import TagsInput from '../../../../ui-elements/TagsInput.svelte';
 	import PopupTitle from '../PopupTitle.svelte';
@@ -26,8 +26,6 @@
 	import { isDesktop, poisStore, userStateStore } from "../../../../../../stores/state.js";
 	import { leafletReference, mapReference } from "../../../../../../stores/references.js";
 
-	$: errorsObj = $json('errors');
-	
 	export let popupData;
 
 	let circle;
@@ -185,16 +183,10 @@
 		on:removeTag={removeTagFromList}
 	/>
 
-	<div class="relative flex justify-center items-center h-28">
-		{#if isLoading}
-			<Spinner />
-		{/if}
-		{#if isError}
-            <span class="italic font-bold">
-                {errorsObj[errorType]}
-            </span>
-		{/if}
-	</div>
+	<SubmissionState
+		{ isLoading }
+		{ errorType }
+	/>
 
 	<div class="flex justify-evenly items-center">
 		<FormButton text={$_('addPOIPopup.submitBtn')} action={debouncedSubmit} />

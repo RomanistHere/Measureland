@@ -1,8 +1,8 @@
 <script>
-	import { _, json } from 'svelte-i18n';
+	import { _ } from 'svelte-i18n';
 
 	import Input from '../../../ui-elements/Input.svelte';
-	import Spinner from '../../../ui-elements/Spinner.svelte';
+	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
 	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
 	import FormButton from '../../../ui-elements/FormButton.svelte';
 	import PopupTitle from './PopupTitle.svelte';
@@ -23,7 +23,6 @@
 	$: isChangePass = popupData.isChangePass;
 	$: title = isChangePass ? $_('changePasswordPopup.title') : $_('forgotPasswordPopup.title');
 	$: mainBtn = isChangePass ? $_('changePasswordPopup.mainBtn') : $_('forgotPasswordPopup.mainBtn');
-	$: errorsObj = $json('errors');
 
 	let isLoading = false;
 	let email = '';
@@ -100,16 +99,10 @@
 		bind:this={emailInputRef}
 	/>
 
-	<div class="relative flex justify-center items-center h-28">
-		{#if isLoading}
-			<Spinner />
-		{/if}
-		{#if isError}
-            <span class="italic font-bold">
-                {errorsObj[errorType]}
-            </span>
-		{/if}
-	</div>
+	<SubmissionState
+		{ isLoading }
+		{ errorType }
+	/>
 
 	<div class="flex justify-evenly items-center">
 		{#if !isChangePass}

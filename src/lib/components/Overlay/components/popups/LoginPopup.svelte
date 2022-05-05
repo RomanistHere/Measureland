@@ -1,8 +1,8 @@
 <script>
-	import { _, json } from 'svelte-i18n';
+	import { _ } from 'svelte-i18n';
 
 	import Input from '../../../ui-elements/Input.svelte';
-	import Spinner from '../../../ui-elements/Spinner.svelte';
+	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
 	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
 	import FormButton from '../../../ui-elements/FormButton.svelte';
 	import PopupTitle from './PopupTitle.svelte';
@@ -19,8 +19,6 @@
 	} from "../../../../utilities/helpers.js";
 	import { login, reverify } from "../../../../utilities/api.js";
 	import { userStateStore } from "../../../../../stores/state.js";
-
-	$: errorsObj = $json('errors');
 
 	let email = '';
 	let password = '';
@@ -157,23 +155,11 @@
 		bind:this={passInputRef}
 	/>
 
-	<div class="relative flex justify-center items-center h-28">
-		{#if isLoading}
-			<Spinner />
-		{/if}
-		{#if isError && errorType === 'verificationLetter'}
-			<div class="italic font-bold">
-				<span class="block text-center">{$_('errors.errorVerification')}</span>
-				<a
-					href={"#"} class="block text-center underline" on:click|preventDefault={resendVerificationLetter}
-				>{$_('errors.errorVerificationBtn')}</a>
-			</div>
-		{:else if isError}
-            <span class="italic font-bold">
-                {errorsObj[errorType]}
-            </span>
-		{/if}
-	</div>
+	<SubmissionState
+		{ isLoading }
+		{ errorType }
+		onVerificationLetterAction={resendVerificationLetter}
+	/>
 
 	<div class="flex justify-evenly items-center">
 		<SecondaryButton text={$_('loginPopup.forgotPasswordBtn')} action={openForgotPasswordPopup} />
