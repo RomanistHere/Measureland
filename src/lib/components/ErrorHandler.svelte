@@ -1,11 +1,14 @@
 <script>
-	import { userStateStore } from '../../stores/state.js';
+	import { userStateStore, isDesktop } from '../../stores/state.js';
 	import { API_URL } from '../../configs/env.js';
 	import { logError, showSomethingWrongNotification } from "../utilities/helpers.js";
 
 	const handleErrors = event => {
-		showSomethingWrongNotification();
 		logError(event);
+
+		// can not get range of undefined error on phones is triggered
+		if ($isDesktop)
+			showSomethingWrongNotification();
 
 		if (!$userStateStore.shouldSendEvent)
 			return;
