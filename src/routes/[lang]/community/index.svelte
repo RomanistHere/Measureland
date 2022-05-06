@@ -57,7 +57,7 @@
 				title={$_('commuinty.tasks.title')}
 				list={$json('commuinty.tasks.list')}
 				type='vote'
-				showedNumber={5}
+				showedNumber={7}
 			/>
 		</div>
 

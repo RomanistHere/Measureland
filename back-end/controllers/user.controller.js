@@ -635,6 +635,23 @@ exports.read_votes = async (req, res, next) => {
 	}
 };
 
+exports.read_all_votes = async (req, res, next) => {
+	try {
+		const tasks = await Task.find({}, '-createdAt -_id');
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Votes fetched",
+				tasks,
+			},
+		});
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};
+
 exports.update_rating_year = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });

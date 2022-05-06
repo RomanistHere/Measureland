@@ -381,6 +381,12 @@ const checkVotes = async id => {
 	return await fetchFunction({ url });
 };
 
+const getAllTasks = async () => {
+	const url = `${API_URL}/user/read_all_votes`;
+
+	return await fetchFunction({ url });
+};
+
 const updateRatingYear = async (id, newValue) => {
 	const url = `${API_URL}/user/update_rating_year`;
 
@@ -440,6 +446,7 @@ export {
 	sendFeedback,
 	voteForTask,
 	checkVotes,
+	getAllTasks,
 	updateRatingYear,
 	deleteUserRating,
 	savePOIToDB,
