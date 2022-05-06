@@ -1,5 +1,5 @@
 <script>
-	import { _, locale } from 'svelte-i18n';
+	import { _, json, locale } from 'svelte-i18n';
 	import { browser } from '$app/env';
 
 	import SidebarBlock from './SidebarBlock.svelte';
@@ -23,6 +23,11 @@
 	$: isUserLoggedIn = $userStateStore.userID === null ? false : true;
 	$: shouldUserHaveMoreRatingsBtn = $userStateStore.activeRatings <= 5;
 	$: isUserAskedForMoreRatings = $userStateStore.wantMoreRatings;
+
+	$: dataNavBlock = {
+		title: $_('menuSidebar.titleNav'),
+		list: $json('navBar.links').map(({ text, url }) => ({ text, href: url })),
+	};
 
 	$: dataTopBlock = {
 		title: $_('menuSidebar.titleTop'),
@@ -112,6 +117,9 @@
 				openAnotherOverlay('partnersPopup');
 			},
 		}, {
+			text: $_('menuSidebar.newsTelegram'),
+			href: `https://t.me/measureland${$locale === 'ru' ? '_ru' : ''}`,
+		}, {
 			text: $_('menuSidebar.aboutUs'),
 			href: 'blog/about-us/',
 		}],
@@ -122,9 +130,6 @@
 			...dataBottomBlock,
 			list: [
 				{
-					text: $_('menuSidebar.newsTelegram'),
-					href: 'https://t.me/measureland_ru',
-				}, {
 					text: $_('menuSidebar.checkList'),
 					href: 'blog/universal-guide/',
 				},
@@ -174,6 +179,7 @@
 </script>
 
 <div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4 relative">
+	<SidebarBlock { ...dataNavBlock } className="lg:hidden" />
 	<SidebarBlock { ...dataTopBlock } className="lg:hidden" />
 
 	<div class="mb-6">

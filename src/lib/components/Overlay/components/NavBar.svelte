@@ -139,6 +139,10 @@
 	};
 
 	$: navLinks = removeDuplicates($json('navBar.links'));
+
+	const onNavLinkClick = () => {
+		appStateStore.update(state => ({ ...state, startScreen: false }));
+	};
 </script>
 
 <nav class="transition-all fixed flex z-5 justify-center inset-x-4 top-4 h-14 -lg:hidden">
@@ -150,7 +154,9 @@
 				on:mouseenter={handleMouseenterLeft}
 				on:mouseleave={handleMouseleaveLeft}
 			>
-				<img src="/images/favicon.svg" alt="{$_('navBar.logoAlt')}" class="transition-all" width='40' height="35">
+				<img
+					src="/images/favicon.svg" alt="{$_('navBar.logoAlt')}" class="transition-all" width='40' height="35"
+				>
 				<span class="ml-4">
                     {$_('navBar.logoTitle')}
                 </span>
@@ -167,6 +173,7 @@
 						<a
 							class="block mx-4 p-2 hover:underline"
 							href={url}
+							on:click={onNavLinkClick}
 						>
 							{text}
 						</a>

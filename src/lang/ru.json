@@ -319,6 +319,7 @@
         }]
     },
     "menuSidebar": {
+        "titleNav": "Навигация",
         "titleTop": "Аккаунт",
         "loginOrRegister": "Войти/Зарегистрироваться",
         "logout": "Выйти из профиля",

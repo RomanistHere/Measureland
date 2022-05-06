@@ -319,6 +319,7 @@
         }]
     },
     "menuSidebar": {
+        "titleNav": "Navigation",
         "titleTop": "Account",
         "loginOrRegister": "Login/Register",
         "logout": "Log out",
@@ -343,7 +344,7 @@
         "paidOptions": "Paid options",
         "aboutUs": "About us",
         "support": "Support",
-        "newsTelegram": "Новости в Телеграме",
+        "newsTelegram": "News in Telegram",
         "checkList": "Чек-лист арендатора",
         "blog": "Blog"
     },
