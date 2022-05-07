@@ -69,7 +69,7 @@ You'll be able to change the radius of "nearby" in this modal. 10 km option is n
 
 ### Edit or delete
 
-Right now you can only edit relevance of your rating. To achieve it, click you profile on the right top side of a screen, chose "My actions" and click on the year next to the needed rating in the newly opened window. If you want to edit comment or change rating for certain criteria - the best way to do would be deleting the current rating or POI and adding a new one. Another option would be writing to <TextLink href="../support" blank={false} text="support" />. Works only on <TextLink href="../../" blank={false} text="main page" />.
+Right now you can only edit relevance of your rating. To achieve it, click you profile on the right top side of a screen, chose "My actions" and click on the year next to the needed rating in the newly opened window. If you want to edit comment or change rating for certain criteria - the best way to do would be deleting the current rating or POI and adding a new one. Another option would be writing to <TextLink href="../support/" blank={false} text="support" />. Works only on <TextLink href="../../" blank={false} text="main page" />.
 
 ### Share it
 
@@ -107,4 +107,4 @@ By default, we're anonymously collecting some information about what features yo
 You can check a <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/configs/flow.js" blank={true} text="full list" /> of actions we collect, and verify "anonymity" of your data: <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/stores/state.js#L14" blank={true} text="random id generation" />, <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/EventsHandler.svelte#L32" blank={true} text="usage" /> and <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/ErrorHandler.svelte#L15" blank={true} text="error data" />, sent to server, processing <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/back-end/controllers/flow.controller.js" blank={true} text="on the server" /> - there is no info, that can disclose our users.
 
 ### How to participate or suggest something?
-Visit our <TextLink href="../../community" blank={false} text="community page" />. You'll find there our current tasks and instruments to influence it, forms to suggest your ideas and much more!
+Visit our <TextLink href="../../community/" blank={false} text="community page" />. You'll find there our current tasks and instruments to influence it, forms to suggest your ideas and much more!

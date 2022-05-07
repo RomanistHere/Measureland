@@ -22,19 +22,20 @@
 # Updates description
 
 - Major design update
-- Add timeline to the rating for more precise results
-- See nearby rating average with stats and badges
-- New community page
-- Feedback popup
 - Moving to Svelte
+- Add timeline to the rating for more precise results
+- Possibility to edit year of the rating
+- Add measurements to the ratings (from external APIs)
+- Possibility to check / report / endorse a single rating
+- Possibility to remove ratings
+- Add point of interest
+- See nearby rating average with stats and badges
+- Feedback popup
+- Content translation
+- 
+- New community page
 - Open collective launch
 - City-guides contest
-- Possibility to edit year of the rating
-- Possibility to remove ratings
-- Possibility to check / report / endorse a single rating
-- Add point of interest
-- Add measurements to the ratings (from external APIs)
-- Content translation
 
 # Later
 

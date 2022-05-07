@@ -6,7 +6,7 @@ date: 2022-04-10
 description: Why do we need it and what are our plans for it?
 tags: [starters]
 layout: article
-author: Роман Смунёв
+author: Roman Smunyov
 ---
 
 We launched the community page 🥳 Why do we need it and what are our plans for it?
