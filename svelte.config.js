@@ -14,7 +14,7 @@ const handleError = ({
 };
 
 const config = {
-	extensions: ['.svelte', ...mdsvexConfig.extensions],
+	extensions: [ '.svelte', ...mdsvexConfig.extensions ],
 
 	// ssr: true
 	kit: {
@@ -27,7 +27,7 @@ const config = {
 		prerender: {
 			crawl: true,
 			enabled: true,
-			entries: [ '*', '/ru/', '/en/' ],
+			entries: [ '*', '/ru/', '/en/', '/en/blog/policy/', '/ru/blog/policy/', '/en/blog/terms-of-use/', '/ru/blog/terms-of-use/' ],
 			onError: handleError,
 		},
 		trailingSlash: 'always',

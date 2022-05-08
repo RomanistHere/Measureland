@@ -4,10 +4,6 @@
 - add description for csrf error
 - last thing to do is to check all the text again
 
-# Articles
-
-- before the release: update technical documentation (github wiki) 1 lang
-
 # With the next release
 
 - write to wiki with questions about development and monetization.
@@ -22,12 +18,6 @@
 - telegram bot
 - ask users to highlight areas in the city with something nice, like best quality of water
 - https://leafletjs.com/examples/map-panes/
-
-# Translation tools:
-
-- https://support.deepl.com/hc/en-us/articles/360019925819-Confidentiality-of-translations
-- https://github.com/DeepLcom/deepl-node
-- https://github.com/wooorm/franc
 
 # Org stuff
 

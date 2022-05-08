@@ -36,7 +36,7 @@ Here we describe what we do with your data in the vastness of Measureland.
 **We may.** In our case they are used for smoother user experience or not used at all. In any case, we don’t store any valuable data there.
 
 ### Do we sell or share your data with anyone?
-**No.** We don’t sell users data to anyone or use any third-party technologies that could do it. If you think that third-party we use went down a crooked path, please, <TextLink href="mailto:support@measureland.org" text="contact us" />.
+**No.** We don’t sell users data to anyone or use any third-party technologies that could do it. If you think that third-party we use went down a crooked path, please, <TextLink href="mailto:support@measureland.org" text="contact us" />. Here's <TextLink href="https://github.com/RomanistHere/Measureland/wiki/Privacy-of-3rd-party-tools" blank={true} text="a full list" /> of third-party tools we use that can collect/process some parts of data.
 
 ### How is the service being supported then?
 **Measureland is financed by its developer RomanistHere (Roman Smunyov).** We don’t intend to make money from it, though in the future we can announce some monetization strategy. If you want to support our project, we're on <TextLink href="https://opencollective.com/measureland" blank={true} text="Open Collective" /> - it's the most transparent way to do so.

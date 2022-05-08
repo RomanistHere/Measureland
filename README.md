@@ -34,6 +34,8 @@ This list will grow, we have ideas already. For example, we plan to build a syst
 
 Back-end part is Node, Express and MongoDB. Some changes are to be expected there soon.
 
+Here's a list of 3rd party tools and services we use: [https://github.com/RomanistHere/Measureland/wiki/Privacy-of-3rd-party-tools](https://github.com/RomanistHere/Measureland/wiki/Privacy-of-3rd-party-tools)
+
 ## Contributing
 
 Useful features, cool technologies, new ideas - jump in! More than 10 people have shown their interest already.
