@@ -30,14 +30,14 @@ Almost every single feature/button/screen was redesigned! We picked glassmorphis
 
 ### "Engine"
 
-We moved our web app to Svelte. Here's <TextLink href="../why-svelte/" text="an article" /> explaining the reasons behind through an alternative, so you don't need to be a technical person to understand why. In short: it's cool and community driven.
+We moved our web app to Svelte. Here's <TextLink href="../why-svelte/" text="an article" /> explaining the reasons behind it through an alternative, so you don't need to be a technical person to understand why. In short: it's cool and community driven.
 
 ### Ratings
 
 There are a lot of rating-related changes:
 - Adding a year of relevance - could be changed in "my actions", assigned 2020 by default.
-- "See what's nearby" button was added to rating's modal window.
-- "Measurements and stats" tab was added to rating's modal window. It's in "testing" mode and is waiting your feedback!
+- "See what's nearby" button was added to the rating's modal window.
+- "Measurements and stats" tab was added to the rating's modal window. It's in "testing" mode and is waiting for your feedback!
 - Possibility to check a single rating (if there is a group) and endorse or report it.
 - Possibility to remove rating (from "my actions", top right corner - visible only on the main page)
 
@@ -45,7 +45,7 @@ There are a lot of rating-related changes:
 
 ### Points of Interest (POIs)
 
-Another type of marks on the map and... well, yeah... our killer feature :) These are for the objects that are important when you live near them. Objects that can influence you lifestyle. It can be something negative, like tobacco factory on the screenshot below, something positive, like a nice park with a lake, or neutral (undefined) - big convenience store is nice to have nearby in terms of groceries, but not that nice when it comes to the air, noise and parking spaces.
+Another type of marks on the map and... well, yeah... our killer feature :) These are for the objects that are important when you live near them. Objects that can influence your lifestyle. It can be something negative, like a tobacco factory on the screenshot below, something positive, like a nice park with a lake, or neutral (undefined) - a big convenience store is nice to have nearby in terms of groceries, but not that nice when it comes to the air, noise and parking spaces.
 
 <Image src="poi-en.jpg" caption="Example of negative Point of Interest" alt="Screenshot of the tobacco factory's POI." />
 
@@ -57,10 +57,10 @@ Window, connecting ratings and POIs. It also shows some stats from "around" and 
 
 ### New sidebar features
 
-- Send feedback - built in modal for submitting bugs, errors or suggestion (logged-in users only).
+- Send feedback - built in modal for submitting bugs, errors or suggestions (logged-in users only).
 - Display POIs - toggling to "OFF" will remove POIs from the map.
 - Send Anonymous reports - sending anonymous data. <TextLink href="../tutorial/#data-collection" text="See how it's anonymized" />. Turn OFF to not send anything.
-- I need more ratings - button to press when you spent all your current actions.
+- I need more ratings - button to press when you've spent all your current actions.
 
 <Image src="sidebar-en.jpg" caption="Sidebar changes" alt="Screenshot of sidebar." />
 

@@ -41,7 +41,7 @@ Comments are not necessary but can be extremely useful. We plan to reward the mo
 
 ### I can't!
 
-<Image src="tutorial_error-en.jpg" caption="You can mouseover yellow icon to get additional information." alt="Screenshot of error." />
+<Image src="tutorial_error-en.jpg" caption="You can mouseover the yellow icon to get additional information." alt="Screenshot of error." />
 
 There are a few reasons you can't rate a place. There should be an error indicating what's wrong. For example:
 
@@ -65,27 +65,27 @@ After clicking the existing rating you'll be able to "see what's nearby". Click 
 
 <Image src="poi_rating_connection-en.gif" caption="See pros and cons right away." alt="Animated example. Open Rating and see POIs nearby." />
 
-You'll be able to change the radius of "nearby" in this modal. 10 km option is not supposed to show stats and POIs, only average rating.
+You'll be able to change the radius of "nearby" in this modal. The 10 km option is not supposed to show stats and POIs, only average rating.
 
 ### Edit or delete
 
-Right now you can only edit relevance of your rating. To achieve it, click you profile on the right top side of a screen, chose "My actions" and click on the year next to the needed rating in the newly opened window. If you want to edit comment or change rating for certain criteria - the best way to do would be deleting the current rating or POI and adding a new one. Another option would be writing to <TextLink href="../support/" blank={false} text="support" />. Works only on <TextLink href="../../" blank={false} text="main page" />.
+Right now you can only edit the relevance of your rating. To achieve it, click your profile on the right top side of a screen, choose "My actions" and click on the year next to the needed rating in the newly opened window. If you want to edit a comment or change rating for certain criteria - the best way to do so would be deleting the current rating or POI and adding a new one. Another option would be writing to <TextLink href="../support/" blank={false} text="support" />. Works only on <TextLink href="../../" blank={false} text="the main page" />.
 
 ### Share it
 
-You can easily get the link to the rating by clicking "Share this rating" or copying the URL. URL will always depend on the location you see on the screen. Points of Interest can be shared via copying URL string as well.
+You can easily get the link to the rating by clicking "Share this rating" or copying the URL. URL will always depend on the location you see on the screen. Points of Interest can be shared via copying URL as well.
 
 ### Filters
 
-To open filters you need to click burger-menu on the right top side of a screen and pick "filters" in features. Now you can remove not relevant for you areas. 
+To open filters you need to click burger-menu on the right top side of a screen and pick "filters" in features. Now you can remove not relevant to you areas. 
 
-<Image src="minsk_water-en.gif" caption="Water quality filter removes problem areas from the map." alt="Animated example. Part of Minsk's ratings dissapear after applying filters." />
+<Image src="minsk_water-en.gif" caption="Water quality filter removes problem areas from the map." alt="Animated example. Part of Minsk's ratings disappear after applying filters." />
 
-It allows to set any range, so you can see what are the worst areas by setting filters to 1-3, for example.
+It allows you to set any range, so you can see what are the worst areas by setting filters to 1-3, for example.
 
 ### Drawing tools
 
-<Image src="tutorial_draw-en.jpg" caption="Highlighted areas will persists after reload." alt="Screenshot of highlighted areas." />
+<Image src="tutorial_draw-en.jpg" caption="Highlighted areas will persist after reload." alt="Screenshot of highlighted areas." />
 
 Since the 1.1.0 version it's possible to draw shapes on the map and then share results. There are three types of shapes right now: polygon, rectangle and circle. You can find it at the right bottom corner of the screen (three top buttons respectively). You'll find the tips on how to draw once you click any of it. There are two more buttons below: edit and delete.
 
@@ -100,11 +100,11 @@ Useful to understand that adding a reason while reporting gives it more value, s
 
 ### Usage and error data collection
 
-By default, we're anonymously collecting some information about what features you use and errors you may encounter. This data collection is connected to the session, not to your account. To disable it, open sidebar, find "Send anonymous error and usage reports" and press it to toggle.
+By default, we're anonymously collecting some information about what features you use and errors you may encounter. This data collection is connected to the session, not to your account. To disable it, open the sidebar, find "Send anonymous error and usage reports" and press it to toggle.
 
 <Image src="tutorial_data_collection-en.jpg" caption="How to open sidebar and disable data collection" alt="Sidebar screenshot." />
 
-You can check a <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/configs/flow.js" blank={true} text="full list" /> of actions we collect, and verify "anonymity" of your data: <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/stores/state.js#L14" blank={true} text="random id generation" />, <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/EventsHandler.svelte#L32" blank={true} text="usage" /> and <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/ErrorHandler.svelte#L15" blank={true} text="error data" />, sent to server, processing <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/back-end/controllers/flow.controller.js" blank={true} text="on the server" /> - there is no info, that can disclose our users.
+You can check a <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/configs/flow.js" blank={true} text="full list" /> of actions we collect, and verify "anonymity" of your data: <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/stores/state.js#L14" blank={true} text="random id generation" />, <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/EventsHandler.svelte#L32" blank={true} text="usage" /> and <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/ErrorHandler.svelte#L15" blank={true} text="error data" />, sent to server, processing <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/back-end/controllers/flow.controller.js" blank={true} text="on the server" /> - there is no info that can disclose our users.
 
 ### How to participate or suggest something?
 Visit our <TextLink href="../../community/" blank={false} text="community page" />. You'll find there our current tasks and instruments to influence it, forms to suggest your ideas and much more!

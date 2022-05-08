@@ -64,7 +64,7 @@ imageSrc: https://measureland.org/images/preview/tutorial_ru_150.jpg
 
 ### Связь между оценками и примечательными местами
 
-После выбора существующей оценки на карте у тебя будет возможность "посмотреть что рядом". Там выведется статистика по ближайшим оценкам, а так же примечательные места. 
+После выбора существующей оценки на карте у тебя будет возможность "посмотреть что рядом". Там выведется статистика по ближайшим оценкам, а также примечательные места. 
 
 <Image src="poi_rating_connection.gif" caption="Ветер с табачного завода может и не принести аромат когда ты поедешь смотреть квартиру. Но он точно это сделает когда ты будешь там жить." alt="Анимированный пример перехода между оценками и примечательными местами." />
 
@@ -108,7 +108,7 @@ imageSrc: https://measureland.org/images/preview/tutorial_ru_150.jpg
 
 <Image src="tutorial_data_collection.jpg" caption="Как открыть боковое меню и выключить сбор данных" alt="Скриншот бокового меню." />
 
-Можешь посмотреть <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/configs/flow.js" blank={true} text="полный список" /> собираемых сведений об использовании, а так же убедиться в анонимности: генерация <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/stores/state.js#L14" blank={true} text="случайного номера" /> сведений, <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/EventsHandler.svelte#L32" blank={true} text="данные об использовании" /> и <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/ErrorHandler.svelte#L15" blank={true} text="данные об ошибках" />, отправляемые на сервер, а так же принятие и обработка данных <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/back-end/controllers/flow.controller.js" blank={true} text="сервером" /> - нигде не фигурирует информация, раскрывающая пользователя.
+Можешь посмотреть <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/configs/flow.js" blank={true} text="полный список" /> собираемых сведений об использовании, а также убедиться в анонимности: генерация <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/stores/state.js#L14" blank={true} text="случайного номера" /> сведений, <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/EventsHandler.svelte#L32" blank={true} text="данные об использовании" /> и <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/src/lib/components/ErrorHandler.svelte#L15" blank={true} text="данные об ошибках" />, отправляемые на сервер, а также принятие и обработка данных <TextLink href="https://github.com/RomanistHere/Measureland/blob/master/back-end/controllers/flow.controller.js" blank={true} text="сервером" /> - нигде не фигурирует информация, раскрывающая пользователя.
 
 ### Как поучаствовать/предложить что-то?
 Посети нашу <TextLink href="../../community" blank={false} text="страничку сообщества" />. Там ты сможешь найти текущие задачи и поучаствовать в них, предложить свои идеи, выбрать площадки для общения с другими пользователями и многое другое! 
