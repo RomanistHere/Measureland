@@ -25,7 +25,10 @@
 	$: searchString = '';
 
 	const sortList = () => {
-		list = list.sort((a, b) => {
+		// next string removes objects with duplicated id
+		// mostly for dev, cause current i18n makes all objects doubled
+		const arrUniq = [ ...new Map(list.map(v => [ v.id, v ])).values() ];
+		list = arrUniq.sort((a, b) => {
 			const diffA = a.upvoted || 0 - a.downvoted || 0;
 			const diffB = b.upvoted || 0 - b.downvoted || 0;
 			return diffB - diffA;
