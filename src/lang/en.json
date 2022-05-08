@@ -840,6 +840,15 @@
                 "text": "Instead of / together with email.",
                 "id": "13",
                 "link": "https://github.com/RomanistHere/Measureland/issues/31"
+            }, {
+                "title": "Links to immigrant communities",
+                "text": "Collect community groups based on country and display.",
+                "id": "14",
+                "link": "https://github.com/RomanistHere/Measureland/issues/36"
+            }, {
+                "title": "Improve stats in what's-nearby modal",
+                "id": "15",
+                "link": "https://github.com/RomanistHere/Measureland/issues/35"
             }]
         },
         "communities": {

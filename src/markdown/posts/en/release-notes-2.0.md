@@ -2,7 +2,7 @@
 slug: release-notes-2.0
 title: Measureland 2.0 release notes.
 firstDate: 2022-05-07
-date: 2022-05-07
+date: 2022-05-08
 description: List of changes with description and explanation.
 tags: [starters]
 layout: article
@@ -45,11 +45,11 @@ There are a lot of rating-related changes:
 
 ### Points of Interest (POIs)
 
-Another type of marks on the map and... well, yeah... our killer feature :) These are for the objects that are important when you live near them. Objects that can influence you lifestyle. It can be something negative, like tobacco factory on the screenshot below, something positive, like a nice park with a lake, or neutral - big store is nice to have nearby in terms of groceries, but not that nice when it comes to air, noise and parking spaces.
+Another type of marks on the map and... well, yeah... our killer feature :) These are for the objects that are important when you live near them. Objects that can influence you lifestyle. It can be something negative, like tobacco factory on the screenshot below, something positive, like a nice park with a lake, or neutral (undefined) - big convenience store is nice to have nearby in terms of groceries, but not that nice when it comes to the air, noise and parking spaces.
 
 <Image src="poi-en.jpg" caption="Example of negative Point of Interest" alt="Screenshot of the tobacco factory's POI." />
 
-### See what's nearby
+### "See what's nearby"
 
 Window, connecting ratings and POIs. It also shows some stats from "around" and generates "wisdom's of the crowd" badges depending on it. Proximity radius is changeable, 10 km option will only display average rating.
 

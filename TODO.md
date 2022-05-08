@@ -1,13 +1,11 @@
 # To do:
 
-- telegram bot
 - add anchors in articles where needed
 - add description for csrf error
 - last thing to do is to check all the text again
 
 # Articles
 
-- 2.0 release notes 2 lang
 - before the release: update technical documentation (github wiki) 1 lang
 
 # With the next release
@@ -19,34 +17,9 @@
 - send why-svelte article to svelte community
 - set the dates on the contest
 
-# Updates description
-
-- Major design update
-- Moving to Svelte
-- Add timeline to the rating for more precise results
-- Possibility to edit year of the rating
-- Add measurements to the ratings (from external APIs)
-- Possibility to check / report / endorse a single rating
-- Possibility to remove ratings
-- Add point of interest
-- See nearby rating average with stats and badges
-- Feedback popup
-- Content translation
-- 
-- New community page
-- Open collective launch
-- City-guides contest
-
 # Later
 
-- improve accessibility (add a menu with quick actions visible only for tabindex)
-- https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles - apply when possible
-- https://github.com/Leaflet/Leaflet.fullscreen
-- add possibility to remove email from account for privacy's sake
-- links communities of immigrants for different cities in other platforms
-- more badges
-- share nearby API public
-- login via Telegram
+- telegram bot
 - ask users to highlight areas in the city with something nice, like best quality of water
 - https://leafletjs.com/examples/map-panes/
 

@@ -335,7 +335,7 @@
         "ratePlace": "Добавить оценку",
         "feedbackPopup": "Обратная связь",
         "ratePlaceAvailable": "доступно",
-        "needMoreRatings": "Хочу больше оценок!",
+        "needMoreRatings": "Хочу больше отметок!",
         "requestProcessing": "Запрос обрабатывается",
         "titleBot": "Полезные ссылки",
         "ourPartners": "Наши партнёры",
@@ -840,6 +840,15 @@
                 "text": "Вместо или вместе с почтой.",
                 "id": "13",
                 "link": "https://github.com/RomanistHere/Measureland/issues/31"
+            }, {
+                "title": "Ссылки на коммьюнити иммигрантов",
+                "text": "Собирать ссылки на такие сообщества в разных странах.",
+                "id": "14",
+                "link": "https://github.com/RomanistHere/Measureland/issues/36"
+            }, {
+                "title": "Улучшить статистику в посмотреть-что-рядом попапе",
+                "id": "15",
+                "link": "https://github.com/RomanistHere/Measureland/issues/35"
             }]
         },
         "communities": {

@@ -141,6 +141,7 @@
 	$: navLinks = removeDuplicates($json('navBar.links'));
 
 	const onNavLinkClick = () => {
+		closeOverlays();
 		appStateStore.update(state => ({ ...state, startScreen: false }));
 	};
 </script>
