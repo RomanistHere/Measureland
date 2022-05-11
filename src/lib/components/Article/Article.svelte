@@ -36,22 +36,22 @@
 
 <section class="fixed-grad-bg"></section>
 
-<main class="grt static mx-auto glassmorphism box-content mb-4 -lg:m-2 overflow-hidden">
-    <h1>
-        {title}
-    </h1>
+<div class="-lg:m-2">
+    <main class="grt mx-auto glassmorphism box-content mb-4 overflow-hidden relative">
+        <h1>
+            {title}
+        </h1>
 
-    <article>
-        <slot>
-        </slot>
+        <article>
+            <slot></slot>
+        </article>
 
-    </article>
-
-    <span class="text-right italic block">
-        {$_('blog.footer.lastChanges')}
-        {new Date(date).toLocaleDateString(langCode, options)}
-    </span>
-</main>
+        <span class="text-right italic block">
+            {$_('blog.footer.lastChanges')}
+            {new Date(date).toLocaleDateString(langCode, options)}
+        </span>
+    </main>
+</div>
 
 <a href="../" class="hidden relative -lg:block text-xl underline text-right mx-4 py-4">
     {$_('blog.linkBack')}

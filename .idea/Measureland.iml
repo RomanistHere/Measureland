@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="backups" />
     <orderEntry type="module" module-name="configs" />
+    <orderEntry type="module" module-name="Measureland admin" />
   </component>
 </module>
