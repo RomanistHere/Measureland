@@ -11,9 +11,13 @@ _Put an `x` in the boxes that apply_
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 
+## Screenshots Of Visual Changes
+
+If applicable, add a screenshot or a video showcasing what was changed.
+
 ## Further comments
 
-If this is a relatively large or complex change, kick off the discussion by explaining why you chose the solution you did and what alternatives you considered, etc...
+If this is a relatively large or complex change, kick off the discussion by explaining why you chose the solution you did and what alternatives you considered, etc... Hesitating why is it all needed? I have a good article for you: [https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/](https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/)
 
 ### Reviewers: 
 

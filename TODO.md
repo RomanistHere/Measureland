@@ -18,10 +18,6 @@
 - ask users to highlight areas in the city with something nice, like best quality of water
 - https://leafletjs.com/examples/map-panes/
 
-# Org stuff
-
-- pull request template: https://www.chakshunyu.com/blog/6-concrete-tips-that-will-make-your-react-pull-requests-easier-to-review/
-
 # Stuff to remember and check later
 
 - Content security policy. Svelte should introduce something to remove script and css 'unsafe-inline' property with the release.
