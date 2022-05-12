@@ -133,7 +133,7 @@ app.use(function (err, req, res, next) {
 		return next(err);
 
 	// handle CSRF token errors here
-	return res.status(403).json({ error: err });
+	return res.status(403).json({ error: "Invalid csrf token" });
 });
 
 // logging and errors

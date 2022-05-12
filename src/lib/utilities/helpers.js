@@ -289,6 +289,7 @@ const errorObj = {
 	'Already verified': 'alreadyVerified',
 	'Email already exists': 'accountExists',
 	'Email is wrong': 'noAccount',
+	'Invalid csrf token': 'invalidCsrfToken',
 	'Matches old password': 'samePass',
 	'Nearby place is already rated': 'nearbyPlaceAlreadyRated',
 	'No actions remaining': 'youRateTooOften',

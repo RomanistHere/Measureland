@@ -670,6 +670,7 @@
         ],
         "errorVerification": "Нужно пройти верификацию (проверь почту)",
         "errorVerificationBtn": "Послать письмо ещё раз",
+        "invalidCsrfToken": "Почисти все cookie и перезагрузи страницу",
         "fieldsError": "Проверь все поля!",
         "noAccount": "Мы не нашли такого аккаунта",
         "accountExists": "Такой аккаунт уже существует",

@@ -1,7 +1,6 @@
 # To do:
 
 - add anchors in articles where needed
-- add description for csrf error
 
 # With the next release
 
