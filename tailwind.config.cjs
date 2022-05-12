@@ -44,6 +44,9 @@ const config = {
 			height: {
 				'100': '25rem',
 			},
+			listStyleType: {
+				square: 'square',
+			},
 			colors: {
 				'active': '#007097',
 				'success': '#146481',

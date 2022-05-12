@@ -154,7 +154,7 @@
 					<h1 class="lg:text-5xl -lg:text-3xl mb-10 @lg:text-5xl -md:text-2xl">
 						{$_('startScreen.lastSlide.title')}
 					</h1>
-					<ul class="list-inside">
+					<ul class="list-inside list-square">
 						{#each lastSlideList as { url, text }}
 							<li>
 								<TextLink
@@ -204,9 +204,5 @@
 
 	:global(.swiper-pagination-bullet-active) {
 		background: var(--active-color);
-	}
-
-	ul {
-		list-style-type: square;
 	}
 </style>

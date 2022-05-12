@@ -31,7 +31,7 @@
         {$_('loggedInPopup.hereSomeArticles')}:
     </p>
 
-    <ul class="pl-5">
+    <ul class="pl-5 list-square">
         {#each list as { text, link }}
             <li class="my-3">
                 <TextLink
@@ -43,9 +43,3 @@
         {/each}
     </ul>
 </div>
-
-<style>
-    ul {
-        list-style-type: square;
-    }
-</style>
