@@ -34,7 +34,7 @@ if (isProd) {
 			new Sentry.Integrations.Http({ tracing: true }),
 			new Tracing.Integrations.Express({ app }),
 		],
-		tracesSampleRate: 1.0,
+		tracesSampleRate: .5,
 	});
 }
 
@@ -129,7 +129,6 @@ if (isAdmin) {
 }
 
 app.use(function (err, req, res, next) {
-	console.log(err.message);
 	if (err.code !== 'EBADCSRFTOKEN')
 		return next(err);
 
