@@ -665,7 +665,7 @@
             "Check console for more info",
             "Press F12 to open it"
         ],
-        "samePass": "The pass is the same as previous. Pick another one.",
+        "samePass": "The pass matches previous one. Pick another.",
         "linkExpired": "The link is expired :(",
         "linkExpiredLink": "Get another one",
         "errorVerification": "Check email for verification letter",

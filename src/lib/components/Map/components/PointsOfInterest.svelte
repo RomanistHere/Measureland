@@ -31,7 +31,7 @@
 
 	const icon = L.icon({
 		iconUrl: `../images/attention.svg`,
-		iconSize: [ 42, 66 ],
+		iconSize: [ 23, 54 ],
 		iconAnchor: [ 5, 30 ],
 	});
 	
