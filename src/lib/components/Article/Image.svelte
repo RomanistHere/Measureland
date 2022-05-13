@@ -7,7 +7,7 @@
 </script>
 
 <figure class="w-full mb-4">
-	<a href="/images/{src}" target="_blank" class="cursor-zoom-in">
+	<a href="/images/{src}" target="_blank" class="cursor-zoom-in bg-gray-100 block min-h-[10rem]">
 		<picture>
 			<source
 				type="image/webp"
