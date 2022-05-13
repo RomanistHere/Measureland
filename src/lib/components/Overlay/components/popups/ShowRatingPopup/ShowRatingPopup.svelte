@@ -61,6 +61,7 @@
 		: Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
 
 	const copyShareRatingURL = () => {
+		registerAction('clickCopyURLButton');
 		if (browser && !shouldShowURLCopySuccess) {
 			const shareRatingURL = new URL(window.location.href).toString();
 			try {
@@ -70,9 +71,9 @@
 			} catch (e) {
 				logError(e);
 				showSomethingWrongNotification();
+				registerAction('clickCopyURLButtonError');
 			}
 		}
-		registerAction('clickCopyURLButton');
 	};
 
 	const openCommentsSidebar = () =>

@@ -25,6 +25,7 @@ export const flowDictionary = {
 	'feedbackPopup': 'p-f',
 	// show rating popup
 	'clickCopyURLButton': 'ccb',
+	'clickCopyURLButtonError': 'ccbe',
 	'fetchRating': 'fr',
 	'reportRating': 'rr',
 	'endorseRating': 'er',

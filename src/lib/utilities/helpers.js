@@ -302,6 +302,7 @@ const errorObj = {
 
 const getErrorType = error => {
 	const errorFromObj = errorObj[error];
+	flowStore.update(actions => ([ ...actions, errorFromObj ]));
 	return errorFromObj ? errorFromObj : 'unrecognizedError';
 };
 
