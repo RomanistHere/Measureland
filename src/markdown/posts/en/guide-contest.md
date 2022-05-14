@@ -14,7 +14,7 @@ author: Roman Smunyov
     import TextLink from "$lib/components/ui-elements/TextLink.svelte";
 </script>
 
-Start of the contest: - April. End of the contest: - May.
+Start of the contest: 14 May. End of the contest: 14 June.
 
 <Summary
     text="Write and submit your guide. 10$ award is guaranteed for the first 50 participants. Winners will get more!"
