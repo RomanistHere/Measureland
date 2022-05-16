@@ -308,12 +308,15 @@
         "account1": "Твой аккаунт,",
         "account2": "Нажми чтобы посмотреть.",
         "links": [{
+            "text": "Карта",
+            "url": "/ru/"
+        }, {
             "text": "Блог",
             "url": "/ru/blog/"
-        },{
+        }, {
             "text": "Сообщество",
             "url": "/ru/community/"
-        },{
+        }, {
             "text": "Поддержка",
             "url": "/ru/blog/support/"
         }]

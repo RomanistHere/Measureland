@@ -6,6 +6,7 @@ const sanitize = require("mongo-sanitize");
 const authKeyDeepL = process.env.DEEPL_KEY;
 const apiOWMKey = process.env.OPENWEATHERMAP_KEY;
 const locationIqKey = process.env.LOCATIONIQ_KEY;
+const locationIqKeyBckp = process.env.LOCATIONIQ_KEY_BCKP;
 const translator = new deepl.Translator(authKeyDeepL);
 
 exports.translateText = async (req, res) => {
@@ -56,9 +57,12 @@ exports.getOpenWeatherAirPollution = async (req, res) => {
 exports.getLocationIqAddress = async (req, res) => {
 	const urlParams = new URLSearchParams(req.params.params);
 	const { lat, lng, lang } = Object.fromEntries(urlParams);
+	const snLat = sanitize(lat);
+	const snLng = sanitize(lng);
+	const snLang = sanitize(lang);
 
 	try {
-		const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=${locationIqKey}&lat=${sanitize(lat)}&lon=${sanitize(lng)}&format=json&accept-language=${sanitize(lang)}`);
+		const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=${locationIqKey}&lat=${snLat}&lon=${snLng}&format=json&accept-language=${snLang}`);
 		const { address } = await geoCoding.json();
 
 		return res.json({
@@ -67,9 +71,22 @@ exports.getLocationIqAddress = async (req, res) => {
 				address,
 			},
 		});
-	} catch (error) {
-		console.log(error);
-		Sentry.captureException(error);
-		return res.status(400).json({ error });
+	} catch (e) {
+		try {
+			// if quota 5K requests per day fail, use as a fallback
+			const geoCoding = await fetch(`https://eu1.locationiq.com/v1/reverse.php?key=${locationIqKeyBckp}&lat=${snLat}&lon=${snLng}&format=json&accept-language=${snLang}`);
+			const { address } = await geoCoding.json();
+
+			return res.json({
+				error: null,
+				data: {
+					address,
+				},
+			});
+		} catch (error) {
+			console.log(error);
+			Sentry.captureException(error);
+			return res.status(400).json({ error });
+		}
 	}
 };

@@ -2,6 +2,11 @@
 	top: calc(1rem + var(--navbar-height))
 }
 
+.leaflet-top.leaflet-right {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
 .leaflet-left .leaflet-control {
 	margin-left: 1rem;
 }

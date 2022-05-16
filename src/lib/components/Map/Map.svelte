@@ -55,7 +55,7 @@
 			});
 		});
 
-		mapObj.zoomControl.setPosition('bottomleft');
+		mapObj.zoomControl.setPosition('topright');
 
 		const debouncedAssign = debounce(() => { mapObj.on('click', onMapClick) }, 350);
 		mapObj.on('click', onMapClick);

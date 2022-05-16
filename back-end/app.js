@@ -96,7 +96,7 @@ const flowLimiter = rateLimit({
 		errorHandler: console.error.bind(null, 'rate-limit-mongo'),
 	}),
 	windowMs: 10 * 60 * 1000,
-	max: 20,
+	max: 40,
 });
 app.use('/api/flow', flowLimiter, flowRouter);
 
@@ -112,7 +112,7 @@ const geoLimiter = rateLimit({
 		errorHandler: console.error.bind(null, 'rate-limit-mongo'),
 	}),
 	windowMs: 10 * 60 * 1000,
-	max: 200,
+	max: 400,
 	handler: (req, res) => {
 		res.status(429).json({ error: 'Too many requests, please try again later' });
 	},

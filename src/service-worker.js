@@ -1,6 +1,6 @@
 import { build, timestamp } from '$service-worker';
 
-const CACHE_NAME = `dev-measureland-2.0.0-${timestamp}`;
+const CACHE_NAME = `dev-measureland-2.1.0-${timestamp}`;
 const CACHED_URLS = build;
 
 // Open cache on install.

@@ -91,6 +91,11 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 		logError('Address fetch from backup failed');
 		logError(e);
 	}
+
+	return {
+		address: null,
+		countryInEnglish: null,
+	};
 };
 
 const getaverageWAQI = aqiVal => {

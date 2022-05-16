@@ -308,12 +308,15 @@
         "account1": "Your account,",
         "account2": "Click to expand.",
         "links": [{
+            "text": "Map",
+            "url": "/en/"
+        }, {
             "text": "Blog",
             "url": "/en/blog/"
-        },{
+        }, {
             "text": "Community",
             "url": "/en/community/"
-        },{
+        }, {
             "text": "Support",
             "url": "/en/blog/support/"
         }]
