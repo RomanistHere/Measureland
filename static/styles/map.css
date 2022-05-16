@@ -7,6 +7,10 @@
 	transform: translateY(-50%);
 }
 
+.geocoder-control {
+	display: none;
+}
+
 .leaflet-left .leaflet-control {
 	margin-left: 1rem;
 }
@@ -31,11 +35,36 @@
 	z-index: 1;
 }
 
+.leaflet-bar a {
+	border-bottom: none;
+}
+
 .geocoder-control .geocoder-control-input,
 .leaflet-control-zoom {
-	background-color: var(--side-bg-color);
-	border: 1px solid var(--text-color);
+	background-color: #ffffff;
+	border: 1px solid #F6F6F6;
 	box-shadow: 0 0 1px var(--text-color);
+}
+
+.leaflet-control-zoom {
+	border-radius: 20px;
+	overflow: hidden;
+}
+
+.leaflet-touch .leaflet-control-zoom a {
+	font-size: 18px;
+	transition: background-color .2s, color .2s;
+}
+
+.leaflet-touch .leaflet-control-zoom a:hover {
+	background-color: #E5EEFF;
+	color: #3877F1;
+}
+
+.leaflet-touch .leaflet-bar a {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
 }
 
 .leaflet-touch .leaflet-bar a {
@@ -44,37 +73,37 @@
 
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar {
-	border-color: var(--text-color);
+	border-color: #F6F6F6;
 	border-width: 1px;
 }
 
-.leaflet-touch .geocoder-control-suggestion {
-	background-color: var(--bg-color-add-non-transparent);
-}
+/*.leaflet-touch .geocoder-control-suggestion {*/
+/*	background-color: var(--bg-color-add-non-transparent);*/
+/*}*/
 
-.leaflet-touch .geocoder-control-suggestion:hover {
-	background-color: var(--side-bg-color);
-	border-color: var(--side-bg-color);
-}
+/*.leaflet-touch .geocoder-control-suggestion:hover {*/
+/*	background-color: var(--side-bg-color);*/
+/*	border-color: var(--side-bg-color);*/
+/*}*/
 
-.leaflet-touch .geocoder-control-input {
-	line-height: 34px;
-	background-size: 34px;
-	background-image: url(/node_modules/esri-leaflet-geocoder/dist/img/search@2x.png);
-}
+/*.leaflet-touch .geocoder-control-input {*/
+/*	line-height: 34px;*/
+/*	background-size: 34px;*/
+/*	background-image: url(/node_modules/esri-leaflet-geocoder/dist/img/search@2x.png);*/
+/*}*/
 
-@supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-	.geocoder-control .geocoder-control-input,
-	.leaflet-control-zoom {
-		background-color: var(--side-bg-color);
-		border: 1px solid var(--text-color);
-		backdrop-filter: blur(7px) saturate(180%);
-		-webkit-backdrop-filter: blur(7px) saturate(180%);
-		background-color: rgba(255, 255, 255, 0.75);
-		border: 1px solid var(--text-color);
-		box-shadow: 0 0 1px var(--text-color);
-	}
-}
+/*@supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {*/
+/*	.geocoder-control .geocoder-control-input,*/
+/*	.leaflet-control-zoom {*/
+/*		background-color: var(--side-bg-color);*/
+/*		border: 1px solid var(--text-color);*/
+/*		backdrop-filter: blur(7px) saturate(180%);*/
+/*		-webkit-backdrop-filter: blur(7px) saturate(180%);*/
+/*		background-color: rgba(255, 255, 255, 0.75);*/
+/*		border: 1px solid var(--text-color);*/
+/*		box-shadow: 0 0 1px var(--text-color);*/
+/*	}*/
+/*}*/
 
 @media screen and (max-width: 1023px) {
 	.leaflet-top {
@@ -88,7 +117,7 @@
 }
 
 .leaflet-draw-section {
-	background-color: rgba(255, 255, 255, 0.95);
+	background-color: #fff;
 	border-radius: 0.375rem;
 	margin-top: 1rem;
 }
@@ -97,10 +126,27 @@
 	opacity: .3;
 }
 
-@supports ((-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-	.leaflet-draw-section {
-		backdrop-filter: blur(7px) saturate(180%);
-		-webkit-backdrop-filter: blur(7px) saturate(180%);
-		background-color: rgba(255, 255, 255, 0.75);
-	}
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
+	background-image: url('../images/icons/pen.svg');
+}
+
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
+	background-image: url('../images/icons/rectangle.svg');
+}
+
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-circle {
+	background-image: url('../images/icons/circle.svg');
+}
+
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-edit-edit {
+	background-image: url('../images/icons/edit.svg');
+}
+
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-edit-remove {
+	background-image: url('../images/icons/trash.svg');
+}
+
+#svelte .leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar a {
+	background-position: center center;
+	background-size: auto;
 }

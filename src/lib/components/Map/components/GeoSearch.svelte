@@ -23,8 +23,8 @@
 		useMapBounds: false,
 	}).addTo(map);
 
-	searchControl.on('results', data => {
-		registerAction('mapSearch');
-		map.setView(data.results[0].latlng, 17);
-	});
+	// searchControl.on('results', data => {
+	// 	registerAction('mapSearch');
+	// 	map.setView(data.results[0].latlng, 17);
+	// });
 </script>

@@ -98,6 +98,19 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 	};
 };
 
+const geoToken = 'AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q';
+const getGeoSuggestions = async (text, maxSuggestions = 5) => {
+	const url = `https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?${new URLSearchParams({ text, maxSuggestions, token: geoToken })}&f=json`;
+
+	return await fetch(url);
+};
+
+const getGeoCandidates = async (text, magicKey) => {
+	const url = `https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?outSr=4326&forStorage=false&outFields=*&maxLocations=5&${new URLSearchParams({ singleLine: text, magicKey, token: geoToken })}&f=json`;
+
+	return await fetch(url);
+};
+
 const getaverageWAQI = aqiVal => {
 	// based on https://waqi.info/
 	if (aqiVal < 50) {
@@ -174,6 +187,8 @@ export {
 	translateText,
 	fetchOpenWeather,
 	getApproximateAddressAndCountry,
+	getGeoSuggestions,
+	getGeoCandidates,
 	fetchDisasterRisk,
 	fetchWaqi,
 };

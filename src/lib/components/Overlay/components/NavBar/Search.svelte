@@ -1,9 +1,14 @@
 <script>
 	import SearchIcon from "$lib/components/inline-images/SearchIcon.svelte";
-	import { closeOverlay, openAnotherOverlay } from "$lib/utilities/helpers.js";
+	import { closeOverlay, openAnotherOverlay, debounce, registerAction } from "$lib/utilities/helpers.js";
+	import { getGeoSuggestions, getGeoCandidates } from "$lib/utilities/externalApi.js";
+
 	import { overlayStateStore } from "../../../../../stores/state.js";
+	import { mapReference } from '../../../../../stores/references.js';
 
 	export let isSidebarActive = false;
+
+	// sidebar and burger button
 
 	let isActive = false;
 	let isMouseOver = false;
@@ -24,6 +29,33 @@
 	} else {
 		isActive = false;
 	}
+
+	// search
+
+	let searchSuggestions = [];
+	let searchInputValue = null;
+
+	const handleSearchInputChange = async e => {
+		const { value } = e.target;
+		searchInputValue = value;
+		const resp = await getGeoSuggestions(value);
+		const { suggestions } = await resp.json();
+		searchSuggestions = [ ...suggestions ];
+	};
+
+	const setViewFromSearch = async (text, magicKey = '') => {
+		searchSuggestions = [];
+
+		const resp = await getGeoCandidates(text, magicKey);
+		const { candidates } = await resp.json();
+		const { extent } = candidates[0];
+
+		$mapReference.fitBounds([[ extent.ymin, extent.xmin ], [ extent.ymax, extent.xmax ]]);
+		searchInputValue = null;
+		registerAction('mapSearch');
+	};
+
+	const debouncedSearch = debounce(e => { handleSearchInputChange(e) }, 200);
 </script>
 
 <div class="bg-white rounded-md overflow-hidden shadow-lg border border-stroke flex">
@@ -57,13 +89,30 @@
 		type="text"
 		class="px-2 my-2"
 		placeholder="Поиск мест и адресов"
+		on:input={debouncedSearch}
 	>
 
 	<button
 		class="flex justify-center items-center cursor-pointer hover:bg-new-active px-3 transition-colors"
 		on:mouseover={() => { isMouseOver = true }}
 		on:mouseout={() => { isMouseOver = false }}
+		on:click={() => { setViewFromSearch(searchInputValue) }}
 	>
 		<SearchIcon color={isMouseOver ? "#AFAFBB" : "#212121"}/>
 	</button>
 </div>
+
+{#if searchSuggestions.length > 0}
+	<ul class="w-80 bg-white rounded-md overflow-hidden shadow-lg border border-stroke absolute top-16 left-0">
+		{#each searchSuggestions as { text, magicKey }}
+			<li class="">
+				<button
+					class="p-2 block w-full text-left hover:bg-new-active hover:text-main transition-colors"
+					on:click={() => { setViewFromSearch(text, magicKey) }}
+				>
+					{text}
+				</button>
+			</li>
+		{/each}
+	</ul>
+{/if}
