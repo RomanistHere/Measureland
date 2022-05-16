@@ -4,7 +4,6 @@
 	import { _ } from 'svelte-i18n';
 
 	import { geocodeServiceReference, mapReference } from '../../../../stores/references.js';
-	import { registerAction } from "../../../utilities/helpers.js";
 
 	// usage is limited to the domain, good luck using it outside
 	const esriApiKey = 'AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q';
@@ -22,9 +21,4 @@
 		placeholder: $_('_.searchPlaceholder'),
 		useMapBounds: false,
 	}).addTo(map);
-
-	// searchControl.on('results', data => {
-	// 	registerAction('mapSearch');
-	// 	map.setView(data.results[0].latlng, 17);
-	// });
 </script>

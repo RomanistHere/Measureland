@@ -10,8 +10,10 @@
     }));
 </script>
 
-<div class="mb-6 {className}">
-    <h2 class="font-bold px-8 text-xl underline">{title}</h2>
+<div class="my-2 {className}">
+    <div class="px-6">
+        <hr>
+    </div>
     <ul class="mt-1">
         {#each list as { text, shouldShow, onClick, href, target }, i}
             {#if shouldShow}
@@ -19,7 +21,7 @@
                     <a
                         { href }
                         { target }
-                        class="block px-8 text-lg py-2 leading-5 transition-colors hover:bg-active hover:text-white"
+                        class="block px-6 py-2 leading-5 hoverable"
                         on:click={onClick}
                     >
                         {text}

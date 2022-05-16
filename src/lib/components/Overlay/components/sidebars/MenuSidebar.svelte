@@ -178,17 +178,16 @@
 	const yearsCopyright = getCopyrightYears();
 </script>
 
-<div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4 relative">
+<div class="min-h-full px-0 pt-1 -lg:pb-4 relative">
 	<SidebarBlock { ...dataNavBlock } className="lg:hidden" />
 	<SidebarBlock { ...dataTopBlock } className="lg:hidden" />
 
-	<div class="mb-6">
-		<h2 class="font-bold px-8 text-xl underline">{$_('menuSidebar.titleMid')}</h2>
+	<div class="my-2">
 		<ul class="mt-1">
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
+					class="block px-6 hoverable py-2 leading-5"
 					on:click|preventDefault={openHowToRatePopup}
 				>
 					{$_('menuSidebar.ratePlace')}
@@ -205,7 +204,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
+					class="block px-6 hoverable py-2 leading-5"
 					on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
 				>
 					{$_('menuSidebar.filters')}
@@ -214,38 +213,55 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
+					class="block px-6 hoverable py-2 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
 					{$_('menuSidebar.feedbackPopup')}
 				</a>
 			</li>
+		</ul>
+
+		<div class="px-6 my-2">
+			<hr>
+		</div>
+
+		<ul>
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
+					class="block px-6 hoverable py-2 leading-5"
 					on:click|preventDefault={togglePOIs}
 				>
-					{$_('menuSidebar.POIs')}:
-					{#if $appStateStore.shouldShowPOIs}
-						{$_('menuSidebar.toggleOn')}
-					{:else}
-						{$_('menuSidebar.toggleOff')}
-					{/if}
+					{$_('menuSidebar.POIs')}
+					<p
+						class:text-danger-red={!$appStateStore.shouldShowPOIs}
+						class:text-on-green={$appStateStore.shouldShowPOIs}
+					>
+						{#if $appStateStore.shouldShowPOIs}
+							{$_('menuSidebar.toggleOn')}
+						{:else}
+							{$_('menuSidebar.toggleOff')}
+						{/if}
+					</p>
 				</a>
 			</li>
 			<li>
 				<a
 					href={"#"}
-					class="block px-8 transition-colors hover:text-white hover:bg-active text-lg py-2 leading-5"
+					class="block px-6 hoverable py-2 leading-5"
 					on:click|preventDefault={toggleSendingEvents}
 				>
-					{$_('menuSidebar.sendCrashReports')}:
-					{#if $userStateStore.shouldSendEvent}
-						{$_('menuSidebar.toggleOn')}
-					{:else}
-						{$_('menuSidebar.toggleOff')}
-					{/if}
+					{$_('menuSidebar.sendCrashReports')}
+					<p
+						class:text-danger-red={!$userStateStore.shouldSendEvent}
+						class:text-on-green={$userStateStore.shouldSendEvent}
+					>
+						{#if $userStateStore.shouldSendEvent}
+							{$_('menuSidebar.toggleOn')}
+						{:else}
+							{$_('menuSidebar.toggleOff')}
+						{/if}
+					</p>
 				</a>
 			</li>
 		</ul>
@@ -267,9 +283,9 @@
 
 	<SidebarBlock { ...dataBottomBlock } />
 
-	<footer class="absolute bottom-0 inset-x-0 text-center text-sm py-5 pb-5 -lg:static">
+	<footer class="text-sm px-6 pb-4 text-txt-secondary">
+		<p>{$_('footer.version')}: {APP_VERSION}.</p>
 		<div>
-			<span>{$_('footer.version')}: {APP_VERSION}</span>.
 			<a class="transition-colors hover:text-white hover:bg-active underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
 		</div>
 		<div>
@@ -280,7 +296,10 @@
 			<a
 				class="transition-colors hover:text-white hover:bg-active underline" target="_blank" rel="noopener"
 				href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p"
-			>{$_('footer.allRightsReserved')}</a>. {yearsCopyright}.
+			>{$_('footer.allRightsReserved')}</a>
+			<p>
+				{yearsCopyright}.
+			</p>
 		</div>
 	</footer>
 </div>

@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .hoverable {
+    @apply hover:bg-new-active hover:text-main transition-colors;
+  }
+}

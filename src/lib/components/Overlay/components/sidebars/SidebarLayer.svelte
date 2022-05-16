@@ -19,13 +19,13 @@
 </script>
 
 <aside
-    class="fixed z-2 left-4 bottom-4 overflow-y-auto overflow-x-hidden rounded-md w-80 -lg:right-4 -lg:w-auto popup-shadow glassmorphism"
+    class="fixed z-2 left-4 overflow-y-auto overflow-x-hidden rounded-md w-64 -lg:right-4 -lg:w-auto popup-shadow bg-white shadow-lg border border-stroke"
     in:fly="{{ x: -100, duration: 300 }}"
     out:fly="{{ x: -100, duration: 300 }}"
 >
     <svelte:component this={Sidebar} { sidebarData }/>
 
-    <CloseButton overlayType='sidebar' />
+<!--    <CloseButton overlayType='sidebar' />-->
 </aside>
 
 <style>

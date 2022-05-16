@@ -156,7 +156,7 @@
 		{#each navLinks as { text, url }}
 			<li class="inline-block border-r border-stroke last:border-0">
 				<a
-					class="block p-2 px-4 hover:bg-new-active hover:text-main transition-colors"
+					class="block p-2 px-4 hoverable"
 					class:text-main={$page.path === url}
 					class:bg-new-active={$page.path === url}
 					href={url}
