@@ -12,7 +12,7 @@
 
 	geocodeServiceReference.set(geocodeService);
 
-	const searchControl = new ELG.geosearch({
+	new ELG.geosearch({
 		providers: [
 			ELG.arcgisOnlineProvider({
 				apikey: esriApiKey,

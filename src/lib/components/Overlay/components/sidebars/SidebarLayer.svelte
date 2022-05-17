@@ -25,7 +25,7 @@
 >
     <svelte:component this={Sidebar} { sidebarData }/>
 
-<!--    <CloseButton overlayType='sidebar' />-->
+    <CloseButton overlayType='sidebar' className="top-3 right-2" />
 </aside>
 
 <style>

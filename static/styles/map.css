@@ -56,7 +56,7 @@
 	transition: background-color .2s, color .2s;
 }
 
-.leaflet-touch .leaflet-control-zoom a:hover {
+.leaflet-touch .leaflet-control-zoom a:not(.leaflet-disabled):hover {
 	background-color: #E5EEFF;
 	color: #3877F1;
 }
@@ -122,28 +122,61 @@
 	margin-top: 1rem;
 }
 
+.leaflet-touch .leaflet-draw-toolbar a {
+	transition: background .2s;
+}
+
+.leaflet-touch .leaflet-draw-toolbar a:hover {
+	background-color: #E5EEFF;
+}
+
 .leaflet-touch .leaflet-draw-toolbar .leaflet-disabled {
 	opacity: .3;
+}
+
+.leaflet-touch .leaflet-draw-toolbar .leaflet-disabled:hover {
+	opacity: .3;
+	background-color: #fff;
 }
 
 .leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-polygon {
 	background-image: url('../images/icons/pen.svg');
 }
 
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-polygon:hover {
+	background-image: url('../images/icons/pen-active.svg');
+}
+
 .leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
 	background-image: url('../images/icons/rectangle.svg');
+}
+
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-rectangle:not(.leaflet-disabled):hover {
+	background-image: url('../images/icons/rectangle-active.svg');
 }
 
 .leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-circle {
 	background-image: url('../images/icons/circle.svg');
 }
 
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-draw-circle:not(.leaflet-disabled):hover {
+	background-image: url('../images/icons/circle-active.svg');
+}
+
 .leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-edit-edit {
 	background-image: url('../images/icons/edit.svg');
 }
 
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-edit-edit:not(.leaflet-disabled):hover {
+	background-image: url('../images/icons/edit-active.svg');
+}
+
 .leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-edit-remove {
 	background-image: url('../images/icons/trash.svg');
+}
+
+.leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar .leaflet-draw-edit-remove:not(.leaflet-disabled):hover {
+	background-image: url('../images/icons/trash-active.svg');
 }
 
 #svelte .leaflet-touch .leaflet-draw-section .leaflet-draw-toolbar a {

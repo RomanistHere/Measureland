@@ -115,8 +115,10 @@
 		isCenterHovered = false;
 	};
 
-	const changeLanguage = async () => {
-		const nextLang = $locale === 'ru' ? 'en' : 'ru';
+	const changeLanguage = async nextLang => {
+		if ($locale === nextLang)
+			return;
+
 		locale.set(nextLang);
 		if (typeof window !== 'undefined') {
 			const url = new URL(window.location.href);
@@ -149,7 +151,7 @@
 	};
 </script>
 
-<nav class="fixed flex z-5 justify-between items-center inset-x-4 top-4 -lg:hidden">
+<nav class="absolute flex z-5 justify-between items-center inset-x-4 top-4 -lg:hidden">
 	<Search {isSidebarActive} />
 
 	<ul class="bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
@@ -159,6 +161,7 @@
 					class="block p-2 px-4 hoverable"
 					class:text-main={$page.path === url}
 					class:bg-new-active={$page.path === url}
+					class:cursor-default={$page.path === url}
 					href={url}
 					on:click={onNavLinkClick}
 				>
@@ -168,63 +171,66 @@
 		{/each}
 	</ul>
 
-	<div>
-		{#if isUserLoggedIn}
-			<a
-				href={"#"}
-				class="flex items-center relative"
-				on:blur={() => { setTimeout(() => { profileDropDownOpen = false }, 200) }}
-				on:click={e => {
-                    e.preventDefault();
-                    profileDropDownOpen = !profileDropDownOpen;
-                }}
-			>
-				<UserProfileIcon />
-				<div class="ml-2 flex">
-                    <span
-                        class="name truncate block mr-1"
-                        title='{$_("navBar.account1")} {$userStateStore.userName}. {$_("navBar.account2")}'
-                    >
-                        {$userStateStore.userName}
-                    </span>
-					- {$userStateStore.activeRatings}🏡
-				</div>
+	<div class="flex">
+		<div>
+			{#if isUserLoggedIn}
+				<a
+					href={"#"}
+					class="flex items-center justify-center rounded-full bg-main-active text-white w-10 h-10 shadow-lg border border-main-active"
+					title='{$_("navBar.account1")} {$userStateStore.userName}. {$_("navBar.account2")}'
+					on:blur={() => { setTimeout(() => { profileDropDownOpen = false }, 200) }}
+					on:click={e => {
+	                    e.preventDefault();
+	                    profileDropDownOpen = !profileDropDownOpen;
+	                }}
+				>
+					{$userStateStore.userName[0]}
+				</a>
 
 				{#if profileDropDownOpen}
 					<DropdownMenu
-						className='-right-4 w-48 top-10 mt-2'
+						className='right-0 w-48 top-10 mt-2'
 						{ dropdownData }
 					/>
 				{/if}
-			</a>
-		{:else}
+			{:else}
+				<button
+					class="text-center rounded-md py-2 px-4 transition-colors bg-white -md:px-4 shadow-lg border border-stroke"
+					on:click={openLogin}
+					type="button"
+				>
+					{$_('navBar.secondaryBtn')}
+				</button>
+				<button
+					class="text-center rounded-md py-2 px-4 transition-colors bg-main text-white ml-2 -md:px-4 shadow-lg border border-main"
+					on:click={openRegister}
+					type="button"
+				>
+					{$_('navBar.primaryBtn')}
+				</button>
+			{/if}
+		</div>
+
+		<div class="flex ml-4 bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
 			<button
-				class="text-center rounded-md py-2 px-8 transition-colors bg-white -md:px-4 shadow-lg border border-stroke"
-				on:click={openLogin}
-				type="button"
+				class="block p-2 px-4 hoverable border-r border-stroke"
+				class:text-main={$locale === 'en'}
+				class:bg-new-active={$locale === 'en'}
+				class:cursor-default={$locale === 'en'}
+				on:click={() => { changeLanguage('en') }}
 			>
-				{$_('navBar.secondaryBtn')}
+				ENG
 			</button>
 			<button
-				class="text-center rounded-md py-2 px-8 transition-colors bg-main text-white ml-2 -md:px-4 shadow-lg border border-main"
-				on:click={openRegister}
-				type="button"
+				class="block p-2 px-4 hoverable"
+				class:text-main={$locale === 'ru'}
+				class:bg-new-active={$locale === 'ru'}
+				class:cursor-default={$locale === 'ru'}
+				on:click={() => { changeLanguage('ru') }}
 			>
-				{$_('navBar.primaryBtn')}
+				РУС
 			</button>
-<!--			<SecondaryButton-->
-<!--				text={$_('navBar.secondaryBtn')}-->
-<!--				className='py-2'-->
-<!--				disabled={!$appStateStore.termsOfUseAgreed}-->
-<!--				action={openLogin}-->
-<!--			/>-->
-<!--			<PrimaryButton-->
-<!--				text={$_('navBar.primaryBtn')}-->
-<!--				className='ml-4 py-2'-->
-<!--				disabled={!$appStateStore.termsOfUseAgreed}-->
-<!--				action={openRegister}-->
-<!--			/>-->
-		{/if}
+		</div>
 	</div>
 </nav>
 

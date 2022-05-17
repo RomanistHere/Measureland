@@ -286,15 +286,15 @@
 	<footer class="text-sm px-6 pb-4 text-txt-secondary">
 		<p>{$_('footer.version')}: {APP_VERSION}.</p>
 		<div>
-			<a class="transition-colors hover:text-white hover:bg-active underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
+			<a class="hoverable underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
 		</div>
 		<div>
 			{$_('footer.credits')} (<a
-			class="transition-colors hover:text-white hover:bg-active underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/"
+			class="hoverable underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/"
 		>{$_('footer.creditsLink')}</a>).
 			<br />
 			<a
-				class="transition-colors hover:text-white hover:bg-active underline" target="_blank" rel="noopener"
+				class="hoverable underline" target="_blank" rel="noopener"
 				href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p"
 			>{$_('footer.allRightsReserved')}</a>
 			<p>
