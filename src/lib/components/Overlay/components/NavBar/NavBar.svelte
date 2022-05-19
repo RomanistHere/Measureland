@@ -158,7 +158,7 @@
 		{#each navLinks as { text, url }}
 			<li class="inline-block border-r border-stroke last:border-0">
 				<a
-					class="block p-2 px-4 hoverable"
+					class="block p-2 px-4 hoverable-link"
 					class:text-main={$page.path === url}
 					class:bg-new-active={$page.path === url}
 					class:cursor-default={$page.path === url}
@@ -184,7 +184,7 @@
 	                    profileDropDownOpen = !profileDropDownOpen;
 	                }}
 				>
-					{$userStateStore.userName[0]}
+					{$userStateStore.userName[0].toUpperCase()}
 				</a>
 
 				{#if profileDropDownOpen}
@@ -213,7 +213,7 @@
 
 		<div class="flex ml-4 bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
 			<button
-				class="block p-2 px-4 hoverable border-r border-stroke"
+				class="block p-2 px-4 hoverable-link border-r border-stroke"
 				class:text-main={$locale === 'en'}
 				class:bg-new-active={$locale === 'en'}
 				class:cursor-default={$locale === 'en'}
@@ -222,7 +222,7 @@
 				ENG
 			</button>
 			<button
-				class="block p-2 px-4 hoverable"
+				class="block p-2 px-4 hoverable-link"
 				class:text-main={$locale === 'ru'}
 				class:bg-new-active={$locale === 'ru'}
 				class:cursor-default={$locale === 'ru'}

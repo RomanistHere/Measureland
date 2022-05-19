@@ -155,12 +155,13 @@
 		openAnotherOverlay('askForMoreRatingsPopup');
 		userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
 		const { error } = await askMoreRatings();
-		closeOverlay('sidebar');
+
 		if (error) {
 			logError(error);
 			showSomethingWrongNotification();
-		} else
+		} else {
 			showSuccessNotification();
+		}
 	};
 
 	const openHowToRatePopup = () => {
@@ -187,7 +188,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-6 hoverable py-2 leading-5"
+					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={openHowToRatePopup}
 				>
 					{$_('menuSidebar.ratePlace')}
@@ -204,7 +205,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-6 hoverable py-2 leading-5"
+					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
 				>
 					{$_('menuSidebar.filters')}
@@ -213,7 +214,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-6 hoverable py-2 leading-5"
+					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
 					{$_('menuSidebar.feedbackPopup')}
@@ -229,7 +230,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-6 hoverable py-2 leading-5"
+					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={togglePOIs}
 				>
 					{$_('menuSidebar.POIs')}
@@ -248,7 +249,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-6 hoverable py-2 leading-5"
+					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={toggleSendingEvents}
 				>
 					{$_('menuSidebar.sendCrashReports')}
@@ -265,36 +266,37 @@
 				</a>
 			</li>
 		</ul>
-
-		{#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
-			<PrimaryButton
-				className="mx-8 mt-2 block text-center px-5"
-				disabled={true}
-				text={$_('menuSidebar.requestProcessing')}
-			/>
-		{:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
-			<PrimaryButton
-				action={askForMoreRatings}
-				text={$_('menuSidebar.needMoreRatings')}
-				className='mx-8 mt-2 block text-center'
-			/>
-		{/if}
 	</div>
 
 	<SidebarBlock { ...dataBottomBlock } />
 
+	<div class="my-2 px-6">
+		{#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
+			<div class="block text-center border-txt-tertiary border rounded-md w-full text-txt-tertiary px-6 py-4 leading-5">
+				{$_('menuSidebar.requestProcessing')}
+			</div>
+		{:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
+			<button
+				on:click={askForMoreRatings}
+				class="block text-center border-main border rounded-md w-full text-main px-6 py-4 leading-5 hoverable-prim"
+			>
+				{$_('menuSidebar.needMoreRatings')}
+			</button>
+		{/if}
+	</div>
+
 	<footer class="text-sm px-6 pb-4 text-txt-secondary">
 		<p>{$_('footer.version')}: {APP_VERSION}.</p>
 		<div>
-			<a class="hoverable underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
+			<a class="hoverable-link underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
 		</div>
 		<div>
 			{$_('footer.credits')} (<a
-			class="hoverable underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/"
+			class="hoverable-link underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/"
 		>{$_('footer.creditsLink')}</a>).
 			<br />
 			<a
-				class="hoverable underline" target="_blank" rel="noopener"
+				class="hoverable-link underline" target="_blank" rel="noopener"
 				href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p"
 			>{$_('footer.allRightsReserved')}</a>
 			<p>

@@ -63,6 +63,7 @@ const config = {
 				///// new /////
 				'new-active': '#E5EEFF',
 				'main': '#3877F1',
+				'main-hover': '#346DDB',
 				'main-active': '#235BC8',
 				'txt-main': '#212121',
 				'txt-secondary': '#9A9AA7',

@@ -21,7 +21,7 @@
                     <a
                         { href }
                         { target }
-                        class="block px-6 py-2 leading-5 hoverable"
+                        class="block px-6 py-2 leading-5 hoverable-link"
                         on:click={onClick}
                     >
                         {text}
