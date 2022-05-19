@@ -10,6 +10,7 @@ const hoverPlugin = plugin(function({ addVariant, e, postcss }) {
 			rule.selector = `.${e(`hover${separator}${rule.selector.slice(1)}`)}:hover`
 		});
 	});
+	addVariant('active', [ '&:active' ]);
 });
 
 const config = {
@@ -48,7 +49,7 @@ const config = {
 				square: 'square',
 			},
 			colors: {
-				'active': '#007097',
+				'actives': '#007097',
 				'success': '#146481',
 				'non-active': '#31493c54',
 				'main-bg': '#d4eff5',
@@ -65,13 +66,20 @@ const config = {
 				'main': '#3877F1',
 				'main-hover': '#346DDB',
 				'main-active': '#235BC8',
-				'txt-main': '#212121',
+				'txt_main': '#212121',
 				'txt-secondary': '#9A9AA7',
 				'txt-tertiary': '#AFAFBB',
+				'bg_hover': '#ECECEF',
+				'bg_active': '#E6EEFF',
 				'stroke': '#F6F6F6',
 				'on-green': '#5ABF70',
 				'danger-red': '#CA5A5A',
 			},
+		},
+	},
+	variants: {
+		extend: {
+			backgroundColor: [ 'active' ],
 		},
 	},
 	plugins: [ hoverPlugin ],

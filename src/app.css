@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.hoverable-link {
+		@apply transition-colors hover:bg-new-active hover:text-main focus:bg-new-active focus:text-main focus:outline-none;
+	}
+
+	.hoverable-prim {
+		@apply transition-colors hover:bg-main-hover hover:text-white focus:bg-main-active focus:text-white focus:outline-none;
+	}
+}

@@ -183,15 +183,6 @@
 				<a
 					href={"#"}
 					class="block px-6 hoverable-link py-2 leading-5"
-					on:click|preventDefault={() => openAnotherOverlay('filtersSidebar')}
-				>
-					{$_('menuSidebar.filters')}
-				</a>
-			</li>
-			<li>
-				<a
-					href={"#"}
-					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
 					{$_('menuSidebar.feedbackPopup')}

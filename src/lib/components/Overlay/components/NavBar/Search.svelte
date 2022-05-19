@@ -40,7 +40,11 @@
 		searchInputValue = value;
 		const resp = await getGeoSuggestions(value);
 		const { suggestions } = await resp.json();
-		searchSuggestions = [ ...suggestions ];
+
+		if (suggestions)
+			searchSuggestions = [ ...suggestions ];
+		else
+			searchSuggestions = [];
 	};
 
 	const setViewFromSearch = async (text, magicKey = '') => {
@@ -69,17 +73,17 @@
 		<span class="burger w-4 h-3 flex flex-col justify-between p-2 box-content">
 			<span
 				class:bg-main={isActive}
-				class:bg-txt-main={!isActive}
+				class:bg-txt_main={!isActive}
 				class="w-full h-0.5 rounded-md transition-colors"
 			></span>
 			<span
 				class:bg-main={isActive}
-				class:bg-txt-main={!isActive}
+				class:bg-txt_main={!isActive}
 				class="w-full h-0.5 rounded-md transition-colors"
 			></span>
 			<span
 				class:bg-main={isActive}
-				class:bg-txt-main={!isActive}
+				class:bg-txt_main={!isActive}
 				class="w-full h-0.5 rounded-md transition-colors"
 			></span>
 		</span>

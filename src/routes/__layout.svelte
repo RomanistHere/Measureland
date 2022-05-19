@@ -1,21 +1,21 @@
 <script>
-    import "../app.postcss";
-    
-    import { addMessages, init } from 'svelte-i18n';
-    import { page } from '$app/stores';
+	import "../app.css";
 
-    import en from '../lang/en.json';
-    import ru from '../lang/ru.json';
+	import { addMessages, init } from 'svelte-i18n';
+	import { page } from '$app/stores';
 
-    const lang = $page.params.lang;
+	import en from '../lang/en.json';
+	import ru from '../lang/ru.json';
 
-    addMessages('en', en);
-    addMessages('ru', ru);
+	const lang = $page.params.lang;
 
-    init({
-    	initialLocale: lang,
-    	fallbackLocale: 'en',
-    });
+	addMessages('en', en);
+	addMessages('ru', ru);
+
+	init({
+		initialLocale: lang,
+		fallbackLocale: 'en',
+	});
 </script>
 
 <slot></slot>

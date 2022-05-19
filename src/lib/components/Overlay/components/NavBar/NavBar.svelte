@@ -10,7 +10,9 @@
 	import Search from './Search.svelte';
 
 	import {
+		closeOverlay,
 		closeOverlays,
+		getOpenedOverlay,
 		logError,
 		openAnotherOverlay,
 		registerAction,
@@ -20,6 +22,7 @@
 	} from '../../../../utilities/helpers.js';
 	import { logout, saveLang } from '../../../../utilities/api.js';
 	import { appStateStore, userStateStore } from "../../../../../stores/state.js";
+	import FilterIcon from "$lib/components/inline-images/FilterIcon.svelte";
 
 	export let mainScreen = true;
 	export let isSidebarActive = false;
@@ -149,16 +152,38 @@
 		closeOverlays();
 		appStateStore.update(state => ({ ...state, startScreen: false }));
 	};
+
+	let isFiltersActive = false;
+	const openFilters = () => {
+		const { overlay } = getOpenedOverlay();
+
+		if (overlay === 'filtersSidebar') {
+			isFiltersActive = false;
+			closeOverlay('sidebar');
+		} else {
+			isFiltersActive = true;
+			openAnotherOverlay('filtersSidebar');
+		}
+	};
 </script>
 
 <nav class="absolute flex z-5 justify-between items-center inset-x-4 top-4 -lg:hidden">
-	<Search {isSidebarActive} />
+	<div class="flex">
+		<Search {isSidebarActive} />
+
+		<button
+			class="rounded-md bg-white px-3 ml-2 hover:bg-bg_hover transition-colors border border-stroke focus:bg-bg_active active:bg-bg_active"
+			on:click={openFilters}
+		>
+			<FilterIcon isActive={isFiltersActive} />
+		</button>
+	</div>
 
 	<ul class="bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
 		{#each navLinks as { text, url }}
 			<li class="inline-block border-r border-stroke last:border-0">
 				<a
-					class="block p-2 px-4 hoverable-link"
+					class="block p-2 px-3 hoverable-link"
 					class:text-main={$page.path === url}
 					class:bg-new-active={$page.path === url}
 					class:cursor-default={$page.path === url}
@@ -195,14 +220,14 @@
 				{/if}
 			{:else}
 				<button
-					class="text-center rounded-md py-2 px-4 transition-colors bg-white -md:px-4 shadow-lg border border-stroke"
+					class="text-center rounded-md py-2 px-3 transition-colors bg-white -md:px-4 shadow-lg border border-stroke"
 					on:click={openLogin}
 					type="button"
 				>
 					{$_('navBar.secondaryBtn')}
 				</button>
 				<button
-					class="text-center rounded-md py-2 px-4 transition-colors bg-main text-white ml-2 -md:px-4 shadow-lg border border-main"
+					class="text-center rounded-md py-2 px-3 transition-colors bg-main text-white ml-2 -md:px-4 shadow-lg border border-main"
 					on:click={openRegister}
 					type="button"
 				>
@@ -213,7 +238,7 @@
 
 		<div class="flex ml-4 bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
 			<button
-				class="block p-2 px-4 hoverable-link border-r border-stroke"
+				class="block p-2 px-3 hoverable-link border-r border-stroke"
 				class:text-main={$locale === 'en'}
 				class:bg-new-active={$locale === 'en'}
 				class:cursor-default={$locale === 'en'}
@@ -222,7 +247,7 @@
 				ENG
 			</button>
 			<button
-				class="block p-2 px-4 hoverable-link"
+				class="block p-2 px-3 hoverable-link"
 				class:text-main={$locale === 'ru'}
 				class:bg-new-active={$locale === 'ru'}
 				class:cursor-default={$locale === 'ru'}

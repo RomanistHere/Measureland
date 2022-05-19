@@ -1,3 +1,5 @@
+import { get } from 'svelte/store';
+
 import { overlayStateStore, appStateStore, notificationsStore, filtersStore, flowStore } from '../../stores/state.js';
 import { overlayStateDefault } from '../constants/overlayStateDefault.js';
 import { flowDictionary } from '../../configs/flow.js';
@@ -386,6 +388,23 @@ const shouldTranslate = async (text, currentLang) => {
 	return possibleLanguages.includes(langTransp[currentLang]);
 };
 
+const getOpenedOverlay = () => {
+	const overlaysObj = get(overlayStateStore);
+	const overlayData = Object.entries(overlaysObj).find(([ key, value ]) => value.isOpen);
+	if (overlayData) {
+		const [ overlay, data ] = overlayData;
+		return {
+			overlay,
+			data,
+		};
+	} else {
+		return {
+			overlay: null,
+			data: null,
+		};
+	}
+};
+
 export {
 	debounce,
 	sleep,
@@ -420,4 +439,5 @@ export {
 	truncateString,
 	getCopyrightYears,
 	shouldTranslate,
+	getOpenedOverlay,
 };
