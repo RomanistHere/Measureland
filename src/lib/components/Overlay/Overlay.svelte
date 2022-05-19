@@ -11,6 +11,7 @@
 	import CornerNotification from './components/notifications/CornerNotification.svelte';
 	import Loading from './components/Loading.svelte';
 	import NavBar from './components/NavBar/NavBar.svelte';
+	import PrimaryButton from "$lib/components/UI/PrimaryButton.svelte";
 
 	export let mainScreen = true;
 	export let hiddenLoading = false;
@@ -87,6 +88,9 @@
 			manageOverlay(openOverlays[i]);
 	};
 
+	const openHowToRatePopup = () =>
+		openAnotherOverlay('howToRatePopup');
+
 	$: dataOpen = checkIsOpen($overlayStateStore);
 	$: manageOverlays(dataOpen);
 
@@ -115,6 +119,14 @@
 	{#if $appStateStore.startScreen}
 		<svelte:component this={StartScreen} />
 	{/if}
+
+	<div class="fixed left-1/2 -translate-x-1/2 z-1 bottom-4">ИЗМЕРИЯ</div>
+
+	<PrimaryButton
+		text="Поставить отметку"
+		class="fixed left-4 bottom-4 z-1"
+		on:click={openHowToRatePopup}
+	/>
 {/if}
 
 <NavBar

@@ -3,7 +3,7 @@
 	import { browser } from '$app/env';
 
 	import SidebarBlock from './SidebarBlock.svelte';
-	import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
+	import PrimaryAltButton from "$lib/components/UI/PrimaryAltButton.svelte";
 
 	import {
 		closeOverlay,
@@ -164,12 +164,6 @@
 		}
 	};
 
-	const openHowToRatePopup = () => {
-		if (!$isDesktop)
-			closeOverlay('sidebar');
-		openAnotherOverlay('howToRatePopup');
-	};
-
 	const openFeedbackPopup = () => {
 		if (!$isDesktop)
 			closeOverlay('sidebar');
@@ -185,23 +179,6 @@
 
 	<div class="my-2">
 		<ul class="mt-1">
-			<li>
-				<a
-					href={"#"}
-					class="block px-6 hoverable-link py-2 leading-5"
-					on:click|preventDefault={openHowToRatePopup}
-				>
-					{$_('menuSidebar.ratePlace')}
-					{#if isUserLoggedIn}
-						<div class="inline-block text-sm settings__available">
-							({$_('menuSidebar.ratePlaceAvailable')}:
-							<span
-								class="settings__highlight settings__highlight-small"
-							>{$userStateStore.activeRatings}</span>)
-						</div>
-					{/if}
-				</a>
-			</li>
 			<li>
 				<a
 					href={"#"}
@@ -276,12 +253,10 @@
 				{$_('menuSidebar.requestProcessing')}
 			</div>
 		{:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
-			<button
+			<PrimaryAltButton
 				on:click={askForMoreRatings}
-				class="block text-center border-main border rounded-md w-full text-main px-6 py-4 leading-5 hoverable-prim"
-			>
-				{$_('menuSidebar.needMoreRatings')}
-			</button>
+				text={$_('menuSidebar.needMoreRatings')}
+			/>
 		{/if}
 	</div>
 
