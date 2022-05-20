@@ -69,6 +69,7 @@ const config = {
 				'txt_main': '#212121',
 				'txt-secondary': '#9A9AA7',
 				'txt-tertiary': '#AFAFBB',
+				'txt_danger': '#E03C50',
 				'bg_hover': '#ECECEF',
 				'bg_active': '#E6EEFF',
 				'stroke': '#F6F6F6',

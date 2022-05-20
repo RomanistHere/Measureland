@@ -5,7 +5,7 @@
 
     $: list = list.map(item => ({
     	...item,
-    	shouldShow: item.shouldShow === undefined || item.shouldShow === true ? true : false,
+    	shouldShow: item.shouldShow === undefined || item.shouldShow === true,
     	target: item.href.includes("https://") ? "_blank" : null,
     }));
 </script>
@@ -21,7 +21,7 @@
                     <a
                         { href }
                         { target }
-                        class="block px-6 py-2 leading-5 hoverable-link"
+                        class="block px-4 py-2 leading-5 hoverable-link"
                         on:click={onClick}
                     >
                         {text}

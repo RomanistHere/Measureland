@@ -7,7 +7,7 @@
 
 <button
 	on:click
-	class="block text-center border-main border rounded-md w-full text-main px-6 py-4 leading-5 hoverable-prim {customClass}"
+	class="block text-center border-main border rounded-md w-full text-main px-8 py-4 leading-5 hoverable-prim {customClass}"
 >
 	{text}
 </button>

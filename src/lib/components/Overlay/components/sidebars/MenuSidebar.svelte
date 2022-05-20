@@ -182,7 +182,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-6 hoverable-link py-2 leading-5"
+					class="block px-4 hoverable-link py-2 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
 					{$_("menuSidebar.feedbackPopup")}
@@ -190,34 +190,34 @@
 			</li>
 		</ul>
 
-		<div class="px-6 my-2">
+		<div class="px-4 my-2">
 			<hr>
 		</div>
 
 		<ul>
+<!--			<li>-->
+<!--				<a-->
+<!--					href={"#"}-->
+<!--					class="block px-4 hoverable-link py-2 leading-5"-->
+<!--					on:click|preventDefault={togglePOIs}-->
+<!--				>-->
+<!--					{$_("menuSidebar.POIs")}-->
+<!--					<p-->
+<!--						class:text-danger-red={!$appStateStore.shouldShowPOIs}-->
+<!--						class:text-on-green={$appStateStore.shouldShowPOIs}-->
+<!--					>-->
+<!--						{#if $appStateStore.shouldShowPOIs}-->
+<!--							{$_("menuSidebar.toggleOn")}-->
+<!--						{:else}-->
+<!--							{$_("menuSidebar.toggleOff")}-->
+<!--						{/if}-->
+<!--					</p>-->
+<!--				</a>-->
+<!--			</li>-->
 			<li>
 				<a
 					href={"#"}
-					class="block px-6 hoverable-link py-2 leading-5"
-					on:click|preventDefault={togglePOIs}
-				>
-					{$_("menuSidebar.POIs")}
-					<p
-						class:text-danger-red={!$appStateStore.shouldShowPOIs}
-						class:text-on-green={$appStateStore.shouldShowPOIs}
-					>
-						{#if $appStateStore.shouldShowPOIs}
-							{$_("menuSidebar.toggleOn")}
-						{:else}
-							{$_("menuSidebar.toggleOff")}
-						{/if}
-					</p>
-				</a>
-			</li>
-			<li>
-				<a
-					href={"#"}
-					class="block px-6 hoverable-link py-2 leading-5"
+					class="block px-4 hoverable-link py-2 leading-5"
 					on:click|preventDefault={toggleSendingEvents}
 				>
 					{$_("menuSidebar.sendCrashReports")}
@@ -238,7 +238,7 @@
 
 	<SidebarBlock { ...dataBottomBlock } />
 
-	<div class="my-2 px-6">
+	<div class="mt-2 px-4 mb-4">
 		{#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
 			<div class="block text-center border-txt-tertiary border rounded-md w-full text-txt-tertiary px-6 py-4 leading-5">
 				{$_("menuSidebar.requestProcessing")}
@@ -251,7 +251,7 @@
 		{/if}
 	</div>
 
-	<footer class="text-sm px-6 pb-4 text-txt-secondary">
+	<footer class="text-sm px-4 pb-4 text-txt-secondary">
 		<p>{$_("footer.version")}: {APP_VERSION}.</p>
 		<div>
 			<a class="hoverable-link underline" target="_blank" href="blog/terms-of-use/">{$_("footer.termsOfUse")}</a>
