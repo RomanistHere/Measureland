@@ -1,0 +1,22 @@
+/*todo replace general.css with this file*/
+
+html {
+	/*// colors //*/
+	--bg-hover: #ECECEF;
+	--bg-active: #E5EEFF;
+	--main: #3877F1;
+	--stroke: #F6F6F6;
+}
+
+*::selection {
+	background-color: #222222;
+	color: #fff;
+}
+
+.absolute-centered {
+	position: absolute;
+
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
