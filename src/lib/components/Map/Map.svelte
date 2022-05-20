@@ -6,6 +6,7 @@
 
 	import PointsOfInterest from "./components/PointsOfInterest.svelte";
 	import MarkerCluster from "./components/MarkerCluster.svelte";
+	import Communities from "./components/Communities.svelte";
 	import GeoSearch from "./components/GeoSearch.svelte";
 	import Draw from "./components/Draw/Draw.svelte";
 	import TextLink from "../ui-elements/TextLink.svelte";
@@ -34,6 +35,8 @@
 			bounceAtZoomLimits: false,
 		});
 
+		// https://www.mediawiki.org/wiki/Wikimedia_Maps/API
+		// https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=en
 		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 			attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
 			subdomains: [ "a", "b", "c" ],
@@ -78,14 +81,15 @@
 </script>
 
 {#if $appStateStore.shouldWork}
-	<div use:mapAction class="w-full h-full">
-		{#if map}
-			<MarkerCluster />
-			<PointsOfInterest />
-			<GeoSearch />
-			<Draw mapClickRefFuntcion={onMapClick} />
-		{/if}
-	</div>
+	<div use:mapAction class="w-full h-full"></div>
+
+	{#if map}
+		<Communities />
+		<PointsOfInterest />
+		<MarkerCluster />
+		<GeoSearch />
+		<Draw mapClickRefFuntcion={onMapClick} />
+	{/if}
 {:else}
 	<section class="fixed inset-0 z-5 flex justify-center items-center bg-white">
 		<p class="error_text px-4">
