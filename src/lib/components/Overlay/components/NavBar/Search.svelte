@@ -1,7 +1,16 @@
 <script>
 	import SearchIcon from "$lib/components/inline-images/SearchIcon.svelte";
-	import { closeOverlay, openAnotherOverlay, debounce, registerAction, getOpenedOverlay } from "$lib/utilities/helpers.js";
-	import { getGeoSuggestions, getGeoCandidates } from "$lib/utilities/externalApi.js";
+
+	import {
+		closeOverlay,
+		debounce,
+		getOpenedOverlay,
+		logError,
+		openAnotherOverlay,
+		registerAction,
+		showSomethingWrongNotification,
+	} from "$lib/utilities/helpers.js";
+	import { getGeoCandidates, getGeoSuggestions } from "$lib/utilities/externalApi.js";
 
 	import { overlayStateStore } from "../../../../../stores/state.js";
 	import { mapReference } from "../../../../../stores/references.js";
@@ -9,7 +18,6 @@
 	// sidebar and burger button
 
 	let isActive = false;
-	let isMouseOver = false;
 
 	const handleClick = () => {
 		isActive = !isActive;
@@ -37,7 +45,12 @@
 		const { value } = e.target;
 		searchInputValue = value;
 		const resp = await getGeoSuggestions(value);
-		const { suggestions } = await resp.json();
+		const { suggestions, error } = await resp.json();
+
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+		}
 
 		if (suggestions)
 			searchSuggestions = [ ...suggestions ];
@@ -62,8 +75,9 @@
 
 <div class="bg-white rounded-md overflow-hidden shadow-lg border border-stroke flex">
 	<button
-		class="flex justify-center items-center cursor-pointer hover:bg-new-active px-1 transition-colors"
+		class="flex justify-center items-center cursor-pointer hover:bg-bg_hover px-1 transition-colors focus:bg-bg_active active:bg-bg_active"
 		class:bg-new-active={isActive}
+		class:focus:outline-none={!isActive}
 		aria-label="Main menu"
 		aria-expanded={isActive && "true"}
 		on:click={handleClick}
@@ -89,18 +103,16 @@
 
 	<input
 		type="text"
-		class="px-2 my-2"
+		class="px-2 my-2 focus:outline-none border-b border-transparent focus:border-text"
 		placeholder="Поиск мест и адресов"
 		on:input={debouncedSearch}
 	>
 
 	<button
-		class="flex justify-center items-center cursor-pointer hover:bg-new-active px-3 transition-colors"
-		on:mouseover={() => { isMouseOver = true }}
-		on:mouseout={() => { isMouseOver = false }}
+		class="flex justify-center items-center cursor-pointer px-3 hover:bg-bg_hover transition-colors focus:bg-bg_active active:bg-bg_active focus:outline-none"
 		on:click={() => { setViewFromSearch(searchInputValue) }}
 	>
-		<SearchIcon color={isMouseOver ? "#AFAFBB" : "#212121"}/>
+		<SearchIcon color={searchInputValue ? "#212121" : "#AFAFBB"} />
 	</button>
 </div>
 

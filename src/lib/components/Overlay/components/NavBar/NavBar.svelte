@@ -148,7 +148,7 @@
 		<Search />
 
 		<button
-			class="rounded-lg bg-white px-3 ml-2 hover:bg-bg_hover transition-colors border border-stroke focus:bg-bg_active active:bg-bg_active"
+			class="rounded-lg bg-white px-3 ml-2 hover:bg-bg_hover transition-colors border border-stroke focus:bg-bg_active active:bg-bg_active focus:outline-none"
 			on:click={openFilters}
 		>
 			<FilterIcon isActive={isFiltersActive} />
