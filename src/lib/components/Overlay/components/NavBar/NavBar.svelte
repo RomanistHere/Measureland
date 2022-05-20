@@ -1,13 +1,13 @@
 <script>
-	import { _, json, locale } from 'svelte-i18n';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { _, json, locale } from "svelte-i18n";
+	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 
-	import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
-	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
-	import UserProfileIcon from '../../../inline-images/UserProfileIcon.svelte';
-	import DropdownMenu from '../../../ui-elements/DropdownMenu.svelte';
-	import Search from './Search.svelte';
+	import PrimaryButton from "../../../ui-elements/PrimaryButton.svelte";
+	import SecondaryButton from "../../../ui-elements/SecondaryButton.svelte";
+	import UserProfileIcon from "../../../inline-images/UserProfileIcon.svelte";
+	import DropdownMenu from "../../../ui-elements/DropdownMenu.svelte";
+	import Search from "./Search.svelte";
 
 	import {
 		closeOverlay,
@@ -19,8 +19,8 @@
 		setCookie,
 		showSomethingWrongNotification,
 		showSuccessNotification,
-	} from '../../../../utilities/helpers.js';
-	import { logout, saveLang } from '../../../../utilities/api.js';
+	} from "../../../../utilities/helpers.js";
+	import { logout, saveLang } from "../../../../utilities/api.js";
 	import { appStateStore, userStateStore } from "../../../../../stores/state.js";
 	import FilterIcon from "$lib/components/inline-images/FilterIcon.svelte";
 
@@ -31,7 +31,7 @@
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 
 	$: dropdownData = [{
-		text: $_('menuSidebar.logout'),
+		text: $_("menuSidebar.logout"),
 		action: async e => {
 			e.preventDefault();
 			profileDropDownOpen = false;
@@ -43,29 +43,29 @@
 					...state,
 					userID: null,
 					activeRatings: 3,
-					userName: 'Аноним',
+					userName: "Аноним",
 					wantMoreRatings: false,
 				}));
 				showSuccessNotification();
-				registerAction('navbarLogout');
+				registerAction("navbarLogout");
 			} else {
 				logError(error);
 				showSomethingWrongNotification();
 			}
 		},
 	}, (mainScreen && {
-		text: $_('menuSidebar.myRatings'),
+		text: $_("menuSidebar.myRatings"),
 		action: e => {
 			e.preventDefault();
 			profileDropDownOpen = false;
-			openAnotherOverlay('myPlacesPopup');
+			openAnotherOverlay("myPlacesPopup");
 		},
 	}), {
-		text: $_('menuSidebar.changePassword'),
+		text: $_("menuSidebar.changePassword"),
 		action: e => {
 			e.preventDefault();
 			profileDropDownOpen = false;
-			openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
+			openAnotherOverlay("forgotPasswordPopup", { isChangePass: true });
 		},
 	}].filter(Boolean);
 
@@ -75,22 +75,22 @@
 			return;
 
 		appStateStore.update(state => ({ ...state, startScreen: false }));
-		setCookie('startScreen', '0', 365);
-		registerAction('navbarButtons');
+		setCookie("startScreen", "0", 365);
+		registerAction("navbarButtons");
 	};
 
 	const openRegister = () => {
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		closeStartScreen();
-		openAnotherOverlay('registerPopup');
+		openAnotherOverlay("registerPopup");
 	};
 
 	const openLogin = () => {
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		closeStartScreen();
-		openAnotherOverlay('loginPopup');
+		openAnotherOverlay("loginPopup");
 	};
 
 	let isLeftHovered = false;
@@ -122,19 +122,19 @@
 			return;
 
 		locale.set(nextLang);
-		if (typeof window !== 'undefined') {
+		if (typeof window !== "undefined") {
 			const url = new URL(window.location.href);
 
-			const pathSplit = url.pathname.split('/');
+			const pathSplit = url.pathname.split("/");
 			pathSplit[1] = nextLang;
-			url.pathname = pathSplit.join('/');
+			url.pathname = pathSplit.join("/");
 			await goto(url, { replaceState: true });
 
 			if (isUserLoggedIn)
 				await saveLang(nextLang);
 
 			showSuccessNotification();
-			registerAction('navbarLanguage');
+			registerAction("navbarLanguage");
 		}
 	};
 
@@ -145,7 +145,7 @@
 		return Array.from(uniqueSet).map(JSON.parse);
 	};
 
-	$: navLinks = removeDuplicates($json('navBar.links'));
+	$: navLinks = removeDuplicates($json("navBar.links"));
 
 	const onNavLinkClick = () => {
 		closeOverlays();
@@ -156,12 +156,12 @@
 	const openFilters = () => {
 		const { overlay } = getOpenedOverlay();
 
-		if (overlay === 'filtersSidebar') {
+		if (overlay === "filtersSidebar") {
 			isFiltersActive = false;
-			closeOverlay('sidebar');
+			closeOverlay("sidebar");
 		} else {
 			isFiltersActive = true;
-			openAnotherOverlay('filtersSidebar');
+			openAnotherOverlay("filtersSidebar");
 		}
 	};
 </script>
@@ -199,19 +199,19 @@
 		<div class="flex mr-4 bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
 			<button
 				class="block p-2 px-3 hoverable-link border-r border-stroke"
-				class:text-main={$locale === 'en'}
-				class:bg-new-active={$locale === 'en'}
-				class:cursor-default={$locale === 'en'}
-				on:click={() => { changeLanguage('en') }}
+				class:text-main={$locale === "en"}
+				class:bg-new-active={$locale === "en"}
+				class:cursor-default={$locale === "en"}
+				on:click={() => { changeLanguage("en") }}
 			>
 				ENG
 			</button>
 			<button
 				class="block p-2 px-3 hoverable-link"
-				class:text-main={$locale === 'ru'}
-				class:bg-new-active={$locale === 'ru'}
-				class:cursor-default={$locale === 'ru'}
-				on:click={() => { changeLanguage('ru') }}
+				class:text-main={$locale === "ru"}
+				class:bg-new-active={$locale === "ru"}
+				class:cursor-default={$locale === "ru"}
+				on:click={() => { changeLanguage("ru") }}
 			>
 				РУС
 			</button>
@@ -244,14 +244,14 @@
 					on:click={openLogin}
 					type="button"
 				>
-					{$_('navBar.secondaryBtn')}
+					{$_("navBar.secondaryBtn")}
 				</button>
 				<button
 					class="text-center rounded-md py-2 px-3 transition-colors bg-main text-white ml-2 -md:px-4 shadow-lg border border-main"
 					on:click={openRegister}
 					type="button"
 				>
-					{$_('navBar.primaryBtn')}
+					{$_("navBar.primaryBtn")}
 				</button>
 			{/if}
 		</div>

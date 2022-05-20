@@ -1,15 +1,15 @@
 <script>
-	import { _, json } from 'svelte-i18n';
-	import { onDestroy, onMount } from 'svelte';
+	import { _, json } from "svelte-i18n";
+	import { onDestroy, onMount } from "svelte";
 
-	import PopupTitle from '../PopupTitle.svelte';
-	import QuizItem from './QuizItem.svelte';
-	import Spinner from '../../../../ui-elements/Spinner.svelte';
-	import TextLink from '../../../../ui-elements/TextLink.svelte';
-	import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
-	import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
-	import Textarea from '../../../../ui-elements/Textarea.svelte';
-	import Select from '../../../../ui-elements/Select.svelte';
+	import PopupTitle from "../PopupTitle.svelte";
+	import QuizItem from "./QuizItem.svelte";
+	import Spinner from "../../../../ui-elements/Spinner.svelte";
+	import TextLink from "../../../../ui-elements/TextLink.svelte";
+	import SecondaryButton from "../../../../ui-elements/SecondaryButton.svelte";
+	import PrimaryButton from "../../../../ui-elements/PrimaryButton.svelte";
+	import Textarea from "../../../../ui-elements/Textarea.svelte";
+	import Select from "../../../../ui-elements/Select.svelte";
 
 	import { saveToDB } from "../../../../../utilities/api.js";
 	import {
@@ -32,12 +32,12 @@
 
 	export let popupData;
 
-	$: errorsObj = $json('errors');
-	$: criteriaObj = $json('criteria');
+	$: errorsObj = $json("errors");
+	$: criteriaObj = $json("criteria");
 	$: quizArray = Object.keys(criteriaObj).map(key => ({
-		title: criteriaObj[key]['title'],
-		tooltip: criteriaObj[key]['tooltip'],
-		caption: criteriaObj[key]['caption'],
+		title: criteriaObj[key]["title"],
+		tooltip: criteriaObj[key]["tooltip"],
+		caption: criteriaObj[key]["caption"],
 		rating: null,
 		key,
 	}));
@@ -65,15 +65,15 @@
 
 	$: timelineOptions = [{
 		value: timelineStamps[1],
-		text: $_('quizPopup.timelineSelectOption1'),
+		text: $_("quizPopup.timelineSelectOption1"),
 		selected: timelineStamps[1] >= quizState.timeline && timelineStamps[2] < quizState.timeline,
 	}, {
 		value: timelineStamps[2],
-		text: $_('quizPopup.timelineSelectOption2'),
+		text: $_("quizPopup.timelineSelectOption2"),
 		selected: timelineStamps[2] >= quizState.timeline && timelineStamps[3] < quizState.timeline,
 	}, {
 		value: timelineStamps[3],
-		text: $_('quizPopup.timelineSelectOption3'),
+		text: $_("quizPopup.timelineSelectOption3"),
 		selected: timelineStamps[3] >= quizState.timeline,
 	}];
 
@@ -137,14 +137,14 @@
 	};
 
 	const submit = async () => {
-		registerAction('trySubmitQuiz');
+		registerAction("trySubmitQuiz");
 		errorType = null;
 		isError = false;
 		isLoading = true;
 		const { isDataValid, averageRating } = checkAndGetData(quizState.ratings);
 		if (!isDataValid) {
 			// TODO: later forward to non rated field
-			errorType = 'rateEveryField';
+			errorType = "rateEveryField";
 			isLoading = false;
 			isError = true;
 			return;
@@ -153,7 +153,7 @@
 		const currentCoords = [ roundToFifthDecimal(popupData.lat), roundToFifthDecimal(popupData.lng) ];
 
 		try {
-			registerAction('submitQuiz');
+			registerAction("submitQuiz");
 			const { ratings, comment, isPersonalExperience, timeline } = quizState;
 			const { error, data } = await saveToDB(currentCoords, ratings, averageRating, comment, isPersonalExperience, timeline);
 			isLoading = false;
@@ -167,7 +167,7 @@
 				return;
 			}
 
-			const isUpdated = data.message === 'Rating updated';
+			const isUpdated = data.message === "Rating updated";
 			if (isUpdated) {
 				const { coords } = data;
 				markerStore.update(state => ({
@@ -182,13 +182,13 @@
 				}));
 			}
 
-			registerAction('successQuiz');
+			registerAction("successQuiz");
 			userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 			closeOverlays();
 			showSuccessNotification();
 		} catch (e) {
 			logError(e);
-			errorType = 'unrecognizedError';
+			errorType = "unrecognizedError";
 			isError = true;
 			isLoading = false;
 			showSomethingWrongNotification();
@@ -199,7 +199,7 @@
 
 	const addCircle = () => {
 		const { lat, lng } = popupData;
-		circle = L.circle(popupData, 200, { color: '#007097' });
+		circle = L.circle(popupData, 200, { color: "#007097" });
 
 		circle.addTo(map);
 
@@ -216,22 +216,22 @@
 <div class="max-w-sm w-full">
 	{#if currentStage === 1}
 		<p class="my-4">
-			{$_('quizPopup.soYouWantToRate')}
+			{$_("quizPopup.soYouWantToRate")}
 		</p>
 
 		<p class="italic my-4">
-			{$_('quizPopup.doYouHavePersonalExperience')}
+			{$_("quizPopup.doYouHavePersonalExperience")}
 		</p>
 
 		<img src="/images/crowd.png" width="400" height="180" alt="{$_('quizPopup.imageTitle')}">
 
 		<p class="text-xs text-center my-4">
-			{$_('quizPopup.beSincere')}
+			{$_("quizPopup.beSincere")}
 		</p>
 	{:else if currentStage === 2}
 		<p class="my-4">
-			{$_('quizPopup.tenCriteria')}
-			<strong class="underline font-normal">{$_('quizPopup.tenCriteriaStrong')}</strong>:
+			{$_("quizPopup.tenCriteria")}
+			<strong class="underline font-normal">{$_("quizPopup.tenCriteriaStrong")}</strong>:
 		</p>
 
 		<QuizItem
@@ -244,7 +244,7 @@
 			{ ...quizArray[1] }
 		/>
 	{:else if currentStage === 3}
-		<PopupTitle title={$_('quizPopup.title3')} />
+		<PopupTitle title={$_("quizPopup.title3")} />
 
 		<QuizItem
 			on:setRating={setRating}
@@ -261,7 +261,7 @@
 			{ ...quizArray[4] }
 		/>
 	{:else if currentStage === 4}
-		<PopupTitle title={$_('quizPopup.title4')} />
+		<PopupTitle title={$_("quizPopup.title4")} />
 
 		<QuizItem
 			on:setRating={setRating}
@@ -278,7 +278,7 @@
 			{ ...quizArray[7] }
 		/>
 	{:else if currentStage === 5}
-		<PopupTitle title={$_('quizPopup.title5')} />
+		<PopupTitle title={$_("quizPopup.title5")} />
 
 		<QuizItem
 			on:setRating={setRating}
@@ -295,10 +295,10 @@
 			{ ...quizArray[10] }
 		/>
 	{:else if currentStage === 6}
-		<PopupTitle title={$_('quizPopup.title6')} />
+		<PopupTitle title={$_("quizPopup.title6")} />
 
 		<Select
-			title={$_('quizPopup.timelineSelectTitle')}
+			title={$_("quizPopup.timelineSelectTitle")}
 			id='timeline-select'
 			options={timelineOptions}
 			className='mb-8'
@@ -306,17 +306,17 @@
 		/>
 
 		<Select
-			title={$_('quizPopup.yearSelectTitle')}
+			title={$_("quizPopup.yearSelectTitle")}
 			id='year-select'
 			options={yearSelectOptions}
 			className='mb-8'
 			on:change={setTimeline}
 		/>
 	{:else if currentStage === 7}
-		<PopupTitle title={$_('quizPopup.title7')} />
+		<PopupTitle title={$_("quizPopup.title7")} />
 
 		<p class="my-4">
-			{$_('quizPopup.isThereAnythingToAdd')}
+			{$_("quizPopup.isThereAnythingToAdd")}
 		</p>
 
 		<Textarea
@@ -329,13 +329,13 @@
 		<div class="flex justify-center items-center h-24 relative w-full">
 			{#if isLoading}
 				<Spinner />
-			{:else if isError && errorType === 'youRateTooOften'}
+			{:else if isError && errorType === "youRateTooOften"}
 				<div class="italic font-bold text-center">
-					{$_('errors.youRateTooOften')}
+					{$_("errors.youRateTooOften")}
 					<TextLink
 						href="blog/how-to-become-citizen/"
 						blank={true}
-						text={$_('errors.youRateTooOftenLink')}
+						text={$_("errors.youRateTooOftenLink")}
 					/>
 				</div>
 			{:else if isError}
@@ -351,31 +351,31 @@
 		{#if isUserLoggedIn && currentStage === 1}
 			<PrimaryButton
 				action={() => { changePersonalExperience(false) }}
-				text={$_('quizPopup.noPersonalExperienceBtn')}
+				text={$_("quizPopup.noPersonalExperienceBtn")}
 			/>
 			<PrimaryButton
 				action={() => { changePersonalExperience(true) }}
-				text={$_('quizPopup.yesPersonalExperienceBtn')}
+				text={$_("quizPopup.yesPersonalExperienceBtn")}
 			/>
 		{:else if currentStage === 1}
 			<PrimaryButton
-				action={() => { openAnotherOverlay('loginPopup') }}
-				text={$_('quizPopup.loginBtn')}
+				action={() => { openAnotherOverlay("loginPopup") }}
+				text={$_("quizPopup.loginBtn")}
 			/>
 		{:else}
 			<SecondaryButton
 				action={prevStage}
-				text={$_('quizPopup.backBtn')}
+				text={$_("quizPopup.backBtn")}
 			/>
 			{#if currentStage === 7}
 				<PrimaryButton
 					action={debouncedSubmit}
-					text={$_('quizPopup.submitBtn')}
+					text={$_("quizPopup.submitBtn")}
 				/>
 			{:else}
 				<PrimaryButton
 					action={nextStage}
-					text={$_('quizPopup.nextBtn')}
+					text={$_("quizPopup.nextBtn")}
 				/>
 			{/if}
 		{/if}

@@ -1,8 +1,8 @@
-import { get } from 'svelte/store';
+import { get } from "svelte/store";
 
-import { overlayStateStore, appStateStore, notificationsStore, filtersStore, flowStore } from '../../stores/state.js';
-import { overlayStateDefault } from '../constants/overlayStateDefault.js';
-import { flowDictionary } from '../../configs/flow.js';
+import { overlayStateStore, appStateStore, notificationsStore, filtersStore, flowStore } from "../../stores/state.js";
+import { overlayStateDefault } from "../constants/overlayStateDefault.js";
+import { flowDictionary } from "../../configs/flow.js";
 
 const debounce = (func, wait, immediate) => {
 	let timeout;
@@ -52,15 +52,15 @@ const roundToInt = number =>
 
 const getColor = rating => {
 	if (rating >= 4) {
-		return 'green';
+		return "green";
 	} else if (rating >= 3) {
-		return 'yellow';
+		return "yellow";
 	} else {
-		return 'red';
+		return "red";
 	}
 };
 
-const additionalProps = [ 'pets', 'kids', 'parking' ];
+const additionalProps = [ "pets", "kids", "parking" ];
 
 const checkAdditionalProp = prop =>
 	additionalProps.some(item => prop === item);
@@ -137,14 +137,14 @@ const closeOverlaysWithSameType = (overlayType, state) => {
 const openAnotherOverlay = (overlayName = null, data = {}) => {
 	try {
 		overlayStateStore.update(state => {
-	        const overlayType = state[overlayName]['type'];
+	        const overlayType = state[overlayName]["type"];
 	        const { newState } = closeOverlaysWithSameType(overlayType, state);
 	        return ({ ...newState, [overlayName]: { ...newState[overlayName], isOpen: true, data } });
 	    });
 		registerAction(overlayName);
 	} catch (e) {
 		logError(e);
-		logError('Suggested solution: define popup in constants/overlayStateDefault.js');
+		logError("Suggested solution: define popup in constants/overlayStateDefault.js");
 	}
 };
 
@@ -162,7 +162,7 @@ const closeOverlay = (overlayType = null) => {
 	} else {
 		overlayStateStore.update(() => overlayStateDefault);
 		appStateStore.update(state => ({ ...state, openModal: false }));
-		registerAction(`cl`);
+		registerAction("cl");
 	}
 };
 
@@ -178,7 +178,7 @@ const hideSomethingWrongNotification = () =>
 	notificationsStore.update(state => ({ ...state, somethingWrongNotification: false }));
 
 const objToString = object => {
-	let str = '';
+	let str = "";
 	for (const k in object) {
 		// eslint-disable-next-line no-prototype-builtins
 		if (object.hasOwnProperty(k)) {
@@ -194,8 +194,8 @@ const fillFiltersFromArrOfStrings = (arrOfStrings, refs = null) => {
 	// probably refactor to something less complicated
 	for (let k = 0; k < arrOfStrings.length; k++) {
 		const string = arrOfStrings[k];
-		const [ key, valString ] = string.split(':');
-		const values = valString.split('-');
+		const [ key, valString ] = string.split(":");
+		const values = valString.split("-");
 		const rangeArr = [ Number(values[0]), Number(values[1]) ];
 		obj = {
 			...obj,
@@ -230,11 +230,11 @@ const setCookie = (cname, cvalue, exdays) => {
 
 const getCookie = cname => {
 	const name = `${cname}=`;
-	const ca = document.cookie.split(';');
+	const ca = document.cookie.split(";");
 	for (let i = 0; i < ca.length; i++) {
 		let c = ca[i];
 		// eslint-disable-next-line eqeqeq
-		while (c.charAt(0) == ' ') {
+		while (c.charAt(0) == " ") {
 			c = c.substring(1);
 		}
 		// eslint-disable-next-line eqeqeq
@@ -242,7 +242,7 @@ const getCookie = cname => {
 			return c.substring(name.length, c.length);
 		}
 	}
-	return '';
+	return "";
 };
 
 const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false, zoomLevel = null) => {
@@ -288,24 +288,24 @@ const blurCurrentInput = document => {
 };
 
 const errorObj = {
-	'Already verified': 'alreadyVerified',
-	'Email already exists': 'accountExists',
-	'Email is wrong': 'noAccount',
-	'Invalid csrf token': 'invalidCsrfToken',
-	'Matches old password': 'samePass',
-	'Nearby place is already rated': 'nearbyPlaceAlreadyRated',
-	'No actions remaining': 'youRateTooOften',
-	'Password is wrong': 'wrongPassword',
-	'Password link is invalid or expired': 'linkExpired',
-	'Too many requests, please try again later': 'manyRequests',
-	'User is not logged in': 'sessionExpired',
-	'User is not verified': 'verificationLetter',
+	"Already verified": "alreadyVerified",
+	"Email already exists": "accountExists",
+	"Email is wrong": "noAccount",
+	"Invalid csrf token": "invalidCsrfToken",
+	"Matches old password": "samePass",
+	"Nearby place is already rated": "nearbyPlaceAlreadyRated",
+	"No actions remaining": "youRateTooOften",
+	"Password is wrong": "wrongPassword",
+	"Password link is invalid or expired": "linkExpired",
+	"Too many requests, please try again later": "manyRequests",
+	"User is not logged in": "sessionExpired",
+	"User is not verified": "verificationLetter",
 };
 
 const getErrorType = error => {
 	const errorFromObj = errorObj[error];
 	flowStore.update(actions => ([ ...actions, errorFromObj ]));
-	return errorFromObj ? errorFromObj : 'unrecognizedError';
+	return errorFromObj ? errorFromObj : "unrecognizedError";
 };
 
 const getMapZoom = map => map.getZoom();
@@ -365,7 +365,7 @@ const getCopyrightYears = () => {
 };
 
 const detectLanguage = async text => {
-	const { francAll } = await import('franc-min');
+	const { francAll } = await import("franc-min");
 
 	const possibleLanguages = francAll(text);
 	let highlyPossibleLanguages = [];
@@ -379,8 +379,8 @@ const detectLanguage = async text => {
 };
 
 const langTransp = {
-	'ru': 'rus',
-	'en': 'eng',
+	"ru": "rus",
+	"en": "eng",
 };
 
 const shouldTranslate = async (text, currentLang) => {

@@ -1,14 +1,14 @@
 <script>
 	import { createEventDispatcher } from "svelte";
 
-	export let value = '';
+	export let value = "";
 	export let group = null;
 
 	const name = Date.now();
 	const dispatch = createEventDispatcher();
 
 	const handleChange = () =>
-		dispatch('change', value);
+		dispatch("change", value);
 </script>
 
 <div class="my-3">

@@ -1,9 +1,9 @@
 <script>
-	import { _, locale } from 'svelte-i18n';
+	import { _, locale } from "svelte-i18n";
 
-	import Spinner from '../../../ui-elements/Spinner.svelte';
-	import TextButton from '../../../ui-elements/TextButton.svelte';
-	import GarbageCan from '../../../inline-images/GarbageCan.svelte';
+	import Spinner from "../../../ui-elements/Spinner.svelte";
+	import TextButton from "../../../ui-elements/TextButton.svelte";
+	import GarbageCan from "../../../inline-images/GarbageCan.svelte";
 
 	import { fetchRatedPlaces, deleteUserRating, deletePOI, deleteCommentPOI } from "../../../../utilities/api.js";
 	import { getApproximateAddressAndCountry } from "../../../../utilities/externalApi.js";
@@ -14,13 +14,13 @@
 		closeOverlay,
 	} from "../../../../utilities/helpers.js";
 	import { markerStore, poisStore } from "../../../../../stores/state.js";
-	import { WEB_DOMAIN } from '../../../../../configs/env.js';
+	import { WEB_DOMAIN } from "../../../../../configs/env.js";
 
 	const openShowRatingsPopup = (lat, lng) =>
-		openAnotherOverlay('showRatingsPopup', { lat, lng });
+		openAnotherOverlay("showRatingsPopup", { lat, lng });
 
 	const editRatingYear = (timeline, ratingID, address) =>
-		openAnotherOverlay('changeYearPopup', { timeline, ratingID, address });
+		openAnotherOverlay("changeYearPopup", { timeline, ratingID, address });
 
 	const deleteRating = async ratingID => {
 		const { error, data } = await deleteUserRating(ratingID);
@@ -33,7 +33,7 @@
 
 		const { message, coords, averageRating } = data;
 
-		if (message === 'Rating deleted') {
+		if (message === "Rating deleted") {
 			if (averageRating !== null) {
 				markerStore.update(state => ({
 					...state,
@@ -41,7 +41,7 @@
 					markersToAdd: [ ...state.markersToAdd, { coords, rating: averageRating }],
 				}));
 			} else {
-				closeOverlay('sidebar');
+				closeOverlay("sidebar");
 				markerStore.update(state => ({
 					...state,
 					markersToRemove: [ ...state.markersToRemove, { coords }],
@@ -54,7 +54,7 @@
 
 	const openPOI = ({ coordinates }) => {
 		const [ lng, lat ] = coordinates;
-		openAnotherOverlay('pointOfInterestPopup', { lat, lng });
+		openAnotherOverlay("pointOfInterestPopup", { lat, lng });
 	};
 
 	const removePOI = async id => {
@@ -68,8 +68,8 @@
 
 		const { message, coords } = data;
 
-		if (message === 'Point of Interest deleted') {
-			closeOverlay('sidebar');
+		if (message === "Point of Interest deleted") {
+			closeOverlay("sidebar");
 			poisStore.update(state => ({
 				...state,
 				markersToRemove: [ ...state.markersToRemove, coords ],
@@ -87,7 +87,7 @@
 			return;
 		}
 
-		closeOverlay('sidebar');
+		closeOverlay("sidebar");
 
 		return null;
 	};
@@ -114,7 +114,7 @@
 				lang: $locale,
 				lat,
 				lng,
-				address: address ? address : $_('myPlacesPopup.defaultAdress'),
+				address: address ? address : $_("myPlacesPopup.defaultAdress"),
 				ratingID,
 				timeline,
 			});
@@ -135,12 +135,12 @@
 		<Spinner isWithText={true} className="absolute w-full h-full inset-0 z-5" />
 	{:then { ratings, pois, poiComments }}
 		<strong class="text-active mt-6">
-			{$_('myPlacesPopup.title')}
+			{$_("myPlacesPopup.title")}
 		</strong>
 
 		<ul class="max-h-52 overflow-y-auto py-2">
 			{#if !ratings || ratings.length === 0}
-				<span>{$_('myPlacesPopup.youHaveNotRated')}</span>
+				<span>{$_("myPlacesPopup.youHaveNotRated")}</span>
 			{:else}
 				{#each ratings as { lang, lat, lng, address, ratingID, timeline }}
 					<li
@@ -149,7 +149,7 @@
 					>
 						<a
 							href={"#"}
-							title={$_('myPlacesPopup.deleteRating')}
+							title={$_("myPlacesPopup.deleteRating")}
 							class="py-1 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { ratingID = await deleteRating(ratingID) }}
 						>
@@ -174,13 +174,13 @@
 		</ul>
 
 		<strong class="text-active block mt-6">
-			{$_('myPlacesPopup.titlePOIs')}
+			{$_("myPlacesPopup.titlePOIs")}
 		</strong>
 
 		<ul class="max-h-52 overflow-y-auto py-2">
 			{#if !pois || pois.length === 0}
 				<span>
-					{$_('myPlacesPopup.noPOIs')}
+					{$_("myPlacesPopup.noPOIs")}
 				</span>
 			{:else}
 				{#each pois as { _id, title, location }}
@@ -190,7 +190,7 @@
 					>
 						<a
 							href={"#"}
-							title={$_('myPlacesPopup.deletePOI')}
+							title={$_("myPlacesPopup.deletePOI")}
 							class="py-1 pb-2 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { _id = await removePOI(_id) }}
 						>
@@ -209,7 +209,7 @@
 
 		{#if !poiComments || poiComments.length !== 0}
 			<strong class="text-active block mt-6">
-				{$_('myPlacesPopup.commentsPOI')}
+				{$_("myPlacesPopup.commentsPOI")}
 			</strong>
 			<ul class="max-h-52 overflow-y-auto mt-2 py-2">
 				{#each poiComments as { _id, comment }}
@@ -219,7 +219,7 @@
 					>
 						<a
 							href={"#"}
-							title={$_('myPlacesPopup.deleteComment')}
+							title={$_("myPlacesPopup.deleteComment")}
 							class="py-1 pb-2 font-bold no-underline text-2xl delete hidden absolute right-1 top-1/2 transform -translate-y-1/2 -lg:right-2"
 							on:click|preventDefault={async () => { _id = await removeCommentPOI(_id) }}
 						>

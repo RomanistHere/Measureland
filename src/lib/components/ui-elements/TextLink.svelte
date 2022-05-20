@@ -1,11 +1,11 @@
 <script>
-    export let text = '';
-    export let href = '#';
-    export let className = '';
+    export let text = "";
+    export let href = "#";
+    export let className = "";
     export let blank = null;
 
-    const target = blank ? '_blank' : null;
-    const rel = blank ? 'noopener' : null;
+    const target = blank ? "_blank" : null;
+    const rel = blank ? "noopener" : null;
 </script>
 
 <a

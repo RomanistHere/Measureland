@@ -1,12 +1,12 @@
 <script>
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 
-	import TextButton from './TextButton.svelte';
+	import TextButton from "./TextButton.svelte";
 
-	export let title = 'Email';
-	export let type = 'email';
-	export let id = 'current-email';
-	export let value = '';
+	export let title = "Email";
+	export let type = "email";
+	export let id = "current-email";
+	export let value = "";
 	export let isInputValid = true;
 	export let autofocus = false;
 	export let shouldShowMatchError = false;
@@ -35,10 +35,10 @@
 		isInputActive = false;
 		value = e.currentTarget.value;
 
-		if (type === 'email') {
+		if (type === "email") {
 			value = value.toLowerCase();
 			isInputValid = validateEmail(value);
-		} else if (type === 'password') {
+		} else if (type === "password") {
 			isInputValid = validatePass(value);
 		}
 	};
@@ -58,11 +58,11 @@
 <div class="relative">
 	<label for={id} class="mt-8 relative block font-bold">
 		<span>{title}</span>
-		{#if type === 'password'}
+		{#if type === "password"}
 			<TextButton
 				className="absolute right-0 bottom-0 text-sm px-1 rounded-md"
 				action={changeInputType}
-				text={$_('input.showOrHide')}
+				text={$_("input.showOrHide")}
 			/>
 		{/if}
 	</label>
@@ -72,7 +72,7 @@
 		class:bg-active={isValid}
 		class:text-white={isValid}
 		class:border-error={isError}
-		type={shouldShowPassword ? 'text' : type}
+		type={shouldShowPassword ? "text" : type}
 		id={id}
 		autocomplete={id}
 		on:blur={onBlur}
@@ -95,15 +95,15 @@
 
 	<span class="absolute right-0 -bottom-6 text-sm">
         {#if !isInputValid && !isInputActive}
-            {#if type === 'email'}
-	            {$_('input.emailError')}
-            {:else if type === 'password'}
-	            {$_('input.passwordError')}
+            {#if type === "email"}
+	            {$_("input.emailError")}
+            {:else if type === "password"}
+	            {$_("input.passwordError")}
             {/if}
         {/if}
 
 		{#if shouldShowMatchError}
-            {$_('input.passwordsShouldMatch')}
+            {$_("input.passwordsShouldMatch")}
         {/if}
     </span>
 </div>

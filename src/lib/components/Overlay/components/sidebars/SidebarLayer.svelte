@@ -1,10 +1,10 @@
 <script>
-    import { fly } from 'svelte/transition';
+    import { fly } from "svelte/transition";
 
-    import CommentsSidebar from './CommentsSidebar/CommentsSidebar.svelte';
-    import FiltersSidebar from './FiltersSidebar/FiltersSidebar.svelte';
-    import MenuSidebar from './MenuSidebar.svelte';
-    import CloseButton from '../../../ui-elements/CloseButton.svelte';
+    import CommentsSidebar from "./CommentsSidebar/CommentsSidebar.svelte";
+    import FiltersSidebar from "./FiltersSidebar/FiltersSidebar.svelte";
+    import MenuSidebar from "./MenuSidebar.svelte";
+    import CloseButton from "../../../ui-elements/CloseButton.svelte";
 
     export let sidebarName;
     export let sidebarData;

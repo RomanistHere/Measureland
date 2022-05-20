@@ -1,17 +1,17 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _ } from "svelte-i18n";
 
-    import CommentBlock from './CommentBlock.svelte';
-    import Spinner from '../../../../ui-elements/Spinner.svelte';
+    import CommentBlock from "./CommentBlock.svelte";
+    import Spinner from "../../../../ui-elements/Spinner.svelte";
 
     import { fetchComments, fetchCommentsPOI } from "../../../../../utilities/api.js";
-    import { showSomethingWrongNotification, logError } from '../../../../../utilities/helpers.js';
+    import { showSomethingWrongNotification, logError } from "../../../../../utilities/helpers.js";
 
     export let sidebarData;
 
     const loadCommentsObj = {
-	    'POI': fetchCommentsPOI,
-	    'rating': fetchComments,
+	    "POI": fetchCommentsPOI,
+	    "rating": fetchComments,
     };
 
     const fetchData = async ({ id, type }) => {
@@ -31,7 +31,7 @@
 </script>
 
 <div class="min-h-full px-0 pt-8 pb-20 -lg:pb-4">
-    <h2 class="font-bold px-8 text-xl">{$_('commentSidebar.title')}</h2>
+    <h2 class="font-bold px-8 text-xl">{$_("commentSidebar.title")}</h2>
     {#await promise}
         <Spinner className="absolute-centered" />
     {:then response}

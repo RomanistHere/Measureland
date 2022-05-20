@@ -1,14 +1,14 @@
 <script>
 	import { onMount } from "svelte";
-	import { flowStore, userStateStore } from '../../stores/state.js';
-	import { API_URL } from '../../configs/env.js';
-	import { logError } from '../utilities/helpers.js';
+	import { flowStore, userStateStore } from "../../stores/state.js";
+	import { API_URL } from "../../configs/env.js";
+	import { logError } from "../utilities/helpers.js";
 
 	const sendFeedback = () => {
 		const { uniqID } = $userStateStore;
 		const flow = $flowStore;
 		const length = flow.length;
-		let flowString = '';
+		let flowString = "";
 		let prevElem = flow[0];
 		let multiplier = 1;
 		for (let i = 1; i < length; i++) {
@@ -35,7 +35,7 @@
 
 	onMount(() => {
 		const onVisibilityChange = () => {
-			if (document.visibilityState === 'hidden' && $userStateStore.shouldSendEvent) {
+			if (document.visibilityState === "hidden" && $userStateStore.shouldSendEvent) {
 				try {
 					sendFeedback();
 				} catch (error) {
@@ -44,8 +44,8 @@
 			}
 		};
 
-		document.addEventListener('visibilitychange', onVisibilityChange);
+		document.addEventListener("visibilitychange", onVisibilityChange);
 
-		return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+		return () => document.removeEventListener("visibilitychange", onVisibilityChange);
 	});
 </script>

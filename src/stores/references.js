@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
 export const mapReference = writable(null);
 export const markersReference = writable(null);

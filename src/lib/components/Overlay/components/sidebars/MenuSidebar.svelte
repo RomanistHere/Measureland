@@ -1,8 +1,8 @@
 <script>
-	import { _, json, locale } from 'svelte-i18n';
-	import { browser } from '$app/env';
+	import { _, json, locale } from "svelte-i18n";
+	import { browser } from "$app/env";
 
-	import SidebarBlock from './SidebarBlock.svelte';
+	import SidebarBlock from "./SidebarBlock.svelte";
 	import PrimaryAltButton from "$lib/components/UI/PrimaryAltButton.svelte";
 
 	import {
@@ -15,9 +15,9 @@
 		showSomethingWrongNotification,
 		showSuccessNotification,
 		getCopyrightYears,
-	} from '../../../../utilities/helpers.js';
-	import { askMoreRatings, logout, saveLang } from '../../../../utilities/api.js';
-	import { APP_VERSION } from '../../../../../configs/env.js';
+	} from "../../../../utilities/helpers.js";
+	import { askMoreRatings, logout, saveLang } from "../../../../utilities/api.js";
+	import { APP_VERSION } from "../../../../../configs/env.js";
 	import { appStateStore, isDesktop, userStateStore } from "../../../../../stores/state.js";
 
 	$: isUserLoggedIn = $userStateStore.userID === null ? false : true;
@@ -25,25 +25,25 @@
 	$: isUserAskedForMoreRatings = $userStateStore.wantMoreRatings;
 
 	$: dataNavBlock = {
-		title: $_('menuSidebar.titleNav'),
-		list: $json('navBar.links').map(({ text, url }) => ({ text, href: url })),
+		title: $_("menuSidebar.titleNav"),
+		list: $json("navBar.links").map(({ text, url }) => ({ text, href: url })),
 	};
 
 	$: dataTopBlock = {
-		title: $_('menuSidebar.titleTop'),
+		title: $_("menuSidebar.titleTop"),
 		list: [{
-			text: $_('menuSidebar.loginOrRegister'),
+			text: $_("menuSidebar.loginOrRegister"),
 			shouldShow: !isUserLoggedIn,
-			href: '#',
+			href: "#",
 			onClick: e => {
 				e.preventDefault();
-				closeOverlay('sidebar');
-				openAnotherOverlay('loginPopup');
+				closeOverlay("sidebar");
+				openAnotherOverlay("loginPopup");
 			},
 		}, {
-			text: $_('menuSidebar.logout'),
+			text: $_("menuSidebar.logout"),
 			shouldShow: isUserLoggedIn,
-			href: '#',
+			href: "#",
 			onClick: async e => {
 				e.preventDefault();
 				closeOverlays();
@@ -53,85 +53,85 @@
 						...state,
 						userID: null,
 						activeRatings: 3,
-						userName: 'Аноним',
+						userName: "Аноним",
 						wantMoreRatings: false,
 					}));
 					showSuccessNotification();
-					registerAction('logoutMobile');
+					registerAction("logoutMobile");
 				} else {
 					logError(error);
 					showSomethingWrongNotification();
 				}
 			},
 		}, {
-			text: $_('menuSidebar.myRatings'),
+			text: $_("menuSidebar.myRatings"),
 			shouldShow: isUserLoggedIn,
-			href: '#',
+			href: "#",
 			onClick: e => {
 				e.preventDefault();
-				closeOverlay('sidebar');
-				openAnotherOverlay('myPlacesPopup');
+				closeOverlay("sidebar");
+				openAnotherOverlay("myPlacesPopup");
 			},
 		}, {
-			text: $_('menuSidebar.changePassword'),
+			text: $_("menuSidebar.changePassword"),
 			shouldShow: isUserLoggedIn,
-			href: '#',
+			href: "#",
 			onClick: e => {
 				e.preventDefault();
-				closeOverlay('sidebar');
-				openAnotherOverlay('forgotPasswordPopup', { isChangePass: true });
+				closeOverlay("sidebar");
+				openAnotherOverlay("forgotPasswordPopup", { isChangePass: true });
 			},
 		}, {
-			text: $_('menuSidebar.changeLanguage'),
+			text: $_("menuSidebar.changeLanguage"),
 			shouldShow: true,
-			href: `#`,
+			href: "#",
 			onClick: async e => {
 				e.preventDefault();
-				const nextLang = $locale === 'ru' ? 'en' : 'ru';
+				const nextLang = $locale === "ru" ? "en" : "ru";
 				locale.set(nextLang);
-				if (typeof window !== 'undefined') {
+				if (typeof window !== "undefined") {
 					const url = new URL(window.location.href);
 					url.pathname = `/${nextLang}`;
 					window.history.replaceState(null, null, url);
 					if (isUserLoggedIn)
 						await saveLang(nextLang);
 					showSuccessNotification();
-					registerAction('changeLanguageMobile');
+					registerAction("changeLanguageMobile");
 				}
 			},
 		}],
 	};
 
 	$: dataBottomBlock = {
-		title: $_('menuSidebar.titleBot'),
+		title: $_("menuSidebar.titleBot"),
 		list: [{
-			text: $_('menuSidebar.ourGuideBook'),
-			href: 'blog/tutorial/',
+			text: $_("menuSidebar.ourGuideBook"),
+			href: "blog/tutorial/",
 		}, {
-			text: $_('menuSidebar.ourPartners'),
-			href: '#',
+			text: $_("menuSidebar.ourPartners"),
+			href: "#",
 			onClick: e => {
 				e.preventDefault();
 				if (!$isDesktop)
-					closeOverlay('sidebar');
-				openAnotherOverlay('partnersPopup');
+					closeOverlay("sidebar");
+				openAnotherOverlay("partnersPopup");
 			},
 		}, {
-			text: $_('menuSidebar.newsTelegram'),
-			href: `https://t.me/measureland${$locale === 'ru' ? '_ru' : ''}`,
+			text: $_("menuSidebar.newsTelegram"),
+			href: `https://t.me/measureland${$locale === "ru" ? "_ru" : ""}`,
 		}, {
-			text: $_('menuSidebar.aboutUs'),
-			href: 'blog/about-us/',
+			text: $_("menuSidebar.aboutUs"),
+			href: "blog/about-us/",
 		}],
 	};
 
-	$: if ($locale === 'ru') {
+	$: if ($locale === "ru") {
 		dataBottomBlock = {
 			...dataBottomBlock,
 			list: [
 				{
-					text: $_('menuSidebar.checkList'),
-					href: 'blog/universal-guide/',
+					text: $_("menuSidebar.checkList"),
+					href: "blog/universal-guide/",
 				},
 				...dataBottomBlock.list,
 			],
@@ -145,14 +145,14 @@
 		if (!browser)
 			return;
 		const shouldSendEvent = !$userStateStore.shouldSendEvent;
-		setCookie('shouldSendEvent', shouldSendEvent ? '1' : '0', 365);
+		setCookie("shouldSendEvent", shouldSendEvent ? "1" : "0", 365);
 		userStateStore.update(state => ({ ...state, shouldSendEvent }));
 	};
 
 	const askForMoreRatings = async () => {
 		if (!$isDesktop)
-			closeOverlay('sidebar');
-		openAnotherOverlay('askForMoreRatingsPopup');
+			closeOverlay("sidebar");
+		openAnotherOverlay("askForMoreRatingsPopup");
 		userStateStore.update(state => ({ ...state, wantMoreRatings: true }));
 		const { error } = await askMoreRatings();
 
@@ -166,8 +166,8 @@
 
 	const openFeedbackPopup = () => {
 		if (!$isDesktop)
-			closeOverlay('sidebar');
-		openAnotherOverlay('feedbackPopup');
+			closeOverlay("sidebar");
+		openAnotherOverlay("feedbackPopup");
 	};
 
 	const yearsCopyright = getCopyrightYears();
@@ -185,7 +185,7 @@
 					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
-					{$_('menuSidebar.feedbackPopup')}
+					{$_("menuSidebar.feedbackPopup")}
 				</a>
 			</li>
 		</ul>
@@ -201,15 +201,15 @@
 					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={togglePOIs}
 				>
-					{$_('menuSidebar.POIs')}
+					{$_("menuSidebar.POIs")}
 					<p
 						class:text-danger-red={!$appStateStore.shouldShowPOIs}
 						class:text-on-green={$appStateStore.shouldShowPOIs}
 					>
 						{#if $appStateStore.shouldShowPOIs}
-							{$_('menuSidebar.toggleOn')}
+							{$_("menuSidebar.toggleOn")}
 						{:else}
-							{$_('menuSidebar.toggleOff')}
+							{$_("menuSidebar.toggleOff")}
 						{/if}
 					</p>
 				</a>
@@ -220,15 +220,15 @@
 					class="block px-6 hoverable-link py-2 leading-5"
 					on:click|preventDefault={toggleSendingEvents}
 				>
-					{$_('menuSidebar.sendCrashReports')}
+					{$_("menuSidebar.sendCrashReports")}
 					<p
 						class:text-danger-red={!$userStateStore.shouldSendEvent}
 						class:text-on-green={$userStateStore.shouldSendEvent}
 					>
 						{#if $userStateStore.shouldSendEvent}
-							{$_('menuSidebar.toggleOn')}
+							{$_("menuSidebar.toggleOn")}
 						{:else}
-							{$_('menuSidebar.toggleOff')}
+							{$_("menuSidebar.toggleOff")}
 						{/if}
 					</p>
 				</a>
@@ -241,30 +241,30 @@
 	<div class="my-2 px-6">
 		{#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
 			<div class="block text-center border-txt-tertiary border rounded-md w-full text-txt-tertiary px-6 py-4 leading-5">
-				{$_('menuSidebar.requestProcessing')}
+				{$_("menuSidebar.requestProcessing")}
 			</div>
 		{:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
 			<PrimaryAltButton
 				on:click={askForMoreRatings}
-				text={$_('menuSidebar.needMoreRatings')}
+				text={$_("menuSidebar.needMoreRatings")}
 			/>
 		{/if}
 	</div>
 
 	<footer class="text-sm px-6 pb-4 text-txt-secondary">
-		<p>{$_('footer.version')}: {APP_VERSION}.</p>
+		<p>{$_("footer.version")}: {APP_VERSION}.</p>
 		<div>
-			<a class="hoverable-link underline" target="_blank" href="blog/terms-of-use/">{$_('footer.termsOfUse')}</a>
+			<a class="hoverable-link underline" target="_blank" href="blog/terms-of-use/">{$_("footer.termsOfUse")}</a>
 		</div>
 		<div>
-			{$_('footer.credits')} (<a
+			{$_("footer.credits")} (<a
 			class="hoverable-link underline" target="_blank" rel="noopener" href="https://romanisthere.github.io/"
-		>{$_('footer.creditsLink')}</a>).
+		>{$_("footer.creditsLink")}</a>).
 			<br />
 			<a
 				class="hoverable-link underline" target="_blank" rel="noopener"
 				href="https://www.copyrighted.com/work/VbLLkh65Chs4gO0p"
-			>{$_('footer.allRightsReserved')}</a>
+			>{$_("footer.allRightsReserved")}</a>
 			<p>
 				{yearsCopyright}.
 			</p>

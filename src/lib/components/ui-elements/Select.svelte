@@ -1,10 +1,10 @@
 <script>
-    import GroupTitle from './GroupTitle.svelte';
+    import GroupTitle from "./GroupTitle.svelte";
 
     export let options = [];
-    export let title = '';
-    export let id = '';
-    export let className = '';
+    export let title = "";
+    export let id = "";
+    export let className = "";
 </script>
 
 <div class="{className}">

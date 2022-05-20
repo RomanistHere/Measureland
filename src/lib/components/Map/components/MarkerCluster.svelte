@@ -1,10 +1,10 @@
 <script>
-	import { _ } from 'svelte-i18n';
-	import { onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import { _ } from "svelte-i18n";
+	import { onMount } from "svelte";
+	import { fade } from "svelte/transition";
 
-	import L from 'leaflet';
-	import PolyBool from 'polybooljs';
+	import L from "leaflet";
+	import PolyBool from "polybooljs";
 	// Supercluster is changed on our side, so we can't use npm's one
 	import "../../../external/supercluster.js";
 
@@ -37,7 +37,7 @@
 			iconSize: [ 61, 100 ],
 			iconAnchor: [ 25, 70 ],
 			popupAnchor: [ -3, -76 ],
-			shadowUrl: '../images/house-base.svg',
+			shadowUrl: "../images/house-base.svg",
 			shadowAnchor: [ 25, 70 ],
 			shadowSize: [ 61, 100 ],
 		});
@@ -48,13 +48,13 @@
 			iconSize: [ 61, 100 ],
 			iconAnchor: [ 25, 70 ],
 			popupAnchor: [ -3, -76 ],
-			shadowUrl: '../images/buildings-base.svg',
+			shadowUrl: "../images/buildings-base.svg",
 			shadowAnchor: [ 25, 70 ],
 			shadowSize: [ 61, 100 ],
 		});
 
 	const initShowRatingPopup = ({ latlng }) =>
-		openAnotherOverlay('showRatingsPopup', latlng);
+		openAnotherOverlay("showRatingsPopup", latlng);
 
 	const createClusterIcon = (feature, latlng) => {
 		if (!feature.properties.cluster) {
@@ -63,14 +63,14 @@
 			const icon = getIcon(Math.floor(rating));
 			const marker = L.marker(latlng, {
 				icon,
-				title: `${$_('clusters.titleSingle')} ${rating}`,
+				title: `${$_("clusters.titleSingle")} ${rating}`,
 				riseOnHover: true,
 				rating,
 			});
-			marker.on('click', initShowRatingPopup);
-			marker.on('keyup', e => {
-				if (e.originalEvent.key === 'Enter') {
-					openAnotherOverlay('showRatingsPopup', e.target._latlng);
+			marker.on("click", initShowRatingPopup);
+			marker.on("keyup", e => {
+				if (e.originalEvent.key === "Enter") {
+					openAnotherOverlay("showRatingsPopup", e.target._latlng);
 				}
 			});
 			return marker;
@@ -81,12 +81,12 @@
 			const grpIcon = getGrpIcon(Math.floor(rating));
 			const marker = L.marker(latlng, {
 				icon: grpIcon,
-				title: `${$_('clusters.titleGrp')} ${rating}`,
+				title: `${$_("clusters.titleGrp")} ${rating}`,
 				riseOnHover: true,
 				rating,
 			});
-			marker.on('keyup', e => {
-				if (e.originalEvent.key === 'Enter') {
+			marker.on("keyup", e => {
+				if (e.originalEvent.key === "Enter") {
 					map.zoomIn();
 				}
 			});
@@ -108,7 +108,7 @@
 		markersReference.set(clusterLayer);
 	};
 
-	clusterMarkers.on('click', e => {
+	clusterMarkers.on("click", e => {
 		const clusterId = e.layer.feature.properties.cluster_id;
 		const center = e.latlng;
 		if (clusterId) {
@@ -136,7 +136,7 @@
 		const newPoint = {
 			geometry: {
 				coordinates: coordsData,
-				type: 'Point',
+				type: "Point",
 			},
 			properties: {
 				averageRating: ratingData,
@@ -152,7 +152,7 @@
 		const [ lat, lng ] = coords;
 		const length = cachedData.length;
 		for (let i = 0; i < length; i++) {
-			const arr = cachedData[i]['geometry']['coordinates'];
+			const arr = cachedData[i]["geometry"]["coordinates"];
 			if (arr[0] === lat && arr[1] === lng) {
 				cachedData.splice(i, 1);
 				return;
@@ -219,13 +219,13 @@
 			const newObj = {
 				...item,
 				geometry: {
-					coordinates: item['location']['coordinates'],
-					type: 'Point',
+					coordinates: item["location"]["coordinates"],
+					type: "Point",
 				},
 				type: "Feature",
 			};
-			delete newObj['location'];
-			delete newObj['_id'];
+			delete newObj["location"];
+			delete newObj["_id"];
 			return newObj;
 		});
 
@@ -267,7 +267,7 @@
 	};
 
 	const getNewData = async () => {
-		registerAction('mapLoadData');
+		registerAction("mapLoadData");
 		// console.warn('____________new_try____________')
 		// console.time('preparations')
 		const { center, zoom, currentScreenPoly } = getScreenData(map);
@@ -322,7 +322,7 @@
 		const { error, data } = await fetchBoundsData(query, zoom, filters);
 		// console.timeEnd('fetch new data')
 
-		if (error === 'Too many requests, please try again later') {
+		if (error === "Too many requests, please try again later") {
 			appStateStore.update(state => ({ ...state, shouldWork: false }));
 			showSomethingWrongNotification();
 			isLoading = false;
@@ -341,7 +341,7 @@
 				...state,
 				userID: null,
 				activeRatings: 3,
-				userName: 'Аноним',
+				userName: "Аноним",
 				wantMoreRatings: false,
 			}));
 		}
@@ -366,7 +366,7 @@
 	};
 
 	// don't use native "moveend" event, it triggers on every button click in popups
-	map.on('move', debounce(getNewData, 300));
+	map.on("move", debounce(getNewData, 300));
 	onMount(getNewData);
 
 	const subscribeToFiltersChanges = ({ isFiltersOn, filters }) => {
@@ -385,7 +385,7 @@
 	<div
 		class="absolute top-20 left-1/2 transform -translate-x-1/2 italic text-3xl pointer-events-none" transition:fade
 	>
-		{$_('loading.geo')}
+		{$_("loading.geo")}
 	</div>
 {/if}
 

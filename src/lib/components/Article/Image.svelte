@@ -3,7 +3,7 @@
 	export let alt = "Sorry, we didn't specify alt tex";
 	export let caption = null;
 
-	const webpSrc = `${src.split('.')[0]}.webp`;
+	const webpSrc = `${src.split(".")[0]}.webp`;
 </script>
 
 <figure class="w-full mb-4">

@@ -1,13 +1,13 @@
 <script>
 	import { onDestroy, onMount } from "svelte";
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 
-	import InputGroupSimple from '../../../../ui-elements/InputGroupSimple.svelte';
-	import Textarea from '../../../../ui-elements/Textarea.svelte';
-	import SubmissionState from '../../../../ui-elements/SubmissionState.svelte';
-	import FormButton from '../../../../ui-elements/FormButton.svelte';
-	import TagsInput from '../../../../ui-elements/TagsInput.svelte';
-	import PopupTitle from '../PopupTitle.svelte';
+	import InputGroupSimple from "../../../../ui-elements/InputGroupSimple.svelte";
+	import Textarea from "../../../../ui-elements/Textarea.svelte";
+	import SubmissionState from "../../../../ui-elements/SubmissionState.svelte";
+	import FormButton from "../../../../ui-elements/FormButton.svelte";
+	import TagsInput from "../../../../ui-elements/TagsInput.svelte";
+	import PopupTitle from "../PopupTitle.svelte";
 
 	import {
 		debounce,
@@ -30,14 +30,14 @@
 
 	let circle;
 	let isError = false;
-	let errorType = '';
+	let errorType = "";
 	let isLoading = false;
 	let isSpam = null;
 	let inputRef = null;
 	let textAreaRef = null;
 	let pointOfInterestState = {
-		title: '',
-		description: '',
+		title: "",
+		description: "",
 		tags: [],
 	};
 
@@ -59,25 +59,25 @@
 			return;
 		pointOfInterestState = { ...pointOfInterestState, tags: [ ...pointOfInterestState.tags, newTag ] };
 
-		registerAction('addTagAddPOI');
+		registerAction("addTagAddPOI");
 	};
 	
 	const removeTagFromList = e => {
 		const key = e.detail;
 		pointOfInterestState = { ...pointOfInterestState, tags: pointOfInterestState.tags.filter(item => item !== key) };
 
-		registerAction('removeTagAddPOI');
+		registerAction("removeTagAddPOI");
 	};
 
 	const submit = async () => {
 		blurCurrentInput(document);
 
-		registerAction('trySubmitAddPOI');
+		registerAction("trySubmitAddPOI");
 		isError = false;
 		const isValuesNotEmpty = pointOfInterestState.description.length > 0 && pointOfInterestState.title.length > 2;
 		if (!isValuesNotEmpty) {
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 
 			if (pointOfInterestState.title.length <= 2)
 				inputRef?.focus();
@@ -87,7 +87,7 @@
 			return;
 		}
 
-		registerAction('submitAddPOI');
+		registerAction("submitAddPOI");
 		const currentCoords = [ roundToFifthDecimal(popupData.lng), roundToFifthDecimal(popupData.lat) ];
 
 		isLoading = true;
@@ -107,13 +107,13 @@
 		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 		closeOverlays();
 		showSuccessNotification();
-		registerAction('successAddPOI');
+		registerAction("successAddPOI");
 	};
 
 	const debouncedSubmit = debounce(() => {
 		if (isSpam) {
 			isError = true;
-			errorType = 'manyAttempts';
+			errorType = "manyAttempts";
 			clearTimeout(isSpam);
 			isSpam = setTimeout(() => {
 				clearTimeout(isSpam);
@@ -133,7 +133,7 @@
 
 	const addCircle = () => {
 		const { lat, lng } = popupData;
-		circle = L.circle(popupData, 200, { color: '#007097' });
+		circle = L.circle(popupData, 200, { color: "#007097" });
 
 		circle.addTo(map);
 
@@ -145,7 +145,7 @@
 
 	onMount(() => {
 		if ($userStateStore.userID === null)
-			openAnotherOverlay('loginPopup');
+			openAnotherOverlay("loginPopup");
 		else
 			addCircle();
 	});
@@ -154,23 +154,23 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('addPOIPopup.title')} />
+	<PopupTitle title={$_("addPOIPopup.title")} />
 
 	<InputGroupSimple
-		title={$_('addPOIPopup.inputTitle')}
+		title={$_("addPOIPopup.inputTitle")}
 		on:change={updateInputValue}
-		placeholder={$_('addPOIPopup.inputPlaceholder')}
+		placeholder={$_("addPOIPopup.inputPlaceholder")}
 		autocomplete="point of interest"
 		bind:this={inputRef}
 		maxlength={256}
 	/>
 
 	<p class="my-4">
-		{$_('addPOIPopup.text')}
+		{$_("addPOIPopup.text")}
 	</p>
 
 	<Textarea
-		placeholder={$_('addPOIPopup.textAreaPlaceholder')}
+		placeholder={$_("addPOIPopup.textAreaPlaceholder")}
 		maxlength="{600}"
 		on:input={updateTextareaValue}
 		className='mt-0'
@@ -189,6 +189,6 @@
 	/>
 
 	<div class="flex justify-evenly items-center">
-		<FormButton text={$_('addPOIPopup.submitBtn')} action={debouncedSubmit} />
+		<FormButton text={$_("addPOIPopup.submitBtn")} action={debouncedSubmit} />
 	</div>
 </form>

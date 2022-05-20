@@ -1,10 +1,10 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _ } from "svelte-i18n";
 
-    import PopupTitle from './PopupTitle.svelte';
-    import Select from '../../../ui-elements/Select.svelte';
-    import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
-    import FormButton from '../../../ui-elements/FormButton.svelte';
+    import PopupTitle from "./PopupTitle.svelte";
+    import Select from "../../../ui-elements/Select.svelte";
+    import InputGroupSimple from "../../../ui-elements/InputGroupSimple.svelte";
+    import FormButton from "../../../ui-elements/FormButton.svelte";
 
     import {
     	closeOverlay,
@@ -16,7 +16,7 @@
     import { onboard } from "../../../../utilities/api.js";
     import { userStateStore } from "../../../../../stores/state.js";
 
-    const defaultName = $_('onboardingPopup.defaultName');
+    const defaultName = $_("onboardingPopup.defaultName");
 
     let isSpam = null;
     let onboardingState = {
@@ -26,27 +26,27 @@
     };
 
     const ageOptions = [{
-    	text: $_('onboardingPopup.ageOption1'),
+    	text: $_("onboardingPopup.ageOption1"),
     	selected: false,
     }, {
-    	text: $_('onboardingPopup.ageOption2'),
+    	text: $_("onboardingPopup.ageOption2"),
     	selected: true,
     }, {
-    	text: $_('onboardingPopup.ageOption3'),
+    	text: $_("onboardingPopup.ageOption3"),
     	selected: false,
     }, {
-    	text: $_('onboardingPopup.ageOption4'),
+    	text: $_("onboardingPopup.ageOption4"),
     	selected: false,
     }];
 
     const incomeOptions = [{
-    	text: $_('onboardingPopup.incomeOption1'),
+    	text: $_("onboardingPopup.incomeOption1"),
     	selected: false,
     }, {
-    	text: $_('onboardingPopup.incomeOption2'),
+    	text: $_("onboardingPopup.incomeOption2"),
     	selected: true,
     }, {
-    	text: $_('onboardingPopup.incomeOption3'),
+    	text: $_("onboardingPopup.incomeOption3"),
     	selected: false,
     }];
 
@@ -63,11 +63,11 @@
 
     const submit = async () => {
     	const { name, ageGrp, moneyGrp } = onboardingState;
-    	const userName = name.trim() === '' ? defaultName : name;
+    	const userName = name.trim() === "" ? defaultName : name;
 
     	if (userName === defaultName && ageGrp === 1 && moneyGrp === 1) {
     		showSuccessNotification();
-    		closeOverlay('popup');
+    		closeOverlay("popup");
     		return;
     	}
 
@@ -80,7 +80,7 @@
     	}
 
     	showSuccessNotification();
-    	closeOverlay('popup');
+    	closeOverlay("popup");
     };
 
     const debouncedSubmit = debounce(() => {
@@ -103,28 +103,28 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-    <PopupTitle title={$_('onboardingPopup.title')} />
+    <PopupTitle title={$_("onboardingPopup.title")} />
 
     <p class="mt-4">
-        {$_('onboardingPopup.caption')}
+        {$_("onboardingPopup.caption")}
     </p>
 
     <Select
         options={ageOptions}
         id='age-select'
-        title={$_('onboardingPopup.yourAgeGroup')}
-        on:change={e => { handleSelect(e, 'ageGrp') }}
+        title={$_("onboardingPopup.yourAgeGroup")}
+        on:change={e => { handleSelect(e, "ageGrp") }}
     />
 
     <Select
         options={incomeOptions}
         id='money-select'
-        title={$_('onboardingPopup.incomeLevel')}
-        on:change={e => { handleSelect(e, 'moneyGrp') }}
+        title={$_("onboardingPopup.incomeLevel")}
+        on:change={e => { handleSelect(e, "moneyGrp") }}
     />
 
     <InputGroupSimple
-        title={$_('onboardingPopup.yourName', { values: [ defaultName ] })}
+        title={$_("onboardingPopup.yourName", { values: [ defaultName ] })}
         on:change={handleInput}
         placeholder="{defaultName}"
         autocomplete="username"
@@ -132,6 +132,6 @@
     />
 
     <div class="flex justify-evenly items-center mt-8">
-        <FormButton text={$_('onboardingPopup.mainBtn')} action={debouncedSubmit} />
+        <FormButton text={$_("onboardingPopup.mainBtn")} action={debouncedSubmit} />
     </div>
 </form>

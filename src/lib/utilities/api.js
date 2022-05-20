@@ -1,33 +1,33 @@
-import { get } from 'svelte/store';
-import { appStateStore } from '../../stores/state.js';
-import { API_URL } from '../../configs/env.js';
-import { convertMetersToRadian, getCookie } from './helpers.js';
+import { get } from "svelte/store";
+import { appStateStore } from "../../stores/state.js";
+import { API_URL } from "../../configs/env.js";
+import { convertMetersToRadian, getCookie } from "./helpers.js";
 
 const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 	if (!url)
-		return ({ error: 'Not valid URL' });
+		return ({ error: "Not valid URL" });
 
 	const { termsOfUseAgreed } = get(appStateStore);
 	if (!termsOfUseAgreed)
-		return ({ error: 'Not agreed to the terms of use' });
+		return ({ error: "Not agreed to the terms of use" });
 
 	// default values
-	const newMethod = method ? method : 'GET';
-	const newCredentials = credentials ? credentials : 'include';
+	const newMethod = method ? method : "GET";
+	const newCredentials = credentials ? credentials : "include";
 	const newHeaders = headers ? headers : {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json',
+		"Accept": "application/json",
+		"Content-Type": "application/json",
 	};
 	const finalHeaders = {
 		...newHeaders,
-		...(newMethod !== 'GET' && typeof document !== 'undefined' && {
-			'csrf-token': getCookie('csrf-token'),
+		...(newMethod !== "GET" && typeof document !== "undefined" && {
+			"csrf-token": getCookie("csrf-token"),
 		}),
 	};
 
 	// console.log(url, method, credentials, headers, body)
 	try {
-		const resp = newMethod === 'POST'
+		const resp = newMethod === "POST"
 			? await fetch(url, {
 				method: newMethod,
 				credentials: newCredentials,
@@ -41,7 +41,7 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 			});
 
 		if (resp.status === 404)
-			return ({ error: '404. No response from the server.' });
+			return ({ error: "404. No response from the server." });
 
 		return await resp.json();
 	} catch (e) {
@@ -54,7 +54,7 @@ const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperi
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			properties: {
 				rating,
@@ -64,7 +64,7 @@ const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperi
 				timeline,
 			},
 			location: {
-				type: 'Point',
+				type: "Point",
 				coordinates: [ ...coords ],
 			},
 		}),
@@ -106,7 +106,7 @@ const reactOnRating = async (ratingID, shouldReport) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			ratingID,
 			shouldReport,
@@ -121,11 +121,11 @@ const savePOIToDB = async (coords, props) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			properties: { ...props },
 			location: {
-				type: 'Point',
+				type: "Point",
 				coordinates: [ ...coords ],
 			},
 		}),
@@ -151,10 +151,10 @@ const reactOnPOI = async (goal, pointID) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			pointID,
-			isUpvote: goal === 'upvote',
+			isUpvote: goal === "upvote",
 		}),
 	});
 };
@@ -164,7 +164,7 @@ const addCommentPOI = async (pointID, comment, username) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			pointID,
 			comment,
@@ -184,7 +184,7 @@ const reactOnCommentPOI = async (goal, key) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			key,
 			goal,
@@ -195,13 +195,13 @@ const reactOnCommentPOI = async (goal, key) => {
 const deletePOI = async pointID => {
 	const url = `${API_URL}/poi/delete_point/${new URLSearchParams({ pointID })}`;
 
-	return await fetchFunction({ url, method: 'DELETE' });
+	return await fetchFunction({ url, method: "DELETE" });
 };
 
 const deleteCommentPOI = async commentID => {
 	const url = `${API_URL}/poi/delete_comment/${new URLSearchParams({ commentID })}`;
 
-	return await fetchFunction({ url, method: 'DELETE' });
+	return await fetchFunction({ url, method: "DELETE" });
 };
 
 // comments
@@ -217,7 +217,7 @@ const reactOnComment = async (goal, key) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			key,
 			goal,
@@ -232,7 +232,7 @@ const register = async (email, password, lang) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			password,
 			email,
@@ -246,7 +246,7 @@ const login = async (email, password) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			email,
 			password,
@@ -259,7 +259,7 @@ const onboard = async (userName, ageGrp, moneyGrp, userID) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			userName,
 			ageGrp,
@@ -274,7 +274,7 @@ const sendFeedback = async ({ heading, comment }, userID) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			heading,
 			comment,
@@ -310,7 +310,7 @@ const askMoreRatings = async () => {
 const logout = async () => {
 	const url = `${API_URL}/user/logout`;
 
-	return await fetchFunction({ url, method: 'DELETE' });
+	return await fetchFunction({ url, method: "DELETE" });
 };
 
 const reverify = async email => {
@@ -318,7 +318,7 @@ const reverify = async email => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			email,
 		}),
@@ -330,7 +330,7 @@ const reset = async (password, token) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			password,
 			token,
@@ -343,7 +343,7 @@ const sendResetPass = async email => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			email,
 		}),
@@ -355,7 +355,7 @@ const saveLang = async lang => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			lang,
 		}),
@@ -367,7 +367,7 @@ const voteForTask = async (goal, key) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			key,
 			goal,
@@ -392,7 +392,7 @@ const updateRatingYear = async (id, newValue) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			id,
 			newValue,
@@ -403,7 +403,7 @@ const updateRatingYear = async (id, newValue) => {
 const deleteUserRating = async ratingID => {
 	const url = `${API_URL}/user/delete_rating/${new URLSearchParams({ ratingID })}`;
 
-	return await fetchFunction({ url, method: 'DELETE' });
+	return await fetchFunction({ url, method: "DELETE" });
 };
 
 const reportReason = async (reportedID, type, code, comment = null) => {
@@ -411,7 +411,7 @@ const reportReason = async (reportedID, type, code, comment = null) => {
 
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			reportedID,
 			type,

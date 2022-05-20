@@ -1,25 +1,25 @@
 <script>
 	import { _, json } from "svelte-i18n";
 
-	import Spinner from './Spinner.svelte';
-	import TextButton from './TextButton.svelte';
+	import Spinner from "./Spinner.svelte";
+	import TextButton from "./TextButton.svelte";
 
 	export let isLoading = false;
-	export let errorType = '';
+	export let errorType = "";
 	export let onVerificationLetterAction = () => {};
 
-	$: errorsObj = $json('errors');
+	$: errorsObj = $json("errors");
 </script>
 
 <div class="relative flex justify-center text-center items-center h-28">
 	{#if isLoading}
 		<Spinner />
-	{:else if errorType === 'verificationLetter'}
+	{:else if errorType === "verificationLetter"}
 		<div class="italic font-bold">
-			<span class="block text-center">{$_('errors.errorVerification')}</span>
+			<span class="block text-center">{$_("errors.errorVerification")}</span>
 			<TextButton
 				action={onVerificationLetterAction}
-				text={$_('errors.errorVerificationBtn')}
+				text={$_("errors.errorVerificationBtn")}
 			/>
 		</div>
 	{:else if errorType.length > 0}

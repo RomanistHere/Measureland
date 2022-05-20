@@ -1,29 +1,29 @@
 <script>
-    import { fly } from 'svelte/transition';
-    import { focusTrap } from 'svelte-focus-trap';
+    import { fly } from "svelte/transition";
+    import { focusTrap } from "svelte-focus-trap";
 
-    import CloseButton from '../../../ui-elements/CloseButton.svelte';
+    import CloseButton from "../../../ui-elements/CloseButton.svelte";
 
-    import PointOfInterestPopup from './PointOfInterestPopup/PointOfInterestPopup.svelte';
-    import ConfirmForgotPasswordPopup from './ConfirmForgotPasswordPopup.svelte';
-    import ShowRatingPopup from './ShowRatingPopup/ShowRatingPopup.svelte';
-    import AskForMoreRatingsPopup from './AskForMoreRatingsPopup.svelte';
-    import ChangePasswordPopup from './ChangePasswordPopup.svelte';
-    import ForgotPasswordPopup from './ForgotPasswordPopup.svelte';
-    import AddCommentPOIPopup from './AddCommentPOIPopup.svelte';
-    import NearbyPopup from './NearbyPopup/NearbyPopup.svelte';
-    import AddPOIPopup from './AddPOIPopup/AddPOIPopup.svelte';
-    import CheckEmailPopup from './CheckEmailPopup.svelte';
-    import OnboardingPopup from './OnboardingPopup.svelte';
-    import ChangeYearPopup from './ChangeYearPopup.svelte';
-    import QuizPopup from './QuizPopup/QuizPopup.svelte';
-    import HowToRatePopup from './HowToRatePopup.svelte';
-    import LoggedInPopup from './LoggedInPopup.svelte';
-    import RegisterPopup from './RegisterPopup.svelte';
-    import PartnersPopup from './PartnersPopup.svelte';
-    import MyPlacesPopup from './MyPlacesPopup.svelte';
-    import FeedbackPopup from './FeedbackPopup.svelte';
-    import LoginPopup from './LoginPopup.svelte';
+    import PointOfInterestPopup from "./PointOfInterestPopup/PointOfInterestPopup.svelte";
+    import ConfirmForgotPasswordPopup from "./ConfirmForgotPasswordPopup.svelte";
+    import ShowRatingPopup from "./ShowRatingPopup/ShowRatingPopup.svelte";
+    import AskForMoreRatingsPopup from "./AskForMoreRatingsPopup.svelte";
+    import ChangePasswordPopup from "./ChangePasswordPopup.svelte";
+    import ForgotPasswordPopup from "./ForgotPasswordPopup.svelte";
+    import AddCommentPOIPopup from "./AddCommentPOIPopup.svelte";
+    import NearbyPopup from "./NearbyPopup/NearbyPopup.svelte";
+    import AddPOIPopup from "./AddPOIPopup/AddPOIPopup.svelte";
+    import CheckEmailPopup from "./CheckEmailPopup.svelte";
+    import OnboardingPopup from "./OnboardingPopup.svelte";
+    import ChangeYearPopup from "./ChangeYearPopup.svelte";
+    import QuizPopup from "./QuizPopup/QuizPopup.svelte";
+    import HowToRatePopup from "./HowToRatePopup.svelte";
+    import LoggedInPopup from "./LoggedInPopup.svelte";
+    import RegisterPopup from "./RegisterPopup.svelte";
+    import PartnersPopup from "./PartnersPopup.svelte";
+    import MyPlacesPopup from "./MyPlacesPopup.svelte";
+    import FeedbackPopup from "./FeedbackPopup.svelte";
+    import LoginPopup from "./LoginPopup.svelte";
 
     export let popupName;
     export let popupData;

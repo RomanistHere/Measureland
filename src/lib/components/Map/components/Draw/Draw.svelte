@@ -1,14 +1,14 @@
 <script>
-	import L from 'leaflet';
+	import L from "leaflet";
 	// import 'leaflet-draw';
 	// can't use original version because of https://github.com/Leaflet/Leaflet.draw/issues/945
 	// fixed by adding "var radius";
-	import '../../../../external/leaflet.draw.js';
-	import 'leaflet-draw/dist/leaflet.draw.css';
-	import { locale } from 'svelte-i18n';
+	import "../../../../external/leaflet.draw.js";
+	import "leaflet-draw/dist/leaflet.draw.css";
+	import { locale } from "svelte-i18n";
 
-	import { mapReference } from '../../../../../stores/references.js';
-	import { appStateStore } from '../../../../../stores/state.js';
+	import { mapReference } from "../../../../../stores/references.js";
+	import { appStateStore } from "../../../../../stores/state.js";
 	import {
 		debounce,
 		logError,
@@ -17,7 +17,7 @@
 		roundToTen,
 		showSomethingWrongNotification,
 	} from "../../../../utilities/helpers.js";
-	import { translateDrawRU } from './drawLocalization.js';
+	import { translateDrawRU } from "./drawLocalization.js";
 
 	export let mapClickRefFuntcion;
 
@@ -43,33 +43,33 @@
 
 		// editing ON
 		map.on(L.Draw.Event.DRAWSTART, () => {
-			map.off('click', mapClickRefFuntcion);
+			map.off("click", mapClickRefFuntcion);
 		});
 
 		map.on(L.Draw.Event.EDITSTART, () => {
-			map.off('click', mapClickRefFuntcion);
+			map.off("click", mapClickRefFuntcion);
 		});
 
 		map.on(L.Draw.Event.DELETESTART, () => {
-			map.off('click', mapClickRefFuntcion);
+			map.off("click", mapClickRefFuntcion);
 		});
 
 		// editing OFF
 		map.on(L.Draw.Event.DRAWSTOP, () => {
 			setTimeout(() => {
-				map.on('click', mapClickRefFuntcion);
+				map.on("click", mapClickRefFuntcion);
 			}, 100);
 		});
 
 		map.on(L.Draw.Event.EDITSTOP, () => {
 			setTimeout(() => {
-				map.on('click', mapClickRefFuntcion);
+				map.on("click", mapClickRefFuntcion);
 			}, 100);
 		});
 
 		map.on(L.Draw.Event.DELETESTOP, () => {
 			setTimeout(() => {
-				map.on('click', mapClickRefFuntcion);
+				map.on("click", mapClickRefFuntcion);
 			}, 100);
 		});
 
@@ -79,12 +79,12 @@
 			drawnItems.addLayer(layer);
 			const shape = layer.toGeoJSON();
 
-			if (type === 'circle') {
+			if (type === "circle") {
 				const radius = layer.getRadius();
 				shape.properties.radius = roundToTen(radius);
 			}
 
-			registerAction('drawFinished');
+			registerAction("drawFinished");
 
 			addToCommongGeoJSON(shape);
 		});
@@ -108,21 +108,21 @@
 	};
 
 	const addToCommongGeoJSON = shape => {
-		if (shape.geometry.type !== 'Point') {
+		if (shape.geometry.type !== "Point") {
 			try {
 				shape.geometry.coordinates[0] = shape.geometry.coordinates[0].map(coordsArr => {
 					const [ lat, lng ] = coordsArr;
 					return [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
 				});
-				delete shape['properties'];
+				delete shape["properties"];
 			} catch (error) {
 				logError(error);
 				showSomethingWrongNotification();
 			}
 		}
 
-		if (shapesGeoJSON['features'] === null)
-			shapesGeoJSON['features'] = [ shape ];
+		if (shapesGeoJSON["features"] === null)
+			shapesGeoJSON["features"] = [ shape ];
 		else
 			shapesGeoJSON = concatGeoJSON(shapesGeoJSON, shape);
 
@@ -130,7 +130,7 @@
 		const urlString = encodeURIComponent(string);
 
 		if (urlString.length >= 2000) {
-			logError('URL length is too long');
+			logError("URL length is too long");
 			showSomethingWrongNotification();
 			return;
 		}
@@ -141,7 +141,7 @@
 
 	const initControls = () => {
 		const drawOptions = {
-			position: 'bottomright',
+			position: "bottomright",
 			draw: {
 				marker: false,
 				circlemarker: false,
@@ -153,7 +153,7 @@
 		};
 		map.addLayer(drawnItems);
 		const drawControl = new L.Control.Draw(drawOptions);
-		if ($locale === 'ru')
+		if ($locale === "ru")
 			translateDrawRU(L);
 		map.addControl(drawControl);
 	};

@@ -1,5 +1,5 @@
 <script>
-	import { _, locale } from 'svelte-i18n';
+	import { _, locale } from "svelte-i18n";
 
 	import VoteButton from "../../../../ui-elements/VoteButton.svelte";
 	import SmallButton from "../../../../ui-elements/SmallButton.svelte";
@@ -30,15 +30,15 @@
 
 	const isUserLoggedIn = $userStateStore.userID !== null;
 	const reactOnCommentsObj = {
-		'POI': reactOnCommentPOI,
-		'rating': reactOnComment,
+		"POI": reactOnCommentPOI,
+		"rating": reactOnComment,
 	};
 	const react = reactOnCommentsObj[type];
 
 	const likeComment = async () => {
 		if (!isUserLoggedIn) {
-			closeOverlay('sidebar');
-			openAnotherOverlay('loginPopup');
+			closeOverlay("sidebar");
+			openAnotherOverlay("loginPopup");
 			return;
 		}
 
@@ -53,7 +53,7 @@
 		liked = liked + 1;
 		isLikesDisabled = true;
 
-		const { error } = await react('like', id);
+		const { error } = await react("like", id);
 		if (error) {
 			logError(error);
 			showSomethingWrongNotification();
@@ -63,8 +63,8 @@
 
 	const dislikeComment = async () => {
 		if (!isUserLoggedIn) {
-			closeOverlay('sidebar');
-			openAnotherOverlay('loginPopup');
+			closeOverlay("sidebar");
+			openAnotherOverlay("loginPopup");
 			return;
 		}
 
@@ -79,7 +79,7 @@
 		disliked = disliked + 1;
 		isDislikesDisabled = true;
 
-		const { error } = await react('dislike', id);
+		const { error } = await react("dislike", id);
 		if (error) {
 			logError(error);
 			showSomethingWrongNotification();
@@ -94,7 +94,7 @@
 			return;
 		}
 
-		const languageToTranslateTo = $locale === 'en' ? 'en-US' : 'ru';
+		const languageToTranslateTo = $locale === "en" ? "en-US" : "ru";
 		const translationResponse = await translateText(comment, languageToTranslateTo);
 
 		if (translationResponse.error) {
@@ -103,7 +103,7 @@
 			return;
 		}
 
-		registerAction('translateComment');
+		registerAction("translateComment");
 		translatedText = translationResponse.data.translation.text;
 		isTranslated = true;
 	};
@@ -120,10 +120,10 @@
 	<p class="font-bold">
 		{username}
 		{#if isYours}
-			({$_('_.user')})
+			({$_("_.user")})
 		{/if}
-		{#if type === 'rating'}
-			<span class="italic opacity-60 text-sm">{$_('_.commentConnector')} {rating}</span>
+		{#if type === "rating"}
+			<span class="italic opacity-60 text-sm">{$_("_.commentConnector")} {rating}</span>
 		{/if}
 	</p>
 
@@ -132,7 +132,7 @@
 	{#if !isCommentTheSameLang}
 		<SmallButton
 			on:click={toggleTranslationComment}
-			text={isTranslated ? $_('translation.showOriginal') : $_('translation.translateTo')}
+			text={isTranslated ? $_("translation.showOriginal") : $_("translation.translateTo")}
 		/>
 	{/if}
 

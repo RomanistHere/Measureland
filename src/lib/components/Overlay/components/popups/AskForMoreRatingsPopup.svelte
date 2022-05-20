@@ -1,53 +1,53 @@
 <script>
-    import { _, locale } from 'svelte-i18n';
+    import { _, locale } from "svelte-i18n";
 
-    import TextLink from '../../../ui-elements/TextLink.svelte';
-    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
-    import PopupTitle from './PopupTitle.svelte';
+    import TextLink from "../../../ui-elements/TextLink.svelte";
+    import PrimaryButton from "../../../ui-elements/PrimaryButton.svelte";
+    import PopupTitle from "./PopupTitle.svelte";
 
     import { closeOverlay } from "../../../../utilities/helpers.js";
-    import { appInfo } from '../../../../../configs/index.js';
+    import { appInfo } from "../../../../../configs/index.js";
 
-    const closePopup = () => closeOverlay('popup');
+    const closePopup = () => closeOverlay("popup");
 </script>
 
 <div class="max-w-sm w-full">
-    <PopupTitle title={$_('askForMoreRatingsPopup.title')} />
+    <PopupTitle title={$_("askForMoreRatingsPopup.title")} />
 
     <p class="my-2">
-        {$_('askForMoreRatingsPopup.weProcessingRequest')}
+        {$_("askForMoreRatingsPopup.weProcessingRequest")}
         <TextLink
             href="blog/support/#faq-help"
-            text={$_('askForMoreRatingsPopup.weProcessingRequestLink')}
+            text={$_("askForMoreRatingsPopup.weProcessingRequestLink")}
             blank={true}
         />
     </p>
 
     <p class="my-2">
-        {$_('askForMoreRatingsPopup.limitationsExist')}
+        {$_("askForMoreRatingsPopup.limitationsExist")}
         <TextLink
             href="/blog/how-to-become-citizen/"
-            text={$_('askForMoreRatingsPopup.limitationsExistLink')}
+            text={$_("askForMoreRatingsPopup.limitationsExistLink")}
             blank={true}
         />
     </p>
 
     <p class="my-2">
-        {#if $locale === 'en'}
-            {$_('askForMoreRatingsPopup.youCanTryFasten')}
+        {#if $locale === "en"}
+            {$_("askForMoreRatingsPopup.youCanTryFasten")}
             <TextLink
                 href="mailto:{appInfo.supportEmail}"
                 text={appInfo.supportEmail}
             />
         {/if}
-        {$_('askForMoreRatingsPopup.orOurTelegramBot')}
+        {$_("askForMoreRatingsPopup.orOurTelegramBot")}
         <TextLink
             href={appInfo.telegramBot}
             text={appInfo.telegramBot}
             blank={true}
         />
-        {$_('askForMoreRatingsPopup.weWillRespond')}
+        {$_("askForMoreRatingsPopup.weWillRespond")}
     </p>
 
-    <PrimaryButton text={$_('askForMoreRatingsPopup.mainBtn')} className="block text-center mt-4" action={closePopup} />
+    <PrimaryButton text={$_("askForMoreRatingsPopup.mainBtn")} className="block text-center mt-4" action={closePopup} />
 </div>

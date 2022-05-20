@@ -1,19 +1,19 @@
 <script>
 	import { onMount } from "svelte";
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 	import { flip } from "svelte/animate";
 
-	import VotingElement from './VotingElement.svelte';
-	import PrimaryButton from '../PrimaryButton.svelte';
-	import TextButton from '../TextButton.svelte';
-	import SearchInput from '../SearchInput.svelte';
+	import VotingElement from "./VotingElement.svelte";
+	import PrimaryButton from "../PrimaryButton.svelte";
+	import TextButton from "../TextButton.svelte";
+	import SearchInput from "../SearchInput.svelte";
 
 	import { debounce, openAnotherOverlay } from "../../../utilities/helpers.js";
 	import { userStateStore } from "../../../../stores/state.js";
 	import { getAllTasks } from "../../../utilities/api.js";
 
-	export let title = '';
-	export let type = 'links';
+	export let title = "";
+	export let type = "links";
 	export let list = [];
 	export let showedNumber = 6;
 	export let showMoreNumber = 4;
@@ -22,7 +22,7 @@
 	$: list = list.sort((a, b) => new Date(b.firstDate) - new Date(a.firstDate));
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 	$: searchArr = [];
-	$: searchString = '';
+	$: searchString = "";
 
 	const sortList = () => {
 		// next string removes objects with duplicated id
@@ -57,11 +57,11 @@
 
 	const submitFeedback = () => {
 		if (!isUserLoggedIn) {
-			openAnotherOverlay('loginPopup');
+			openAnotherOverlay("loginPopup");
 			return;
 		}
 
-		openAnotherOverlay('feedbackPopup');
+		openAnotherOverlay("feedbackPopup");
 	};
 
 	const showMore = () => {
@@ -81,7 +81,7 @@
 	};
 
 	onMount(async () => {
-		if (type === 'vote') {
+		if (type === "vote") {
 			const { data } = await getAllTasks();
 			const { tasks } = data;
 
@@ -109,7 +109,7 @@
 
 	{#if isSearchAvailable}
 		<SearchInput
-			placeholder={$_('blog.searchPlaceholder')}
+			placeholder={$_("blog.searchPlaceholder")}
 			on:input={searchSubstring}
 			autocomplete={true}
 		/>
@@ -119,7 +119,7 @@
 		{#if searchString.length === 0}
 			{#each list.slice(0, showedNumber) as { title, text, link, id } (id || Math.random().toString(16).slice(2))}
 				<li class="my-4 rounded-md glassmorphism" animate:flip>
-					{#if type === 'vote'}
+					{#if type === "vote"}
 						<VotingElement
 							{title}
 							{text}
@@ -129,7 +129,7 @@
 						/>
 					{:else if link}
 						<a
-							href={link} class="link block p-2" target={link.includes('https://') ? "_blank" : null}
+							href={link} class="link block p-2" target={link.includes("https://") ? "_blank" : null}
 							rel="noopener"
 						>
 							{#if title}
@@ -161,7 +161,7 @@
 				<li class="my-4 rounded-md glassmorphism" animate:flip>
 					{#if link}
 						<a
-							href={link} class="link block p-2" target={link.includes('https://') ? "_blank" : null}
+							href={link} class="link block p-2" target={link.includes("https://") ? "_blank" : null}
 							rel="noopener"
 						>
 							{#if title}
@@ -187,7 +187,7 @@
 			{#if searchArr.length === 0}
 				<li class="my-4 rounded-md glassmorphism">
 					<div class="block p-2">
-						<p>{$_('blog.searchNoSuccess')}</p>
+						<p>{$_("blog.searchNoSuccess")}</p>
 					</div>
 				</li>
 			{/if}
@@ -197,16 +197,16 @@
 	{#if list.length > showedNumber}
 		<div class="text-right">
 			<TextButton
-				text={$_('commuinty.showMoreButton')}
+				text={$_("commuinty.showMoreButton")}
 				action={showMore}
 				className="mb-4 inline-block"
 			/>
 		</div>
 	{/if}
 
-	{#if type === 'vote'}
+	{#if type === "vote"}
 		<PrimaryButton
-			text={$_('commuinty.submitSuggestionBtn')}
+			text={$_("commuinty.submitSuggestionBtn")}
 			className="text-center block px-10 mb-2"
 			action={submitFeedback}
 		/>

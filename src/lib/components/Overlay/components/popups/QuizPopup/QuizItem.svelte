@@ -1,7 +1,7 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher } from "svelte";
 
-    import Tooltip from '../../../../ui-elements/Tooltip.svelte';
+    import Tooltip from "../../../../ui-elements/Tooltip.svelte";
 
     export let title;
     export let tooltip;
@@ -13,10 +13,10 @@
 
     const handleClick = newRating => {
     	rating = newRating;
-    	dispatch('setRating', { rating, key });
+    	dispatch("setRating", { rating, key });
     };
 
-    const character = String.fromCharCode('0xE900');
+    const character = String.fromCharCode("0xE900");
     const possibleRatingsArr = [ 5, 4, 3, 2, 1 ];
 </script>
 

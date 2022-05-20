@@ -1,8 +1,8 @@
 <script>
-    import { onMount, createEventDispatcher } from 'svelte';
-    import noUiSlider from 'nouislider';
-    import 'nouislider/dist/nouislider.min.css';
-    import '/static/styles/slider.css';
+    import { onMount, createEventDispatcher } from "svelte";
+    import noUiSlider from "nouislider";
+    import "nouislider/dist/nouislider.min.css";
+    import "/static/styles/slider.css";
 
     let slider;
     const dispatch = createEventDispatcher();
@@ -48,9 +48,9 @@
     	});
 
     	slider.noUiSlider.on(
-    		'update',
+    		"update",
     		(values, handle, unencoded, tap, positions) =>
-    			dispatch('update', { values, handle, unencoded, tap, positions }),
+    			dispatch("update", { values, handle, unencoded, tap, positions }),
     	);
     	// slider.noUiSlider.on(
     	//     'slide',
@@ -73,9 +73,9 @@
     	//         dispatch('start', { values, handle, unencoded, tap, positions })
     	// );
     	slider.noUiSlider.on(
-    		'end',
+    		"end",
     		(values, handle, unencoded, tap, positions) =>
-    			dispatch('end', { values, handle, unencoded, tap, positions }),
+    			dispatch("end", { values, handle, unencoded, tap, positions }),
     	);
     });
 </script>

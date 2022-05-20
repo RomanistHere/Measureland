@@ -1,5 +1,5 @@
 <script>
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 
 	import { closeOverlay, openAnotherOverlay, registerAction, setCookie } from "$lib/utilities/helpers.js";
 	import { appStateStore, userStateStore } from "../../../../../stores/state.js";
@@ -12,7 +12,7 @@
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 
 	const openPopup = item => {
-		closeOverlay('dialog');
+		closeOverlay("dialog");
 		openAnotherOverlay(item, coords);
 	};
 
@@ -41,9 +41,9 @@
 		const { numberOfPOIs, pointsOfInterestApprox } = getNumberOfNearbyPOIs();
 
 		if (numberOfPOIs === 0) {
-			openPopup('addPOIPopup');
+			openPopup("addPOIPopup");
 		} else {
-			openAnotherOverlay('warningPoiNearbyDialog', {
+			openAnotherOverlay("warningPoiNearbyDialog", {
 				latlng: coords,
 				closePointsData: pointsOfInterestApprox,
 			});
@@ -56,102 +56,102 @@
 			return;
 
 		appStateStore.update(state => ({ ...state, startScreen: false }));
-		setCookie('startScreen', '0', 365);
-		registerAction('dialogCloseStartScreen');
+		setCookie("startScreen", "0", 365);
+		registerAction("dialogCloseStartScreen");
 	};
 
 	const openRegister = () => {
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		closeStartScreen();
-		closeOverlay('dialog');
-		openAnotherOverlay('registerPopup');
-		registerAction('dialogRegister');
+		closeOverlay("dialog");
+		openAnotherOverlay("registerPopup");
+		registerAction("dialogRegister");
 	};
 
 	const openLogin = () => {
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		closeStartScreen();
-		closeOverlay('dialog');
-		openAnotherOverlay('loginPopup');
-		registerAction('dialogLogin');
+		closeOverlay("dialog");
+		openAnotherOverlay("loginPopup");
+		registerAction("dialogLogin");
 	};
 </script>
 
 {#if isUserLoggedIn}
 	<h3 class="text-2xl -md:text-lg pr-6">
-		{$_('onMapClickDialog.title')}
+		{$_("onMapClickDialog.title")}
 	</h3>
 
 	{#if isWar}
 		<p class="my-2">
-			{$_('onMapClickDialog.warNote')}
+			{$_("onMapClickDialog.warNote")}
 		</p>
 	{/if}
 
 	<p class="mt-2">
 		<a href="blog/tutorial" target="_blank" class="underline">
-			{$_('onMapClickDialog.subtitleLink')}
+			{$_("onMapClickDialog.subtitleLink")}
 		</a>
-		{$_('onMapClickDialog.subtitleText')}
+		{$_("onMapClickDialog.subtitleText")}
 	</p>
 
 	<div class="flex -mx-1 mt-4">
 		<a
-			href={'#'}
+			href={"#"}
 			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors hover:bg-active hover:text-white"
-			on:click|preventDefault|stopPropagation={() => { openPopup('quizPopup') }}
+			on:click|preventDefault|stopPropagation={() => { openPopup("quizPopup") }}
 		>
 			<div class="text-center">
 				<img
 					src="/images/rating_icon.svg"
-					alt={$_('onMapClickDialog.option1Alt')}
+					alt={$_("onMapClickDialog.option1Alt")}
 					class="h-24 inline-block my-2"
 				>
 			</div>
-			{$_('onMapClickDialog.option1')}
+			{$_("onMapClickDialog.option1")}
 		</a>
 		<a
-			href={'#'}
+			href={"#"}
 			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors hover:bg-active hover:text-white"
 			on:click|preventDefault|stopPropagation={openPOI}
 		>
 			<div class="text-center">
 				<img
 					src="/images/attention.svg"
-					alt={$_('onMapClickDialog.option2Alt')}
+					alt={$_("onMapClickDialog.option2Alt")}
 					class="h-24 inline-block my-2"
 				>
 			</div>
-			{$_('onMapClickDialog.option2')}
+			{$_("onMapClickDialog.option2")}
 		</a>
 	</div>
 {:else}
 	<h3 class="text-2xl -md:text-lg pr-6">
-		{$_('onMapClickDialog.alternativeTitle')}
+		{$_("onMapClickDialog.alternativeTitle")}
 	</h3>
 
 	<p class="mt-2">
-		{$_('onMapClickDialog.alternativeDesc1')}
+		{$_("onMapClickDialog.alternativeDesc1")}
 	</p>
 	<p>
-		{$_('onMapClickDialog.alternativeDesc2')}
+		{$_("onMapClickDialog.alternativeDesc2")}
 	</p>
 	<div class="flex -mx-1 mt-4">
 		<a
-			href={'#'}
+			href={"#"}
 			class="block w-1/2 text-center rounded-md border border-black p-2 mx-1 transition-colors hover:bg-active hover:text-white"
 			on:click|preventDefault|stopPropagation={openRegister}
 		>
-			{$_('onMapClickDialog.alternativeBtn1')}
+			{$_("onMapClickDialog.alternativeBtn1")}
 		</a>
 		<a
-			href={'#'}
+			href={"#"}
 			class="block w-1/2 text-center rounded-md border border-black p-2 mx-1 transition-colors hover:bg-active hover:text-white"
 			on:click|preventDefault|stopPropagation={openLogin}
 		>
-			{$_('onMapClickDialog.alternativeBtn2')}
+			{$_("onMapClickDialog.alternativeBtn2")}
 		</a>
 	</div>
 {/if}

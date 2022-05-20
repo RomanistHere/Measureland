@@ -1,6 +1,6 @@
 <script>
-	import InputSimple from './InputSimple.svelte';
-	import GroupTitle from './GroupTitle.svelte';
+	import InputSimple from "./InputSimple.svelte";
+	import GroupTitle from "./GroupTitle.svelte";
 
 	export let title;
 	export let placeholder;

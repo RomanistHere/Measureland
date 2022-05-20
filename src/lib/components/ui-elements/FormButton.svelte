@@ -1,7 +1,7 @@
 <script>
     export let action;
-    export let text = 'Submit';
-    export let className = '';
+    export let text = "Submit";
+    export let className = "";
     export let disabled = false;
 </script>
 

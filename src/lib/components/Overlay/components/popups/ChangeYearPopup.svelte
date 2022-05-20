@@ -1,9 +1,9 @@
 <script>
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 
-	import FormButton from '../../../ui-elements/FormButton.svelte';
-	import Select from '../../../ui-elements/Select.svelte';
-	import PopupTitle from './PopupTitle.svelte';
+	import FormButton from "../../../ui-elements/FormButton.svelte";
+	import Select from "../../../ui-elements/Select.svelte";
+	import PopupTitle from "./PopupTitle.svelte";
 
 	import {
 		closeOverlay,
@@ -28,7 +28,7 @@
 	const setTimeline = event => {
 		const timeline = Number(event.target.value);
 		newTimeline = timeline;
-		registerAction('changeYear');
+		registerAction("changeYear");
 	};
 
 	const submit = async () => {
@@ -44,19 +44,19 @@
 			return;
 		}
 
-		registerAction('saveNewYear');
+		registerAction("saveNewYear");
 		showSuccessNotification();
-		closeOverlay('popup');
+		closeOverlay("popup");
 	};
 
 	const debouncedSubmit = debounce(submit, 200);
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('changeYearPopup.title')} />
+	<PopupTitle title={$_("changeYearPopup.title")} />
 
 	<Select
-		title={$_('changeYearPopup.selectTitle', { values: { address: popupData.address } })}
+		title={$_("changeYearPopup.selectTitle", { values: { address: popupData.address } })}
 		id='year-select'
 		options={yearSelectOptions}
 		className='mb-8'
@@ -65,7 +65,7 @@
 
 	<div class="flex justify-evenly items-center">
 		<FormButton
-			text={$_('changeYearPopup.submitBtn')}
+			text={$_("changeYearPopup.submitBtn")}
 			action={debouncedSubmit}
 			disabled={newTimeline === popupData.timeline}
 		/>
@@ -75,6 +75,6 @@
 		class="text-center mt-2 text-sm transition-opacity"
 		class:opacity-0={newTimeline !== popupData.timeline}
 	>
-		{$_('changeYearPopup.warning')}
+		{$_("changeYearPopup.warning")}
 	</div>
 </form>

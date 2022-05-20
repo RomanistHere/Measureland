@@ -1,11 +1,11 @@
 <script>
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 	
-	import Tooltip from '../../../../ui-elements/Tooltip.svelte';
-	import TextLink from '../../../../ui-elements/TextLink.svelte';
-	import ShowRatingPopupStars from './ShowRatingPopupStars.svelte';
+	import Tooltip from "../../../../ui-elements/Tooltip.svelte";
+	import TextLink from "../../../../ui-elements/TextLink.svelte";
+	import ShowRatingPopupStars from "./ShowRatingPopupStars.svelte";
 	
-	export let title = '';
+	export let title = "";
 	export let link;
 	export let linkText;
 	export let tooltip;
@@ -26,11 +26,11 @@
     </h2>
 	{#if !rating}
 		<p>
-			{$_('loading.geo')}
+			{$_("loading.geo")}
 		</p>
-	{:else if rating === 'unavailable'}
+	{:else if rating === "unavailable"}
 		<p>
-			{$_('loading.fail')}
+			{$_("loading.fail")}
 		</p>
 	{:else}
 		<ShowRatingPopupStars { rating } />

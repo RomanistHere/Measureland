@@ -1,6 +1,6 @@
 <script>
-    import Tooltip from '../../../../ui-elements/Tooltip.svelte';
-    import ShowRatingPopupStars from './ShowRatingPopupStars.svelte';
+    import Tooltip from "../../../../ui-elements/Tooltip.svelte";
+    import ShowRatingPopupStars from "./ShowRatingPopupStars.svelte";
 
     export let title;
     export let tooltip;

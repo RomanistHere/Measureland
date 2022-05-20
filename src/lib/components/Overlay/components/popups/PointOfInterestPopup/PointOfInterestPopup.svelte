@@ -1,13 +1,13 @@
 <script>
-	import { _, locale } from 'svelte-i18n';
-	import { onDestroy } from 'svelte';
+	import { _, locale } from "svelte-i18n";
+	import { onDestroy } from "svelte";
 
-	import PopupTitle from '../PopupTitle.svelte';
+	import PopupTitle from "../PopupTitle.svelte";
 	import Tag from "../../../../ui-elements/Tag.svelte";
-	import Spinner from '../../../../ui-elements/Spinner.svelte';
-	import VoteButton from '../../../../ui-elements/VoteButton.svelte';
-	import TextButton from '../../../../ui-elements/TextButton.svelte';
-	import SmallButton from '../../../../ui-elements/SmallButton.svelte';
+	import Spinner from "../../../../ui-elements/Spinner.svelte";
+	import VoteButton from "../../../../ui-elements/VoteButton.svelte";
+	import TextButton from "../../../../ui-elements/TextButton.svelte";
+	import SmallButton from "../../../../ui-elements/SmallButton.svelte";
 
 	import { getSinglePointOfInterest, reactOnPOI } from "../../../../../utilities/api.js";
 	import {
@@ -45,7 +45,7 @@
 	let isTranslated = false;
 	let isCommentTheSameLang = true;
 
-	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
+	$: approximateAdress = $_("showRatingPopup.approximateAddressDefault");
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 	$: promise = null;
 
@@ -57,7 +57,7 @@
 			return;
 		}
 
-		const languageToTranslateTo = $locale === 'en' ? 'en-US' : 'ru';
+		const languageToTranslateTo = $locale === "en" ? "en-US" : "ru";
 		const { data, error } = await translateText([ titleGlob, descriptionGlob ], languageToTranslateTo);
 
 		if (error) {
@@ -66,7 +66,7 @@
 			return;
 		}
 
-		registerAction('translatePOI');
+		registerAction("translatePOI");
 		titleGlobTranslated = data.translation[0].text;
 		descriptionGlobTranslated = data.translation[1].text;
 		isTranslated = true;
@@ -74,8 +74,8 @@
 
 	const endorseRelevant = async () => {
 		if (!isUserLoggedIn) {
-			closeOverlay('sidebar');
-			openAnotherOverlay('loginPopup');
+			closeOverlay("sidebar");
+			openAnotherOverlay("loginPopup");
 			return;
 		}
 
@@ -90,20 +90,20 @@
 		likes = likes + 1;
 		isLikesDisabled = true;
 
-		const { error } = await reactOnPOI('upvote', pointID);
+		const { error } = await reactOnPOI("upvote", pointID);
 		if (error) {
 			logError(error);
 			showSomethingWrongNotification();
 			return;
 		}
 
-		registerAction('endorsePOI');
+		registerAction("endorsePOI");
 	};
 
 	const endorseIrrelevant = async () => {
 		if (!isUserLoggedIn) {
-			closeOverlay('sidebar');
-			openAnotherOverlay('loginPopup');
+			closeOverlay("sidebar");
+			openAnotherOverlay("loginPopup");
 			return;
 		}
 
@@ -118,19 +118,19 @@
 		dislikes = dislikes + 1;
 		isDislikesDisabled = true;
 	
-		const { error } = await reactOnPOI('downvote', pointID);
+		const { error } = await reactOnPOI("downvote", pointID);
 		if (error) {
 			logError(error);
 			showSomethingWrongNotification();
 			return;
 		}
 
-		openAnotherOverlay('reportReasonDialog', { id: pointID, type: 'POI' });
-		registerAction('reportPOI');
+		openAnotherOverlay("reportReasonDialog", { id: pointID, type: "POI" });
+		registerAction("reportPOI");
 	};
 	
 	const openCommentsSidebar = () =>
-		openAnotherOverlay('commentsSidebar', { id: pointID, type: 'POI' });
+		openAnotherOverlay("commentsSidebar", { id: pointID, type: "POI" });
 	
 	const checkCommentsRelevanceAndOpen = () => {
 		if (!$overlayStateStore.commentsSidebar.isOpen)
@@ -138,7 +138,7 @@
 	};
 	
 	const openAddCommentPopup = () =>
-		openAnotherOverlay('addCommentPOIPopup', { pointID });
+		openAnotherOverlay("addCommentPOIPopup", { pointID });
 
 	const fetchData = async ({ lng, lat }) => {
 		const { address } = await getApproximateAddressAndCountry(lat, lng, $locale);
@@ -147,14 +147,14 @@
 		if (circle)
 			map.removeLayer(circle);
 
-		circle = L.circle({ lng, lat }, 300, { color: '#007097' });
+		circle = L.circle({ lng, lat }, 300, { color: "#007097" });
 
 		circle.addTo(map);
 		centerMap(map, lat, lng, $isDesktop);
 		const { error, data } = await getSinglePointOfInterest([ lng, lat ]);
 
 		if (error) {
-			closeOverlay('popup');
+			closeOverlay("popup");
 			logError(error);
 			showSomethingWrongNotification();
 			return [];
@@ -221,7 +221,7 @@
 		<PopupTitle title={titleGlobTranslated || title} />
 
 		<p class="my-4 italic text-sm font-bold">
-			{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
+			{$_("showRatingPopup.approximateAddress")}: {approximateAdress}
 		</p>
 		
 		{#if tags.length > 0 || isOwnPOI}
@@ -258,7 +258,7 @@
 		<div class="flex justify-between items-end mt-4">
 			<div>
 				<TextButton
-					text={$_('showRatingPopup.comments')}
+					text={$_("showRatingPopup.comments")}
 					action={checkCommentsRelevanceAndOpen}
 					isDisabled={numberOfComments === 0}
 				/>:
@@ -276,7 +276,7 @@
 		{#if !isCommentTheSameLang}
 			<div class="mt-4">
 				<SmallButton
-					text={isTranslated ? $_('translation.showOriginal') : $_('translation.translateTo')}
+					text={isTranslated ? $_("translation.showOriginal") : $_("translation.translateTo")}
 					on:click={translatePOI}
 				/>
 			</div>

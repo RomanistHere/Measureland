@@ -1,10 +1,10 @@
 <script>
-    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
+    import PrimaryButton from "../../../ui-elements/PrimaryButton.svelte";
 
-    export let title = '';
-    export let text1 = '';
-    export let text2 = '';
-    export let button = '';
+    export let title = "";
+    export let text1 = "";
+    export let text2 = "";
+    export let button = "";
     export let slideNumber;
     export let action = () => {};
     export let disabled = false;

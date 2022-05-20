@@ -1,14 +1,14 @@
 <script>
-	import { browser } from '$app/env';
-	import { _ } from 'svelte-i18n';
+	import { browser } from "$app/env";
+	import { _ } from "svelte-i18n";
 
-	import Spinner from '../../ui-elements/Spinner.svelte';
-	import TextLink from '../../ui-elements/TextLink.svelte';
+	import Spinner from "../../ui-elements/Spinner.svelte";
+	import TextLink from "../../ui-elements/TextLink.svelte";
 
 	import { checkUser } from "../../../utilities/api.js";
 	import { getCookie, logError, registerAction, showSomethingWrongNotification } from "../../../utilities/helpers.js";
 	import { appStateStore, userStateStore } from "../../../../stores/state.js";
-	import { appInfo } from '../../../../configs/index.js';
+	import { appInfo } from "../../../../configs/index.js";
 
 	export let hiddenLoading = false;
 
@@ -22,14 +22,14 @@
 			logError(error);
 			showSomethingWrongNotification();
 			isError = true;
-			if (error === 'Too many requests, please try again later')
+			if (error === "Too many requests, please try again later")
 				appStateStore.update(state => ({ ...state, shouldWork: false }));
 
 			return;
 		}
 		const { userID, userName, activeRatings, wantMoreRatings } = data;
-		const shouldSendEvent = browser ? getCookie('shouldSendEvent') !== '0' : false;
-		const shouldShowStartScreen = browser ? getCookie('startScreen') !== '0' : false;
+		const shouldSendEvent = browser ? getCookie("shouldSendEvent") !== "0" : false;
+		const shouldShowStartScreen = browser ? getCookie("startScreen") !== "0" : false;
 
 		isLoaded = true;
 		if (userID) {
@@ -41,12 +41,12 @@
 				wantMoreRatings,
 				shouldSendEvent,
 			}));
-			registerAction('user');
+			registerAction("user");
 		}
 
 		if (shouldShowStartScreen) {
 			appStateStore.update(state => ({ ...state, startScreen: true }));
-			registerAction('startScreen');
+			registerAction("startScreen");
 		}
 
 		if (shouldSendEvent) {
@@ -68,7 +68,7 @@
 	{#if isError}
 		<section class="fixed z-4 flex justify-center items-center inset-0 -md:px-8">
             <span class="text-xl pt-64">
-                {$_('errors.noResponseFromServer')}
+                {$_("errors.noResponseFromServer")}
 	            <TextLink
 		            text={appInfo.supportEmail}
 		            href="mailto:{appInfo.supportEmail}"

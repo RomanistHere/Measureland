@@ -1,11 +1,11 @@
 <script>
-	import { _, locale } from 'svelte-i18n';
+	import { _, locale } from "svelte-i18n";
 
-	import Input from '../../../ui-elements/Input.svelte';
-	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
-	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
-	import FormButton from '../../../ui-elements/FormButton.svelte';
-	import PopupTitle from './PopupTitle.svelte';
+	import Input from "../../../ui-elements/Input.svelte";
+	import SubmissionState from "../../../ui-elements/SubmissionState.svelte";
+	import SecondaryButton from "../../../ui-elements/SecondaryButton.svelte";
+	import FormButton from "../../../ui-elements/FormButton.svelte";
+	import PopupTitle from "./PopupTitle.svelte";
 
 	import {
 		openAnotherOverlay,
@@ -19,14 +19,14 @@
 	} from "../../../../utilities/helpers.js";
 	import { register } from "../../../../utilities/api.js";
 
-	let email = '';
-	let password = '';
-	let passwordConfirm = '';
+	let email = "";
+	let password = "";
+	let passwordConfirm = "";
 	let isEmailValid = true;
 	let isPasswordValid = true;
 	let isPasswordConfirmValid = true;
 	let isError = false;
-	let errorType = '';
+	let errorType = "";
 	let isLoading = false;
 	let isSpam = null;
 	let shouldShowMatchError = false;
@@ -34,18 +34,18 @@
 	let passInputRef = null;
 	let passSecondInputRef = null;
 
-	const openLoginPopup = () => openAnotherOverlay('loginPopup');
+	const openLoginPopup = () => openAnotherOverlay("loginPopup");
 
 	const submit = async () => {
 		blurCurrentInput(document);
 
-		registerAction('trySubmitRegister');
+		registerAction("trySubmitRegister");
 		isError = false;
 		shouldShowMatchError = false;
 		const isValuesNotEmpty = email.length > 0 && password.length > 0 && passwordConfirm.length > 0;
 		if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid || !isPasswordConfirmValid) {
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 
 			if (!isEmailValid || email.length === 0)
 				emailInputRef?.focus();
@@ -59,12 +59,12 @@
 			passSecondInputRef?.focus();
 			shouldShowMatchError = true;
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 
 			return;
 		}
 
-		registerAction('submitRegister');
+		registerAction("submitRegister");
 		isLoading = true;
 		const { error } = await register(email, password, $locale);
 		isLoading = false;
@@ -78,15 +78,15 @@
 			return;
 		}
 
-		registerAction('successRegister');
-		openAnotherOverlay('checkEmailPopup');
+		registerAction("successRegister");
+		openAnotherOverlay("checkEmailPopup");
 		showSuccessNotification();
 	};
 
 	const debouncedSubmit = debounce(() => {
 		if (isSpam) {
 			isError = true;
-			errorType = 'manyAttempts';
+			errorType = "manyAttempts";
 			clearTimeout(isSpam);
 			isSpam = setTimeout(() => {
 				clearTimeout(isSpam);
@@ -106,11 +106,11 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('registrationPopup.title')} />
+	<PopupTitle title={$_("registrationPopup.title")} />
 
 	<Input
 		autofocus={true}
-		title={$_('registrationPopup.email')}
+		title={$_("registrationPopup.email")}
 		type='email'
 		id='new-email'
 		maxlength={256}
@@ -120,7 +120,7 @@
 	/>
 
 	<Input
-		title={$_('registrationPopup.password')}
+		title={$_("registrationPopup.password")}
 		type='password'
 		id='new-password'
 		maxlength={512}
@@ -131,7 +131,7 @@
 	/>
 
 	<Input
-		title={$_('registrationPopup.repeatPassword')}
+		title={$_("registrationPopup.repeatPassword")}
 		type='password'
 		id='repeat-new-password'
 		maxlength={512}
@@ -147,7 +147,7 @@
 	/>
 
 	<div class="flex justify-evenly items-center">
-		<SecondaryButton text={$_('registrationPopup.goToLoginBtn')} action={openLoginPopup} />
-		<FormButton text={$_('registrationPopup.registerBtn')} action={debouncedSubmit} />
+		<SecondaryButton text={$_("registrationPopup.goToLoginBtn")} action={openLoginPopup} />
+		<FormButton text={$_("registrationPopup.registerBtn")} action={debouncedSubmit} />
 	</div>
 </form>

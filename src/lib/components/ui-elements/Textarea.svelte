@@ -2,8 +2,8 @@
 	import { createEventDispatcher } from "svelte";
 
 	export let maxlength;
-	export let placeholder = '';
-	export let className = '';
+	export let placeholder = "";
+	export let className = "";
 
 	let ref;
 	let remainingCommentLength = maxlength;
@@ -15,7 +15,7 @@
 	const handleInput = e => {
 		const { value } = e.target;
 		remainingCommentLength = maxlength - value.length;
-		dispatch('input', value);
+		dispatch("input", value);
 	};
 
 	export const focus = () => {

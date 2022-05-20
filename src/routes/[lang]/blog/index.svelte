@@ -1,5 +1,5 @@
 <script context="module">
-    import { getArrays } from '../../../markdown/prepareMarkdown.js';
+    import { getArrays } from "../../../markdown/prepareMarkdown.js";
 
     // eslint-disable-next-line func-style
     export function load ({ page }) {
@@ -8,7 +8,7 @@
 
     	if (!postsArray) {
     		return {
-    			error: 'No posts found. Try switching to another language',
+    			error: "No posts found. Try switching to another language",
     			status: 404,
     		};
     	}
@@ -24,12 +24,12 @@
 </script>
 
 <script>
-    import { _ } from 'svelte-i18n';
-    import '/static/styles/general.css';
+    import { _ } from "svelte-i18n";
+    import "/static/styles/general.css";
 
-    import SEO from '../../../lib/components/SEO/SEO.svelte';
-    import Overlay from '../../../lib/components/Overlay/Overlay.svelte';
-    import GlassGroup from '../../../lib/components/ui-elements/GlassGroup/GlassGroup.svelte';
+    import SEO from "../../../lib/components/SEO/SEO.svelte";
+    import Overlay from "../../../lib/components/Overlay/Overlay.svelte";
+    import GlassGroup from "../../../lib/components/ui-elements/GlassGroup/GlassGroup.svelte";
 
     export let postsArray;
     export let guidesArray;
@@ -44,12 +44,12 @@
     			text: description,
     		};
 
-    		delete arrOfObjects[i]['slug'];
-    		delete arrOfObjects[i]['tags'];
-    		delete arrOfObjects[i]['layout'];
-    		delete arrOfObjects[i]['description'];
-    		delete arrOfObjects[i]['author'];
-    		delete arrOfObjects[i]['isGuide'];
+    		delete arrOfObjects[i]["slug"];
+    		delete arrOfObjects[i]["tags"];
+    		delete arrOfObjects[i]["layout"];
+    		delete arrOfObjects[i]["description"];
+    		delete arrOfObjects[i]["author"];
+    		delete arrOfObjects[i]["isGuide"];
     	}
 
     	return arrOfObjects;
@@ -57,8 +57,8 @@
 </script>
 
 <SEO
-    pageTitle={$_(`blog.title`)}
-	description={$_('blog.descriptionSEO')}
+    pageTitle={$_("blog.title")}
+	description={$_("blog.descriptionSEO")}
 />
 
 <section class="fixed-grad-bg"></section>
@@ -67,7 +67,7 @@
 	<div class="flex justify-center -lg:block -md:mt-4">
 		<div class="w-1/3 mx-4 -lg:w-auto">
 			<GlassGroup
-				title={$_(`blog.guidesTitle`)}
+				title={$_("blog.guidesTitle")}
 				list={addLinkToObj(guidesArray)}
                 isSearchAvailable={true}
 			/>
@@ -75,14 +75,14 @@
 
 		<div class="w-1/3 mx-4 -lg:w-auto">
 			<GlassGroup
-				title={$_(`blog.blogTitle`)}
+				title={$_("blog.blogTitle")}
 				list={addLinkToObj(postsArray)}
 			/>
 		</div>
 	</div>
 
 	<a href="../" class="hidden -lg:block text-xl underline text-right mx-4 pb-4">
-		{$_('commuinty.linkBack')}
+		{$_("commuinty.linkBack")}
 	</a>
 </main>
 

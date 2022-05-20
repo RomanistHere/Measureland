@@ -1,12 +1,12 @@
 <script>
 	import { onMount } from "svelte";
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 
-	import InputGroupSimple from '../../../ui-elements/InputGroupSimple.svelte';
-	import Textarea from '../../../ui-elements/Textarea.svelte';
-	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
-	import FormButton from '../../../ui-elements/FormButton.svelte';
-	import PopupTitle from './PopupTitle.svelte';
+	import InputGroupSimple from "../../../ui-elements/InputGroupSimple.svelte";
+	import Textarea from "../../../ui-elements/Textarea.svelte";
+	import SubmissionState from "../../../ui-elements/SubmissionState.svelte";
+	import FormButton from "../../../ui-elements/FormButton.svelte";
+	import PopupTitle from "./PopupTitle.svelte";
 
 	import {
 		debounce,
@@ -21,14 +21,14 @@
 	import { userStateStore } from "../../../../../stores/state.js";
 
 	let isError = false;
-	let errorType = '';
+	let errorType = "";
 	let isLoading = false;
 	let isSpam = null;
 	let inputRef = null;
 	let textAreaRef = null;
 	let feedbackState = {
-		heading: '',
-		comment: '',
+		heading: "",
+		comment: "",
 	};
 
 	const updateInputValue = e => {
@@ -48,7 +48,7 @@
 		const isValuesNotEmpty = feedbackState.comment.length > 0 && feedbackState.heading.length > 3;
 		if (!isValuesNotEmpty) {
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 
 			if (feedbackState.heading.length <= 2)
 				inputRef?.focus();
@@ -78,7 +78,7 @@
 	const debouncedSubmit = debounce(() => {
 		if (isSpam) {
 			isError = true;
-			errorType = 'manyAttempts';
+			errorType = "manyAttempts";
 			clearTimeout(isSpam);
 			isSpam = setTimeout(() => {
 				clearTimeout(isSpam);
@@ -98,28 +98,28 @@
 
 	onMount(() => {
 		if ($userStateStore.userID === null)
-			openAnotherOverlay('loginPopup');
+			openAnotherOverlay("loginPopup");
 	});
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('feedbackPopup.title')} />
+	<PopupTitle title={$_("feedbackPopup.title")} />
 
 	<InputGroupSimple
-		title={$_('feedbackPopup.inputTitle')}
+		title={$_("feedbackPopup.inputTitle")}
 		on:change={updateInputValue}
-		placeholder={$_('feedbackPopup.inputPlaceholder')}
+		placeholder={$_("feedbackPopup.inputPlaceholder")}
 		autocomplete="feedback"
 		bind:this={inputRef}
 		maxlength={256}
 	/>
 
 	<p class="my-4">
-		{$_('feedbackPopup.text')}
+		{$_("feedbackPopup.text")}
 	</p>
 
 	<Textarea
-		placeholder={$_('feedbackPopup.textAreaPlaceholder')}
+		placeholder={$_("feedbackPopup.textAreaPlaceholder")}
 		maxlength="{800}"
 		on:input={updateTextareaValue}
 		className='mt-0'
@@ -132,6 +132,6 @@
 	/>
 
 	<div class="flex justify-evenly items-center">
-		<FormButton text={$_('feedbackPopup.submitBtn')} action={debouncedSubmit} />
+		<FormButton text={$_("feedbackPopup.submitBtn")} action={debouncedSubmit} />
 	</div>
 </form>

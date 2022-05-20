@@ -1,7 +1,7 @@
 <script>
-    import { fade } from 'svelte/transition';
+    import { fade } from "svelte/transition";
 
-    export let text = '';
+    export let text = "";
 </script>
 
 <div class="absolute bottom-5 w-full flex justify-center animate-bounce z-1 -md:text-sm" transition:fade>

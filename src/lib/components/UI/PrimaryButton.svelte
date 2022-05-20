@@ -1,5 +1,5 @@
 <script>
-	export let text = '';
+	export let text = "";
 	export let disabled = false;
 
 	let customClass = "";

@@ -1,10 +1,10 @@
 <script>
-	import { _, json } from 'svelte-i18n';
+	import { _, json } from "svelte-i18n";
 
-	import Input from '../../../ui-elements/Input.svelte';
-	import Spinner from '../../../ui-elements/Spinner.svelte';
-	import FormButton from '../../../ui-elements/FormButton.svelte';
-	import PopupTitle from './PopupTitle.svelte';
+	import Input from "../../../ui-elements/Input.svelte";
+	import Spinner from "../../../ui-elements/Spinner.svelte";
+	import FormButton from "../../../ui-elements/FormButton.svelte";
+	import PopupTitle from "./PopupTitle.svelte";
 
 	import {
 		openAnotherOverlay,
@@ -20,21 +20,21 @@
 
 	export let popupData;
 
-	$: errorsObj = $json('errors');
+	$: errorsObj = $json("errors");
 
-	let password = '';
-	let passwordConfirm = '';
+	let password = "";
+	let passwordConfirm = "";
 	let isPasswordValid = true;
 	let isPasswordConfirmValid = true;
 	let isError = false;
-	let errorType = '';
+	let errorType = "";
 	let isLoading = false;
 	let isSpam = null;
 	let shouldShowMatchError = false;
 	let passInputRef = null;
 	let passSecondInputRef = null;
 
-	const resendLink = () => openAnotherOverlay('forgotPasswordPopup');
+	const resendLink = () => openAnotherOverlay("forgotPasswordPopup");
 
 	const submit = async () => {
 		blurCurrentInput(document);
@@ -44,7 +44,7 @@
 		const isValuesNotEmpty = password.length > 0 && passwordConfirm.length > 0;
 		if (!isValuesNotEmpty || !isPasswordValid || !isPasswordConfirmValid) {
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 
 			if (!isPasswordValid || password.length === 0)
 				passInputRef?.focus();
@@ -56,7 +56,7 @@
 			passSecondInputRef?.focus();
 			shouldShowMatchError = true;
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 
 			return;
 		}
@@ -81,7 +81,7 @@
 	const debouncedSubmit = debounce(() => {
 		if (isSpam) {
 			isError = true;
-			errorType = 'manyAttempts';
+			errorType = "manyAttempts";
 			clearTimeout(isSpam);
 			isSpam = setTimeout(() => {
 				clearTimeout(isSpam);
@@ -101,10 +101,10 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('confirmNewPasswordPopup.title')} />
+	<PopupTitle title={$_("confirmNewPasswordPopup.title")} />
 
 	<Input
-		title={$_('confirmNewPasswordPopup.input1Title')}
+		title={$_("confirmNewPasswordPopup.input1Title")}
 		type='password'
 		id='new-password-reset'
 		maxlength={512}
@@ -115,7 +115,7 @@
 	/>
 
 	<Input
-		title={$_('confirmNewPasswordPopup.input2Title')}
+		title={$_("confirmNewPasswordPopup.input2Title")}
 		type='password'
 		id='repeat-new-password-reset'
 		maxlength={512}
@@ -129,12 +129,12 @@
 		{#if isLoading}
 			<Spinner />
 		{/if}
-		{#if isError && errorType === 'linkExpired'}
+		{#if isError && errorType === "linkExpired"}
 			<div class="italic font-bold">
-				<span class="block text-center">{$_('errors.linkExpired')}</span>
+				<span class="block text-center">{$_("errors.linkExpired")}</span>
 				<a
 					href={"#"} class="block text-center underline" on:click|preventDefault={resendLink}
-				>{$_('errors.linkExpiredLink')}</a>
+				>{$_("errors.linkExpiredLink")}</a>
 			</div>
 		{:else if isError}
             <span class="italic font-bold">
@@ -144,6 +144,6 @@
 	</div>
 
 	<div class="flex justify-evenly items-center">
-		<FormButton text={$_('confirmNewPasswordPopup.submitBtn')} action={debouncedSubmit} />
+		<FormButton text={$_("confirmNewPasswordPopup.submitBtn")} action={debouncedSubmit} />
 	</div>
 </form>

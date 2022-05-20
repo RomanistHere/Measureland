@@ -1,13 +1,13 @@
 <script>
 	import { createEventDispatcher } from "svelte";
 
-	import RadioButton from './RadioButton.svelte';
+	import RadioButton from "./RadioButton.svelte";
 
-	export let firstVal = '';
-	export let secondVal = '';
-	export let thirdVal = '';
-	export let fourthVal = '';
-	export let fifthVal = '';
+	export let firstVal = "";
+	export let secondVal = "";
+	export let thirdVal = "";
+	export let fourthVal = "";
+	export let fifthVal = "";
 	export let isExpandableLast = false;
 
 	let radioGroupVal = null;
@@ -24,7 +24,7 @@
 			isLastInputChecked = false;
 		}
 
-		dispatch('input', radioGroupVal);
+		dispatch("input", radioGroupVal);
 	};
 
 	$: isExpanded = isExpandableLast && isLastInputChecked;

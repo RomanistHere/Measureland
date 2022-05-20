@@ -12,9 +12,9 @@
 
     import { voteForTask, checkVotes } from "../../../utilities/api.js";
 
-    export let title = '';
-    export let text = '';
-    export let link = '';
+    export let title = "";
+    export let text = "";
+    export let link = "";
     export let id = null;
 
     const dispatch = createEventDispatcher();
@@ -28,7 +28,7 @@
     $: isUserLoggedIn = $userStateStore.userID === null ? false : true;
 
     const updateNumbers = () => {
-    	dispatch('updateNumbers', {
+    	dispatch("updateNumbers", {
     		upvoted,
     		downvoted,
     		id,
@@ -37,7 +37,7 @@
 
     const upvote = async () => {
     	if (!isUserLoggedIn) {
-    		openAnotherOverlay('loginPopup');
+    		openAnotherOverlay("loginPopup");
     		return;
     	}
 
@@ -52,7 +52,7 @@
     	upvoted = upvoted + 1;
     	isUpvoted = true;
 
-    	const { error } = await voteForTask('upvote', id);
+    	const { error } = await voteForTask("upvote", id);
     	if (error) {
     		isError = true;
     		logError(error);
@@ -65,7 +65,7 @@
 
     const downvote = async () => {
     	if (!isUserLoggedIn) {
-    		openAnotherOverlay('loginPopup');
+    		openAnotherOverlay("loginPopup");
     		return;
     	}
 
@@ -80,7 +80,7 @@
     	downvoted = downvoted + 1;
     	isDownvoted = true;
 
-    	const { error } = await voteForTask('downvote', id);
+    	const { error } = await voteForTask("downvote", id);
     	if (error) {
     		isError = true;
     		logError(error);
@@ -102,7 +102,7 @@
 
     	const { info, message } = data;
 
-    	if (message === 'No task with the given ID')
+    	if (message === "No task with the given ID")
     		return;
 
     	const { liked, disliked, isLiked, isDisliked } = info;

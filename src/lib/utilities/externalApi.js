@@ -12,7 +12,7 @@ const translateText = async (text, lang) => {
 	// we won't be able to recognize array items correctly
 	return await fetchFunction({
 		url,
-		method: 'POST',
+		method: "POST",
 		body: JSON.stringify({
 			text,
 			lang,
@@ -32,7 +32,7 @@ const fetchOpenWeather = async (lat, lng) => {
 	if (error) {
 		logError(error);
 		showSomethingWrongNotification();
-		return 'unavailable';
+		return "unavailable";
 	}
 
 	const { airPollutionIndex } = data;
@@ -60,7 +60,7 @@ const fetchAddress = async (lat, lng, lang) => {
 	const { address } = data;
 
 	if (!address)
-		throw new Error('Address fetch failed');
+		throw new Error("Address fetch failed");
 
 	return address;
 };
@@ -70,13 +70,13 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 		const address = await fetchAddress(lat, lng, lang);
 
 		const { road, city, country } = address;
-		const regionNamesInEnglish = new Intl.DisplayNames([ 'en' ], { type: 'region' });
+		const regionNamesInEnglish = new Intl.DisplayNames([ "en" ], { type: "region" });
 		return {
-			address: `${road || ''}, ${address.house_number || ''}. ${city || ''}, ${country || ''}`,
+			address: `${road || ""}, ${address.house_number || ""}. ${city || ""}, ${country || ""}`,
 			countryInEnglish: regionNamesInEnglish.of(address.country_code.toUpperCase()),
 		};
 	} catch (e) {
-		logError('Address fetch failed');
+		logError("Address fetch failed");
 		logError(e);
 	}
 
@@ -88,7 +88,7 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 			countryInEnglish: null,
 		};
 	} catch (e) {
-		logError('Address fetch from backup failed');
+		logError("Address fetch from backup failed");
 		logError(e);
 	}
 
@@ -98,7 +98,7 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 	};
 };
 
-const geoToken = 'AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q';
+const geoToken = "AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q";
 const getGeoSuggestions = async (text, maxSuggestions = 5) => {
 	const url = `https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?${new URLSearchParams({ text, maxSuggestions, token: geoToken })}&f=json`;
 
@@ -159,9 +159,9 @@ const fetchDisasterRisk = async country => {
 		const extractedNumber = parseFloat(foundCountry.match(/[\d\\.]+/));
 		return getDisasterRisk(extractedNumber);
 	} catch (e) {
-		logError('Api load failed');
+		logError("Api load failed");
 		logError(e);
-		return 'unavailable';
+		return "unavailable";
 	}
 };
 
@@ -170,16 +170,16 @@ const fetchWaqi = async (lat, lng) => {
 	// https://aqicn.org/data-platform/token/
 	// https://aqicn.org/json-api/doc/
 	// https://aqicn.org/api/
-	const apiWaqiKey = 'dae93ad4b135f627cf146b641b1820ab0395d9c8';
+	const apiWaqiKey = "dae93ad4b135f627cf146b641b1820ab0395d9c8";
 	try {
 		const data = await fetch(`https://api.waqi.info/feed/geo:${lat};${lng}/?token=${apiWaqiKey}`);
 		const parsedData = await data.json();
 		const aqi = parsedData.data.aqi;
 		return getaverageWAQI(aqi);
 	} catch (e) {
-		logError('Api load failed');
+		logError("Api load failed");
 		logError(e);
-		return 'unavailable';
+		return "unavailable";
 	}
 };
 

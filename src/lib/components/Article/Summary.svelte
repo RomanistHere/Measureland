@@ -1,5 +1,5 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _ } from "svelte-i18n";
 
     export let text;
     export let text2;
@@ -7,7 +7,7 @@
 
 <div class="note">
     <strong class="mb-2 mt-1 block">
-        {$_('blog.summary')}
+        {$_("blog.summary")}
     </strong>
 
     <p>

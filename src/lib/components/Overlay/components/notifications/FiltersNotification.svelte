@@ -1,8 +1,8 @@
 <script>
-	import { fade } from 'svelte/transition';
-	import { _ } from 'svelte-i18n';
+	import { fade } from "svelte/transition";
+	import { _ } from "svelte-i18n";
 
-	import TextButton from '../../../ui-elements/TextButton.svelte';
+	import TextButton from "../../../ui-elements/TextButton.svelte";
 
 	import {
 		appStateStore,
@@ -13,17 +13,17 @@
 	import { closeOverlays, openAnotherOverlay, registerAction } from "../../../../utilities/helpers.js";
 
 	$: openedOverlayTypes = Object.values($overlayStateStore).filter(({ isOpen }) => isOpen === true).map(({ type }) => type);
-	$: isPopupOpened = openedOverlayTypes.includes('popup');
-	$: isSidebarOpened = openedOverlayTypes.includes('sidebar');
+	$: isPopupOpened = openedOverlayTypes.includes("popup");
+	$: isSidebarOpened = openedOverlayTypes.includes("sidebar");
 	$: isLeftCentered = $appStateStore.startScreen || isPopupOpened;
 
 	const openFilters = () => {
-		registerAction('filtersNotifcationClick');
-		openAnotherOverlay('filtersSidebar');
+		registerAction("filtersNotifcationClick");
+		openAnotherOverlay("filtersSidebar");
 	};
 
 	const resetFilters = () => {
-		registerAction('filtersNotifcationClick');
+		registerAction("filtersNotifcationClick");
 		closeOverlays();
 		filtersStore.update(state => ({
 			...state,
@@ -34,11 +34,11 @@
 
 	const getLeftClass = (isPopup, isSidebar) => {
 		if (isPopup && isSidebar)
-			return 'custom_left';
+			return "custom_left";
 		else if (isPopup)
-			return 'left-1/4';
+			return "left-1/4";
 		else
-			return 'left-1/2';
+			return "left-1/2";
 	};
 </script>
 
@@ -51,12 +51,12 @@
 	>
 		<TextButton
 			action={openFilters}
-			text={$_('filterNotification.filters')}
+			text={$_("filterNotification.filters")}
 		/>
-		{$_('filterNotification.active')}.
+		{$_("filterNotification.active")}.
 		<TextButton
 			action={resetFilters}
-			text={$_('filterNotification.reset')}
+			text={$_("filterNotification.reset")}
 		/>
 	</div>
 {/if}

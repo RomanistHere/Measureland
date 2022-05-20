@@ -1,8 +1,8 @@
 <script>
-	import { fly } from 'svelte/transition';
-	import { json } from 'svelte-i18n';
+	import { fly } from "svelte/transition";
+	import { json } from "svelte-i18n";
 
-	import { registerAction } from '../../utilities/helpers.js';
+	import { registerAction } from "../../utilities/helpers.js";
 
 	export let key = null;
 	export let clickable = false;
@@ -22,7 +22,7 @@
 	const handleMouseenter = () => {
 		clearTimeout(tooltipTimeout);
 		isExpanded = true;
-		registerAction('hoverTag');
+		registerAction("hoverTag");
 	};
 
 	const generateBadge = (keyProp, obj) => {
@@ -34,7 +34,7 @@
 		isBad = data.isBad;
 	};
 
-	$: generateBadge(key, $json('tags'));
+	$: generateBadge(key, $json("tags"));
 </script>
 
 <span

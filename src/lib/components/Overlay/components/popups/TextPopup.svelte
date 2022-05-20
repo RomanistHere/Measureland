@@ -1,14 +1,14 @@
 <script>
-    import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
-    import PopupTitle from './PopupTitle.svelte';
+    import PrimaryButton from "../../../ui-elements/PrimaryButton.svelte";
+    import PopupTitle from "./PopupTitle.svelte";
 
     import { closeOverlay } from "../../../../utilities/helpers.js";
 
-    export let title = '';
-    export let text = '';
-    export let button = '';
+    export let title = "";
+    export let text = "";
+    export let button = "";
 
-    const closePopup = () => closeOverlay('popup');
+    const closePopup = () => closeOverlay("popup");
 </script>
 
 <div class="max-w-sm w-full">

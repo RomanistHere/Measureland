@@ -1,10 +1,10 @@
 <script>
     export let isLike = false;
     export let isDisabled = false;
-    export let text = '';
+    export let text = "";
     export let action;
 
-    const emojIcon = isLike ? '👍' : '👎';
+    const emojIcon = isLike ? "👍" : "👎";
 </script>
 
 <a

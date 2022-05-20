@@ -1,11 +1,11 @@
 <script>
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 
-	import Input from '../../../ui-elements/Input.svelte';
-	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
-	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
-	import FormButton from '../../../ui-elements/FormButton.svelte';
-	import PopupTitle from './PopupTitle.svelte';
+	import Input from "../../../ui-elements/Input.svelte";
+	import SubmissionState from "../../../ui-elements/SubmissionState.svelte";
+	import SecondaryButton from "../../../ui-elements/SecondaryButton.svelte";
+	import FormButton from "../../../ui-elements/FormButton.svelte";
+	import PopupTitle from "./PopupTitle.svelte";
 
 	import {
 		openAnotherOverlay,
@@ -20,29 +20,29 @@
 	import { login, reverify } from "../../../../utilities/api.js";
 	import { userStateStore } from "../../../../../stores/state.js";
 
-	let email = '';
-	let password = '';
+	let email = "";
+	let password = "";
 	let isEmailValid = true;
 	let isPasswordValid = true;
 	let isError = false;
-	let errorType = '';
+	let errorType = "";
 	let isLoading = false;
 	let isSpam = null;
 	let emailInputRef = null;
 	let passInputRef = null;
 
 	const openRegisterPopup = () =>
-		openAnotherOverlay('registerPopup');
+		openAnotherOverlay("registerPopup");
 
 	const openForgotPasswordPopup = () =>
-		openAnotherOverlay('forgotPasswordPopup', { isChangePass: false });
+		openAnotherOverlay("forgotPasswordPopup", { isChangePass: false });
 
 	const resendVerificationLetter = async () => {
 		isError = false;
 		if (!isEmailValid || email.length === 0) {
 			emailInputRef?.focus();
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 			return;
 		}
 
@@ -59,18 +59,18 @@
 			return;
 		}
 
-		openAnotherOverlay('checkEmailPopup');
+		openAnotherOverlay("checkEmailPopup");
 	};
 
 	const submit = async () => {
 		blurCurrentInput(document);
 
-		registerAction('trySubmitLogin');
+		registerAction("trySubmitLogin");
 		isError = false;
 		const isValuesNotEmpty = email.length > 0 && password.length > 0;
 		if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 
 			if (!isEmailValid || email.length === 0)
 				emailInputRef?.focus();
@@ -80,7 +80,7 @@
 			return;
 		}
 
-		registerAction('submitLogin');
+		registerAction("submitLogin");
 		isLoading = true;
 		const { error, data } = await login(email, password);
 		isLoading = false;
@@ -104,15 +104,15 @@
 			wantMoreRatings,
 		}));
 
-		registerAction('successLogin');
-		openAnotherOverlay('loggedInPopup');
+		registerAction("successLogin");
+		openAnotherOverlay("loggedInPopup");
 		showSuccessNotification();
 	};
 
 	const debouncedSubmit = debounce(() => {
 		if (isSpam) {
 			isError = true;
-			errorType = 'manyAttempts';
+			errorType = "manyAttempts";
 			clearTimeout(isSpam);
 			isSpam = setTimeout(() => {
 				clearTimeout(isSpam);
@@ -132,11 +132,11 @@
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('loginPopup.title')} />
+	<PopupTitle title={$_("loginPopup.title")} />
 
 	<Input
 		autofocus={true}
-		title={$_('loginPopup.email')}
+		title={$_("loginPopup.email")}
 		type='email'
 		id='current-email'
 		maxlength={256}
@@ -146,7 +146,7 @@
 	/>
 
 	<Input
-		title={$_('loginPopup.password')}
+		title={$_("loginPopup.password")}
 		type='password'
 		id='current-password'
 		maxlength={512}
@@ -162,10 +162,10 @@
 	/>
 
 	<div class="flex justify-evenly items-center">
-		<SecondaryButton text={$_('loginPopup.forgotPasswordBtn')} action={openForgotPasswordPopup} />
-		<FormButton text={$_('loginPopup.loginBtn')} action={debouncedSubmit} />
+		<SecondaryButton text={$_("loginPopup.forgotPasswordBtn")} action={openForgotPasswordPopup} />
+		<FormButton text={$_("loginPopup.loginBtn")} action={debouncedSubmit} />
 	</div>
 	<a href={"#"} class="underline block text-center p-2 my-2 mx-auto w-60" on:click|preventDefault={openRegisterPopup}>
-		{$_('loginPopup.registerBtn')}
+		{$_("loginPopup.registerBtn")}
 	</a>
 </form>

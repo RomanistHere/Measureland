@@ -1,12 +1,12 @@
 <script>
     export let title;
     export let list;
-    export let className = '';
+    export let className = "";
 
     $: list = list.map(item => ({
     	...item,
     	shouldShow: item.shouldShow === undefined || item.shouldShow === true ? true : false,
-    	target: item.href.includes('https://') ? '_blank' : null,
+    	target: item.href.includes("https://") ? "_blank" : null,
     }));
 </script>
 

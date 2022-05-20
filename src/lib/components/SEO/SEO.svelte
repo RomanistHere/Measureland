@@ -1,33 +1,33 @@
 <script>
-    import { page } from '$app/stores';
-    import { _, json } from 'svelte-i18n';
+    import { page } from "$app/stores";
+    import { _, json } from "svelte-i18n";
 
-    import OG from './OG.svelte';
-    import Twitter from './Twitter.svelte';
+    import OG from "./OG.svelte";
+    import Twitter from "./Twitter.svelte";
 
-    import { appInfo } from '../../../configs/index.js';
-    import { API_DOMAIN, WEB_DOMAIN } from '../../../configs/env.js';
+    import { appInfo } from "../../../configs/index.js";
+    import { API_DOMAIN, WEB_DOMAIN } from "../../../configs/env.js";
 
-    export let keywords = $_('SEO.keywords');
-    export let subject = $_('SEO.subject');
+    export let keywords = $_("SEO.keywords");
+    export let subject = $_("SEO.subject");
     export let isApp = true;
 
     export let isArticle = false;
     export let isSquareImage = true;
-    export let imageAltText = '';
-    export let description = '';
-    export let pageTitle = '';
-    export let siteTitle = $_('SEO.title');
-    export let imageSrc = 'https://measureland.org/images/preview/square_100.jpg';
+    export let imageAltText = "";
+    export let description = "";
+    export let pageTitle = "";
+    export let siteTitle = $_("SEO.title");
+    export let imageSrc = "https://measureland.org/images/preview/square_100.jpg";
     export let url = `${WEB_DOMAIN}${$page.path}`;
 
-    export let author = $_('SEO.author');
+    export let author = $_("SEO.author");
     export let twitterUsername = appInfo.twitterID;
     export let timeToRead;
 
     export let isAnotherLang = true;
     const lang = $page.params.lang;
-    const altLang = lang === 'en' ? 'ru' : 'en';
+    const altLang = lang === "en" ? "ru" : "en";
     const altPath = $page.path.replace(lang, altLang);
     const altUrl = `${WEB_DOMAIN}${altPath}`;
 </script>
@@ -90,7 +90,7 @@
         </h1>
 
         <div class="opacity-20">
-            {#each Object.values($json('startScreen.slides')) as { title, text1, text2 }}
+            {#each Object.values($json("startScreen.slides")) as { title, text1, text2 }}
                 <h2>
                     {title}
                 </h2>

@@ -1,5 +1,5 @@
 <script>
-	export let text = '';
+	export let text = "";
 
 	let customClass = "";
 	export { customClass as class };

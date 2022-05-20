@@ -1,9 +1,9 @@
 <script>
-	import { fly } from 'svelte/transition';
-	import { createEventDispatcher } from 'svelte';
-	import { _, json } from 'svelte-i18n';
+	import { fly } from "svelte/transition";
+	import { createEventDispatcher } from "svelte";
+	import { _, json } from "svelte-i18n";
 	
-	import Tag from './Tag.svelte';
+	import Tag from "./Tag.svelte";
 	import TextButton from "$lib/components/ui-elements/TextButton.svelte";
 	import { isDesktop } from "../../../stores/state.js";
 	import { closeOverlay, openAnotherOverlay } from "$lib/utilities/helpers.js";
@@ -23,18 +23,18 @@
 	};
 	
 	const addTag = tagKey => {
-		dispatch('addNewTag', tagKey);
+		dispatch("addNewTag", tagKey);
 		isExpanded = false;
 	};
 	
 	const removeTag = tagKey => {
-		dispatch('removeTag', tagKey);
+		dispatch("removeTag", tagKey);
 	};
 
 	const openFeedbackPopup = () => {
 		if (!$isDesktop)
-			closeOverlay('popup');
-		openAnotherOverlay('feedbackPopup');
+			closeOverlay("popup");
+		openAnotherOverlay("feedbackPopup");
 	};
 </script>
 
@@ -55,7 +55,7 @@
 		class="bg-active hover:bg-success text-white rounded-md px-2 py-0.5 text-sm mb-2 block relative z-5 mr-2"
 		on:click|preventDefault={showAllTags}
 	>
-		{$_('tagsInput.title')}
+		{$_("tagsInput.title")}
 	</a>
 	
 	{#if isExpanded}
@@ -65,8 +65,8 @@
 			out:fly="{{ y: -10, duration: 200 }}"
 			on:mouseleave={handleMouseleave}
 		>
-			{#each Object.keys($json('tags')) as tagKey}
-				{#if tagKey !== 'own'}
+			{#each Object.keys($json("tags")) as tagKey}
+				{#if tagKey !== "own"}
 					<Tag
 						key={tagKey}
 						clickable={true}
@@ -76,9 +76,9 @@
 			{/each}
 			
 			<p class="text-sm">
-				{$_('tagsInput.description')}
+				{$_("tagsInput.description")}
 				<TextButton
-					text={$_('tagsInput.buttonText')}
+					text={$_("tagsInput.buttonText")}
 					action={openFeedbackPopup}
 				/>
 			</p>

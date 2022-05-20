@@ -1,25 +1,25 @@
 <script>
-	import { _ } from 'svelte-i18n';
-	import L from 'leaflet';
-	import 'leaflet/dist/leaflet.css';
-	import '/static/styles/map.css';
+	import { _ } from "svelte-i18n";
+	import L from "leaflet";
+	import "leaflet/dist/leaflet.css";
+	import "/static/styles/map.css";
 
-	import PointsOfInterest from './components/PointsOfInterest.svelte';
-	import MarkerCluster from './components/MarkerCluster.svelte';
-	import GeoSearch from './components/GeoSearch.svelte';
-	import Draw from './components/Draw/Draw.svelte';
-	import TextLink from '../ui-elements/TextLink.svelte';
+	import PointsOfInterest from "./components/PointsOfInterest.svelte";
+	import MarkerCluster from "./components/MarkerCluster.svelte";
+	import GeoSearch from "./components/GeoSearch.svelte";
+	import Draw from "./components/Draw/Draw.svelte";
+	import TextLink from "../ui-elements/TextLink.svelte";
 
 	import { appStateStore } from "../../../stores/state.js";
 	import { mapReference, leafletReference } from "../../../stores/references.js";
-	import { openAnotherOverlay, debounce } from '../../utilities/helpers.js';
-	import { appInfo } from '../../../configs/index.js';
-	import { militaryConflictCountries } from './objects/militaryConflictCountries.js';
+	import { openAnotherOverlay, debounce } from "../../utilities/helpers.js";
+	import { appInfo } from "../../../configs/index.js";
+	import { militaryConflictCountries } from "./objects/militaryConflictCountries.js";
 
 	let map;
 
 	const onMapClick = (e, isWar) =>
-		openAnotherOverlay('onMapClickDialog', { coords: e.latlng, isWar });
+		openAnotherOverlay("onMapClickDialog", { coords: e.latlng, isWar });
 
 	const createMap = node => {
 		const { zoom, center } = $appStateStore;
@@ -34,9 +34,9 @@
 			bounceAtZoomLimits: false,
 		});
 
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-			subdomains: [ 'a', 'b', 'c' ],
+		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+			attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
+			subdomains: [ "a", "b", "c" ],
 		}).addTo(mapObj);
 
 		const conflictAreas = L.geoJson(militaryConflictCountries, {
@@ -47,20 +47,20 @@
 		}).addTo(mapObj);
 
 		conflictAreas.eachLayer(layer => {
-			layer.on('click', e => {
-				mapObj.off('click', onMapClick);
+			layer.on("click", e => {
+				mapObj.off("click", onMapClick);
 				onMapClick(e, true);
 				// without debounce click will propagate and fire the second time
 				debouncedAssign();
 			});
 		});
 
-		mapObj.zoomControl.setPosition('topright');
+		mapObj.zoomControl.setPosition("topright");
 
-		const debouncedAssign = debounce(() => { mapObj.on('click', onMapClick) }, 350);
-		mapObj.on('click', onMapClick);
-		mapObj.on('zoomstart', () => { mapObj.off('click', onMapClick) });
-		mapObj.on('zoomend', debouncedAssign);
+		const debouncedAssign = debounce(() => { mapObj.on("click", onMapClick) }, 350);
+		mapObj.on("click", onMapClick);
+		mapObj.on("zoomstart", () => { mapObj.off("click", onMapClick) });
+		mapObj.on("zoomend", debouncedAssign);
 
 		return mapObj;
 	};
@@ -89,17 +89,17 @@
 {:else}
 	<section class="fixed inset-0 z-5 flex justify-center items-center bg-white">
 		<p class="error_text px-4">
-			{$_('errors.limitError.textBeforeLink')}
+			{$_("errors.limitError.textBeforeLink")}
 			<TextLink
-				text={$_('errors.limitError.textFirstLink')}
+				text={$_("errors.limitError.textFirstLink")}
 				href="blog/how-to-become-citizen/"
 			/>
-			{$_('errors.limitError.textBetweenLinks')}
+			{$_("errors.limitError.textBetweenLinks")}
 			<TextLink
-				text={$_('errors.limitError.textSecondLink')}
+				text={$_("errors.limitError.textSecondLink")}
 				href="mailto:{appInfo.supportEmail}"
 			/>
-			{$_('errors.limitError.textAfterLinks')}
+			{$_("errors.limitError.textAfterLinks")}
 		</p>
 	</section>
 {/if}

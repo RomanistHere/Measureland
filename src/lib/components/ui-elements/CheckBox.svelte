@@ -1,9 +1,9 @@
 <script>
-    import TextLink from './TextLink.svelte';
+    import TextLink from "./TextLink.svelte";
 
-    export let text = '';
-    export let textLink = '';
-    export let hrefLink = '';
+    export let text = "";
+    export let textLink = "";
+    export let hrefLink = "";
     export let checked = false;
     export let className = null;
 

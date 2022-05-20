@@ -1,11 +1,11 @@
 <script>
 	import { onMount } from "svelte";
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 	
-	import Textarea from '../../../ui-elements/Textarea.svelte';
-	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
-	import FormButton from '../../../ui-elements/FormButton.svelte';
-	import PopupTitle from './PopupTitle.svelte';
+	import Textarea from "../../../ui-elements/Textarea.svelte";
+	import SubmissionState from "../../../ui-elements/SubmissionState.svelte";
+	import FormButton from "../../../ui-elements/FormButton.svelte";
+	import PopupTitle from "./PopupTitle.svelte";
 
 	import {
 		debounce,
@@ -23,10 +23,10 @@
 	export let popupData;
 	
 	let isError = false;
-	let errorType = '';
+	let errorType = "";
 	let isLoading = false;
 	let isSpam = null;
-	let comment = '';
+	let comment = "";
 	let textAreaRef = null;
 	
 	const updateTextareaValue = e => {
@@ -37,18 +37,18 @@
 		const { pointID } = popupData;
 		blurCurrentInput();
 
-		registerAction('trySubmitCommentPOI');
+		registerAction("trySubmitCommentPOI");
 		isError = false;
 		const isValuesNotEmpty = comment.length > 2;
 		if (!isValuesNotEmpty) {
 			textAreaRef?.focus();
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 	
 			return;
 		}
 
-		registerAction('submitCommentPOI');
+		registerAction("submitCommentPOI");
 		isLoading = true;
 		const { error } = await addCommentPOI(pointID, comment, $userStateStore.userName);
 		isLoading = false;
@@ -62,7 +62,7 @@
 			return;
 		}
 
-		registerAction('successCommentPOI');
+		registerAction("successCommentPOI");
 		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 		closeOverlays();
 		showSuccessNotification();
@@ -71,7 +71,7 @@
 	const debouncedSubmit = debounce(() => {
 		if (isSpam) {
 			isError = true;
-			errorType = 'manyAttempts';
+			errorType = "manyAttempts";
 			clearTimeout(isSpam);
 			isSpam = setTimeout(() => {
 				clearTimeout(isSpam);
@@ -91,19 +91,19 @@
 	
 	onMount(() => {
 		if ($userStateStore.userID === null)
-			openAnotherOverlay('loginPopup');
+			openAnotherOverlay("loginPopup");
 	});
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>
-	<PopupTitle title={$_('addCommentPOIPopup.title')} />
+	<PopupTitle title={$_("addCommentPOIPopup.title")} />
 	
 	<p class="my-4">
-		{$_('addCommentPOIPopup.description')}
+		{$_("addCommentPOIPopup.description")}
 	</p>
 	
 	<Textarea
-		placeholder={$_('addCommentPOIPopup.textAreaPlaceholder')}
+		placeholder={$_("addCommentPOIPopup.textAreaPlaceholder")}
 		maxlength="{330}"
 		on:input={updateTextareaValue}
 		className='mt-0'
@@ -116,6 +116,6 @@
 	/>
 	
 	<div class="flex justify-evenly items-center">
-		<FormButton text={$_('addCommentPOIPopup.primaryBtnText')} action={debouncedSubmit} />
+		<FormButton text={$_("addCommentPOIPopup.primaryBtnText")} action={debouncedSubmit} />
 	</div>
 </form>

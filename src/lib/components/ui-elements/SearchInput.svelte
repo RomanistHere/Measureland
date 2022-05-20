@@ -1,6 +1,6 @@
 <script>
     export let autocomplete = false;
-    export let placeholder = '';
+    export let placeholder = "";
 </script>
 
 <input

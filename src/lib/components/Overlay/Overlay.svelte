@@ -1,16 +1,16 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount } from "svelte";
 
-	import { appStateStore, appWidth, overlayStateStore } from '../../../stores/state.js';
-	import { closeOverlay, closeOverlays, openAnotherOverlay } from '../../utilities/helpers.js';
+	import { appStateStore, appWidth, overlayStateStore } from "../../../stores/state.js";
+	import { closeOverlay, closeOverlays, openAnotherOverlay } from "../../utilities/helpers.js";
 
-	import PopupLayer from './components/popups/PopupLayer.svelte';
-	import SidebarLayer from './components/sidebars/SidebarLayer.svelte';
-	import DialogLayer from './components/dialogs/DialogLayer.svelte';
-	import FiltersNotification from './components/notifications/FiltersNotification.svelte';
-	import CornerNotification from './components/notifications/CornerNotification.svelte';
-	import Loading from './components/Loading.svelte';
-	import NavBar from './components/NavBar/NavBar.svelte';
+	import PopupLayer from "./components/popups/PopupLayer.svelte";
+	import SidebarLayer from "./components/sidebars/SidebarLayer.svelte";
+	import DialogLayer from "./components/dialogs/DialogLayer.svelte";
+	import FiltersNotification from "./components/notifications/FiltersNotification.svelte";
+	import CornerNotification from "./components/notifications/CornerNotification.svelte";
+	import Loading from "./components/Loading.svelte";
+	import NavBar from "./components/NavBar/NavBar.svelte";
 	import PrimaryButton from "$lib/components/UI/PrimaryButton.svelte";
 
 	export let mainScreen = true;
@@ -30,7 +30,7 @@
 	const handleKeydown = event => {
 		const key = event.key;
 		// console.log(key);
-		if ((popupActive || sidebarActive || dialogActive) && key === 'Escape')
+		if ((popupActive || sidebarActive || dialogActive) && key === "Escape")
 			closeOverlays();
 	};
 
@@ -43,10 +43,10 @@
 		}
 
 		if (openOverlays.length >= 2 && openOverlays[0].type === openOverlays[1].type) {
-			throw new Error(`Can't open two or more modals at once`);
+			throw new Error("Can't open two or more modals at once");
 		}
 
-		if (openOverlays.length === 1 && openOverlays[0].key === 'commentsSidebar') {
+		if (openOverlays.length === 1 && openOverlays[0].key === "commentsSidebar") {
 			// close sidebar if only comments is opened (expected behaviour: user closes rating)
 			openOverlays = [];
 			closeOverlays();
@@ -56,15 +56,15 @@
 	};
 
 	const manageOverlay = ({ key, data, type }) => {
-		if (type === 'sidebar') {
+		if (type === "sidebar") {
 			sidebarName = key;
 			sidebarData = data;
 			sidebarActive = true;
-		} else if (type === 'popup') {
+		} else if (type === "popup") {
 			popupName = key;
 			popupData = data;
 			popupActive = true;
-		} else if (type === 'dialog') {
+		} else if (type === "dialog") {
 			dialogName = key;
 			dialogData = data;
 			dialogActive = true;
@@ -89,13 +89,13 @@
 	};
 
 	const openHowToRatePopup = () =>
-		openAnotherOverlay('howToRatePopup');
+		openAnotherOverlay("howToRatePopup");
 
 	$: dataOpen = checkIsOpen($overlayStateStore);
 	$: manageOverlays(dataOpen);
 
 	onMount(async () => {
-		const module = await import('./components/StartScreen/StartScreen.svelte');
+		const module = await import("./components/StartScreen/StartScreen.svelte");
 		StartScreen = module.default;
 	});
 </script>

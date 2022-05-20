@@ -1,5 +1,5 @@
-import { writable, derived } from 'svelte/store';
-import { overlayStateDefault } from '../lib/constants/overlayStateDefault.js';
+import { writable, derived } from "svelte/store";
+import { overlayStateDefault } from "../lib/constants/overlayStateDefault.js";
 
 export const flowStore = writable([]);
 
@@ -8,9 +8,9 @@ export const userStateStore = writable({
 	userID: null,
 	activeRatings: 3,
 	dateCreated: null,
-	userName: 'Аноним',
+	userName: "Аноним",
 	// lang: detectPrefLang(),
-	lang: 'ru',
+	lang: "ru",
 	uniqID: Math.random().toString(16).slice(2),
 	shouldSendEvent: false,
 	wantMoreRatings: false,

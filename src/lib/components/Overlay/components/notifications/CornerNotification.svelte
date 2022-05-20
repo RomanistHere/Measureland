@@ -1,12 +1,12 @@
 <script>
-    import SuccessNotification from './SuccessNotification.svelte';
-    import SomethingWrongNotification from './SomethingWrongNotification.svelte';
+    import SuccessNotification from "./SuccessNotification.svelte";
+    import SomethingWrongNotification from "./SomethingWrongNotification.svelte";
 
-    import { appStateStore, notificationsStore, overlayStateStore } from '../../../../../stores/state.js';
-    import { hideSomethingWrongNotification, registerAction } from '../../../../utilities/helpers.js';
+    import { appStateStore, notificationsStore, overlayStateStore } from "../../../../../stores/state.js";
+    import { hideSomethingWrongNotification, registerAction } from "../../../../utilities/helpers.js";
 
     $: openedOverlayTypes = Object.values($overlayStateStore).filter(({ isOpen }) => isOpen === true).map(({ type }) => type);
-    $: isPopupOpened = openedOverlayTypes.includes('popup');
+    $: isPopupOpened = openedOverlayTypes.includes("popup");
     $: isPopupOrStartScreen = $appStateStore.startScreen || isPopupOpened;
 
     let shouldShowSuccessNotification = false;
@@ -30,7 +30,7 @@
     const somethingWrongOnMouseenter = () => {
     	stopSomethingWrongTimeout();
     	somethingWrongNotificationExpanded = true;
-    	registerAction('hoverNotification');
+    	registerAction("hoverNotification");
     };
 
     const somethingWrongOnMouseleave = () => {
@@ -40,14 +40,14 @@
 
     const somethignWrongOnClick = () => {
     	hideSomethingWrongNotification();
-    	registerAction('clickNotification');
+    	registerAction("clickNotification");
     };
 
     const showAndHideNotifications = ({ successNotification, somethingWrongNotification }) => {
     	if (somethingWrongNotification && !somethingWrongNotificationTimeout) {
     		shouldShowSomethingWrongNotification = true;
     		startSomethingWrongTimeout();
-    		registerAction('showNotification');
+    		registerAction("showNotification");
     	}
 
     	if (successNotification && !successNotificationTimeout) {

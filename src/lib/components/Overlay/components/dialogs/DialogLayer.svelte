@@ -1,12 +1,12 @@
 <script>
-	import { fade } from 'svelte/transition';
-	import { focusTrap } from 'svelte-focus-trap';
+	import { fade } from "svelte/transition";
+	import { focusTrap } from "svelte-focus-trap";
 
-	import CloseButton from '../../../ui-elements/CloseButton.svelte';
+	import CloseButton from "../../../ui-elements/CloseButton.svelte";
 
-	import OnMapClickDialog from './OnMapClickDialog.svelte';
-	import ReportReasonDialog from './ReportReasonDialog.svelte';
-	import WarningPoiNearbyDialog from './WarningPoiNearbyDialog.svelte';
+	import OnMapClickDialog from "./OnMapClickDialog.svelte";
+	import ReportReasonDialog from "./ReportReasonDialog.svelte";
+	import WarningPoiNearbyDialog from "./WarningPoiNearbyDialog.svelte";
 
 	export let dialogName;
 	export let dialogData;

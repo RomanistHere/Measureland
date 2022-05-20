@@ -1,11 +1,11 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _ } from "svelte-i18n";
 
     export let rating = 0;
 
     $: roundedRating = Math.round(rating);
 
-    const character = String.fromCharCode('0xE900');
+    const character = String.fromCharCode("0xE900");
     const possibleRatingsArr = [ 5, 4, 3, 2, 1 ];
 </script>
 

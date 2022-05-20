@@ -1,25 +1,25 @@
 const getGuidesRU = () => {
-	const data = import.meta.globEager(`./guides/ru/*.md`);
+	const data = import.meta.globEager("./guides/ru/*.md");
 	return data;
 };
 
 const getGuidesEN = () => {
-	const data = import.meta.globEager(`./guides/en/*.md`);
+	const data = import.meta.globEager("./guides/en/*.md");
 	return data;
 };
 
 const getPostsRU = () => {
-	const data = import.meta.globEager(`./posts/ru/*.md`);
+	const data = import.meta.globEager("./posts/ru/*.md");
 	return data;
 };
 
 const getPostsEN = () => {
-	const data = import.meta.globEager(`./posts/en/*.md`);
+	const data = import.meta.globEager("./posts/en/*.md");
 	return data;
 };
 
 export const getGuides = lang => {
-	const postsData = lang === 'ru' ? getGuidesRU() : getGuidesEN();
+	const postsData = lang === "ru" ? getGuidesRU() : getGuidesEN();
 
 	let posts = [];
 
@@ -33,7 +33,7 @@ export const getGuides = lang => {
 };
 
 export const getSingleGuide = (lang, slugTest) => {
-	const postsData = lang === 'ru' ? getGuidesRU() : getGuidesEN();
+	const postsData = lang === "ru" ? getGuidesRU() : getGuidesEN();
 
 	let posts = [];
 
@@ -49,7 +49,7 @@ export const getSingleGuide = (lang, slugTest) => {
 };
 
 export const getPosts = lang => {
-	const postsData = lang === 'ru' ? getPostsRU() : getPostsEN();
+	const postsData = lang === "ru" ? getPostsRU() : getPostsEN();
 
 	let posts = [];
 
@@ -63,7 +63,7 @@ export const getPosts = lang => {
 };
 
 export const getSinglePost = (lang, slugTest) => {
-	const postsData = lang === 'ru' ? getPostsRU() : getPostsEN();
+	const postsData = lang === "ru" ? getPostsRU() : getPostsEN();
 
 	let posts = [];
 

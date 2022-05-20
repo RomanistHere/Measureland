@@ -1,11 +1,11 @@
 <script>
-	import { _ } from 'svelte-i18n';
+	import { _ } from "svelte-i18n";
 
-	import Input from '../../../ui-elements/Input.svelte';
-	import SubmissionState from '../../../ui-elements/SubmissionState.svelte';
-	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
-	import FormButton from '../../../ui-elements/FormButton.svelte';
-	import PopupTitle from './PopupTitle.svelte';
+	import Input from "../../../ui-elements/Input.svelte";
+	import SubmissionState from "../../../ui-elements/SubmissionState.svelte";
+	import SecondaryButton from "../../../ui-elements/SecondaryButton.svelte";
+	import FormButton from "../../../ui-elements/FormButton.svelte";
+	import PopupTitle from "./PopupTitle.svelte";
 
 	import {
 		openAnotherOverlay,
@@ -21,18 +21,18 @@
 	export let popupData = {};
 
 	$: isChangePass = popupData.isChangePass;
-	$: title = isChangePass ? $_('changePasswordPopup.title') : $_('forgotPasswordPopup.title');
-	$: mainBtn = isChangePass ? $_('changePasswordPopup.mainBtn') : $_('forgotPasswordPopup.mainBtn');
+	$: title = isChangePass ? $_("changePasswordPopup.title") : $_("forgotPasswordPopup.title");
+	$: mainBtn = isChangePass ? $_("changePasswordPopup.mainBtn") : $_("forgotPasswordPopup.mainBtn");
 
 	let isLoading = false;
-	let email = '';
+	let email = "";
 	let isEmailValid = true;
 	let isError = false;
-	let errorType = '';
+	let errorType = "";
 	let isSpam = null;
 	let emailInputRef = null;
 
-	const openRegisterPopup = () => openAnotherOverlay('registerPopup');
+	const openRegisterPopup = () => openAnotherOverlay("registerPopup");
 
 	const submit = async () => {
 		blurCurrentInput(document);
@@ -42,7 +42,7 @@
 		if (!isValuesNotEmpty || !isEmailValid) {
 			emailInputRef?.focus();
 			isError = true;
-			errorType = 'fieldsError';
+			errorType = "fieldsError";
 			return;
 		}
 
@@ -60,13 +60,13 @@
 		}
 
 		showSuccessNotification();
-		openAnotherOverlay('confirmForgotPasswordPopup');
+		openAnotherOverlay("confirmForgotPasswordPopup");
 	};
 
 	const debouncedSubmit = debounce(() => {
 		if (isSpam) {
 			isError = true;
-			errorType = 'manyAttempts';
+			errorType = "manyAttempts";
 			clearTimeout(isSpam);
 			isSpam = setTimeout(() => {
 				clearTimeout(isSpam);
@@ -90,7 +90,7 @@
 
 	<Input
 		autofocus={true}
-		title={$_('forgotPasswordPopup.email')}
+		title={$_("forgotPasswordPopup.email")}
 		type='email'
 		id='old-email-restore'
 		maxlength={256}
@@ -106,7 +106,7 @@
 
 	<div class="flex justify-evenly items-center">
 		{#if !isChangePass}
-			<SecondaryButton text={$_('forgotPasswordPopup.secondaryBtn')} action={openRegisterPopup} />
+			<SecondaryButton text={$_("forgotPasswordPopup.secondaryBtn")} action={openRegisterPopup} />
 		{/if}
 		<FormButton text={mainBtn} action={debouncedSubmit} />
 	</div>

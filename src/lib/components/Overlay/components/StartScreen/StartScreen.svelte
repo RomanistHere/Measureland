@@ -1,17 +1,17 @@
 <script>
-	import { _, json, locale } from 'svelte-i18n';
-	import { fade } from 'svelte/transition';
-	import { Swiper, SwiperSlide } from 'swiper/svelte';
-	import SwiperCore, { Mousewheel, Pagination } from 'swiper';
-	import 'swiper/css';
-	import 'swiper/css/pagination';
+	import { _, json, locale } from "svelte-i18n";
+	import { fade } from "svelte/transition";
+	import { Swiper, SwiperSlide } from "swiper/svelte";
+	import SwiperCore, { Mousewheel, Pagination } from "swiper";
+	import "swiper/css";
+	import "swiper/css/pagination";
 
-	import Slide from './Slide.svelte';
-	import TextLink from '../../../ui-elements/TextLink.svelte';
-	import CheckBox from '../../../ui-elements/CheckBox.svelte';
-	import PrimaryButton from '../../../ui-elements/PrimaryButton.svelte';
-	import SecondaryButton from '../../../ui-elements/SecondaryButton.svelte';
-	import ScrollBottomText from './ScrollBottomText.svelte';
+	import Slide from "./Slide.svelte";
+	import TextLink from "../../../ui-elements/TextLink.svelte";
+	import CheckBox from "../../../ui-elements/CheckBox.svelte";
+	import PrimaryButton from "../../../ui-elements/PrimaryButton.svelte";
+	import SecondaryButton from "../../../ui-elements/SecondaryButton.svelte";
+	import ScrollBottomText from "./ScrollBottomText.svelte";
 
 	import {
 		fillFiltersFromArrOfStrings,
@@ -19,8 +19,8 @@
 		registerAction,
 		setCookie,
 		centerMap,
-	} from '../../../../utilities/helpers.js';
-	import { appStateStore, isDesktop } from '../../../../../stores/state.js';
+	} from "../../../../utilities/helpers.js";
+	import { appStateStore, isDesktop } from "../../../../../stores/state.js";
 	import { mapReference } from "../../../../../stores/references.js";
 
 	SwiperCore.use([ Mousewheel, Pagination ]);
@@ -28,7 +28,7 @@
 	let shouldShowScrollCaption = true;
 
 	const getSlideAction = ({ action, href }) => {
-		if (action === 'openFilters') {
+		if (action === "openFilters") {
 			return () => {
 				if (!$appStateStore.termsOfUseAgreed)
 					return;
@@ -36,55 +36,55 @@
 					closeStartScreen();
 				centerMap($mapReference, 53.91, 27.55, $isDesktop, false, 12);
 				setTimeout(() => {
-					fillFiltersFromArrOfStrings([ 'water:5-5' ]);
+					fillFiltersFromArrOfStrings([ "water:5-5" ]);
 				}, 1000);
 			};
-		} else if (action === 'openNearbyWithPOIs') {
+		} else if (action === "openNearbyWithPOIs") {
 			return () => {
 				if (!$appStateStore.termsOfUseAgreed)
 					return;
 				if (!$isDesktop)
 					closeStartScreen();
-				const lat = $locale === 'en' ? 54.5219 : 53.9093;
-				const lng = $locale === 'en' ? 18.5488 : 27.52;
+				const lat = $locale === "en" ? 54.5219 : 53.9093;
+				const lng = $locale === "en" ? 18.5488 : 27.52;
 				centerMap($mapReference, lat, lng, $isDesktop, true);
 				setTimeout(() => {
-					openAnotherOverlay('nearbyPopup', { lat, lng });
+					openAnotherOverlay("nearbyPopup", { lat, lng });
 				}, 1000);
 			};
 		} else {
 			return () => {
-				registerAction('startScreenExternalLink');
-				window.open(href, '_blank');
+				registerAction("startScreenExternalLink");
+				window.open(href, "_blank");
 			};
 		}
 	};
 
-	$: contentSlides = Object.values($json('startScreen.slides')).map(item => ({
+	$: contentSlides = Object.values($json("startScreen.slides")).map(item => ({
 		...item,
 		action: getSlideAction(item),
-		disabled: item.action === 'openFilters' && !$appStateStore.termsOfUseAgreed,
+		disabled: item.action === "openFilters" && !$appStateStore.termsOfUseAgreed,
 	}));
 
-	$: lastSlideList = Object.values($json('startScreen.lastSlide.list'));
+	$: lastSlideList = Object.values($json("startScreen.lastSlide.list"));
 
 	const onSlideChange = () => {
 		shouldShowScrollCaption = false;
-		registerAction('startScreenSlideChange');
+		registerAction("startScreenSlideChange");
 	};
 
 	const closeStartScreen = () => {
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		appStateStore.update(state => ({ ...state, startScreen: false }));
-		setCookie('startScreen', '0', 365);
+		setCookie("startScreen", "0", 365);
 	};
 
 	const openRegister = () => {
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		closeStartScreen();
-		openAnotherOverlay('registerPopup');
+		openAnotherOverlay("registerPopup");
 	};
 </script>
 
@@ -107,17 +107,17 @@
 			<section class="flex items-center justify-center w-full h-full slide-1 px-10">
 				<div class="max-w-xl">
 					<h1 class="lg:text-6xl -lg:text-5xl -md:text-4xl mb-5">
-						{$_('startScreen.firstSlide.titleLow')}
+						{$_("startScreen.firstSlide.titleLow")}
 						<span class="lg:text-7xl -lg:text-6xl -md:text-5xl font-bold">
-                            {$_('startScreen.firstSlide.titleBig')}
+                            {$_("startScreen.firstSlide.titleBig")}
                         </span>
 					</h1>
 					<p class="lg:text-2xl -md:text-base">
-						{$_('startScreen.firstSlide.text')}
+						{$_("startScreen.firstSlide.text")}
 					</p>
 					<CheckBox
-						text={$_('startScreen.checkboxText')}
-						textLink={$_('startScreen.checkboxLink')}
+						text={$_("startScreen.checkboxText")}
+						textLink={$_("startScreen.checkboxLink")}
 						hrefLink='blog/terms-of-use/'
 						bind:checked={$appStateStore.termsOfUseAgreed}
 						className="mt-5 text-base -md:text-xs"
@@ -126,13 +126,13 @@
 						class="flex items-center justify-left -lg:flex-wrap {!$appStateStore.termsOfUseAgreed && 'opacity-30'}"
 					>
 						<SecondaryButton
-							text={$_('startScreen.firstSlide.btn1')}
+							text={$_("startScreen.firstSlide.btn1")}
 							className="mr-5 mt-5 -md:text-sm"
 							disabled={!$appStateStore.termsOfUseAgreed}
 							action={closeStartScreen}
 						/>
 						<PrimaryButton
-							text={$_('startScreen.firstSlide.btn2')}
+							text={$_("startScreen.firstSlide.btn2")}
 							className='block mt-5 -md:text-sm -md:mt-2'
 							disabled={!$appStateStore.termsOfUseAgreed}
 							action={openRegister}
@@ -152,7 +152,7 @@
 			<section class="flex items-center justify-center w-full h-full slide-1 px-10">
 				<div class="max-w-xl">
 					<h1 class="lg:text-5xl -lg:text-3xl mb-10 @lg:text-5xl -md:text-2xl">
-						{$_('startScreen.lastSlide.title')}
+						{$_("startScreen.lastSlide.title")}
 					</h1>
 					<ul class="list-inside list-square">
 						{#each lastSlideList as { url, text }}
@@ -167,13 +167,13 @@
 						class="flex items-center justify-left mt-4 -lg:flex-wrap {!$appStateStore.termsOfUseAgreed && 'opacity-30'}"
 					>
 						<SecondaryButton
-							text={$_('startScreen.firstSlide.btn1')}
+							text={$_("startScreen.firstSlide.btn1")}
 							className="mr-5 mt-5 -md:text-sm"
 							disabled={!$appStateStore.termsOfUseAgreed}
 							action={closeStartScreen}
 						/>
 						<PrimaryButton
-							text={$_('startScreen.firstSlide.btn2')}
+							text={$_("startScreen.firstSlide.btn2")}
 							className='block mt-5 -md:text-sm -md:mt-2'
 							disabled={!$appStateStore.termsOfUseAgreed}
 							action={openRegister}
@@ -185,7 +185,7 @@
 	</Swiper>
 
 	{#if shouldShowScrollCaption}
-		<ScrollBottomText text={$_('startScreen.scrollToLearnMode')} />
+		<ScrollBottomText text={$_("startScreen.scrollToLearnMode")} />
 	{/if}
 </div>
 

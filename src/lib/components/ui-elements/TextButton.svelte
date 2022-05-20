@@ -1,7 +1,7 @@
 <script>
-    export let text = '';
-    export let className = '';
-    export let href = '#';
+    export let text = "";
+    export let className = "";
+    export let href = "#";
     export let action;
     export let isDisabled = false;
     export let title = null;

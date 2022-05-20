@@ -1,6 +1,6 @@
 <script>
-	import { userStateStore, isDesktop } from '../../stores/state.js';
-	import { API_URL } from '../../configs/env.js';
+	import { userStateStore, isDesktop } from "../../stores/state.js";
+	import { API_URL } from "../../configs/env.js";
 	import { logError, showSomethingWrongNotification } from "../utilities/helpers.js";
 
 	const handleErrors = event => {

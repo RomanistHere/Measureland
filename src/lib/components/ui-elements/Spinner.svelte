@@ -1,11 +1,11 @@
 <script>
-    import { _, json } from 'svelte-i18n';
-    import { onDestroy } from 'svelte';
-    import { fly, fade } from 'svelte/transition';
+    import { _, json } from "svelte-i18n";
+    import { onDestroy } from "svelte";
+    import { fly, fade } from "svelte/transition";
 
-    $: statusText = $_('spinner.start');
+    $: statusText = $_("spinner.start");
 
-    export let className = '';
+    export let className = "";
     export let isWithText = false;
     export let isWithBg = false;
 
@@ -30,7 +30,7 @@
     	spinnerTimeout = setTimeout(() => {
     		shouldShowText = true;
     		spinnerInterval = setInterval(() => {
-    			statusText = $json('spinner.change')[i];
+    			statusText = $json("spinner.change")[i];
     			i = i >= 2 ? 0 : i + 1;
     		}, 3000);
     	}, 2000);

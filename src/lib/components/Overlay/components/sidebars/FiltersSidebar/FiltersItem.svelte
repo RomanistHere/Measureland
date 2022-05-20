@@ -1,22 +1,22 @@
 <script>
-    import { _ } from 'svelte-i18n';
+    import { _ } from "svelte-i18n";
 
-    import Slider from './Slider.svelte';
-    import Tooltip from '../../../../ui-elements/Tooltip.svelte';
+    import Slider from "./Slider.svelte";
+    import Tooltip from "../../../../ui-elements/Tooltip.svelte";
 
     import { filtersStore } from "../../../../../../stores/state.js";
-    import { registerAction } from '../../../../../utilities/helpers.js';
+    import { registerAction } from "../../../../../utilities/helpers.js";
 
     let slider;
     export const setSlider = val => slider.set(val);
 
-    export let key = '';
-    export let title = '';
-    export let tooltip = '';
+    export let key = "";
+    export let title = "";
+    export let tooltip = "";
     export let start = [ 1, 5 ];
-    export let currentValue = '1-5';
+    export let currentValue = "1-5";
     export let isShortDesc = true;
-    $: description = isShortDesc ? '' : $_('filterSidebar.currentValue');
+    $: description = isShortDesc ? "" : $_("filterSidebar.currentValue");
 
     const setFilterText = e => {
     	const { unencoded } = e.detail;

@@ -1,8 +1,8 @@
 const badgesGoodPairs = {
-	pairedNature: [ 'air', 'water' ],
-	pairedInfrastructure: [ 'logistic', 'transport' ],
-	pairedDogs: [ 'pets', 'chill' ],
-	pairedWalk: [ 'air', 'chill' ],
+	pairedNature: [ "air", "water" ],
+	pairedInfrastructure: [ "logistic", "transport" ],
+	pairedDogs: [ "pets", "chill" ],
+	pairedWalk: [ "air", "chill" ],
 };
 
 export const generateBadges = (bestRatings, worstRatings, numberOfRatings) => {

@@ -1,10 +1,10 @@
 <script>
-	import { fly } from 'svelte/transition';
-	import { json, _ } from 'svelte-i18n';
+	import { fly } from "svelte/transition";
+	import { json, _ } from "svelte-i18n";
 
-	import TextButton from '../../../../ui-elements/TextButton.svelte';
+	import TextButton from "../../../../ui-elements/TextButton.svelte";
 
-	import { fetchSingleRating, reactOnRating } from '../../../../../utilities/api.js';
+	import { fetchSingleRating, reactOnRating } from "../../../../../utilities/api.js";
 	import {
 		showSuccessNotification,
 		openAnotherOverlay,
@@ -12,7 +12,7 @@
 		debounce,
 		registerAction,
 		logError,
-	} from '../../../../../utilities/helpers.js';
+	} from "../../../../../utilities/helpers.js";
 
 	export let averageRating;
 	export let timeline;
@@ -49,13 +49,13 @@
 
 			const { ratingData } = data;
 			const { rating, isPersonalExperience, isReported, isEndorsed, isYours } = ratingData;
-			ratings = Object.entries(rating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
+			ratings = Object.entries(rating).map(([ key, value ]) => ({ ...$json("criteria")[key], rating: value }));
 			isPersExp = isPersonalExperience;
 			isOwnRating = isYours;
 			isAlreadyReported = isReported;
 			isAlreadyEndorsed = isEndorsed;
 			isRatingExpanded = true;
-			registerAction('fetchRating');
+			registerAction("fetchRating");
 		}
 	};
 
@@ -69,16 +69,16 @@
 	};
 
 	const reportRating = async () => {
-		registerAction('reportRating');
+		registerAction("reportRating");
 
 		const { error } = await reactOnRating(_id, true);
 
 		if (!error) {
 			isAlreadyReported = true;
 			showSuccessNotification();
-			openAnotherOverlay('reportReasonDialog', { id: _id, type: 'rating' });
-		} else if (error === 'User is not logged in') {
-			openAnotherOverlay('loginPopup');
+			openAnotherOverlay("reportReasonDialog", { id: _id, type: "rating" });
+		} else if (error === "User is not logged in") {
+			openAnotherOverlay("loginPopup");
 		} else {
 			logError(error);
 			showSomethingWrongNotification();
@@ -91,14 +91,14 @@
 		if (!error) {
 			isAlreadyEndorsed = true;
 			showSuccessNotification();
-		} else if (error === 'User is not logged in') {
-			openAnotherOverlay('loginPopup');
+		} else if (error === "User is not logged in") {
+			openAnotherOverlay("loginPopup");
 		} else {
 			logError(error);
 			showSomethingWrongNotification();
 		}
 
-		registerAction('endorseRating');
+		registerAction("endorseRating");
 	};
 
 	const debouncedEndorseRating = debounce(endorseRating, 300);
@@ -126,12 +126,12 @@
 			{#if ratings}
 				<div class="font-bold">
 					{#if isPersExp}
-						{$_('timelinePoint.personalExp')}
+						{$_("timelinePoint.personalExp")}
 					{:else}
-						{$_('timelinePoint.alienExp')}
+						{$_("timelinePoint.alienExp")}
 					{/if}
 					<p>
-						{$_('timelinePoint.average')}: {averageRating}
+						{$_("timelinePoint.average")}: {averageRating}
 					</p>
 				</div>
 				{#each ratings as { title, rating }}
@@ -142,26 +142,26 @@
 				{/each}
 
 				{#if isOwnRating}
-					<span class="font-bold">{$_('timelinePoint.yourRating')}</span>
+					<span class="font-bold">{$_("timelinePoint.yourRating")}</span>
 				{:else if !isAlreadyReported && !isAlreadyEndorsed}
 					<TextButton
-						text={$_('timelinePoint.report')}
+						text={$_("timelinePoint.report")}
 						className='px-1 font-bold'
 						action={debouncedReportRating}
 					/>
 
 					<TextButton
-						text={$_('timelinePoint.endorse')}
+						text={$_("timelinePoint.endorse")}
 						className='px-1 font-bold'
 						action={debouncedEndorseRating}
 					/>
 				{:else if isAlreadyReported}
-					{$_('timelinePoint.reported')}
+					{$_("timelinePoint.reported")}
 				{:else if isAlreadyEndorsed}
-					{$_('timelinePoint.endorsed')}
+					{$_("timelinePoint.endorsed")}
 				{/if}
 			{:else}
-				{$_('timelinePoint.clickToExpand', { values: [ averageRating ] })}
+				{$_("timelinePoint.clickToExpand", { values: [ averageRating ] })}
 			{/if}
 		</div>
 	{/if}

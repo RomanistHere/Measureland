@@ -1,19 +1,19 @@
 <script>
-    import { _, json } from 'svelte-i18n';
+    import { _, json } from "svelte-i18n";
 
-    import TextLink from '../../../ui-elements/TextLink.svelte';
-    import PopupTitle from './PopupTitle.svelte';
+    import TextLink from "../../../ui-elements/TextLink.svelte";
+    import PopupTitle from "./PopupTitle.svelte";
 
     import { userStateStore } from "../../../../../stores/state.js";
 
-    $: list = $json('loggedInPopup.list');
+    $: list = $json("loggedInPopup.list");
 </script>
 
 <div class="max-w-sm w-full">
     <PopupTitle title="{$_('loggedInPopup.welcome')}, {$userStateStore.userName}!" />
 
     <p class="my-3">
-        {$_('loggedInPopup.activeRatingsRemaining')}: {$userStateStore.activeRatings}.
+        {$_("loggedInPopup.activeRatingsRemaining")}: {$userStateStore.activeRatings}.
     </p>
 
     {#if $userStateStore.activeRatings <= 5}
@@ -21,14 +21,14 @@
             <TextLink
                 href="blog/how-to-become-citizen/"
                 blank={true}
-                text={$_('loggedInPopup.learnWhyLimits')}
+                text={$_("loggedInPopup.learnWhyLimits")}
             />
-            {$_('loggedInPopup.learnWhyLimitsAddition')}
+            {$_("loggedInPopup.learnWhyLimitsAddition")}
         </p>
     {/if}
 
     <p class="my-3">
-        {$_('loggedInPopup.hereSomeArticles')}:
+        {$_("loggedInPopup.hereSomeArticles")}:
     </p>
 
     <ul class="pl-5 list-square">

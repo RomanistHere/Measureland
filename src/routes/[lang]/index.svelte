@@ -1,19 +1,19 @@
 <script>
-	import { onMount } from 'svelte';
-	import { _, locale } from 'svelte-i18n';
-	import 'esri-leaflet-geocoder/dist/img/search.png';
-	import '/static/styles/general.css';
+	import { onMount } from "svelte";
+	import { _, locale } from "svelte-i18n";
+	import "esri-leaflet-geocoder/dist/img/search.png";
+	import "/static/styles/general.css";
 
-	import SEO from '../../lib/components/SEO/SEO.svelte';
-	import UrlUpdater from '../../lib/components/UrlUpdater.svelte';
-	import ErrorHandler from '../../lib/components/ErrorHandler.svelte';
-	import EventsHandler from '../../lib/components/EventsHandler.svelte';
-	import Overlay from '../../lib/components/Overlay/Overlay.svelte';
+	import SEO from "../../lib/components/SEO/SEO.svelte";
+	import UrlUpdater from "../../lib/components/UrlUpdater.svelte";
+	import ErrorHandler from "../../lib/components/ErrorHandler.svelte";
+	import EventsHandler from "../../lib/components/EventsHandler.svelte";
+	import Overlay from "../../lib/components/Overlay/Overlay.svelte";
 
 	let Map;
 
 	onMount(async () => {
-		const module = await import('../../lib/components/Map/Map.svelte');
+		const module = await import("../../lib/components/Map/Map.svelte");
 		Map = module.default;
 	});
 </script>
@@ -34,11 +34,11 @@
 </svelte:head>
 
 <SEO
-    pageTitle={$_('SEO.title')}
-    description={$_('SEO.description')}
+    pageTitle={$_("SEO.title")}
+    description={$_("SEO.description")}
     imageSrc='https://measureland.org/images/preview/rectangle_{$locale}_150.jpg'
 	isSquareImage={false}
-	imageAltText={$_('SEO.imageAltText')}
+	imageAltText={$_("SEO.imageAltText")}
 />
 
 <ErrorHandler />

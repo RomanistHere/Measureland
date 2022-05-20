@@ -1,8 +1,8 @@
 <script>
-	import { _ } from 'svelte-i18n';
-	import { onMount } from 'svelte';
+	import { _ } from "svelte-i18n";
+	import { onMount } from "svelte";
 
-	import L from 'leaflet';
+	import L from "leaflet";
 	// Supercluster is changed on our side, so we can't use npm's one
 	import "../../../external/supercluster.js";
 	
@@ -27,10 +27,10 @@
 	let currentCenter = [ 0, 0 ];
 
 	const initPointOfInterestPopup = ({ latlng }) =>
-		openAnotherOverlay('pointOfInterestPopup', latlng);
+		openAnotherOverlay("pointOfInterestPopup", latlng);
 
 	const icon = L.icon({
-		iconUrl: `../images/attention.svg`,
+		iconUrl: "../images/attention.svg",
 		iconSize: [ 23, 54 ],
 		iconAnchor: [ 5, 30 ],
 	});
@@ -38,21 +38,21 @@
 	const createClusterIcon = (feature, latlng) => {
 		const marker = L.marker(latlng, {
 			icon,
-			title: $_('POIs.iconTitle'),
+			title: $_("POIs.iconTitle"),
 			riseOnHover: true,
 		});
 	
 		if (!feature.properties.cluster) {
 			// single point
-			marker.on('click', initPointOfInterestPopup);
-			marker.on('keyup', e => {
-				if (e.originalEvent.key === 'Enter') {
-					openAnotherOverlay('pointOfInterestPopup', e.target._latlng);
+			marker.on("click", initPointOfInterestPopup);
+			marker.on("keyup", e => {
+				if (e.originalEvent.key === "Enter") {
+					openAnotherOverlay("pointOfInterestPopup", e.target._latlng);
 				}
 			});
 		} else {
-			marker.on('keyup', e => {
-				if (e.originalEvent.key === 'Enter') {
+			marker.on("keyup", e => {
+				if (e.originalEvent.key === "Enter") {
 					map.zoomIn();
 				}
 			});
@@ -65,7 +65,7 @@
 		pointToLayer: createClusterIcon,
 	}).addTo(map);
 	
-	clusterMarkers.on('click', e => {
+	clusterMarkers.on("click", e => {
 		const clusterId = e.layer.feature.properties.cluster_id;
 		const center = e.latlng;
 		if (clusterId) {
@@ -90,7 +90,7 @@
 		const newPoint = {
 			geometry: {
 				coordinates: coordsData,
-				type: 'Point',
+				type: "Point",
 			},
 			properties: {
 				averageRating: 5,
@@ -169,13 +169,13 @@
 					averageRating: 5,
 				},
 				geometry: {
-					coordinates: item['location']['coordinates'],
-					type: 'Point',
+					coordinates: item["location"]["coordinates"],
+					type: "Point",
 				},
 				type: "Feature",
 			};
-			delete newObj['location'];
-			delete newObj['_id'];
+			delete newObj["location"];
+			delete newObj["_id"];
 			return newObj;
 		});
 		// eslint-disable-next-line  no-undef
@@ -196,7 +196,7 @@
 	
 		const { error, data } = await fetchPOIsBounds(queryBounds, zoom);
 	
-		if (error === 'Too many requests, please try again later') {
+		if (error === "Too many requests, please try again later") {
 			appStateStore.update(state => ({ ...state, shouldWork: false }));
 			showSomethingWrongNotification();
 			return;
@@ -230,7 +230,7 @@
 	$: checkTogglePOIs($appStateStore);
 	
 	// don't use native "moveend" event, it triggers on every button click in popups
-	map.on('move', debounce(() => {
+	map.on("move", debounce(() => {
 		const zoom = getMapZoom(map);
 		if (zoom < 13) {
 			destroyPOIs();

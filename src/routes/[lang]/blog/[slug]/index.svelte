@@ -1,5 +1,5 @@
 <script context="module">
-    import { getSingleInstance } from '../../../../markdown/prepareMarkdown.js';
+    import { getSingleInstance } from "../../../../markdown/prepareMarkdown.js";
 
     // eslint-disable-next-line func-style
     export function load ({ page }) {
@@ -8,7 +8,7 @@
 
     	if (!neededPost) {
     		return {
-    			error: 'No page found. Try switching to another language',
+    			error: "No page found. Try switching to another language",
     			status: 404,
     		};
     	}

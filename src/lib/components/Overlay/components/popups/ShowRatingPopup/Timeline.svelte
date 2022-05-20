@@ -1,5 +1,5 @@
 <script>
-    import TimelinePoint from './TimelinePoint.svelte';
+    import TimelinePoint from "./TimelinePoint.svelte";
 
     export let timelineData = [];
     $: data = timelineData.sort((a, b) => a.timeline - b.timeline);

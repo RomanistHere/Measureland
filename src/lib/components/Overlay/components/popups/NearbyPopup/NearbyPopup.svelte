@@ -1,13 +1,13 @@
 <script>
-	import { onMount, onDestroy } from 'svelte';
-	import { _ } from 'svelte-i18n';
+	import { onMount, onDestroy } from "svelte";
+	import { _ } from "svelte-i18n";
 
-	import Spinner from '../../../../ui-elements/Spinner.svelte';
-	import Select from '../../../../ui-elements/Select.svelte';
+	import Spinner from "../../../../ui-elements/Spinner.svelte";
+	import Select from "../../../../ui-elements/Select.svelte";
 	import TextButton from "../../../../ui-elements/TextButton.svelte";
 	import Tag from "../../../../ui-elements/Tag.svelte";
-	import PopupTitle from '../PopupTitle.svelte';
-	import Badge from './Badge.svelte';
+	import PopupTitle from "../PopupTitle.svelte";
+	import Badge from "./Badge.svelte";
 
 	import { getNearbyPointData } from "../../../../../utilities/api.js";
 	import {
@@ -24,9 +24,9 @@
 		registerAction,
 		logError,
 		openAnotherOverlay,
-	} from '../../../../../utilities/helpers.js';
-	import { generateSmartReport } from './generateSmartReport.js';
-	import { generateBadges } from './generateBadges.js';
+	} from "../../../../../utilities/helpers.js";
+	import { generateSmartReport } from "./generateSmartReport.js";
+	import { generateBadges } from "./generateBadges.js";
 
 	export let popupData;
 
@@ -46,29 +46,29 @@
 	$: radiusOptions = [{
 		value: 800,
 		zoomLevel: 15,
-		text: $_('nearbyPopup.selectOption1'),
+		text: $_("nearbyPopup.selectOption1"),
 		selected: true,
 	}, {
 		value: 1200,
 		zoomLevel: 14,
-		text: $_('nearbyPopup.selectOption2'),
+		text: $_("nearbyPopup.selectOption2"),
 		selected: false,
 	}, {
 		value: 2000,
 		zoomLevel: 14,
-		text: $_('nearbyPopup.selectOption3'),
+		text: $_("nearbyPopup.selectOption3"),
 		selected: false,
 	}, {
 		value: 10000,
 		zoomLevel: 12,
-		text: $_('nearbyPopup.selectOption4'),
+		text: $_("nearbyPopup.selectOption4"),
 		selected: false,
 	}];
 
 	const loadData = async ({ lat, lng }, radiusParam = null) => {
 		const pointsOfInterestLayer = $poiReference;
 		const clusterLayer = $markersReference;
-		const radius = radiusParam || radiusOptions[0]['value'];
+		const radius = radiusParam || radiusOptions[0]["value"];
 
 		const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
 		const bounds = L.rectangle(squareBounds).getBounds();
@@ -145,7 +145,7 @@
 
 	const openPOI = ({ coordinates }) => {
 		const [ lng, lat ] = coordinates;
-		openAnotherOverlay('pointOfInterestPopup', { lat, lng });
+		openAnotherOverlay("pointOfInterestPopup", { lat, lng });
 	};
 
 	const removeCircle = () => {
@@ -155,7 +155,7 @@
 
 	const drawCircle = ({ lat, lng }, radius = null) => {
 		const { zoomLevel } = radiusOptions.find(({ selected }) => selected === true);
-		circle = L.circle({ lng, lat }, radius || radiusOptions[0]['value'], { color: '#007097' });
+		circle = L.circle({ lng, lat }, radius || radiusOptions[0]["value"], { color: "#007097" });
 
 		circle.addTo(map);
 		centerMap(map, lat, lng, $isDesktop, false, zoomLevel);
@@ -184,15 +184,15 @@
 <div class="max-w-sm w-full">
 	<strong class="text-active">
 		{#if averageNearbyRating}
-			{$_('nearbyPopup.averageRating')}: {averageNearbyRating}.
-			{$_('nearbyPopup.numberOfRatings')}: {numberOfRatings}
+			{$_("nearbyPopup.averageRating")}: {averageNearbyRating}.
+			{$_("nearbyPopup.numberOfRatings")}: {numberOfRatings}
 		{:else}
-			{$_('nearbyPopup.noData')}
+			{$_("nearbyPopup.noData")}
 		{/if}
 	</strong>
 
 	<Select
-		title={$_('nearbyPopup.selectTitle')}
+		title={$_("nearbyPopup.selectTitle")}
 		id='radius-select'
 		options={radiusOptions}
 		className='mb-6'
@@ -205,20 +205,20 @@
 		</div>
 	{:else if isData}
 		{#if ratingsGood.length > 0}
-			<PopupTitle title={$_('nearbyPopup.secondTitle')} />
+			<PopupTitle title={$_("nearbyPopup.secondTitle")} />
 			<ul class="my-4">
 				{#each ratingsGood as { title, numberOfUsers, value }}
 					<li>
 						{numberOfUsers}
 						{#if numberOfUsers === 1}
-							{$_('nearbyPopup.usersRated_single')}
+							{$_("nearbyPopup.usersRated_single")}
 						{:else}
-							{$_('nearbyPopup.usersRated_other')}
+							{$_("nearbyPopup.usersRated_other")}
 						{/if}
 						<strong class="text-active">
 							{title}
 						</strong>
-						{$_('nearbyPopup.as')}
+						{$_("nearbyPopup.as")}
 						<strong class="text-active">
 							{value}
 						</strong>
@@ -228,20 +228,20 @@
 		{/if}
 
 		{#if ratingsBad.length > 0}
-			<PopupTitle title={$_('nearbyPopup.thirdTitle')} />
+			<PopupTitle title={$_("nearbyPopup.thirdTitle")} />
 			<ul class="my-4">
 				{#each ratingsBad as { title, numberOfUsers, value }}
 					<li>
 						{numberOfUsers}
 						{#if numberOfUsers === 1}
-							{$_('nearbyPopup.usersRated_single')}
+							{$_("nearbyPopup.usersRated_single")}
 						{:else}
-							{$_('nearbyPopup.usersRated_other')}
+							{$_("nearbyPopup.usersRated_other")}
 						{/if}
 						<strong class="text-active">
 							{title}
 						</strong>
-						{$_('nearbyPopup.as')}
+						{$_("nearbyPopup.as")}
 						<strong class="text-active">
 							{value}
 						</strong>
@@ -251,7 +251,7 @@
 		{/if}
 
 		{#if badges && badges.length > 0}
-			<PopupTitle title={$_('nearbyPopup.fourthTitle')} />
+			<PopupTitle title={$_("nearbyPopup.fourthTitle")} />
 			<div class="my-4 flex justify-left flex-wrap">
 				{#each badges as { key, isGood }}
 					<Badge
@@ -264,7 +264,7 @@
 
 		{#if numberOfPOIs > 0}
 			<strong class="text-active">
-				{$_('nearbyPopup.pointsOfInterest')}: {numberOfPOIs}
+				{$_("nearbyPopup.pointsOfInterest")}: {numberOfPOIs}
 			</strong>
 			<ul class="my-4">
 				{#each pointsOfInterest as { title, location, tags }}

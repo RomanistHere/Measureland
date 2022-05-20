@@ -1,8 +1,8 @@
 <script>
-    import PrimaryButton from './PrimaryButton.svelte';
+    import PrimaryButton from "./PrimaryButton.svelte";
     export let action;
-    export let text = '';
-    export let className = '';
+    export let text = "";
+    export let className = "";
     export let disabled = false;
 </script>
 

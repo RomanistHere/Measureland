@@ -1,16 +1,16 @@
 <script>
-	import { browser } from '$app/env';
-	import { onDestroy } from 'svelte';
-	import { json, _, locale } from 'svelte-i18n';
-	import { fade } from 'svelte/transition';
+	import { browser } from "$app/env";
+	import { onDestroy } from "svelte";
+	import { json, _, locale } from "svelte-i18n";
+	import { fade } from "svelte/transition";
 
-	import Timeline from './Timeline.svelte';
-	import ShowRatingPopupItem from './ShowRatingPopupItem.svelte';
-	import ShowLoadedRatingPopupItem from './ShowLoadedRatingPopupItem.svelte';
-	import Spinner from '../../../../ui-elements/Spinner.svelte';
-	import PrimaryButton from '../../../../ui-elements/PrimaryButton.svelte';
-	import SecondaryButton from '../../../../ui-elements/SecondaryButton.svelte';
-	import TextButton from '../../../../ui-elements/TextButton.svelte';
+	import Timeline from "./Timeline.svelte";
+	import ShowRatingPopupItem from "./ShowRatingPopupItem.svelte";
+	import ShowLoadedRatingPopupItem from "./ShowLoadedRatingPopupItem.svelte";
+	import Spinner from "../../../../ui-elements/Spinner.svelte";
+	import PrimaryButton from "../../../../ui-elements/PrimaryButton.svelte";
+	import SecondaryButton from "../../../../ui-elements/SecondaryButton.svelte";
+	import TextButton from "../../../../ui-elements/TextButton.svelte";
 
 	import { getSinglePointData } from "../../../../../utilities/api.js";
 	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
@@ -24,8 +24,8 @@
 		registerAction,
 		logError,
 		closeOverlay,
-	} from '../../../../../utilities/helpers.js';
-	import { fetchDisasterRisk, fetchWaqi, fetchOpenWeather, getApproximateAddressAndCountry } from '../../../../../utilities/externalApi.js';
+	} from "../../../../../utilities/helpers.js";
+	import { fetchDisasterRisk, fetchWaqi, fetchOpenWeather, getApproximateAddressAndCountry } from "../../../../../utilities/externalApi.js";
 
 	export let popupData;
 
@@ -33,10 +33,10 @@
 	const L = $leafletReference;
 
 	let isAlreadyRatedByThisUser = false;
-	let openedTab = 'ratings';
-	let averageRating = '';
-	let numberOfUsers = '';
-	let numberOfComments = '';
+	let openedTab = "ratings";
+	let averageRating = "";
+	let numberOfUsers = "";
+	let numberOfComments = "";
 	let personalExperiencePercent = 100;
 	let shouldShowURLCopySuccess = false;
 	let isAirQualityDataLoaded = false;
@@ -48,20 +48,20 @@
 	let timelineData = [];
 	let currentCoords = { lat: 0, lng: 0 };
 
-	$: approximateAdress = $_('showRatingPopup.approximateAddressDefault');
+	$: approximateAdress = $_("showRatingPopup.approximateAddressDefault");
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 	$: promise = null;
 	$: averageAQI = null;
 	$: averageWAQI = null;
 	$: averageSafetyValue = null;
-	$: copyLinkState = shouldShowURLCopySuccess ? $_('showRatingPopup.copied') : $_('showRatingPopup.shareThisRating');
+	$: copyLinkState = shouldShowURLCopySuccess ? $_("showRatingPopup.copied") : $_("showRatingPopup.shareThisRating");
 	// complexity because of translation
 	$: criteriaArray = loadedRating === null
-		? Object.entries($json('criteria')).map(([ , value ]) => ({ ...value, rating: 0 }))
-		: Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json('criteria')[key], rating: value }));
+		? Object.entries($json("criteria")).map(([ , value ]) => ({ ...value, rating: 0 }))
+		: Object.entries(loadedRating).map(([ key, value ]) => ({ ...$json("criteria")[key], rating: value }));
 
 	const copyShareRatingURL = () => {
-		registerAction('clickCopyURLButton');
+		registerAction("clickCopyURLButton");
 		if (browser && !shouldShowURLCopySuccess) {
 			const shareRatingURL = new URL(window.location.href).toString();
 			try {
@@ -71,13 +71,13 @@
 			} catch (e) {
 				logError(e);
 				showSomethingWrongNotification();
-				registerAction('clickCopyURLButtonError');
+				registerAction("clickCopyURLButtonError");
 			}
 		}
 	};
 
 	const openCommentsSidebar = () =>
-		openAnotherOverlay('commentsSidebar', { id: commentGeoID, type: 'rating' });
+		openAnotherOverlay("commentsSidebar", { id: commentGeoID, type: "rating" });
 
 	const checkCommentsRelevanceAndOpen = () => {
 		if (!$overlayStateStore.commentsSidebar.isOpen)
@@ -85,16 +85,16 @@
 	};
 
 	const switchTabToRatings = () => {
-		openedTab = 'ratings';
-		registerAction('openRatingsTab');
+		openedTab = "ratings";
+		registerAction("openRatingsTab");
 	};
 
 	const switchTabToMeasurements = () => {
-		openedTab = 'measurements';
+		openedTab = "measurements";
 		if (!isAirQualityDataLoaded) {
 			getAirQualityData();
 		}
-		registerAction('openMeasurementsTab');
+		registerAction("openMeasurementsTab");
 	};
 
 	const fetchData = async ({ lng, lat }) => {
@@ -105,7 +105,7 @@
 		if (circle)
 			map.removeLayer(circle);
 
-		circle = L.circle({ lng, lat }, 300, { color: '#007097' });
+		circle = L.circle({ lng, lat }, 300, { color: "#007097" });
 
 		circle.addTo(map);
 		centerMap(map, lat, lng, $isDesktop);
@@ -113,7 +113,7 @@
 		const { error, data } = await getSinglePointData([ lng, lat ]);
 
 		if (error) {
-			closeOverlay('popup');
+			closeOverlay("popup");
 			logError(error);
 			showSomethingWrongNotification();
 			return;
@@ -121,7 +121,7 @@
 
 		const { properties } = data;
 		const { timeline, isRated, geoID, numberOfPersonalExperience } = properties;
-		loadedRating = properties['rating'];
+		loadedRating = properties["rating"];
 		const { finalRating } = getFinalRating(loadedRating);
 
 		appStateStore.update(state => ({ ...state, showRating: [ lat, lng ] }));
@@ -178,7 +178,7 @@
 
 <div class="max-w-lg w-full">
 	<p class="mb-4 text-center italic text-base font-bold -md:px-10">
-		{$_('showRatingPopup.approximateAddress')}: {approximateAdress}
+		{$_("showRatingPopup.approximateAddress")}: {approximateAdress}
 	</p>
 
 	<div class="text-center py-1 md:-mt-2 bg-text text-white flex justify-evenly rounded-md">
@@ -186,57 +186,57 @@
 			href={"#"}
 			on:click|preventDefault={switchTabToRatings}
 			class="inline-block py-1 px-12 rounded-md transition-color duration-300 border -md:px-6"
-			class:bg-active={openedTab === 'ratings'}
-			class:hover:border-white={openedTab !== 'ratings'}
-			class:border-transparent={openedTab !== 'ratings'}
+			class:bg-active={openedTab === "ratings"}
+			class:hover:border-white={openedTab !== "ratings"}
+			class:border-transparent={openedTab !== "ratings"}
 		>
-			{$_('showRatingPopup.tabRatingsBtn')}
+			{$_("showRatingPopup.tabRatingsBtn")}
 		</a>
 		<a
 			href={"#"}
 			on:click|preventDefault={switchTabToMeasurements}
 			class="inline-block py-1 px-12 rounded-md transition-color duration-300 border -md:px-6"
-			class:bg-active={openedTab === 'measurements'}
-			class:hover:border-white={openedTab !== 'measurements'}
-			class:border-transparent={openedTab !== 'measurements'}
+			class:bg-active={openedTab === "measurements"}
+			class:hover:border-white={openedTab !== "measurements"}
+			class:border-transparent={openedTab !== "measurements"}
 		>
-			{$_('showRatingPopup.tabMeasurementsBtn')}
+			{$_("showRatingPopup.tabMeasurementsBtn")}
 		</a>
 	</div>
 
 	<div class="relative">
 		<ul
-			class:opacity-0={openedTab === 'measurements'}
+			class:opacity-0={openedTab === "measurements"}
 			class="transition-opacity"
 		>
 			{#each criteriaArray as item}
 				<ShowRatingPopupItem { ...item } />
 			{/each}
 		</ul>
-		{#if openedTab === 'measurements'}
+		{#if openedTab === "measurements"}
 			<div
 				class="absolute inset-x-0 -top-3"
 				transition:fade
 			>
 				<ShowLoadedRatingPopupItem
-					title={$_('showRatingPopup.airQualityLoadedTitle')}
+					title={$_("showRatingPopup.airQualityLoadedTitle")}
 					linkText="openweathermap.org"
 					link="https://openweathermap.org/api/air-pollution"
-					tooltip={$_('showRatingPopup.descriptionOWM')}
+					tooltip={$_("showRatingPopup.descriptionOWM")}
 					rating={averageAQI}
 				/>
 				<ShowLoadedRatingPopupItem
-					title={$_('showRatingPopup.airQualityLoadedTitle')}
+					title={$_("showRatingPopup.airQualityLoadedTitle")}
 					linkText="waqi.info"
 					link="https://waqi.info/"
-					tooltip={$_('showRatingPopup.descriptionWAQI')}
+					tooltip={$_("showRatingPopup.descriptionWAQI")}
 					rating={averageWAQI}
 				/>
 				<ShowLoadedRatingPopupItem
-					title={$_('showRatingPopup.naturalDisasterTitle')}
+					title={$_("showRatingPopup.naturalDisasterTitle")}
 					linkText="wikipedia.org"
 					link="https://en.wikipedia.org/wiki/List_of_countries_by_natural_disaster_risk"
-					tooltip={$_('showRatingPopup.descriptionNaturalDisaster')}
+					tooltip={$_("showRatingPopup.descriptionNaturalDisaster")}
 					rating={averageSafetyValue}
 				/>
 			</div>
@@ -251,21 +251,21 @@
 	</div>
 
 	<div class="italic text-sm font-bold" title="{$_('showRatingPopup.howMuchPeople')}">
-		{personalExperiencePercent}% {$_('showRatingPopup.ofParticipantsLived')}
+		{personalExperiencePercent}% {$_("showRatingPopup.ofParticipantsLived")}
 	</div>
 
 	<div class="flex justify-between my-4 -md:text-sm">
 		<div>
-			{$_('showRatingPopup.averageRating')}:
+			{$_("showRatingPopup.averageRating")}:
 			<span class="sug-col font-bold text-2xl -md:text-lg">{averageRating}</span>
 		</div>
 		<div>
-			{$_('showRatingPopup.usersRated')}:
+			{$_("showRatingPopup.usersRated")}:
 			<span class="sug-col font-bold text-2xl -md:text-lg">{numberOfUsers}</span>
 		</div>
 		<div>
 			<TextButton
-				text={$_('showRatingPopup.comments')}
+				text={$_("showRatingPopup.comments")}
 				action={checkCommentsRelevanceAndOpen}
 			/>:
 			<span class="sug-col font-bold text-2xl -md:text-lg">{numberOfComments}</span>
@@ -276,23 +276,23 @@
 
 	<div class="flex justify-evenly items-center mt-4">
 		<SecondaryButton
-			text={$_('showRatingPopup.showNearbyRatings')}
-			action={() => openAnotherOverlay('nearbyPopup', currentLatLng)}
+			text={$_("showRatingPopup.showNearbyRatings")}
+			action={() => openAnotherOverlay("nearbyPopup", currentLatLng)}
 		/>
 		{#if isUserLoggedIn && isAlreadyRatedByThisUser}
 			<PrimaryButton
-				text={$_('showRatingPopup.youHaveAlreadyRated')}
+				text={$_("showRatingPopup.youHaveAlreadyRated")}
 				disabled={true}
 			/>
 		{:else if isUserLoggedIn && !isAlreadyRatedByThisUser}
 			<PrimaryButton
-				text={$_('showRatingPopup.addNewRating')}
-                action={() => openAnotherOverlay('quizPopup', currentLatLng)}
+				text={$_("showRatingPopup.addNewRating")}
+                action={() => openAnotherOverlay("quizPopup", currentLatLng)}
 			/>
 		{:else}
 			<PrimaryButton
-				text={$_('showRatingPopup.loginAndRate')}
-				action={() => openAnotherOverlay('loginPopup')}
+				text={$_("showRatingPopup.loginAndRate")}
+				action={() => openAnotherOverlay("loginPopup")}
 			/>
 		{/if}
 	</div>

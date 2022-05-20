@@ -4,7 +4,7 @@
 	import { getGeoSuggestions, getGeoCandidates } from "$lib/utilities/externalApi.js";
 
 	import { overlayStateStore } from "../../../../../stores/state.js";
-	import { mapReference } from '../../../../../stores/references.js';
+	import { mapReference } from "../../../../../stores/references.js";
 
 	// sidebar and burger button
 
@@ -15,15 +15,15 @@
 		isActive = !isActive;
 
 		if (isActive)
-			openAnotherOverlay('menuSidebar');
+			openAnotherOverlay("menuSidebar");
 		else
-			closeOverlay('sidebar');
+			closeOverlay("sidebar");
 	};
 
 	// eslint-disable-next-line no-unused-vars
 	const checkOpenedOverlay = somethingNotImportant => {
 		const { overlay } = getOpenedOverlay();
-		isActive = overlay === 'menuSidebar';
+		isActive = overlay === "menuSidebar";
 	};
 
 	$: checkOpenedOverlay($overlayStateStore);
@@ -45,7 +45,7 @@
 			searchSuggestions = [];
 	};
 
-	const setViewFromSearch = async (text, magicKey = '') => {
+	const setViewFromSearch = async (text, magicKey = "") => {
 		searchSuggestions = [];
 
 		const resp = await getGeoCandidates(text, magicKey);
@@ -54,7 +54,7 @@
 
 		$mapReference.fitBounds([[ extent.ymin, extent.xmin ], [ extent.ymax, extent.xmax ]]);
 		searchInputValue = null;
-		registerAction('mapSearch');
+		registerAction("mapSearch");
 	};
 
 	const debouncedSearch = debounce(e => { handleSearchInputChange(e) }, 200);

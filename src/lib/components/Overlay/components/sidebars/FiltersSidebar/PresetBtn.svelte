@@ -1,14 +1,14 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
 
     export let presetNumber = 0;
-    export let presetText = '';
+    export let presetText = "";
     export let isActive = false;
 
     const onPresetBtnClick = () =>
-    	dispatch('presetClick', { presetNumber });
+    	dispatch("presetClick", { presetNumber });
 </script>
 
 <a

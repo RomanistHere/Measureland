@@ -1,8 +1,8 @@
 <script>
-    import { fade, fly } from 'svelte/transition';
-    import { json } from 'svelte-i18n';
+    import { fade, fly } from "svelte/transition";
+    import { json } from "svelte-i18n";
 
-    import SomethingWrongIcon from '../../../inline-images/SomethingWrongIcon.svelte';
+    import SomethingWrongIcon from "../../../inline-images/SomethingWrongIcon.svelte";
 
     export let expanded = false;
 </script>
@@ -20,7 +20,7 @@
             in:fly="{{ y: 10, duration: 150 }}"
             out:fly="{{ y: 10, duration: 150 }}"
         >
-            {#each $json('errors.somethingWentWrong') as text}
+            {#each $json("errors.somethingWentWrong") as text}
                 <p class="whitespace-nowrap">
                     {text}
                 </p>
