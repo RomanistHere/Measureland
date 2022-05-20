@@ -4,7 +4,7 @@
 
 @layer components {
 	.hoverable-link {
-		@apply transition-colors hover:bg-new-active hover:text-main focus:bg-new-active focus:text-main focus:outline-none;
+		@apply transition-colors hover:bg-bg_hover active:text-main active:bg-bg_active focus:bg-bg_active focus:text-main focus:outline-none;
 	}
 
 	.hoverable-prim {

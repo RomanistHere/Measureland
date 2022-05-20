@@ -19,7 +19,7 @@
 </script>
 
 <aside
-    class="fixed z-2 left-4 overflow-y-auto overflow-x-hidden rounded-md w-64 -lg:right-4 -lg:w-auto popup-shadow bg-white shadow-lg border border-stroke"
+    class="fixed z-2 left-4 overflow-y-auto overflow-x-hidden rounded-md w-64 -lg:right-4 -lg:w-auto popup-shadow bg-white shadow-lg border border-stroke top-20"
     in:fly="{{ x: -100, duration: 300 }}"
     out:fly="{{ x: -100, duration: 300 }}"
 >
@@ -27,9 +27,3 @@
 
 <!--    <CloseButton overlayType='sidebar' className="top-3 right-2" />-->
 </aside>
-
-<style>
-    aside {
-        top: var(--distance-top);
-    }
-</style>

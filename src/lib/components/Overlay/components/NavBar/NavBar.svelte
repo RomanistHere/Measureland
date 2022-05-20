@@ -196,6 +196,27 @@
 	</ul>
 
 	<div class="flex">
+		<div class="flex mr-4 bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
+			<button
+				class="block p-2 px-3 hoverable-link border-r border-stroke"
+				class:text-main={$locale === 'en'}
+				class:bg-new-active={$locale === 'en'}
+				class:cursor-default={$locale === 'en'}
+				on:click={() => { changeLanguage('en') }}
+			>
+				ENG
+			</button>
+			<button
+				class="block p-2 px-3 hoverable-link"
+				class:text-main={$locale === 'ru'}
+				class:bg-new-active={$locale === 'ru'}
+				class:cursor-default={$locale === 'ru'}
+				on:click={() => { changeLanguage('ru') }}
+			>
+				РУС
+			</button>
+		</div>
+
 		<div>
 			{#if isUserLoggedIn}
 				<a
@@ -213,7 +234,7 @@
 
 				{#if profileDropDownOpen}
 					<DropdownMenu
-						className='right-0 w-48 top-10 mt-2'
+						class='right-0 w-48 top-16'
 						{ dropdownData }
 					/>
 				{/if}
@@ -233,27 +254,6 @@
 					{$_('navBar.primaryBtn')}
 				</button>
 			{/if}
-		</div>
-
-		<div class="flex ml-4 bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
-			<button
-				class="block p-2 px-3 hoverable-link border-r border-stroke"
-				class:text-main={$locale === 'en'}
-				class:bg-new-active={$locale === 'en'}
-				class:cursor-default={$locale === 'en'}
-				on:click={() => { changeLanguage('en') }}
-			>
-				ENG
-			</button>
-			<button
-				class="block p-2 px-3 hoverable-link"
-				class:text-main={$locale === 'ru'}
-				class:bg-new-active={$locale === 'ru'}
-				class:cursor-default={$locale === 'ru'}
-				on:click={() => { changeLanguage('ru') }}
-			>
-				РУС
-			</button>
 		</div>
 	</div>
 </nav>

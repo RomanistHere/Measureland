@@ -20,6 +20,7 @@
 			closeOverlay('sidebar');
 	};
 
+	// eslint-disable-next-line no-unused-vars
 	const checkOpenedOverlay = somethingNotImportant => {
 		const { overlay } = getOpenedOverlay();
 		isActive = overlay === 'menuSidebar';
