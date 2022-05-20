@@ -157,11 +157,12 @@
 
 	<ul class="bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
 		{#each navLinks as { text, url }}
-			<li class="inline-block border-r border-stroke last:border-0">
+			<li class="inline-block">
 				<a
 					class="block p-2 px-3 hoverable-link"
 					class:text-main={$page.path === url}
 					class:bg-new-active={$page.path === url}
+					class:hover:bg-new-active={$page.path === url}
 					class:cursor-default={$page.path === url}
 					href={url}
 					on:click={onNavLinkClick}
@@ -178,6 +179,7 @@
 				class="block p-2 px-3 hoverable-link border-r border-stroke"
 				class:text-main={$locale === "en"}
 				class:bg-new-active={$locale === "en"}
+				class:hover:bg-new-active={$locale === "en"}
 				class:cursor-default={$locale === "en"}
 				on:click={() => { changeLanguage("en") }}
 			>
@@ -187,6 +189,7 @@
 				class="block p-2 px-3 hoverable-link"
 				class:text-main={$locale === "ru"}
 				class:bg-new-active={$locale === "ru"}
+				class:hover:bg-new-active={$locale === "ru"}
 				class:cursor-default={$locale === "ru"}
 				on:click={() => { changeLanguage("ru") }}
 			>
