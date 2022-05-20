@@ -158,3 +158,9 @@
 	background-position: center center;
 	background-size: auto;
 }
+
+/*// MAP ICONS //*/
+
+.leaflet-marker-icon {
+	transition: all .2s;
+}

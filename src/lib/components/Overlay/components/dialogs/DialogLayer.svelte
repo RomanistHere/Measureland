@@ -6,6 +6,7 @@
 
 	import OnMapClickDialog from "./OnMapClickDialog.svelte";
 	import ReportReasonDialog from "./ReportReasonDialog.svelte";
+	import CommunityInfoDialog from "./CommunityInfoDialog.svelte";
 	import WarningPoiNearbyDialog from "./WarningPoiNearbyDialog.svelte";
 
 	export let dialogName;
@@ -14,6 +15,7 @@
 	const dialogList = {
 		onMapClickDialog: OnMapClickDialog,
 		reportReasonDialog: ReportReasonDialog,
+		communityInfoDialog: CommunityInfoDialog,
 		warningPoiNearbyDialog: WarningPoiNearbyDialog,
 	};
 
@@ -26,7 +28,7 @@
 	transition:fade
 	role="dialog"
 >
-	<div class="glassmorphism max-w-lg p-8 -md:px-4 -md:mx-4">
+	<div class="glassmorphism relative max-w-lg p-8 -md:px-4 -md:mx-4">
 		<svelte:component this={Dialog} { dialogData }/>
 		<CloseButton overlayType='dialog' className='-md:top-3 -md:right-3' />
 	</div>

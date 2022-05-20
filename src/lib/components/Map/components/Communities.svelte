@@ -30,10 +30,12 @@
 	const openCommunityInfo = () => {
 		const { center, id } = currentCommunityProps;
 		map.flyTo([ ...center ].reverse(), 14);
+		openAnotherOverlay("communityInfoDialog", { communityID: id });
 	};
 
 	const handleCommunityIconClick = ({ properties }) => {
 		map.flyTo([ ...properties.center ].reverse(), 14);
+		openAnotherOverlay("communityInfoDialog", { communityID: properties.id });
 	};
 
 	// shadowURL is used because of leaflet z-index distribution
