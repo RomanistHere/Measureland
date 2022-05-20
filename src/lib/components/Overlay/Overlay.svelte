@@ -131,7 +131,6 @@
 
 <NavBar
 	{mainScreen}
-	isSidebarActive={sidebarActive}
 />
 
 <FiltersNotification />

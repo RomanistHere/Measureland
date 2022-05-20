@@ -49,7 +49,7 @@ const config = {
 				square: 'square',
 			},
 			colors: {
-				'actives': '#007097',
+				'active': '#007097',
 				'success': '#146481',
 				'non-active': '#31493c54',
 				'main-bg': '#d4eff5',

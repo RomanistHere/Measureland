@@ -673,7 +673,7 @@
         "linkExpiredLink": "Get another one",
         "errorVerification": "Check email for verification letter",
         "errorVerificationBtn": "Resend letter",
-        "invalidCsrfToken": "Try to clear all cookies and refresh",
+        "invalidCsrfToken": "Try to refresh or clear all cookies",
         "fieldsError": "Check all the fields!",
         "noAccount": "Couldn't find your account",
         "accountExists": "Account already exists",

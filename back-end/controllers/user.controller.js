@@ -406,6 +406,9 @@ exports.ask_more_ratings = async (req, res) => {
 };
 
 exports.user_logout = async (req, res, next) => {
+	if (req.cookies['csrf-token'])
+		res.clearCookie('csrf-token');
+
 	if (req.session) {
 		req.session.destroy(err => {
 			if (err) {

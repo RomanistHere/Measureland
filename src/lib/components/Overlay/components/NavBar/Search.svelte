@@ -1,12 +1,10 @@
 <script>
 	import SearchIcon from "$lib/components/inline-images/SearchIcon.svelte";
-	import { closeOverlay, openAnotherOverlay, debounce, registerAction } from "$lib/utilities/helpers.js";
+	import { closeOverlay, openAnotherOverlay, debounce, registerAction, getOpenedOverlay } from "$lib/utilities/helpers.js";
 	import { getGeoSuggestions, getGeoCandidates } from "$lib/utilities/externalApi.js";
 
 	import { overlayStateStore } from "../../../../../stores/state.js";
 	import { mapReference } from '../../../../../stores/references.js';
-
-	export let isSidebarActive = false;
 
 	// sidebar and burger button
 
@@ -22,13 +20,12 @@
 			closeOverlay('sidebar');
 	};
 
-	$: if (isSidebarActive) {
-		const sidebarData = Object.values($overlayStateStore).filter(({ isOpen, type }) => isOpen === true && type === 'sidebar')[0];
-		if (sidebarData && Object.entries(sidebarData.data).length === 0)
-			isActive = true;
-	} else {
-		isActive = false;
-	}
+	const checkOpenedOverlay = somethingNotImportant => {
+		const { overlay } = getOpenedOverlay();
+		isActive = overlay === 'menuSidebar';
+	};
+
+	$: checkOpenedOverlay($overlayStateStore);
 
 	// search
 

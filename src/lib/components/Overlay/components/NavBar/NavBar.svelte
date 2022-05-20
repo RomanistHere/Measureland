@@ -25,7 +25,6 @@
 	import FilterIcon from "$lib/components/inline-images/FilterIcon.svelte";
 
 	export let mainScreen = true;
-	export let isSidebarActive = false;
 
 	let profileDropDownOpen = false;
 
@@ -169,7 +168,7 @@
 
 <nav class="absolute flex z-5 justify-between items-center inset-x-4 top-4 -lg:hidden">
 	<div class="flex">
-		<Search {isSidebarActive} />
+		<Search />
 
 		<button
 			class="rounded-md bg-white px-3 ml-2 hover:bg-bg_hover transition-colors border border-stroke focus:bg-bg_active active:bg-bg_active"
