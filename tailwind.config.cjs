@@ -40,7 +40,7 @@ const config = {
 				'5': 5,
 			},
 			fontFamily: {
-				sans: ['"Nunito"', 'sans-serif']
+				sans: ['Manrope', 'sans-serif']
 		    },
 			height: {
 				'100': '25rem',

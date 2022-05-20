@@ -7,7 +7,7 @@
 </script>
 
 <button
-	class="hoverable-prim bg-main text-white p-2 px-4 rounded-md {customClass}"
+	class="hoverable-prim bg-main text-white p-2 px-4 rounded-lg {customClass}"
 	class:cursor-default={disabled}
 	class:opacity-60={disabled}
 	on:click

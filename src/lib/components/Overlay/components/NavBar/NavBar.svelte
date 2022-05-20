@@ -148,14 +148,14 @@
 		<Search />
 
 		<button
-			class="rounded-md bg-white px-3 ml-2 hover:bg-bg_hover transition-colors border border-stroke focus:bg-bg_active active:bg-bg_active"
+			class="rounded-lg bg-white px-3 ml-2 hover:bg-bg_hover transition-colors border border-stroke focus:bg-bg_active active:bg-bg_active"
 			on:click={openFilters}
 		>
 			<FilterIcon isActive={isFiltersActive} />
 		</button>
 	</div>
 
-	<ul class="bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
+	<ul class="bg-white rounded-lg overflow-hidden shadow-lg border border-stroke">
 		{#each navLinks as { text, url }}
 			<li class="inline-block">
 				<a
@@ -174,7 +174,7 @@
 	</ul>
 
 	<div class="flex">
-		<div class="flex mr-4 bg-white rounded-md overflow-hidden shadow-lg border border-stroke">
+		<div class="flex mr-4 bg-white rounded-lg overflow-hidden shadow-lg border border-stroke">
 			<button
 				class="block p-2 px-3 hoverable-link border-r border-stroke"
 				class:text-main={$locale === "en"}
@@ -220,14 +220,14 @@
 				{/if}
 			{:else}
 				<button
-					class="text-center rounded-md py-2 px-3 transition-colors bg-white -md:px-4 shadow-lg border border-stroke"
+					class="text-center rounded-lg py-2 px-3 transition-colors bg-white -md:px-4 shadow-lg border border-stroke"
 					on:click={openLogin}
 					type="button"
 				>
 					{$_("navBar.secondaryBtn")}
 				</button>
 				<button
-					class="text-center rounded-md py-2 px-3 transition-colors bg-main text-white ml-2 -md:px-4 shadow-lg border border-main"
+					class="text-center rounded-lg py-2 px-3 transition-colors bg-main text-white ml-2 -md:px-4 shadow-lg border border-main"
 					on:click={openRegister}
 					type="button"
 				>

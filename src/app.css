@@ -15,3 +15,69 @@
 		@apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
 	}
 }
+
+@layer base {
+	/* https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight */
+	/*@font-face {*/
+	/*	font-family: 'Manrope';*/
+	/*	font-weight: 200;*/
+	/*	font-display: swap;*/
+	/*	src: local('Manrope'),*/
+	/*	url('/static/fonts/Manrope-ExtraLight.woff2') format('woff2'),*/
+	/*	url('/static/fonts/Manrope-ExtraLight.woff') format('woff');*/
+	/*}*/
+
+	/*@font-face {*/
+	/*	font-family: 'Manrope';*/
+	/*	font-weight: 300;*/
+	/*	font-display: swap;*/
+	/*	src: local('Manrope'),*/
+	/*	url('/static/fonts/Manrope-Light.woff2') format('woff2'),*/
+	/*	url('/static/fonts/Manrope-Light.woff') format('woff');*/
+	/*}*/
+
+	@font-face {
+		font-family: 'Manrope';
+		font-weight: 400;
+		font-display: swap;
+		src: local('Manrope'),
+		url('/static/fonts/Manrope-Regular.woff2') format('woff2'),
+		url('/static/fonts/Manrope-Regular.woff') format('woff');
+	}
+
+	@font-face {
+		font-family: 'Manrope';
+		font-weight: 500;
+		font-display: swap;
+		src: local('Manrope'),
+		url('/static/fonts/Manrope-Medium.woff2') format('woff2'),
+		url('/static/fonts/Manrope-Medium.woff') format('woff');
+	}
+
+	/*@font-face {*/
+	/*	font-family: 'Manrope';*/
+	/*	font-weight: 600;*/
+	/*	font-display: swap;*/
+	/*	src: local('Manrope'),*/
+	/*	url('/static/fonts/Manrope-SemiBold.woff2') format('woff2'),*/
+	/*	url('/static/fonts/Manrope-SemiBold.woff') format('woff');*/
+	/*}*/
+
+	@font-face {
+		font-family: 'Manrope';
+		font-weight: 700;
+		font-display: swap;
+		src: local('Manrope'),
+		url('/static/fonts/Manrope-Bold.woff2') format('woff2'),
+		url('/static/fonts/Manrope-Bold.woff') format('woff');
+	}
+
+	/*@font-face {*/
+	/*	font-family: 'Manrope';*/
+	/*	font-weight: 800;*/
+	/*	font-display: swap;*/
+	/*	src: local('Manrope'),*/
+	/*	url('/static/fonts/Manrope-ExtraBold.woff2') format('woff2'),*/
+	/*	url('/static/fonts/Manrope-ExtraBold.woff') format('woff');*/
+	/*}*/
+}

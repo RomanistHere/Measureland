@@ -1,34 +1,4 @@
 @font-face {
-	font-family: 'Nunito';
-	font-style: normal;
-	font-weight: normal;
-	font-display: swap;
-	src: local(''),
-	url('../fonts/nunito-v16-latin_cyrillic-regular.woff2') format('woff2'),
-	url('../fonts/nunito-v16-latin_cyrillic-regular.woff') format('woff');
-}
-
-@font-face {
-	font-family: 'Nunito';
-	font-style: italic;
-	font-weight: normal;
-	font-display: swap;
-	src: local(''),
-	url('../fonts/nunito-v16-latin_cyrillic-italic.woff2') format('woff2'),
-	url('../fonts/nunito-v16-latin_cyrillic-italic.woff') format('woff');
-}
-
-@font-face {
-	font-family: 'Nunito';
-	font-style: normal;
-	font-weight: bold;
-	font-display: swap;
-	src: local(''),
-	url('../fonts/nunito-v16-latin_cyrillic-800.woff2') format('woff2'),
-	url('../fonts/nunito-v16-latin_cyrillic-800.woff') format('woff');
-}
-
-@font-face {
 	font-family: 'star__icon';
 	src: url('../fonts/star__icon.eot?87ao9s');
 	src: url('../fonts/star__icon.eot?87ao9s#iefix') format('embedded-opentype'),
@@ -42,7 +12,6 @@
 
 html {
 	position: relative;
-	font-family: "Nunito", sans-serif;
 
 	/* main color sheme */
 	--non-active-color: #31493c54;

@@ -182,7 +182,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-4 hoverable-link py-2 leading-5"
+					class="block px-4 hoverable-link py-2.5 leading-5"
 					on:click|preventDefault={openFeedbackPopup}
 				>
 					{$_("menuSidebar.feedbackPopup")}
@@ -217,7 +217,7 @@
 			<li>
 				<a
 					href={"#"}
-					class="block px-4 hoverable-link py-2 leading-5"
+					class="block px-4 hoverable-link py-2.5 leading-5"
 					on:click|preventDefault={toggleSendingEvents}
 				>
 					{$_("menuSidebar.sendCrashReports")}
@@ -251,7 +251,7 @@
 		{/if}
 	</div>
 
-	<footer class="text-sm px-4 pb-4 text-txt-secondary">
+	<footer class="text-sm px-4 pb-4 text-txt-secondary leading-6">
 		<p>{$_("footer.version")}: {APP_VERSION}.</p>
 		<div>
 			<a class="hoverable-link underline" target="_blank" href="blog/terms-of-use/">{$_("footer.termsOfUse")}</a>
