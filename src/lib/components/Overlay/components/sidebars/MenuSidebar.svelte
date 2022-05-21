@@ -240,7 +240,7 @@
 
 	<div class="mt-2 px-4 mb-4">
 		{#if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && isUserAskedForMoreRatings}
-			<div class="block text-center border-txt-tertiary border rounded-md w-full text-txt-tertiary px-6 py-4 leading-5">
+			<div class="block text-center border-txt_tertiary border rounded-md w-full text-txt_tertiary px-6 py-4 leading-5">
 				{$_("menuSidebar.requestProcessing")}
 			</div>
 		{:else if isUserLoggedIn && shouldUserHaveMoreRatingsBtn && !isUserAskedForMoreRatings}
@@ -251,7 +251,7 @@
 		{/if}
 	</div>
 
-	<footer class="text-sm px-4 pb-4 text-txt-secondary leading-6">
+	<footer class="text-sm px-4 pb-4 text-txt_secondary leading-6">
 		<p>{$_("footer.version")}: {APP_VERSION}.</p>
 		<div>
 			<a class="hoverable-link underline" target="_blank" href="blog/terms-of-use/">{$_("footer.termsOfUse")}</a>
