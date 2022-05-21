@@ -73,7 +73,7 @@
 	const debouncedSearch = debounce(e => { handleSearchInputChange(e) }, 200);
 </script>
 
-<div class="bg-white rounded-md overflow-hidden shadow-lg border border-stroke flex">
+<div class="bg-white rounded-md overflow-hidden shadow-lg flex">
 	<button
 		class="flex justify-center items-center cursor-pointer hover:bg-bg_hover px-1 transition-colors focus:bg-bg_active active:bg-bg_active"
 		class:bg-new-active={isActive}
@@ -117,7 +117,7 @@
 </div>
 
 {#if searchSuggestions.length > 0}
-	<ul class="w-80 bg-white rounded-md overflow-hidden shadow-lg border border-stroke absolute top-16 left-0">
+	<ul class="w-80 bg-white rounded-md overflow-hidden shadow-lg absolute top-16 left-0">
 		{#each searchSuggestions as { text, magicKey }}
 			<li class="">
 				<button
