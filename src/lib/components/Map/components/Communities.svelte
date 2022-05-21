@@ -1,6 +1,7 @@
 <script>
 	import { locale } from "svelte-i18n";
 	import { onMount } from "svelte";
+	import { fly } from "svelte/transition";
 
 	import L from "leaflet";
 	import "../../../external/supercluster.js";
@@ -28,6 +29,7 @@
 	$: currentCommunityProps = null;
 
 	const openCommunityInfo = () => {
+		isCommunity = false;
 		const { center, id } = currentCommunityProps;
 		map.flyTo([ ...center ].reverse(), 14);
 		openAnotherOverlay("communityInfoDialog", { communityID: id });
@@ -38,14 +40,33 @@
 		openAnotherOverlay("communityInfoDialog", { communityID: properties.id });
 	};
 
-	// shadowURL is used because of leaflet z-index distribution
+	const transparentIcon = L.icon({
+		iconUrl: "../images/map/community_icon.png",
+		iconSize: [ 0, 0 ],
+		iconAnchor: [ 0, 0 ],
+	});
+
 	const iconConfig = {
 		iconUrl: "../images/map/community_icon.png",
 		iconSize: [ 50, 50 ],
 		iconAnchor: [ 25, 25 ],
 	};
 
+	const iconClusterConfig = {
+		iconUrl: "../images/map/community_icon-two.png",
+		iconSize: [ 54, 50 ],
+		iconAnchor: [ 27, 25 ],
+	};
+
+	const iconClusterMultipleConfig = {
+		iconUrl: "../images/map/community_icon-multiple.png",
+		iconSize: [ 66, 50 ],
+		iconAnchor: [ 33, 25 ],
+	};
+
 	const icon = L.icon(iconConfig);
+	const iconCluster = L.icon(iconClusterConfig);
+	const iconClusterMultiple = L.icon(iconClusterMultipleConfig);
 
 	const hoverIcon = L.icon({
 		...iconConfig,
@@ -53,17 +74,16 @@
 		iconAnchor: [ 35, 35 ],
 	});
 
-	const iconCluster = L.icon({
-		// todo: multiple icon
-		iconUrl: "../images/map/community_icon.png",
-		iconSize: [ 50, 50 ],
-		iconAnchor: [ 25, 25 ],
+	const hoverIconCluster = L.icon({
+		...iconClusterConfig,
+		iconSize: [ 80, 70 ],
+		iconAnchor: [ 40, 35 ],
 	});
 
-	const transparentIcon = L.icon({
-		iconUrl: "../images/map/community_icon.png",
-		iconSize: [ 0, 0 ],
-		iconAnchor: [ 0, 0 ],
+	const hoverIconClusterMultiple = L.icon({
+		...iconClusterMultipleConfig,
+		iconSize: [ 90, 70 ],
+		iconAnchor: [ 45, 35 ],
 	});
 
 	const createClusterIcon = (feature, latlng) => {
@@ -88,11 +108,16 @@
 		} else {
 			// cluster
 			// docs: https://github.com/mapbox/supercluster
+			const isClusterMultiple = feature.properties.point_count >= 3;
+			const clusterIcon = isClusterMultiple ? iconClusterMultiple : iconCluster;
+			const clusterIconHover = isClusterMultiple ? hoverIconClusterMultiple : hoverIconCluster;
 			const marker = L.marker(latlng, {
-				icon: isClose ? transparentIcon : iconCluster,
+				icon: isClose ? transparentIcon : clusterIcon,
 				riseOnHover: true,
 				zIndexOffset: -50,
 			});
+			marker.on("mouseover", () => { marker.setIcon(clusterIconHover) });
+			marker.on("mouseout", () => { marker.setIcon(clusterIcon) });
 			marker.on("keyup", e => {
 				if (e.originalEvent.key === "Enter") {
 					map.zoomIn();
@@ -213,17 +238,33 @@
 {#if isCommunity}
 	<button
 		on:click={openCommunityInfo}
-		class="absolute p-4 top-20 right-4 z-5 bg-white w-64"
+		class="absolute px-5 py-2.5 top-36 right-0 z-5 bg-white w-64 text-left rounded-l-lg overflow-hidden transition-transform translate-x-2 hover:translate-x-0"
+		in:fly="{{ x: 300, duration: 500 }}"
+		out:fly="{{ x: 300, duration: 500 }}"
 	>
-		В {city} есть русскоговорящее сообщество!
+		<span class="absolute w-2.5 h-full left-0 top-0 bg-main"></span>
+		<span class="block leading-5 pb-px text-main">
+			В {city} есть русскоязычное сообщество
+		</span>
+		<span class="text-txt_tertiary text-sm">
+			нажми, чтобы посмотреть
+		</span>
 	</button>
 {/if}
 
 {#if isCommunityNearby}
 	<button
 		on:click={openCommunityInfo}
-		class="absolute p-4 top-20 right-4 z-5 bg-white w-64"
+		class="absolute px-5 py-2.5 top-36 right-0 z-5 bg-white w-64 text-left rounded-l-lg overflow-hidden transition-transform translate-x-2 hover:translate-x-0"
+		in:fly="{{ x: 300, duration: 500 }}"
+		out:fly="{{ x: 300, duration: 500 }}"
 	>
-		Неподалёку в {city} есть русскоговорящее сообщество!
+		<span class="absolute w-2.5 h-full left-0 top-0 bg-main"></span>
+		<span class="block leading-5 pb-px text-main">
+			Неподалёку в {city} есть русскоязычное сообщество
+		</span>
+		<span class="text-txt_tertiary text-sm">
+			нажми, чтобы посмотреть
+		</span>
 	</button>
 {/if}

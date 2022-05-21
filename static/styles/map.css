@@ -33,15 +33,14 @@
 
 .leaflet-touch .leaflet-control-layers,
 .leaflet-touch .leaflet-bar {
-	border-color: var(--stroke);
-	border-width: 1px;
+	border: none;
 }
 
 /*// ZOOM //*/
 
 .leaflet-control-zoom {
 	background-color: #ffffff;
-	border: 1px solid var(--stroke);
+	border: none;
 	box-shadow: 0 0 1px var(--text-color);
 	border-radius: 1.25rem;
 	overflow: hidden;
