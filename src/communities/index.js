@@ -83,9 +83,6 @@ export const communitiesInfoRU = {
 				text: "Бизнес в Грузии (t.me)",
 				link: "https://t.me/ip_ge",
 			}, {
-				text: "Бизнес в Грузии (t.me)",
-				link: "https://t.me/ip_ge",
-			}, {
 				text: "Гайд по открытию ИП в Грузии (rb.ru)",
 				link: "https://rb.ru/opinion/ip-georgia/",
 			}],

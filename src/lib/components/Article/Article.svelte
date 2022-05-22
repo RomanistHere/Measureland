@@ -57,7 +57,7 @@
     {$_("blog.linkBack")}
 </a>
 
-<footer class="grt static mx-auto glassmorphism box-content mb-2 -lg:m-2">
+<footer class="grt static mx-auto glassmorphism box-content mb-2 -lg:m-2 relative">
     <EndCaption />
 
     <span class="text-center text-base block -mb-4 mt-4 -md:mb-0">

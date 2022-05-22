@@ -5,7 +5,7 @@
 
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import { communitiesInfoEN, communitiesInfoRU } from "../../../../../communities/index.js";
-	import { closeOverlay } from "$lib/utilities/helpers.js";
+	import { closeOverlay, openAnotherOverlay } from "$lib/utilities/helpers.js";
 
 	export let modalData;
 
@@ -13,27 +13,25 @@
 		? communitiesInfoRU[modalData.communityID]
 		: communitiesInfoEN[modalData.communityID];
 
-	$: console.log(communityInfo);
-
 	$: if (!communityInfo) {
 		// change language to no info
 		closeOverlay("modal");
 	}
 
-	let isSubmenuOpen = false;
+	$: currentKey = Object.keys(communityInfo.links)[0];
+	$: currentValue = communityInfo.links[currentKey];
+	$: isFirstFocused = false;
 
-	const handleFocus = () => {
-		isSubmenuOpen = true;
-	};
+	const handleFocus = key => {
+		if (!isFirstFocused)
+			isFirstFocused = true;
 
-	const handleBlur = () => {
-		isSubmenuOpen = false;
+		currentKey = key;
 	};
 </script>
 
 <div
-	class="fixed top-20 left-4 bg-white rounded-lg z-1 w-64 p-4 min-h-[30rem]"
-	class:rounded-r-none={isSubmenuOpen}
+	class="fixed top-20 left-4 bg-white rounded-l-lg z-1 w-64 p-4 min-h-[30rem]"
 	use:focusTrap
 	in:fly="{{ y: 50, duration: 200 }}"
 	out:fly="{{ y: 50, duration: 200 }}"
@@ -43,65 +41,63 @@
 	</h1>
 
 	<ul class="-mx-4 pb-16">
-		{#each Object.entries(communityInfo.links) as [key, value]}
+		{#each Object.entries(communityInfo.links) as [key, value], i}
 			{#if value.length > 0}
 				<li>
 					<a
 						href={"#"}
-						class="py-2.5 block text-main px-4 hover:bg-bg_active focus:bg-bg_active"
-						on:mouseover={handleFocus}
-						on:focus={handleFocus}
-						on:mouseout={handleBlur}
-						on:blur={handleBlur}
+						on:click|preventDefault={() => {}}
+						class="py-2.5 block text-txt_main px-4 hover:bg-bg_active hover:text-main focus:bg-bg_active focus:text-main transition-colors"
+						class:bg-bg_active={i === 0 && !isFirstFocused}
+						class:text-main={i === 0 && !isFirstFocused}
+						class:text-txt_main={i !== 0 && isFirstFocused}
+						on:mouseover={() => { handleFocus(key) }}
+						on:focus={() => { handleFocus(key) }}
 					>
 						<span>
 							{$_(`communityAbroadModal.keysToText.${key}.long`)}
 						</span>
-
-						<div
-							class="absolute left-full top-0 bg-white h-full rounded-r-lg w-64 p-4 drop-shadow-[0_4px_7px_rgba(10,13,84,0.05)] hidden cursor-default"
-							on:mouseover={handleFocus}
-							on:focus={handleFocus}
-							on:mouseout={handleBlur}
-							on:blur={handleBlur}
-						>
-							<h2 class="text-2xl my-2 mb-0 text-txt_main">
-								{$_(`communityAbroadModal.keysToText.${key}.short`)}
-							</h2>
-							<p class="text-sm text-txt_tertiary">
-								{$_(`communityAbroadModal.keysToText.${key}.description`)}
-							</p>
-
-							<ul class="mt-1 -mx-4">
-								{#each value as { text, link }}
-									<li>
-										<a
-											href={link}
-											target="_blank"
-											class="block text-main hoverable-link px-4 py-2.5 leading-5"
-										>
-											{text}
-										</a>
-									</li>
-								{/each}
-							</ul>
-						</div>
 					</a>
 				</li>
 			{/if}
 		{/each}
 	</ul>
 
+	<div class="absolute left-full top-0 bg-white h-full rounded-r-lg w-64 p-4 drop-shadow-[0_4px_7px_rgba(10,13,84,0.05)]">
+		<h2 class="text-2xl my-2 mb-0 text-txt_main">
+			{$_(`communityAbroadModal.keysToText.${currentKey}.short`)}
+		</h2>
+		<p class="text-sm text-txt_tertiary">
+			{$_(`communityAbroadModal.keysToText.${currentKey}.description`)}
+		</p>
+
+		<ul class="mt-1 -mx-4">
+			{#each currentValue as { text, link }}
+				<li>
+					<a
+						href={link}
+						target="_blank"
+						class="block text-main hoverable-link px-4 py-2.5 leading-5"
+					>
+						{text}
+					</a>
+				</li>
+			{/each}
+		</ul>
+	</div>
+
 	<div class="absolute inset-x-4 bottom-4">
 		<a
 			href={"#"}
-			class="text-sm text-txt_tertiary hoverable-link"
+			on:click|preventDefault={() => { openAnotherOverlay("feedbackPopup") }}
+			class="text-sm text-txt_tertiary hover:text-main focus:text-main"
 		>
 			Добавить новое сообщество
 		</a>
 		<a
-			href={"#"}
-			class="text-sm text-txt_tertiary hoverable-link"
+			href="https://t.me/MeasurelandBot"
+			target="_blank"
+			class="text-sm text-txt_tertiary hover:text-main focus:text-main"
 		>
 			Сообщить о неточности
 		</a>

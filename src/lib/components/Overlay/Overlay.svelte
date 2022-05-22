@@ -130,9 +130,9 @@
 		<SidebarLayer { sidebarName } { sidebarData } />
 	{/if}
 
-	{#if $appStateStore.startScreen}
-		<svelte:component this={StartScreen} />
-	{/if}
+	<!--{#if $appStateStore.startScreen}-->
+	<!--	<svelte:component this={StartScreen} />-->
+	<!--{/if}-->
 
 	<div class="fixed left-1/2 -translate-x-1/2 z-1 bottom-4">ИЗМЕРИЯ</div>
 
