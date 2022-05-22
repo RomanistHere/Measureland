@@ -32,12 +32,12 @@
 		isCommunity = false;
 		const { center, id } = currentCommunityProps;
 		map.flyTo([ ...center ].reverse(), 14);
-		openAnotherOverlay("communityInfoDialog", { communityID: id });
+		openAnotherOverlay("communityAbroadModal", { communityID: id });
 	};
 
 	const handleCommunityIconClick = ({ properties }) => {
 		map.flyTo([ ...properties.center ].reverse(), 14);
-		openAnotherOverlay("communityInfoDialog", { communityID: properties.id });
+		openAnotherOverlay("communityAbroadModal", { communityID: properties.id });
 	};
 
 	const transparentIcon = L.icon({

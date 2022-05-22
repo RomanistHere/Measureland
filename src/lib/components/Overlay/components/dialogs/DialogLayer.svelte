@@ -6,7 +6,6 @@
 
 	import OnMapClickDialog from "./OnMapClickDialog.svelte";
 	import ReportReasonDialog from "./ReportReasonDialog.svelte";
-	import CommunityInfoDialog from "./CommunityInfoDialog.svelte";
 	import WarningPoiNearbyDialog from "./WarningPoiNearbyDialog.svelte";
 
 	export let dialogName;
@@ -15,7 +14,6 @@
 	const dialogList = {
 		onMapClickDialog: OnMapClickDialog,
 		reportReasonDialog: ReportReasonDialog,
-		communityInfoDialog: CommunityInfoDialog,
 		warningPoiNearbyDialog: WarningPoiNearbyDialog,
 	};
 

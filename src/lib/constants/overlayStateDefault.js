@@ -129,9 +129,9 @@ export const overlayStateDefault = {
 		type: "dialog",
 		data: {},
 	},
-	communityInfoDialog: {
+	communityAbroadModal: {
 		isOpen: false,
-		type: "dialog",
+		type: "modal",
 		data: {},
 	},
 };
