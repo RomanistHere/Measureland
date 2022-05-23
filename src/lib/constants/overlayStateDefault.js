@@ -129,4 +129,9 @@ export const overlayStateDefault = {
 		type: "dialog",
 		data: {},
 	},
+	communityAbroadModal: {
+		isOpen: false,
+		type: "modal",
+		data: {},
+	},
 };

@@ -7,6 +7,7 @@
 	import PopupLayer from "./components/popups/PopupLayer.svelte";
 	import SidebarLayer from "./components/sidebars/SidebarLayer.svelte";
 	import DialogLayer from "./components/dialogs/DialogLayer.svelte";
+	import ModalLayer from "./components/modals/ModalLayer.svelte";
 	import FiltersNotification from "./components/notifications/FiltersNotification.svelte";
 	import CornerNotification from "./components/notifications/CornerNotification.svelte";
 	import Loading from "./components/Loading.svelte";
@@ -25,12 +26,16 @@
 	let dialogActive = false;
 	let dialogName;
 	let dialogData;
+	// modal thing is new popups (gonna to migrate everything there)
+	let modalActive = false;
+	let modalName;
+	let modalData;
 	let StartScreen;
 
 	const handleKeydown = event => {
 		const key = event.key;
 		// console.log(key);
-		if ((popupActive || sidebarActive || dialogActive) && key === "Escape")
+		if ((popupActive || sidebarActive || dialogActive || modalActive) && key === "Escape")
 			closeOverlays();
 	};
 
@@ -68,9 +73,13 @@
 			dialogName = key;
 			dialogData = data;
 			dialogActive = true;
+		} else if (type === "modal") {
+			modalName = key;
+			modalData = data;
+			modalActive = true;
 		}
 
-		if (popupActive || sidebarActive || dialogActive)
+		if (popupActive || sidebarActive || dialogActive || modalActive)
 			appStateStore.update(state => ({ ...state, openModal: true }));
 		else
 			appStateStore.update(state => ({ ...state, openModal: false }));
@@ -80,6 +89,7 @@
 		sidebarActive = false;
 		popupActive = false;
 		dialogActive = false;
+		modalActive = false;
 
 		if (openOverlays.length === 0)
 			return;
@@ -111,14 +121,18 @@
 	<DialogLayer { dialogName } { dialogData } />
 {/if}
 
+{#if modalActive}
+	<ModalLayer { modalName } { modalData } />
+{/if}
+
 {#if mainScreen}
 	{#if sidebarActive}
 		<SidebarLayer { sidebarName } { sidebarData } />
 	{/if}
 
-	{#if $appStateStore.startScreen}
-		<svelte:component this={StartScreen} />
-	{/if}
+	<!--{#if $appStateStore.startScreen}-->
+	<!--	<svelte:component this={StartScreen} />-->
+	<!--{/if}-->
 
 	<div class="fixed left-1/2 -translate-x-1/2 z-1 bottom-4">ИЗМЕРИЯ</div>
 

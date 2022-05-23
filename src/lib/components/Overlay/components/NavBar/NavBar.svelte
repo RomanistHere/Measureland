@@ -148,14 +148,14 @@
 		<Search />
 
 		<button
-			class="rounded-lg bg-white px-3 ml-2 hover:bg-bg_hover transition-colors border border-stroke focus:bg-bg_active active:bg-bg_active focus:outline-none"
+			class="rounded-lg bg-white px-3 ml-2 hover:bg-bg_hover transition-colors focus:bg-bg_active active:bg-bg_active focus:outline-none"
 			on:click={openFilters}
 		>
 			<FilterIcon isActive={isFiltersActive} />
 		</button>
 	</div>
 
-	<ul class="bg-white rounded-lg overflow-hidden shadow-lg border border-stroke">
+	<ul class="bg-white rounded-lg overflow-hidden shadow-lg">
 		{#each navLinks as { text, url }}
 			<li class="inline-block">
 				<a
@@ -174,9 +174,9 @@
 	</ul>
 
 	<div class="flex">
-		<div class="flex mr-4 bg-white rounded-lg overflow-hidden shadow-lg border border-stroke">
+		<div class="flex mr-4 bg-white rounded-lg overflow-hidden shadow-lg">
 			<button
-				class="block p-2 px-3 hoverable-link border-r border-stroke"
+				class="block p-2 px-3 hoverable-link"
 				class:text-main={$locale === "en"}
 				class:bg-new-active={$locale === "en"}
 				class:hover:bg-new-active={$locale === "en"}
@@ -220,7 +220,7 @@
 				{/if}
 			{:else}
 				<button
-					class="text-center rounded-lg py-2 px-3 transition-colors bg-white -md:px-4 shadow-lg border border-stroke"
+					class="text-center rounded-lg py-2 px-3 transition-colors bg-white -md:px-4 shadow-lg"
 					on:click={openLogin}
 					type="button"
 				>

@@ -75,13 +75,17 @@
 	});
 	
 	const updateClusters = () => {
-		const { east, north, south, west, zoom } = getBoundsData(map);
-		const bbox = [ west, south, east, north ];
-		const clusters = pointsOfInterestLayer.getClusters(bbox, zoom);
+		try {
+			const { east, north, south, west, zoom } = getBoundsData(map);
+			const bbox = [ west, south, east, north ];
+			const clusters = pointsOfInterestLayer.getClusters(bbox, zoom);
 
-		clusterMarkers.clearLayers();
-		clusterMarkers.addData(clusters);
-		poiReference.set(pointsOfInterestLayer);
+			clusterMarkers.clearLayers();
+			clusterMarkers.addData(clusters);
+			poiReference.set(pointsOfInterestLayer);
+		} catch (e) {
+			logError(e);
+		}
 	};
 
 	// addMarker cluster 2.0 version (supercluster)

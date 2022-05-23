@@ -33,24 +33,16 @@
 
 	const getIcon = rating =>
 		L.icon({
-			iconUrl: `../images/rating${rating}.svg`,
+			iconUrl: `../images/map/house_${rating}.svg`,
 			iconSize: [ 61, 100 ],
 			iconAnchor: [ 25, 70 ],
-			popupAnchor: [ -3, -76 ],
-			shadowUrl: "../images/house-base.svg",
-			shadowAnchor: [ 25, 70 ],
-			shadowSize: [ 61, 100 ],
 		});
 
 	const getGrpIcon = rating =>
 		L.icon({
-			iconUrl: `../images/rating${rating}.svg`,
+			iconUrl: `../images/map/houses_${rating}.svg`,
 			iconSize: [ 61, 100 ],
 			iconAnchor: [ 25, 70 ],
-			popupAnchor: [ -3, -76 ],
-			shadowUrl: "../images/buildings-base.svg",
-			shadowAnchor: [ 25, 70 ],
-			shadowSize: [ 61, 100 ],
 		});
 
 	const initShowRatingPopup = ({ latlng }) =>
@@ -99,13 +91,17 @@
 	}).addTo(map);
 
 	const updateClusters = () => {
-		const { east, north, south, west, zoom } = getBoundsData(map);
-		const bbox = [ west, south, east, north ];
-		const clusters = clusterLayer.getClusters(bbox, zoom);
+		try {
+			const { east, north, south, west, zoom } = getBoundsData(map);
+			const bbox = [ west, south, east, north ];
+			const clusters = clusterLayer.getClusters(bbox, zoom);
 
-		clusterMarkers.clearLayers();
-		clusterMarkers.addData(clusters);
-		markersReference.set(clusterLayer);
+			clusterMarkers.clearLayers();
+			clusterMarkers.addData(clusters);
+			markersReference.set(clusterLayer);
+		} catch (e) {
+			logError(e);
+		}
 	};
 
 	clusterMarkers.on("click", e => {

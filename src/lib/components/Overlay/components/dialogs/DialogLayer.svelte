@@ -2,7 +2,7 @@
 	import { fade } from "svelte/transition";
 	import { focusTrap } from "svelte-focus-trap";
 
-	import CloseButton from "../../../ui-elements/CloseButton.svelte";
+	import CloseButton from "../../../UI/CloseButton.svelte";
 
 	import OnMapClickDialog from "./OnMapClickDialog.svelte";
 	import ReportReasonDialog from "./ReportReasonDialog.svelte";
@@ -26,9 +26,9 @@
 	transition:fade
 	role="dialog"
 >
-	<div class="glassmorphism max-w-lg p-8 -md:px-4 -md:mx-4">
+	<div class="glassmorphism relative max-w-lg p-8 -md:px-4 -md:mx-4">
 		<svelte:component this={Dialog} { dialogData }/>
-		<CloseButton overlayType='dialog' className='-md:top-3 -md:right-3' />
+		<CloseButton overlayType='dialog' class='-md:top-3 -md:right-3' />
 	</div>
 </div>
 
