@@ -14,13 +14,24 @@
 		: communitiesInfoEN[modalData.communityID];
 
 	$: if (!communityInfo) {
-		// change language to no info
+		// change language and there is no info
 		closeOverlay("modal");
 	}
 
 	$: currentKey = Object.keys(communityInfo.links)[0];
 	$: currentValue = communityInfo.links[currentKey];
 	$: isFirstFocused = false;
+	$: shouldFocusChange = true;
+
+	const handleMouseFocus = key => {
+		if (!isFirstFocused)
+			isFirstFocused = true;
+
+		setTimeout(() => {
+			if (shouldFocusChange)
+				currentKey = key;
+		}, 150);
+	};
 
 	const handleFocus = key => {
 		if (!isFirstFocused)
@@ -28,7 +39,22 @@
 
 		currentKey = key;
 	};
+
+	// accessibility (left, right arrows)
+	let menu;
+	let submenu;
+
+	const handleKeydown = e => {
+		// probably redo in a more declarative way
+		if (e.key === "ArrowLeft") {
+			menu.querySelector(".bg-bg_active").focus();
+		} else if (e.key === "ArrowRight") {
+			submenu.querySelector("li:first-child a").focus();
+		}
+	};
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <div
 	class="fixed top-20 left-4 bg-white rounded-l-lg z-1 w-64 p-4 min-h-[30rem]"
@@ -40,18 +66,23 @@
 		{$_("communityAbroadModal.title")} {communityInfo && communityInfo.name}
 	</h1>
 
-	<ul class="-mx-4 pb-16">
-		{#each Object.entries(communityInfo.links) as [key, value], i}
+	<ul
+		class="-mx-4 pb-16"
+		on:mouseover={() => { shouldFocusChange = true }}
+		on:mouseleave={() => { shouldFocusChange = false }}
+		bind:this={menu}
+	>
+		{#each Object.entries(communityInfo.links) as [ key, value ], i}
 			{#if value.length > 0}
 				<li>
 					<a
 						href={"#"}
 						on:click|preventDefault={() => {}}
-						class="py-2.5 block text-txt_main px-4 hover:bg-bg_active hover:text-main focus:bg-bg_active focus:text-main transition-colors"
-						class:bg-bg_active={i === 0 && !isFirstFocused}
-						class:text-main={i === 0 && !isFirstFocused}
-						class:text-txt_main={i !== 0 && isFirstFocused}
-						on:mouseover={() => { handleFocus(key) }}
+						class="py-2.5 block text-txt_main px-4 transition-colors"
+						class:bg-bg_active={key === currentKey}
+						class:text-main={key === currentKey}
+						class:text-txt_main={key !== currentKey}
+						on:mouseover={() => { handleMouseFocus(key) }}
 						on:focus={() => { handleFocus(key) }}
 					>
 						<span>
@@ -63,7 +94,9 @@
 		{/each}
 	</ul>
 
-	<div class="absolute left-full top-0 bg-white h-full rounded-r-lg w-64 p-4 drop-shadow-[0_4px_7px_rgba(10,13,84,0.05)]">
+	<div
+		class="absolute left-full top-0 bg-white h-full rounded-r-lg w-64 p-4 drop-shadow-[0_4px_7px_rgba(10,13,84,0.05)]"
+	>
 		<h2 class="text-2xl my-2 mb-0 text-txt_main">
 			{$_(`communityAbroadModal.keysToText.${currentKey}.short`)}
 		</h2>
@@ -71,7 +104,10 @@
 			{$_(`communityAbroadModal.keysToText.${currentKey}.description`)}
 		</p>
 
-		<ul class="mt-1 -mx-4">
+		<ul
+			class="mt-1 -mx-4"
+			bind:this={submenu}
+		>
 			{#each currentValue as { text, link }}
 				<li>
 					<a
@@ -108,10 +144,3 @@
 		class="top-4 right-2"
 	/>
 </div>
-
-<style>
-	a:hover .hidden,
-	a:focus .hidden {
-		display: block;
-	}
-</style>
