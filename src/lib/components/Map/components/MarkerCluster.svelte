@@ -3,6 +3,7 @@
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 
+	import { hexGrid, flatten, collect } from "@turf/turf";
 	import L from "leaflet";
 	import PolyBool from "polybooljs";
 	// Supercluster is changed on our side, so we can't use npm's one
@@ -90,15 +91,102 @@
 		pointToLayer: createClusterIcon,
 	}).addTo(map);
 
+	// const colors = {
+	// 	1: "#D05A04",
+	// 	2: "#DEC806",
+	// 	3: "#A9AC04",
+	// 	4: "#62AC04",
+	// 	5: "#00CC66",
+	// };
+
+	// const colors = {
+	// 	1: "#ff2300",
+	// 	2: "#ff563b",
+	// 	3: "#c97800",
+	// 	4: "#b57c28",
+	// 	5: "#b3b528",
+	// 	6: "#bdbd00",
+	// 	7: "#7dbd00",
+	// 	8: "#70cb70",
+	// 	9: "#3ea73e",
+	// 	10: "#008000",
+	// };
+
+	const colors = {
+		1: "#ff2300",
+		2: "#ff563b",
+		3: "#c97800",
+		4: "#cef1dd",
+		5: "#9ee3bb",
+		6: "#6dd499",
+		7: "#3cc677",
+		8: "#33a865",
+		9: "#2a8b53",
+		10: "#216d41",
+	};
+
+	const getHexStyle = rating => ({
+		fillColor: colors[rating],
+		color: colors[rating],
+		weight: 0.5,
+		opacity: 1,
+		fillOpacity: .7,
+	});
+
+	const onEachHex = (feature, layer) => {
+		const { ratings } = feature.properties;
+		const average = roundToInt((ratings.reduce((i, acc) => acc + i, 0) / ratings.length) * 2 || 0);
+		const style = getHexStyle(average);
+		layer.setStyle(style);
+	};
+
+	let hexagonsLayer = null;
+
+	const zoomToHexSize = {
+		18: .05,
+		17: .05,
+		16: .1,
+		15: .1,
+		14: .2,
+		13: .3,
+		12: .5,
+		11: .5,
+		10: 1,
+		9: 2,
+		8: 5,
+		7: 10,
+		6: 20,
+		5: 50,
+		4: 100,
+	};
+
 	const updateClusters = () => {
 		try {
 			const { east, north, south, west, zoom } = getBoundsData(map);
 			const bbox = [ west, south, east, north ];
 			const clusters = clusterLayer.getClusters(bbox, zoom);
 
-			clusterMarkers.clearLayers();
-			clusterMarkers.addData(clusters);
-			markersReference.set(clusterLayer);
+			const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);
+			const collection = flatten({
+				"type": "FeatureCollection",
+				"features": cachedData,
+			});
+			const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
+			const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
+			const notEmptyHexagons = {
+				"type": "FeatureCollection",
+				"features": notEmptyHexagonValues,
+			};
+			try {
+				hexagonsLayer.clearLayers();
+			} catch (e) {
+				console.log(e);
+			}
+			hexagonsLayer = L.geoJson(notEmptyHexagons, { onEachFeature: onEachHex }).addTo(map);
+
+			// clusterMarkers.clearLayers();
+			// clusterMarkers.addData(clusters);
+			// markersReference.set(clusterLayer);
 		} catch (e) {
 			logError(e);
 		}
