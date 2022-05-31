@@ -5,9 +5,9 @@
 	import "/static/styles/map.css";
 
 	import PointsOfInterest from "./components/PointsOfInterest.svelte";
-	import MarkerCluster from "./components/MarkerCluster.svelte";
 	import Communities from "./components/Communities.svelte";
 	import GeoSearch from "./components/GeoSearch.svelte";
+	import Hexagons from "./components/Hexagons.svelte";
 	import Draw from "./components/Draw/Draw.svelte";
 	import TextLink from "../ui-elements/TextLink.svelte";
 
@@ -86,7 +86,7 @@
 	{#if map}
 		<Communities />
 		<PointsOfInterest />
-		<MarkerCluster />
+		<Hexagons />
 		<GeoSearch />
 		<Draw mapClickRefFuntcion={onMapClick} />
 	{/if}

@@ -2,18 +2,18 @@
 	import { _ } from "svelte-i18n";
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
+	import { fly } from "svelte/transition";
 
+	import { hexGrid, flatten, collect } from "@turf/turf";
 	import L from "leaflet";
 	import PolyBool from "polybooljs";
-	// Supercluster is changed on our side, so we can't use npm's one
-	import "../../../external/supercluster.js";
 
-	import { userStateStore, appStateStore, filtersStore, markerStore } from "../../../../stores/state.js";
-	import { mapReference, markersReference } from "../../../../stores/references.js";
+	import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
+	import { mapReference } from "../../../../stores/references.js";
 	import {
 		roundToFifthDecimal,
 		roundToInt,
-		openAnotherOverlay,
+		roundToTen,
 		debounce,
 		showSomethingWrongNotification,
 		registerAction,
@@ -28,165 +28,110 @@
 	let visitedPoly = null;
 	let cachedData = [];
 	let usedBounds = [];
-	let clusterLayer;
 	let isLoading = false;
+	let hexagonsLayer = null;
 
-	const getIcon = rating =>
-		L.icon({
-			iconUrl: `../images/map/house_${rating}.svg`,
-			iconSize: [ 61, 100 ],
-			iconAnchor: [ 25, 70 ],
-		});
+	// const colors = {
+	// 	1: "#ff2300",
+	// 	2: "#ff563b",
+	// 	3: "#c97800",
+	// 	4: "#cef1dd",
+	// 	5: "#9ee3bb",
+	// 	6: "#6dd499",
+	// 	7: "#3cc677",
+	// 	8: "#33a865",
+	// 	9: "#2a8b53",
+	// 	10: "#216d41",
+	// };
 
-	const getGrpIcon = rating =>
-		L.icon({
-			iconUrl: `../images/map/houses_${rating}.svg`,
-			iconSize: [ 61, 100 ],
-			iconAnchor: [ 25, 70 ],
-		});
-
-	const initShowRatingPopup = ({ latlng }) =>
-		openAnotherOverlay("showRatingsPopup", latlng);
-
-	const createClusterIcon = (feature, latlng) => {
-		if (!feature.properties.cluster) {
-			// single point
-			const rating = roundToInt(feature.properties.averageRating);
-			const icon = getIcon(Math.floor(rating));
-			const marker = L.marker(latlng, {
-				icon,
-				title: `${$_("clusters.titleSingle")} ${rating}`,
-				riseOnHover: true,
-				rating,
-			});
-			marker.on("click", initShowRatingPopup);
-			marker.on("keyup", e => {
-				if (e.originalEvent.key === "Enter") {
-					openAnotherOverlay("showRatingsPopup", e.target._latlng);
-				}
-			});
-			return marker;
-		} else {
-			// cluster
-			// docs: https://github.com/mapbox/supercluster
-			const rating = roundToInt(feature.properties.ratingSum / feature.properties.point_count);
-			const grpIcon = getGrpIcon(Math.floor(rating));
-			const marker = L.marker(latlng, {
-				icon: grpIcon,
-				title: `${$_("clusters.titleGrp")} ${rating}`,
-				riseOnHover: true,
-				rating,
-			});
-			marker.on("keyup", e => {
-				if (e.originalEvent.key === "Enter") {
-					map.zoomIn();
-				}
-			});
-			return marker;
-		}
+	const colors = {
+		1: "#ffec64",
+		2: "#c6ca59",
+		3: "#8ea94e",
+		4: "#558842",
+		5: "#006837",
 	};
 
-	const clusterMarkers = L.geoJson(null, {
-		pointToLayer: createClusterIcon,
-	}).addTo(map);
+	// const colors = {
+	// 	1: "#d7191c",
+	// 	2: "#fdae61",
+	// 	3: "#ffffbf",
+	// 	4: "#a6d96a",
+	// 	5: "#1a9641",
+	// };
+
+	// const colors = {
+	// 	1: "#ffbb46",
+	// 	2: "#ccb13a",
+	// 	3: "#99a62d",
+	// 	4: "#629921",
+	// 	5: "#008a15",
+	// };
+
+	const getHexStyle = rating => ({
+		fillColor: colors[rating],
+		color: colors[rating],
+		weight: 0.5,
+		opacity: 1,
+		fillOpacity: .7,
+	});
+
+	$: hoveredHexagon = null;
+
+	const onEachHex = (feature, layer) => {
+		const { ratings } = feature.properties;
+		const average = roundToTen(ratings.reduce((i, acc) => acc + i, 0) / ratings.length || 0);
+		const style = getHexStyle(roundToInt(average));
+		layer.setStyle(style);
+
+		layer.on("mouseover", () => { hoveredHexagon = { number: ratings.length, average } });
+		layer.on("mouseout", () => { hoveredHexagon = null });
+	};
+
+	const zoomToHexSize = {
+		18: .05,
+		17: .05,
+		16: .1,
+		15: .1,
+		14: .2,
+		13: .3,
+		12: .5,
+		11: .8,
+		10: 1,
+		9: 1.5,
+		8: 3,
+		7: 5,
+		6: 10,
+		5: 20,
+		4: 50,
+	};
 
 	const updateClusters = () => {
 		try {
 			const { east, north, south, west, zoom } = getBoundsData(map);
 			const bbox = [ west, south, east, north ];
-			const clusters = clusterLayer.getClusters(bbox, zoom);
 
-			clusterMarkers.clearLayers();
-			clusterMarkers.addData(clusters);
-			markersReference.set(clusterLayer);
+			const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);
+			const collection = flatten({
+				"type": "FeatureCollection",
+				"features": cachedData,
+			});
+			const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
+			const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
+			const notEmptyHexagons = {
+				"type": "FeatureCollection",
+				"features": notEmptyHexagonValues,
+			};
+			try {
+				hexagonsLayer.clearLayers();
+			} catch (e) {
+				console.log(e);
+			}
+			hexagonsLayer = L.geoJson(notEmptyHexagons, { onEachFeature: onEachHex }).addTo(map);
 		} catch (e) {
 			logError(e);
 		}
 	};
-
-	clusterMarkers.on("click", e => {
-		const clusterId = e.layer.feature.properties.cluster_id;
-		const center = e.latlng;
-		if (clusterId) {
-			const expansionZoom = clusterLayer.getClusterExpansionZoom(clusterId);
-			map.setView(center, expansionZoom);
-		}
-	});
-
-	const clusterData = (geoData = null) => {
-		const data = geoData || cachedData;
-		// eslint-disable-next-line  no-undef
-		clusterLayer = new Supercluster({
-			// log: true,
-			radius: 150,
-			minPoints: 2,
-			minZoom: 4,
-			maxZoom: 18,
-		}).load(data);
-
-		updateClusters();
-	};
-
-	// addMarker cluster 2.0 version (supercluster)
-	const addMarker = (coordsData, ratingData) => {
-		const newPoint = {
-			geometry: {
-				coordinates: coordsData,
-				type: "Point",
-			},
-			properties: {
-				averageRating: ratingData,
-			},
-			type: "Feature",
-			isAdequate: true,
-		};
-
-		cachedData = [ ...cachedData, newPoint ];
-	};
-
-	const removeMarker = coords => {
-		const [ lat, lng ] = coords;
-		const length = cachedData.length;
-		for (let i = 0; i < length; i++) {
-			const arr = cachedData[i]["geometry"]["coordinates"];
-			if (arr[0] === lat && arr[1] === lng) {
-				cachedData.splice(i, 1);
-				return;
-			}
-		}
-	};
-
-	const handleExternalMarkers = ({ markersToAdd, markersToRemove }) => {
-		const toAddArrayLength = markersToAdd.length;
-		const toRemoveArrayLength = markersToRemove.length;
-
-		if (toAddArrayLength === 0 && toRemoveArrayLength === 0)
-			return;
-
-		if (toRemoveArrayLength !== 0) {
-			for (let i = 0; i < toRemoveArrayLength; i++) {
-				const { coords } = markersToRemove[i];
-				removeMarker(coords);
-			}
-		}
-
-		if (toAddArrayLength !== 0) {
-			for (let i = 0; i < toAddArrayLength; i++) {
-				const { coords, rating } = markersToAdd[i];
-				addMarker(coords, rating);
-			}
-		}
-
-		clusterData();
-
-		markerStore.update(state => ({
-			...state,
-			markersToAdd: [],
-			markersToRemove: [],
-		}));
-	};
-
-	$: handleExternalMarkers($markerStore);
 
 	const checkDataForRepeat = geoData => {
 		// due to some cases that is not covered by poolybool we need to check
@@ -234,11 +179,9 @@
 			// console.log('total number of points in cache: ', cachedData.length)
 
 			// console.timeEnd('fix geojson')
-
-			clusterData();
-		} else {
-			clusterData(geoData);
 		}
+
+		updateClusters();
 	};
 
 	const updateState = (coords, zoom) => {
@@ -274,7 +217,7 @@
 
 		// use data from cache
 		if (!queryPolygon.regions[0])
-			return clusterData();
+			return updateClusters();
 
 		const getQuery = queryPolygonRef => {
 			if (queryPolygonRef.regions[2]) {
@@ -376,6 +319,19 @@
 	};
 	$: subscribeToFiltersChanges($filtersStore);
 </script>
+
+{#if hoveredHexagon}
+	<div
+		class="absolute px-5 py-2.5 top-36 right-0 z-5 bg-white w-64 text-left rounded-l-lg overflow-hidden transition-transform translate-x-2 hover:translate-x-0"
+		in:fly="{{ x: 300, duration: 500 }}"
+		out:fly="{{ x: 300, duration: 500 }}"
+	>
+		<span class="absolute w-2.5 h-full left-0 top-0 bg-main"></span>
+		<span class="block leading-5 pb-px text-main">
+			{hoveredHexagon.number} оценки, средняя: {hoveredHexagon.average}
+		</span>
+		</div>
+{/if}
 
 {#if isLoading}
 	<div
