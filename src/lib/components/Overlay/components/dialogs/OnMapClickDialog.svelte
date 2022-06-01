@@ -97,35 +97,45 @@
 		{$_("onMapClickDialog.subtitleText")}
 	</p>
 
-	<div class="flex -mx-1 mt-4">
-		<a
+	<div class="flex flex-wrap -mx-1 mt-4">
+		<div class="flex w-full">
+			<a
+				href={"#"}
+				class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors hover:bg-active hover:text-white"
+				on:click|preventDefault|stopPropagation={() => { openPopup("quizPopup") }}
+			>
+				<div class="text-center">
+					<img
+						src="/images/rating_icon.svg"
+						alt={$_("onMapClickDialog.option1Alt")}
+						class="h-24 inline-block my-2"
+					>
+				</div>
+				{$_("onMapClickDialog.option1")}
+			</a>
+			<a
+				href={"#"}
+				class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors hover:bg-active hover:text-white"
+				on:click|preventDefault|stopPropagation={openPOI}
+			>
+				<div class="text-center">
+					<img
+						src="/images/attention.svg"
+						alt={$_("onMapClickDialog.option2Alt")}
+						class="h-24 inline-block my-2"
+					>
+				</div>
+				{$_("onMapClickDialog.option2")}
+			</a>
+		</div>
+
+		<button
 			href={"#"}
-			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors hover:bg-active hover:text-white"
-			on:click|preventDefault|stopPropagation={() => { openPopup("quizPopup") }}
+			class="block w-full mt-4 text-center rounded-md border border-black p-2 mx-1 transition-colors hover:bg-active hover:text-white"
+			on:click={() => openPopup("nearbyPopup")}
 		>
-			<div class="text-center">
-				<img
-					src="/images/rating_icon.svg"
-					alt={$_("onMapClickDialog.option1Alt")}
-					class="h-24 inline-block my-2"
-				>
-			</div>
-			{$_("onMapClickDialog.option1")}
-		</a>
-		<a
-			href={"#"}
-			class="block w-1/2 text-center rounded-md border border-black p-2 px-4 mx-1 transition-colors hover:bg-active hover:text-white"
-			on:click|preventDefault|stopPropagation={openPOI}
-		>
-			<div class="text-center">
-				<img
-					src="/images/attention.svg"
-					alt={$_("onMapClickDialog.option2Alt")}
-					class="h-24 inline-block my-2"
-				>
-			</div>
-			{$_("onMapClickDialog.option2")}
-		</a>
+			Посмотреть что здесь
+		</button>
 	</div>
 {:else}
 	<h3 class="text-2xl -md:text-lg pr-6">
