@@ -45,28 +45,31 @@
 		const { value } = e.target;
 		searchInputValue = value;
 		const resp = await getGeoSuggestions(value);
-		const { suggestions, error } = await resp.json();
+		const { features, message } = await resp.json();
 
-		if (error) {
-			logError(error);
+		if (message) {
+			logError(message);
 			showSomethingWrongNotification();
 		}
 
-		if (suggestions)
-			searchSuggestions = [ ...suggestions ];
+		if (features)
+			searchSuggestions = [ ...features ];
 		else
 			searchSuggestions = [];
 	};
 
-	const setViewFromSearch = async (text, magicKey = "") => {
-		searchSuggestions = [];
+	const setViewFromSearch = ({ bbox, center }) => {
+		if (bbox) {
+			$mapReference.fitBounds([[ bbox[1], bbox[0] ], [ bbox[3], bbox[2] ]]);
+		} else {
+			$mapReference.setView({
+				lng: center[0],
+				lat: center[1],
+			}, 17);
+		}
 
-		const resp = await getGeoCandidates(text, magicKey);
-		const { candidates } = await resp.json();
-		const { extent } = candidates[0];
-
-		$mapReference.fitBounds([[ extent.ymin, extent.xmin ], [ extent.ymax, extent.xmax ]]);
 		searchInputValue = null;
+		searchSuggestions = [];
 		registerAction("mapSearch");
 	};
 
@@ -118,13 +121,13 @@
 
 {#if searchSuggestions.length > 0}
 	<ul class="w-80 bg-white rounded-md overflow-hidden shadow-lg absolute top-16 left-0">
-		{#each searchSuggestions as { text, magicKey }}
+		{#each searchSuggestions as suggestion}
 			<li class="">
 				<button
 					class="p-2 block w-full text-left hover:bg-new-active hover:text-main transition-colors"
-					on:click={() => { setViewFromSearch(text, magicKey) }}
+					on:click={() => { setViewFromSearch(suggestion) }}
 				>
-					{text}
+					{suggestion.place_name}
 				</button>
 			</li>
 		{/each}
