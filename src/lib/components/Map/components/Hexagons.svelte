@@ -9,7 +9,7 @@
 	import PolyBool from "polybooljs";
 
 	import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
-	import { mapReference } from "../../../../stores/references.js";
+	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import {
 		roundToFifthDecimal,
 		roundToInt,
@@ -31,19 +31,6 @@
 	let isLoading = false;
 	let hexagonsLayer = null;
 
-	// const colors = {
-	// 	1: "#ff2300",
-	// 	2: "#ff563b",
-	// 	3: "#c97800",
-	// 	4: "#cef1dd",
-	// 	5: "#9ee3bb",
-	// 	6: "#6dd499",
-	// 	7: "#3cc677",
-	// 	8: "#33a865",
-	// 	9: "#2a8b53",
-	// 	10: "#216d41",
-	// };
-
 	const colors = {
 		1: "#ffec64",
 		2: "#c6ca59",
@@ -52,28 +39,14 @@
 		5: "#006837",
 	};
 
-	// const colors = {
-	// 	1: "#d7191c",
-	// 	2: "#fdae61",
-	// 	3: "#ffffbf",
-	// 	4: "#a6d96a",
-	// 	5: "#1a9641",
-	// };
-
-	// const colors = {
-	// 	1: "#ffbb46",
-	// 	2: "#ccb13a",
-	// 	3: "#99a62d",
-	// 	4: "#629921",
-	// 	5: "#008a15",
-	// };
-
 	const getHexStyle = rating => ({
 		fillColor: colors[rating],
 		color: colors[rating],
 		weight: 0.5,
 		opacity: 1,
-		fillOpacity: .7,
+		fillOpacity: .8,
+		pointerEvents: "none",
+		// interactive: false,
 	});
 
 	$: hoveredHexagon = null;

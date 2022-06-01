@@ -67,27 +67,27 @@
 
 	const loadData = async ({ lat, lng }, radiusParam = null) => {
 		const pointsOfInterestLayer = $poiReference;
-		const clusterLayer = $markersReference;
+		// const clusterLayer = $markersReference;
 		const radius = radiusParam || radiusOptions[0]["value"];
 
 		const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
 		const bounds = L.rectangle(squareBounds).getBounds();
 		const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
-		const clusters = clusterLayer.getClusters(bbox, 20);
+		// const clusters = clusterLayer.getClusters(bbox, 20);
 		const pointsOfInterestApprox = pointsOfInterestLayer.getClusters(bbox, 20);
 		numberOfPOIs = pointsOfInterestApprox.length;
 
-		if ((!clusters || clusters.length === 1) && (!pointsOfInterestApprox || numberOfPOIs === 0)) {
-			averageNearbyRating = null;
-			numberOfRatings = null;
-			isData = false;
-			isLoading = false;
-			return;
-		}
+		// if ((!clusters || clusters.length === 1) && (!pointsOfInterestApprox || numberOfPOIs === 0)) {
+		// 	averageNearbyRating = null;
+		// 	numberOfRatings = null;
+		// 	isData = false;
+		// 	isLoading = false;
+		// 	return;
+		// }
 
-		const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
-		averageNearbyRating = roundToTen(average);
-		numberOfRatings = clusters.length;
+		// const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
+		// averageNearbyRating = roundToTen(average);
+		// numberOfRatings = clusters.length;
 
 		if (radius >= 5000) {
 			ratingsBad = [];
