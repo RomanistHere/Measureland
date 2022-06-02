@@ -100,14 +100,8 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 
 const geoToken = "AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q";
 const mapboxToken = "pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w";
-const getGeoSuggestions = async (text, maxSuggestions = 5) => {
+const getGeoSuggestions = async text => {
 	// const url = `https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?${new URLSearchParams({ text, maxSuggestions, token: geoToken })}&f=json`;
-	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${text}.json?access_token=${mapboxToken}`;
-	return await fetch(url);
-};
-
-const getGeoCandidates = async (text, magicKey) => {
-	// const url = `https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?outSr=4326&forStorage=false&outFields=*&maxLocations=5&${new URLSearchParams({ singleLine: text, magicKey, token: geoToken })}&f=json`;
 	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${text}.json?access_token=${mapboxToken}`;
 	return await fetch(url);
 };
@@ -189,7 +183,6 @@ export {
 	fetchOpenWeather,
 	getApproximateAddressAndCountry,
 	getGeoSuggestions,
-	getGeoCandidates,
 	fetchDisasterRisk,
 	fetchWaqi,
 };

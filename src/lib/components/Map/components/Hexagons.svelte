@@ -123,6 +123,7 @@
 			return true;
 		} else {
 			cachedData = [ ...cachedData, ...geoData ];
+			ratingsReference.update(state => cachedData);
 			return false;
 		}
 	};

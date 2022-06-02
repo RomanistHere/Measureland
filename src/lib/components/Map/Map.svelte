@@ -8,6 +8,7 @@
 	import Communities from "./components/Communities.svelte";
 	import GeoSearch from "./components/GeoSearch.svelte";
 	import Hexagons from "./components/Hexagons.svelte";
+	import Cities from "./components/Cities.svelte";
 	import Draw from "./components/Draw/Draw.svelte";
 	import TextLink from "../ui-elements/TextLink.svelte";
 
@@ -48,15 +49,11 @@
 				stroke: false,
 				fill: false,
 			},
+			bubblingMouseEvents: false,
 		}).addTo(mapObj);
 
 		conflictAreas.eachLayer(layer => {
-			layer.on("click", e => {
-				mapObj.off("click", onMapClick);
-				onMapClick(e, true);
-				// without debounce click will propagate and fire the second time
-				debouncedAssign();
-			});
+			layer.on("click", e => { onMapClick(e, true) });
 		});
 
 		mapObj.zoomControl.setPosition("topright");
@@ -88,6 +85,7 @@
 		<Communities />
 		<PointsOfInterest />
 		<Hexagons />
+		<Cities />
 		<GeoSearch />
 		<Draw mapClickRefFuntcion={onMapClick} />
 	{/if}
