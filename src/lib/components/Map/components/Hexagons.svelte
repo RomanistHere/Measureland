@@ -46,7 +46,7 @@
 		opacity: 1,
 		fillOpacity: .8,
 		pointerEvents: "none",
-		// interactive: false,
+		interactive: false,
 	});
 
 	$: hoveredHexagon = null;
@@ -82,6 +82,11 @@
 	const updateClusters = () => {
 		try {
 			const { east, north, south, west, zoom } = getBoundsData(map);
+			if (zoom <= 9) {
+				if (hexagonsLayer)
+					hexagonsLayer.clearLayers();
+				return;
+			}
 			const bbox = [ west, south, east, north ];
 
 			const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);

@@ -491,7 +491,7 @@ exports.geo_location_by_bounds = async (req, res, next) => {
 					},
 					"$and": arrOfFilters,
 				},
-				'location.coordinates properties.averageRating',
+				'location.coordinates properties.averageRating properties.rating',
 			)
 			: await Geo.find(
 				{
@@ -501,7 +501,7 @@ exports.geo_location_by_bounds = async (req, res, next) => {
 						},
 					},
 				},
-				'location.coordinates properties.averageRating',
+				'location.coordinates properties.averageRating properties.rating',
 			);
 
 		return res.json({
