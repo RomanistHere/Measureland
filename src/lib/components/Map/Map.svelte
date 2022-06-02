@@ -37,8 +37,9 @@
 
 		// https://www.mediawiki.org/wiki/Wikimedia_Maps/API
 		// https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=en
-		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-			attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
+		// https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+		L.tileLayer("https://api.mapbox.com/styles/v1/romanisthere/cl3vxfje0001w15nvusadxt25/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w", {
+			attribution: "© <a href=\"https://www.mapbox.com/about/maps/\">Mapbox</a> © <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
 			subdomains: [ "a", "b", "c" ],
 		}).addTo(mapObj);
 
