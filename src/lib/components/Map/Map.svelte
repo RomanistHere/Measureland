@@ -6,7 +6,6 @@
 
 	import PointsOfInterest from "./components/PointsOfInterest.svelte";
 	import Communities from "./components/Communities.svelte";
-	import GeoSearch from "./components/GeoSearch.svelte";
 	import Hexagons from "./components/Hexagons.svelte";
 	import Cities from "./components/Cities.svelte";
 	import Draw from "./components/Draw/Draw.svelte";
@@ -86,7 +85,6 @@
 		<PointsOfInterest />
 		<Hexagons />
 		<Cities />
-		<GeoSearch />
 		<Draw mapClickRefFuntcion={onMapClick} />
 	{/if}
 {:else}

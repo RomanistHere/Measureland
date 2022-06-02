@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from "svelte";
 	import { _, locale } from "svelte-i18n";
-	import "esri-leaflet-geocoder/dist/img/search.png";
 	import "/static/styles/general.css";
 	import "/static/styles/temp-general.css";
 

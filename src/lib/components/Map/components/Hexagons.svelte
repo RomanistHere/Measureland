@@ -95,11 +95,10 @@
 				"type": "FeatureCollection",
 				"features": notEmptyHexagonValues,
 			};
-			try {
+
+			if (hexagonsLayer)
 				hexagonsLayer.clearLayers();
-			} catch (e) {
-				console.log(e);
-			}
+
 			hexagonsLayer = L.geoJson(notEmptyHexagons, { onEachFeature: onEachHex }).addTo(map);
 		} catch (e) {
 			logError(e);
