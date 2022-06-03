@@ -22,7 +22,6 @@ const countCityStats = ({ ratings }, { name }) => {
 		...acc,
 		[key]: roundToHundredth(ratingSum[key] / length),
 	}), {});
-	console.log(averageRatingSObject);
 
 	return {
 		name,

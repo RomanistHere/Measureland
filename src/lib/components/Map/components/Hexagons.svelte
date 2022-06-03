@@ -1,8 +1,7 @@
 <script>
 	import { _ } from "svelte-i18n";
 	import { onMount } from "svelte";
-	import { fade } from "svelte/transition";
-	import { fly } from "svelte/transition";
+	import { fade, fly } from "svelte/transition";
 
 	import { hexGrid, flatten, collect, polygon, pointsWithinPolygon } from "@turf/turf";
 	import L from "leaflet";
