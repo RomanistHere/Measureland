@@ -10,6 +10,8 @@
 
 	import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
+	import { cityBounds } from "../objects/cityBounds.js";
+	import { getPointsInsideAndOutsidePolygon } from "../utils";
 	import {
 		roundToFifthDecimal,
 		roundToInt,
@@ -72,11 +74,26 @@
 		11: .8,
 		10: 1,
 		9: 1.5,
-		8: 3,
-		7: 5,
+		8: 2,
+		7: 3,
 		6: 10,
 		5: 20,
 		4: 50,
+	};
+
+	const getCorrectCollection = zoom => {
+		const collection = flatten({
+			"type": "FeatureCollection",
+			"features": cachedData,
+		});
+
+		if (zoom <= 9) {
+			// todo: with growth of cities, detect only visible cityBounds
+			const { outside } = getPointsInsideAndOutsidePolygon(collection, cityBounds);
+			return outside;
+		}
+
+		return collection;
 	};
 
 	const updateClusters = () => {
@@ -90,10 +107,8 @@
 			const bbox = [ west, south, east, north ];
 
 			const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);
-			const collection = flatten({
-				"type": "FeatureCollection",
-				"features": cachedData,
-			});
+			const collection = getCorrectCollection(zoom);
+
 			const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
 			const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
 			const notEmptyHexagons = {

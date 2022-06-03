@@ -21,7 +21,19 @@
 		}).addTo($mapReference);
 
 		citiesLayer.eachLayer(layer => {
-			layer.on("click", e => {
+			layer.on("mouseover", () => {
+				const zoom = getMapZoom($mapReference);
+				if (zoom <= 9) {
+					layer.setStyle({
+						fillOpacity: .2,
+						opacity: .5,
+					});
+				}
+			});
+			layer.on("mouseout", () => {
+				layer.setStyle({ fillOpacity: .05, opacity: .3 });
+			});
+			layer.on("click", () => {
 				$mapReference.flyToBounds(layer.getBounds());
 
 				const collection = flatten({
@@ -48,9 +60,9 @@
 		const zoom = getMapZoom($mapReference);
 		const { length } = citiesLayer ? citiesLayer.getLayers() : { length: 0 };
 
-		if (zoom >= 15 && length !== 0)
+		if (zoom >= 13 && length !== 0)
 			citiesLayer.clearLayers();
-		else if (zoom <= 14 && (!citiesLayer || length === 0))
+		else if (zoom <= 12 && (!citiesLayer || length === 0))
 			initCityLayer();
 	};
 

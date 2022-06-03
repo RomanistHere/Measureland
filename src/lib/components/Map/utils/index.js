@@ -1,8 +1,8 @@
 import { roundToHundredth } from "$lib/utilities/helpers.js";
+import { booleanPointInPolygon, featureCollection, featureEach, geomEach } from "@turf/turf";
 
 const countCityStats = ({ ratings }, { name }) => {
 	const { length } = ratings;
-	console.log(ratings);
 
 	const ratingSum = ratings.reduce((acc, item) => ({
 		air: item.air + (acc.air || 0),
@@ -31,6 +31,30 @@ const countCityStats = ({ ratings }, { name }) => {
 	};
 };
 
+const getPointsInsideAndOutsidePolygon = (points, polygons) => {
+	let inPoints = [];
+	let outPoints = [];
+
+	featureEach(points, point => {
+		let contained = false;
+		geomEach(polygons, polygon => {
+			if (booleanPointInPolygon(point, polygon))
+				contained = true;
+		});
+
+		if (contained)
+			inPoints = [ ...inPoints, point ];
+		else
+			outPoints = [ ...outPoints, point ];
+	});
+
+	return {
+		outside: featureCollection(outPoints),
+		inside: featureCollection(inPoints),
+	};
+};
+
 export {
 	countCityStats,
+	getPointsInsideAndOutsidePolygon,
 };
