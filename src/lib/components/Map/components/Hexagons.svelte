@@ -82,7 +82,7 @@
 	const updateClusters = () => {
 		try {
 			const { east, north, south, west, zoom } = getBoundsData(map);
-			if (zoom <= 9) {
+			if (zoom <= 6) {
 				if (hexagonsLayer)
 					hexagonsLayer.clearLayers();
 				return;

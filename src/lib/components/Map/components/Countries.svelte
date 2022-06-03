@@ -1,27 +1,37 @@
 <script>
 	import L from "leaflet";
+	import { onMount } from "svelte";
 	import { collect, flatten, featureCollection } from "@turf/turf";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
-	import { cityBounds } from "../objects/cityBounds.js";
+	import { countryBounds } from "../objects/countryBounds.js";
 	import { countCityStats } from "../utils";
-	import { debounce, getMapZoom, openAnotherOverlay } from "$lib/utilities/helpers.js";
-	import { onMount } from "svelte";
+	import { getMapZoom, debounce, openAnotherOverlay } from "$lib/utilities/helpers.js";
 
-	let citiesLayer = null;
+	let countryLayer = null;
 
-	const initCityLayer = () => {
-		citiesLayer = L.geoJson(cityBounds, {
+	const initCountryLayer = () => {
+		countryLayer = L.geoJson(countryBounds, {
 			style: {
 				color: "yellow",
-				fillOpacity: .05,
-				opacity: .3,
+				stroke: false,
+				fill: false,
 			},
 			bubblingMouseEvents: false,
 		}).addTo($mapReference);
 
-		citiesLayer.eachLayer(layer => {
-			layer.on("click", e => {
+		countryLayer.eachLayer(layer => {
+			layer.on("mouseover", () => {
+				layer.setStyle({ fill: true,
+					fillOpacity: .3,
+					opacity: .3,
+					stroke: true,
+				});
+			});
+			layer.on("mouseout", () => {
+				layer.setStyle({ fill: false, stroke: false });
+			});
+			layer.on("click", () => {
 				$mapReference.flyToBounds(layer.getBounds());
 
 				const collection = flatten({
@@ -46,12 +56,12 @@
 
 	const layerControl = () => {
 		const zoom = getMapZoom($mapReference);
-		const { length } = citiesLayer ? citiesLayer.getLayers() : { length: 0 };
+		const { length } = countryLayer ? countryLayer.getLayers() : { length: 0 };
 
-		if (zoom >= 15 && length !== 0)
-			citiesLayer.clearLayers();
-		else if (zoom <= 14 && (!citiesLayer || length === 0))
-			initCityLayer();
+		if (zoom >= 7 && length !== 0)
+			countryLayer.clearLayers();
+		else if (zoom <= 6 && (!countryLayer || length === 0))
+			initCountryLayer();
 	};
 
 	$mapReference.on("zoomend", debounce(layerControl, 300));

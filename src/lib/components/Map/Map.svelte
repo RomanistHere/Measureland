@@ -6,6 +6,7 @@
 
 	import PointsOfInterest from "./components/PointsOfInterest.svelte";
 	import Communities from "./components/Communities.svelte";
+	import Countries from "./components/Countries.svelte";
 	import Hexagons from "./components/Hexagons.svelte";
 	import Cities from "./components/Cities.svelte";
 	import Draw from "./components/Draw/Draw.svelte";
@@ -15,7 +16,6 @@
 	import { mapReference, leafletReference } from "../../../stores/references.js";
 	import { openAnotherOverlay, debounce } from "../../utilities/helpers.js";
 	import { appInfo } from "../../../configs/index.js";
-	import { militaryConflictCountries } from "./objects/militaryConflictCountries.js";
 
 	let map;
 
@@ -42,18 +42,6 @@
 			attribution: `© <a href="https://www.mapbox.com/about/maps/" target="_blank" rel='noopener'>Mapbox</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>`,
 			subdomains: [ "a", "b", "c" ],
 		}).addTo(mapObj);
-
-		const conflictAreas = L.geoJson(militaryConflictCountries, {
-			style: {
-				stroke: false,
-				fill: false,
-			},
-			bubblingMouseEvents: false,
-		}).addTo(mapObj);
-
-		conflictAreas.eachLayer(layer => {
-			layer.on("click", e => { onMapClick(e, true) });
-		});
 
 		mapObj.zoomControl.setPosition("topright");
 
@@ -82,9 +70,10 @@
 
 	{#if map}
 		<Communities />
-		<PointsOfInterest />
-		<Hexagons />
+		<Countries />
 		<Cities />
+		<Hexagons />
+		<PointsOfInterest />
 		<Draw mapClickRefFuntcion={onMapClick} />
 	{/if}
 {:else}
