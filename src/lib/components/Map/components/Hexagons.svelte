@@ -1,15 +1,16 @@
 <script>
 	import { _ } from "svelte-i18n";
 	import { onMount } from "svelte";
-	import { fade } from "svelte/transition";
-	import { fly } from "svelte/transition";
+	import { fade, fly } from "svelte/transition";
 
-	import { hexGrid, flatten, collect } from "@turf/turf";
+	import { hexGrid, flatten, collect, polygon, pointsWithinPolygon } from "@turf/turf";
 	import L from "leaflet";
 	import PolyBool from "polybooljs";
 
 	import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
+	import { cityBounds } from "../objects/cityBounds.js";
+	import { getPointsInsideAndOutsidePolygon } from "../utils";
 	import {
 		roundToFifthDecimal,
 		roundToInt,
@@ -20,6 +21,7 @@
 		logError,
 		getBoundsData,
 		getScreenData,
+		openAnotherOverlay,
 	} from "../../../utilities/helpers.js";
 	import { fetchBoundsData } from "../../../utilities/api.js";
 
@@ -29,7 +31,9 @@
 	let cachedData = [];
 	let usedBounds = [];
 	let isLoading = false;
+
 	let hexagonsLayer = null;
+	const markersLayer = L.layerGroup().addTo(map);
 
 	const colors = {
 		1: "#ffec64",
@@ -46,7 +50,6 @@
 		opacity: 1,
 		fillOpacity: .8,
 		pointerEvents: "none",
-		// interactive: false,
 	});
 
 	$: hoveredHexagon = null;
@@ -57,8 +60,17 @@
 		const style = getHexStyle(roundToInt(average));
 		layer.setStyle(style);
 
-		layer.on("mouseover", () => { hoveredHexagon = { number: ratings.length, average } });
-		layer.on("mouseout", () => { hoveredHexagon = null });
+		layer.on("mouseover", () => {
+			layer.setStyle({ fillOpacity: .9 });
+			hoveredHexagon = { number: ratings.length, average };
+		});
+		layer.on("mouseout", () => {
+			layer.setStyle({ fillOpacity: .8 });
+			hoveredHexagon = null;
+		});
+		layer.on("click", () => {
+			$mapReference.flyToBounds(layer.getBounds());
+		});
 	};
 
 	const zoomToHexSize = {
@@ -72,35 +84,77 @@
 		11: .8,
 		10: 1,
 		9: 1.5,
-		8: 3,
-		7: 5,
+		8: 2,
+		7: 3,
 		6: 10,
 		5: 20,
 		4: 50,
 	};
 
+	const getCorrectCollection = zoom => {
+		const collection = flatten({
+			"type": "FeatureCollection",
+			"features": cachedData,
+		});
+
+		if (zoom <= 9) {
+			// todo: with growth of cities, detect only visible cityBounds
+			const { outside } = getPointsInsideAndOutsidePolygon(collection, cityBounds);
+			return outside;
+		}
+
+		return collection;
+	};
+
+	const getSingleMarkerIcon = rating =>
+		L.icon({
+			iconUrl: `../images/map/house_${rating}.svg`,
+			iconSize: [ 40, 90 ],
+			iconAnchor: [ 5, 30 ],
+		});
+
+	const initShowRatingPopup = ({ latlng }) =>
+		openAnotherOverlay("showRatingsPopup", latlng);
+
 	const updateClusters = () => {
 		try {
 			const { east, north, south, west, zoom } = getBoundsData(map);
-			const bbox = [ west, south, east, north ];
-
-			const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);
-			const collection = flatten({
-				"type": "FeatureCollection",
-				"features": cachedData,
-			});
-			const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
-			const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
-			const notEmptyHexagons = {
-				"type": "FeatureCollection",
-				"features": notEmptyHexagonValues,
-			};
-			try {
+			if (hexagonsLayer)
 				hexagonsLayer.clearLayers();
-			} catch (e) {
-				console.log(e);
+
+			if (markersLayer)
+				markersLayer.clearLayers();
+
+			if (zoom >= 16) {
+				cachedData.forEach(({ geometry, properties }) => {
+					const { averageRating } = properties;
+					const { coordinates } = geometry;
+					const marker = L.marker([ coordinates[1], coordinates[0] ], { icon: getSingleMarkerIcon(roundToInt(averageRating)) });
+
+					marker.on("click", initShowRatingPopup);
+					marker.on("keyup", e => {
+						if (e.originalEvent.key === "Enter") {
+							openAnotherOverlay("showRatingsPopup", e.target._latlng);
+						}
+					});
+
+					markersLayer.addLayer(marker);
+				});
+			} else if (zoom >= 7) {
+				const bbox = [ west, south, east, north ];
+
+				const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);
+				const collection = getCorrectCollection(zoom);
+
+				const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
+				const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
+				const notEmptyHexagons = {
+					"type": "FeatureCollection",
+					"features": notEmptyHexagonValues,
+				};
+
+				hexagonsLayer = L.geoJson(notEmptyHexagons, { onEachFeature: onEachHex }).addTo(map);
 			}
-			hexagonsLayer = L.geoJson(notEmptyHexagons, { onEachFeature: onEachHex }).addTo(map);
 		} catch (e) {
 			logError(e);
 		}
@@ -123,6 +177,7 @@
 			return true;
 		} else {
 			cachedData = [ ...cachedData, ...geoData ];
+			ratingsReference.update(state => cachedData);
 			return false;
 		}
 	};

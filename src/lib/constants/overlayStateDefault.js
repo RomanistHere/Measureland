@@ -64,6 +64,11 @@ export const overlayStateDefault = {
 		type: "popup",
 		data: {},
 	},
+	cityRatingPopup: {
+		isOpen: false,
+		type: "popup",
+		data: {},
+	},
 	nearbyPopup: {
 		isOpen: false,
 		type: "popup",

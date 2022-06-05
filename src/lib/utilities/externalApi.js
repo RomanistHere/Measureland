@@ -1,8 +1,8 @@
 import { fetchFunction } from "./api.js";
 import { API_URL } from "../../configs/env.js";
 import { showSomethingWrongNotification, logError } from "$lib/utilities/helpers.js";
-import { get } from "svelte/store";
-import { geocodeServiceReference } from "../../stores/references.js";
+
+const mapboxToken = "pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w";
 
 const translateText = async (text, lang) => {
 	const url = `${API_URL}/external/translate_text`;
@@ -39,15 +39,17 @@ const fetchOpenWeather = async (lat, lng) => {
 	return airPollutionIndex;
 };
 
-const getAddressBackUp = (lat, lng, lang) => new Promise((resolve, reject) => {
-	const geocodeService = get(geocodeServiceReference);
-	geocodeService.reverse().latlng({ lat, lng }).language(lang).run((err, result) => {
-		if (err)
-			reject(err);
-		if (result && result.address)
-			resolve(result.address.LongLabel);
-	});
-});
+const getGeoSuggestions = async text => {
+	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${text}.json?access_token=${mapboxToken}`;
+
+	return await fetch(url);
+};
+
+const getAddressBackUp = async (lat, lng, lang) => {
+	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxToken}&language=${lang}`;
+
+	return await fetch(url);
+};
 
 const fetchAddress = async (lat, lng, lang) => {
 	const url = `${API_URL}/external/locationiq-address/${new URLSearchParams({ lat, lng, lang })}`;
@@ -66,11 +68,12 @@ const fetchAddress = async (lat, lng, lang) => {
 };
 
 const getApproximateAddressAndCountry = async (lat, lng, lang) => {
+	const regionNamesInEnglish = new Intl.DisplayNames([ "en" ], { type: "region" });
+
 	try {
 		const address = await fetchAddress(lat, lng, lang);
-
 		const { road, city, country } = address;
-		const regionNamesInEnglish = new Intl.DisplayNames([ "en" ], { type: "region" });
+
 		return {
 			address: `${road || ""}, ${address.house_number || ""}. ${city || ""}, ${country || ""}`,
 			countryInEnglish: regionNamesInEnglish.of(address.country_code.toUpperCase()),
@@ -82,10 +85,12 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 
 	// if first service is unavailable or limit is reached, try another one
 	try {
-		const addressTry2 = await getAddressBackUp(lat, lng, lang);
+		const resp = await getAddressBackUp(lat, lng, lang);
+		const addressTry2 = await resp.json();
+
 		return {
-			address: addressTry2,
-			countryInEnglish: null,
+			address: addressTry2.features[0].place_name,
+			countryInEnglish: regionNamesInEnglish.of(addressTry2.features[0].context[3].short_code.toUpperCase()),
 		};
 	} catch (e) {
 		logError("Address fetch from backup failed");
@@ -96,20 +101,6 @@ const getApproximateAddressAndCountry = async (lat, lng, lang) => {
 		address: null,
 		countryInEnglish: null,
 	};
-};
-
-const geoToken = "AAPKdec033141fc049a1936e3862bd2fec4ce1WeDmCkYfNW9w7DMLrt7bfPVl8vWPRistJ8w-fEzIg0u4I6uVRL1tIxuqajfw7Q";
-const mapboxToken = "pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w";
-const getGeoSuggestions = async (text, maxSuggestions = 5) => {
-	// const url = `https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?${new URLSearchParams({ text, maxSuggestions, token: geoToken })}&f=json`;
-	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${text}.json?access_token=${mapboxToken}`;
-	return await fetch(url);
-};
-
-const getGeoCandidates = async (text, magicKey) => {
-	// const url = `https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?outSr=4326&forStorage=false&outFields=*&maxLocations=5&${new URLSearchParams({ singleLine: text, magicKey, token: geoToken })}&f=json`;
-	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${text}.json?access_token=${mapboxToken}`;
-	return await fetch(url);
 };
 
 const getaverageWAQI = aqiVal => {
@@ -189,7 +180,6 @@ export {
 	fetchOpenWeather,
 	getApproximateAddressAndCountry,
 	getGeoSuggestions,
-	getGeoCandidates,
 	fetchDisasterRisk,
 	fetchWaqi,
 };

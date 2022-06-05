@@ -10,7 +10,7 @@
 		registerAction,
 		showSomethingWrongNotification,
 	} from "$lib/utilities/helpers.js";
-	import { getGeoCandidates, getGeoSuggestions } from "$lib/utilities/externalApi.js";
+	import { getGeoSuggestions } from "$lib/utilities/externalApi.js";
 
 	import { overlayStateStore } from "../../../../../stores/state.js";
 	import { mapReference } from "../../../../../stores/references.js";

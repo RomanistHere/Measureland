@@ -70,7 +70,12 @@
 .leaflet-draw-section {
 	background-color: #fff;
 	border-radius: 0.5rem;
-	margin-top: 1rem;
+	margin-top: 0.5rem;
+}
+
+.leaflet-draw-toolbar {
+	border-radius: 0.5rem;
+	overflow: hidden;
 }
 
 .leaflet-touch .leaflet-draw-toolbar a {
@@ -162,4 +167,25 @@
 
 .leaflet-marker-icon {
 	transition: all .2s;
+}
+
+/*// ATTRIBUTION //*/
+
+.leaflet-control-attribution svg {
+	display: none !important;
+}
+
+.leaflet-container .leaflet-control-attribution {
+	background-color: #2b3440;
+	color: #ffffff;
+}
+
+.leaflet-control-attribution a {
+	color: var(--bg-active);
+	transition: opacity .2s;
+	opacity: .6;
+}
+
+.leaflet-control-attribution a:hover {
+	opacity: 1;
 }

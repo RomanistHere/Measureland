@@ -47,6 +47,9 @@ const roundToFifthDecimalLatLng = ({ lat, lng }) =>
 const roundToTen = number =>
 	Math.round(10 * number) / 10;
 
+const roundToHundredth = number =>
+	Math.round(100 * number) / 100;
+
 const roundToInt = number =>
 	Math.round(number);
 
@@ -413,6 +416,7 @@ export {
 	roundToFifthDecimal,
 	roundToFifthDecimalLatLng,
 	roundToTen,
+	roundToHundredth,
 	roundToInt,
 	getColor,
 	getFinalRating,

@@ -6,8 +6,9 @@
 
 	import PointsOfInterest from "./components/PointsOfInterest.svelte";
 	import Communities from "./components/Communities.svelte";
-	import GeoSearch from "./components/GeoSearch.svelte";
+	import Countries from "./components/Countries.svelte";
 	import Hexagons from "./components/Hexagons.svelte";
+	import Cities from "./components/Cities.svelte";
 	import Draw from "./components/Draw/Draw.svelte";
 	import TextLink from "../ui-elements/TextLink.svelte";
 
@@ -15,7 +16,6 @@
 	import { mapReference, leafletReference } from "../../../stores/references.js";
 	import { openAnotherOverlay, debounce } from "../../utilities/helpers.js";
 	import { appInfo } from "../../../configs/index.js";
-	import { militaryConflictCountries } from "./objects/militaryConflictCountries.js";
 
 	let map;
 
@@ -39,25 +39,9 @@
 		// https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=en
 		// https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 		L.tileLayer("https://api.mapbox.com/styles/v1/romanisthere/cl3vxfje0001w15nvusadxt25/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w", {
-			attribution: "© <a href=\"https://www.mapbox.com/about/maps/\">Mapbox</a> © <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
+			attribution: `© <a href="https://www.mapbox.com/about/maps/" target="_blank" rel='noopener'>Mapbox</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>`,
 			subdomains: [ "a", "b", "c" ],
 		}).addTo(mapObj);
-
-		const conflictAreas = L.geoJson(militaryConflictCountries, {
-			style: {
-				stroke: false,
-				fill: false,
-			},
-		}).addTo(mapObj);
-
-		conflictAreas.eachLayer(layer => {
-			layer.on("click", e => {
-				mapObj.off("click", onMapClick);
-				onMapClick(e, true);
-				// without debounce click will propagate and fire the second time
-				debouncedAssign();
-			});
-		});
 
 		mapObj.zoomControl.setPosition("topright");
 
@@ -86,9 +70,10 @@
 
 	{#if map}
 		<Communities />
-		<PointsOfInterest />
+		<Countries />
+		<Cities />
 		<Hexagons />
-		<GeoSearch />
+		<PointsOfInterest />
 		<Draw mapClickRefFuntcion={onMapClick} />
 	{/if}
 {:else}
