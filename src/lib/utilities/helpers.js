@@ -408,6 +408,9 @@ const getOpenedOverlay = () => {
 	}
 };
 
+const generateRandomString = () =>
+	Math.random().toString(16).slice(2);
+
 export {
 	debounce,
 	sleep,
@@ -444,4 +447,5 @@ export {
 	getCopyrightYears,
 	shouldTranslate,
 	getOpenedOverlay,
+	generateRandomString,
 };

@@ -689,6 +689,7 @@
     "input": {
         "showOrHide": "Show/Hide",
         "emailError": "Wrong email format! Example: yournick@mail.com",
+        "emailEmpty": "Email is required",
         "passwordError": "Password should be longer than 6 characters!",
         "passwordsShouldMatch": "Passwords should match!"
     },

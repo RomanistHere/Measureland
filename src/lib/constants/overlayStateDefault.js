@@ -139,4 +139,9 @@ export const overlayStateDefault = {
 		type: "modal",
 		data: {},
 	},
+	registrationModal: {
+		isOpen: true,
+		type: "modal",
+		data: {},
+	},
 };
