@@ -491,7 +491,7 @@
     },
     "loginPopup": {
         "title": "Войти",
-        "email": "Почта (Email)",
+        "email": "Почта",
         "password": "Пароль",
         "forgotPasswordBtn": "Не помню пароль",
         "loginBtn": "Войти",
@@ -503,7 +503,7 @@
         "password": "Пароль",
         "repeatPassword": "Повтори пароль",
         "goToLoginBtn": "Перейти ко Входу",
-        "registerBtn": "Регистрация"
+        "registerBtn": "Зарегистрироваться"
     },
     "onboardingPopup": {
         "defaultName": "Аноним",
