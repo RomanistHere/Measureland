@@ -525,13 +525,13 @@
         "mainBtn": "Готово"
     },
     "forgotPasswordPopup": {
-        "title": "Восстановление (изменение) пароля",
+        "title": "Восстановить пароль",
         "email": "Почта (Email)",
-        "secondaryBtn": "К регистрации",
-        "mainBtn": "Восстановить"
+        "secondaryBtn": "Хочу создать новый аккаунт",
+        "mainBtn": "Отправить ссылку"
     },
     "changePasswordPopup": {
-        "title": "Изменение пароля (через почту)",
+        "title": "Изменить пароль",
         "mainBtn": "Отправить ссылку на почту"
     },
     "confirmNewPasswordPopup": {

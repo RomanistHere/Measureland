@@ -6,6 +6,7 @@
 	import Input from "$lib/components/UI/Input.svelte";
 	import ErrorBlock from "$lib/components/UI/ErrorBlock.svelte";
 	import TextButton from "$lib/components/UI/TextButton.svelte";
+	import LoginTitle from "$lib/components/UI/LoginTitle.svelte";
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import SuccessBlock from "$lib/components/UI/SuccessBlock.svelte";
 	import PrimaryButton from "$lib/components/UI/PrimaryButton.svelte";
@@ -43,8 +44,11 @@
 		openAnotherOverlay("registrationModal");
 	};
 
-	const openForgotPasswordPopup = () =>
-		openAnotherOverlay("forgotPasswordPopup", { isChangePass: false });
+	const openForgotPasswordPopup = e => {
+		e.preventDefault();
+		isEmailValid = true;
+		openAnotherOverlay("restorePasswordModal", { isChangePass: false });
+	};
 
 	const closeModal = e => {
 		if (e.target !== e.currentTarget)
@@ -161,9 +165,9 @@
 		in:fly="{{ y: 50, duration: 500 }}"
 		out:fade="{{ duration: 500 }}"
 	>
-		<h2 class="text-5xl mb-6 tracking-tighter mt-4">
-			{$_("loginPopup.title")}
-		</h2>
+		<LoginTitle
+			title={$_("loginPopup.title")}
+		/>
 
 		{#if isSuccess}
 			<SuccessBlock />
@@ -227,11 +231,11 @@
 			</div>
 
 			<AdditionalAuthButtons isRegistration={false} />
-
-			<CloseButton
-				overlayType="modal"
-				class="top-2 right-2"
-			/>
 		{/if}
+
+		<CloseButton
+			overlayType="modal"
+			class="top-2 right-2"
+		/>
 	</form>
 </div>

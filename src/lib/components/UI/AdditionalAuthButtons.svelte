@@ -15,7 +15,7 @@
 
 <button
 	on:click={authTelegram}
-	class="relative block text-center py-3 hover:border-new-active text-txt_main border rounded-lg w-full focus:border-new-active transition-colors hover:bg-new-active"
+	class="relative block text-center py-3 hover:border-new-active text-txt_main border rounded-lg w-full focus:outline-0 focus:border-new-active transition-colors hover:bg-new-active focus:bg-new-active"
 >
 		<span class="relative">
 			{isRegistration ? "Регистрация" : "Вход"} через Telegram
@@ -29,7 +29,7 @@
 
 <button
 	on:click={authMetamask}
-	class="relative block text-center py-3 my-2 hover:border-new-active text-txt_main border rounded-lg w-full focus:border-new-active transition-colors hover:bg-new-active"
+	class="relative block text-center py-3 hover:border-new-active text-txt_main border rounded-lg w-full focus:outline-0 focus:border-new-active transition-colors hover:bg-new-active focus:bg-new-active my-2"
 >
 		<span class="relative">
 			{isRegistration ? "Регистрация" : "Вход"} через Metamask
@@ -42,7 +42,8 @@
 </button>
 
 <style>
-	.block:hover .opacity-0 {
+	.block:hover .opacity-0,
+	.block:focus .opacity-0 {
 		opacity: 1;
 	}
 </style>

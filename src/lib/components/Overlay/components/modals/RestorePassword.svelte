@@ -17,32 +17,27 @@
 		debounce,
 		showSuccessNotification,
 		showSomethingWrongNotification,
-		registerAction,
 		logError,
 		getErrorType,
 		blurCurrentInput,
 		closeOverlay,
 	} from "../../../../utilities/helpers.js";
-	import { register } from "../../../../utilities/api.js";
+	import { sendResetPass } from "../../../../utilities/api.js";
 
+	export let popupData = {};
+
+	$: isChangePass = popupData.isChangePass;
+	$: title = isChangePass ? $_("changePasswordPopup.title") : $_("forgotPasswordPopup.title");
+	$: mainBtn = isChangePass ? $_("changePasswordPopup.mainBtn") : $_("forgotPasswordPopup.mainBtn");
+
+	let isLoading = false;
 	let email = "";
-	let password = "";
 	let isEmailValid = true;
-	let isPasswordValid = true;
 	let isError = false;
 	let isSuccess = false;
 	let errorType = null;
-	let isLoading = false;
 	let isSpam = null;
-	let shouldShowMatchError = false;
 	let emailInputRef = null;
-	let passInputRef = null;
-
-	const openLoginPopup = e => {
-		e.preventDefault();
-		isEmailValid = true;
-		openAnotherOverlay("loginModal");
-	};
 
 	const closeModal = e => {
 		if (e.target !== e.currentTarget)
@@ -51,30 +46,27 @@
 		closeOverlay("modal");
 	};
 
+	const openRegisterModal = e => {
+		e.preventDefault();
+		isEmailValid = true;
+		openAnotherOverlay("registrationModal");
+	};
+
 	const submit = async () => {
 		blurCurrentInput(document);
 
-		registerAction("trySubmitRegister");
-		isError = false;
-		errorType = null;
 		isSuccess = false;
-		shouldShowMatchError = false;
-		const isValuesNotEmpty = email.length > 0 && password.length > 0;
-		if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
+		isError = false;
+		const isValuesNotEmpty = email.length > 0;
+		if (!isValuesNotEmpty || !isEmailValid) {
+			emailInputRef?.focus();
 			isError = true;
 			errorType = "fieldsError";
-
-			if (!isEmailValid || email.length === 0)
-				emailInputRef?.focus();
-			else if (!isPasswordValid || password.length === 0)
-				passInputRef?.focus();
-
 			return;
 		}
 
-		registerAction("submitRegister");
 		isLoading = true;
-		const { error } = await register(email, password, $locale);
+		const { error } = await sendResetPass(email);
 		isLoading = false;
 
 		if (error) {
@@ -86,7 +78,6 @@
 			return;
 		}
 
-		registerAction("successRegister");
 		showSuccessNotification();
 		isSuccess = true;
 	};
@@ -126,17 +117,14 @@
 		in:fly="{{ y: 50, duration: 500 }}"
 		out:fade="{{ duration: 500 }}"
 	>
-		<LoginTitle
-			title="Регистрация"
-		/>
+		<LoginTitle { title } />
 
 		{#if isSuccess}
 			<SuccessBlock />
 
 			<p class="px-8 text-sm text-center text-txt_secondary mt-3 mb-4 leading-5">
-				Нужно перейти по ссылке из почты, <br /> чтобы получить доступ <br /> ко
-				<a href="#" class="text-main hover:underline focus:underline" on:click|preventDefault={() => {}}>всем возможностям</a>
-				Измерии
+				Чтобы создать новый пароль, <br />
+				нужно перейти по ссылке из почты
 			</p>
 		{:else}
 			{#if errorType}
@@ -145,9 +133,9 @@
 
 			<Input
 				autofocus={true}
-				title={$_("registrationPopup.email")}
+				title={$_("forgotPasswordPopup.email")}
 				type="email"
-				id="new-email"
+				id="old-email-restore"
 				placeholder="ivan_ivanovich@mail.ru"
 				maxlength={64}
 				bind:value={email}
@@ -155,33 +143,21 @@
 				bind:this={emailInputRef}
 			/>
 
-			<Input
-				title={$_("registrationPopup.password")}
-				type="password"
-				id="new-password"
-				placeholder="*******"
-				maxlength={128}
-				bind:value={password}
-				bind:isInputValid={isPasswordValid}
-				bind:shouldShowMatchError={shouldShowMatchError}
-				bind:this={passInputRef}
-			/>
-
 			<PrimaryButton
-				text={$_("registrationPopup.registerBtn")}
-				class="w-full mt-12 py-3"
+				text={mainBtn}
+				class="w-full mt-4 py-3"
 				on:click={debouncedSubmit}
 			/>
 
 			<div class="text-right mt-1 mb-3">
 				<TextButton
-					text={$_("registrationPopup.goToLoginBtn")}
-					on:click={openLoginPopup}
+					text={$_("forgotPasswordPopup.secondaryBtn")}
+					on:click={openRegisterModal}
 					class="py-1"
 				/>
 			</div>
 
-			<AdditionalAuthButtons isRegistration={true} />
+			<AdditionalAuthButtons isRegistration={false} />
 		{/if}
 
 		<CloseButton
