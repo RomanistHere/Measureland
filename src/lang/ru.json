@@ -721,7 +721,7 @@
         "linkExpired": "Ссылка уже не актуальна :(",
         "linkExpiredLink": "Получить другую",
         "errorVerification": "Нужно пройти верификацию (проверь почту)",
-        "errorVerificationBtn": "Послать письмо ещё раз",
+        "errorVerificationBtn": "Отправить письмо ещё раз",
         "invalidCsrfToken": "Перезагрузи страницу или почисти cookie",
         "fieldsError": "Как минимум одно обязательное поле не заполнено!",
         "noAccount": "Мы не нашли такого аккаунта",
