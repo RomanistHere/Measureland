@@ -74,6 +74,7 @@ const config = {
 				'bg_active': '#E6EEFF',
 				'bg_gray': '#F4F6F9',
 				'bg_danger': '#FDF0F1',
+				'bg_green': '#F2FAF4',
 				'stroke': '#DADCE1',
 				'on-green': '#5ABF70',
 				'danger-red': '#CA5A5A',

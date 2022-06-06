@@ -723,7 +723,7 @@
         "errorVerification": "Нужно пройти верификацию (проверь почту)",
         "errorVerificationBtn": "Послать письмо ещё раз",
         "invalidCsrfToken": "Перезагрузи страницу или почисти cookie",
-        "fieldsError": "Проверь все поля!",
+        "fieldsError": "Как минимум одно обязательное поле не заполнено!",
         "noAccount": "Мы не нашли такого аккаунта",
         "accountExists": "Такой аккаунт уже существует",
         "wrongPassword": "Неверный пароль",

@@ -4,6 +4,6 @@
 	export let errorType = "unrecognizedError";
 </script>
 
-<div class="rounded-lg bg-bg_danger p-2 text-txt_danger text-center">
+<div class="rounded-lg bg-bg_danger py-3 px-8 text-txt_danger text-center leading-5">
 	{$json("errors")[errorType]}
 </div>

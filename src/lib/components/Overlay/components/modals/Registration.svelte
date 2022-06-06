@@ -5,6 +5,7 @@
 	import Input from "$lib/components/UI/Input.svelte";
 	import ErrorBlock from "$lib/components/UI/ErrorBlock.svelte";
 	import TextButton from "$lib/components/UI/TextButton.svelte";
+	import SuccessBlock from "$lib/components/UI/SuccessBlock.svelte";
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import PrimaryButton from "$lib/components/UI/PrimaryButton.svelte";
 	import AdditionalAuthButtons from "$lib/components/UI/AdditionalAuthButtons.svelte";
@@ -26,7 +27,8 @@
 	let isEmailValid = true;
 	let isPasswordValid = true;
 	let isError = false;
-	let errorType = "";
+	let isSuccess = false;
+	let errorType = null;
 	let isLoading = false;
 	let isSpam = null;
 	let shouldShowMatchError = false;
@@ -40,6 +42,8 @@
 
 		registerAction("trySubmitRegister");
 		isError = false;
+		errorType = null;
+		isSuccess = false;
 		shouldShowMatchError = false;
 		const isValuesNotEmpty = email.length > 0 && password.length > 0;
 		if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
@@ -69,8 +73,8 @@
 		}
 
 		registerAction("successRegister");
-		openAnotherOverlay("checkEmailPopup");
 		showSuccessNotification();
+		isSuccess = true;
 	};
 
 	const debouncedSubmit = debounce(() => {
@@ -104,49 +108,59 @@
 		Регистрация
 	</h2>
 
-	{#if errorType}
-		<ErrorBlock { errorType } />
-	{/if}
+	{#if isSuccess}
+		<SuccessBlock />
 
-	<Input
-		autofocus={true}
-		title={$_("registrationPopup.email")}
-		type='email'
-		id='new-email'
-		placeholder="ivan_ivanovich@mail.ru"
-		maxlength={64}
-		bind:value={email}
-		bind:isInputValid={isEmailValid}
-		bind:this={emailInputRef}
-	/>
+		<p class="px-8 text-sm text-center text-txt_secondary mt-3 mb-4 leading-5">
+			Нужно перейти по ссылке из почты, <br /> чтобы получить доступ <br /> ко
+			<a href="#" class="text-main hover:underline focus:underline">всем возможностям</a>
+			Измерии
+		</p>
+	{:else}
+		{#if errorType}
+			<ErrorBlock { errorType } />
+		{/if}
 
-	<Input
-		title={$_("registrationPopup.password")}
-		type='password'
-		id='new-password'
-		placeholder="*******"
-		maxlength={128}
-		bind:value={password}
-		bind:isInputValid={isPasswordValid}
-		bind:shouldShowMatchError={shouldShowMatchError}
-		bind:this={passInputRef}
-	/>
-
-	<PrimaryButton
-		text={$_("registrationPopup.registerBtn")}
-		class="w-full mt-12 py-3"
-		on:click={debouncedSubmit}
-	/>
-
-	<div class="text-right mt-1 mb-3">
-		<TextButton
-			text={$_("registrationPopup.goToLoginBtn")}
-			on:click={openLoginPopup}
-			class="py-1"
+		<Input
+			autofocus={true}
+			title={$_("registrationPopup.email")}
+			type='email'
+			id='new-email'
+			placeholder="ivan_ivanovich@mail.ru"
+			maxlength={64}
+			bind:value={email}
+			bind:isInputValid={isEmailValid}
+			bind:this={emailInputRef}
 		/>
-	</div>
 
-	<AdditionalAuthButtons isRegistration={true} />
+		<Input
+			title={$_("registrationPopup.password")}
+			type='password'
+			id='new-password'
+			placeholder="*******"
+			maxlength={128}
+			bind:value={password}
+			bind:isInputValid={isPasswordValid}
+			bind:shouldShowMatchError={shouldShowMatchError}
+			bind:this={passInputRef}
+		/>
+
+		<PrimaryButton
+			text={$_("registrationPopup.registerBtn")}
+			class="w-full mt-12 py-3"
+			on:click={debouncedSubmit}
+		/>
+
+		<div class="text-right mt-1 mb-3">
+			<TextButton
+				text={$_("registrationPopup.goToLoginBtn")}
+				on:click={openLoginPopup}
+				class="py-1"
+			/>
+		</div>
+
+		<AdditionalAuthButtons isRegistration={true} />
+	{/if}
 
 	<CloseButton
 		overlayType="modal"
