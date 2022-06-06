@@ -84,14 +84,14 @@
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		closeStartScreen();
-		openAnotherOverlay("registerPopup");
+		openAnotherOverlay("registrationModal");
 	};
 
 	const openLogin = () => {
 		if (!$appStateStore.termsOfUseAgreed)
 			return;
 		closeStartScreen();
-		openAnotherOverlay("loginPopup");
+		openAnotherOverlay("loginModal");
 	};
 
 	const changeLanguage = async nextLang => {

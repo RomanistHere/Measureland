@@ -140,6 +140,11 @@ export const overlayStateDefault = {
 		data: {},
 	},
 	registrationModal: {
+		isOpen: false,
+		type: "modal",
+		data: {},
+	},
+	loginModal: {
 		isOpen: true,
 		type: "modal",
 		data: {},

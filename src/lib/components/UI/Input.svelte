@@ -81,7 +81,7 @@
 	<div class="relative mt-2">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
-			class="bg-bg_gray border-bg_gray border rounded-lg p-3 px-6 w-full focus:outline-0 transition-colors focus:border-main focus:bg-white"
+			class="bg-bg_gray border-bg_gray border rounded-lg p-3 px-6 w-full focus:outline-0 transition-colors focus:border-main focus:bg-white hover:border-stroke"
 			class:border-txt_danger={isError}
 			class:pr-12={type === "password"}
 			autocomplete={id}

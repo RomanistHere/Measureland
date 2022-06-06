@@ -1,12 +1,11 @@
 <script>
-	import { _, locale } from "svelte-i18n";
+	import { _ } from "svelte-i18n";
 	import { fade, fly } from "svelte/transition";
 	import { focusTrap } from "svelte-focus-trap";
 
 	import Input from "$lib/components/UI/Input.svelte";
 	import ErrorBlock from "$lib/components/UI/ErrorBlock.svelte";
 	import TextButton from "$lib/components/UI/TextButton.svelte";
-	import SuccessBlock from "$lib/components/UI/SuccessBlock.svelte";
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import PrimaryButton from "$lib/components/UI/PrimaryButton.svelte";
 	import AdditionalAuthButtons from "$lib/components/UI/AdditionalAuthButtons.svelte";
@@ -22,26 +21,28 @@
 		blurCurrentInput,
 		closeOverlay,
 	} from "../../../../utilities/helpers.js";
-	import { register } from "../../../../utilities/api.js";
+	import { login, reverify } from "../../../../utilities/api.js";
+	import { userStateStore } from "../../../../../stores/state.js";
 
 	let email = "";
 	let password = "";
 	let isEmailValid = true;
 	let isPasswordValid = true;
 	let isError = false;
-	let isSuccess = false;
 	let errorType = null;
 	let isLoading = false;
 	let isSpam = null;
-	let shouldShowMatchError = false;
 	let emailInputRef = null;
 	let passInputRef = null;
 
-	const openLoginPopup = e => {
+	const openRegisterModal = e => {
 		e.preventDefault();
 		isEmailValid = true;
-		openAnotherOverlay("loginModal");
+		openAnotherOverlay("registrationModal");
 	};
+
+	const openForgotPasswordPopup = () =>
+		openAnotherOverlay("forgotPasswordPopup", { isChangePass: false });
 
 	const closeModal = e => {
 		if (e.target !== e.currentTarget)
@@ -50,14 +51,36 @@
 		closeOverlay("modal");
 	};
 
+	const resendVerificationLetter = async () => {
+		isError = false;
+		if (!isEmailValid || email.length === 0) {
+			emailInputRef?.focus();
+			isError = true;
+			errorType = "fieldsError";
+			return;
+		}
+
+		isLoading = true;
+		const { error } = await reverify(email);
+		isLoading = false;
+
+		if (error) {
+			logError(error);
+			isError = true;
+			errorType = getErrorType(error);
+
+			showSomethingWrongNotification();
+			return;
+		}
+
+		openAnotherOverlay("checkEmailPopup");
+	};
+
 	const submit = async () => {
 		blurCurrentInput(document);
 
-		registerAction("trySubmitRegister");
+		registerAction("trySubmitLogin");
 		isError = false;
-		errorType = null;
-		isSuccess = false;
-		shouldShowMatchError = false;
 		const isValuesNotEmpty = email.length > 0 && password.length > 0;
 		if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
 			isError = true;
@@ -71,9 +94,9 @@
 			return;
 		}
 
-		registerAction("submitRegister");
+		registerAction("submitLogin");
 		isLoading = true;
-		const { error } = await register(email, password, $locale);
+		const { error, data } = await login(email, password);
 		isLoading = false;
 
 		if (error) {
@@ -85,9 +108,19 @@
 			return;
 		}
 
-		registerAction("successRegister");
+		const { userID, activeRatings, userName, wantMoreRatings } = data;
+
+		userStateStore.update(state => ({
+			...state,
+			userID,
+			activeRatings,
+			userName,
+			wantMoreRatings,
+		}));
+
+		registerAction("successLogin");
+		openAnotherOverlay("loggedInPopup");
 		showSuccessNotification();
-		isSuccess = true;
 	};
 
 	const debouncedSubmit = debounce(() => {
@@ -119,73 +152,76 @@
 	out:fade="{{ duration: 500 }}"
 >
 	<form
-		class="max-w-sm w-96 absolute absolute-centered z-1 bg-white p-4 rounded-3xl font-medium"
+		class="max-w-sm w-96 absolute absolute-centered bg-white p-4 rounded-3xl font-medium"
 		on:submit|preventDefault={debouncedSubmit}
 		use:focusTrap
 		in:fly="{{ y: 50, duration: 500 }}"
 		out:fade="{{ duration: 500 }}"
 	>
 		<h2 class="text-5xl mb-6 tracking-tighter mt-4">
-			Регистрация
+			{$_("loginPopup.title")}
 		</h2>
 
-		{#if isSuccess}
-			<SuccessBlock />
-
-			<p class="px-8 text-sm text-center text-txt_secondary mt-3 mb-4 leading-5">
-				Нужно перейти по ссылке из почты, <br /> чтобы получить доступ <br /> ко
-				<a href="#" class="text-main hover:underline focus:underline" on:click|preventDefault={() => {}}>всем возможностям</a>
-				Измерии
-			</p>
-		{:else}
-			{#if errorType}
-				<ErrorBlock { errorType } />
-			{/if}
-
-			<Input
-				autofocus={true}
-				title={$_("registrationPopup.email")}
-				type="email"
-				id="new-email"
-				placeholder="ivan_ivanovich@mail.ru"
-				maxlength={64}
-				bind:value={email}
-				bind:isInputValid={isEmailValid}
-				bind:this={emailInputRef}
-			/>
-
-			<Input
-				title={$_("registrationPopup.password")}
-				type="password"
-				id="new-password"
-				placeholder="*******"
-				maxlength={128}
-				bind:value={password}
-				bind:isInputValid={isPasswordValid}
-				bind:shouldShowMatchError={shouldShowMatchError}
-				bind:this={passInputRef}
-			/>
-
-			<PrimaryButton
-				text={$_("registrationPopup.registerBtn")}
-				class="w-full mt-12 py-3"
-				on:click={debouncedSubmit}
-			/>
-
-			<div class="text-right mt-1 mb-3">
-				<TextButton
-					text={$_("registrationPopup.goToLoginBtn")}
-					on:click={openLoginPopup}
-					class="py-1"
-				/>
-			</div>
-
-			<AdditionalAuthButtons isRegistration={true} />
+		{#if errorType}
+			<ErrorBlock { errorType } />
 		{/if}
+
+		<Input
+			autofocus={true}
+			title={$_("loginPopup.email")}
+			type="email"
+			id="current-email"
+			placeholder="ivan_ivanovich@mail.ru"
+			maxlength={64}
+			bind:value={email}
+			bind:isInputValid={isEmailValid}
+			bind:this={emailInputRef}
+		/>
+
+		<Input
+			title={$_("loginPopup.password")}
+			type="password"
+			id="current-password"
+			placeholder="*******"
+			maxlength={128}
+			bind:value={password}
+			bind:isInputValid={isPasswordValid}
+			bind:this={passInputRef}
+		/>
+
+		<div class="text-right mt-1">
+			<TextButton
+				text={$_("loginPopup.forgotPasswordBtn")}
+				on:click={openForgotPasswordPopup}
+				class="py-1"
+			/>
+		</div>
+
+		<PrimaryButton
+			text={$_("loginPopup.loginBtn")}
+			class="w-full mt-4 py-3"
+			on:click={debouncedSubmit}
+		/>
+
+		<div class="text-right mt-1 mb-3">
+			<TextButton
+				text="У меня нет аккаунта"
+				on:click={openRegisterModal}
+				class="py-1"
+			/>
+		</div>
+
+		<AdditionalAuthButtons isRegistration={false} />
 
 		<CloseButton
 			overlayType="modal"
 			class="top-2 right-2"
 		/>
+
+	<!--	<SubmissionState-->
+	<!--		{ isLoading }-->
+	<!--		{ errorType }-->
+	<!--		onVerificationLetterAction={resendVerificationLetter}-->
+	<!--	/>-->
 	</form>
 </div>

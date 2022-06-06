@@ -73,6 +73,7 @@ const config = {
 				'bg_hover': '#ECECEF',
 				'bg_active': '#E6EEFF',
 				'bg_gray': '#F4F6F9',
+				'bg_blue': '#F0F5FE',
 				'bg_danger': '#FDF0F1',
 				'bg_green': '#F2FAF4',
 				'stroke': '#DADCE1',
