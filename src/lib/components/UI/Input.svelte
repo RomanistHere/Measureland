@@ -11,7 +11,7 @@
 	export let id = generateRandomString();
 	export let autofocus = false;
 	export let maxlength = null;
-	export let placeholder = "enter the value";
+	export let placeholder = null;
 	export let value = "";
 	export let isInputValid = true;
 	export let externalError = false;
@@ -81,13 +81,14 @@
 	<div class="relative mt-2">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
-			class="bg-bg_gray border-bg_gray border rounded-lg p-3 px-6 w-full focus:outline-0 transition-colors focus:border-main"
+			class="bg-bg_gray border-bg_gray border rounded-lg p-3 px-6 w-full focus:outline-0 transition-colors focus:border-main focus:bg-white"
 			class:border-txt_danger={isError}
 			class:pr-12={type === "password"}
 			autocomplete={id}
 			{ id }
 			{ autofocus }
 			{ maxlength }
+			{ placeholder }
 			type={shouldShowPassword ? "text" : type}
 			on:blur={onBlur}
 			on:input={onInput}

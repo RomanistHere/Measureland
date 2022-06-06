@@ -113,6 +113,7 @@
 		title={$_("registrationPopup.email")}
 		type='email'
 		id='new-email'
+		placeholder="ivan_ivanovich@mail.ru"
 		maxlength={64}
 		bind:value={email}
 		bind:isInputValid={isEmailValid}
@@ -123,6 +124,7 @@
 		title={$_("registrationPopup.password")}
 		type='password'
 		id='new-password'
+		placeholder="*******"
 		maxlength={128}
 		bind:value={password}
 		bind:isInputValid={isPasswordValid}
@@ -144,7 +146,7 @@
 		/>
 	</div>
 
-	<AdditionalAuthButtons />
+	<AdditionalAuthButtons isRegistration={true} />
 
 	<CloseButton
 		overlayType="modal"

@@ -39,7 +39,7 @@
 		// https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=en
 		// https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 		L.tileLayer("https://api.mapbox.com/styles/v1/romanisthere/cl3vxfje0001w15nvusadxt25/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w", {
-			attribution: `© <a href="https://www.mapbox.com/about/maps/" target="_blank" rel='noopener'>Mapbox</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>`,
+			attribution: "© <a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\" rel='noopener'>Mapbox</a> © <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a>",
 			subdomains: [ "a", "b", "c" ],
 		}).addTo(mapObj);
 

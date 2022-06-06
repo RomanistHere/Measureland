@@ -502,11 +502,11 @@
     },
     "registrationPopup": {
         "title": "Регистрация",
-        "email": "Почта (Email)",
+        "email": "Почта",
         "password": "Пароль",
         "repeatPassword": "Повтори пароль",
         "goToLoginBtn": "Перейти ко Входу",
-        "registerBtn": "Регистрация"
+        "registerBtn": "Зарегистрироваться"
     },
     "onboardingPopup": {
         "defaultName": "Аноним",
