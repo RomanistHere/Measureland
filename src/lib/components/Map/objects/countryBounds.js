@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const countryBounds = {
 	"type": "FeatureCollection", "features": [{
 		"type": "Feature", "properties": {
