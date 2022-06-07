@@ -16,6 +16,24 @@
 	let isLoaded = false;
 
 	const userInit = async () => {
+		if (typeof window !== "undefined") {
+			const userWalletAddress = window.localStorage.getItem("userWalletAddress");
+
+			console.log(userWalletAddress);
+			console.log(Web3);
+			console.log(window.ethereum);
+
+			if (window.ethereum) {
+				window.web3 = new Web3(window.ethereum);
+				console.log(window.web3)
+
+				const wei = await window.web3.eth.getBalance(userWalletAddress);
+				const balance = window.web3.utils.fromWei(wei);
+
+				console.log(balance);
+			}
+		}
+
 		const { error, data } = await checkUser();
 
 		if (error) {

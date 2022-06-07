@@ -8,13 +8,40 @@
 
 	};
 
-	const authMetamask = () => {
+	const authMetamask = async () => {
+		if (window.web3) {
+			try {
+				const selectedAccount = await window.ethereum
+					.request({
+						method: "eth_requestAccounts",
+					})
+					.then(accounts => {
+						console.log(accounts);
+						return accounts[0];
+					})
+					.catch(error => {
+						if (error.code === 4001) {
+							// EIP-1193 userRejectedRequest error
+							console.log('Please connect to MetaMask.');
+						} else {
+							console.error(error);
+						}
+					});
 
+				window.userWalletAddress = selectedAccount;
+				console.log(selectedAccount);
+				window.localStorage.setItem("userWalletAddress", selectedAccount);
+			} catch (error) {
+				console.warn(error);
+			}
+		} else {
+			console.warn("wallet not found");
+		}
 	};
 </script>
 
 <button
-	on:click={authTelegram}
+	on:click|preventDefault={authTelegram}
 	class="relative block text-center py-3 hover:border-new-active text-txt_main border rounded-lg w-full focus:outline-0 focus:border-new-active transition-colors hover:bg-new-active focus:bg-new-active"
 >
 		<span class="relative">
@@ -28,7 +55,7 @@
 </button>
 
 <button
-	on:click={authMetamask}
+	on:click|preventDefault={authMetamask}
 	class="relative block text-center py-3 hover:border-new-active text-txt_main border rounded-lg w-full focus:outline-0 focus:border-new-active transition-colors hover:bg-new-active focus:bg-new-active my-2"
 >
 		<span class="relative">
