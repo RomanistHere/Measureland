@@ -1,2 +1,4 @@
 /src/lib/external
 /src/service-worker.js
+/src/lib/components/Map/objects/europeCountryBounds.js
+/src/lib/components/Map/objects/countryBounds.js

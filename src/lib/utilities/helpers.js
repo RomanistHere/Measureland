@@ -408,6 +408,15 @@ const getOpenedOverlay = () => {
 	}
 };
 
+const removeBigNumberValuesInJsonValues = json =>
+	JSON.stringify(json, (key, val) => {
+		if (val && typeof val === "number") {
+			return val.toFixed ? Number(val.toFixed(2)) : val;
+		}
+
+		return val;
+	});
+
 const generateRandomString = () =>
 	Math.random().toString(16).slice(2);
 
@@ -448,4 +457,5 @@ export {
 	shouldTranslate,
 	getOpenedOverlay,
 	generateRandomString,
+	removeBigNumberValuesInJsonValues,
 };

@@ -150,7 +150,7 @@ export const overlayStateDefault = {
 		data: {},
 	},
 	restorePasswordModal: {
-		isOpen: true,
+		isOpen: false,
 		type: "modal",
 		data: {},
 	},
