@@ -9,19 +9,43 @@
 	import { openAnotherOverlay, logError, closeOverlay } from "$lib/utilities/helpers.js";
 
 	export let isRegistration = false;
+	export let handleError = e => logError(e);
+
+	const handleSuccess = data => {
+		console.log(data);
+		closeOverlay("modal");
+
+		if (data.authType === "login") {
+			const { userID, activeRatings, userName, wantMoreRatings } = data;
+
+			userStateStore.update(state => ({
+				...state,
+				userID,
+				activeRatings,
+				userName,
+				wantMoreRatings,
+			}));
+		} else {
+			const { userID } = data;
+
+			userStateStore.update(state => ({
+				...state,
+				userID,
+			}));
+
+			openAnotherOverlay("onboardingPopup");
+		}
+	};
 
 	const authTelegram = () => {
 		if (typeof window !== "undefined") {
 			window.Telegram.Login.auth(
-				{
-					// eslint-disable-next-line camelcase
-					bot_id: "1849789317",
-					// eslint-disable-next-line camelcase
-					request_access: true,
-				},
+				// eslint-disable-next-line camelcase
+				{ bot_id: "1849789317", request_access: true },
 				async tgResp => {
 					if (!tgResp) {
-						console.warn("Telegram auth failed");
+						// todo: add custom error message
+						handleError("Telegram auth failed");
 						return;
 					}
 
@@ -29,14 +53,13 @@
 					const isDataFromTg = await validateTelegram(tgResp);
 
 					if (!isDataFromTg) {
-						console.warn("Data is not from Telegram");
+						// todo: add custom error message
+						handleError("Data is not from Telegram");
 						return;
 					}
 
 					// eslint-disable-next-line camelcase
 					const { first_name, auth_date, last_name, id } = tgResp;
-
-					console.log('good!');
 
 					const { data, error } = await authThirdParty({
 						id,
@@ -45,33 +68,11 @@
 					});
 
 					if (error) {
-						logError(error);
+						handleError(error);
 						return;
 					}
 
-					console.log(data);
-					closeOverlay("modal");
-
-					if (data.authType === "login") {
-						const { userID, activeRatings, userName, wantMoreRatings } = data;
-
-						userStateStore.update(state => ({
-							...state,
-							userID,
-							activeRatings,
-							userName,
-							wantMoreRatings,
-						}));
-					} else {
-						const { userID } = data;
-
-						userStateStore.update(state => ({
-							...state,
-							userID,
-						}));
-
-						openAnotherOverlay("onboardingPopup");
-					}
+					handleSuccess(data);
 				},
 			);
 		}
@@ -84,33 +85,37 @@
 					.request({
 						method: "eth_requestAccounts",
 					})
-					.then(accounts => {
-						console.log(accounts);
-						return accounts[0];
-					})
+					.then(accounts => accounts[0])
 					.catch(error => {
 						if (error.code === 4001) {
 							// EIP-1193 userRejectedRequest error
-							console.log('Please connect to MetaMask.');
+							// todo: add custom error message
+							handleError("Please connect to MetaMask.");
 						} else {
-							console.error(error);
+							handleError(error);
 						}
 					});
 
-				// window.userWalletAddress = selectedAccount;
 				console.log(id);
 
-				const resp = await authThirdParty({
+				const { data, error } = await authThirdParty({
 					id,
 					type: "web3",
 					lang: $locale,
 				});
-				// window.localStorage.setItem("userWalletAddress", selectedAccount);
+
+				if (error) {
+					handleError(error);
+					return;
+				}
+
+				handleSuccess(data);
 			} catch (error) {
-				console.warn(error);
+				handleError(error);
 			}
 		} else {
-			console.warn("wallet not found");
+			// todo: add custom error message
+			handleError("wallet not found");
 		}
 	};
 </script>

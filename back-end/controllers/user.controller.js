@@ -19,17 +19,20 @@ const { sendEmail } = require('../helpers/email');
 
 const isProd = process.env.IS_PROD === '1';
 
+const authKeys = {
+	telegram: "telegramID",
+	web3: "walletAddress",
+};
+
 exports.userAuthThirdParty = async (req, res) => {
 	const { id, type, lang } = req.body;
 
-	console.log(id, type);
+	try {
+		const authKey = authKeys[type];
+		const user = await User.findOne({ [authKey]: sanitize(id) });
 
-	if (type === "telegram") {
-		const user = await User.findOne({ telegramID: sanitize(id) });
 		if (user) {
 			req.session.userID = user._id;
-
-			console.log(req.session);
 
 			return res.json({
 				error: null,
@@ -44,8 +47,8 @@ exports.userAuthThirdParty = async (req, res) => {
 				},
 			});
 		} else {
-			const user = new User({
-				telegramID: id,
+			const newUser = new User({
+				[authKey]: id,
 				dateCreated: new Date(),
 				verified: true,
 				properties: {
@@ -53,8 +56,7 @@ exports.userAuthThirdParty = async (req, res) => {
 				},
 			});
 
-			const savedUser = await user.save();
-
+			const savedUser = await newUser.save();
 			req.session.userID = savedUser._id;
 
 			return res.json({
@@ -66,10 +68,10 @@ exports.userAuthThirdParty = async (req, res) => {
 				},
 			});
 		}
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
 	}
-	// else if (type === "web3") {
-	//
-	// }
 };
 
 exports.user_register = async (req, res) => {

@@ -57,6 +57,14 @@
 		closeOverlay("modal");
 	};
 
+	const handleError = error => {
+		logError(error);
+		isError = true;
+		errorType = getErrorType(error);
+
+		showSomethingWrongNotification();
+	};
+
 	const resendVerificationLetter = async () => {
 		isSuccess = false;
 		isError = false;
@@ -72,11 +80,7 @@
 		isLoading = false;
 
 		if (error) {
-			logError(error);
-			isError = true;
-			errorType = getErrorType(error);
-
-			showSomethingWrongNotification();
+			handleError(error);
 			return;
 		}
 
@@ -107,11 +111,7 @@
 		isLoading = false;
 
 		if (error) {
-			logError(error);
-			isError = true;
-			errorType = getErrorType(error);
-
-			showSomethingWrongNotification();
+			handleError(error);
 			return;
 		}
 
@@ -126,6 +126,7 @@
 		}));
 
 		registerAction("successLogin");
+		closeOverlay("modal");
 		openAnotherOverlay("loggedInPopup");
 		showSuccessNotification();
 	};
@@ -230,7 +231,10 @@
 				/>
 			</div>
 
-			<AdditionalAuthButtons isRegistration={false} />
+			<AdditionalAuthButtons
+				{ handleError }
+				isRegistration={false}
+			/>
 		{/if}
 
 		<CloseButton
