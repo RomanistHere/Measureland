@@ -14,10 +14,10 @@ exports.POI_add = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const userEmail = sanitize(req.session.userID);
+	const id = sanitize(req.session.userID);
 
 	try {
-		const user = await User.findOne({ email: userEmail });
+		const user = await User.findOne({ _id: id });
 		if (!user)
 			return res.status(400).json({ error: "User is not found" });
 
@@ -57,7 +57,7 @@ exports.POI_add = async (req, res) => {
 			}).save();
 
 			await User.findOneAndUpdate({
-				email: userEmail,
+				_id: userID,
 			}, {
 				$addToSet: {
 					'properties.POIIDs': pointSaved._id,
@@ -123,7 +123,7 @@ const getRelations = async (userID, POIID, likes, dislikes) => {
 	if (!userID)
 		return { isYourPOI: null, isLiked: null, isDisliked: null };
 
-	const { _id, properties } = await User.findOne({ email: userID }, 'properties.POIIDs');
+	const { _id, properties } = await User.findOne({ _id: userID }, 'properties.POIIDs');
 	const { POIIDs } = properties;
 
 	return {
@@ -187,13 +187,13 @@ exports.POI_react = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const email = sanitize(req.session.userID);
+	const id = sanitize(req.session.userID);
 	const { pointID, isUpvote } = req.body;
 	const property = isUpvote ? 'likes' : 'dislikes';
 	const propertyOpp = isUpvote ? 'dislikes' : 'likes';
 
 	try {
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ _id: id });
 
 		if (!user)
 			return res.status(400).json({ error: "User not found" });
@@ -233,7 +233,7 @@ exports.POI_react = async (req, res) => {
 			error: null,
 			data: {
 				message: "Reaction successful",
-				userID: user.email,
+				userID: user._id,
 			},
 		});
 	} catch (error) {
@@ -246,11 +246,11 @@ exports.POI_add_comment = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const userEmail = sanitize(req.session.userID);
+	const userID = sanitize(req.session.userID);
 	const { pointID, comment, username } = req.body;
 
 	try {
-		const user = await User.findOne({ email: userEmail });
+		const user = await User.findOne({ _id: userID });
 		if (!user)
 			return res.status(400).json({ error: "User is not found" });
 
@@ -275,7 +275,7 @@ exports.POI_add_comment = async (req, res) => {
 		});
 
 		await User.findOneAndUpdate({
-			email: userEmail,
+			_id: userID,
 		}, {
 			$addToSet: {
 				'properties.POICommentIDs': commentSaved._id,
@@ -301,14 +301,14 @@ exports.POI_add_comment = async (req, res) => {
 };
 
 exports.POI_get_comments = async (req, res) => {
-	const userEmail = sanitize(req.session.userID);
+	const id = sanitize(req.session.userID);
 
 	const urlParams = new URLSearchParams(req.params.pointID);
 	const { pointID } = Object.fromEntries(urlParams);
 
 	try {
 		const comments = await CommentPOI.find({ "point": sanitize(pointID) });
-		const user = await User.findOne({ email: userEmail });
+		const user = await User.findOne({ _id: id });
 		const userID = user ? user._id : 'anon';
 
 		const arrayToSend = comments.map(item => ({
@@ -340,13 +340,13 @@ exports.POI_react_comment = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const email = sanitize(req.session.userID);
+	const id = sanitize(req.session.userID);
 	const { key, goal } = req.body;
 	const property = goal === 'like' ? 'likes' : 'dislikes';
 	const propertyOpp = goal === 'like' ? 'dislikes' : 'likes';
 
 	try {
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ _id: id });
 
 		if (!user)
 			return res.status(400).json({ error: "User not found" });
@@ -378,7 +378,7 @@ exports.POI_react_comment = async (req, res) => {
 			error: null,
 			data: {
 				message: "Reaction successful",
-				userID: user.email,
+				userID: user._id,
 			},
 		});
 	} catch (error) {

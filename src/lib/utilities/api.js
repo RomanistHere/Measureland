@@ -421,6 +421,16 @@ const reportReason = async (reportedID, type, code, comment = null) => {
 	});
 };
 
+const authThirdParty = async ({ id, type, lang }) => {
+	const url = `${API_URL}/user/auth_third_party`;
+
+	return await fetchFunction({
+		url,
+		method: "POST",
+		body: JSON.stringify({ id, type, lang }),
+	});
+};
+
 export {
 	fetchFunction,
 	saveToDB,
@@ -459,4 +469,5 @@ export {
 	deletePOI,
 	deleteCommentPOI,
 	reportReason,
+	authThirdParty,
 };

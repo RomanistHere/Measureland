@@ -19,6 +19,59 @@ const { sendEmail } = require('../helpers/email');
 
 const isProd = process.env.IS_PROD === '1';
 
+exports.userAuthThirdParty = async (req, res) => {
+	const { id, type, lang } = req.body;
+
+	console.log(id, type);
+
+	if (type === "telegram") {
+		const user = await User.findOne({ telegramID: sanitize(id) });
+		if (user) {
+			req.session.userID = user._id;
+
+			console.log(req.session);
+
+			return res.json({
+				error: null,
+				data: {
+					authType: "login",
+					message: "Authentication successful",
+					userID: user._id,
+					dateCreated: user.dateCreated,
+					activeRatings: user.usergroup === 0 ? 99 : user.properties.activeRatings,
+					wantMoreRatings: user.properties.wantMoreRatings,
+					userName: user.username,
+				},
+			});
+		} else {
+			const user = new User({
+				telegramID: id,
+				dateCreated: new Date(),
+				verified: true,
+				properties: {
+					lang,
+				},
+			});
+
+			const savedUser = await user.save();
+
+			req.session.userID = savedUser._id;
+
+			return res.json({
+				error: null,
+				data: {
+					authType: "register",
+					message: "Authentication successful",
+					userID: savedUser._id,
+				},
+			});
+		}
+	}
+	// else if (type === "web3") {
+	//
+	// }
+};
+
 exports.user_register = async (req, res) => {
 	const { email, lang } = req.body;
 	const isEmailExist = await User.findOne({ email: sanitize(email) });
@@ -64,7 +117,7 @@ exports.user_register = async (req, res) => {
 			error: null,
 			data: {
 				message: "Register successful",
-				userID: email,
+				userID: savedUser._id,
 			},
 		});
 	} catch (error) {
@@ -88,13 +141,15 @@ exports.user_login = async (req, res) => {
 		if (!user.verified)
 			return res.status(400).json({ error: "User is not verified" });
 
-		req.session.userID = user.email;
+		req.session.userID = user._id;
+
+		console.log(req.session);
 
 		return res.json({
 			error: null,
 			data: {
 				message: "Login successful",
-				userID: user.email,
+				userID: user._id,
 				dateCreated: user.dateCreated,
 				activeRatings: user.usergroup === 0 ? 99 : user.properties.activeRatings,
 				wantMoreRatings: user.properties.wantMoreRatings,
@@ -111,7 +166,7 @@ exports.user_onboard = async (req, res) => {
 	const { userName, ageGrp, moneyGrp, userID } = req.body;
 	try {
 		const update = await User.updateOne(
-			{ 'email': sanitize(userID) },
+			{ '_id': sanitize(userID) },
 			{
 				$set: {
 					'username': userName,
@@ -142,7 +197,7 @@ exports.user_feedback = async (req, res) => {
 	const { userID } = req.session;
 	const { heading, comment, email } = req.body;
 
-	if (!userID || userID !== email)
+	if (!userID)
 		return res.status(400).json({ error: "User is not recognized" });
 
 	try {
@@ -182,7 +237,7 @@ exports.user_verify = async (req, res) => {
 		if (!user)
 			return res.status(400).json({ error: "Email is wrong" });
 
-		req.session.userID = user.email;
+		req.session.userID = user._id;
 
 		await sendEmail({
 			email: user.email,
@@ -194,7 +249,7 @@ exports.user_verify = async (req, res) => {
 			error: null,
 			data: {
 				message: "Verification is successful",
-				userID: user.email,
+				userID: user._id,
 			},
 		});
 	} else {
@@ -238,7 +293,7 @@ exports.user_reverify = async (req, res) => {
 				error: null,
 				data: {
 					message: "Verification email sent",
-					userID: req.body.email,
+					userID: user._id,
 				},
 			});
 		}
@@ -267,13 +322,13 @@ exports.user_check = async (req, res) => {
 	const { userID } = req.session;
 
 	try {
-		const user = await User.findOne({ email: sanitize(userID) }, '-properties.ratingIDs -properties.geoIDs');
+		const user = await User.findOne({ _id: sanitize(userID) }, '-properties.ratingIDs -properties.geoIDs');
 
 		const { shouldUpdate, activeRatings } = updateActiveRatings(user);
 
 		if (shouldUpdate) {
 			const update = await User.updateOne(
-				{ email: userID },
+				{ _id: userID },
 				{
 					$set: {
 						'properties.lastRatingsAdded': Date.now(),
@@ -296,7 +351,7 @@ exports.user_check = async (req, res) => {
 			error: null,
 			data: {
 				message: "Check user",
-				userID: user ? user.email : null,
+				userID: user ? user._id : null,
 				userName: user ? user.username : null,
 				lang: user ? user.properties.lang : null,
 				dateCreated: user ? user.dateCreated : null,
@@ -314,7 +369,7 @@ exports.user_places = async (req, res) => {
 	const { userID } = req.session;
 
 	try {
-		const user = await User.findOne({ email: sanitize(userID) }, 'properties.geoIDs properties.ratingIDs properties.POIIDs properties.POICommentIDs');
+		const user = await User.findOne({ _id: sanitize(userID) }, 'properties.geoIDs properties.ratingIDs properties.POIIDs properties.POICommentIDs');
 
 		if (!user)
 			return res.status(400).json({ error: "Couldn't find the user" });
@@ -392,7 +447,7 @@ exports.user_places = async (req, res) => {
 exports.ask_more_ratings = async (req, res) => {
 	const { userID } = req.session;
 
-	const user = await User.findOneAndUpdate({ email: sanitize(userID) }, { 'properties.wantMoreRatings': true });
+	const user = await User.findOneAndUpdate({ _id: sanitize(userID) }, { 'properties.wantMoreRatings': true });
 
 	if (!user)
 		return res.status(400).json({ error: "Couldn't find the user" });
@@ -462,7 +517,7 @@ exports.user_reset_password = async (req, res, next) => {
 			error: null,
 			data: {
 				message: "Email sent",
-				userID: userEmail,
+				userID: user._id,
 			},
 		});
 	} catch (error) {
@@ -520,14 +575,13 @@ exports.user_change_password = async (req, res) => {
 };
 
 exports.user_language = async (req, res) => {
-	if (!req.session.userID) {
+	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
-	}
 
 	const { lang } = req.body;
 	try {
 		const update = await User.updateOne(
-			{ 'email': sanitize(req.session.userID) },
+			{ _id: sanitize(req.session.userID) },
 			{
 				$set: {
 					'properties.lang': lang,
@@ -555,13 +609,13 @@ exports.vote_for_task = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const email = sanitize(req.session.userID);
+	const id = sanitize(req.session.userID);
 	const { key, goal } = req.body;
 	const property = goal === 'upvote' ? 'upvotes' : 'downvotes';
 	const propertyOpp = goal === 'upvote' ? 'downvotes' : 'upvotes';
 
 	try {
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ _id: id });
 
 		if (!user)
 			return res.status(400).json({ error: "User not found" });
@@ -593,7 +647,7 @@ exports.vote_for_task = async (req, res) => {
 			error: null,
 			data: {
 				message: "Reaction successful",
-				userID: user.email,
+				userID: user._id,
 			},
 		});
 	} catch (error) {
@@ -603,7 +657,7 @@ exports.vote_for_task = async (req, res) => {
 };
 
 exports.read_votes = async (req, res, next) => {
-	const userEmail = sanitize(req.session.userID);
+	const userid = sanitize(req.session.userID);
 
 	const urlParams = new URLSearchParams(req.params.id);
 	const { id } = Object.fromEntries(urlParams);
@@ -614,7 +668,7 @@ exports.read_votes = async (req, res, next) => {
 		if (!task)
 			return res.json({ error: null, data: { message: "No task with the given ID" } });
 
-		const user = await User.findOne({ email: userEmail });
+		const user = await User.findOne({ _id: userid });
 		const userID = user ? user._id : 'anon';
 
 		const dataToSend = {
@@ -659,9 +713,7 @@ exports.update_rating_year = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const email = sanitize(req.session.userID);
 	const { id, newValue } = req.body;
-
 	try {
 		const rating = await Rating.findOneAndUpdate({ _id: sanitize(id) }, { 'timeline': sanitize(newValue) });
 
@@ -707,12 +759,12 @@ exports.report_reason = async (req, res) => {
 	if (!req.session.userID)
 		return res.status(400).json({ error: "User is not logged in" });
 
-	const email = sanitize(req.session.userID);
+	const id = sanitize(req.session.userID);
 	const { reportedID, code, comment, type } = req.body;
 
 	try {
 		let reportedUserID = null;
-		const reportingUser = await User.findOne({ email }, '_id');
+		const reportingUser = await User.findOne({ _id: id }, '_id');
 
 		if (!reportingUser)
 			return res.status(400).json({ error: "User not found" });
@@ -740,7 +792,7 @@ exports.report_reason = async (req, res) => {
 			error: null,
 			data: {
 				message: "Report successful",
-				userID: email,
+				userID: id,
 			},
 		});
 	} catch (error) {

@@ -38,6 +38,7 @@ const hardLimiter = rateLimit({
 	},
 });
 
+router.post('/auth_third_party', hardLimiter, user_controller.userAuthThirdParty);
 router.post('/register', hardLimiter, user_controller.user_register);
 router.post('/login', mediumLimiter, user_controller.user_login);
 router.post('/onboard', hardLimiter, user_controller.user_onboard);

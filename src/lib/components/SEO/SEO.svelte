@@ -39,12 +39,12 @@
 
     <meta http-equiv="Content-Security-Policy" content="
         base-uri 'self';
-        connect-src 'self' {API_DOMAIN} plausible.io api.mapbox.com *.openstreetmap.org api.waqi.info en.wikipedia.org;
+        connect-src 'self' {API_DOMAIN} plausible.io api.mapbox.com *.openstreetmap.org api.waqi.info en.wikipedia.org *.telegram.org;
         default-src 'self';
         font-src 'self' data:;
         img-src 'self' api.mapbox.com *.openstreetmap.org data:;
         media-src 'self';
-        script-src 'self' 'unsafe-inline' plausible.io;
+        script-src 'self' 'unsafe-inline' plausible.io telegram.org;
         style-src 'self' 'unsafe-inline';
     "/>
 
@@ -58,6 +58,7 @@
     {/if}
 
     <script defer data-domain="measureland.org" src="https://plausible.io/js/plausible.js"></script>
+    <script async src="https://telegram.org/js/telegram-widget.js"></script>
 
     <title>{pageTitle}</title>
 </svelte:head>

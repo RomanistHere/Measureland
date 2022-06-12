@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/../Measureland admin/.idea/Measureland admin.iml" filepath="$PROJECT_DIR$/../Measureland admin/.idea/Measureland admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/../backups/.idea/backups.iml" filepath="$PROJECT_DIR$/../backups/.idea/backups.iml" />
       <module fileurl="file://$PROJECT_DIR$/../configs/.idea/configs.iml" filepath="$PROJECT_DIR$/../configs/.idea/configs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../measureland-telegram/.idea/worker-typescript-template.iml" filepath="$PROJECT_DIR$/../measureland-telegram/.idea/worker-typescript-template.iml" />
     </modules>
   </component>
 </project>

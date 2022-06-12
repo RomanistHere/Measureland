@@ -3,13 +3,11 @@ import { overlayStateDefault } from "../lib/constants/overlayStateDefault.js";
 
 export const flowStore = writable([]);
 
-// TODO:
 export const userStateStore = writable({
 	userID: null,
 	activeRatings: 3,
 	dateCreated: null,
 	userName: "Аноним",
-	// lang: detectPrefLang(),
 	lang: "ru",
 	uniqID: Math.random().toString(16).slice(2),
 	shouldSendEvent: false,
@@ -17,7 +15,6 @@ export const userStateStore = writable({
 });
 
 export const appStateStore = writable({
-	// zoom: 12,
 	zoom: 4,
 	openModal: false,
 	shouldWork: true,
@@ -26,7 +23,6 @@ export const appStateStore = writable({
 	showPOI: false,
 	ratingToSave: null,
 	corrdsToSave: null,
-	// center: [53.9065, 27.6663],
 	center: [ 55, 64 ],
 	shouldShowLoading: false,
 	startScreen: false,

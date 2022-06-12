@@ -1,17 +1,86 @@
 <script>
+	import { locale } from "svelte-i18n";
+
 	import MetamaskIcon from "$lib/components/inline-images/MetamaskIcon.svelte";
 	import TelegramIcon from "$lib/components/inline-images/TelegramIcon.svelte";
+	import { validateTelegram } from "$lib/utilities/externalApi.js";
+	import { authThirdParty } from "$lib/utilities/api.js";
+	import { userStateStore } from "../../../stores/state.js";
+	import { openAnotherOverlay, logError, closeOverlay } from "$lib/utilities/helpers.js";
 
 	export let isRegistration = false;
 
 	const authTelegram = () => {
+		if (typeof window !== "undefined") {
+			window.Telegram.Login.auth(
+				{
+					// eslint-disable-next-line camelcase
+					bot_id: "1849789317",
+					// eslint-disable-next-line camelcase
+					request_access: true,
+				},
+				async tgResp => {
+					if (!tgResp) {
+						console.warn("Telegram auth failed");
+						return;
+					}
 
+					console.log(tgResp);
+					const isDataFromTg = await validateTelegram(tgResp);
+
+					if (!isDataFromTg) {
+						console.warn("Data is not from Telegram");
+						return;
+					}
+
+					// eslint-disable-next-line camelcase
+					const { first_name, auth_date, last_name, id } = tgResp;
+
+					console.log('good!');
+
+					const { data, error } = await authThirdParty({
+						id,
+						type: "telegram",
+						lang: $locale,
+					});
+
+					if (error) {
+						logError(error);
+						return;
+					}
+
+					console.log(data);
+					closeOverlay("modal");
+
+					if (data.authType === "login") {
+						const { userID, activeRatings, userName, wantMoreRatings } = data;
+
+						userStateStore.update(state => ({
+							...state,
+							userID,
+							activeRatings,
+							userName,
+							wantMoreRatings,
+						}));
+					} else {
+						const { userID } = data;
+
+						userStateStore.update(state => ({
+							...state,
+							userID,
+						}));
+
+						openAnotherOverlay("onboardingPopup");
+					}
+				},
+			);
+		}
 	};
 
 	const authMetamask = async () => {
-		if (window.web3) {
+		if (typeof window !== "undefined" && window.web3) {
 			try {
-				const selectedAccount = await window.ethereum
+				const id = await window.ethereum
 					.request({
 						method: "eth_requestAccounts",
 					})
@@ -28,9 +97,15 @@
 						}
 					});
 
-				window.userWalletAddress = selectedAccount;
-				console.log(selectedAccount);
-				window.localStorage.setItem("userWalletAddress", selectedAccount);
+				// window.userWalletAddress = selectedAccount;
+				console.log(id);
+
+				const resp = await authThirdParty({
+					id,
+					type: "web3",
+					lang: $locale,
+				});
+				// window.localStorage.setItem("userWalletAddress", selectedAccount);
 			} catch (error) {
 				console.warn(error);
 			}

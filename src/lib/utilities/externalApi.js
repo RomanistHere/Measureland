@@ -175,6 +175,12 @@ const fetchWaqi = async (lat, lng) => {
 	}
 };
 
+const validateTelegram = async userData => {
+	const url = `${API_URL}/external/telegram-login_check/${new URLSearchParams({ ...userData })}`;
+
+	return await fetchFunction({ url });
+};
+
 export {
 	translateText,
 	fetchOpenWeather,
@@ -182,4 +188,5 @@ export {
 	getGeoSuggestions,
 	fetchDisasterRisk,
 	fetchWaqi,
+	validateTelegram,
 };

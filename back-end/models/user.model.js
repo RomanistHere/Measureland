@@ -4,15 +4,16 @@ const UserSchema = new Schema({
 	email: {
 		type: String,
 		unique: true,
-		required: true,
 		trim: true,
-		maxLength: 512,
+		maxLength: 128,
 	},
+	telegramID: String,
+	walletAddress: String,
 	username: {
 		type: String,
 		trim: true,
-		default: 'Anonym',
-		maxLength: 512,
+		default: "Anonym",
+		maxLength: 128,
 	},
 	verified: {
 		type: Boolean,
@@ -25,7 +26,7 @@ const UserSchema = new Schema({
 	},
 	password: {
 		type: String,
-		required: true,
+		maxLength: 128,
 	},
 	dateCreated: {
 		type: Date,

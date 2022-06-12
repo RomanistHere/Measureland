@@ -53,7 +53,7 @@
 		value = e.currentTarget.value;
 	};
 
-	$: isError = (!isInputValid && !isInputActive) || externalError;
+	$: isError = (!isInputValid && !isInputActive && value !== "") || externalError;
 	$: isValid = isInputValid && hasTypingStarted && !isInputActive && !externalError;
 </script>
 
@@ -81,8 +81,9 @@
 	<div class="relative mt-2">
 		<!-- svelte-ignore a11y-autofocus -->
 		<input
-			class="bg-bg_gray border-bg_gray border rounded-lg p-3 px-6 w-full focus:outline-0 transition-colors focus:border-main focus:bg-white hover:border-stroke"
+			class="bg-bg_gray border-bg_gray border rounded-lg p-3 px-6 w-full focus:outline-0 transition-colors hover:border-stroke focus:border-main focus:bg-white"
 			class:border-txt_danger={isError}
+			class:hover:border-txt_danger={isError}
 			class:pr-12={type === "password"}
 			autocomplete={id}
 			{ id }
@@ -109,3 +110,9 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	.border-bg_gray:focus {
+		border-color: var(--main);
+	}
+</style>

@@ -2,11 +2,13 @@ require('dotenv').config();
 const deepl = require('deepl-node');
 const Sentry = require('@sentry/node');
 const sanitize = require("mongo-sanitize");
+const crypto = require('node:crypto');
 
 const authKeyDeepL = process.env.DEEPL_KEY;
 const apiOWMKey = process.env.OPENWEATHERMAP_KEY;
 const locationIqKey = process.env.LOCATIONIQ_KEY;
 const locationIqKeyBckp = process.env.LOCATIONIQ_KEY_BCKP;
+const telegramBotToken = process.env.TG_BOT_TOKEN;
 const translator = new deepl.Translator(authKeyDeepL);
 
 exports.translateText = async (req, res) => {
@@ -88,5 +90,44 @@ exports.getLocationIqAddress = async (req, res) => {
 			Sentry.captureException(error);
 			return res.status(400).json({ error });
 		}
+	}
+};
+
+const checkSignature = ({ hash, ...userData }) => {
+	// create a hash of a secret that both you and Telegram know. In this case, it is your bot token
+	const secretKey = crypto.createHash('sha256')
+		.update(telegramBotToken)
+		.digest();
+
+	// this is the data to be authenticated i.e. telegram user id, first_name, last_name etc.
+	const dataCheckString = Object.keys(userData)
+		.sort()
+		.map(key => (`${key}=${userData[key]}`))
+		.join('\n');
+
+	// run a cryptographic hash function over the data to be authenticated and the secret
+	const hmac = crypto.createHmac('sha256', secretKey)
+		.update(dataCheckString)
+		.digest('hex');
+
+	// compare the hash that you calculate on your side (hmac) with what Telegram sends you (hash) and return the result
+	return hmac === hash;
+};
+
+exports.checkTelegramLogin = async (req, res) => {
+	const urlParams = new URLSearchParams(req.params.params);
+	const data = Object.fromEntries(urlParams);
+
+	try {
+		return res.json({
+			error: null,
+			data: {
+				isFromTg: checkSignature(data),
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
 	}
 };
