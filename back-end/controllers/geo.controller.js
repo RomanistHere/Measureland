@@ -469,7 +469,6 @@ exports.geo_react_comment = async (req, res) => {
 
 exports.geo_location_by_bounds = async (req, res, next) => {
 	const { userID } = req.session;
-	console.log(req.session)
 	const urlParams = new URLSearchParams(req.params.coords);
 	const { bounds, zoom, filters } = Object.fromEntries(urlParams);
 	const polygon = JSON.parse(bounds);
