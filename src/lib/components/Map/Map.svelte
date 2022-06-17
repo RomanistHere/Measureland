@@ -90,7 +90,7 @@
 	{#if isMapLoaded}
 <!--		<Communities />-->
 		<Countries />
-<!--		<Cities />-->
+		<Cities />
 		<Markers />
 <!--		<Hexagons />-->
 <!--		<PointsOfInterest />-->

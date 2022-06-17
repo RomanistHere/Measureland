@@ -1,40 +1,15 @@
 <script>
 	import { onMount } from "svelte";
 	import { fly } from "svelte/transition";
-	import { collect, flatten, featureCollection, bbox } from "@turf/turf";
+	import { bbox } from "@turf/turf";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import { countryBounds } from "../objects/countryBounds.js";
-	import { countCityStats } from "../utils";
+	import { getLayerStats, assignIDsToFeatures } from "../utils";
 	import { getMapZoom, debounce, openAnotherOverlay } from "$lib/utilities/helpers.js";
 
 	let hoveredCountry = null;
-	let hoveredStateId = null;
-
-	const getStats = layer => {
-		const collection = flatten({
-			"type": "FeatureCollection",
-			"features": $ratingsReference,
-		});
-		const layerCollection = featureCollection([ layer.geometry ]);
-		const { features } = collect(layerCollection, collection, "rating", "ratings");
-		return countCityStats(features[0].properties, layer.properties);
-	};
-
-	const assignIDsToFeatures = data => {
-		let currentID = 0;
-
-		return {
-			...data,
-			features: data.features.map(feature => {
-				currentID++;
-				return {
-					...feature,
-					id: currentID,
-				};
-			}),
-		};
-	};
+	let hoveredCountryId = null;
 
 	const initCountryLayer = () => {
 		const map = $mapReference;
@@ -47,6 +22,8 @@
 		map.addLayer({
 			"id": "countries-layer",
 			"type": "fill",
+			"maxzoom": 6,
+			"minzoom": 0,
 			"source": "countries",
 			"layout": {
 				"visibility": "visible",
@@ -65,21 +42,21 @@
 		map.on("mousemove", "countries-layer", e => {
 			map.getCanvas().style.cursor = "pointer";
 			if (e.features.length > 0) {
-				if (hoveredStateId) {
+				if (hoveredCountryId) {
 					map.setFeatureState({
 						source: "countries",
-						id: hoveredStateId,
+						id: hoveredCountryId,
 					}, {
 						hover: false,
 					});
 				}
 
-				hoveredStateId = e.features[0].id;
-				hoveredCountry = getStats(e.features[0]);
+				hoveredCountryId = e.features[0].id;
+				hoveredCountry = getLayerStats(e.features[0], $ratingsReference);
 
 				map.setFeatureState({
 					source: "countries",
-					id: hoveredStateId,
+					id: hoveredCountryId,
 				}, {
 					hover: true,
 				});
@@ -89,6 +66,16 @@
 		map.on("mouseleave", "countries-layer", () => {
 			map.getCanvas().style.cursor = "";
 
+			if (hoveredCountryId !== null) {
+				map.setFeatureState({
+					source: "countries",
+					id: hoveredCountryId,
+				}, {
+					hover: false,
+				});
+			}
+
+			hoveredCountryId = null;
 			hoveredCountry = null;
 		});
 
@@ -97,7 +84,7 @@
 			const bounds = bbox(e.features[0].geometry);
 			map.fitBounds(bounds);
 
-			const { name, ratings, number } = getStats(e.features[0]);
+			const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
 
 			if (number === 0)
 				return;
@@ -110,22 +97,7 @@
 		});
 	};
 
-	const layerControl = () => {
-		const map = $mapReference;
-		const zoom = getMapZoom(map);
-
-		const countryLayer = map.getLayer("countries-layer");
-
-		if (zoom > 6 && countryLayer)
-			map.setLayoutProperty("countries-layer", "visibility", "none");
-		else if (zoom <= 6 && !countryLayer)
-			initCountryLayer();
-		else if (zoom <= 6 && countryLayer)
-			map.setLayoutProperty("countries-layer", "visibility", "visible");
-	};
-
-	$mapReference.on("zoomend", debounce(layerControl, 300));
-	onMount(layerControl);
+	onMount(initCountryLayer);
 </script>
 
 {#if hoveredCountry}

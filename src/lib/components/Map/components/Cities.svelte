@@ -1,83 +1,116 @@
 <script>
-	import L from "leaflet";
 	import { fly } from "svelte/transition";
-	import { collect, flatten, featureCollection } from "@turf/turf";
+	import { bbox } from "@turf/turf";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import { cityBounds } from "../objects/cityBounds.js";
-	import { countCityStats } from "../utils";
+	import { getLayerStats, assignIDsToFeatures } from "../utils";
 	import { debounce, getMapZoom, openAnotherOverlay } from "$lib/utilities/helpers.js";
 	import { onMount } from "svelte";
 
-	let citiesLayer = null;
 	let hoveredCity = null;
-
-	const getStats = layer => {
-		const collection = flatten({
-			"type": "FeatureCollection",
-			"features": $ratingsReference,
-		});
-		const layerCollection = featureCollection([ layer.feature.geometry ]);
-		const { features } = collect(layerCollection, collection, "rating", "ratings");
-		return countCityStats(features[0].properties, layer.feature.properties);
-	};
+	let hoveredCityId = null;
 
 	const initCityLayer = () => {
-		citiesLayer = L.geoJson(cityBounds, {
-			style: {
-				color: "yellow",
-				fillOpacity: .05,
-				opacity: .3,
-			},
-			bubblingMouseEvents: false,
-		}).addTo($mapReference);
+		const map = $mapReference;
 
-		citiesLayer.eachLayer(layer => {
-			layer.on("mouseover", () => {
-				const zoom = getMapZoom($mapReference);
-				if (zoom <= 9) {
-					layer.setStyle({
-						fillOpacity: .2,
-						opacity: .5,
+		map.addSource("cities", {
+			type: "geojson",
+			data: assignIDsToFeatures(cityBounds),
+		});
+
+		map.addLayer({
+			"id": "cities-layer",
+			"type": "fill",
+			"maxzoom": 13,
+			"minzoom": 6,
+			"source": "cities",
+			"layout": {
+				"visibility": "visible",
+			},
+			"paint": {
+				"fill-color": "#0080ff",
+				"fill-opacity": [
+					"case",
+					[ "boolean", [ "feature-state", "hover" ], false ],
+					.4,
+					.3,
+				],
+			},
+		});
+
+		map.addLayer({
+			"id": "cities-borders",
+			"type": "line",
+			"maxzoom": 13,
+			"minzoom": 6,
+			"source": "cities",
+			"layout": {},
+			"paint": {
+				"line-color": "#627BC1",
+				"line-width": 2,
+			},
+		});
+
+		map.on("mousemove", "cities-layer", e => {
+			map.getCanvas().style.cursor = "pointer";
+			if (e.features.length > 0) {
+				if (hoveredCityId) {
+					map.setFeatureState({
+						source: "cities",
+						id: hoveredCityId,
+					}, {
+						hover: false,
 					});
 				}
 
-				hoveredCity = getStats(layer);
-			});
-			layer.on("mouseout", () => {
-				layer.setStyle({ fillOpacity: .05, opacity: .3 });
-				hoveredCity = null;
-			});
-			layer.on("click", () => {
-				$mapReference.flyToBounds(layer.getBounds());
-				hoveredCity = null;
+				hoveredCityId = e.features[0].id;
+				hoveredCity = getLayerStats(e.features[0], $ratingsReference);
 
-				const { name, ratings, number } = getStats(layer);
-
-				if (number === 0)
-					return;
-
-				openAnotherOverlay("cityRatingPopup", {
-					name,
-					ratings,
-					number,
+				map.setFeatureState({
+					source: "cities",
+					id: hoveredCityId,
+				}, {
+					hover: true,
 				});
+			}
+		});
+
+		map.on("mouseleave", "cities-layer", () => {
+			map.getCanvas().style.cursor = "";
+
+			if (hoveredCityId !== null) {
+				map.setFeatureState({
+					source: "cities",
+					id: hoveredCityId,
+				}, {
+					hover: false,
+				});
+			}
+
+			hoveredCityId = null;
+			hoveredCity = null;
+		});
+
+		map.on("click", "cities-layer", e => {
+			hoveredCity = null;
+			const bounds = bbox(e.features[0].geometry);
+			map.fitBounds(bounds);
+
+			const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
+
+			if (number === 0)
+				return;
+
+			openAnotherOverlay("cityRatingPopup", {
+				name,
+				ratings,
+				number,
 			});
 		});
 	};
 
-	const layerControl = () => {
-		const zoom = getMapZoom($mapReference);
-		const { length } = citiesLayer ? citiesLayer.getLayers() : { length: 0 };
-
-		if (zoom >= 13 && length !== 0)
-			citiesLayer.clearLayers();
-		else if (zoom <= 12 && (!citiesLayer || length === 0))
-			initCityLayer();
-	};
-
-	$mapReference.on("zoomend", debounce(layerControl, 300));
-	onMount(layerControl);
+	onMount(initCityLayer);
 </script>
 
 {#if hoveredCity}

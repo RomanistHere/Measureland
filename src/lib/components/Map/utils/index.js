@@ -1,5 +1,5 @@
 import { roundToHundredth } from "$lib/utilities/helpers.js";
-import { booleanPointInPolygon, featureCollection, featureEach, geomEach } from "@turf/turf";
+import { booleanPointInPolygon, collect, featureCollection, featureEach, flatten, geomEach } from "@turf/turf";
 
 const countCityStats = ({ ratings }, { name }) => {
 	const { length } = ratings;
@@ -53,7 +53,34 @@ const getPointsInsideAndOutsidePolygon = (points, polygons) => {
 	};
 };
 
+const getLayerStats = (layer, ratings) => {
+	const collection = flatten({
+		"type": "FeatureCollection",
+		"features": ratings,
+	});
+	const layerCollection = featureCollection([ layer.geometry ]);
+	const { features } = collect(layerCollection, collection, "rating", "ratings");
+	return countCityStats(features[0].properties, layer.properties);
+};
+
+const assignIDsToFeatures = data => {
+	let currentID = 0;
+
+	return {
+		...data,
+		features: data.features.map(feature => {
+			currentID++;
+			return {
+				...feature,
+				id: currentID,
+			};
+		}),
+	};
+};
+
 export {
 	countCityStats,
 	getPointsInsideAndOutsidePolygon,
+	getLayerStats,
+	assignIDsToFeatures,
 };
