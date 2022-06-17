@@ -41,6 +41,7 @@
 		"franc-min": "^6.0.0",
 		"leaflet": "^1.8.0",
 		"leaflet-draw": "^1.0.4",
+		"mapbox-gl": "^2.8.2",
 		"nouislider": "^15.5.1",
 		"polybooljs": "^1.2.0",
 		"svelte-focus-trap": "^1.2.0",

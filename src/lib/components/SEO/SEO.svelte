@@ -39,8 +39,9 @@
 
     <meta http-equiv="Content-Security-Policy" content="
         base-uri 'self';
-        connect-src 'self' {API_DOMAIN} plausible.io api.mapbox.com *.openstreetmap.org api.waqi.info en.wikipedia.org *.telegram.org;
+        connect-src 'self' {API_DOMAIN} plausible.io api.mapbox.com events.mapbox.com *.openstreetmap.org api.waqi.info en.wikipedia.org *.telegram.org;
         default-src 'self';
+        worker-src blob:;
         font-src 'self' data:;
         img-src 'self' api.mapbox.com *.openstreetmap.org data:;
         media-src 'self';

@@ -1,77 +1,127 @@
 <script>
-	import L from "leaflet";
 	import { onMount } from "svelte";
 	import { fly } from "svelte/transition";
-	import { collect, flatten, featureCollection } from "@turf/turf";
+	import { collect, flatten, featureCollection, bbox } from "@turf/turf";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import { countryBounds } from "../objects/countryBounds.js";
 	import { countCityStats } from "../utils";
 	import { getMapZoom, debounce, openAnotherOverlay } from "$lib/utilities/helpers.js";
 
-	let countryLayer = null;
 	let hoveredCountry = null;
+	let hoveredStateId = null;
 
 	const getStats = layer => {
 		const collection = flatten({
 			"type": "FeatureCollection",
 			"features": $ratingsReference,
 		});
-		const layerCollection = featureCollection([ layer.feature.geometry ]);
+		const layerCollection = featureCollection([ layer.geometry ]);
 		const { features } = collect(layerCollection, collection, "rating", "ratings");
-		return countCityStats(features[0].properties, layer.feature.properties);
+		return countCityStats(features[0].properties, layer.properties);
+	};
+
+	const assignIDsToFeatures = data => {
+		let currentID = 0;
+
+		return {
+			...data,
+			features: data.features.map(feature => {
+				currentID++;
+				return {
+					...feature,
+					id: currentID,
+				};
+			}),
+		};
 	};
 
 	const initCountryLayer = () => {
-		countryLayer = L.geoJson(countryBounds, {
-			style: {
-				color: "yellow",
-				stroke: false,
-				fill: false,
+		const map = $mapReference;
+
+		map.addSource("countries", {
+			type: "geojson",
+			data: assignIDsToFeatures(countryBounds),
+		});
+
+		map.addLayer({
+			"id": "countries-layer",
+			"type": "fill",
+			"source": "countries",
+			"layout": {
+				"visibility": "visible",
 			},
-			bubblingMouseEvents: false,
-		}).addTo($mapReference);
+			"paint": {
+				"fill-color": "#0080ff",
+				"fill-opacity": [
+					"case",
+					[ "boolean", [ "feature-state", "hover" ], false ],
+					.3,
+					0,
+				],
+			},
+		});
 
-		countryLayer.eachLayer(layer => {
-			layer.on("mouseover", () => {
-				layer.setStyle({ fill: true,
-					fillOpacity: .3,
-					opacity: .3,
-					stroke: true,
+		map.on("mousemove", "countries-layer", e => {
+			map.getCanvas().style.cursor = "pointer";
+			if (e.features.length > 0) {
+				if (hoveredStateId) {
+					map.setFeatureState({
+						source: "countries",
+						id: hoveredStateId,
+					}, {
+						hover: false,
+					});
+				}
+
+				hoveredStateId = e.features[0].id;
+				hoveredCountry = getStats(e.features[0]);
+
+				map.setFeatureState({
+					source: "countries",
+					id: hoveredStateId,
+				}, {
+					hover: true,
 				});
+			}
+		});
 
-				hoveredCountry = getStats(layer);
-			});
-			layer.on("mouseout", () => {
-				layer.setStyle({ fill: false, stroke: false });
-				hoveredCountry = null;
-			});
-			layer.on("click", () => {
-				$mapReference.flyToBounds(layer.getBounds());
-				hoveredCountry = null;
+		map.on("mouseleave", "countries-layer", () => {
+			map.getCanvas().style.cursor = "";
 
-				const { name, ratings, number } = getStats(layer);
+			hoveredCountry = null;
+		});
 
-				if (number === 0)
-					return;
+		map.on("click", "countries-layer", e => {
+			hoveredCountry = null;
+			const bounds = bbox(e.features[0].geometry);
+			map.fitBounds(bounds);
 
-				openAnotherOverlay("cityRatingPopup", {
-					name,
-					ratings,
-					number,
-				});
+			const { name, ratings, number } = getStats(e.features[0]);
+
+			if (number === 0)
+				return;
+
+			openAnotherOverlay("cityRatingPopup", {
+				name,
+				ratings,
+				number,
 			});
 		});
 	};
 
 	const layerControl = () => {
-		const zoom = getMapZoom($mapReference);
-		const { length } = countryLayer ? countryLayer.getLayers() : { length: 0 };
+		const map = $mapReference;
+		const zoom = getMapZoom(map);
 
-		if (zoom >= 7 && length !== 0)
-			countryLayer.clearLayers();
-		else if (zoom <= 6 && (!countryLayer || length === 0))
+		const countryLayer = map.getLayer("countries-layer");
+
+		if (zoom > 6 && countryLayer)
+			map.setLayoutProperty("countries-layer", "visibility", "none");
+		else if (zoom <= 6 && !countryLayer)
 			initCountryLayer();
+		else if (zoom <= 6 && countryLayer)
+			map.setLayoutProperty("countries-layer", "visibility", "visible");
 	};
 
 	$mapReference.on("zoomend", debounce(layerControl, 300));

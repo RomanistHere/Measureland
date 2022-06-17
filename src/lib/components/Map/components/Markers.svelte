@@ -27,136 +27,30 @@
 
 	const map = $mapReference;
 
-	let visitedPoly = null;
-	let cachedData = [];
-	let usedBounds = [];
 	let isLoading = false;
+	let visitedPoly = null;
+	let usedBounds = [];
+	let cachedData = [];
 
-	let hexagonsLayer = null;
-	const markersLayer = L.layerGroup().addTo(map);
+	const updateState = (coords, zoom) => {
+		const { lat, lng } = coords;
 
-	const colors = {
-		1: "#ffec64",
-		2: "#c6ca59",
-		3: "#8ea94e",
-		4: "#558842",
-		5: "#006837",
+		appStateStore.update(state => ({
+			...state,
+			center: [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ],
+			zoom,
+		}));
 	};
 
-	const getHexStyle = rating => ({
-		fillColor: colors[rating],
-		color: colors[rating],
-		weight: 0.5,
-		opacity: 1,
-		fillOpacity: .8,
-		pointerEvents: "none",
-	});
-
-	$: hoveredHexagon = null;
-
-	const onEachHex = (feature, layer) => {
-		const { ratings } = feature.properties;
-		const average = roundToTen(ratings.reduce((i, acc) => acc + i, 0) / ratings.length || 0);
-		const style = getHexStyle(roundToInt(average));
-		layer.setStyle(style);
-
-		layer.on("mouseover", () => {
-			layer.setStyle({ fillOpacity: .9 });
-			hoveredHexagon = { number: ratings.length, average };
-		});
-		layer.on("mouseout", () => {
-			layer.setStyle({ fillOpacity: .8 });
-			hoveredHexagon = null;
-		});
-		layer.on("click", () => {
-			$mapReference.flyToBounds(layer.getBounds());
-		});
-	};
-
-	const zoomToHexSize = {
-		18: .05,
-		17: .05,
-		16: .1,
-		15: .1,
-		14: .2,
-		13: .3,
-		12: .5,
-		11: .8,
-		10: 1,
-		9: 1.5,
-		8: 2,
-		7: 3,
-		6: 10,
-		5: 20,
-		4: 50,
-	};
-
-	const getCorrectCollection = zoom => {
-		const collection = flatten({
-			"type": "FeatureCollection",
-			"features": cachedData,
-		});
-
-		if (zoom <= 9) {
-			// todo: with growth of cities, detect only visible cityBounds
-			const { outside } = getPointsInsideAndOutsidePolygon(collection, cityBounds);
-			return outside;
-		}
-
-		return collection;
-	};
-
-	const getSingleMarkerIcon = rating =>
-		L.icon({
-			iconUrl: `../images/map/house_${rating}.svg`,
-			iconSize: [ 40, 90 ],
-			iconAnchor: [ 5, 30 ],
-		});
-
-	const initShowRatingPopup = ({ latlng }) =>
-		openAnotherOverlay("showRatingsPopup", latlng);
-
-	const updateClusters = () => {
+	const getQueryPolygon = (visitedPolyRef, currentScreenPoly) => {
 		try {
-			const { east, north, south, west, zoom } = getBoundsData(map);
-			if (hexagonsLayer)
-				hexagonsLayer.clearLayers();
-
-			if (markersLayer)
-				markersLayer.clearLayers();
-
-			if (zoom >= 16) {
-				cachedData.forEach(({ geometry, properties }) => {
-					const { averageRating } = properties;
-					const { coordinates } = geometry;
-					const marker = L.marker([ coordinates[1], coordinates[0] ], { icon: getSingleMarkerIcon(roundToInt(averageRating)) });
-
-					marker.on("click", initShowRatingPopup);
-					marker.on("keyup", e => {
-						if (e.originalEvent.key === "Enter") {
-							openAnotherOverlay("showRatingsPopup", e.target._latlng);
-						}
-					});
-
-					markersLayer.addLayer(marker);
-				});
-			} else if (zoom >= 7) {
-				const bbox = [ west, south, east, north ];
-
-				const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);
-				const collection = getCorrectCollection(zoom);
-
-				const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
-				const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
-				const notEmptyHexagons = {
-					"type": "FeatureCollection",
-					"features": notEmptyHexagonValues,
-				};
-
-				hexagonsLayer = L.geoJson(notEmptyHexagons, { onEachFeature: onEachHex }).addTo(map);
-			}
+			return visitedPolyRef !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
+				? PolyBool.differenceRev(visitedPolyRef, currentScreenPoly)
+				: currentScreenPoly;
 		} catch (e) {
 			logError(e);
+			showSomethingWrongNotification();
+			return currentScreenPoly;
 		}
 	};
 
@@ -212,25 +106,8 @@
 		updateClusters();
 	};
 
-	const updateState = (coords, zoom) => {
-		const { lat, lng } = coords;
-		appStateStore.update(state => ({
-			...state,
-			center: [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ],
-			zoom,
-		}));
-	};
-
-	const getQueryPolygon = (visitedPolyRef, currentScreenPoly) => {
-		try {
-			return visitedPolyRef !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
-				? PolyBool.differenceRev(visitedPolyRef, currentScreenPoly)
-				: currentScreenPoly;
-		} catch (e) {
-			logError(e);
-			showSomethingWrongNotification();
-			return currentScreenPoly;
-		}
+	const updateClusters = () => {
+		// console.log(cachedData);
 	};
 
 	const getNewData = async () => {
@@ -279,9 +156,6 @@
 
 		if (!$filtersStore.isFiltersOn)
 			usedBounds.push(poly);
-
-		if ($appStateStore.shouldShowLoading && !$filtersStore.isFiltersOn)
-			poly.addTo(map);
 
 		const filters = $filtersStore.isFiltersOn ? $filtersStore.filters : null;
 		// console.timeEnd('preparations')
@@ -335,43 +209,4 @@
 	// don't use native "moveend" event, it triggers on every button click in popups
 	map.on("move", debounce(getNewData, 300));
 	onMount(getNewData);
-
-	const subscribeToFiltersChanges = ({ isFiltersOn, filters }) => {
-		if (!isFiltersOn)
-			return;
-
-		if (filters === null)
-			filtersStore.update(state => ({ ...state, isFiltersOn: false }));
-
-		getNewData();
-	};
-	$: subscribeToFiltersChanges($filtersStore);
 </script>
-
-{#if hoveredHexagon}
-	<div
-		class="absolute px-5 py-2.5 top-36 right-0 z-5 bg-white w-64 text-left rounded-l-lg overflow-hidden transition-transform translate-x-2 hover:translate-x-0"
-		in:fly="{{ x: 300, duration: 500 }}"
-		out:fly="{{ x: 300, duration: 500 }}"
-	>
-		<span class="absolute w-2.5 h-full left-0 top-0 bg-main"></span>
-		<span class="block leading-5 pb-px text-main">
-			{hoveredHexagon.number} оценки, средняя: {hoveredHexagon.average}
-		</span>
-		</div>
-{/if}
-
-{#if isLoading}
-	<div
-		class="absolute top-20 left-1/2 transform -translate-x-1/2 italic text-3xl pointer-events-none" transition:fade
-	>
-		{$_("loading.geo")}
-	</div>
-{/if}
-
-<style>
-	div {
-		text-shadow: 0 0 2px var(--border-color);
-		z-index: 1000;
-	}
-</style>
