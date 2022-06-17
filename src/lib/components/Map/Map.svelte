@@ -4,13 +4,14 @@
 	import 'mapbox-gl/dist/mapbox-gl.css';
 	// import L from "leaflet";
 	// import "leaflet/dist/leaflet.css";
-	import "/static/styles/map.css";
+	import "/static/styles/mapbox.css";
 
 	import PointsOfInterest from "./components/PointsOfInterest.svelte";
 	import Communities from "./components/Communities.svelte";
 	import Countries from "./components/Countries.svelte";
 	import Hexagons from "./components/Hexagons.svelte";
-	import Markers from "./components/Markers.svelte";
+	import Data from "./components/Data.svelte";
+	import Polygons from "./components/Polygons.svelte";
 	import Cities from "./components/Cities.svelte";
 	import Draw from "./components/Draw/Draw.svelte";
 	import TextLink from "../ui-elements/TextLink.svelte";
@@ -40,15 +41,20 @@
 		// });
 
 		const token = "pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w";
-		mapboxgl.accessToken = token;
 		const mapObj = new mapboxgl.Map({
+			accessToken: token,
 			container: node,
 			center: center.reverse() || [ 27.5, 53.8 ],
 			style: "mapbox://styles/romanisthere/cl3vxfje0001w15nvusadxt25", // style URL
 			minZoom: 4,
 			maxZoom: 18,
 			zoom: zoom || 7,
+			dragRotate: false,
+			logoPosition: "bottom-right",
 		});
+
+		mapObj.addControl(new mapboxgl.FullscreenControl({ container: node }), "bottom-right");
+		mapObj.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
 		mapObj.on("load", () => {
 			isMapLoaded = true;
@@ -75,7 +81,7 @@
 	const mapAction = wrap => {
 		map = createMap(wrap);
 		mapReference.set(map);
-		// leafletReference.set(L);
+
 		return {
 			destroy: () => {
 				map.remove();
@@ -89,9 +95,10 @@
 
 	{#if isMapLoaded}
 <!--		<Communities />-->
+		<Data />
 		<Countries />
 		<Cities />
-		<Markers />
+		<Polygons />
 <!--		<Hexagons />-->
 <!--		<PointsOfInterest />-->
 <!--		<Draw mapClickRefFuntcion={onMapClick} />-->

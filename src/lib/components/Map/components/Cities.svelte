@@ -1,12 +1,12 @@
 <script>
-	import { fly } from "svelte/transition";
+	import { onMount } from "svelte";
 	import { bbox } from "@turf/turf";
+	import { fly } from "svelte/transition";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import { cityBounds } from "../objects/cityBounds.js";
 	import { getLayerStats, assignIDsToFeatures } from "../utils";
-	import { debounce, getMapZoom, openAnotherOverlay } from "$lib/utilities/helpers.js";
-	import { onMount } from "svelte";
+	import { openAnotherOverlay } from "$lib/utilities/helpers.js";
 
 	let hoveredCity = null;
 	let hoveredCityId = null;

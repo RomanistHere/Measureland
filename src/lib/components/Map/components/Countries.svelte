@@ -1,12 +1,12 @@
 <script>
 	import { onMount } from "svelte";
-	import { fly } from "svelte/transition";
 	import { bbox } from "@turf/turf";
+	import { fly } from "svelte/transition";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import { countryBounds } from "../objects/countryBounds.js";
 	import { getLayerStats, assignIDsToFeatures } from "../utils";
-	import { getMapZoom, debounce, openAnotherOverlay } from "$lib/utilities/helpers.js";
+	import { openAnotherOverlay } from "$lib/utilities/helpers.js";
 
 	let hoveredCountry = null;
 	let hoveredCountryId = null;

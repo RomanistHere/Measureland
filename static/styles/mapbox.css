@@ -1,0 +1,7 @@
+/*.mapboxgl-ctrl-bottom-left {*/
+/*	display: none;*/
+/*}*/
+
+.mapboxgl-ctrl button.mapboxgl-ctrl-compass {
+	display: none;
+}
