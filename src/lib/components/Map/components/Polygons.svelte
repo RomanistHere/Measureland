@@ -2,14 +2,12 @@
 	import { bbox, collect, flatten, hexGrid } from "@turf/turf";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
-	import { getBoundsData, roundToInt } from "$lib/utilities/helpers.js";
-	import {
-		assignIDsToFeatures,
-		getPointsInsideAndOutsidePolygon,
-	} from "$lib/components/Map/utils/index.js";
+	import { getBoundsData, roundToInt, debounce, getMapZoom } from "$lib/utilities/helpers.js";
+	import { assignIDsToFeatures, getPointsInsideAndOutsidePolygon } from "$lib/components/Map/utils/index.js";
 	import { cityBounds } from "$lib/components/Map/objects/cityBounds.js";
 
 	let hoveredHexagonId = null;
+	let prevZoomLevel = 0;
 
 	const zoomToHexSize = {
 		18: .05,
@@ -17,16 +15,16 @@
 		16: .1,
 		15: .1,
 		14: .2,
-		13: .3,
-		12: .5,
-		11: .8,
-		10: 1,
+		13: .2,
+		12: .3,
+		11: .5,
+		10: .8,
 		9: 1.5,
 		8: 2,
 		7: 3,
-		6: 10,
-		5: 20,
-		4: 50,
+		6: 3,
+		5: 10,
+		4: 20,
 	};
 
 	const getCorrectCollection = zoom => {
@@ -95,18 +93,18 @@
 				"fill-color": {
 					"property": "avRating", // this will be your density property form you geojson
 					"stops": [
-						[ 1, "#ffec64" ],
-						[ 2, "#c6ca59" ],
-						[ 3, "#8ea94e" ],
-						[ 4, "#558842" ],
-						[ 5, "#006837" ],
+						[ 1, "#f9da00" ],
+						[ 2, "#bdc31d" ],
+						[ 3, "#80ab1a" ],
+						[ 4, "#358717" ],
+						[ 5, "#00703d" ],
 					],
 				},
 				"fill-opacity": [
 					"case",
 					[ "boolean", [ "feature-state", "hover" ], false ],
-					.8,
-					.5,
+					.9,
+					.6,
 				],
 			},
 		});
@@ -155,6 +153,17 @@
 		});
 	};
 
-	// todo: on moveend redraw grid
+	const onZoomEnd = () => {
+		const zoom = getMapZoom($mapReference);
+		const zoomInt = roundToInt(zoom);
+
+		if (zoomInt === prevZoomLevel)
+			return;
+
+		prevZoomLevel = zoomInt;
+		updateHexagonGrid($ratingsReference);
+	};
+
+	$mapReference.on("zoomend", debounce(onZoomEnd, 300));
 	$: updateHexagonGrid($ratingsReference);
 </script>

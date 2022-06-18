@@ -29,12 +29,12 @@
 				"visibility": "visible",
 			},
 			"paint": {
-				"fill-color": "#0080ff",
+				"fill-color": "#fff",
 				"fill-opacity": [
 					"case",
 					[ "boolean", [ "feature-state", "hover" ], false ],
-					.4,
-					.3,
+					.15,
+					.1,
 				],
 			},
 		});

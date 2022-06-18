@@ -1,15 +1,14 @@
 <script>
 	import { _ } from "svelte-i18n";
-	import mapboxgl from 'mapbox-gl';
-	import 'mapbox-gl/dist/mapbox-gl.css';
-	// import L from "leaflet";
-	// import "leaflet/dist/leaflet.css";
+	import mapboxgl from "mapbox-gl";
+	import "mapbox-gl/dist/mapbox-gl.css";
 	import "/static/styles/mapbox.css";
 
-	import PointsOfInterest from "./components/PointsOfInterest.svelte";
+	// import PointsOfInterest from "./components/PointsOfInterest.svelte";
 	import Communities from "./components/Communities.svelte";
 	import Countries from "./components/Countries.svelte";
 	import Hexagons from "./components/Hexagons.svelte";
+	import POIs from "./components/POIs.svelte";
 	import Data from "./components/Data.svelte";
 	import Polygons from "./components/Polygons.svelte";
 	import Cities from "./components/Cities.svelte";
@@ -29,16 +28,6 @@
 
 	const createMap = node => {
 		const { zoom, center } = $appStateStore;
-
-		// const mapObj = L.map(node, {
-		// 	center: center || [ 53.8, 27.5 ],
-		// 	minZoom: 4,
-		// 	maxZoom: 18,
-		// 	zoom: zoom || 7,
-		// 	preferCanvas: true,
-		// 	worldCopyJump: true,
-		// 	bounceAtZoomLimits: false,
-		// });
 
 		const token = "pk.eyJ1Ijoicm9tYW5pc3RoZXJlIiwiYSI6ImNrc3E2cjYyMTA5eXkyeG5xZXpkcTI0dnUifQ.Bm8W-u4ylJZTzs3sNFu91w";
 		const mapObj = new mapboxgl.Map({
@@ -67,8 +56,6 @@
 		// 	attribution: "© <a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\" rel='noopener'>Mapbox</a> © <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a>",
 		// 	subdomains: [ "a", "b", "c" ],
 		// }).addTo(mapObj);
-
-		// mapObj.zoomControl.setPosition("topright");
 
 		// const debouncedAssign = debounce(() => { mapObj.on("click", onMapClick) }, 350);
 		// mapObj.on("click", onMapClick);
@@ -99,6 +86,7 @@
 		<Countries />
 		<Cities />
 		<Polygons />
+		<POIs />
 <!--		<Hexagons />-->
 <!--		<PointsOfInterest />-->
 <!--		<Draw mapClickRefFuntcion={onMapClick} />-->
