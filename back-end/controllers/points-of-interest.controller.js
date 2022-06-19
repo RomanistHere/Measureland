@@ -102,7 +102,7 @@ exports.POI_get_by_bounds = async (req, res) => {
 					},
 				},
 			},
-			'location.coordinates isAdequate',
+			'location.coordinates isAdequate title',
 		);
 
 		return res.json({

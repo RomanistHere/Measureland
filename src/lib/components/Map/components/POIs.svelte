@@ -3,10 +3,6 @@
 	import { onMount } from "svelte";
 	import mapboxgl from "mapbox-gl";
 
-	import L from "leaflet";
-	// Supercluster is changed on our side, so we can't use npm's one
-	import "../../../external/supercluster.js";
-
 	import { mapReference, poiReference } from "../../../../stores/references.js";
 	import {
 		debounce,
@@ -16,15 +12,26 @@
 		logError,
 		openAnotherOverlay,
 		showSomethingWrongNotification,
+		truncateString,
+		pipe,
 	} from "$lib/utilities/helpers.js";
 	import { fetchPOIsBounds } from "$lib/utilities/api.js";
 	import { appStateStore, poisStore } from "../../../../stores/state.js";
 
-	// Mostly this file is a weak (simpler) copy of ./MarkerCluster.svelte
-	// If (when) this feature is out of beta, extract logic from both files
-
 	const map = $mapReference;
-	let pointsOfInterestLayer;
+	// let cachedPois = [];
+	// let pointsOfInterestLayer;
+
+	// const prepareStringToNotBreak = str =>
+	// 	str.split(" ").join("\u00A0").split("-").join("\u2011");
+
+	const truncateStringToTwenty = str =>
+		truncateString(str, 20);
+
+	// const prepareTitle = pipe(
+	// 	prepareStringToNotBreak,
+	// 	truncateStringToTwenty,
+	// );
 	// let currentCenter = [ 0, 0 ];
 
 	// const initPointOfInterestPopup = ({ latlng }) =>
@@ -71,28 +78,28 @@
 	// 	}
 	// });
 
-	const addMarker = coordsData => {
-		const newPoint = {
-			geometry: {
-				coordinates: coordsData,
-				type: "Point",
-			},
-			properties: {
-				title: "Tobacco factory",
-				isAdequate: true,
-			},
-			type: "Feature",
-		};
-
-		const el = document.createElement("button");
-		el.className = "marker-poi";
-		// const imgUrl = "asdas";
-		// el.style.backgroundImage = `url(${imgUrl})`;
-
-		new mapboxgl.Marker(el)
-			.setLngLat([ -122.4, 37.7 ])
-			.addTo(map);
-	};
+	// const addMarker = coordsData => {
+	// 	const newPoint = {
+	// 		geometry: {
+	// 			coordinates: coordsData,
+	// 			type: "Point",
+	// 		},
+	// 		properties: {
+	// 			title: "Tobacco factory",
+	// 			isAdequate: true,
+	// 		},
+	// 		type: "Feature",
+	// 	};
+	//
+	// 	const el = document.createElement("button");
+	// 	el.className = "marker-poi";
+	// 	// const imgUrl = "asdas";
+	// 	// el.style.backgroundImage = `url(${imgUrl})`;
+	//
+	// 	new mapboxgl.Marker(el)
+	// 		.setLngLat([ -122.4, 37.7 ])
+	// 		.addTo(map);
+	// };
 
 	// const removeMarker = coordsArr => {
 	// 	const { points } = $poiReference;
@@ -143,27 +150,27 @@
 	//
 	// $: deletePOIsExternal($poisStore);
 
-	const addDataAndDisplay = data => {
-		// console.time('fix geojson')
-		const geoData = Object.values(data).map(item => {
-			const newObj = {
-				...item,
-				properties: {
-					averageRating: 5,
-				},
-				geometry: {
-					coordinates: item["location"]["coordinates"],
-					type: "Point",
-				},
-				type: "Feature",
-			};
-			delete newObj["location"];
-			delete newObj["_id"];
-			return newObj;
-		});
-
-		poiReference.set(pointsOfInterestLayer);
-	};
+	// const addDataAndDisplay = data => {
+	// 	// console.time('fix geojson')
+	// 	const geoData = Object.values(data).map(item => {
+	// 		const newObj = {
+	// 			...item,
+	// 			properties: {
+	// 				averageRating: 5,
+	// 			},
+	// 			geometry: {
+	// 				coordinates: item["location"]["coordinates"],
+	// 				type: "Point",
+	// 			},
+	// 			type: "Feature",
+	// 		};
+	// 		delete newObj["location"];
+	// 		delete newObj["_id"];
+	// 		return newObj;
+	// 	});
+	//
+	// 	poiReference.set(pointsOfInterestLayer);
+	// };
 
 	const loadPOIs = async () => {
 		const { zoom, currentScreenPoly } = getScreenData(map);
@@ -184,7 +191,8 @@
 		const { result } = data;
 		const filteredData = result.filter(item => item.isAdequate);
 
-		addDataAndDisplay(filteredData);
+		displayData(filteredData);
+		// addDataAndDisplay(filteredData);
 	};
 
 	const debouncedLoading = debounce(loadPOIs, 300);
@@ -205,6 +213,116 @@
 	// $: checkTogglePOIs($appStateStore);
 
 	// don't use native "moveend" event, it triggers on every button click in popups
-	// map.on("move", debouncedLoading);
-	// onMount(debouncedLoading);
+	map.on("move", debouncedLoading);
+	onMount(debouncedLoading);
+
+	const imagesToLoad = {
+		"red-marker": "../images/map/poi-red.png",
+		"green-marker": "../images/map/poi-green.png",
+		"gray-marker": "../images/map/poi-gray.png",
+	};
+
+	let loadedImages = {};
+
+	const loadImages = (urls, callback) => {
+		const makeCallback = name =>
+			(err, image) => {
+				loadedImages = {
+					...loadedImages,
+					[name]: err ? null : image,
+				};
+
+				// if all images are loaded, call the callback
+				if (Object.keys(loadedImages).length === Object.keys(urls).length) {
+					callback(loadedImages);
+				}
+			};
+
+		if (Object.keys(loadedImages).length === Object.keys(urls).length) {
+			callback(loadedImages);
+			return;
+		}
+
+		for (const name in urls) {
+			map.loadImage(urls[name], makeCallback(name));
+		}
+	};
+
+	const preparePOIsJson = poiData => ({
+		"type": "FeatureCollection",
+		"features": poiData.map(({ location, title }) => ({
+			"type": "Feature",
+			"geometry": {
+				"type": "Point",
+				"coordinates": location["coordinates"],
+			},
+			"properties": {
+				"image-name": title.includes("парк") ? "green-marker" : title.includes("завод") || title.includes("фабрика") || title.includes("развязка") || title.includes("комбинат") ? "red-marker" : "red-marker",
+				"name": truncateStringToTwenty(title),
+				"full-name": title,
+			},
+		})),
+	});
+
+	const displayData = poiData => {
+		console.log(poiData);
+
+		loadImages(imagesToLoad, loadedImages => {
+			console.log(loadedImages);
+
+			const poiJson = preparePOIsJson(poiData);
+
+			console.log(poiJson);
+
+			if (map.getSource("POIs")) {
+				map.getSource("POIs").setData(poiJson);
+				return;
+			}
+
+			map.addImage("red-marker", loadedImages["red-marker"], {
+				"stretchX": [[ 24, 160 ]],
+				"stretchY": [[ 0, 40 ]],
+				"content": [ 20, 3, 170, 28 ],
+				"pixelRatio": 2,
+			});
+
+			map.addImage("green-marker", loadedImages["green-marker"], {
+				"stretchX": [[ 24, 160 ]],
+				"stretchY": [[ 0, 40 ]],
+				"content": [ 20, 3, 170, 28 ],
+				"pixelRatio": 2,
+			});
+
+			map.addImage("gray-marker", loadedImages["gray-marker"], {
+				"stretchX": [[ 24, 160 ]],
+				"stretchY": [[ 0, 40 ]],
+				"content": [ 20, 3, 170, 28 ],
+				"pixelRatio": 2,
+			});
+
+			map.addSource("POIs", {
+				"type": "geojson",
+				"data": poiJson,
+			});
+
+			map.addLayer({
+				"id": "POIs",
+				"type": "symbol",
+				"source": "POIs",
+				"layout": {
+					"text-field": [ "get", "name" ],
+					"text-max-width": 20,
+					"icon-text-fit": "both",
+					"icon-image": [ "get", "image-name" ],
+					"icon-allow-overlap": false,
+					"text-allow-overlap": false,
+					"icon-anchor": "bottom-right",
+					"text-anchor": "bottom-right",
+				},
+				"paint": {
+					"text-color": "#ffffff",
+				},
+			});
+		});
+	};
 </script>

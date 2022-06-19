@@ -420,6 +420,12 @@ const removeBigNumberValuesInJsonValues = json =>
 const generateRandomString = () =>
 	Math.random().toString(16).slice(2);
 
+const pipe = (...fns) =>
+	x => fns.reduce((v, f) => f(v), x);
+
+const compose = (...fns) =>
+	x => fns.reduceRight((v, f) => f(v), x);
+
 export {
 	debounce,
 	sleep,
@@ -458,4 +464,5 @@ export {
 	getOpenedOverlay,
 	generateRandomString,
 	removeBigNumberValuesInJsonValues,
+	pipe,
 };
