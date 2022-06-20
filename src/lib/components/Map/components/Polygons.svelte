@@ -3,12 +3,13 @@
 	import { fly } from "svelte/transition";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
-	import { getBoundsData, roundToInt, debounce, getMapZoom } from "$lib/utilities/helpers.js";
+	import { getBoundsData, roundToInt, debounce, getMapZoom, roundToHundredth } from "$lib/utilities/helpers.js";
 	import {
 		assignIDsToFeatures,
 		getPointsInsideAndOutsidePolygon,
 	} from "$lib/components/Map/utils/index.js";
 	import { cityBounds } from "$lib/components/Map/objects/cityBounds.js";
+	import { mapLoadingProgress } from "../../../../stores/state.js";
 
 	let hoveredHexagonId = null;
 	let hoveredHexagon = null;
@@ -29,7 +30,7 @@
 		7: 3,
 		6: 3,
 		5: 3,
-		4: 5,
+		4: 3,
 	};
 
 	const getCorrectCollection = zoom => {
@@ -62,10 +63,13 @@
 		const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
 		const averagedHexagonValues = notEmptyHexagonValues.map(item => {
 			const { properties } = item;
+			const { length } = properties.ratings;
 			return {
 				...item,
 				properties: {
-					avRating: roundToInt(properties.ratings.reduce((i, acc) => acc + i, 0) / properties.ratings.length),
+					averageRatingRounded: roundToInt(properties.ratings.reduce((i, acc) => acc + i, 0) / length),
+					averageRating: roundToHundredth(properties.ratings.reduce((i, acc) => acc + i, 0) / length),
+					numberOfRatings: length,
 				},
 			};
 		});
@@ -96,7 +100,7 @@
 			},
 			"paint": {
 				"fill-color": {
-					"property": "avRating", // this will be your density property form you geojson
+					"property": "averageRatingRounded", // this will be your density property form you geojson
 					"stops": [
 						[ 1, "#f9da00" ],
 						[ 2, "#bdc31d" ],
@@ -128,7 +132,10 @@
 				}
 
 				hoveredHexagonId = e.features[0].id;
-				hoveredHexagon = { number: 2, average: e.features[0].properties.avRating };
+				hoveredHexagon = {
+					number: e.features[0].properties.numberOfRatings,
+					average: e.features[0].properties.averageRating,
+				};
 
 				map.setFeatureState({
 					source: "hexagons",
@@ -159,6 +166,8 @@
 			const bounds = bbox(e.features[0].geometry);
 			map.fitBounds(bounds);
 		});
+
+		mapLoadingProgress.update(state => ({ ...state, hexagons: true }));
 	};
 
 	const onZoomEnd = () => {

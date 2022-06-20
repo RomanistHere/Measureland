@@ -7,6 +7,7 @@
 	import { cityBounds } from "../objects/cityBounds.js";
 	import { getLayerStats, assignIDsToFeatures } from "../utils";
 	import { openAnotherOverlay } from "$lib/utilities/helpers.js";
+	import { mapLoadingProgress } from "../../../../stores/state.js";
 
 	let hoveredCity = null;
 	let hoveredCityId = null;
@@ -52,9 +53,13 @@
 			},
 		});
 
-		setTimeout(() => {
+		mapLoadingProgress.subscribe(({ pois, hexagons }) => {
+			if (!pois || !hexagons)
+				return;
+
 			// it's important to assign event handlers on city at the end
 			// otherwise it won't be called last and `defaultPrevented` won't work
+			// todo: fire when everything's loaded
 			map.on("mousemove", "cities-layer", e => {
 				if (e.originalEvent.defaultPrevented) {
 					hoveredCityId = null;
@@ -117,7 +122,7 @@
 					number,
 				});
 			});
-		}, 1000);
+		});
 	};
 
 	onMount(initCityLayer);

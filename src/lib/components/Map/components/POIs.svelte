@@ -16,7 +16,7 @@
 		roundToHundredth,
 	} from "$lib/utilities/helpers.js";
 	import { fetchPOIsBounds } from "$lib/utilities/api.js";
-	import { appStateStore, poisStore } from "../../../../stores/state.js";
+	import { appStateStore, poisStore, mapLoadingProgress } from "../../../../stores/state.js";
 
 	const map = $mapReference;
 
@@ -351,6 +351,8 @@
 					lng: e.features[0].geometry.coordinates[0],
 				});
 			});
+
+			mapLoadingProgress.update(state => ({ ...state, pois: true }));
 		});
 	};
 </script>

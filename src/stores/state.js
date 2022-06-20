@@ -57,3 +57,8 @@ export const shouldShowFiltersNotification = derived(filtersStore, $filtersStore
 export const appWidth = writable(0);
 
 export const isDesktop = derived(appWidth, $appWidth => $appWidth >= 1024);
+
+export const mapLoadingProgress = writable({
+	pois: false,
+	hexagons: false,
+});
