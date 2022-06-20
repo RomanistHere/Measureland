@@ -1,12 +1,17 @@
 <script>
 	import { bbox, collect, flatten, hexGrid } from "@turf/turf";
+	import { fly } from "svelte/transition";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import { getBoundsData, roundToInt, debounce, getMapZoom } from "$lib/utilities/helpers.js";
-	import { assignIDsToFeatures, getPointsInsideAndOutsidePolygon } from "$lib/components/Map/utils/index.js";
+	import {
+		assignIDsToFeatures,
+		getPointsInsideAndOutsidePolygon,
+	} from "$lib/components/Map/utils/index.js";
 	import { cityBounds } from "$lib/components/Map/objects/cityBounds.js";
 
 	let hoveredHexagonId = null;
+	let hoveredHexagon = null;
 	let prevZoomLevel = 0;
 
 	const zoomToHexSize = {
@@ -23,8 +28,8 @@
 		8: 2,
 		7: 3,
 		6: 3,
-		5: 10,
-		4: 20,
+		5: 3,
+		4: 5,
 	};
 
 	const getCorrectCollection = zoom => {
@@ -110,6 +115,7 @@
 		});
 
 		map.on("mousemove", "hexagons-layer", e => {
+			e.originalEvent.preventDefault();
 			map.getCanvas().style.cursor = "pointer";
 			if (e.features.length > 0) {
 				if (hoveredHexagonId) {
@@ -122,6 +128,7 @@
 				}
 
 				hoveredHexagonId = e.features[0].id;
+				hoveredHexagon = { number: 2, average: e.features[0].properties.avRating };
 
 				map.setFeatureState({
 					source: "hexagons",
@@ -145,6 +152,7 @@
 			}
 
 			hoveredHexagonId = null;
+			hoveredHexagon = null;
 		});
 
 		map.on("click", "hexagons-layer", e => {
@@ -167,3 +175,16 @@
 	$mapReference.on("zoomend", debounce(onZoomEnd, 300));
 	$: updateHexagonGrid($ratingsReference);
 </script>
+
+{#if hoveredHexagon}
+	<div
+		class="absolute px-5 py-2.5 top-36 right-0 z-5 bg-white w-64 text-left rounded-l-lg overflow-hidden transition-transform translate-x-2 hover:translate-x-0"
+		in:fly="{{ x: 300, duration: 500 }}"
+		out:fly="{{ x: 300, duration: 500 }}"
+	>
+		<span class="absolute w-2.5 h-full left-0 top-0 bg-main"></span>
+		<span class="block leading-5 pb-px text-main">
+			{hoveredHexagon.number} оценки, средняя: {hoveredHexagon.average}
+		</span>
+	</div>
+{/if}

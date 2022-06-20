@@ -23,8 +23,8 @@
 	import { mapReference, leafletReference } from "../../../../../../stores/references.js";
 	import { appStateStore, isDesktop, overlayStateStore, userStateStore } from "../../../../../../stores/state.js";
 
-	const map = $mapReference;
-	const L = $leafletReference;
+	// const map = $mapReference;
+	// const L = $leafletReference;
 
 	export let popupData = {};
 
@@ -34,7 +34,7 @@
 	let isLikesDisabled = true;
 	let isDislikesDisabled = true;
 	let isOwnPOI = false;
-	let circle = null;
+	// let circle = null;
 	let pointID = null;
 	let currentCoords = { lat: 0, lng: 0 };
 	// translation
@@ -144,13 +144,13 @@
 		const { address } = await getApproximateAddressAndCountry(lat, lng, $locale);
 		approximateAdress = address;
 
-		if (circle)
-			map.removeLayer(circle);
+		// if (circle)
+		// 	map.removeLayer(circle);
 
-		circle = L.circle({ lng, lat }, 300, { color: "#007097" });
-
-		circle.addTo(map);
-		centerMap(map, lat, lng, $isDesktop);
+		// circle = L.circle({ lng, lat }, 300, { color: "#007097" });
+		//
+		// circle.addTo(map);
+		// centerMap(map, lat, lng, $isDesktop);
 		const { error, data } = await getSinglePointOfInterest([ lng, lat ]);
 
 		if (error) {
@@ -209,8 +209,8 @@
 
 	onDestroy(() => {
 		appStateStore.update(state => ({ ...state, showPOI: false }));
-		map.removeLayer(circle);
-		circle = null;
+		// map.removeLayer(circle);
+		// circle = null;
 	});
 </script>
 

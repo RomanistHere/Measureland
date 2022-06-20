@@ -423,8 +423,15 @@ const generateRandomString = () =>
 const pipe = (...fns) =>
 	x => fns.reduce((v, f) => f(v), x);
 
+// not currently used
 const compose = (...fns) =>
 	x => fns.reduceRight((v, f) => f(v), x);
+
+const removeDuplicatesById = arr =>
+	arr.filter((v, i, a) => a.findIndex(v2 => (v2._id === v._id)) === i);
+
+const prepareStringToNotBreak = str =>
+	str.split(" ").join("\u00A0").split("-").join("\u2011");
 
 export {
 	debounce,

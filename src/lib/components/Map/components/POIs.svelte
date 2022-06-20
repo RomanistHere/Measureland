@@ -1,7 +1,6 @@
 <script>
 	import { _ } from "svelte-i18n";
 	import { onMount } from "svelte";
-	import mapboxgl from "mapbox-gl";
 
 	import { mapReference, poiReference } from "../../../../stores/references.js";
 	import {
@@ -14,16 +13,16 @@
 		showSomethingWrongNotification,
 		truncateString,
 		pipe,
+		roundToHundredth,
 	} from "$lib/utilities/helpers.js";
 	import { fetchPOIsBounds } from "$lib/utilities/api.js";
 	import { appStateStore, poisStore } from "../../../../stores/state.js";
 
 	const map = $mapReference;
-	// let cachedPois = [];
-	// let pointsOfInterestLayer;
 
-	// const prepareStringToNotBreak = str =>
-	// 	str.split(" ").join("\u00A0").split("-").join("\u2011");
+	let cachedPois = [];
+	let hoveredPoiId = null;
+	// let pointsOfInterestLayer;
 
 	const truncateStringToTwenty = str =>
 		truncateString(str, 20);
@@ -34,40 +33,8 @@
 	// );
 	// let currentCenter = [ 0, 0 ];
 
-	// const initPointOfInterestPopup = ({ latlng }) =>
-	// 	openAnotherOverlay("pointOfInterestPopup", latlng);
-	//
-	// const icon = L.icon({
-	// 	iconUrl: "../images/attention.svg",
-	// 	iconSize: [ 23, 54 ],
-	// 	iconAnchor: [ 5, 30 ],
-	// });
-
-	// const createClusterIcon = (feature, latlng) => {
-	// 	const marker = L.marker(latlng, {
-	// 		icon,
-	// 		title: $_("POIs.iconTitle"),
-	// 		riseOnHover: true,
-	// 	});
-	//
-	// 	if (!feature.properties.cluster) {
-	// 		// single point
-	// 		marker.on("click", initPointOfInterestPopup);
-	// 		marker.on("keyup", e => {
-	// 			if (e.originalEvent.key === "Enter") {
-	// 				openAnotherOverlay("pointOfInterestPopup", e.target._latlng);
-	// 			}
-	// 		});
-	// 	} else {
-	// 		marker.on("keyup", e => {
-	// 			if (e.originalEvent.key === "Enter") {
-	// 				map.zoomIn();
-	// 			}
-	// 		});
-	// 	}
-	//
-	// 	return marker;
-	// };
+	const initPointOfInterestPopup = latlng =>
+		openAnotherOverlay("pointOfInterestPopup", latlng);
 
 	// clusterMarkers.on("click", e => {
 	// 	const clusterId = e.layer.feature.properties.cluster_id;
@@ -150,28 +117,6 @@
 	//
 	// $: deletePOIsExternal($poisStore);
 
-	// const addDataAndDisplay = data => {
-	// 	// console.time('fix geojson')
-	// 	const geoData = Object.values(data).map(item => {
-	// 		const newObj = {
-	// 			...item,
-	// 			properties: {
-	// 				averageRating: 5,
-	// 			},
-	// 			geometry: {
-	// 				coordinates: item["location"]["coordinates"],
-	// 				type: "Point",
-	// 			},
-	// 			type: "Feature",
-	// 		};
-	// 		delete newObj["location"];
-	// 		delete newObj["_id"];
-	// 		return newObj;
-	// 	});
-	//
-	// 	poiReference.set(pointsOfInterestLayer);
-	// };
-
 	const loadPOIs = async () => {
 		const { zoom, currentScreenPoly } = getScreenData(map);
 		const queryBounds = currentScreenPoly.regions[0];
@@ -192,7 +137,6 @@
 		const filteredData = result.filter(item => item.isAdequate);
 
 		displayData(filteredData);
-		// addDataAndDisplay(filteredData);
 	};
 
 	const debouncedLoading = debounce(loadPOIs, 300);
@@ -250,50 +194,82 @@
 
 	const preparePOIsJson = poiData => ({
 		"type": "FeatureCollection",
-		"features": poiData.map(({ location, title }) => ({
+		"features": poiData.map(({ location, title }, i) => ({
 			"type": "Feature",
 			"geometry": {
 				"type": "Point",
 				"coordinates": location["coordinates"],
 			},
 			"properties": {
-				"image-name": title.includes("парк") ? "green-marker" : title.includes("завод") || title.includes("фабрика") || title.includes("развязка") || title.includes("комбинат") ? "red-marker" : "red-marker",
+				// todo: add type to back and and to it based on the type
+				// eslint-disable-next-line max-len
+				"image-name": title.includes("парк") ? "green-marker" : title.includes("завод") || title.includes("фабрика") || title.includes("развязка") || title.includes("комбинат") ? "red-marker" : "gray-marker",
 				"name": truncateStringToTwenty(title),
 				"full-name": title,
 			},
+			"id": i,
 		})),
 	});
 
+	const addNonDuplicatesToArr = (arr1, arr2) => {
+		let newArr = [ ...arr1 ];
+		for (let i = 0; i < arr2.length; i++) {
+			const elem = arr2[i];
+			const isInArr = newArr.find(item => item._id === elem._id);
+
+			if (!isInArr)
+				newArr = [ ...newArr, elem ];
+		}
+
+		return newArr;
+	};
+
+	const addNewPOI = newPOI => {
+		// todo: check
+		cachedPois = addNonDuplicatesToArr(cachedPois, [ newPOI ]);
+		const poiJson = preparePOIsJson(cachedPois);
+
+		if (map.getSource("POIs")) {
+			map.getSource("POIs").setData(poiJson);
+		}
+	};
+
+	const removePOI = poi => {
+		// todo: check
+		// cachedPois = removeFromArr(cachedPois, poi);
+		// const poiJson = preparePOIsJson(cachedPois);
+		//
+		// if (map.getSource("POIs")) {
+		// 	map.getSource("POIs").setData(poiJson);
+		// }
+	};
+
 	const displayData = poiData => {
-		console.log(poiData);
+		cachedPois = addNonDuplicatesToArr(cachedPois, poiData);
 
-		loadImages(imagesToLoad, loadedImages => {
-			console.log(loadedImages);
-
+		loadImages(imagesToLoad, imagesResp => {
 			const poiJson = preparePOIsJson(poiData);
-
-			console.log(poiJson);
 
 			if (map.getSource("POIs")) {
 				map.getSource("POIs").setData(poiJson);
 				return;
 			}
 
-			map.addImage("red-marker", loadedImages["red-marker"], {
+			map.addImage("red-marker", imagesResp["red-marker"], {
 				"stretchX": [[ 24, 160 ]],
 				"stretchY": [[ 0, 40 ]],
 				"content": [ 20, 3, 170, 28 ],
 				"pixelRatio": 2,
 			});
 
-			map.addImage("green-marker", loadedImages["green-marker"], {
+			map.addImage("green-marker", imagesResp["green-marker"], {
 				"stretchX": [[ 24, 160 ]],
 				"stretchY": [[ 0, 40 ]],
 				"content": [ 20, 3, 170, 28 ],
 				"pixelRatio": 2,
 			});
 
-			map.addImage("gray-marker", loadedImages["gray-marker"], {
+			map.addImage("gray-marker", imagesResp["gray-marker"], {
 				"stretchX": [[ 24, 160 ]],
 				"stretchY": [[ 0, 40 ]],
 				"content": [ 20, 3, 170, 28 ],
@@ -306,7 +282,7 @@
 			});
 
 			map.addLayer({
-				"id": "POIs",
+				"id": "POIs-layer",
 				"type": "symbol",
 				"source": "POIs",
 				"layout": {
@@ -321,7 +297,59 @@
 				},
 				"paint": {
 					"text-color": "#ffffff",
+					"icon-opacity": [
+						"case",
+						[ "boolean", [ "feature-state", "hover" ], false ],
+						.7,
+						1,
+					],
 				},
+			});
+
+			map.on("mousemove", "POIs-layer", e => {
+				e.originalEvent.preventDefault();
+				map.getCanvas().style.cursor = "pointer";
+				if (e.features.length > 0) {
+					if (hoveredPoiId) {
+						map.setFeatureState({
+							source: "POIs",
+							id: hoveredPoiId,
+						}, {
+							hover: false,
+						});
+					}
+
+					hoveredPoiId = e.features[0].id;
+
+					map.setFeatureState({
+						source: "POIs",
+						id: hoveredPoiId,
+					}, {
+						hover: true,
+					});
+				}
+			});
+
+			map.on("mouseleave", "POIs-layer", () => {
+				map.getCanvas().style.cursor = "";
+
+				if (hoveredPoiId !== null) {
+					map.setFeatureState({
+						source: "POIs",
+						id: hoveredPoiId,
+					}, {
+						hover: false,
+					});
+				}
+
+				hoveredPoiId = null;
+			});
+
+			map.on("click", "POIs-layer", e => {
+				initPointOfInterestPopup({
+					lat: e.features[0].geometry.coordinates[1],
+					lng: e.features[0].geometry.coordinates[0],
+				});
 			});
 		});
 	};

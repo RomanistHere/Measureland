@@ -52,10 +52,43 @@
 			},
 		});
 
-		map.on("mousemove", "cities-layer", e => {
-			map.getCanvas().style.cursor = "pointer";
-			if (e.features.length > 0) {
-				if (hoveredCityId) {
+		setTimeout(() => {
+			// it's important to assign event handlers on city at the end
+			// otherwise it won't be called last and `defaultPrevented` won't work
+			map.on("mousemove", "cities-layer", e => {
+				if (e.originalEvent.defaultPrevented) {
+					hoveredCityId = null;
+					hoveredCity = null;
+					return;
+				}
+
+				map.getCanvas().style.cursor = "pointer";
+				if (e.features.length > 0) {
+					if (hoveredCityId) {
+						map.setFeatureState({
+							source: "cities",
+							id: hoveredCityId,
+						}, {
+							hover: false,
+						});
+					}
+
+					hoveredCityId = e.features[0].id;
+					hoveredCity = getLayerStats(e.features[0], $ratingsReference);
+
+					map.setFeatureState({
+						source: "cities",
+						id: hoveredCityId,
+					}, {
+						hover: true,
+					});
+				}
+			});
+
+			map.on("mouseleave", "cities-layer", () => {
+				map.getCanvas().style.cursor = "";
+
+				if (hoveredCityId !== null) {
 					map.setFeatureState({
 						source: "cities",
 						id: hoveredCityId,
@@ -64,50 +97,27 @@
 					});
 				}
 
-				hoveredCityId = e.features[0].id;
-				hoveredCity = getLayerStats(e.features[0], $ratingsReference);
-
-				map.setFeatureState({
-					source: "cities",
-					id: hoveredCityId,
-				}, {
-					hover: true,
-				});
-			}
-		});
-
-		map.on("mouseleave", "cities-layer", () => {
-			map.getCanvas().style.cursor = "";
-
-			if (hoveredCityId !== null) {
-				map.setFeatureState({
-					source: "cities",
-					id: hoveredCityId,
-				}, {
-					hover: false,
-				});
-			}
-
-			hoveredCityId = null;
-			hoveredCity = null;
-		});
-
-		map.on("click", "cities-layer", e => {
-			hoveredCity = null;
-			const bounds = bbox(e.features[0].geometry);
-			map.fitBounds(bounds);
-
-			const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
-
-			if (number === 0)
-				return;
-
-			openAnotherOverlay("cityRatingPopup", {
-				name,
-				ratings,
-				number,
+				hoveredCityId = null;
+				hoveredCity = null;
 			});
-		});
+
+			map.on("click", "cities-layer", e => {
+				hoveredCity = null;
+				const bounds = bbox(e.features[0].geometry);
+				map.fitBounds(bounds);
+
+				const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
+
+				if (number === 0)
+					return;
+
+				openAnotherOverlay("cityRatingPopup", {
+					name,
+					ratings,
+					number,
+				});
+			});
+		}, 1000);
 	};
 
 	onMount(initCityLayer);
