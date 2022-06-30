@@ -22,6 +22,7 @@ const geoRouter = require('./routes/geo.route');
 const pointsOfInterestRouter = require('./routes/points-of-interest.route');
 const userRouter = require('./routes/user.route');
 const flowRouter = require('./routes/flow.route');
+const storiesRouter = require('./routes/stories.route');
 const externalApiRouter = require('./routes/externalApi.route');
 const winston = require('./helpers/winston');
 
@@ -120,6 +121,7 @@ const geoLimiter = rateLimit({
 
 // routes
 app.use('/api/geo', geoLimiter, geoRouter);
+app.use('/api/stories', geoLimiter, storiesRouter);
 app.use('/api/poi', geoLimiter, pointsOfInterestRouter);
 // user api limited in user.route.js
 app.use('/api/user', userRouter);

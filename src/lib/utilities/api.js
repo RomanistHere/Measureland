@@ -431,6 +431,12 @@ const authThirdParty = async ({ id, type, lang }) => {
 	});
 };
 
+const fetchStories = async () => {
+	const url = `${API_URL}/stories/read_all`;
+
+	return await fetchFunction({ url });
+};
+
 export {
 	fetchFunction,
 	saveToDB,
@@ -470,4 +476,5 @@ export {
 	deleteCommentPOI,
 	reportReason,
 	authThirdParty,
+	fetchStories,
 };

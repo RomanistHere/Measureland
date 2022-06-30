@@ -54,6 +54,10 @@
 
 		const map = $mapReference;
 		const { east, north, south, west, zoom } = getBoundsData(map);
+
+		if (zoom < 6)
+			return;
+
 		const bounds = [ west, south, east, north ];
 
 		const hexagons = hexGrid(bounds, zoomToHexSize[roundToInt(zoom)]);
