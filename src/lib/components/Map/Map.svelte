@@ -87,7 +87,7 @@
 		<Cities />
 		<Polygons />
 		<POIs />
-<!--		<Stories />-->
+		<Stories />
 <!--		<Hexagons />-->
 <!--		<PointsOfInterest />-->
 <!--		<Draw mapClickRefFuntcion={onMapClick} />-->

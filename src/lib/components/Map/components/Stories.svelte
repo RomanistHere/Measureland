@@ -91,22 +91,25 @@
 
 	const preparePOIsJson = markerData => ({
 		"type": "FeatureCollection",
-		"features": markerData.map(({ coords, title }, i) => ({
+		"features": markerData.map(({ location, title, _id }) => ({
 			"type": "Feature",
 			"geometry": {
 				"type": "Point",
-				"coordinates": coords,
+				"coordinates": location.coordinates,
 			},
 			"properties": {
 				"image-name": "story-marker",
 				"name": truncateStringToTwenty(title),
 				"full-name": title,
+				"id": _id,
 			},
-			"id": i,
 		})),
 	});
 
 	const displayData = storiesData => {
+		if (!storiesData || storiesData.length === 0)
+			return;
+
 		loadImages(imagesToLoad, imagesResp => {
 			const storiesJson = preparePOIsJson(storiesData);
 			console.log(storiesJson);
@@ -122,6 +125,7 @@
 			map.addSource("stories", {
 				"type": "geojson",
 				"data": storiesJson,
+				"generateId": true,
 			});
 
 			// Add a symbol layer
@@ -147,7 +151,7 @@
 							hover: false,
 						});
 					}
-					console.log(e.features[0]);
+					// console.log(e.features[0]);
 					hoveredStoryId = e.features[0].id;
 
 					map.setFeatureState({
@@ -175,10 +179,11 @@
 			});
 
 			map.on("click", "stories", e => {
-				initPointOfInterestPopup({
-					lat: e.features[0].geometry.coordinates[1],
-					lng: e.features[0].geometry.coordinates[0],
-				});
+				console.log(e.features[0]);
+				// initPointOfInterestPopup({
+				// 	lat: e.features[0].geometry.coordinates[1],
+				// 	lng: e.features[0].geometry.coordinates[0],
+				// });
 			});
 
 			// mapLoadingProgress.update(state => ({ ...state, pois: true }));
