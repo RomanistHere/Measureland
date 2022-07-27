@@ -35,8 +35,8 @@ exports.getFullStory = async (req, res, next) => {
 		const result = {
 			isLiked: user ? story.likes.some(item => item.equals(userID)) : false,
 			isDisliked: user ? story.dislikes.some(item => item.equals(userID)) : false,
-			liked: story.likes.length,
-			disliked: story.dislikes.length,
+			likes: story.likes.length,
+			dislikes: story.dislikes.length,
 			author: story.author,
 			content: story.content,
 			title: story.title,
