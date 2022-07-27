@@ -437,6 +437,12 @@ const fetchStories = async () => {
 	return await fetchFunction({ url });
 };
 
+const fetchStory = async storyId => {
+	const url = `${API_URL}/stories/read_single/${new URLSearchParams({ storyId })}`;
+
+	return await fetchFunction({ url });
+};
+
 export {
 	fetchFunction,
 	saveToDB,
@@ -477,4 +483,5 @@ export {
 	reportReason,
 	authThirdParty,
 	fetchStories,
+	fetchStory,
 };

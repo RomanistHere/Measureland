@@ -45,6 +45,9 @@ const config = {
 			height: {
 				'100': '25rem',
 			},
+			width: {
+				'128': '32rem',
+			},
 			listStyleType: {
 				square: 'square',
 			},

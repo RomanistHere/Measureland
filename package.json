@@ -44,9 +44,12 @@
 		"mapbox-gl": "^2.8.2",
 		"nouislider": "^15.5.1",
 		"polybooljs": "^1.2.0",
+		"sanitize-html": "^2.7.1",
+		"simple-scrollbar": "^0.4.0",
+		"simplebar": "^5.3.8",
 		"svelte-focus-trap": "^1.2.0",
 		"svelte-i18n": "^3.4.0",
 		"swiper": "^8.1.4",
-		"web3": "^1.7.3"
+		"web3": "^0.20.7"
 	}
 }

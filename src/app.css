@@ -81,3 +81,13 @@
 	/*	url('/static/fonts/Manrope-ExtraBold.woff') format('woff');*/
 	/*}*/
 }
+
+.ss-container .ss-scroll {
+	/*opacity: 1;*/
+	/*width: 4px;*/
+	background: rgba(154, 154, 167, .16);
+	/*margin-left: -28px;*/
+	/*right: 8px !important;*/
+	/*position: absolute;*/
+	/*margin: 1.5rem 0;*/
+}

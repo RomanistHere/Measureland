@@ -14,6 +14,10 @@ const schema = new Schema({
 		type: String,
 		required: true,
 	},
+	slug: {
+		type: String,
+		required: true,
+	},
 	author: {
 		type: String,
 		required: true,

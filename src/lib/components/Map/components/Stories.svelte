@@ -91,7 +91,7 @@
 
 	const preparePOIsJson = markerData => ({
 		"type": "FeatureCollection",
-		"features": markerData.map(({ location, title, _id }) => ({
+		"features": markerData.map(({ location, title, slug }) => ({
 			"type": "Feature",
 			"geometry": {
 				"type": "Point",
@@ -101,7 +101,7 @@
 				"image-name": "story-marker",
 				"name": truncateStringToTwenty(title),
 				"full-name": title,
-				"id": _id,
+				"slug": slug,
 			},
 		})),
 	});
