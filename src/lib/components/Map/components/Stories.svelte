@@ -100,7 +100,7 @@
 			"properties": {
 				"image-name": "story-marker",
 				"name": truncateStringToTwenty(title),
-				"full-name": title,
+				"title": title,
 				"slug": slug,
 			},
 		})),
@@ -179,11 +179,11 @@
 			});
 
 			map.on("click", "stories", e => {
-				console.log(e.features[0]);
-				// initPointOfInterestPopup({
-				// 	lat: e.features[0].geometry.coordinates[1],
-				// 	lng: e.features[0].geometry.coordinates[0],
-				// });
+				openAnotherOverlay("storyModal", {
+					storySlug: e.features[0].properties.slug,
+					title: e.features[0].properties.title,
+					lngLat: e.lngLat,
+				});
 			});
 
 			// mapLoadingProgress.update(state => ({ ...state, pois: true }));

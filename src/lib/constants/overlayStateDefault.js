@@ -155,7 +155,7 @@ export const overlayStateDefault = {
 		data: {},
 	},
 	storyModal: {
-		isOpen: true,
+		isOpen: false,
 		type: "modal",
 		data: {},
 	},

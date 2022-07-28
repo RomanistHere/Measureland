@@ -11,26 +11,44 @@
 	import Story from "$lib/components/Story/Story.svelte";
 
 	import { fetchStory } from "$lib/utilities/api.js";
+	import { logError, closeOverlay } from "$lib/utilities/helpers.js";
+	import { mapReference } from "../../../../../stores/references.js";
+	import { appStateStore } from "../../../../../stores/state.js";
 
 	export let modalData;
 
-	let currentStoryId = null;
+	const map = $mapReference;
+
+	let currentStorySlug = null;
 	let storyConfig = {
-		title: "",
+		lngLat: modalData.lngLat || null,
+		title: modalData.title || "",
 		bodyHtml: "",
 		author: "",
+		likes: 0,
+		dislikes: 0,
+		isLiked: false,
+		isDisliked: false,
 	};
 
 	$: promise = null;
 
-	const fetchData = async ({ storyId }) => {
-		const conststoryId = "62e058fbb706ab3645d6ca1a";
-		const { data, error } = await fetchStory(conststoryId);
+	const fetchData = async ({ storySlug, lngLat }) => {
+		const { data, error } = await fetchStory(storySlug);
 
-		console.log(data);
+		if (error) {
+			logError(error);
+			closeOverlay("modal");
+			return;
+		}
 
 		const { result } = data;
+
+		if (!lngLat)
+			map.flyTo({ center: result.lngLat });
+
 		storyConfig = {
+			...storyConfig,
 			...result,
 			bodyHtml: sanitizeHtml(result.content, {
 				allowedTags: sanitizeHtml.defaults.allowedTags.concat([ "img" ]),
@@ -41,12 +59,17 @@
 			const SimpleScrollbar = await import("simple-scrollbar");
 			SimpleScrollbar.initAll();
 		}
+
+		appStateStore.update(state => ({ ...state, openedStory: storySlug }));
 	};
 
 	// need to check in order not to do unnecessary requests.
-	$: if (currentStoryId !== modalData.storyId) {
+	$: if (currentStorySlug !== modalData.storySlug) {
+		if (modalData.lngLat)
+			map.flyTo({ center: modalData.lngLat });
+
 		promise = fetchData(modalData);
-		currentStoryId = modalData.storyId;
+		currentStorySlug = modalData.storySlug;
 	}
 </script>
 

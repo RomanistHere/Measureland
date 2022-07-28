@@ -15,7 +15,6 @@ exports.getAllStories = async (req, res, next) => {
 			},
 		});
 	} catch (error) {
-		console.log(error);
 		Sentry.captureException(error);
 		return res.status(400).json({ error });
 	}
@@ -23,11 +22,11 @@ exports.getAllStories = async (req, res, next) => {
 
 exports.getFullStory = async (req, res, next) => {
 	const userid = sanitize(req.session.userID);
-	const urlParams = new URLSearchParams(req.params.ratingID);
-	const { storyId } = Object.fromEntries(urlParams);
+	const urlParams = new URLSearchParams(req.params.storySlug);
+	const { storySlug } = Object.fromEntries(urlParams);
 
 	try {
-		const story = await Story.findOne({ "_id": sanitize(storyId) }, "-location -_id");
+		const story = await Story.findOne({ "slug": sanitize(storySlug) });
 
 		const user = await User.findOne({ _id: userid });
 		const userID = user ? user._id : 'anon';
@@ -40,6 +39,10 @@ exports.getFullStory = async (req, res, next) => {
 			author: story.author,
 			content: story.content,
 			title: story.title,
+			lngLat: {
+				lng: story.location.coordinates[0],
+				lat: story.location.coordinates[1],
+			},
 		};
 
 		return res.json({

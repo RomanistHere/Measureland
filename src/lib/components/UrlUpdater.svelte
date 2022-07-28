@@ -18,9 +18,9 @@
     }
 
     const checkIfMapLoaded = () =>
-    	$mapReference === null ? false : true;
+    	$mapReference !== null;
 
-    const updateURL = ({ center, zoom, openModal, showRating, showPOI, shades }, { isFiltersOn, filters }) => {
+    const updateURL = ({ center, zoom, openModal, showRating, showPOI, shades, openedStory }, { isFiltersOn, filters }) => {
     	const [ lat, lng ] = center;
 
     	const url = new URL(window.location.href);
@@ -56,13 +56,21 @@
 		    url.searchParams.delete("splng");
 	    }
 
-    	if (openModal) {
-    		url.searchParams.set("openModal", true);
-    		window.history.pushState(null, null, url);
-    	} else {
-    		url.searchParams.delete("openModal");
-    		window.history.replaceState(null, null, url);
-    	}
+	    if (openModal) {
+		    url.searchParams.set("openModal", true);
+		    window.history.pushState(null, null, url);
+	    } else {
+		    url.searchParams.delete("openModal");
+		    window.history.replaceState(null, null, url);
+	    }
+
+	    if (openedStory) {
+		    url.searchParams.set("openedStory", openedStory);
+		    window.history.pushState(null, null, url);
+	    } else {
+		    url.searchParams.delete("openedStory");
+		    window.history.replaceState(null, null, url);
+	    }
     };
 
     const updateAppStateFromURL = async () => {
@@ -76,7 +84,8 @@
 	    const splat = url.searchParams.get("splat");
 	    const splng = url.searchParams.get("splng");
     	const token = url.searchParams.get("token");
-    	const shades = url.searchParams.get("shades");
+	    const shades = url.searchParams.get("shades");
+	    const openedStory = url.searchParams.get("openedStory");
     	const passToken = url.searchParams.get("reset_pass_token");
     	const center = [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ];
 
@@ -108,6 +117,18 @@
 
 			    if (isMapReady) {
 				    openAnotherOverlay("pointOfInterestPopup", { lat: roundToFifthDecimal(splat), lng: roundToFifthDecimal(splng) });
+				    clearInterval(interval);
+			    }
+		    }, 60);
+	    }
+
+	    if (openedStory) {
+		    // open popup only after map is loaded
+		    const interval = setInterval(() => {
+			    const isMapReady = checkIfMapLoaded();
+
+			    if (isMapReady) {
+				    openAnotherOverlay("storyModal", { storySlug: openedStory });
 				    clearInterval(interval);
 			    }
 		    }, 60);

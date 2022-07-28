@@ -437,8 +437,8 @@ const fetchStories = async () => {
 	return await fetchFunction({ url });
 };
 
-const fetchStory = async storyId => {
-	const url = `${API_URL}/stories/read_single/${new URLSearchParams({ storyId })}`;
+const fetchStory = async storySlug => {
+	const url = `${API_URL}/stories/read_single/${new URLSearchParams({ storySlug })}`;
 
 	return await fetchFunction({ url });
 };
