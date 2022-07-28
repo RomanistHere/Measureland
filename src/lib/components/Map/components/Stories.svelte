@@ -100,8 +100,8 @@
 			"properties": {
 				"image-name": "story-marker",
 				"name": truncateStringToTwenty(title),
-				"title": title,
-				"slug": slug,
+				title,
+				slug,
 			},
 		})),
 	});

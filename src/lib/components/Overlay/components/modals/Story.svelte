@@ -1,4 +1,5 @@
 <script>
+	import { onDestroy } from "svelte";
 	import { _ } from "svelte-i18n";
 	import { fade, fly } from "svelte/transition";
 	import { focusTrap } from "svelte-focus-trap";
@@ -71,6 +72,10 @@
 		promise = fetchData(modalData);
 		currentStorySlug = modalData.storySlug;
 	}
+
+	onDestroy(() => {
+		appStateStore.update(state => ({ ...state, openedStory: null }));
+	});
 </script>
 
 <div
@@ -103,6 +108,7 @@
 
 	<CloseButton
 		overlayType="modal"
-		class="top-2 right-2"
+		class="top-2 right-2 z-2"
+		isWhite={true}
 	/>
 </div>
