@@ -57,7 +57,6 @@
 		if (error) {
 			logError(error);
 			showSomethingWrongNotification();
-			return;
 		}
 	};
 
@@ -83,7 +82,6 @@
 		if (error) {
 			logError(error);
 			showSomethingWrongNotification();
-			return;
 		}
 	};
 

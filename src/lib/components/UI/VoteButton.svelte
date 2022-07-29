@@ -8,7 +8,7 @@
 </script>
 
 <button
-    class="p-2 px-4 rounded-md mx-1 bg-like_bg transition-colors border-like_bg border"
+    class="p-2 px-4 rounded-md mx-1 bg-like_bg transition-colors border"
 
     class:hover:bg-like_bg_hover={isLike}
     class:hover:bg-dislike_bg_hover={!isLike}
@@ -25,6 +25,7 @@
 
     class:bg-like_bg_hover={isActive && isLike}
     class:bg-dislike_bg_hover={isActive && !isLike}
+    class:border-like_bg={!isActive}
     class:border-on-green={isActive && isLike}
     class:border-txt_danger={isActive && !isLike}
     class:text-on-green={isActive && isLike}

@@ -57,3 +57,52 @@ exports.getFullStory = async (req, res, next) => {
 		return res.status(400).json({ error });
 	}
 };
+
+exports.reactToStory = async (req, res) => {
+	if (!req.session.userID)
+		return res.status(400).json({ error: "User is not logged in" });
+
+	const id = sanitize(req.session.userID);
+	const { action, storySlug } = req.body;
+	const property = action === 'like' ? 'likes' : 'dislikes';
+	const propertyOpp = action === 'like' ? 'dislikes' : 'likes';
+
+	try {
+		const user = await User.findOne({ _id: id });
+
+		if (!user)
+			return res.status(400).json({ error: "User not found" });
+
+		const userID = user._id;
+		const result = await Story.findOneAndUpdate({
+			slug: sanitize(storySlug),
+		}, {
+			$addToSet: {
+				[property]: userID,
+			},
+		}, {
+			new: true,
+		});
+
+		const resultRemove = await Story.findOneAndUpdate({
+			slug: sanitize(storySlug),
+		}, {
+			$pull: {
+				[propertyOpp]: userID,
+			},
+		}, {
+			new: true,
+		});
+
+		return res.json({
+			error: null,
+			data: {
+				message: "Reaction successful",
+				userID: user._id,
+			},
+		});
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
+	}
+};

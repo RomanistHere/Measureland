@@ -443,6 +443,16 @@ const fetchStory = async storySlug => {
 	return await fetchFunction({ url });
 };
 
+const reactStory = async (action, storySlug) => {
+	const url = `${API_URL}/stories/react`;
+
+	return await fetchFunction({
+		url,
+		method: "POST",
+		body: JSON.stringify({ action, storySlug }),
+	});
+};
+
 export {
 	fetchFunction,
 	saveToDB,
@@ -484,4 +494,5 @@ export {
 	authThirdParty,
 	fetchStories,
 	fetchStory,
+	reactStory,
 };

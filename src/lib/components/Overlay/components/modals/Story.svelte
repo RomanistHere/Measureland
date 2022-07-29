@@ -11,17 +11,25 @@
 	import VoteButton from "$lib/components/UI/VoteButton.svelte";
 	import Story from "$lib/components/Story/Story.svelte";
 
-	import { fetchStory } from "$lib/utilities/api.js";
-	import { logError, closeOverlay } from "$lib/utilities/helpers.js";
+	import { fetchStory, reactStory } from "$lib/utilities/api.js";
+	import {
+		logError,
+		closeOverlay,
+		openAnotherOverlay,
+		showSomethingWrongNotification,
+	} from "$lib/utilities/helpers.js";
 	import { mapReference } from "../../../../../stores/references.js";
-	import { appStateStore } from "../../../../../stores/state.js";
+	import { appStateStore, userStateStore } from "../../../../../stores/state.js";
 
 	export let modalData;
 
 	const map = $mapReference;
+	const isUserLoggedIn = $userStateStore.userID !== null;
 
 	let currentStorySlug = null;
-	let storyConfig = {
+
+	$: promise = null;
+	$: storyConfig = {
 		lngLat: modalData.lngLat || null,
 		title: modalData.title || "",
 		bodyHtml: "",
@@ -31,8 +39,6 @@
 		isLiked: false,
 		isDisliked: false,
 	};
-
-	$: promise = null;
 
 	const fetchData = async ({ storySlug, lngLat }) => {
 		const { data, error } = await fetchStory(storySlug);
@@ -62,6 +68,68 @@
 		}
 
 		appStateStore.update(state => ({ ...state, openedStory: storySlug }));
+	};
+
+	const submitLike = async () => {
+		if (!isUserLoggedIn) {
+			openAnotherOverlay("loginModal");
+			return;
+		}
+
+		if (storyConfig.isLiked)
+			return;
+
+		if (storyConfig.isDisliked) {
+			storyConfig = {
+				...storyConfig,
+				isDisliked: false,
+				dislikes: storyConfig.dislikes - 1,
+			};
+		}
+
+		storyConfig = {
+			...storyConfig,
+			isLiked: true,
+			likes: storyConfig.likes + 1,
+		};
+
+		const { error } = await reactStory("like", currentStorySlug);
+
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+		}
+	};
+
+	const submitDislike = async () => {
+		if (!isUserLoggedIn) {
+			openAnotherOverlay("loginModal");
+			return;
+		}
+
+		if (storyConfig.isDisliked)
+			return;
+
+		if (storyConfig.isLiked) {
+			storyConfig = {
+				...storyConfig,
+				isLiked: false,
+				likes: storyConfig.likes - 1,
+			};
+		}
+
+		storyConfig = {
+			...storyConfig,
+			isDisliked: true,
+			dislikes: storyConfig.dislikes + 1,
+		};
+
+		const { error } = await reactStory("dislike", currentStorySlug);
+
+		if (error) {
+			logError(error);
+			showSomethingWrongNotification();
+		}
 	};
 
 	// need to check in order not to do unnecessary requests.
@@ -97,10 +165,12 @@
 					isLike={true}
 					isActive={storyConfig.isLiked}
 					text={storyConfig.likes || 0}
+					action={submitLike}
 				/>
 				<VoteButton
 					isActive={storyConfig.isDisliked}
 					text={storyConfig.dislikes || 0}
+					action={submitDislike}
 				/>
 			</div>
 		</div>
