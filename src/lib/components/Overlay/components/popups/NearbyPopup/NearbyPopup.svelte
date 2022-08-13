@@ -19,7 +19,8 @@
 	import { isDesktop } from "../../../../../../stores/state.js";
 	import {
 		roundToTen,
-		centerMap,
+		drawCircle,
+		removeCircle,
 		showSomethingWrongNotification,
 		registerAction,
 		logError,
@@ -30,7 +31,6 @@
 
 	export let popupData;
 
-	let circle = null;
 	let averageNearbyRating = null;
 	let numberOfRatings = null;
 	let numberOfPOIs = null;
@@ -44,64 +44,66 @@
 	$: ratingsBad = [];
 	$: badges = [];
 	$: radiusOptions = [{
-		value: 800,
+		value: .8,
 		zoomLevel: 15,
 		text: $_("nearbyPopup.selectOption1"),
 		selected: true,
 	}, {
-		value: 1200,
+		value: 1.2,
 		zoomLevel: 14,
 		text: $_("nearbyPopup.selectOption2"),
 		selected: false,
 	}, {
-		value: 2000,
+		value: 2,
 		zoomLevel: 14,
 		text: $_("nearbyPopup.selectOption3"),
 		selected: false,
 	}, {
-		value: 10000,
+		value: 10,
 		zoomLevel: 12,
 		text: $_("nearbyPopup.selectOption4"),
 		selected: false,
 	}];
 
 	const loadData = async ({ lat, lng }, radiusParam = null) => {
-		const pointsOfInterestLayer = $poiReference;
-		// const clusterLayer = $markersReference;
+		// const pointsOfInterestLayer = $poiReference;
+		// // const clusterLayer = $markersReference;
 		const radius = radiusParam || radiusOptions[0]["value"];
-
-		const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
-		const bounds = L.rectangle(squareBounds).getBounds();
-		const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
-		// const clusters = clusterLayer.getClusters(bbox, 20);
-		const pointsOfInterestApprox = pointsOfInterestLayer.getClusters(bbox, 20);
-		numberOfPOIs = pointsOfInterestApprox.length;
-
-		// if ((!clusters || clusters.length === 1) && (!pointsOfInterestApprox || numberOfPOIs === 0)) {
-		// 	averageNearbyRating = null;
-		// 	numberOfRatings = null;
-		// 	isData = false;
-		// 	isLoading = false;
+		//
+		// const squareBounds = L.latLng(lat, lng).toBounds(radius * 2);
+		// const bounds = L.rectangle(squareBounds).getBounds();
+		// const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
+		// // const clusters = clusterLayer.getClusters(bbox, 20);
+		// const pointsOfInterestApprox = pointsOfInterestLayer.getClusters(bbox, 20);
+		// numberOfPOIs = pointsOfInterestApprox.length;
+		//
+		// // if ((!clusters || clusters.length === 1) && (!pointsOfInterestApprox || numberOfPOIs === 0)) {
+		// // 	averageNearbyRating = null;
+		// // 	numberOfRatings = null;
+		// // 	isData = false;
+		// // 	isLoading = false;
+		// // 	return;
+		// // }
+		//
+		// // const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
+		// // averageNearbyRating = roundToTen(average);
+		// // numberOfRatings = clusters.length;
+		//
+		// if (radius >= 5000) {
+		// 	ratingsBad = [];
+		// 	ratingsGood = [];
+		// 	pointsOfInterest = [];
+		// 	badges = [];
+		// 	numberOfPOIs = null;
 		// 	return;
 		// }
 
-		// const average = clusters.reduce((a, b) => a + b.properties.averageRating, 0) / clusters.length;
-		// averageNearbyRating = roundToTen(average);
-		// numberOfRatings = clusters.length;
-
-		if (radius >= 5000) {
-			ratingsBad = [];
-			ratingsGood = [];
-			pointsOfInterest = [];
-			badges = [];
-			numberOfPOIs = null;
-			return;
-		}
-
 		isLoading = true;
-		const { data, error } = await getNearbyPointData([ lat, lng ], radius);
+		const { data, error } = await getNearbyPointData([ lat, lng ], radius * 1000);
 		isLoading = false;
 		isData = true;
+
+		console.log(data);
 
 		if (error) {
 			logError(error);
@@ -148,17 +150,9 @@
 		openAnotherOverlay("pointOfInterestPopup", { lat, lng });
 	};
 
-	const removeCircle = () => {
-		map.removeLayer(circle);
-		circle = null;
-	};
-
-	const drawCircle = ({ lat, lng }, radius = null) => {
+	const advancedDrawCircle = ({ lat, lng }, radius = null) => {
 		const { zoomLevel } = radiusOptions.find(({ selected }) => selected === true);
-		circle = L.circle({ lng, lat }, radius || radiusOptions[0]["value"], { color: "#007097" });
-
-		circle.addTo(map);
-		centerMap(map, lat, lng, $isDesktop, false, zoomLevel);
+		drawCircle({ lat, lng, map, radius: radius || radiusOptions[0]["value"] });
 	};
 
 	const handleSelect = event => {
@@ -167,18 +161,18 @@
 			item.selected = item.value === newValue;
 		});
 
-		removeCircle();
-		drawCircle(popupData, newValue);
+		removeCircle({ map });
+		advancedDrawCircle(popupData, newValue);
 		loadData(popupData, newValue);
 		registerAction(`nearbySelect-${newValue}`);
 	};
 
 	onMount(() => {
-		drawCircle(popupData);
+		advancedDrawCircle(popupData);
 		loadData(popupData);
 	});
 
-	onDestroy(removeCircle);
+	onDestroy(() => { removeCircle({ map }) });
 </script>
 
 <div class="max-w-sm w-full">

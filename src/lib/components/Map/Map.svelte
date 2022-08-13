@@ -23,8 +23,7 @@
 	let map;
 	let isMapLoaded = false;
 
-	const onMapClick = (e, isWar) =>
-		openAnotherOverlay("onMapClickDialog", { coords: e.latlng, isWar });
+	const onMapClick = e => openAnotherOverlay("onMapClickModal", { coords: e.lngLat });
 
 	const createMap = node => {
 		const { zoom, center } = $appStateStore;
@@ -58,7 +57,7 @@
 		// }).addTo(mapObj);
 
 		// const debouncedAssign = debounce(() => { mapObj.on("click", onMapClick) }, 350);
-		// mapObj.on("click", onMapClick);
+		mapObj.on("click", onMapClick);
 		// mapObj.on("zoomstart", () => { mapObj.off("click", onMapClick) });
 		// mapObj.on("zoomend", debouncedAssign);
 

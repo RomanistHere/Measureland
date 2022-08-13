@@ -20,7 +20,8 @@
 		getErrorType,
 		blurCurrentInput,
 		registerAction,
-		centerMap,
+		drawCircle,
+		removeCircle,
 	} from "../../../../../utilities/helpers.js";
 	import { savePOIToDB } from "../../../../../utilities/api.js";
 	import { isDesktop, poisStore, userStateStore } from "../../../../../../stores/state.js";
@@ -28,7 +29,6 @@
 
 	export let popupData;
 
-	let circle;
 	let isError = false;
 	let errorType = "";
 	let isLoading = false;
@@ -131,26 +131,14 @@
 		submit();
 	}, 200);
 
-	const addCircle = () => {
-		const { lat, lng } = popupData;
-		circle = L.circle(popupData, 200, { color: "#007097" });
-
-		circle.addTo(map);
-
-		centerMap(map, lat, lng, $isDesktop, true);
-	};
-
-	const removeCircle = () =>
-		circle && map.removeLayer(circle);
-
 	onMount(() => {
 		if ($userStateStore.userID === null)
 			openAnotherOverlay("loginPopup");
 		else
-			addCircle();
+			drawCircle({ ...popupData, map, radius: .2 });
 	});
 
-	onDestroy(removeCircle);
+	onDestroy(() => { removeCircle({ map }) });
 </script>
 
 <form class="max-w-sm w-full" on:submit|preventDefault={debouncedSubmit}>

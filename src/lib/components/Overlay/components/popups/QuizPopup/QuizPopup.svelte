@@ -13,7 +13,8 @@
 
 	import { saveToDB } from "../../../../../utilities/api.js";
 	import {
-		centerMap,
+		drawCircle,
+		removeCircle,
 		closeOverlays,
 		debounce,
 		generateYearsBetween,
@@ -52,7 +53,6 @@
 		3: currentYear - 10,
 	};
 
-	let circle;
 	let errorType = null;
 	let isLoading = false;
 	let isError = false;
@@ -197,20 +197,8 @@
 
 	const debouncedSubmit = debounce(submit, 300);
 
-	const addCircle = () => {
-		const { lat, lng } = popupData;
-		circle = L.circle(popupData, 200, { color: "#007097" });
-
-		circle.addTo(map);
-
-		centerMap(map, lat, lng, $isDesktop, true);
-	};
-
-	const removeCircle = () =>
-		map.removeLayer(circle);
-
-	onMount(addCircle);
-	onDestroy(removeCircle);
+	onMount(() => { drawCircle({ ...popupData, map, radius: .2 }) });
+	onDestroy(() => { removeCircle({ map }) });
 </script>
 
 <div class="max-w-sm w-full">

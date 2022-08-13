@@ -1,5 +1,7 @@
 import { get } from "svelte/store";
 
+import { circle } from "@turf/turf";
+
 import { overlayStateStore, appStateStore, notificationsStore, filtersStore, flowStore } from "../../stores/state.js";
 import { overlayStateDefault } from "../constants/overlayStateDefault.js";
 import { flowDictionary } from "../../configs/flow.js";
@@ -248,6 +250,33 @@ const getCookie = cname => {
 	return "";
 };
 
+const drawCircle = ({ map, lng, lat, radius }) => {
+	if (!map)
+		return;
+
+	const circleObj = circle([ lng, lat ], radius, { steps: 50, unites: "kilometers" });
+
+	map.addSource("highlightedArea", {
+		type: "geojson",
+		data: circleObj,
+	});
+
+	map.addLayer({
+		id: "highlighted-area",
+		type: "fill",
+		source: "highlightedArea",
+		paint: {
+			"fill-outline-color": "#007097",
+			"fill-color": "rgba(56, 119, 241, .16)",
+		},
+	});
+};
+
+const removeCircle = ({ map, id = "highlighted-area", source = "highlightedArea" }) => {
+	map.removeLayer(id);
+	map.removeSource(source);
+};
+
 const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false, zoomLevel = null) => {
 	if (!map)
 		return;
@@ -455,6 +484,8 @@ export {
 	fillFiltersFromArrOfStrings,
 	setCookie,
 	getCookie,
+	drawCircle,
+	removeCircle,
 	centerMap,
 	registerAction,
 	generateYearsBetween,

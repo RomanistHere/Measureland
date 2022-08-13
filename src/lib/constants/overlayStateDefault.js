@@ -159,4 +159,9 @@ export const overlayStateDefault = {
 		type: "modal",
 		data: {},
 	},
+	onMapClickModal: {
+		isOpen: false,
+		type: "modal",
+		data: {},
+	},
 };

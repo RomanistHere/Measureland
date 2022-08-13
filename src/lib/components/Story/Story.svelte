@@ -9,12 +9,16 @@
 
 	{@html bodyHtml}
 
-	<p class="text-center text-sm text-txt_secondary">Прислал: {author}</p>
+	<p class="text-center text-sm text-txt_secondary">Автор: {author}</p>
 </article>
 
 <style>
 	article :global(p) {
 		margin-bottom: 27px;
+	}
+	article :global(h2) {
+		font-size: 18px;
+		margin-bottom: 11px;
 	}
 
 	article :global(img) {
