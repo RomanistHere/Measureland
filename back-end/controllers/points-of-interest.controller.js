@@ -8,6 +8,25 @@ const CommentPOI = require("../models/comment-POI.model");
 const { LIMIT_OF_POI_DISLIKES } = require('../config');
 const { updateKarma } = require("../helpers/index");
 
+const generateRandomString = () =>
+	Math.random().toString(16).slice(2);
+
+const registerAnonymous = async lang => {
+	const user = new User({
+		email: generateRandomString(),
+		dateCreated: new Date(),
+		properties: {
+			lang,
+		},
+	});
+
+	try {
+		const savedUser = await user.save();
+	} catch (error) {
+		Sentry.captureException(error);
+	}
+};
+
 exports.POI_add = async (req, res) => {
 	const { body } = req;
 

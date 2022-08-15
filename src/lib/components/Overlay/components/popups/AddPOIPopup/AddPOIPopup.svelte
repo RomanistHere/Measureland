@@ -131,13 +131,7 @@
 		submit();
 	}, 200);
 
-	onMount(() => {
-		if ($userStateStore.userID === null)
-			openAnotherOverlay("loginPopup");
-		else
-			drawCircle({ ...popupData, map, radius: .2 });
-	});
-
+	onMount(() => { drawCircle({ ...popupData, map, radius: .2 }) });
 	onDestroy(() => { removeCircle({ map }) });
 </script>
 

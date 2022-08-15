@@ -15,7 +15,6 @@
 
 	$: ({ coords } = modalData);
 	$: L = $leafletReference;
-	$: isUserLoggedIn = $userStateStore.userID !== null;
 
 	const openPopup = item => {
 		closeOverlays();

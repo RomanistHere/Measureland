@@ -273,8 +273,13 @@ const drawCircle = ({ map, lng, lat, radius }) => {
 };
 
 const removeCircle = ({ map, id = "highlighted-area", source = "highlightedArea" }) => {
-	map.removeLayer(id);
-	map.removeSource(source);
+	try {
+		map.removeLayer(id);
+		map.removeSource(source);
+	} catch (e) {
+		logError("Layer or source that you're trying to delete isn't created");
+		logError(e);
+	}
 };
 
 const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false, zoomLevel = null) => {
