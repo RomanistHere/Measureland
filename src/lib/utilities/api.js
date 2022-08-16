@@ -116,7 +116,7 @@ const reactOnRating = async (ratingID, shouldReport) => {
 
 // POIs
 
-const savePOIToDB = async (coords, props) => {
+const savePOIToDB = async (coords, props, lang) => {
 	const url = `${API_URL}/poi/add`;
 
 	return await fetchFunction({
@@ -124,6 +124,7 @@ const savePOIToDB = async (coords, props) => {
 		method: "POST",
 		body: JSON.stringify({
 			properties: { ...props },
+			lang,
 			location: {
 				type: "Point",
 				coordinates: [ ...coords ],

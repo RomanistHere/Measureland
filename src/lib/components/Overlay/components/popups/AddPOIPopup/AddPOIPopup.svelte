@@ -91,7 +91,7 @@
 		const currentCoords = [ roundToFifthDecimal(popupData.lng), roundToFifthDecimal(popupData.lat) ];
 
 		isLoading = true;
-		const { error } = await savePOIToDB(currentCoords, pointOfInterestState);
+		const { error } = await savePOIToDB(currentCoords, pointOfInterestState, $userStateStore.lang);
 		isLoading = false;
 
 		if (error) {
