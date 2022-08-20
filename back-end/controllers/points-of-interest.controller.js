@@ -11,7 +11,7 @@ const { updateKarma } = require("../helpers/index");
 const generateRandomString = () =>
 	Math.random().toString(16).slice(2);
 
-const registerAnonymous = async lang => {
+const registerAnonymous = async (req, lang) => {
 	const userDummyEmail = generateRandomString();
 	const user = new User({
 		email: userDummyEmail,
@@ -25,6 +25,7 @@ const registerAnonymous = async lang => {
 
 	try {
 		const savedUser = await user.save();
+		req.session.noAuthUserID = savedUser._id;
 		return savedUser._id;
 	} catch (error) {
 		Sentry.captureException(error);
@@ -34,12 +35,12 @@ const registerAnonymous = async lang => {
 exports.POI_add = async (req, res) => {
 	const { body } = req;
 
-	// if (!req.session.userID)
-	// 	return res.status(400).json({ error: "User is not logged in" });
-
+	// eslint-disable-next-line no-nested-ternary
 	const id = req.session.userID
 		? sanitize(req.session.userID)
-		: await registerAnonymous(body.lang);
+		: req.session.noAuthUserID
+			? sanitize(req.session.noAuthUserID)
+			: await registerAnonymous(req, body.lang);
 
 	try {
 		const user = await User.findOne({ _id: id });

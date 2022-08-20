@@ -24,6 +24,20 @@ const authKeys = {
 	web3: "walletAddress",
 };
 
+const mergeTwoAccs = async (mainAccId, sideAccId) => {
+	// todo: before merging, compare location of every action from sideAcc with location of every action from mainAcc
+	const sideAcc = await User.findOne({ _id: sideAccId });
+	const mainAcc = await User.findOneAndUpdate({ _id: mainAccId }, {
+		$addToSet: {
+			'properties.ratingIDs': { $each: sideAcc.properties.ratingIDs },
+			'properties.geoIDs': { $each: sideAcc.properties.geoIDs },
+			'properties.POIIDs': { $each: sideAcc.properties.POIIDs },
+			'properties.POICommentIDs': { $each: sideAcc.properties.POICommentIDs },
+		},
+	});
+	const deletedUser = await User.deleteOne({ _id: sideAccId });
+};
+
 exports.userAuthThirdParty = async (req, res) => {
 	const { id, type, lang } = req.body;
 
@@ -75,6 +89,7 @@ exports.userAuthThirdParty = async (req, res) => {
 };
 
 exports.user_register = async (req, res) => {
+	const { noAuthUserID } = req.session;
 	const { email, lang } = req.body;
 	const isEmailExist = await User.findOne({ email: sanitize(email) });
 
@@ -86,15 +101,14 @@ exports.user_register = async (req, res) => {
 	const token = v4().toString().replace(/-/g, '');
 	const domain = isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV;
 	const verificationUrl = `${domain}/${lang}/?token=${token}`;
-
-	const user = new User({
+	const userProps = {
 		email,
 		password,
 		dateCreated: new Date(),
 		properties: {
 			lang,
 		},
-	});
+	};
 
 	try {
 		await sendEmail({
@@ -104,7 +118,9 @@ exports.user_register = async (req, res) => {
 			reason: 'Verify',
 		});
 
-		const savedUser = await user.save();
+		const savedUser = noAuthUserID
+			? await User.findOneAndUpdate({ _id: sanitize(noAuthUserID) }, { ...userProps })
+			: await new User({ ...userProps }).save();
 
 		await UserVerification.updateOne({
 			user: savedUser._id,
@@ -114,6 +130,8 @@ exports.user_register = async (req, res) => {
 		}, {
 			upsert: true,
 		});
+
+		req.session.noAuthUserID = undefined;
 
 		return res.json({
 			error: null,
@@ -144,8 +162,13 @@ exports.user_login = async (req, res) => {
 			return res.status(400).json({ error: "User is not verified" });
 
 		req.session.userID = user._id;
+		const { noAuthUserID } = req.session;
 
-		console.log(req.session);
+		if (noAuthUserID) {
+			// user did some actions without signing in and then logged in (created another noAuth acc)
+			await mergeTwoAccs(user._id, noAuthUserID);
+			req.session.noAuthUserID = undefined;
+		}
 
 		return res.json({
 			error: null,
@@ -159,6 +182,7 @@ exports.user_login = async (req, res) => {
 			},
 		});
 	} catch (error) {
+		console.log(error);
 		Sentry.captureException(error);
 		return res.status(400).json({ error });
 	}
@@ -229,33 +253,45 @@ exports.user_verify = async (req, res) => {
 	const { token } = Object.fromEntries(urlParams);
 	const userVerification = await UserVerification.findOne({ token: sanitize(token) });
 
-	if (userVerification) {
-		const user = await User.findOneAndUpdate({ _id: userVerification.user }, { verified: true });
+	try {
+		if (userVerification) {
+			const { noAuthUserID } = req.session;
+			const user = await User.findOneAndUpdate({ _id: userVerification.user }, { verified: true });
 
-		await UserVerification.deleteOne({
-			token,
-		});
+			if (noAuthUserID) {
+				// user did some actions between registration and verification (created another noAuth acc)
+				await mergeTwoAccs(user._id, noAuthUserID);
+				req.session.noAuthUserID = undefined;
+			}
 
-		if (!user)
-			return res.status(400).json({ error: "Email is wrong" });
+			await UserVerification.deleteOne({
+				token,
+			});
 
-		req.session.userID = user._id;
+			if (!user)
+				return res.status(400).json({ error: "Email is wrong" });
 
-		await sendEmail({
-			email: user.email,
-			lang: user.properties.lang,
-			reason: 'Verified',
-		});
+			req.session.userID = user._id;
 
-		return res.json({
-			error: null,
-			data: {
-				message: "Verification is successful",
-				userID: user._id,
-			},
-		});
-	} else {
-		return res.status(400).json({ error: "Verification link is invalid or has expired" });
+			await sendEmail({
+				email: user.email,
+				lang: user.properties.lang,
+				reason: 'Verified',
+			});
+
+			return res.json({
+				error: null,
+				data: {
+					message: "Verification is successful",
+					userID: user._id,
+				},
+			});
+		} else {
+			return res.status(400).json({ error: "Verification link is invalid or has expired" });
+		}
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
 	}
 };
 
@@ -346,8 +382,8 @@ exports.user_check = async (req, res) => {
 			}
 		}
 
-		if (!req.cookies['csrf-token'])
-			res.cookie('csrf-token', req.csrfToken());
+		// if (!req.cookies['csrf-token'])
+		// 	res.cookie('csrf-token', req.csrfToken());
 
 		return res.json({
 			error: null,
@@ -463,8 +499,8 @@ exports.ask_more_ratings = async (req, res) => {
 };
 
 exports.user_logout = async (req, res, next) => {
-	if (req.cookies['csrf-token'])
-		res.clearCookie('csrf-token');
+	// if (req.cookies['csrf-token'])
+	// 	res.clearCookie('csrf-token');
 
 	if (req.session) {
 		req.session.destroy(err => {

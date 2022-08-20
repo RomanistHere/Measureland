@@ -101,9 +101,9 @@ const flowLimiter = rateLimit({
 });
 app.use('/api/flow', flowLimiter, flowRouter);
 
-app.use(csurf({
-	cookie: false,
-}));
+// app.use(csurf({
+// 	cookie: false,
+// }));
 
 const geoLimiter = rateLimit({
 	store: new MongoLimitStore({
