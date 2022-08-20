@@ -4,6 +4,8 @@ const User = require('../models/user.model');
 const Rating = require("../models/rating.model");
 const Comment = require("../models/comment.model");
 const Geo = require("../models/geo.model");
+const Sentry = require("@sentry/node");
+const sanitize = require("mongo-sanitize");
 
 const additionalProps = [ 'pets', 'kids', 'parking' ];
 
@@ -194,3 +196,39 @@ const deleteRating = async ratingID => {
 };
 
 exports.deleteRating = deleteRating;
+
+const generateRandomString = () =>
+	Math.random().toString(16).slice(2);
+
+const registerAnonymous = async (req, lang) => {
+	const userDummyEmail = generateRandomString();
+	const user = new User({
+		email: userDummyEmail,
+		dateCreated: new Date(),
+		usergroup: 2,
+		properties: {
+			lang,
+			activeRatings: 10,
+		},
+	});
+
+	try {
+		const savedUser = await user.save();
+		req.session.noAuthUserID = savedUser._id;
+		return savedUser._id;
+	} catch (error) {
+		Sentry.captureException(error);
+	}
+};
+
+// 1. try to get registered user id; 2. try to get non-registered user id; 3. create non-registered user
+const getOrCreateId = async (req, lang) =>
+	// eslint-disable-next-line no-nested-ternary
+	req.session.userID
+		? sanitize(req.session.userID)
+		: req.session.noAuthUserID
+			? sanitize(req.session.noAuthUserID)
+			: await registerAnonymous(req, lang);
+
+exports.generateRandomString = generateRandomString;
+exports.getOrCreateId = getOrCreateId;

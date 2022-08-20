@@ -27,6 +27,12 @@ const authKeys = {
 const mergeTwoAccs = async (mainAccId, sideAccId) => {
 	// todo: before merging, compare location of every action from sideAcc with location of every action from mainAcc
 	const sideAcc = await User.findOne({ _id: sideAccId });
+
+	// update user object (link to user)
+	const ratings = await Rating.updateMany({ _id: { $in: sideAcc.properties.ratingIDs } }, { userID: mainAccId });
+	const pois = await PointOfInterest.updateMany({ _id: { $in: sideAcc.properties.POIIDs } }, { userID: mainAccId });
+	const poiComments = await CommentPOI.updateMany({ _id: { $in: sideAcc.properties.POICommentIDs } }, { user: mainAccId });
+
 	const mainAcc = await User.findOneAndUpdate({ _id: mainAccId }, {
 		$addToSet: {
 			'properties.ratingIDs': { $each: sideAcc.properties.ratingIDs },
@@ -89,7 +95,6 @@ exports.userAuthThirdParty = async (req, res) => {
 };
 
 exports.user_register = async (req, res) => {
-	const { noAuthUserID } = req.session;
 	const { email, lang } = req.body;
 	const isEmailExist = await User.findOne({ email: sanitize(email) });
 
@@ -101,14 +106,15 @@ exports.user_register = async (req, res) => {
 	const token = v4().toString().replace(/-/g, '');
 	const domain = isProd ? process.env.SITE_URL : process.env.SITE_URL_DEV;
 	const verificationUrl = `${domain}/${lang}/?token=${token}`;
-	const userProps = {
+
+	const user = new User({
 		email,
 		password,
 		dateCreated: new Date(),
 		properties: {
 			lang,
 		},
-	};
+	});
 
 	try {
 		await sendEmail({
@@ -118,9 +124,15 @@ exports.user_register = async (req, res) => {
 			reason: 'Verify',
 		});
 
-		const savedUser = noAuthUserID
-			? await User.findOneAndUpdate({ _id: sanitize(noAuthUserID) }, { ...userProps })
-			: await new User({ ...userProps }).save();
+		const savedUser = await user.save();
+
+		const { noAuthUserID } = req.session;
+
+		if (noAuthUserID) {
+			// user did some actions without registering and then verifying in (created another noAuth acc)
+			await mergeTwoAccs(savedUser._id, noAuthUserID);
+			req.session.noAuthUserID = undefined;
+		}
 
 		await UserVerification.updateOne({
 			user: savedUser._id,

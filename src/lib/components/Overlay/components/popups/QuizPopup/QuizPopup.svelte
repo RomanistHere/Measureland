@@ -43,7 +43,6 @@
 		key,
 	}));
 
-	$: isUserLoggedIn = $userStateStore.userID !== null;
 	$: currentStage = 1;
 
 	const currentYear = new Date().getFullYear();
@@ -336,7 +335,7 @@
 	{/if}
 
 	<div class="flex justify-evenly items-center my-4">
-		{#if isUserLoggedIn && currentStage === 1}
+		{#if currentStage === 1}
 			<PrimaryButton
 				action={() => { changePersonalExperience(false) }}
 				text={$_("quizPopup.noPersonalExperienceBtn")}
@@ -344,11 +343,6 @@
 			<PrimaryButton
 				action={() => { changePersonalExperience(true) }}
 				text={$_("quizPopup.yesPersonalExperienceBtn")}
-			/>
-		{:else if currentStage === 1}
-			<PrimaryButton
-				action={() => { openAnotherOverlay("loginPopup") }}
-				text={$_("quizPopup.loginBtn")}
 			/>
 		{:else}
 			<SecondaryButton

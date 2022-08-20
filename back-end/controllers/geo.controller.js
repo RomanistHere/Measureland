@@ -7,7 +7,7 @@ const Rating = require('../models/rating.model');
 const Comment = require('../models/comment.model');
 const PointOfInterest = require('../models/point-of-interest.model');
 
-const { getFinalRating, roundToTen, updateKarma } = require('../helpers/index');
+const { getFinalRating, roundToTen, updateKarma, getOrCreateId } = require('../helpers/index');
 
 const getNewRating = (rating, numberOfUsers, quizRating) => {
 	const newKeys = Object.keys(quizRating);
@@ -79,11 +79,8 @@ const saveAndUpdateRefs = async (userID, geoID, comment, username, averageRating
 
 exports.geo_add = async (req, res, next) => {
 	const { body } = req;
+	const id = await getOrCreateId(req, body.lang);
 
-	if (!req.session.userID)
-		return res.status(400).json({ error: "User is not logged in" });
-
-	const id = sanitize(req.session.userID);
 	body.location.coordinates = [ body.location.coordinates[1], body.location.coordinates[0] ];
 
 	try {
@@ -112,8 +109,8 @@ exports.geo_add = async (req, res, next) => {
 		const userID = user._id;
 		if (geo) {
 			// check if user rated it already
-			const id = geo._id;
-			const exists = user.properties.geoIDs.some(val => val.equals(id));
+			const geoId = geo._id;
+			const exists = user.properties.geoIDs.some(val => val.equals(geoId));
 			if (exists)
 				return res.status(400).json({ error: "Nearby place is already rated" });
 			// update
@@ -126,7 +123,7 @@ exports.geo_add = async (req, res, next) => {
 
 			try {
 				const geoUpdated = await Geo.findOneAndUpdate({
-					_id: geo._id,
+					_id: geoId,
 				}, {
 					$set: {
 						properties: {

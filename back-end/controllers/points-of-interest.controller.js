@@ -6,41 +6,12 @@ const User = require('../models/user.model');
 const CommentPOI = require("../models/comment-POI.model");
 
 const { LIMIT_OF_POI_DISLIKES } = require('../config');
-const { updateKarma } = require("../helpers/index");
-
-const generateRandomString = () =>
-	Math.random().toString(16).slice(2);
-
-const registerAnonymous = async (req, lang) => {
-	const userDummyEmail = generateRandomString();
-	const user = new User({
-		email: userDummyEmail,
-		dateCreated: new Date(),
-		usergroup: 2,
-		properties: {
-			lang,
-			activeRatings: 10,
-		},
-	});
-
-	try {
-		const savedUser = await user.save();
-		req.session.noAuthUserID = savedUser._id;
-		return savedUser._id;
-	} catch (error) {
-		Sentry.captureException(error);
-	}
-};
+const { updateKarma, getOrCreateId } = require("../helpers/index");
 
 exports.POI_add = async (req, res) => {
 	const { body } = req;
 
-	// eslint-disable-next-line no-nested-ternary
-	const id = req.session.userID
-		? sanitize(req.session.userID)
-		: req.session.noAuthUserID
-			? sanitize(req.session.noAuthUserID)
-			: await registerAnonymous(req, body.lang);
+	const id = await getOrCreateId(req, body.lang);
 
 	try {
 		const user = await User.findOne({ _id: id });
