@@ -336,6 +336,7 @@
 		});
 	};
 
+	// update layer from other components through poisStore
 	const addNewPOIs = newPOIs => {
 		cachedPois = addNonDuplicatesToArr(cachedPois, [ ...newPOIs ]);
 		const poiJson = preparePOIsJson(cachedPois);
@@ -355,6 +356,12 @@
 	};
 
 	const updateLayer = ({ markersToAdd, markersToRemove }) => {
+		if (markersToRemove.length > 0) {
+			markersToRemove.forEach(item => {
+				removePOI(item);
+			});
+		}
+
 		if (markersToAdd.length > 0) {
 			const newMarkers = markersToAdd.map(item => ({
 				isAdequate: true,
@@ -364,12 +371,6 @@
 				title: item.title,
 			}));
 			addNewPOIs(newMarkers);
-		}
-
-		if (markersToRemove.length > 0) {
-			markersToRemove.forEach(item => {
-				removePOI(item);
-			});
 		}
 	};
 

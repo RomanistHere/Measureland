@@ -172,12 +172,12 @@
 				markerStore.update(state => ({
 					...state,
 					markersToRemove: [ ...state.markersToRemove, { coords }],
-					markersToAdd: [ ...state.markersToAdd, { coords, rating: data.averageRating }],
+					markersToAdd: [ ...state.markersToAdd, { coords, averageRating: data.averageRating, ratings }],
 				}));
 			} else {
 				markerStore.update(state => ({
 					...state,
-					markersToAdd: [ ...state.markersToAdd, { coords: currentCoords.reverse(), rating: averageRating }],
+					markersToAdd: [ ...state.markersToAdd, { coords: currentCoords.reverse(), averageRating, ratings }],
 				}));
 			}
 

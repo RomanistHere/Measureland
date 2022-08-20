@@ -7,7 +7,7 @@
 	import L from "leaflet";
 	import PolyBool from "polybooljs";
 
-	import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
+	import { userStateStore, appStateStore, filtersStore, markerStore } from "../../../../stores/state.js";
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
 	import { cityBounds } from "../objects/cityBounds.js";
 	import { getPointsInsideAndOutsidePolygon } from "../utils";
@@ -209,4 +209,40 @@
 	// don't use native "moveend" event, it triggers on every button click in popups
 	map.on("move", debounce(getNewData, 300));
 	onMount(getNewData);
+
+	// update layer from other components through markerStore
+	const externalUpdateMarkers = ({ markersToAdd, markersToRemove }) => {
+		if (markersToRemove.length > 0) {
+			markersToRemove.forEach(item => {
+				cachedData = cachedData.filter(cachedItem => {
+					const { coordinates } = cachedItem.geometry;
+					const { coords } = item;
+					return coordinates[0] !== coords[0] && coordinates[1] !== coords[1];
+				});
+			});
+
+			ratingsReference.update(state => cachedData);
+		}
+
+		if (markersToAdd.length > 0) {
+			markersToAdd.forEach(item => {
+				const newObj = {
+					geometry: {
+						coordinates: [ ...item.coords ],
+						type: "Point",
+					},
+					type: "Feature",
+					properties: {
+						averageRating: item.averageRating,
+						rating: { ...item.ratings },
+					},
+				};
+				cachedData = [ ...cachedData, newObj ];
+			});
+
+			ratingsReference.update(state => cachedData);
+		}
+	};
+
+	$: externalUpdateMarkers($markerStore);
 </script>
