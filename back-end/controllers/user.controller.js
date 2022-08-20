@@ -53,6 +53,13 @@ exports.userAuthThirdParty = async (req, res) => {
 
 		if (user) {
 			req.session.userID = user._id;
+			const { noAuthUserID } = req.session;
+
+			if (noAuthUserID) {
+				// user did some actions without signing in and then logged in (created another noAuth acc)
+				await mergeTwoAccs(user._id, noAuthUserID);
+				req.session.noAuthUserID = undefined;
+			}
 
 			return res.json({
 				error: null,
@@ -78,6 +85,13 @@ exports.userAuthThirdParty = async (req, res) => {
 
 			const savedUser = await newUser.save();
 			req.session.userID = savedUser._id;
+			const { noAuthUserID } = req.session;
+
+			if (noAuthUserID) {
+				// user did some actions without signing in and then logged in (created another noAuth acc)
+				await mergeTwoAccs(savedUser._id, noAuthUserID);
+				req.session.noAuthUserID = undefined;
+			}
 
 			return res.json({
 				error: null,
@@ -125,7 +139,6 @@ exports.user_register = async (req, res) => {
 		});
 
 		const savedUser = await user.save();
-
 		const { noAuthUserID } = req.session;
 
 		if (noAuthUserID) {
@@ -142,8 +155,6 @@ exports.user_register = async (req, res) => {
 		}, {
 			upsert: true,
 		});
-
-		req.session.noAuthUserID = undefined;
 
 		return res.json({
 			error: null,
