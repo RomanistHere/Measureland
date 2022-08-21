@@ -141,12 +141,12 @@ const removeRatingFromSum = (geo, rating) => {
 const deleteRating = async ratingID => {
 	let newAverageRating = null;
 	const {
-		      isPersonalExperience,
-		      commentID,
-		      userID,
-		      geoID,
-		      rating,
-	      } = await Rating.findOne({ _id: ratingID });
+		isPersonalExperience,
+		commentID,
+		userID,
+		geoID,
+		rating,
+	} = await Rating.findOne({ _id: ratingID });
 
 	const commentRemoved = commentID ? await Comment.findOneAndRemove({ _id: commentID }) : null;
 	const geo = await Geo.findOne({ _id: geoID });

@@ -1,5 +1,6 @@
 const sanitize = require('mongo-sanitize');
 const Sentry = require('@sentry/node');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const PointOfInterest = require('../models/point-of-interest.model');
 const User = require('../models/user.model');
@@ -390,10 +391,20 @@ exports.POI_delete = async (req, res) => {
 
 	const urlParams = new URLSearchParams(req.params.pointID);
 	const { pointID } = Object.fromEntries(urlParams);
+	const sanPoiId = sanitize(pointID);
 
 	try {
-		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: sanitize(pointID) });
+		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: sanPoiId });
 		const commentsRemoved = await CommentPOI.deleteMany({ _id: { $in: pointRemoved.commentIDs } });
+		const resultRemove = await User.findOneAndUpdate({
+			_id: pointRemoved.userID,
+		}, {
+			$pull: {
+				'properties.POIIDs': new ObjectId(sanPoiId),
+			},
+		}, {
+			new: false,
+		});
 
 		return res.json({
 			error: null,
