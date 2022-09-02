@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { appStateStore } from "../../stores/state.js";
+import { appStateStore, userStateStore } from "../../stores/state.js";
 import { API_URL } from "../../configs/env.js";
 import { convertMetersToRadian, getCookie } from "./helpers.js";
 
@@ -51,11 +51,13 @@ const fetchFunction = async ({ url, method, credentials, headers, body }) => {
 
 const saveToDB = async (coords, rating, averageRating, comment, isPersonalExperience, timeline) => {
 	const url = `${API_URL}/geo/add`;
+	const { lang } = get(userStateStore);
 
 	return await fetchFunction({
 		url,
 		method: "POST",
 		body: JSON.stringify({
+			lang,
 			properties: {
 				rating,
 				averageRating,
@@ -118,12 +120,14 @@ const reactOnRating = async (ratingID, shouldReport) => {
 
 const savePOIToDB = async (coords, props) => {
 	const url = `${API_URL}/poi/add`;
+	const { lang } = get(userStateStore);
 
 	return await fetchFunction({
 		url,
 		method: "POST",
 		body: JSON.stringify({
 			properties: { ...props },
+			lang,
 			location: {
 				type: "Point",
 				coordinates: [ ...coords ],

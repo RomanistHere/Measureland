@@ -1,39 +1,18 @@
 const sanitize = require('mongo-sanitize');
 const Sentry = require('@sentry/node');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const PointOfInterest = require('../models/point-of-interest.model');
 const User = require('../models/user.model');
 const CommentPOI = require("../models/comment-POI.model");
 
 const { LIMIT_OF_POI_DISLIKES } = require('../config');
-const { updateKarma } = require("../helpers/index");
-
-const generateRandomString = () =>
-	Math.random().toString(16).slice(2);
-
-const registerAnonymous = async lang => {
-	const user = new User({
-		email: generateRandomString(),
-		dateCreated: new Date(),
-		properties: {
-			lang,
-		},
-	});
-
-	try {
-		const savedUser = await user.save();
-	} catch (error) {
-		Sentry.captureException(error);
-	}
-};
+const { updateKarma, getOrCreateId } = require("../helpers/index");
 
 exports.POI_add = async (req, res) => {
 	const { body } = req;
 
-	if (!req.session.userID)
-		return res.status(400).json({ error: "User is not logged in" });
-
-	const id = sanitize(req.session.userID);
+	const id = await getOrCreateId(req, body.lang);
 
 	try {
 		const user = await User.findOne({ _id: id });
@@ -50,7 +29,7 @@ exports.POI_add = async (req, res) => {
 						type: "Point",
 						coordinates: [ ...body.location.coordinates ],
 					},
-					$maxDistance: 100,
+					$maxDistance: 50,
 				},
 			},
 		});
@@ -412,10 +391,20 @@ exports.POI_delete = async (req, res) => {
 
 	const urlParams = new URLSearchParams(req.params.pointID);
 	const { pointID } = Object.fromEntries(urlParams);
+	const sanPoiId = sanitize(pointID);
 
 	try {
-		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: sanitize(pointID) });
+		const pointRemoved = await PointOfInterest.findOneAndRemove({ _id: sanPoiId });
 		const commentsRemoved = await CommentPOI.deleteMany({ _id: { $in: pointRemoved.commentIDs } });
+		const resultRemove = await User.findOneAndUpdate({
+			_id: pointRemoved.userID,
+		}, {
+			$pull: {
+				'properties.POIIDs': new ObjectId(sanPoiId),
+			},
+		}, {
+			new: false,
+		});
 
 		return res.json({
 			error: null,

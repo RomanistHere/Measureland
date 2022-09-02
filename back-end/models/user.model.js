@@ -23,7 +23,7 @@ const UserSchema = new Schema({
 	},
 	usergroup: {
 		type: Number,
-		default: 1,
+		default: 1, // 0 - verified, 1 - registered, 2 - guest
 	},
 	password: {
 		type: String,

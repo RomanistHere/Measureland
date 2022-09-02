@@ -224,26 +224,6 @@
 		return newArr;
 	};
 
-	const addNewPOI = newPOI => {
-		// todo: check
-		cachedPois = addNonDuplicatesToArr(cachedPois, [ newPOI ]);
-		const poiJson = preparePOIsJson(cachedPois);
-
-		if (map.getSource("POIs")) {
-			map.getSource("POIs").setData(poiJson);
-		}
-	};
-
-	const removePOI = poi => {
-		// todo: check
-		// cachedPois = removeFromArr(cachedPois, poi);
-		// const poiJson = preparePOIsJson(cachedPois);
-		//
-		// if (map.getSource("POIs")) {
-		// 	map.getSource("POIs").setData(poiJson);
-		// }
-	};
-
 	const displayData = poiData => {
 		cachedPois = addNonDuplicatesToArr(cachedPois, poiData);
 
@@ -355,4 +335,44 @@
 			mapLoadingProgress.update(state => ({ ...state, pois: true }));
 		});
 	};
+
+	// update layer from other components through poisStore
+	const addNewPOIs = newPOIs => {
+		cachedPois = addNonDuplicatesToArr(cachedPois, [ ...newPOIs ]);
+		const poiJson = preparePOIsJson(cachedPois);
+
+		if (map.getSource("POIs")) {
+			map.getSource("POIs").setData(poiJson);
+		}
+	};
+
+	const removePOI = ({ _id }) => {
+		cachedPois = cachedPois.filter(item => item._id !== _id);
+		const poiJson = preparePOIsJson(cachedPois);
+
+		if (map.getSource("POIs")) {
+			map.getSource("POIs").setData(poiJson);
+		}
+	};
+
+	const updateLayer = ({ markersToAdd, markersToRemove }) => {
+		if (markersToRemove.length > 0) {
+			markersToRemove.forEach(item => {
+				removePOI(item);
+			});
+		}
+
+		if (markersToAdd.length > 0) {
+			const newMarkers = markersToAdd.map(item => ({
+				isAdequate: true,
+				location: {
+					coordinates: [ ...item.coords ],
+				},
+				title: item.title,
+			}));
+			addNewPOIs(newMarkers);
+		}
+	};
+
+	$: updateLayer($poisStore);
 </script>

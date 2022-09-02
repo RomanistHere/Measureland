@@ -103,7 +103,13 @@
 			return;
 		}
 
-		poisStore.update(state => ({ ...state, markersToAdd: [ ...state.markersToAdd, currentCoords ] }));
+		poisStore.update(state => ({
+			...state,
+			markersToAdd: [
+				...state.markersToAdd,
+				{ coords: currentCoords, title: pointOfInterestState.title },
+			],
+		}));
 		userStateStore.update(state => ({ ...state, activeRatings: state.activeRatings - 1 }));
 		closeOverlays();
 		showSuccessNotification();

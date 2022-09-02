@@ -24,6 +24,26 @@ const authKeys = {
 	web3: "walletAddress",
 };
 
+const mergeTwoAccs = async (mainAccId, sideAccId) => {
+	// todo: before merging, compare location of every action from sideAcc with location of every action from mainAcc
+	const sideAcc = await User.findOne({ _id: sideAccId });
+
+	// update user object (link to user)
+	const ratings = await Rating.updateMany({ _id: { $in: sideAcc.properties.ratingIDs } }, { userID: mainAccId });
+	const pois = await PointOfInterest.updateMany({ _id: { $in: sideAcc.properties.POIIDs } }, { userID: mainAccId });
+	const poiComments = await CommentPOI.updateMany({ _id: { $in: sideAcc.properties.POICommentIDs } }, { user: mainAccId });
+
+	const mainAcc = await User.findOneAndUpdate({ _id: mainAccId }, {
+		$addToSet: {
+			'properties.ratingIDs': { $each: sideAcc.properties.ratingIDs },
+			'properties.geoIDs': { $each: sideAcc.properties.geoIDs },
+			'properties.POIIDs': { $each: sideAcc.properties.POIIDs },
+			'properties.POICommentIDs': { $each: sideAcc.properties.POICommentIDs },
+		},
+	});
+	const deletedUser = await User.deleteOne({ _id: sideAccId });
+};
+
 exports.userAuthThirdParty = async (req, res) => {
 	const { id, type, lang } = req.body;
 
@@ -33,6 +53,13 @@ exports.userAuthThirdParty = async (req, res) => {
 
 		if (user) {
 			req.session.userID = user._id;
+			const { noAuthUserID } = req.session;
+
+			if (noAuthUserID) {
+				// user did some actions without signing in and then logged in (created another noAuth acc)
+				await mergeTwoAccs(user._id, noAuthUserID);
+				req.session.noAuthUserID = undefined;
+			}
 
 			return res.json({
 				error: null,
@@ -58,6 +85,13 @@ exports.userAuthThirdParty = async (req, res) => {
 
 			const savedUser = await newUser.save();
 			req.session.userID = savedUser._id;
+			const { noAuthUserID } = req.session;
+
+			if (noAuthUserID) {
+				// user did some actions without signing in and then logged in (created another noAuth acc)
+				await mergeTwoAccs(savedUser._id, noAuthUserID);
+				req.session.noAuthUserID = undefined;
+			}
 
 			return res.json({
 				error: null,
@@ -105,6 +139,13 @@ exports.user_register = async (req, res) => {
 		});
 
 		const savedUser = await user.save();
+		const { noAuthUserID } = req.session;
+
+		if (noAuthUserID) {
+			// user did some actions without registering and then verifying in (created another noAuth acc)
+			await mergeTwoAccs(savedUser._id, noAuthUserID);
+			req.session.noAuthUserID = undefined;
+		}
 
 		await UserVerification.updateOne({
 			user: savedUser._id,
@@ -144,8 +185,13 @@ exports.user_login = async (req, res) => {
 			return res.status(400).json({ error: "User is not verified" });
 
 		req.session.userID = user._id;
+		const { noAuthUserID } = req.session;
 
-		console.log(req.session);
+		if (noAuthUserID) {
+			// user did some actions without signing in and then logged in (created another noAuth acc)
+			await mergeTwoAccs(user._id, noAuthUserID);
+			req.session.noAuthUserID = undefined;
+		}
 
 		return res.json({
 			error: null,
@@ -159,6 +205,7 @@ exports.user_login = async (req, res) => {
 			},
 		});
 	} catch (error) {
+		console.log(error);
 		Sentry.captureException(error);
 		return res.status(400).json({ error });
 	}
@@ -229,33 +276,45 @@ exports.user_verify = async (req, res) => {
 	const { token } = Object.fromEntries(urlParams);
 	const userVerification = await UserVerification.findOne({ token: sanitize(token) });
 
-	if (userVerification) {
-		const user = await User.findOneAndUpdate({ _id: userVerification.user }, { verified: true });
+	try {
+		if (userVerification) {
+			const { noAuthUserID } = req.session;
+			const user = await User.findOneAndUpdate({ _id: userVerification.user }, { verified: true });
 
-		await UserVerification.deleteOne({
-			token,
-		});
+			if (noAuthUserID) {
+				// user did some actions between registration and verification (created another noAuth acc)
+				await mergeTwoAccs(user._id, noAuthUserID);
+				req.session.noAuthUserID = undefined;
+			}
 
-		if (!user)
-			return res.status(400).json({ error: "Email is wrong" });
+			await UserVerification.deleteOne({
+				token,
+			});
 
-		req.session.userID = user._id;
+			if (!user)
+				return res.status(400).json({ error: "Email is wrong" });
 
-		await sendEmail({
-			email: user.email,
-			lang: user.properties.lang,
-			reason: 'Verified',
-		});
+			req.session.userID = user._id;
 
-		return res.json({
-			error: null,
-			data: {
-				message: "Verification is successful",
-				userID: user._id,
-			},
-		});
-	} else {
-		return res.status(400).json({ error: "Verification link is invalid or has expired" });
+			await sendEmail({
+				email: user.email,
+				lang: user.properties.lang,
+				reason: 'Verified',
+			});
+
+			return res.json({
+				error: null,
+				data: {
+					message: "Verification is successful",
+					userID: user._id,
+				},
+			});
+		} else {
+			return res.status(400).json({ error: "Verification link is invalid or has expired" });
+		}
+	} catch (error) {
+		Sentry.captureException(error);
+		return res.status(400).json({ error });
 	}
 };
 
@@ -346,8 +405,8 @@ exports.user_check = async (req, res) => {
 			}
 		}
 
-		if (!req.cookies['csrf-token'])
-			res.cookie('csrf-token', req.csrfToken());
+		// if (!req.cookies['csrf-token'])
+		// 	res.cookie('csrf-token', req.csrfToken());
 
 		return res.json({
 			error: null,
@@ -463,8 +522,8 @@ exports.ask_more_ratings = async (req, res) => {
 };
 
 exports.user_logout = async (req, res, next) => {
-	if (req.cookies['csrf-token'])
-		res.clearCookie('csrf-token');
+	// if (req.cookies['csrf-token'])
+	// 	res.clearCookie('csrf-token');
 
 	if (req.session) {
 		req.session.destroy(err => {

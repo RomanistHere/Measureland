@@ -72,7 +72,7 @@
 			closeOverlay("sidebar");
 			poisStore.update(state => ({
 				...state,
-				markersToRemove: [ ...state.markersToRemove, coords ],
+				markersToRemove: [ ...state.markersToRemove, { coords, _id: id }],
 			}));
 		}
 		return null;
