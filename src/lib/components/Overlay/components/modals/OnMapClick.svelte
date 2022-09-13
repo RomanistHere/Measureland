@@ -56,6 +56,26 @@
 			});
 		}
 	};
+
+	const adjustPosition = node => {
+		if (typeof document === "undefined")
+			return;
+
+		const bodyBounds = document.body.getBoundingClientRect();
+		const popupBounds = node.getBoundingClientRect();
+
+		const tooRight = popupBounds.left + popupBounds.width + 20 > bodyBounds.right;
+		const tooHigh = popupBounds.bottom - popupBounds.height - 50 < bodyBounds.top;
+
+		if (tooRight)
+			dynamicPosition = `--top: ${pageY}px; --left: ${pageX - popupBounds.width}px`;
+
+		if (tooHigh)
+			dynamicPosition = `--top: ${pageY + popupBounds.height}px; --left: ${pageX}px`;
+
+		if (tooRight && tooHigh)
+			dynamicPosition = `--top: ${pageY + popupBounds.height}px; --left: ${pageX - popupBounds.width}px`;
+	};
 </script>
 
 <style>
@@ -70,8 +90,9 @@
 	class:dynamicTop={$isDesktop}
 	style="{$isDesktop && dynamicPosition}"
 	use:focusTrap
-	in:fly="{{ y: 50, duration: 200 }}"
-	out:fly="{{ y: 50, duration: 200 }}"
+	use:adjustPosition
+	in:fly="{{ y: 50, duration: 300 }}"
+	out:fly="{{ y: 50, duration: 300 }}"
 >
 	<LoginTitle
 		title="Добавить"
