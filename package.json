@@ -2,8 +2,8 @@
 	"name": "Measureland",
 	"version": "2.0.0",
 	"scripts": {
-		"start": "svelte-kit dev --port=8080",
-		"start:tg": "svelte-kit dev --port=80 --host 127.0.0.1",
+		"dev": "svelte-kit dev --port=8080",
+		"dev:tg": "svelte-kit dev --port=80 --host 127.0.0.1",
 		"build": "svelte-kit build",
 		"preview": "svelte-kit preview --port=8080",
 		"prettier:check": "prettier --check --plugin-search-dir=. .",

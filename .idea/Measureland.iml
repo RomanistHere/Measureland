@@ -9,8 +9,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="backups" />
-    <orderEntry type="module" module-name="configs" />
     <orderEntry type="module" module-name="Measureland admin" />
     <orderEntry type="module" module-name="worker-typescript-template" />
+    <orderEntry type="module" module-name="configsMeasureland" />
   </component>
 </module>

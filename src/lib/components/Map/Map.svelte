@@ -23,7 +23,11 @@
 	let map;
 	let isMapLoaded = false;
 
-	const onMapClick = e => openAnotherOverlay("onMapClickModal", { coords: e.lngLat });
+	const onMapClick = e => openAnotherOverlay("onMapClickModal", {
+		coords: e.lngLat,
+		pageX: e.originalEvent.pageX,
+		pageY: e.originalEvent.pageY,
+	});
 
 	const createMap = node => {
 		const { zoom, center } = $appStateStore;
@@ -57,7 +61,7 @@
 		// }).addTo(mapObj);
 
 		// const debouncedAssign = debounce(() => { mapObj.on("click", onMapClick) }, 350);
-		mapObj.on("click", onMapClick);
+		mapObj.on("contextmenu", onMapClick);
 		// mapObj.on("zoomstart", () => { mapObj.off("click", onMapClick) });
 		// mapObj.on("zoomend", debouncedAssign);
 

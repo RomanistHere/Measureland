@@ -5,16 +5,17 @@
 
 	import LoginTitle from "$lib/components/UI/LoginTitle.svelte";
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
-	import PrimaryAltButton from "$lib/components/UI/PrimaryAltButton.svelte";
+	import MapModalButton from "$lib/components/UI/MapModalButton.svelte";
 
 	import { closeOverlays, openAnotherOverlay, registerAction, setCookie } from "$lib/utilities/helpers.js";
-	import { appStateStore, userStateStore } from "../../../../../stores/state.js";
+	import { appStateStore, userStateStore, isDesktop } from "../../../../../stores/state.js";
 	import { poiReference, leafletReference } from "../../../../../stores/references.js";
 
 	export let modalData;
 
-	$: ({ coords } = modalData);
+	$: ({ coords, pageX, pageY } = modalData);
 	$: L = $leafletReference;
+	$: dynamicPosition = `--top: ${pageY}px; --left: ${pageX}px`;
 
 	const openPopup = item => {
 		closeOverlays();
@@ -57,48 +58,60 @@
 	};
 </script>
 
+<style>
+	.dynamicTop {
+		left: var(--left);
+		top: var(--top);
+	}
+</style>
+
 <div
-	class="fixed top-20 left-4 bg-white rounded-lg z-1 w-72 p-4"
+	class="fixed bg-bg_dark text-white rounded-lg z-1 w-72 p-4 -translate-y-full -md:z-5 -md:bottom-0 -md:top-auto -md:left-0 -md:translate-y-0 -md:w-full"
+	class:dynamicTop={$isDesktop}
+	style="{$isDesktop && dynamicPosition}"
 	use:focusTrap
 	in:fly="{{ y: 50, duration: 200 }}"
 	out:fly="{{ y: 50, duration: 200 }}"
 >
 	<LoginTitle
-		title="Я хочу"
+		title="Добавить"
 	/>
 
-	<PrimaryAltButton
-		text="Оценить это место для жизни"
+	<MapModalButton
+		title="Оценку"
+		description="Оценить конкретное место и прилегающий район по нескольким критериям"
 		class="my-2"
 		on:click={() => { openPopup("quizPopup") }}
 	/>
 
-	<PrimaryAltButton
-		text="Добавить здесь примечательное место"
+	<MapModalButton
+		title="Примечательное место"
+		description="Оценить конкретное место и прилегающий район по нескольким критериям + Оценить конкретное место и прилегающий"
 		class="my-2"
 		on:click={openPOI}
 	/>
 
-	<PrimaryAltButton
-		text="Рассказать интересную историю об этом месте"
+	<MapModalButton
+		title="Историю"
+		description="Оценить конкретное место"
 		class="my-2"
 	/>
 
-	<PrimaryAltButton
-		text="Посмотреть что здесь"
-		class="my-2"
-		on:click={() => openPopup("nearbyPopup")}
-	/>
+<!--	<PrimaryAltButton-->
+<!--		text="Посмотреть что здесь"-->
+<!--		class="my-2"-->
+<!--		on:click={() => openPopup("nearbyPopup")}-->
+<!--	/>-->
 
-	<div class="text-txt_secondary">
-		<p class="mb-2 mt-8">Подробнее:</p>
+<!--	<div class="text-txt_secondary">-->
+<!--		<p class="mb-2 mt-8">Подробнее:</p>-->
 
-		<ul>
-			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">О рейтингах</a></li>
-			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">О примечательных местах</a></li>
-			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">Об историях</a></li>
-		</ul>
-	</div>
+<!--		<ul>-->
+<!--			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">О рейтингах</a></li>-->
+<!--			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">О примечательных местах</a></li>-->
+<!--			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">Об историях</a></li>-->
+<!--		</ul>-->
+<!--	</div>-->
 
 	<CloseButton
 		overlayType="modal"
