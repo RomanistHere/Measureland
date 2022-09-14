@@ -12,5 +12,6 @@
     <orderEntry type="module" module-name="Measureland admin" />
     <orderEntry type="module" module-name="worker-typescript-template" />
     <orderEntry type="module" module-name="configsMeasureland" />
+    <orderEntry type="module" module-name="Measureland-backend" />
   </component>
 </module>
