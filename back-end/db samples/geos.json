@@ -1,0 +1,379 @@
+[{
+  "_id": {
+    "$oid": "619e2a0187dc485c6c0935f7"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2a0187dc485c6c0935fb"
+      }
+    ],
+    "rating": {
+      "air": 5,
+      "water": 5,
+      "logistic": 5,
+      "transport": 5,
+      "noize": 5,
+      "clean": 5,
+      "chill": 5,
+      "safety": 5,
+      "pets": 5,
+      "kids": 5,
+      "parking": 5
+    },
+    "averageRating": 5,
+    "numberOfComments": 1,
+    "numberOfPersonalExperience": 1,
+    "numberOfUsers": 1
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.3416,
+      53.949
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a1787dc485c6c093601"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2a1787dc485c6c093605"
+      }
+    ],
+    "rating": {
+      "air": 5,
+      "water": 5,
+      "logistic": 5,
+      "transport": 5,
+      "noize": 5,
+      "clean": 5,
+      "chill": 5,
+      "safety": 5,
+      "pets": 5,
+      "kids": 5,
+      "parking": 5
+    },
+    "averageRating": 5,
+    "numberOfComments": 1,
+    "numberOfPersonalExperience": 1,
+    "numberOfUsers": 1
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.3808,
+      53.9496
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a2d87dc485c6c09360b"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2a2d87dc485c6c09360f"
+      },
+      {
+        "$oid": "619e2ad787dc485c6c09364c"
+      }
+    ],
+    "rating": {
+      "air": 3,
+      "water": 3,
+      "logistic": 3,
+      "transport": 3,
+      "noize": 3,
+      "clean": 3,
+      "chill": 3,
+      "safety": 3,
+      "pets": 3,
+      "kids": 3,
+      "parking": 3
+    },
+    "averageRating": 3,
+    "numberOfComments": 2,
+    "numberOfPersonalExperience": 2,
+    "numberOfUsers": 2
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.4363,
+      53.9436
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a4787dc485c6c093616"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2a4787dc485c6c09361a"
+      },
+      {
+        "$oid": "619e2abd87dc485c6c093640"
+      },
+      {
+        "$oid": "619e30d03ec4454884015330"
+      }
+    ],
+    "rating": {
+      "air": 3.7,
+      "water": 2.7,
+      "logistic": 2.7,
+      "transport": 3.3,
+      "noize": 2.7,
+      "clean": 3.7,
+      "chill": 2.7,
+      "safety": 3,
+      "pets": 3.7,
+      "kids": 2.7,
+      "parking": 3.3
+    },
+    "averageRating": 3.11,
+    "numberOfComments": 3,
+    "numberOfPersonalExperience": 2,
+    "numberOfUsers": 3
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.4757,
+      53.9509
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a5c87dc485c6c093620"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2a5c87dc485c6c093624"
+      },
+      {
+        "$oid": "619e2a9b87dc485c6c093631"
+      },
+      {
+        "$oid": "619e2caf3ec445488401529d"
+      },
+      {
+        "$oid": "619e2fa53ec445488401531e"
+      }
+    ],
+    "rating": {
+      "air": 3.3,
+      "water": 2.7,
+      "logistic": 3.7,
+      "transport": 3,
+      "noize": 2.7,
+      "clean": 3.3,
+      "chill": 3.7,
+      "safety": 2.7,
+      "pets": 2.7,
+      "kids": 3.7,
+      "parking": 4.3
+    },
+    "averageRating": 3.24,
+    "numberOfComments": 3,
+    "numberOfPersonalExperience": 3,
+    "numberOfUsers": 3
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.4889,
+      53.9387
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2d003ec44548840152d4"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2d003ec44548840152d8"
+      }
+    ],
+    "rating": {
+      "air": 1,
+      "water": 1,
+      "logistic": 1,
+      "transport": 1,
+      "noize": 1,
+      "clean": 1,
+      "chill": 1,
+      "safety": 1,
+      "pets": 1,
+      "kids": 1,
+      "parking": 1
+    },
+    "averageRating": 1,
+    "numberOfComments": 1,
+    "numberOfPersonalExperience": 1,
+    "numberOfUsers": 1
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.5013,
+      53.9317
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2d1d3ec44548840152f6"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2d1d3ec44548840152fa"
+      }
+    ],
+    "rating": {
+      "air": 1,
+      "water": 1,
+      "logistic": 1,
+      "transport": 1,
+      "noize": 1,
+      "clean": 1,
+      "chill": 1,
+      "safety": 1,
+      "pets": 1,
+      "kids": 1,
+      "parking": 1
+    },
+    "averageRating": 1,
+    "numberOfComments": 1,
+    "numberOfPersonalExperience": 1,
+    "numberOfUsers": 1
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.4868,
+      53.9279
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2d473ec4454884015305"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e2d473ec4454884015309"
+      }
+    ],
+    "rating": {
+      "air": 5,
+      "water": 5,
+      "logistic": 5,
+      "transport": 5,
+      "noize": 5,
+      "clean": 2,
+      "chill": 5,
+      "safety": 1,
+      "pets": 3,
+      "kids": 1,
+      "parking": 5
+    },
+    "averageRating": 3.8,
+    "numberOfComments": 1,
+    "numberOfPersonalExperience": 1,
+    "numberOfUsers": 1
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.4871,
+      53.9337
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e44a33ec445488401534b"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e44a33ec445488401534f"
+      }
+    ],
+    "rating": {
+      "air": 4,
+      "water": 2,
+      "transport": 2,
+      "logistic": 5,
+      "noize": 4,
+      "clean": 2,
+      "chill": 4,
+      "safety": 2,
+      "pets": 5,
+      "parking": 1,
+      "kids": 3
+    },
+    "averageRating": 3.1,
+    "numberOfComments": 1,
+    "numberOfPersonalExperience": 1,
+    "numberOfUsers": 1
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.4617,
+      53.9402
+    ]
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e44c73ec4454884015362"
+  },
+  "properties": {
+    "ratingIDs": [
+      {
+        "$oid": "619e44c73ec4454884015366"
+      }
+    ],
+    "rating": {
+      "air": 5,
+      "water": 4,
+      "logistic": 3,
+      "transport": 2,
+      "noize": 4,
+      "clean": 5,
+      "chill": 2,
+      "safety": 3,
+      "kids": 2,
+      "pets": 4,
+      "parking": 4
+    },
+    "averageRating": 3.5,
+    "numberOfComments": 1,
+    "numberOfPersonalExperience": 1,
+    "numberOfUsers": 1
+  },
+  "location": {
+    "type": "Point",
+    "coordinates": [
+      27.4452,
+      53.9333
+    ]
+  },
+  "__v": 0
+}]

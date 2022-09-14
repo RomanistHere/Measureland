@@ -1,0 +1,616 @@
+[{
+  "_id": {
+    "$oid": "619e2a0187dc485c6c0935fb"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T11:58:17.944Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e295987dc485c6c0935e9"
+  },
+  "commentID": {
+    "$oid": "619e2a0187dc485c6c0935f9"
+  },
+  "geoID": {
+    "$oid": "619e2a0187dc485c6c0935f7"
+  },
+  "rating": {
+    "air": 5,
+    "water": 5,
+    "logistic": 5,
+    "transport": 5,
+    "noize": 5,
+    "clean": 5,
+    "chill": 5,
+    "safety": 5,
+    "pets": 5,
+    "kids": 5,
+    "parking": 5
+  },
+  "averageRating": 5,
+  "timeline": 2021,
+  "createdAt": {
+    "$date": "2021-11-24T12:03:13.580Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:03:13.580Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a1787dc485c6c093605"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T11:58:17.944Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e295987dc485c6c0935e9"
+  },
+  "commentID": {
+    "$oid": "619e2a1787dc485c6c093603"
+  },
+  "geoID": {
+    "$oid": "619e2a1787dc485c6c093601"
+  },
+  "rating": {
+    "air": 5,
+    "water": 5,
+    "logistic": 5,
+    "transport": 5,
+    "noize": 5,
+    "clean": 5,
+    "chill": 5,
+    "safety": 5,
+    "pets": 5,
+    "kids": 5,
+    "parking": 5
+  },
+  "averageRating": 5,
+  "timeline": 2021,
+  "createdAt": {
+    "$date": "2021-11-24T12:03:35.601Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:03:35.601Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a2d87dc485c6c09360f"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T11:58:17.944Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e295987dc485c6c0935e9"
+  },
+  "commentID": {
+    "$oid": "619e2a2d87dc485c6c09360d"
+  },
+  "geoID": {
+    "$oid": "619e2a2d87dc485c6c09360b"
+  },
+  "rating": {
+    "air": 5,
+    "water": 5,
+    "logistic": 5,
+    "transport": 5,
+    "noize": 5,
+    "clean": 5,
+    "chill": 5,
+    "safety": 5,
+    "pets": 5,
+    "kids": 5,
+    "parking": 5
+  },
+  "averageRating": 5,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:03:57.932Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:03:57.932Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a4787dc485c6c09361a"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T11:58:17.944Z"
+  },
+  "isPersonalExperience": false,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e295987dc485c6c0935e9"
+  },
+  "commentID": {
+    "$oid": "619e2a4787dc485c6c093618"
+  },
+  "geoID": {
+    "$oid": "619e2a4787dc485c6c093616"
+  },
+  "rating": {
+    "air": 5,
+    "water": 5,
+    "logistic": 5,
+    "transport": 5,
+    "noize": 5,
+    "clean": 5,
+    "chill": 5,
+    "safety": 5,
+    "pets": 5,
+    "kids": 5,
+    "parking": 5
+  },
+  "averageRating": 5,
+  "timeline": 2000,
+  "createdAt": {
+    "$date": "2021-11-24T12:04:23.647Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:04:23.647Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2a5c87dc485c6c093624"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T11:58:17.944Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e295987dc485c6c0935e9"
+  },
+  "commentID": {
+    "$oid": "619e2a5c87dc485c6c093622"
+  },
+  "geoID": {
+    "$oid": "619e2a5c87dc485c6c093620"
+  },
+  "rating": {
+    "air": 5,
+    "water": 5,
+    "logistic": 5,
+    "transport": 5,
+    "noize": 5,
+    "clean": 5,
+    "chill": 5,
+    "safety": 5,
+    "pets": 5,
+    "kids": 5,
+    "parking": 5
+  },
+  "averageRating": 5,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:04:44.650Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:04:44.650Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2abd87dc485c6c093640"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T11:58:17.944Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e297187dc485c6c0935ed"
+  },
+  "commentID": {
+    "$oid": "619e2abd87dc485c6c09363e"
+  },
+  "geoID": {
+    "$oid": "619e2a4787dc485c6c093616"
+  },
+  "rating": {
+    "air": 1,
+    "water": 1,
+    "logistic": 1,
+    "transport": 1,
+    "noize": 1,
+    "clean": 1,
+    "chill": 1,
+    "safety": 1,
+    "pets": 1,
+    "kids": 1,
+    "parking": 1
+  },
+  "averageRating": 1,
+  "timeline": 2021,
+  "createdAt": {
+    "$date": "2021-11-24T12:06:21.013Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:06:21.013Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2ad787dc485c6c09364c"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T11:58:17.944Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e297187dc485c6c0935ed"
+  },
+  "commentID": {
+    "$oid": "619e2ad787dc485c6c09364a"
+  },
+  "geoID": {
+    "$oid": "619e2a2d87dc485c6c09360b"
+  },
+  "rating": {
+    "air": 1,
+    "water": 1,
+    "logistic": 1,
+    "transport": 1,
+    "noize": 1,
+    "clean": 1,
+    "chill": 1,
+    "safety": 1,
+    "pets": 1,
+    "kids": 1,
+    "parking": 1
+  },
+  "averageRating": 1,
+  "timeline": 2021,
+  "createdAt": {
+    "$date": "2021-11-24T12:06:47.582Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:06:47.582Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2caf3ec445488401529d"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e297187dc485c6c0935ed"
+  },
+  "commentID": {
+    "$oid": "619e2caf3ec445488401529b"
+  },
+  "geoID": {
+    "$oid": "619e2a5c87dc485c6c093620"
+  },
+  "rating": {
+    "air": 1,
+    "water": 1,
+    "logistic": 1,
+    "transport": 1,
+    "noize": 1,
+    "clean": 1,
+    "chill": 1,
+    "safety": 1,
+    "pets": 1,
+    "kids": 1,
+    "parking": 5
+  },
+  "averageRating": 1.3,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:14:39.872Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:14:39.872Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2d003ec44548840152d8"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e297187dc485c6c0935ed"
+  },
+  "commentID": {
+    "$oid": "619e2d003ec44548840152d6"
+  },
+  "geoID": {
+    "$oid": "619e2d003ec44548840152d4"
+  },
+  "rating": {
+    "air": 1,
+    "water": 1,
+    "logistic": 1,
+    "transport": 1,
+    "noize": 1,
+    "clean": 1,
+    "chill": 1,
+    "safety": 1,
+    "pets": 1,
+    "kids": 1,
+    "parking": 1
+  },
+  "averageRating": 1,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:16:00.478Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:16:00.478Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2d1d3ec44548840152fa"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e297187dc485c6c0935ed"
+  },
+  "commentID": {
+    "$oid": "619e2d1d3ec44548840152f8"
+  },
+  "geoID": {
+    "$oid": "619e2d1d3ec44548840152f6"
+  },
+  "rating": {
+    "air": 1,
+    "water": 1,
+    "logistic": 1,
+    "transport": 1,
+    "noize": 1,
+    "clean": 1,
+    "chill": 1,
+    "safety": 1,
+    "pets": 1,
+    "kids": 1,
+    "parking": 1
+  },
+  "averageRating": 1,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:16:29.529Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:16:29.529Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2d473ec4454884015309"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e298287dc485c6c0935f1"
+  },
+  "commentID": {
+    "$oid": "619e2d473ec4454884015307"
+  },
+  "geoID": {
+    "$oid": "619e2d473ec4454884015305"
+  },
+  "rating": {
+    "air": 5,
+    "water": 5,
+    "logistic": 5,
+    "transport": 5,
+    "noize": 5,
+    "clean": 2,
+    "chill": 5,
+    "safety": 1,
+    "pets": 3,
+    "kids": 1,
+    "parking": 5
+  },
+  "averageRating": 3.8,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:17:11.307Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:17:11.307Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e2fa53ec445488401531e"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e298287dc485c6c0935f1"
+  },
+  "commentID": {
+    "$oid": "619e2fa53ec445488401531c"
+  },
+  "geoID": {
+    "$oid": "619e2a5c87dc485c6c093620"
+  },
+  "rating": {
+    "air": 4,
+    "water": 2,
+    "logistic": 5,
+    "transport": 3,
+    "noize": 2,
+    "clean": 4,
+    "chill": 5,
+    "safety": 2,
+    "pets": 2,
+    "kids": 5,
+    "parking": 3
+  },
+  "averageRating": 3.4,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:27:17.185Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:27:17.185Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e30d03ec4454884015330"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e298287dc485c6c0935f1"
+  },
+  "commentID": {
+    "$oid": "619e30d03ec445488401532e"
+  },
+  "geoID": {
+    "$oid": "619e2a4787dc485c6c093616"
+  },
+  "rating": {
+    "air": 5,
+    "water": 2,
+    "logistic": 2,
+    "transport": 4,
+    "noize": 2,
+    "clean": 5,
+    "chill": 2,
+    "safety": 3,
+    "pets": 5,
+    "kids": 2,
+    "parking": 4
+  },
+  "averageRating": 3.3,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T12:32:16.425Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T12:32:16.425Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e44a33ec445488401534f"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e298287dc485c6c0935f1"
+  },
+  "commentID": {
+    "$oid": "619e44a33ec445488401534d"
+  },
+  "geoID": {
+    "$oid": "619e44a33ec445488401534b"
+  },
+  "rating": {
+    "air": 4,
+    "water": 2,
+    "transport": 2,
+    "logistic": 5,
+    "noize": 4,
+    "clean": 2,
+    "chill": 4,
+    "safety": 2,
+    "pets": 5,
+    "parking": 1,
+    "kids": 3
+  },
+  "averageRating": 3.1,
+  "timeline": 2017,
+  "createdAt": {
+    "$date": "2021-11-24T13:56:51.382Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T13:56:51.382Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "619e44c73ec4454884015366"
+  },
+  "dateCreated": {
+    "$date": "2021-11-24T12:12:18.570Z"
+  },
+  "isPersonalExperience": true,
+  "reported": [],
+  "endorsed": [],
+  "userID": {
+    "$oid": "619e298287dc485c6c0935f1"
+  },
+  "commentID": {
+    "$oid": "619e44c73ec4454884015364"
+  },
+  "geoID": {
+    "$oid": "619e44c73ec4454884015362"
+  },
+  "rating": {
+    "air": 5,
+    "water": 4,
+    "logistic": 3,
+    "transport": 2,
+    "noize": 4,
+    "clean": 5,
+    "chill": 2,
+    "safety": 3,
+    "kids": 2,
+    "pets": 4,
+    "parking": 4
+  },
+  "averageRating": 3.5,
+  "timeline": 2018,
+  "createdAt": {
+    "$date": "2021-11-24T13:57:27.349Z"
+  },
+  "updatedAt": {
+    "$date": "2021-11-24T13:57:27.349Z"
+  },
+  "__v": 0
+}]
