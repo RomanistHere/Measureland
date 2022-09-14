@@ -2,20 +2,30 @@
 	import { _ } from "svelte-i18n";
 	import { fly } from "svelte/transition";
 	import { focusTrap } from "svelte-focus-trap";
+	import { onDestroy, onMount } from "svelte";
 
 	import LoginTitle from "$lib/components/UI/LoginTitle.svelte";
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import MapModalButton from "$lib/components/UI/MapModalButton.svelte";
 
-	import { closeOverlays, openAnotherOverlay, registerAction, setCookie } from "$lib/utilities/helpers.js";
+	import {
+		closeOverlays,
+		drawCircle,
+		removeCircle,
+		openAnotherOverlay,
+		registerAction,
+		setCookie,
+	} from "$lib/utilities/helpers.js";
 	import { appStateStore, userStateStore, isDesktop } from "../../../../../stores/state.js";
-	import { poiReference, leafletReference } from "../../../../../stores/references.js";
+	import { poiReference, leafletReference, mapReference } from "../../../../../stores/references.js";
 
 	export let modalData;
 
 	$: ({ coords, pageX, pageY } = modalData);
 	$: L = $leafletReference;
 	$: dynamicPosition = `--top: ${pageY}px; --left: ${pageX}px`;
+	
+	const map = $mapReference;
 
 	const openPopup = item => {
 		closeOverlays();
@@ -76,6 +86,9 @@
 		if (tooRight && tooHigh)
 			dynamicPosition = `--top: ${pageY + popupBounds.height}px; --left: ${pageX - popupBounds.width}px`;
 	};
+
+	onMount(() => { drawCircle({ ...coords, map, radius: .2 }) });
+	onDestroy(() => { removeCircle({ map }) });
 </script>
 
 <style>
@@ -86,7 +99,7 @@
 </style>
 
 <div
-	class="fixed bg-bg_dark text-white rounded-lg z-1 w-72 p-4 -translate-y-full -md:z-5 -md:bottom-0 -md:top-auto -md:left-0 -md:translate-y-0 -md:w-full"
+	class="fixed bg-bg_dark text-white rounded-xl z-1 w-72 p-4 -translate-y-full -md:z-5 -md:bottom-0 -md:top-auto -md:left-0 -md:translate-y-0 -md:w-full"
 	class:dynamicTop={$isDesktop}
 	style="{$isDesktop && dynamicPosition}"
 	use:focusTrap
@@ -96,6 +109,7 @@
 >
 	<LoginTitle
 		title="Добавить"
+		class="mt-0"
 	/>
 
 	<MapModalButton
@@ -115,7 +129,15 @@
 	<MapModalButton
 		title="Историю"
 		description="Оценить конкретное место"
-		class="my-2"
+		class="mt-2"
+	/>
+
+	<p class="my-2">или</p>
+
+	<MapModalButton
+			title="Посмотреть что здесь"
+			description="Оценить конкретное место"
+			class="mt-2"
 	/>
 
 <!--	<PrimaryAltButton-->

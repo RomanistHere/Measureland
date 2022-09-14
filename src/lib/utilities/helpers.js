@@ -139,19 +139,35 @@ const closeOverlaysWithSameType = (overlayType, state) => {
 	};
 };
 
-const openAnotherOverlay = (overlayName = null, data = {}) => {
-	try {
-		overlayStateStore.update(state => {
-	        const overlayType = state[overlayName]["type"];
-	        const { newState } = closeOverlaysWithSameType(overlayType, state);
-	        return ({ ...newState, [overlayName]: { ...newState[overlayName], isOpen: true, data } });
-	    });
-		registerAction(overlayName);
-	} catch (e) {
-		logError(e);
-		logError("Suggested solution: define popup in constants/overlayStateDefault.js");
-	}
+const openOverlayHandler = () => {
+	let previousOverlayName = null;
+	return async (overlayName = null, data = {}) => {
+		try {
+			if (previousOverlayName === overlayName) {
+				overlayStateStore.update(state => {
+					const overlayType = state[overlayName]["type"];
+					const { newState } = closeOverlaysWithSameType(overlayType, state);
+
+					return ({ ...newState });
+				});
+				await sleep(400);
+			}
+			previousOverlayName = overlayName;
+
+			overlayStateStore.update(state => {
+				const overlayType = state[overlayName]["type"];
+				const { newState } = closeOverlaysWithSameType(overlayType, state);
+				return ({ ...newState, [overlayName]: { ...newState[overlayName], isOpen: true, data } });
+			});
+			registerAction(overlayName);
+		} catch (e) {
+			logError(e);
+			logError("Suggested solution: define popup in constants/overlayStateDefault.js");
+		}
+	};
 };
+
+const openAnotherOverlay = openOverlayHandler();
 
 const closeOverlay = (overlayType = null) => {
 	if (overlayType) {
