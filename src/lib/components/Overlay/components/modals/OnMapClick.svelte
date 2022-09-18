@@ -14,7 +14,7 @@
 		removeCircle,
 		openAnotherOverlay,
 		registerAction,
-		setCookie,
+		setCookie, debounce, closeOverlay,
 	} from "$lib/utilities/helpers.js";
 	import { appStateStore, userStateStore, isDesktop } from "../../../../../stores/state.js";
 	import { poiReference, leafletReference, mapReference } from "../../../../../stores/references.js";
@@ -87,8 +87,18 @@
 			dynamicPosition = `--top: ${pageY + popupBounds.height}px; --left: ${pageX - popupBounds.width}px`;
 	};
 
-	onMount(() => { drawCircle({ ...coords, map, radius: .2 }) });
-	onDestroy(() => { removeCircle({ map }) });
+	const handleMovementWithPopupOpen = () => {
+		closeOverlay("modal");
+	};
+
+	onMount(() => {
+		drawCircle({ ...coords, map, radius: .2 });
+		map.once("move", handleMovementWithPopupOpen);
+	});
+	onDestroy(() => {
+		removeCircle({ map });
+		map.off("move", handleMovementWithPopupOpen);
+	});
 </script>
 
 <style>
@@ -132,32 +142,17 @@
 		class="mt-2"
 	/>
 
-	<p class="my-2">или</p>
+<!--	<p class="my-2">или</p>-->
 
-	<MapModalButton
-			title="Посмотреть что здесь"
-			description="Оценить конкретное место"
-			class="mt-2"
-	/>
-
-<!--	<PrimaryAltButton-->
-<!--		text="Посмотреть что здесь"-->
-<!--		class="my-2"-->
-<!--		on:click={() => openPopup("nearbyPopup")}-->
+<!--	<MapModalButton-->
+<!--			title="Посмотреть что здесь"-->
+<!--			description="Оценить конкретное место"-->
+<!--			class="mt-2"-->
 <!--	/>-->
-
-<!--	<div class="text-txt_secondary">-->
-<!--		<p class="mb-2 mt-8">Подробнее:</p>-->
-
-<!--		<ul>-->
-<!--			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">О рейтингах</a></li>-->
-<!--			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">О примечательных местах</a></li>-->
-<!--			<li><a href="blog/tutorial" target="_blank" class="text-main py-0.5 transition-colors hover:bg-txt_tertiary">Об историях</a></li>-->
-<!--		</ul>-->
-<!--	</div>-->
 
 	<CloseButton
 		overlayType="modal"
-		class="top-2 right-2"
+		isWhite={true}
+		class="top-1 right-1"
 	/>
 </div>
