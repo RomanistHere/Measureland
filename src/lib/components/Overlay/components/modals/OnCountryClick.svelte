@@ -7,11 +7,10 @@
 	import LoginTitle from "$lib/components/UI/LoginTitle.svelte";
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import MapModalButton from "$lib/components/UI/MapModalButton.svelte";
+	import PercentageBar from "$lib/components/UI/PercentageBar.svelte";
 
 	import {
 		closeOverlays,
-		drawCircle,
-		removeCircle,
 		openAnotherOverlay,
 		registerAction,
 		setCookie,
@@ -23,51 +22,11 @@
 
 	export let modalData;
 
-	$: ({ coords, pageX, pageY } = modalData);
+	$: ({ country, pageX, pageY } = modalData);
 	$: L = $leafletReference;
 	$: dynamicPosition = `--top: ${pageY}px; --left: ${pageX}px`;
 	
 	const map = $mapReference;
-
-	const openPopup = item => {
-		closeOverlays();
-		openAnotherOverlay(item, coords);
-	};
-
-	const getNumberOfNearbyPOIs = () => {
-		try {
-			const { lat, lng } = coords;
-			const squareBounds = L.latLng(lat, lng).toBounds(500 * 2);
-			const bounds = L.rectangle(squareBounds).getBounds();
-			const bbox = [ bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth() ];
-			const pointsOfInterestApprox = $poiReference.getClusters(bbox, 20);
-			const numberOfPOIs = pointsOfInterestApprox.length;
-
-			return {
-				numberOfPOIs,
-				pointsOfInterestApprox,
-			};
-		} catch (e) {
-			return {
-				numberOfPOIs: 0,
-				pointsOfInterestApprox: [],
-			};
-		}
-	};
-
-	const openPOI = () => {
-		const { numberOfPOIs, pointsOfInterestApprox } = getNumberOfNearbyPOIs();
-		closeOverlays();
-
-		if (numberOfPOIs === 0) {
-			openPopup("addPOIPopup", coords);
-		} else {
-			openAnotherOverlay("warningPoiNearbyDialog", {
-				latlng: coords,
-				closePointsData: pointsOfInterestApprox,
-			});
-		}
-	};
 
 	const adjustPosition = node => {
 		if (typeof document === "undefined")
@@ -94,11 +53,9 @@
 	};
 
 	onMount(() => {
-		drawCircle({ ...coords, map, radius: .2 });
 		map.once("move", handleMovementWithPopupOpen);
 	});
 	onDestroy(() => {
-		removeCircle({ map });
 		map.off("move", handleMovementWithPopupOpen);
 	});
 </script>
@@ -120,37 +77,24 @@
 	out:fly="{{ y: 50, duration: 300 }}"
 >
 	<LoginTitle
-		title="Добавить"
-		class="mt-0"
+		title={country}
+		class="mt-0 mb-1"
+	/>
+
+	<p class="text-[#9A9AA7] mt-2">
+		качество жизни
+	</p>
+
+	<PercentageBar
+		class="mb-4 mt-1"
+		text="высокое"
+		value={85}
 	/>
 
 	<MapModalButton
-		title="Оценку"
-		description="Оценить конкретное место и прилегающий район по нескольким критериям"
-		class="my-2"
-		on:click={() => { openPopup("quizPopup") }}
-	/>
-
-	<MapModalButton
-		title="Примечательное место"
-		description="Оценить конкретное место и прилегающий район по нескольким критериям + Оценить конкретное место и прилегающий"
-		class="my-2"
-		on:click={openPOI}
-	/>
-
-	<MapModalButton
-		title="Историю"
-		description="Оценить конкретное место"
+		title="Больше показателей"
 		class="mt-2"
 	/>
-
-<!--	<p class="my-2">или</p>-->
-
-<!--	<MapModalButton-->
-<!--			title="Посмотреть что здесь"-->
-<!--			description="Оценить конкретное место"-->
-<!--			class="mt-2"-->
-<!--	/>-->
 
 	<CloseButton
 		overlayType="modal"

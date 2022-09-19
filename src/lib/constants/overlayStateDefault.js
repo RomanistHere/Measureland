@@ -164,4 +164,9 @@ export const overlayStateDefault = {
 		type: "modal",
 		data: {},
 	},
+	onCountryClickModal: {
+		isOpen: false,
+		type: "modal",
+		data: {},
+	},
 };

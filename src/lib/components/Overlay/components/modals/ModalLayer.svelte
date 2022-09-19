@@ -3,6 +3,7 @@
 	import Story from "./Story.svelte";
 	import Community from "./Community.svelte";
 	import OnMapClick from "./OnMapClick.svelte";
+	import OnCountryClick from "./OnCountryClick.svelte";
 	import Registration from "./Registration.svelte";
 	import RestorePassword from "./RestorePassword.svelte";
 
@@ -13,6 +14,7 @@
 		communityAbroadModal: Community,
 		loginModal: Login,
 		onMapClickModal: OnMapClick,
+		onCountryClickModal: OnCountryClick,
 		registrationModal: Registration,
 		restorePasswordModal: RestorePassword,
 		storyModal: Story,

@@ -52,7 +52,7 @@
 				}
 
 				hoveredCountryId = e.features[0].id;
-				hoveredCountry = getLayerStats(e.features[0], $ratingsReference);
+				// hoveredCountry = getLayerStats(e.features[0], $ratingsReference);
 
 				map.setFeatureState({
 					source: "countries",
@@ -76,24 +76,32 @@
 			}
 
 			hoveredCountryId = null;
-			hoveredCountry = null;
+			// hoveredCountry = null;
 		});
 
 		map.on("click", "countries-layer", e => {
 			hoveredCountry = null;
-			const bounds = bbox(e.features[0].geometry);
-			map.fitBounds(bounds);
 
-			const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
+			const { name } = getLayerStats(e.features[0], $ratingsReference);
 
-			if (number === 0)
-				return;
-
-			openAnotherOverlay("cityRatingPopup", {
-				name,
-				ratings,
-				number,
+			openAnotherOverlay("onCountryClickModal", {
+				country: name,
+				pageX: e.originalEvent.pageX,
+				pageY: e.originalEvent.pageY,
 			});
+			// const bounds = bbox(e.features[0].geometry);
+			// map.fitBounds(bounds);
+			//
+			// const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
+			//
+			// if (number === 0)
+			// 	return;
+			//
+			// openAnotherOverlay("cityRatingPopup", {
+			// 	name,
+			// 	ratings,
+			// 	number,
+			// });
 		});
 	};
 
