@@ -189,6 +189,12 @@
 				>
 					{$_("navBar.primaryBtn")}
 				</button>
+
+				{#if profileDropDownOpen}
+					<Profile
+						closeDropDown={() => { profileDropDownOpen = false }}
+					/>
+				{/if}
 			{/if}
 		</div>
 	</div>
