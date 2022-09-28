@@ -24,10 +24,20 @@
 	export let closeDropDown;
 
 	$: isLangInChange = false;
+	$: isProtectionInChange = false;
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 
-	const toggleLanguageChange = () =>
-		(isLangInChange = !isLangInChange);
+	const toggleLanguageChange = () => {
+		if (isProtectionInChange)
+			isProtectionInChange = false;
+		isLangInChange = !isLangInChange
+	};
+
+	const toggleProtectionChange = () => {
+		if (isLangInChange)
+			isLangInChange = false;
+		isProtectionInChange = !isProtectionInChange
+	};
 
 	const logoutUser = async () => {
 		closeDropDown();
@@ -106,7 +116,7 @@
 	};
 </script>
 
-<div class="absolute right-0 top-16 bg-white rounded-2xl p-4 w-88">
+<div class="absolute right-0 top-16 bg-white rounded-2xl p-4 pt-8 pb-6 w-88">
 	<h2
 		class="text-4xl font-medium tracking-tight truncate"
 		title="Константиныч который был прав, а потом не прав"
@@ -116,13 +126,13 @@
 
 	<ul class="flex text-txt_secondary my-2">
 		<li class="mr-3">
-			<b class="text-txt_main">3</b> оценки
+			<span class="text-txt_main">3</span> оценки
 		</li>
 		<li class="mr-3">
-			<b class="text-txt_main">5</b> прим. мест
+			<span class="text-txt_main">5</span> прим. мест
 		</li>
 		<li class="mr-3">
-			<b class="text-txt_main">7</b> историй
+			<span class="text-txt_main">7</span> историй
 		</li>
 	</ul>
 
@@ -139,7 +149,7 @@
 	<ul>
 		<li>
 			<button
-				class="flex w-full justify-between items-center p-3"
+				class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
 				on:click={toggleLanguageChange}
 			>
 				Изменить язык
@@ -181,32 +191,54 @@
 				</ul>
 			{/if}
 		</li>
-		<li class="flex w-full justify-between items-center p-3 text-left">
-			Посылать сведения об ошибках
-			<Toggler
-				checked={$userStateStore.shouldSendEvent}
-				on:change={changeDataCollectionSettings}
-			/>
-		</li>
 		<li>
 			<button
-				class="flex w-full justify-between items-center p-3"
-				on:click={openChangePasswordPopup}
+				class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
+				on:click={changeDataCollectionSettings}
 			>
-				Изменить пароль
+				Посылать сведения об ошибках
+				<Toggler
+					checked={$userStateStore.shouldSendEvent}
+					on:change={changeDataCollectionSettings}
+				/>
 			</button>
 		</li>
 		<li>
 			<button
-				class="flex w-full justify-between items-center p-3"
-				on:click={openDisconnectEmailPopup}
+				class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
+				on:click={toggleProtectionChange}
 			>
-				Отвязать почту
+				Безопасность
+				<span class="flex items-center">
+					<Chevron
+						class={isProtectionInChange ? "transform rotate-90" : ""}
+					/>
+				</span>
 			</button>
+			{#if isProtectionInChange}
+				<ul class="bg-bg_gray rounded-lg">
+					<li>
+						<button
+							class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
+							on:click={openChangePasswordPopup}
+						>
+							Изменить пароль
+						</button>
+					</li>
+					<li>
+						<button
+							class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
+							on:click={openDisconnectEmailPopup}
+						>
+							Отвязать почту
+						</button>
+					</li>
+				</ul>
+			{/if}
 		</li>
 		<li>
 			<button
-				class="flex w-full justify-between items-center p-3"
+				class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
 				on:click={logoutUser}
 			>
 				Выход
