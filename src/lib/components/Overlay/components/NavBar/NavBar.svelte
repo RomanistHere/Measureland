@@ -23,7 +23,8 @@
 
 	export let mainScreen = true;
 
-	let profileDropDownOpen = true;
+	let profileDropDownOpen = false;
+	let profileButton = null;
 
 	$: isUserLoggedIn = $userStateStore.userID !== null;
 
@@ -160,11 +161,11 @@
 					href={"#"}
 					class="flex items-center justify-center rounded-full bg-main-active text-white w-10 h-10 shadow-lg border border-main-active"
 					title='{$_("navBar.account1")} {$userStateStore.userName}. {$_("navBar.account2")}'
-					on:blur={() => { setTimeout(() => { profileDropDownOpen = false }, 200) }}
 					on:click={e => {
 	                    e.preventDefault();
 	                    profileDropDownOpen = !profileDropDownOpen;
 	                }}
+					bind:this={profileButton}
 				>
 					{$userStateStore.userName[0].toUpperCase()}
 				</a>
@@ -172,6 +173,7 @@
 				{#if profileDropDownOpen}
 					<Profile
 						closeDropDown={() => { profileDropDownOpen = false }}
+						buttonRef={profileButton}
 					/>
 				{/if}
 			{:else}
@@ -189,12 +191,6 @@
 				>
 					{$_("navBar.primaryBtn")}
 				</button>
-
-				{#if profileDropDownOpen}
-					<Profile
-						closeDropDown={() => { profileDropDownOpen = false }}
-					/>
-				{/if}
 			{/if}
 		</div>
 	</div>

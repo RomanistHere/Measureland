@@ -15,7 +15,7 @@
 	<span
 		class="round absolute inset-0 bg-txt_secondary transition-colors rounded-2xl"
 	>
-		<span class="absolute w-4 h-4 left-1 bottom-1 rounded-full bg-white transition-transform"></span>
+		<span class="absolute w-5 h-5 left-0.5 bottom-0.5 rounded-full bg-white transition-transform"></span>
 	</span>
 </label>
 

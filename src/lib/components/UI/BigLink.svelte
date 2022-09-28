@@ -15,13 +15,13 @@
 	{href}
 	{target}
 	{rel}
-	class="flex justify-between items-center p-3 py-4 text-[#7468AC] rounded-lg bg-gradient-to-br from-[#F4EEFF] to-[#F6F7FF] {customClass}"
+	class="flex justify-between items-center p-3 py-3 text-[#7468AC] rounded-lg bg-gradient-to-br from-[#F4EEFF] to-[#F6F7FF] {customClass}"
 >
 	<div>
-		<span class="block">
+		<span class="block text-xs mt-1">
 			{textSmall}
 		</span>
-			<span class="text-2xl font-semibold block tracking-tight">
+			<span class="text-2xl font-semibold -mt-1 block tracking-tight">
 			{textBig}
 		</span>
 	</div>

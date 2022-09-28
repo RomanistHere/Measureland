@@ -22,10 +22,13 @@
 	import { goto } from "$app/navigation";
 
 	export let closeDropDown;
+	export let buttonRef;
 
 	$: isLangInChange = false;
 	$: isProtectionInChange = false;
 	$: isUserLoggedIn = $userStateStore.userID !== null;
+
+	let profileRef = null;
 
 	const toggleLanguageChange = () => {
 		if (isProtectionInChange)
@@ -114,9 +117,29 @@
 		closeDropDown();
 		openForgotPassPopup();
 	};
+
+	const handleClickOutside = e => {
+		const shouldNotClose = buttonRef === e.target
+			|| profileRef === e.target
+			|| profileRef === e.target.parentNode
+			|| profileRef === e.target.parentNode.parentNode
+			|| profileRef === e.target.parentNode.parentNode.parentNode
+			|| profileRef === e.target.parentNode.parentNode.parentNode.parentNode
+			|| profileRef === e.target.parentNode.parentNode.parentNode.parentNode.parentNode
+			|| profileRef === e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+			|| profileRef === e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+		if (shouldNotClose)
+			return;
+
+		closeDropDown();
+	};
 </script>
 
-<div class="absolute right-0 top-16 bg-white rounded-2xl p-4 pt-8 pb-6 w-88">
+<div
+	class="absolute right-0 top-16 bg-white rounded-2xl p-4 pt-8 pb-6 w-88 text-txt_main"
+	bind:this={profileRef}
+>
 	<h2
 		class="text-4xl font-medium tracking-tight truncate"
 		title="Константиныч который был прав, а потом не прав"
@@ -124,7 +147,7 @@
 		Константиныч который был прав, а потом не прав
 	</h2>
 
-	<ul class="flex text-txt_secondary my-2">
+	<ul class="flex text-txt_secondary mt-1 mb-3">
 		<li class="mr-3">
 			<span class="text-txt_main">3</span> оценки
 		</li>
@@ -140,13 +163,14 @@
 		text="Посмотреть свои отметки"
 		on:click={openMyPlacesPopup}
 	/>
+
 	<BigLink
 		textBig="Заполнить анкету"
 		textSmall="новое задание"
 		class="my-2"
 	/>
 
-	<ul>
+	<ul class="mt-4">
 		<li>
 			<button
 				class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
@@ -165,7 +189,7 @@
 				</span>
 			</button>
 			{#if isLangInChange}
-				<ul class="bg-bg_gray rounded-lg">
+				<ul class="bg-bg_gray rounded-lg mb-4">
 					<li>
 						<button
 							class="flex justify-between items-center w-full p-3 rounded-lg transition-colors hover:bg-bg_slate"
@@ -216,7 +240,7 @@
 				</span>
 			</button>
 			{#if isProtectionInChange}
-				<ul class="bg-bg_gray rounded-lg">
+				<ul class="bg-bg_gray rounded-lg mb-4">
 					<li>
 						<button
 							class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
@@ -242,7 +266,15 @@
 				on:click={logoutUser}
 			>
 				Выход
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M2.66602 9.33203H6.66602V13.332" stroke="#9A9AA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M13.334 6.66797H9.33398V2.66797" stroke="#9A9AA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M9.33398 6.66667L14.0007 2" stroke="#9A9AA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M2 13.9987L6.66667 9.33203" stroke="#9A9AA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
 			</button>
 		</li>
 	</ul>
 </div>
+
+<svelte:window on:click={handleClickOutside}/>

@@ -54,14 +54,14 @@
 		url('/static/fonts/Manrope-Medium.woff') format('woff');
 	}
 
-	/*@font-face {*/
-	/*	font-family: 'Manrope';*/
-	/*	font-weight: 600;*/
-	/*	font-display: swap;*/
-	/*	src: local('Manrope'),*/
-	/*	url('/static/fonts/Manrope-SemiBold.woff2') format('woff2'),*/
-	/*	url('/static/fonts/Manrope-SemiBold.woff') format('woff');*/
-	/*}*/
+	@font-face {
+		font-family: 'Manrope';
+		font-weight: 600;
+		font-display: swap;
+		src: local('Manrope'),
+		url('/static/fonts/Manrope-SemiBold.woff2') format('woff2'),
+		url('/static/fonts/Manrope-SemiBold.woff') format('woff');
+	}
 
 	@font-face {
 		font-family: 'Manrope';
