@@ -13,5 +13,6 @@
     <orderEntry type="module" module-name="worker-typescript-template" />
     <orderEntry type="module" module-name="configsMeasureland" />
     <orderEntry type="module" module-name="Measureland-backend" />
+    <orderEntry type="module" module-name="measureland-telegram" />
   </component>
 </module>

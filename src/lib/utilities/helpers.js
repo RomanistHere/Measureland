@@ -270,22 +270,27 @@ const drawCircle = ({ map, lng, lat, radius }) => {
 	if (!map)
 		return;
 
-	const circleObj = circle([ lng, lat ], radius, { steps: 50, unites: "kilometers" });
+	try {
+		const circleObj = circle([ lng, lat ], radius, { steps: 50, unites: "kilometers" });
 
-	map.addSource("highlightedArea", {
-		type: "geojson",
-		data: circleObj,
-	});
+		map.addSource("highlightedArea", {
+			type: "geojson",
+			data: circleObj,
+		});
 
-	map.addLayer({
-		id: "highlighted-area",
-		type: "fill",
-		source: "highlightedArea",
-		paint: {
-			"fill-outline-color": "#007097",
-			"fill-color": "rgba(56, 119, 241, .16)",
-		},
-	});
+		map.addLayer({
+			id: "highlighted-area",
+			type: "fill",
+			source: "highlightedArea",
+			paint: {
+				"fill-outline-color": "#007097",
+				"fill-color": "rgba(56, 119, 241, .16)",
+			},
+		});
+	} catch (e) {
+		logError("Most likely circle already exists");
+		logError(e);
+	}
 };
 
 const removeCircle = ({ map, id = "highlighted-area", source = "highlightedArea" }) => {

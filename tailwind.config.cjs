@@ -46,6 +46,7 @@ const config = {
 				'100': '25rem',
 			},
 			width: {
+				"88": "22rem",
 				'128': '32rem',
 			},
 			listStyleType: {
@@ -69,13 +70,10 @@ const config = {
 				'main': '#3877F1',
 				'main-hover': '#346DDB',
 				'main-active': '#235BC8',
-				'txt_main': '#212121',
-				'txt_secondary': '#9A9AA7',
 				'txt_tertiary': '#AFAFBB',
 				'txt_danger': '#E03C50',
 				'bg_hover': '#ECECEF',
 				'bg_active': '#E6EEFF',
-				'bg_gray': '#F4F6F9',
 				'bg_blue': '#F0F5FE',
 				'bg_danger': '#FDF0F1',
 				'bg_green': '#F2FAF4',
@@ -87,6 +85,11 @@ const config = {
 				'like_bg': '#363636',
 				'like_bg_hover': '#29312B',
 				'dislike_bg_hover': '#342728',
+				///// going to release //////
+				"txt_main": "#212121",
+				"txt_secondary": "#9A9AA7",
+				"bg_gray": "#F4F6F9",
+				"bg_slate": "#ECF0F4"
 			},
 		},
 	},

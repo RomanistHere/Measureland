@@ -3,7 +3,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 
-	import DropdownMenu from "../../../ui-elements/DropdownMenu.svelte";
+	import Profile from "./Profile.svelte";
 	import Search from "./Search.svelte";
 
 	import {
@@ -23,52 +23,9 @@
 
 	export let mainScreen = true;
 
-	let profileDropDownOpen = false;
+	let profileDropDownOpen = true;
 
 	$: isUserLoggedIn = $userStateStore.userID !== null;
-
-	const userLogout = async () => {
-		profileDropDownOpen = false;
-		closeOverlays();
-		const { error } = await logout();
-
-		if (!error) {
-			userStateStore.update(state => ({
-				...state,
-				userID: null,
-				activeRatings: 3,
-				userName: "Аноним",
-				wantMoreRatings: false,
-			}));
-			showSuccessNotification();
-			registerAction("navbarLogout");
-		} else {
-			logError(error);
-			showSomethingWrongNotification();
-		}
-	};
-
-	const openForgotPassPopup = () => {
-		profileDropDownOpen = false;
-		openAnotherOverlay("forgotPasswordPopup", { isChangePass: true });
-	};
-
-	const openMyPlacesPopup = () => {
-		profileDropDownOpen = false;
-		openAnotherOverlay("myPlacesPopup");
-	};
-
-	$: dropdownData = [ (mainScreen && {
-		text: $_("menuSidebar.myRatings"),
-		action: openMyPlacesPopup,
-	}), {
-		text: $_("menuSidebar.changePassword"),
-		action: openForgotPassPopup,
-	}, {
-		text: $_("menuSidebar.logout"),
-		action: userLogout,
-		className: "text-txt_danger hover:bg-red-50",
-	}].filter(Boolean);
 
 	const closeStartScreen = () => {
 		const { termsOfUseAgreed, startScreen } = $appStateStore;
@@ -213,9 +170,8 @@
 				</a>
 
 				{#if profileDropDownOpen}
-					<DropdownMenu
-						class='right-0 w-56 top-16'
-						{ dropdownData }
+					<Profile
+						closeDropDown={() => { profileDropDownOpen = false }}
 					/>
 				{/if}
 			{:else}

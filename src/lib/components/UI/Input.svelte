@@ -31,8 +31,13 @@
 	const validatePass = pass =>
 		pass.length > 6 && pass.length < 255;
 
-	const changeInputType = () =>
-		(shouldShowPassword = !shouldShowPassword);
+	const changeInputType = e => {
+		if (e.detail !== 0) {
+			// clicked with mouse
+			e.preventDefault();
+			shouldShowPassword = !shouldShowPassword;
+		}
+	};
 
 	const onBlur = e => {
 		isInputActive = false;
