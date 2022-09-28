@@ -99,6 +99,17 @@
 			openAnotherOverlay("filtersSidebar");
 		}
 	};
+
+	const toggleProfile = () =>
+		(profileDropDownOpen = !profileDropDownOpen);
+
+	$: iconColor = "#212121";
+
+	const focusProfileIcon = () =>
+		(iconColor = "#3877F1");
+
+	const blurProfileIcon = () =>
+		(iconColor = "#212121");
 </script>
 
 <nav class="absolute flex z-5 justify-between items-center inset-x-4 top-4 -lg:hidden">
@@ -159,15 +170,23 @@
 			{#if isUserLoggedIn}
 				<a
 					href={"#"}
-					class="flex items-center justify-center rounded-full bg-main-active text-white w-10 h-10 shadow-lg border border-main-active"
+					class="relative flex items-center justify-center rounded-full bg-white w-10 h-10 shadow-lg transition-colors hover:bg-bg_slate"
 					title='{$_("navBar.account1")} {$userStateStore.userName}. {$_("navBar.account2")}'
-					on:click={e => {
-	                    e.preventDefault();
-	                    profileDropDownOpen = !profileDropDownOpen;
-	                }}
+					on:click|preventDefault={toggleProfile}
+					on:focus={focusProfileIcon}
+					on:blur={blurProfileIcon}
 					bind:this={profileButton}
 				>
-					{$userStateStore.userName[0].toUpperCase()}
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke={iconColor} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M22 22C22 18.134 17.5228 15 12 15C6.47715 15 2 18.134 2 22" stroke={iconColor} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+
+					{#if true}
+						<span class="rounded-full bg-main w-4 h-4 text-xs text-white absolute top-0 right-0 flex justify-center items-center font-semibold">
+							1
+						</span>
+					{/if}
 				</a>
 
 				{#if profileDropDownOpen}

@@ -33,13 +33,13 @@
 	const toggleLanguageChange = () => {
 		if (isProtectionInChange)
 			isProtectionInChange = false;
-		isLangInChange = !isLangInChange
+		isLangInChange = !isLangInChange;
 	};
 
 	const toggleProtectionChange = () => {
 		if (isLangInChange)
 			isLangInChange = false;
-		isProtectionInChange = !isProtectionInChange
+		isProtectionInChange = !isProtectionInChange;
 	};
 
 	const logoutUser = async () => {
@@ -119,7 +119,11 @@
 	};
 
 	const handleClickOutside = e => {
-		const shouldNotClose = buttonRef === e.target
+		const shouldNotClose =
+			buttonRef === e.target
+			|| buttonRef === e.target.parentNode
+			|| buttonRef === e.target.parentNode.parentNode
+			|| buttonRef === e.target.parentNode.parentNode.parentNode
 			|| profileRef === e.target
 			|| profileRef === e.target.parentNode
 			|| profileRef === e.target.parentNode.parentNode
