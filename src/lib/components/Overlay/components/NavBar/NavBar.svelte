@@ -26,7 +26,8 @@
 	let profileDropDownOpen = false;
 	let profileButton = null;
 
-	$: isUserLoggedIn = $userStateStore.userID !== null;
+	// $: isUserLoggedIn = $userStateStore.userID !== null;
+	$: isUserLoggedIn = true;
 
 	const closeStartScreen = () => {
 		const { termsOfUseAgreed, startScreen } = $appStateStore;
