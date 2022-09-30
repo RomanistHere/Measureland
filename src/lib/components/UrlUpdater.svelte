@@ -157,7 +157,7 @@
 
     	if (passToken && passToken.length >= 25) {
     		url.searchParams.delete("reset_pass_token");
-    		openAnotherOverlay("typeNewPassword", passToken);
+    		openAnotherOverlay("typeNewPasswordModal", passToken);
     	}
 
     	url.searchParams.delete("openModal");

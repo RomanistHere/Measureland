@@ -24,9 +24,9 @@
 	} from "../../../../utilities/helpers.js";
 	import { sendResetPass } from "../../../../utilities/api.js";
 
-	export let popupData = {};
+	export let modalData = {};
 
-	$: isChangePass = popupData.isChangePass;
+	$: isChangePass = modalData.isChangePass;
 	$: title = isChangePass ? $_("changePasswordPopup.title") : $_("forgotPasswordPopup.title");
 	$: mainBtn = isChangePass ? $_("changePasswordPopup.mainBtn") : $_("forgotPasswordPopup.mainBtn");
 
@@ -120,11 +120,18 @@
 		<LoginTitle { title } />
 
 		{#if isSuccess}
-			<SuccessBlock />
+			<SuccessBlock
+				successType={isChangePass ? "PasswordChangeLinkSent" : "PasswordResetLinkSent"}
+			/>
 
 			<p class="px-8 text-sm text-center text-txt_secondary mt-3 mb-4 leading-5">
-				Чтобы создать новый пароль, <br />
-				нужно перейти по ссылке из почты
+				{#if isChangePass}
+					Чтобы изменить пароль, <br />
+					нужно перейти по ссылке из почты
+				{:else}
+					Чтобы создать новый пароль, <br />
+					нужно перейти по ссылке из почты
+				{/if}
 			</p>
 		{:else}
 			{#if errorType}
@@ -145,19 +152,21 @@
 
 			<PrimaryButton
 				text={mainBtn}
-				class="w-full mt-4 py-3"
+				class="w-full mt-4 py-3 {isChangePass && 'mb-6'}"
 				on:click={debouncedSubmit}
 			/>
 
-			<div class="text-right mt-1 mb-3">
-				<TextButton
-					text={$_("forgotPasswordPopup.secondaryBtn")}
-					on:click={openRegisterModal}
-					class="py-1"
-				/>
-			</div>
+			{#if !isChangePass}
+				<div class="text-right mt-1 mb-3">
+					<TextButton
+						text={$_("forgotPasswordPopup.secondaryBtn")}
+						on:click={openRegisterModal}
+						class="py-1"
+					/>
+				</div>
 
-			<AdditionalAuthButtons isRegistration={false} />
+				<AdditionalAuthButtons isRegistration={false} />
+			{/if}
 		{/if}
 
 		<CloseButton

@@ -3,10 +3,11 @@
 
 	const types = {
 		"PasswordChanged": "Пароль успешно изменён!",
-		"unrecognizedError": "Ссылка для подтверждения отправлена на почту",
+		"PasswordResetLinkSent": "Ссылка для подтверждения отправлена на почту",
+		"PasswordChangeLinkSent": "Ссылка для смены пароля отправлена на почту",
 	};
 
-	export let successType = "unrecognizedError";
+	export let successType = "PasswordResetLinkSent";
 </script>
 
 <div class="rounded-lg bg-bg_green py-3 px-8 text-on-green text-center leading-5 flex justify-center items-center min-h-[4rem]">

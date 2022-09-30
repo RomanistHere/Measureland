@@ -101,12 +101,6 @@
 
 	};
 
-	const openForgotPassPopup = () => {
-		closeOverlays();
-		closeDropDown();
-		openAnotherOverlay("forgotPasswordPopup", { isChangePass: true });
-	};
-
 	const openMyPlacesPopup = () => {
 		closeOverlays();
 		closeDropDown();
@@ -116,7 +110,7 @@
 	const openChangePasswordPopup = () => {
 		closeOverlays();
 		closeDropDown();
-		openForgotPassPopup();
+		openAnotherOverlay("restorePasswordModal", { isChangePass: true });
 	};
 
 	const handleClickOutside = e => {

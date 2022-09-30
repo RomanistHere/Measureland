@@ -5,15 +5,12 @@
 
 	import Input from "$lib/components/UI/Input.svelte";
 	import ErrorBlock from "$lib/components/UI/ErrorBlock.svelte";
-	import TextButton from "$lib/components/UI/TextButton.svelte";
 	import LoginTitle from "$lib/components/UI/LoginTitle.svelte";
 	import SuccessBlock from "$lib/components/UI/SuccessBlock.svelte";
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import PrimaryButton from "$lib/components/UI/PrimaryButton.svelte";
-	import AdditionalAuthButtons from "$lib/components/UI/AdditionalAuthButtons.svelte";
 
 	import {
-		openAnotherOverlay,
 		debounce,
 		showSuccessNotification,
 		showSomethingWrongNotification,
@@ -21,11 +18,14 @@
 		getErrorType,
 		blurCurrentInput,
 		closeOverlay,
-	} from "../../../../utilities/helpers.js";
-	import { reset, sendResetPass } from "../../../../utilities/api.js";
+		registerAction,
+	} from "$lib/utilities/helpers.js";
+	import { logout, reset } from "$lib/utilities/api.js";
+	import { userStateStore } from "../../../../../stores/state.js";
+
+	$: isUserLoggedIn = $userStateStore.userID !== null;
 
 	export let modalData = {};
-	$: console.log(modalData);
 
 	let password = "";
 	let isPasswordValid = true;
@@ -69,8 +69,30 @@
 			return;
 		}
 
+		if (isUserLoggedIn)
+			await logoutUser();
+
 		showSuccessNotification();
 		isSuccess = true;
+	};
+
+	const logoutUser = async () => {
+		const { error } = await logout();
+
+		if (!error) {
+			userStateStore.update(state => ({
+				...state,
+				userID: null,
+				activeRatings: 3,
+				userName: "Аноним",
+				wantMoreRatings: false,
+			}));
+			showSuccessNotification();
+			registerAction("navbarLogout");
+		} else {
+			logError(error);
+			showSomethingWrongNotification();
+		}
 	};
 
 	const debouncedSubmit = debounce(() => {
@@ -108,7 +130,7 @@
 		in:fly="{{ y: 50, duration: 500 }}"
 		out:fade="{{ duration: 500 }}"
 	>
-		<LoginTitle title="Восстановить аккаунт" />
+		<LoginTitle title="Изменить пароль" />
 
 		{#if isSuccess}
 			<SuccessBlock

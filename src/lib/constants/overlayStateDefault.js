@@ -169,7 +169,7 @@ export const overlayStateDefault = {
 		type: "modal",
 		data: {},
 	},
-	typeNewPassword: {
+	typeNewPasswordModal: {
 		isOpen: false,
 		type: "modal",
 		data: {},

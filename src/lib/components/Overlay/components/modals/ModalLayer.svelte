@@ -19,7 +19,7 @@
 		registrationModal: Registration,
 		restorePasswordModal: RestorePassword,
 		storyModal: Story,
-		typeNewPassword: TypeNewPassword,
+		typeNewPasswordModal: TypeNewPassword,
 	};
 
 	$: Modal = sidebarList[modalName];
