@@ -27,7 +27,7 @@
 
 			return;
 		}
-		const { userID, userName, activeRatings, wantMoreRatings } = data;
+		const { userID, userName, activeRatings, wantMoreRatings, numberOfRatings, numberOfPois } = data;
 		const shouldSendEvent = browser ? getCookie("shouldSendEvent") !== "0" : false;
 		const shouldShowStartScreen = browser ? getCookie("startScreen") !== "0" : false;
 
@@ -40,6 +40,8 @@
 				userName,
 				wantMoreRatings,
 				shouldSendEvent,
+				numberOfRatings,
+				numberOfPois,
 			}));
 			registerAction("user");
 		}

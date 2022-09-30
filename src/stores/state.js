@@ -12,6 +12,9 @@ export const userStateStore = writable({
 	uniqID: Math.random().toString(16).slice(2),
 	shouldSendEvent: false,
 	wantMoreRatings: false,
+	numberOfRatings: 0,
+	numberOfPois: 0,
+	numberOfStories: 0,
 });
 
 export const appStateStore = writable({

@@ -16,6 +16,7 @@
 		setCookie,
 		showSomethingWrongNotification,
 		showSuccessNotification,
+		getDeclension,
 	} from "$lib/utilities/helpers.js";
 	import { logout, saveLang } from "$lib/utilities/api.js";
 	import { userStateStore } from "../../../../../stores/state.js";
@@ -146,20 +147,23 @@
 >
 	<h2
 		class="text-4xl font-medium tracking-tight truncate"
-		title="Константиныч который был прав, а потом не прав"
+		title={$userStateStore.userName}
 	>
-		Константиныч который был прав, а потом не прав
+		{$userStateStore.userName}
 	</h2>
 
 	<ul class="flex text-txt_secondary mt-1 mb-3">
 		<li class="mr-3">
-			<span class="text-txt_main">3</span> оценки
+			<span class="text-txt_main">{$userStateStore.numberOfRatings}</span>
+			{getDeclension($userStateStore.numberOfRatings, [ "оценка", "оценки", "оценок" ])}
 		</li>
 		<li class="mr-3">
-			<span class="text-txt_main">5</span> прим. мест
+			<span class="text-txt_main">{$userStateStore.numberOfPois}</span>
+			прим. мест
 		</li>
 		<li class="mr-3">
-			<span class="text-txt_main">7</span> историй
+			<span class="text-txt_main">{$userStateStore.numberOfStories}</span>
+			историй
 		</li>
 	</ul>
 
