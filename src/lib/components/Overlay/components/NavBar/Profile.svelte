@@ -159,11 +159,11 @@
 		</li>
 		<li class="mr-3">
 			<span class="text-txt_main">{$userStateStore.numberOfPois}</span>
-			прим. мест
+			прим. {getDeclension($userStateStore.numberOfPois, [ "место", "места", "мест" ])}
 		</li>
 		<li class="mr-3">
 			<span class="text-txt_main">{$userStateStore.numberOfStories}</span>
-			историй
+			{getDeclension($userStateStore.numberOfStories, [ "история", "истории", "историй" ])}
 		</li>
 	</ul>
 

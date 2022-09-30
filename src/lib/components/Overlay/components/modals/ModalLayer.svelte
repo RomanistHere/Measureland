@@ -6,6 +6,7 @@
 	import OnCountryClick from "./OnCountryClick.svelte";
 	import Registration from "./Registration.svelte";
 	import RestorePassword from "./RestorePassword.svelte";
+	import TypeNewPassword from "./TypeNewPassword.svelte";
 
 	export let modalName;
 	export let modalData;
@@ -18,6 +19,7 @@
 		registrationModal: Registration,
 		restorePasswordModal: RestorePassword,
 		storyModal: Story,
+		typeNewPassword: TypeNewPassword,
 	};
 
 	$: Modal = sidebarList[modalName];

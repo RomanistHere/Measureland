@@ -97,14 +97,14 @@ const getFinalRating = obj => {
 	}
 
 	const mainPart = mainAsnwersCounter !== 0
-					 ? sumMain / mainAsnwersCounter
-					 : 0; // 75%
+		? sumMain / mainAsnwersCounter
+		: 0; // 75%
 	const additionalPart = additionalAsnwersCounter !== 0
-						   ? sumAdditional / additionalAsnwersCounter
-						   : 0; // 25%
+		? sumAdditional / additionalAsnwersCounter
+		: 0; // 25%
 	const finalRating = additionalPart !== 0
-						? (mainPart * 3 + additionalPart) / 4
-						: mainPart; // if no additional ratings
+		? (mainPart * 3 + additionalPart) / 4
+		: mainPart; // if no additional ratings
 
 	return {
 		answersNumber: mainAsnwersCounter + additionalAsnwersCounter,
@@ -317,10 +317,10 @@ const centerMap = (map, lat, lng, isDesktop = true, zoomClosely = false, zoomLev
 	/* eslint-disable no-nested-ternary */
 	// doesn't look better with if/else syntax
 	const zoom = zoomLevel && currentZoom >= zoomLevel
-				 ? zoomLevel
-				 : zoomClosely
-				   ? currentZoom <= 14 ? 15 : currentZoom
-				   : currentZoom <= 12 ? 13 : currentZoom;
+		? zoomLevel
+		: zoomClosely
+			? currentZoom <= 14 ? 15 : currentZoom
+			: currentZoom <= 12 ? 13 : currentZoom;
 	/* eslint-enable no-nested-ternary */
 
 	// center in left half of the screen for desktop
@@ -393,7 +393,7 @@ const getScreenData = map => {
 
 	const currentScreenPoly = {
 		regions: [
-			[ [ north, west ], [ north, east ], [ south, east ], [ south, west ] ],
+			[[ north, west ], [ north, east ], [ south, east ], [ south, west ]],
 		],
 		inverted: false,
 	};
