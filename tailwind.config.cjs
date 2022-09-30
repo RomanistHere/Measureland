@@ -1,16 +1,16 @@
-const plugin = require('tailwindcss/plugin');
+const plugin = require("tailwindcss/plugin");
 
 // reference: https://stackoverflow.com/a/67458852/11698825
-const hoverPlugin = plugin(function({ addVariant, e, postcss }) {
-	addVariant('hover', ({ container, separator }) => {
-		const hoverRule = postcss.atRule({ name: 'media', params: '(hover: hover) and (pointer: fine)' });
+const hoverPlugin = plugin(function ({ addVariant, e, postcss }) {
+	addVariant("hover", ({ container, separator }) => {
+		const hoverRule = postcss.atRule({ name: "media", params: "(hover: hover) and (pointer: fine)" });
 		hoverRule.append(container.nodes);
 		container.append(hoverRule);
 		hoverRule.walkRules(rule => {
 			rule.selector = `.${e(`hover${separator}${rule.selector.slice(1)}`)}:hover`
 		});
 	});
-	addVariant('active', [ '&:active' ]);
+	addVariant("active", [ "&:active" ]);
 });
 
 const config = {
@@ -21,71 +21,71 @@ const config = {
 	theme: {
 		extend: {
 			screens: {
-				'-2xl': { max: '1535px' },
-				'-xl': { max: '1279px' },
-				'-lg': { max: '1023px' },
-				'-md': { max: '767px' },
-				'-sm': { max: '639px' },
-				'@md': { min: '640px', max: '767px' },
-				'@lg': { min: '768px', max: '1023px' },
-				'@xl': { min: '1024px', max: '1279px' },
-				'@2xl': { min: '1280px', max: '1535px' },
+				"-2xl": { max: "1535px" },
+				"-xl": { max: "1279px" },
+				"-lg": { max: "1023px" },
+				"-md": { max: "767px" },
+				"-sm": { max: "639px" },
+				"@md": { min: "640px", max: "767px" },
+				"@lg": { min: "768px", max: "1023px" },
+				"@xl": { min: "1024px", max: "1279px" },
+				"@2xl": { min: "1280px", max: "1535px" },
 			},
 			zIndex: {
-				'-1': '-1',
-        		'1': 1,
-				'2': 2,
-				'3': 3,
-				'4': 4,
-				'5': 5,
+				"-1": "-1",
+				"1": 1,
+				"2": 2,
+				"3": 3,
+				"4": 4,
+				"5": 5,
 			},
 			fontFamily: {
-				sans: ['Manrope', 'sans-serif']
-		    },
+				sans: [ "Manrope", "sans-serif" ]
+			},
 			height: {
-				'100': '25rem',
+				"100": "25rem",
 			},
 			width: {
 				"88": "22rem",
-				'128': '32rem',
+				"128": "32rem",
 			},
 			listStyleType: {
-				square: 'square',
+				square: "square",
 			},
 			colors: {
-				'active': '#007097',
-				'success': '#146481',
-				'non-active': '#31493c54',
-				'main-bg': '#d4eff5',
-				'add-bg': '#d4eff554',
-				'add-bg-non-tr': '#d4eff554',
-				'text': '#001A23',
-				'good-feeling': '#bcedb5',
-				'neutral-feeling': '#fcd9f6',
-				'bad-feeling': '#ffbaba',
-				'error': '#ffa500',
-				'almost-inv': '#dddddd',
+				"active": "#007097",
+				"success": "#146481",
+				"non-active": "#31493c54",
+				"main-bg": "#d4eff5",
+				"add-bg": "#d4eff554",
+				"add-bg-non-tr": "#d4eff554",
+				"text": "#001A23",
+				"good-feeling": "#bcedb5",
+				"neutral-feeling": "#fcd9f6",
+				"bad-feeling": "#ffbaba",
+				"error": "#ffa500",
+				"almost-inv": "#dddddd",
 				///// new /////
-				'new-active': '#E5EEFF',
-				'main': '#3877F1',
-				'main-hover': '#346DDB',
-				'main-active': '#235BC8',
-				'txt_tertiary': '#AFAFBB',
-				'txt_danger': '#E03C50',
-				'bg_hover': '#ECECEF',
-				'bg_active': '#E6EEFF',
-				'bg_blue': '#F0F5FE',
-				'bg_danger': '#FDF0F1',
-				'bg_green': '#F2FAF4',
-				'bg_dark': '#151A1C',
-				'bg_darker': '#272C2E',
-				'stroke': '#DADCE1',
-				'on-green': '#5ABF70',
-				'danger-red': '#CA5A5A',
-				'like_bg': '#363636',
-				'like_bg_hover': '#29312B',
-				'dislike_bg_hover': '#342728',
+				"new-active": "#E5EEFF",
+				"txt_tertiary": "#AFAFBB",
+				"txt_danger": "#E03C50",
+				"bg_hover": "#ECECEF",
+				"bg_active": "#E6EEFF",
+				"bg_blue": "#F0F5FE",
+				"bg_danger": "#FDF0F1",
+				"bg_green": "#F2FAF4",
+				"bg_dark": "#151A1C",
+				"bg_darker": "#272C2E",
+				"stroke": "#DADCE1",
+				"on-green": "#5ABF70",
+				"danger-red": "#CA5A5A",
+				"like_bg": "#363636",
+				"like_bg_hover": "#29312B",
+				"dislike_bg_hover": "#342728",
 				///// going to release //////
+				"main": "#3877F1",
+				"main-hover": "#346DDB",
+				"main-active": "#235BC8",
 				"txt_main": "#212121",
 				"txt_secondary": "#9A9AA7",
 				"bg_gray": "#F4F6F9",
@@ -95,7 +95,7 @@ const config = {
 	},
 	variants: {
 		extend: {
-			backgroundColor: [ 'active' ],
+			backgroundColor: [ "active" ],
 		},
 	},
 	plugins: [ hoverPlugin ],

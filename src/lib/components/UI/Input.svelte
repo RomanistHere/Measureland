@@ -6,6 +6,8 @@
 
 	import { generateRandomString } from "$lib/utilities/helpers.js";
 
+	let customClass = "";
+	export { customClass as class };
 	export let title;
 	export let type = "string";
 	export let id = generateRandomString();
@@ -20,6 +22,8 @@
 	let isInputActive = false;
 	let hasTypingStarted = false;
 
+	$: inputType = type !== "password" || (type === "password" && shouldShowPassword) ? "text" : "password";
+
 	let ref;
 
 	export const focus = () =>
@@ -30,6 +34,9 @@
 
 	const validatePass = pass =>
 		pass.length > 6 && pass.length < 255;
+
+	const validateLogin = str =>
+		str.length > 2 && str.length < 255;
 
 	const changeInputType = e => {
 		if (e.detail !== 0) {
@@ -48,6 +55,8 @@
 			isInputValid = validateEmail(value);
 		} else if (type === "password") {
 			isInputValid = validatePass(value);
+		} else if (type === "login") {
+			isInputValid = validateLogin(value);
 		}
 	};
 
@@ -62,7 +71,7 @@
 	$: isValid = isInputValid && hasTypingStarted && !isInputActive && !externalError;
 </script>
 
-<div class="mt-2">
+<div class="mt-2 {customClass}">
 	<label
 		class="lowercase text-sm"
 		class:text-txt_danger={isError}
@@ -75,6 +84,8 @@
 				{$_("input.emailError")}
 			{:else if type === "email" && !value}
 				{$_("input.emailEmpty")}
+			{:else if type === "login"}
+				Придумай логин длиннее 2-х символов
 			{:else if type === "password"}
 				{$_("input.passwordError")}
 			{/if}
@@ -95,7 +106,7 @@
 			{ autofocus }
 			{ maxlength }
 			{ placeholder }
-			type={shouldShowPassword ? "text" : type}
+			type={inputType}
 			on:blur={onBlur}
 			on:input={onInput}
 			bind:this={ref}

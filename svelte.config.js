@@ -1,8 +1,8 @@
-import { mdsvex } from 'mdsvex';
-import mdsvexConfig from './mdsvex.config.js';
-import preprocess from 'svelte-preprocess';
-/** @type {import('@sveltejs/kit').Config} */
-import adapter from '@sveltejs/adapter-static';
+import { mdsvex } from "mdsvex";
+import mdsvexConfig from "./mdsvex.config.js";
+import preprocess from "svelte-preprocess";
+/** @type {import("@sveltejs/kit").Config} */
+import adapter from "@sveltejs/adapter-static";
 
 const handleError = ({
 	status,
@@ -10,27 +10,27 @@ const handleError = ({
 	referrer,
 	referenceType,
 }) => {
-	console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ''}`);
+	console.warn(`${status} ${path}${referrer ? ` (${referenceType} from ${referrer})` : ""}`);
 };
 
 const config = {
-	extensions: [ '.svelte', ...mdsvexConfig.extensions ],
+	extensions: [ ".svelte", ...mdsvexConfig.extensions ],
 
 	// ssr: true
 	kit: {
-		target: '#svelte',
+		target: "#svelte",
 		adapter: adapter({
-			pages: 'dist',
-			assets: 'dist',
+			pages: "dist",
+			assets: "dist",
 			fallback: null,
 		}),
 		prerender: {
 			crawl: true,
 			enabled: true,
-			entries: [ '*', '/ru/', '/en/', '/en/blog/policy/', '/ru/blog/policy/', '/en/blog/terms-of-use/', '/ru/blog/terms-of-use/' ],
+			entries: [ "*", "/ru/", "/en/", "/en/blog/policy/", "/ru/blog/policy/", "/en/blog/terms-of-use/", "/ru/blog/terms-of-use/" ],
 			onError: handleError,
 		},
-		trailingSlash: 'always',
+		trailingSlash: "always",
 	},
 
 	preprocess: [

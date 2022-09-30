@@ -7,12 +7,14 @@
 	import Registration from "./Registration.svelte";
 	import RestorePassword from "./RestorePassword.svelte";
 	import TypeNewPassword from "./TypeNewPassword.svelte";
+	import DisconnectEmail from "./DisconnectEmail.svelte";
 
 	export let modalName;
 	export let modalData;
 
 	const sidebarList = {
 		communityAbroadModal: Community,
+		disconnectEmailModal: DisconnectEmail,
 		loginModal: Login,
 		onMapClickModal: OnMapClick,
 		onCountryClickModal: OnCountryClick,
