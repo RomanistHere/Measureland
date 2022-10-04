@@ -31,6 +31,12 @@
 
 	let profileRef = null;
 
+	// if adding new language, change height in the next string: `class:max-h-24={isLangInChange}` for proper animation
+	const languages = {
+		"ru": "Русский",
+		"en": "English",
+	};
+
 	const toggleLanguageChange = () => {
 		if (isProtectionInChange)
 			isProtectionInChange = false;
@@ -95,10 +101,10 @@
 		}
 	};
 
-	// todo: rewrite functions below when ready
-
 	const openDisconnectEmailPopup = () => {
-
+		closeOverlays();
+		closeDropDown();
+		openAnotherOverlay("disconnectEmailModal");
 	};
 
 	const openMyPlacesPopup = () => {
@@ -182,7 +188,7 @@
 				<span class="flex items-center">
 					{#if !isLangInChange}
 						<span class="mr-2 text-txt_secondary">
-							{$locale === "ru" ? "Русский" : "English"}
+							{languages[$locale]}
 						</span>
 					{/if}
 					<Chevron
@@ -190,32 +196,26 @@
 					/>
 				</span>
 			</button>
-			{#if isLangInChange}
-				<ul class="bg-bg_gray rounded-lg mb-4">
+			<ul
+				class="bg-bg_gray rounded-lg max-h-0 overflow-hidden transition-all"
+				class:max-h-24={isLangInChange}
+				class:mb-4={isLangInChange}
+			>
+				{#each Object.entries(languages) as [key, value]}
 					<li>
 						<button
 							class="flex justify-between items-center w-full p-3 rounded-lg transition-colors hover:bg-bg_slate"
-							on:click={() => { setNewLang("ru") }}
+							on:click={() => { setNewLang(key) }}
 						>
-							Русский
-							{#if $locale === "ru"}
+							{value}
+							{#if $locale === key}
 								<Check />
 							{/if}
 						</button>
 					</li>
-					<li>
-						<button
-							class="flex justify-between items-center w-full p-3 rounded-lg transition-colors hover:bg-bg_slate"
-							on:click={() => { setNewLang("en") }}
-						>
-							English
-							{#if $locale === "en"}
-								<Check />
-							{/if}
-						</button>
-					</li>
-				</ul>
-			{/if}
+				{/each}
+				<li>
+			</ul>
 		</li>
 		<li>
 			<button
@@ -241,26 +241,28 @@
 					/>
 				</span>
 			</button>
-			{#if isProtectionInChange}
-				<ul class="bg-bg_gray rounded-lg mb-4">
-					<li>
-						<button
-							class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
-							on:click={openChangePasswordPopup}
-						>
-							Изменить пароль
-						</button>
-					</li>
-					<li>
-						<button
-							class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
-							on:click={openDisconnectEmailPopup}
-						>
-							Отвязать почту
-						</button>
-					</li>
-				</ul>
-			{/if}
+			<ul
+				class="bg-bg_gray rounded-lg max-h-0 overflow-hidden transition-all"
+				class:max-h-24={isProtectionInChange}
+				class:mb-4={isProtectionInChange}
+			>
+				<li>
+					<button
+						class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
+						on:click={openChangePasswordPopup}
+					>
+						Изменить пароль
+					</button>
+				</li>
+				<li>
+					<button
+						class="flex w-full justify-between items-center p-3 rounded-lg transition-colors hover:bg-bg_slate"
+						on:click={openDisconnectEmailPopup}
+					>
+						Отвязать почту
+					</button>
+				</li>
+			</ul>
 		</li>
 		<li>
 			<button
