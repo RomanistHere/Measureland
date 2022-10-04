@@ -36,7 +36,7 @@
 		pass.length > 6 && pass.length < 255;
 
 	const validateLogin = str =>
-		str.length > 2 && str.length < 255;
+		str.length > 2 && str.length < 255 && !str.includes("@");
 
 	const changeInputType = e => {
 		if (e.detail !== 0) {
@@ -85,7 +85,7 @@
 			{:else if type === "email" && !value}
 				{$_("input.emailEmpty")}
 			{:else if type === "login"}
-				Придумай логин длиннее 2-х символов
+				Придумай логин длиннее 2-х символов и без символа "@"
 			{:else if type === "password"}
 				{$_("input.passwordError")}
 			{/if}

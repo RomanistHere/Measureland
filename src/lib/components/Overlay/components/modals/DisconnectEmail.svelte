@@ -16,6 +16,7 @@
 	let isSecondOptionActive = false;
 	let isError = false;
 	let errorType = null;
+	let isLoginAvailable = true;
 	// let isLoading = false;
 	let isSpam = null;
 
@@ -51,7 +52,9 @@
 	};
 
 	const submit = async () => {
+		isLoginAvailable = false;
 
+		setTimeout(() => { isLoginAvailable = true }, 2000);
 	};
 
 	const debouncedSubmit = debounce(() => {
@@ -94,8 +97,10 @@
 		</h1>
 
 		<ul class="bg-bg_gray p-3 pl-8 mb-6 rounded-xl list-disc list-inside leading-5">
-			<li>Уведомления на почту будут отключены</li>
-			<li>Восстанавливать аккаунт через почту будет нельзя</li>
+			<li>Данное действие обратимо</li>
+			<li>В случае утечки данных ничто не укажет на тебя</li>
+			<li>Восстановление аккаунта не работает без почты</li>
+			<li>Мы не сможем связаться с тобой</li>
 		</ul>
 
 		<div class="flex mb-4">
@@ -187,9 +192,10 @@
 			<Input
 				title="придумай логин, который будет использоваться вместо почты"
 				type="login"
-				id="current-email"
-				placeholder="ivan_ivanovich@mail.ru"
+				id="new-login"
+				placeholder="Измерянин94"
 				maxlength={64}
+				externalError={!isLoginAvailable && "этот логин уже занят"}
 			/>
 
 			<Input
