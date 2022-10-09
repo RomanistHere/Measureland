@@ -33,10 +33,13 @@
 		/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email);
 
 	const validatePass = pass =>
-		pass.length > 6 && pass.length < 255;
+		pass.length > 6 && pass.length < 128;
 
 	const validateLogin = str =>
-		str.length > 2 && str.length < 255 && !str.includes("@");
+		str.length > 2 && str.length < 64 && !str.includes("@");
+
+	const validateMixedLogin = str =>
+		str.length > 2 && str.length < maxlength;
 
 	const changeInputType = e => {
 		if (e.detail !== 0) {
@@ -57,6 +60,8 @@
 			isInputValid = validatePass(value);
 		} else if (type === "login") {
 			isInputValid = validateLogin(value);
+		} else if (type === "mixedLogin") {
+			isInputValid = validateMixedLogin(value);
 		}
 	};
 
@@ -85,9 +90,11 @@
 			{:else if type === "email" && !value}
 				{$_("input.emailEmpty")}
 			{:else if type === "login"}
-				Придумай логин длиннее 2-х символов и без символа "@"
+				{$_("input.loginError")}
 			{:else if type === "password"}
 				{$_("input.passwordError")}
+			{:else if type === "mixedLogin"}
+				{$_("input.mixedLoginError")}
 			{/if}
 		{:else}
 			{title}

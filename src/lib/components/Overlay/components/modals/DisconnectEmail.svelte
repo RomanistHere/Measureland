@@ -8,17 +8,34 @@
 	import CloseButton from "$lib/components/UI/CloseButton.svelte";
 	import PrimaryButton from "$lib/components/UI/PrimaryButton.svelte";
 	import TextButton from "$lib/components/UI/TextButton.svelte";
+	import ErrorBlock from "$lib/components/UI/ErrorBlock.svelte";
 
-	import { closeOverlay, debounce, openAnotherOverlay } from "$lib/utilities/helpers.js";
+	import {
+		blurCurrentInput,
+		closeOverlay,
+		debounce,
+		getErrorType,
+		logError,
+		openAnotherOverlay,
+		registerAction,
+		showSomethingWrongNotification,
+		showSuccessNotification,
+	} from "$lib/utilities/helpers.js";
 	import { appInfo } from "../../../../../configs/index.js";
+	import { disconnectEmail } from "$lib/utilities/api.js";
 
 	let isFirstOptionActive = false;
 	let isSecondOptionActive = false;
 	let isError = false;
 	let errorType = null;
-	let isLoginAvailable = true;
-	// let isLoading = false;
+	let isLoading = false;
 	let isSpam = null;
+	let login = null;
+	let password = null;
+	let isLoginValid = true;
+	let isPasswordValid = true;
+	let loginInputRef = null;
+	let passInputRef = null;
 
 	const onFirstOptionClick = () => {
 		if (isSecondOptionActive)
@@ -52,9 +69,37 @@
 	};
 
 	const submit = async () => {
-		isLoginAvailable = false;
+		blurCurrentInput(document);
 
-		setTimeout(() => { isLoginAvailable = true }, 2000);
+		isError = false;
+		errorType = null;
+		const isValuesNotEmpty = login && login.length > 0 && password.length > 0;
+		if (!isValuesNotEmpty || !isLoginValid || !isPasswordValid) {
+			isError = true;
+			errorType = "fieldsError";
+
+			if (!isLoginValid || login.length === 0)
+				loginInputRef?.focus();
+			else if (!isPasswordValid || password.length === 0)
+				passInputRef?.focus();
+
+			return;
+		}
+
+		isLoading = true;
+		const { error } = await disconnectEmail(login, password);
+		isLoading = false;
+
+		if (error) {
+			logError(error);
+			isError = true;
+			errorType = getErrorType(error);
+
+			showSomethingWrongNotification();
+			return;
+		}
+
+		showSuccessNotification();
 	};
 
 	const debouncedSubmit = debounce(() => {
@@ -99,8 +144,7 @@
 		<ul class="bg-bg_gray p-3 pl-8 mb-6 rounded-xl list-disc list-inside leading-5">
 			<li>Данное действие обратимо</li>
 			<li>В случае утечки данных ничто не укажет на тебя</li>
-			<li>Восстановление аккаунта не работает без почты</li>
-			<li>Мы не сможем связаться с тобой</li>
+			<li>Восстановить аккаунт через почту будет нельзя</li>
 		</ul>
 
 		<div class="flex mb-4">
@@ -185,6 +229,11 @@
 			</div>
 		</div>
 
+		<ErrorBlock
+			class="max-w-[31rem] px-28"
+			{errorType}
+		/>
+
 		<div
 			class="max-h-0 overflow-hidden transition-all duration-300"
 			class:max-h-80={isFirstOptionActive}
@@ -195,7 +244,9 @@
 				id="new-login"
 				placeholder="Измерянин94"
 				maxlength={64}
-				externalError={!isLoginAvailable && "этот логин уже занят"}
+				bind:value={login}
+				bind:isInputValid={isLoginValid}
+				bind:this={loginInputRef}
 			/>
 
 			<Input
@@ -204,6 +255,9 @@
 				id="current-password"
 				placeholder="*******"
 				maxlength={128}
+				bind:value={password}
+				bind:isInputValid={isPasswordValid}
+				bind:this={passInputRef}
 			/>
 
 			<PrimaryButton

@@ -691,7 +691,9 @@
         "emailError": "Wrong email format! Example: yournick@mail.com",
         "emailEmpty": "Email is required",
         "passwordError": "Password should be longer than 6 characters!",
-        "passwordsShouldMatch": "Passwords should match!"
+        "passwordsShouldMatch": "Passwords should match!",
+        "loginError": "Login should be longer than 2 characters and should not contain \"@\"",
+        "mixedLoginError": "Login should be longer than 2 characters"
     },
     "spinner": {
         "start": "Loading...",
@@ -717,6 +719,7 @@
         "samePass": "The pass matches previous one. Pick another.",
         "linkExpired": "The link is expired :(",
         "linkExpiredLink": "Get another one",
+        "loginIsInUse": "The login is in use by someone else. Pick another.",
         "errorVerification": "Check email for verification letter",
         "errorVerificationBtn": "Resend letter",
         "invalidCsrfToken": "Try to refresh or clear all cookies",

@@ -258,6 +258,19 @@ const login = async (email, password) => {
 	});
 };
 
+const disconnectEmail = async (loginStr, password) => {
+	const url = `${API_URL}/user/disconnect_email`;
+
+	return await fetchFunction({
+		url,
+		method: "POST",
+		body: JSON.stringify({
+			loginStr,
+			password,
+		}),
+	});
+};
+
 const onboard = async (userName, ageGrp, moneyGrp, userID) => {
 	const url = `${API_URL}/user/onboard`;
 
@@ -467,6 +480,7 @@ export {
 	reactOnComment,
 	register,
 	login,
+	disconnectEmail,
 	onboard,
 	verifyUser,
 	checkUser,

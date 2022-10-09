@@ -351,6 +351,7 @@ const errorObj = {
 	"Email already exists": "accountExists",
 	"Email is wrong": "noAccount",
 	"Invalid csrf token": "invalidCsrfToken",
+	"Login is already in use": "loginIsInUse",
 	"Matches old password": "samePass",
 	"Nearby place is already rated": "nearbyPlaceAlreadyRated",
 	"No actions remaining": "youRateTooOften",

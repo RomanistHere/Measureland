@@ -22,8 +22,8 @@
 		getErrorType,
 		blurCurrentInput,
 		closeOverlay,
-	} from "../../../../utilities/helpers.js";
-	import { register } from "../../../../utilities/api.js";
+	} from "$lib/utilities/helpers.js";
+	import { register } from "$lib/utilities/api.js";
 
 	let email = "";
 	let password = "";
@@ -34,7 +34,6 @@
 	let errorType = null;
 	let isLoading = false;
 	let isSpam = null;
-	let shouldShowMatchError = false;
 	let emailInputRef = null;
 	let passInputRef = null;
 
@@ -58,7 +57,6 @@
 		isError = false;
 		errorType = null;
 		isSuccess = false;
-		shouldShowMatchError = false;
 		const isValuesNotEmpty = email.length > 0 && password.length > 0;
 		if (!isValuesNotEmpty || !isEmailValid || !isPasswordValid) {
 			isError = true;
@@ -135,13 +133,11 @@
 
 			<p class="px-8 text-sm text-center text-txt_secondary mt-3 mb-4 leading-5">
 				Нужно перейти по ссылке из почты, <br /> чтобы получить доступ <br /> ко
-				<a href="#" class="text-main hover:underline focus:underline" on:click|preventDefault={() => {}}>всем возможностям</a>
+				<a href={"#"} class="text-main hover:underline focus:underline" on:click|preventDefault={() => {}}>всем возможностям</a>
 				Измерии
 			</p>
 		{:else}
-			{#if errorType}
-				<ErrorBlock { errorType } />
-			{/if}
+			<ErrorBlock { errorType } />
 
 			<Input
 				autofocus={true}
@@ -163,7 +159,6 @@
 				maxlength={128}
 				bind:value={password}
 				bind:isInputValid={isPasswordValid}
-				bind:shouldShowMatchError={shouldShowMatchError}
 				bind:this={passInputRef}
 			/>
 

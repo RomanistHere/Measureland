@@ -179,18 +179,16 @@
 				Измерии
 			</p>
 		{:else}
-			{#if errorType}
-				<ErrorBlock
-					{ errorType }
-					handleErrorAction={resendVerificationLetter}
-				/>
-			{/if}
+			<ErrorBlock
+				{ errorType }
+				handleErrorAction={resendVerificationLetter}
+			/>
 
 			<Input
 				autofocus={true}
 				title={$_("loginPopup.email")}
-				type="email"
-				id="current-email"
+				type="mixedLogin"
+				id="current-email-login"
 				placeholder="ivan_ivanovich@mail.ru"
 				maxlength={64}
 				bind:value={email}
