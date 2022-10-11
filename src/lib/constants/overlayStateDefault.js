@@ -175,7 +175,12 @@ export const overlayStateDefault = {
 		data: {},
 	},
 	disconnectEmailModal: {
-		isOpen: true,
+		isOpen: false,
+		type: "modal",
+		data: {},
+	},
+	confirmDisconnectEmailModal: {
+		isOpen: false,
 		type: "modal",
 		data: {},
 	},

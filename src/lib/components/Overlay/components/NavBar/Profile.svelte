@@ -197,7 +197,8 @@
 				</span>
 			</button>
 			<ul
-				class="bg-bg_gray rounded-lg max-h-0 overflow-hidden transition-all"
+				class="bg-bg_gray rounded-lg overflow-hidden transition-all"
+				class:max-h-0={!isLangInChange}
 				class:max-h-24={isLangInChange}
 				class:mb-4={isLangInChange}
 			>
@@ -242,7 +243,8 @@
 				</span>
 			</button>
 			<ul
-				class="bg-bg_gray rounded-lg max-h-0 overflow-hidden transition-all"
+				class="bg-bg_gray rounded-lg overflow-hidden transition-all"
+				class:max-h-0={!isProtectionInChange}
 				class:max-h-24={isProtectionInChange}
 				class:mb-4={isProtectionInChange}
 			>

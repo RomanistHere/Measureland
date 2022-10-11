@@ -87,7 +87,7 @@
 		}
 
 		isLoading = true;
-		const { error } = await disconnectEmail(login, password);
+		const { error, data } = await disconnectEmail(login, password);
 		isLoading = false;
 
 		if (error) {
@@ -99,7 +99,10 @@
 			return;
 		}
 
-		showSuccessNotification();
+		openAnotherOverlay("confirmDisconnectEmailModal", {
+			code: data.loginBackupCode,
+			login,
+		});
 	};
 
 	const debouncedSubmit = debounce(() => {
