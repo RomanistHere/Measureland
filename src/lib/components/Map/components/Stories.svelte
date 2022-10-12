@@ -128,7 +128,7 @@
 
 			// Add a symbol layer
 			map.addLayer({
-				"id": "stories",
+				"id": "stories-layer",
 				"type": "symbol",
 				"source": "stories",
 				"layout": {
@@ -137,7 +137,7 @@
 				},
 			});
 
-			map.on("mousemove", "stories", e => {
+			map.on("mousemove", "stories-layer", e => {
 				e.originalEvent.preventDefault();
 				map.getCanvas().style.cursor = "pointer";
 				if (e.features.length > 0) {
@@ -161,7 +161,7 @@
 				}
 			});
 
-			map.on("mouseleave", "stories", () => {
+			map.on("mouseleave", "stories-layer", () => {
 				map.getCanvas().style.cursor = "";
 
 				if (hoveredStoryId !== null) {
@@ -176,7 +176,7 @@
 				hoveredStoryId = null;
 			});
 
-			map.on("click", "stories", e => {
+			map.on("click", "stories-layer", e => {
 				openAnotherOverlay("storyModal", {
 					storySlug: e.features[0].properties.slug,
 					title: e.features[0].properties.title,
@@ -184,7 +184,13 @@
 				});
 			});
 
-			// mapLoadingProgress.update(state => ({ ...state, pois: true }));
+			try {
+				map.moveLayer("stories-layer", "communities-layer");
+			} catch (e) {
+				logError("Error in layers priority change");
+				logError(e);
+			}
+			mapLoadingProgress.update(state => ({ ...state, stories: true }));
 		});
 	};
 </script>

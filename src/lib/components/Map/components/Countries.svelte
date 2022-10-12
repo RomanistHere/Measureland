@@ -40,12 +40,9 @@
 			},
 		});
 
-		const unsubscribe = mapLoadingProgress.subscribe(({ communities }) => {
-			console.log("try toggle");
-			if (!communities)
+		const unsubscribe = mapLoadingProgress.subscribe(({ communities, pois }) => {
+			if (!communities || !pois)
 				return;
-
-			console.log("toggle");
 
 			map.on("mousemove", "countries-layer", e => {
 				map.getCanvas().style.cursor = "pointer";
@@ -115,6 +112,7 @@
 			});
 
 			unsubscribe();
+			mapLoadingProgress.update(state => ({ ...state, countries: true }));
 		});
 	};
 

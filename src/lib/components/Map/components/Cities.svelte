@@ -107,6 +107,9 @@
 			});
 
 			map.on("click", "cities-layer", e => {
+				if (e.originalEvent.defaultPrevented)
+					return;
+
 				hoveredCity = null;
 				const bounds = bbox(e.features[0].geometry);
 				map.fitBounds(bounds);
@@ -124,6 +127,7 @@
 			});
 
 			unsubscribe();
+			mapLoadingProgress.update(state => ({ ...state, cities: true }));
 		});
 	};
 

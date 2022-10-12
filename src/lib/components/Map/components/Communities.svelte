@@ -22,7 +22,7 @@
 	const updateNotificationLayer = () => {
 		city = null;
 		communityID = null;
-		
+
 		const zoomLevel = 12;
 		const { bbox, zoom } = getScreenTurfBbox($mapReference, zoomLevel);
 

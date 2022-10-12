@@ -1,77 +1,26 @@
 <script>
-	import { _ } from "svelte-i18n";
-	import { onMount } from "svelte";
-	import { fade, fly } from "svelte/transition";
+	import { bbox, collect, flatten, hexGrid } from "@turf/turf";
+	import { fly } from "svelte/transition";
 
-	import { hexGrid, flatten, collect } from "@turf/turf";
-	import L from "leaflet";
-	import PolyBool from "polybooljs";
-
-	import { userStateStore, appStateStore, filtersStore } from "../../../../stores/state.js";
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
-	import { cityBounds } from "../objects/cityBounds.js";
-	import { getPointsInsideAndOutsidePolygon } from "../utils";
 	import {
-		roundToFifthDecimal,
-		roundToInt,
-		roundToTen,
-		debounce,
-		showSomethingWrongNotification,
-		registerAction,
-		logError,
 		getBoundsData,
-		getScreenData,
-		openAnotherOverlay,
-	} from "../../../utilities/helpers.js";
-	import { fetchBoundsData } from "../../../utilities/api.js";
+		roundToInt,
+		debounce,
+		getMapZoom,
+		roundToHundredth,
+		logError,
+	} from "$lib/utilities/helpers.js";
+	import {
+		assignIDsToFeatures,
+		getPointsInsideAndOutsidePolygon,
+	} from "$lib/components/Map/utils/index.js";
+	import { cityBounds } from "$lib/components/Map/objects/cityBounds.js";
+	import { mapLoadingProgress } from "../../../../stores/state.js";
 
-	const map = $mapReference;
-
-	let visitedPoly = null;
-	let cachedData = [];
-	let usedBounds = [];
-	let isLoading = false;
-
-	let hexagonsLayer = null;
-	const markersLayer = L.layerGroup().addTo(map);
-
-	const colors = {
-		1: "#ffec64",
-		2: "#c6ca59",
-		3: "#8ea94e",
-		4: "#558842",
-		5: "#006837",
-	};
-
-	const getHexStyle = rating => ({
-		fillColor: colors[rating],
-		color: colors[rating],
-		weight: 0.5,
-		opacity: 1,
-		fillOpacity: .8,
-		pointerEvents: "none",
-	});
-
-	$: hoveredHexagon = null;
-
-	const onEachHex = (feature, layer) => {
-		const { ratings } = feature.properties;
-		const average = roundToTen(ratings.reduce((i, acc) => acc + i, 0) / ratings.length || 0);
-		const style = getHexStyle(roundToInt(average));
-		layer.setStyle(style);
-
-		layer.on("mouseover", () => {
-			layer.setStyle({ fillOpacity: .9 });
-			hoveredHexagon = { number: ratings.length, average };
-		});
-		layer.on("mouseout", () => {
-			layer.setStyle({ fillOpacity: .8 });
-			hoveredHexagon = null;
-		});
-		layer.on("click", () => {
-			$mapReference.flyToBounds(layer.getBounds());
-		});
-	};
+	let hoveredHexagonId = null;
+	let hoveredHexagon = null;
+	let prevZoomLevel = 0;
 
 	const zoomToHexSize = {
 		18: .05,
@@ -79,22 +28,22 @@
 		16: .1,
 		15: .1,
 		14: .2,
-		13: .3,
-		12: .5,
-		11: .8,
-		10: 1,
+		13: .2,
+		12: .3,
+		11: .5,
+		10: .8,
 		9: 1.5,
 		8: 2,
 		7: 3,
-		6: 10,
-		5: 20,
-		4: 50,
+		6: 3,
+		5: 3,
+		4: 3,
 	};
 
 	const getCorrectCollection = zoom => {
 		const collection = flatten({
 			"type": "FeatureCollection",
-			"features": cachedData,
+			"features": $ratingsReference,
 		});
 
 		if (zoom <= 9) {
@@ -106,246 +55,152 @@
 		return collection;
 	};
 
-	const getSingleMarkerIcon = rating =>
-		L.icon({
-			iconUrl: `../images/map/house_${rating}.svg`,
-			iconSize: [ 40, 90 ],
-			iconAnchor: [ 5, 30 ],
+	const updateHexagonGrid = ratings => {
+		if (!ratings)
+			return;
+
+		const map = $mapReference;
+		const { east, north, south, west, zoom } = getBoundsData(map);
+
+		if (zoom < 6)
+			return;
+
+		const bounds = [ west, south, east, north ];
+
+		const hexagons = hexGrid(bounds, zoomToHexSize[roundToInt(zoom)]);
+		const collection = getCorrectCollection(zoom);
+
+		const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
+		const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
+		const averagedHexagonValues = notEmptyHexagonValues.map(item => {
+			const { properties } = item;
+			const { length } = properties.ratings;
+			return {
+				...item,
+				properties: {
+					averageRatingRounded: roundToInt(properties.ratings.reduce((i, acc) => acc + i, 0) / length),
+					averageRating: roundToHundredth(properties.ratings.reduce((i, acc) => acc + i, 0) / length),
+					numberOfRatings: length,
+				},
+			};
+		});
+		const notEmptyHexagons = {
+			"type": "FeatureCollection",
+			"features": averagedHexagonValues,
+		};
+		const hexagonsWithIds = assignIDsToFeatures(notEmptyHexagons);
+
+		if (map.getSource("hexagons")) {
+			map.getSource("hexagons").setData(hexagonsWithIds);
+			return;
+		}
+
+		map.addSource("hexagons", {
+			type: "geojson",
+			data: hexagonsWithIds,
 		});
 
-	const initShowRatingPopup = ({ latlng }) =>
-		openAnotherOverlay("showRatingsPopup", latlng);
+		map.addLayer({
+			"id": "hexagons-layer",
+			"type": "fill",
+			"maxzoom": 16,
+			"minzoom": 6,
+			"source": "hexagons",
+			"layout": {
+				"visibility": "visible",
+			},
+			"paint": {
+				"fill-color": {
+					"property": "averageRatingRounded", // this will be your density property form you geojson
+					"stops": [
+						[ 1, "#f9da00" ],
+						[ 2, "#bdc31d" ],
+						[ 3, "#80ab1a" ],
+						[ 4, "#358717" ],
+						[ 5, "#00703d" ],
+					],
+				},
+				"fill-opacity": [
+					"case",
+					[ "boolean", [ "feature-state", "hover" ], false ],
+					.9,
+					.6,
+				],
+			},
+		});
 
-	const updateClusters = () => {
-		try {
-			const { east, north, south, west, zoom } = getBoundsData(map);
-			if (hexagonsLayer)
-				hexagonsLayer.clearLayers();
-
-			if (markersLayer)
-				markersLayer.clearLayers();
-
-			if (zoom >= 16) {
-				cachedData.forEach(({ geometry, properties }) => {
-					const { averageRating } = properties;
-					const { coordinates } = geometry;
-					const marker = L.marker([ coordinates[1], coordinates[0] ], { icon: getSingleMarkerIcon(roundToInt(averageRating)) });
-
-					marker.on("click", initShowRatingPopup);
-					marker.on("keyup", e => {
-						if (e.originalEvent.key === "Enter") {
-							openAnotherOverlay("showRatingsPopup", e.target._latlng);
-						}
+		map.on("mousemove", "hexagons-layer", e => {
+			e.originalEvent.preventDefault();
+			map.getCanvas().style.cursor = "pointer";
+			if (e.features.length > 0) {
+				if (hoveredHexagonId) {
+					map.setFeatureState({
+						source: "hexagons",
+						id: hoveredHexagonId,
+					}, {
+						hover: false,
 					});
+				}
 
-					markersLayer.addLayer(marker);
-				});
-			} else if (zoom >= 7) {
-				const bbox = [ west, south, east, north ];
-
-				const hexagons = hexGrid(bbox, zoomToHexSize[zoom]);
-				const collection = getCorrectCollection(zoom);
-
-				const hexagonsWithin = collect(hexagons, collection, "averageRating", "ratings");
-				const notEmptyHexagonValues = hexagonsWithin.features.filter(({ properties }) => properties.ratings.length !== 0);
-				const notEmptyHexagons = {
-					"type": "FeatureCollection",
-					"features": notEmptyHexagonValues,
+				hoveredHexagonId = e.features[0].id;
+				hoveredHexagon = {
+					number: e.features[0].properties.numberOfRatings,
+					average: e.features[0].properties.averageRating,
 				};
 
-				hexagonsLayer = L.geoJson(notEmptyHexagons, { onEachFeature: onEachHex }).addTo(map);
+				map.setFeatureState({
+					source: "hexagons",
+					id: hoveredHexagonId,
+				}, {
+					hover: true,
+				});
 			}
-		} catch (e) {
-			logError(e);
-		}
-	};
-
-	const checkDataForRepeat = geoData => {
-		// due to some cases that is not covered by poolybool we need to check
-		// if didn't load the same data twice, if so reset cached data, othervise
-		// user will see group icons instead of single ones
-		// TODO: WATCH FOR THE PERFORMANCE!!!
-		const isRepeated = geoData.some(newItem => {
-			const coords = newItem.geometry.coordinates.toString();
-			return cachedData.find(item => item.geometry.coordinates.toString() === coords);
 		});
 
-		if (isRepeated) {
-			cachedData = [];
-			usedBounds = [];
-			visitedPoly = null;
-			return true;
-		} else {
-			cachedData = [ ...cachedData, ...geoData ];
-			ratingsReference.update(state => cachedData);
-			return false;
-		}
-	};
+		map.on("mouseleave", "hexagons-layer", () => {
+			map.getCanvas().style.cursor = "";
 
-	const addDataAndDisplay = data => {
-		// console.time('fix geojson')
-		const geoData = Object.values(data).map(item => {
-			const newObj = {
-				...item,
-				geometry: {
-					coordinates: item["location"]["coordinates"],
-					type: "Point",
-				},
-				type: "Feature",
-			};
-			delete newObj["location"];
-			delete newObj["_id"];
-			return newObj;
+			if (hoveredHexagonId !== null) {
+				map.setFeatureState({
+					source: "hexagons",
+					id: hoveredHexagonId,
+				}, {
+					hover: false,
+				});
+			}
+
+			hoveredHexagonId = null;
+			hoveredHexagon = null;
 		});
 
-		if (!$filtersStore.isFiltersOn) {
-			const shouldRedownload = checkDataForRepeat(geoData);
-			if (shouldRedownload) {
-				getNewData();
-				return;
-			}
-			// console.log('total number of points in cache: ', cachedData.length)
-
-			// console.timeEnd('fix geojson')
-		}
-
-		updateClusters();
-	};
-
-	const updateState = (coords, zoom) => {
-		const { lat, lng } = coords;
-		appStateStore.update(state => ({
-			...state,
-			center: [ roundToFifthDecimal(lat), roundToFifthDecimal(lng) ],
-			zoom,
-		}));
-	};
-
-	const getQueryPolygon = (visitedPolyRef, currentScreenPoly) => {
-		try {
-			return visitedPolyRef !== null && (!$filtersStore.isFiltersOn || !$filtersStore.filters)
-				? PolyBool.differenceRev(visitedPolyRef, currentScreenPoly)
-				: currentScreenPoly;
-		} catch (e) {
-			logError(e);
-			showSomethingWrongNotification();
-			return currentScreenPoly;
-		}
-	};
-
-	const getNewData = async () => {
-		registerAction("mapLoadData");
-		// console.warn('____________new_try____________')
-		// console.time('preparations')
-		const { center, zoom, currentScreenPoly } = getScreenData(map);
-
-		updateState(center, zoom);
-
-		const queryPolygon = getQueryPolygon(visitedPoly, currentScreenPoly);
-
-		// use data from cache
-		if (!queryPolygon.regions[0])
-			return updateClusters();
-
-		const getQuery = queryPolygonRef => {
-			if (queryPolygonRef.regions[2]) {
-				return currentScreenPoly.regions[0];
-			} else if (queryPolygonRef.regions[1]) {
-				const secondRegLength = queryPolygonRef.regions[1].length;
-				const [ lastElemLat, lastElemLng ] = queryPolygonRef.regions[0].pop();
-				const [ , lastElemLng2 ] = queryPolygonRef.regions[1][secondRegLength - 1];
-				const fixedFirstPart = [ ...queryPolygonRef.regions[0], [ lastElemLat, lastElemLng2 ]];
-				const queryPol = [
-					...fixedFirstPart,
-					...queryPolygonRef.regions[1].reverse(),
-					[ lastElemLat + 0.001, lastElemLng2 ],
-					[ lastElemLat + 0.001, lastElemLng ],
-				];
-				return queryPol;
-			} else {
-				return queryPolygon.regions[0];
-			}
-		};
-
-		isLoading = true;
-
-		const query = getQuery(queryPolygon);
-		const poly = L.polygon(query, {
-			// generate random color to see the difference between areas
-			fillColor: `#${((1 << 24) * Math.random() | 0).toString(16)}`,
-			fillOpacity: 0.3,
-			weight: 2,
+		map.on("click", "hexagons-layer", e => {
+			e.originalEvent.preventDefault();
+			const box = bbox(e.features[0].geometry);
+			map.fitBounds(box);
 		});
-
-		if (!$filtersStore.isFiltersOn)
-			usedBounds.push(poly);
-
-		if ($appStateStore.shouldShowLoading && !$filtersStore.isFiltersOn)
-			poly.addTo(map);
-
-		const filters = $filtersStore.isFiltersOn ? $filtersStore.filters : null;
-		// console.timeEnd('preparations')
-		// console.time('fetch new data')
-		const { error, data } = await fetchBoundsData(query, zoom, filters);
-		// console.timeEnd('fetch new data')
-
-		if (error === "Too many requests, please try again later") {
-			appStateStore.update(state => ({ ...state, shouldWork: false }));
-			showSomethingWrongNotification();
-			isLoading = false;
-			return;
-		} else if (error) {
-			logError(error);
-			showSomethingWrongNotification();
-			isLoading = false;
-			return;
-		}
-
-		const { result, userID } = data;
-
-		if (!userID) {
-			userStateStore.update(state => ({
-				...state,
-				userID: null,
-				activeRatings: 3,
-				userName: "Аноним",
-				wantMoreRatings: false,
-			}));
-		}
-
-		// TODO:
-		// console.log('number of downloaded points: ', result.length)
 
 		try {
-			if (!$filtersStore.isFiltersOn) {
-				visitedPoly = visitedPoly !== null
-					? PolyBool.union(visitedPoly, queryPolygon)
-					: currentScreenPoly;
-			}
+			map.moveLayer("hexagons-layer", "POIs-layer");
 		} catch (e) {
+			logError("Error in layers priority change");
 			logError(e);
-			showSomethingWrongNotification();
 		}
-
-		// checkSize(result)
-		isLoading = false;
-		addDataAndDisplay(result);
+		mapLoadingProgress.update(state => ({ ...state, hexagons: true }));
 	};
 
-	// don't use native "moveend" event, it triggers on every button click in popups
-	map.on("move", debounce(getNewData, 300));
-	onMount(getNewData);
+	const onZoomEnd = () => {
+		const zoom = getMapZoom($mapReference);
+		const zoomInt = roundToInt(zoom);
 
-	const subscribeToFiltersChanges = ({ isFiltersOn, filters }) => {
-		if (!isFiltersOn)
+		if (zoomInt === prevZoomLevel)
 			return;
 
-		if (filters === null)
-			filtersStore.update(state => ({ ...state, isFiltersOn: false }));
-
-		getNewData();
+		prevZoomLevel = zoomInt;
+		updateHexagonGrid($ratingsReference);
 	};
-	$: subscribeToFiltersChanges($filtersStore);
+
+	$mapReference.on("zoomend", debounce(onZoomEnd, 300));
+	$: updateHexagonGrid($ratingsReference);
 </script>
 
 {#if hoveredHexagon}
@@ -358,20 +213,5 @@
 		<span class="block leading-5 pb-px text-main">
 			{hoveredHexagon.number} оценки, средняя: {hoveredHexagon.average}
 		</span>
-		</div>
-{/if}
-
-{#if isLoading}
-	<div
-		class="absolute top-20 left-1/2 transform -translate-x-1/2 italic text-3xl pointer-events-none" transition:fade
-	>
-		{$_("loading.geo")}
 	</div>
 {/if}
-
-<style>
-	div {
-		text-shadow: 0 0 2px var(--border-color);
-		z-index: 1000;
-	}
-</style>

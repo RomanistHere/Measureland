@@ -224,7 +224,7 @@
 			{$_("showRatingPopup.approximateAddress")}: {approximateAdress}
 		</p>
 		
-		{#if tags.length > 0 || isOwnPOI}
+		{#if (tags && tags.length > 0) || isOwnPOI}
 			<div class="flex mt-4 flex-wrap">
 				{#if isOwnPOI}
 					<Tag key="own" />

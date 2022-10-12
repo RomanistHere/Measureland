@@ -6,11 +6,10 @@
 
 	import Communities from "./components/Communities.svelte";
 	import Countries from "./components/Countries.svelte";
-	// import Hexagons from "./components/Hexagons.svelte";
 	import Stories from "./components/Stories.svelte";
 	import POIs from "./components/POIs.svelte";
 	import Data from "./components/Data.svelte";
-	import Polygons from "./components/Polygons.svelte";
+	import Hexagons from "./components/Hexagons.svelte";
 	import Cities from "./components/Cities.svelte";
 	// import Draw from "./components/Draw/Draw.svelte";
 	import TextLink from "../ui-elements/TextLink.svelte";
@@ -87,11 +86,10 @@
 		<Data />
 		<Countries />
 		<Cities />
-		<Polygons />
+		<Hexagons />
 		<POIs />
 		<Stories />
 		<Communities />
-<!--		<Hexagons />-->
 <!--		<Draw mapClickRefFuntcion={onMapClick} />-->
 	{/if}
 {:else}

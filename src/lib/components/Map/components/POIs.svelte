@@ -169,12 +169,11 @@
 					"text-anchor": "bottom-right",
 				},
 				"paint": {
-					"text-color": "#ffffff",
-					"icon-opacity": [
+					"text-color": [
 						"case",
 						[ "boolean", [ "feature-state", "hover" ], false ],
-						.7,
-						1,
+						"#60d9ff",
+						"#fff",
 					],
 				},
 			});
@@ -219,12 +218,20 @@
 			});
 
 			map.on("click", "POIs-layer", e => {
+				e.originalEvent.preventDefault();
 				initPointOfInterestPopup({
 					lat: e.features[0].geometry.coordinates[1],
 					lng: e.features[0].geometry.coordinates[0],
 				});
 			});
 
+			try {
+				map.moveLayer("POIs-layer", "communities-layer");
+				map.moveLayer("countries-layer", "POIs-layer");
+			} catch (e) {
+				logError("Error in layers priority change");
+				logError(e);
+			}
 			mapLoadingProgress.update(state => ({ ...state, pois: true }));
 		});
 	};
