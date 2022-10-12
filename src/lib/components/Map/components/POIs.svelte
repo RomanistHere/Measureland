@@ -5,15 +5,11 @@
 	import { mapReference, poiReference } from "../../../../stores/references.js";
 	import {
 		debounce,
-		getBoundsData,
 		getScreenData,
-		getMapZoom,
 		logError,
 		openAnotherOverlay,
 		showSomethingWrongNotification,
 		truncateString,
-		pipe,
-		roundToHundredth,
 	} from "$lib/utilities/helpers.js";
 	import { fetchPOIsBounds } from "$lib/utilities/api.js";
 	import { appStateStore, poisStore, mapLoadingProgress } from "../../../../stores/state.js";
@@ -22,100 +18,12 @@
 
 	let cachedPois = [];
 	let hoveredPoiId = null;
-	// let pointsOfInterestLayer;
 
 	const truncateStringToTwenty = str =>
 		truncateString(str, 20);
 
-	// const prepareTitle = pipe(
-	// 	prepareStringToNotBreak,
-	// 	truncateStringToTwenty,
-	// );
-	// let currentCenter = [ 0, 0 ];
-
 	const initPointOfInterestPopup = latlng =>
 		openAnotherOverlay("pointOfInterestPopup", latlng);
-
-	// clusterMarkers.on("click", e => {
-	// 	const clusterId = e.layer.feature.properties.cluster_id;
-	// 	const center = e.latlng;
-	// 	if (clusterId) {
-	// 		const expansionZoom = pointsOfInterestLayer.getClusterExpansionZoom(clusterId);
-	// 		map.setView(center, expansionZoom);
-	// 	}
-	// });
-
-	// const addMarker = coordsData => {
-	// 	const newPoint = {
-	// 		geometry: {
-	// 			coordinates: coordsData,
-	// 			type: "Point",
-	// 		},
-	// 		properties: {
-	// 			title: "Tobacco factory",
-	// 			isAdequate: true,
-	// 		},
-	// 		type: "Feature",
-	// 	};
-	//
-	// 	const el = document.createElement("button");
-	// 	el.className = "marker-poi";
-	// 	// const imgUrl = "asdas";
-	// 	// el.style.backgroundImage = `url(${imgUrl})`;
-	//
-	// 	new mapboxgl.Marker(el)
-	// 		.setLngLat([ -122.4, 37.7 ])
-	// 		.addTo(map);
-	// };
-
-	// const removeMarker = coordsArr => {
-	// 	const { points } = $poiReference;
-	// 	for (let i = 0; i < points.length; i++) {
-	// 		const { coordinates } = points[i].geometry;
-	// 		if (coordinates[0] === coordsArr[0] && coordinates[1] === coordsArr[1]) {
-	// 			points.splice(i, 1);
-	// 			break;
-	// 		}
-	// 	}
-	// 	// eslint-disable-next-line  no-undef
-	// 	pointsOfInterestLayer = new Supercluster({
-	// 		// log: true,
-	// 		radius: 150,
-	// 		minPoints: 2,
-	// 		minZoom: 4,
-	// 		maxZoom: 18,
-	// 	}).load(points);
-	//
-	// 	updateClusters();
-	// };
-
-	// const deletePOIsExternal = ({ markersToAdd, markersToRemove }) => {
-	// 	const toAddArrayLength = markersToAdd.length;
-	// 	const toRemoveArrayLength = markersToRemove.length;
-	//
-	// 	if (toAddArrayLength === 0 && toRemoveArrayLength === 0)
-	// 		return;
-	//
-	// 	if (toRemoveArrayLength !== 0) {
-	// 		for (let i = 0; i < toRemoveArrayLength; i++) {
-	// 			removeMarker(markersToRemove[i]);
-	// 		}
-	// 	}
-	//
-	// 	if (toAddArrayLength !== 0) {
-	// 		for (let i = 0; i < toAddArrayLength; i++) {
-	// 			addMarker(markersToAdd[i]);
-	// 		}
-	// 	}
-	//
-	// 	poisStore.update(state => ({
-	// 		...state,
-	// 		markersToAdd: [],
-	// 		markersToRemove: [],
-	// 	}));
-	// };
-	//
-	// $: deletePOIsExternal($poisStore);
 
 	const loadPOIs = async () => {
 		const { zoom, currentScreenPoly } = getScreenData(map);
@@ -140,21 +48,6 @@
 	};
 
 	const debouncedLoading = debounce(loadPOIs, 300);
-	// const destroyPOIs = () => clusterMarkers.clearLayers();
-	//
-	// const checkTogglePOIs = ({ zoom, shouldShowPOIs, center }) => {
-	// 	if (shouldShowPOIs && zoom >= 13) {
-	// 		if (currentCenter[0] === center[0] && currentCenter[1] === center[1])
-	// 			return;
-	//
-	// 		debouncedLoading();
-	// 		currentCenter = [ ...center ];
-	// 	} else {
-	// 		destroyPOIs();
-	// 	}
-	// };
-	//
-	// $: checkTogglePOIs($appStateStore);
 
 	// don't use native "moveend" event, it triggers on every button click in popups
 	map.on("move", debouncedLoading);

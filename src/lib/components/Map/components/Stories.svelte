@@ -48,7 +48,6 @@
 		}
 
 		const { result } = data;
-		console.log(result);
 
 		displayData(result);
 	};
@@ -112,7 +111,6 @@
 
 		loadImages(imagesToLoad, imagesResp => {
 			const storiesJson = preparePOIsJson(storiesData);
-			console.log(storiesJson);
 
 			if (map.getSource("stories")) {
 				return;

@@ -64,5 +64,9 @@ export const isDesktop = derived(appWidth, $appWidth => $appWidth >= 1024);
 
 export const mapLoadingProgress = writable({
 	pois: false,
+	cities: false,
+	stories: false,
 	hexagons: false,
+	countries: false,
+	communities: false,
 });

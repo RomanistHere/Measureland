@@ -1,6 +1,6 @@
 import { get } from "svelte/store";
 
-import { circle } from "@turf/turf";
+import { circle, polygon } from "@turf/turf";
 
 import { overlayStateStore, appStateStore, notificationsStore, filtersStore, flowStore } from "../../stores/state.js";
 import { overlayStateDefault } from "../constants/overlayStateDefault.js";
@@ -389,6 +389,19 @@ const getBoundsData = map => {
 	};
 };
 
+const getScreenTurfBbox = (map, zoomOptimization) => {
+	const { zoom, east, north, south, west } = getBoundsData(map);
+
+	if (zoomOptimization && zoom < zoomOptimization)
+		return { bbox: null, zoom };
+
+	const bbox = polygon([[[ west, north ], [ east, north ], [ east, south ], [ west, south ], [ west, north ]]]);
+	return {
+		bbox,
+		zoom,
+	};
+};
+
 const getScreenData = map => {
 	const { zoom, center, east, north, south, west } = getBoundsData(map);
 
@@ -532,6 +545,7 @@ export {
 	convertMetersToRadian,
 	getMapZoom,
 	getBoundsData,
+	getScreenTurfBbox,
 	getScreenData,
 	blurCurrentInput,
 	getErrorType,

@@ -7,6 +7,7 @@
 	import { countryBounds } from "../objects/countryBounds.js";
 	import { getLayerStats, assignIDsToFeatures } from "../utils";
 	import { openAnotherOverlay } from "$lib/utilities/helpers.js";
+	import { mapLoadingProgress } from "../../../../stores/state.js";
 
 	let hoveredCountry = null;
 	let hoveredCountryId = null;
@@ -39,10 +40,41 @@
 			},
 		});
 
-		map.on("mousemove", "countries-layer", e => {
-			map.getCanvas().style.cursor = "pointer";
-			if (e.features.length > 0) {
-				if (hoveredCountryId) {
+		const unsubscribe = mapLoadingProgress.subscribe(({ communities }) => {
+			console.log("try toggle");
+			if (!communities)
+				return;
+
+			console.log("toggle");
+
+			map.on("mousemove", "countries-layer", e => {
+				map.getCanvas().style.cursor = "pointer";
+				if (e.features.length > 0) {
+					if (hoveredCountryId) {
+						map.setFeatureState({
+							source: "countries",
+							id: hoveredCountryId,
+						}, {
+							hover: false,
+						});
+					}
+
+					hoveredCountryId = e.features[0].id;
+					// hoveredCountry = getLayerStats(e.features[0], $ratingsReference);
+
+					map.setFeatureState({
+						source: "countries",
+						id: hoveredCountryId,
+					}, {
+						hover: true,
+					});
+				}
+			});
+
+			map.on("mouseleave", "countries-layer", () => {
+				map.getCanvas().style.cursor = "";
+
+				if (hoveredCountryId !== null) {
 					map.setFeatureState({
 						source: "countries",
 						id: hoveredCountryId,
@@ -51,57 +83,38 @@
 					});
 				}
 
-				hoveredCountryId = e.features[0].id;
-				// hoveredCountry = getLayerStats(e.features[0], $ratingsReference);
-
-				map.setFeatureState({
-					source: "countries",
-					id: hoveredCountryId,
-				}, {
-					hover: true,
-				});
-			}
-		});
-
-		map.on("mouseleave", "countries-layer", () => {
-			map.getCanvas().style.cursor = "";
-
-			if (hoveredCountryId !== null) {
-				map.setFeatureState({
-					source: "countries",
-					id: hoveredCountryId,
-				}, {
-					hover: false,
-				});
-			}
-
-			hoveredCountryId = null;
-			// hoveredCountry = null;
-		});
-
-		map.on("click", "countries-layer", e => {
-			hoveredCountry = null;
-
-			const { name } = getLayerStats(e.features[0], $ratingsReference);
-
-			openAnotherOverlay("onCountryClickModal", {
-				country: name,
-				pageX: e.originalEvent.pageX,
-				pageY: e.originalEvent.pageY,
+				hoveredCountryId = null;
+				// hoveredCountry = null;
 			});
-			// const bounds = bbox(e.features[0].geometry);
-			// map.fitBounds(bounds);
-			//
-			// const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
-			//
-			// if (number === 0)
-			// 	return;
-			//
-			// openAnotherOverlay("cityRatingPopup", {
-			// 	name,
-			// 	ratings,
-			// 	number,
-			// });
+
+			map.on("click", "countries-layer", e => {
+				if (e.originalEvent.defaultPrevented)
+					return;
+				hoveredCountry = null;
+
+				const { name } = getLayerStats(e.features[0], $ratingsReference);
+
+				openAnotherOverlay("onCountryClickModal", {
+					country: name,
+					pageX: e.originalEvent.pageX,
+					pageY: e.originalEvent.pageY,
+				});
+				// const bounds = bbox(e.features[0].geometry);
+				// map.fitBounds(bounds);
+				//
+				// const { name, ratings, number } = getLayerStats(e.features[0], $ratingsReference);
+				//
+				// if (number === 0)
+				// 	return;
+				//
+				// openAnotherOverlay("cityRatingPopup", {
+				// 	name,
+				// 	ratings,
+				// 	number,
+				// });
+			});
+
+			unsubscribe();
 		});
 	};
 

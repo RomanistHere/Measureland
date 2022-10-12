@@ -53,7 +53,7 @@
 			},
 		});
 
-		mapLoadingProgress.subscribe(({ pois, hexagons }) => {
+		const unsubscribe = mapLoadingProgress.subscribe(({ pois, hexagons }) => {
 			if (!pois || !hexagons)
 				return;
 
@@ -122,6 +122,8 @@
 					number,
 				});
 			});
+
+			unsubscribe();
 		});
 	};
 
