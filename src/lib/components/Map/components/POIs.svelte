@@ -87,7 +87,7 @@
 
 	const preparePOIsJson = poiData => ({
 		"type": "FeatureCollection",
-		"features": poiData.map(({ location, title }, i) => ({
+		"features": poiData.map(({ location, title, _id }, i) => ({
 			"type": "Feature",
 			"geometry": {
 				"type": "Point",
@@ -99,6 +99,7 @@
 				"image-name": title.includes("парк") ? "green-marker" : title.includes("завод") || title.includes("фабрика") || title.includes("развязка") || title.includes("комбинат") ? "red-marker" : "gray-marker",
 				"name": truncateStringToTwenty(title),
 				"full-name": title,
+				"id": _id,
 			},
 			"id": i,
 		})),
@@ -118,10 +119,12 @@
 	};
 
 	const displayData = poiData => {
+		console.log(poiData);
 		cachedPois = addNonDuplicatesToArr(cachedPois, poiData);
 
 		loadImages(imagesToLoad, imagesResp => {
 			const poiJson = preparePOIsJson(poiData);
+			console.log(poiJson);
 
 			if (map.getSource("POIs")) {
 				map.getSource("POIs").setData(poiJson);
@@ -222,6 +225,7 @@
 				initPointOfInterestPopup({
 					lat: e.features[0].geometry.coordinates[1],
 					lng: e.features[0].geometry.coordinates[0],
+					id: e.features[0].properties.id,
 				});
 			});
 

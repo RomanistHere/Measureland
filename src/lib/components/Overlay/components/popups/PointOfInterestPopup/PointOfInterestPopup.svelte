@@ -36,7 +36,7 @@
 	let isOwnPOI = false;
 	// let circle = null;
 	let pointID = null;
-	let currentCoords = { lat: 0, lng: 0 };
+	let currentID = null;
 	// translation
 	let titleGlob = null;
 	let titleGlobTranslated = null;
@@ -140,7 +140,7 @@
 	const openAddCommentPopup = () =>
 		openAnotherOverlay("addCommentPOIPopup", { pointID });
 
-	const fetchData = async ({ lng, lat }) => {
+	const fetchData = async ({ lng, lat, id }) => {
 		const { address } = await getApproximateAddressAndCountry(lat, lng, $locale);
 		approximateAdress = address;
 
@@ -151,7 +151,7 @@
 		//
 		// circle.addTo(map);
 		// centerMap(map, lat, lng, $isDesktop);
-		const { error, data } = await getSinglePointOfInterest([ lng, lat ]);
+		const { error, data } = await getSinglePointOfInterest(id);
 
 		if (error) {
 			closeOverlay("popup");
@@ -188,9 +188,9 @@
 	};
 
 	// need to check in order not to do unnecessary requests.
-	$: if (currentCoords.lat !== popupData.lat && currentCoords.lng !== popupData.lng) {
+	$: if (currentID !== popupData.id) {
 		promise = fetchData(popupData);
-		currentCoords = { ...popupData };
+		currentID = popupData.id;
 		titleGlob = null;
 		titleGlobTranslated = null;
 		descriptionGlob = null;

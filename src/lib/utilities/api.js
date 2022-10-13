@@ -144,8 +144,8 @@ const fetchPOIsBounds = async (box, zoom) => {
 	return await fetchFunction({ url });
 };
 
-const getSinglePointOfInterest = async latlng => {
-	const url = `${API_URL}/poi/read_single/${new URLSearchParams({ latlng })}`;
+const getSinglePointOfInterest = async id => {
+	const url = `${API_URL}/poi/read_single_by_id/${new URLSearchParams({ id })}`;
 
 	return await fetchFunction({ url });
 };
