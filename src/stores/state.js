@@ -26,7 +26,7 @@ export const appStateStore = writable({
 	showPOI: false,
 	ratingToSave: null,
 	corrdsToSave: null,
-	center: [ 55, 64 ],
+	center: [ 53, 24 ],
 	shouldShowLoading: false,
 	startScreen: false,
 	termsOfUseAgreed: true,
@@ -68,5 +68,6 @@ export const mapLoadingProgress = writable({
 	stories: false,
 	hexagons: false,
 	countries: false,
+	districts: false,
 	communities: false,
 });

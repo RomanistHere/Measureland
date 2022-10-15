@@ -84,7 +84,7 @@
 
 	const onNavLinkClick = () => {
 		closeOverlays();
-		appStateStore.update(state => ({ ...state, startScreen: false }));
+		// appStateStore.update(state => ({ ...state, startScreen: false }));
 	};
 
 	let isFiltersActive = false;

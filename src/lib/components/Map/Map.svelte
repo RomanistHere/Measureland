@@ -11,6 +11,7 @@
 	import Data from "./components/Data.svelte";
 	import Hexagons from "./components/Hexagons.svelte";
 	import Cities from "./components/Cities.svelte";
+	import Districts from "./components/Districts.svelte";
 	// import Draw from "./components/Draw/Draw.svelte";
 	import TextLink from "../ui-elements/TextLink.svelte";
 
@@ -35,9 +36,9 @@
 		const mapObj = new mapboxgl.Map({
 			accessToken: token,
 			container: node,
-			center: center.reverse() || [ 27.5, 53.8 ],
+			center: center.reverse() || [ 53.8, 27.5 ],
 			style: "mapbox://styles/romanisthere/cl4vg1sk8002414p6vf8gouz9", // style URL
-			minZoom: 3,
+			minZoom: 4,
 			maxZoom: 18,
 			zoom: zoom || 7,
 			dragRotate: false,
@@ -86,6 +87,7 @@
 		<Data />
 		<Countries />
 		<Cities />
+		<Districts />
 		<Hexagons />
 		<POIs />
 		<Stories />

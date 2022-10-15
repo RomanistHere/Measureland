@@ -119,12 +119,10 @@
 	};
 
 	const displayData = poiData => {
-		console.log(poiData);
 		cachedPois = addNonDuplicatesToArr(cachedPois, poiData);
 
 		loadImages(imagesToLoad, imagesResp => {
 			const poiJson = preparePOIsJson(poiData);
-			console.log(poiJson);
 
 			if (map.getSource("POIs")) {
 				map.getSource("POIs").setData(poiJson);
@@ -229,13 +227,19 @@
 				});
 			});
 
-			try {
+			const hexagons = map.getLayer("hexagons-layer");
+			console.log(hexagons)
+			if (hexagons)
+				map.moveLayer("hexagons-layer", "POIs-layer");
+
+			const communities = map.getLayer("communities-layer");
+			if (communities)
 				map.moveLayer("POIs-layer", "communities-layer");
+
+			const countries = map.getLayer("countries-layer");
+			if (countries)
 				map.moveLayer("countries-layer", "POIs-layer");
-			} catch (e) {
-				logError("Error in layers priority change");
-				logError(e);
-			}
+
 			mapLoadingProgress.update(state => ({ ...state, pois: true }));
 		});
 	};

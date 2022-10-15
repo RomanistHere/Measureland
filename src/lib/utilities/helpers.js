@@ -368,7 +368,8 @@ const getErrorType = error => {
 	return errorFromObj ? errorFromObj : "unrecognizedError";
 };
 
-const getMapZoom = map => map.getZoom();
+const getMapZoom = map =>
+	roundToHundredth(map.getZoom());
 
 const getBoundsData = map => {
 	const bounds = map.getBounds();

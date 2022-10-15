@@ -4,7 +4,7 @@
 	import { fly } from "svelte/transition";
 
 	import { mapReference, ratingsReference } from "../../../../stores/references.js";
-	import { cityBounds } from "../objects/cityBounds.js";
+	import { minskDistrictsBounds } from "../objects/districtsBounds.js";
 	import { getLayerStats } from "../utils";
 	import { openAnotherOverlay } from "$lib/utilities/helpers.js";
 	import { mapLoadingProgress } from "../../../../stores/state.js";
@@ -15,18 +15,18 @@
 	const initCityLayer = () => {
 		const map = $mapReference;
 
-		map.addSource("cities", {
+		map.addSource("districts", {
 			type: "geojson",
-			data: { ...cityBounds },
+			data: { ...minskDistrictsBounds },
 			generateId: true,
 		});
 
 		map.addLayer({
-			"id": "cities-layer",
+			"id": "districts-layer",
 			"type": "fill",
-			"maxzoom": 10,
-			"minzoom": 4,
-			"source": "cities",
+			"maxzoom": 13,
+			"minzoom": 10,
+			"source": "districts",
 			"layout": {
 				"visibility": "visible",
 			},
@@ -42,11 +42,11 @@
 		});
 
 		map.addLayer({
-			"id": "cities-borders",
+			"id": "districts-borders",
 			"type": "line",
-			"maxzoom": 10,
-			"minzoom": 4,
-			"source": "cities",
+			"maxzoom": 13,
+			"minzoom": 10,
+			"source": "districts",
 			"layout": {},
 			"paint": {
 				"line-color": "#ffa500",
@@ -59,7 +59,7 @@
 				// it's important to assign event handlers on city at the end
 				// otherwise it won't be called last and `defaultPrevented` won't work
 				// todo: fire when everything's loaded
-				map.on("mousemove", "cities-layer", e => {
+				map.on("mousemove", "districts-layer", e => {
 					if (e.originalEvent.defaultPrevented) {
 						hoveredCityId = null;
 						hoveredCity = null;
@@ -70,7 +70,7 @@
 					if (e.features.length > 0) {
 						if (hoveredCityId) {
 							map.setFeatureState({
-								source: "cities",
+								source: "districts",
 								id: hoveredCityId,
 							}, {
 								hover: false,
@@ -81,7 +81,7 @@
 						hoveredCity = getLayerStats(e.features[0], $ratingsReference);
 
 						map.setFeatureState({
-							source: "cities",
+							source: "districts",
 							id: hoveredCityId,
 						}, {
 							hover: true,
@@ -89,12 +89,12 @@
 					}
 				});
 
-				map.on("mouseleave", "cities-layer", () => {
+				map.on("mouseleave", "districts-layer", () => {
 					map.getCanvas().style.cursor = "";
 
 					if (hoveredCityId !== null) {
 						map.setFeatureState({
-							source: "cities",
+							source: "districts",
 							id: hoveredCityId,
 						}, {
 							hover: false,
@@ -105,7 +105,7 @@
 					hoveredCity = null;
 				});
 
-				map.on("click", "cities-layer", e => {
+				map.on("click", "districts-layer", e => {
 					if (e.originalEvent.defaultPrevented)
 						return;
 
@@ -126,7 +126,7 @@
 				});
 
 				unsubscribe();
-				mapLoadingProgress.update(state => ({ ...state, cities: true }));
+				mapLoadingProgress.update(state => ({ ...state, districts: true }));
 			}
 		});
 	};

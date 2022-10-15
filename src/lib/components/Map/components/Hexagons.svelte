@@ -179,14 +179,14 @@
 			map.fitBounds(box);
 		});
 
-		try {
+		const pois = map.getLayer("POIs-layer");
+		if (pois)
 			map.moveLayer("hexagons-layer", "POIs-layer");
-		} catch (e) {
-			logError("Error in layers priority change");
-			logError(e);
-		}
+
 		mapLoadingProgress.update(state => ({ ...state, hexagons: true }));
 	};
+
+	$: console.log($mapLoadingProgress);
 
 	const onZoomEnd = () => {
 		const zoom = getMapZoom($mapReference);
