@@ -184,12 +184,10 @@
 				});
 			});
 
-			try {
+			const communities = map.getLayer("communities-layer");
+			if (communities)
 				map.moveLayer("stories-layer", "communities-layer");
-			} catch (e) {
-				logError("Error in layers priority change");
-				logError(e);
-			}
+			
 			mapLoadingProgress.update(state => ({ ...state, stories: true }));
 		});
 	};

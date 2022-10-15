@@ -186,7 +186,9 @@
 		mapLoadingProgress.update(state => ({ ...state, hexagons: true }));
 	};
 
-	$: console.log($mapLoadingProgress);
+	// try to remove and watch for url update when update to the new version of svelte
+	const emptyFunction = progress => {};
+	$: emptyFunction($mapLoadingProgress);
 
 	const onZoomEnd = () => {
 		const zoom = getMapZoom($mapReference);

@@ -228,7 +228,6 @@
 			});
 
 			const hexagons = map.getLayer("hexagons-layer");
-			console.log(hexagons)
 			if (hexagons)
 				map.moveLayer("hexagons-layer", "POIs-layer");
 
