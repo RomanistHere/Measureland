@@ -187,7 +187,7 @@
 			const communities = map.getLayer("communities-layer");
 			if (communities)
 				map.moveLayer("stories-layer", "communities-layer");
-			
+
 			mapLoadingProgress.update(state => ({ ...state, stories: true }));
 		});
 	};
