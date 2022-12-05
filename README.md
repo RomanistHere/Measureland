@@ -1,5 +1,7 @@
 # Measureland - An interactive encyclopedia of finding the best place to live 🏡.
 
+**Important**: project is on hold, resources are not available.
+
 Check live [https://measureland.org/en/](https://measureland.org/en/)
 
 We want to centralise house searching. We want to build a platform, where people would share their opinions about places they lived at. Where real-estate agencies would post (probably for money) trustworthy stats and information. Where opinions would be backed by facts. We want to build the only platform you need to pick better city, better district, better neighborhood to move to or stay at even if you know nothing about it. We want this platform to be transparent and free for everyone.
