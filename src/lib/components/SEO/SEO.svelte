@@ -37,16 +37,16 @@
     <meta name="format-detection" content="telephone=no" />
     <link rel="me" href="mailto:{appInfo.personalEmail}">
 
-    <meta http-equiv="Content-Security-Policy" content="
-        base-uri 'self';
-        connect-src 'self' {API_DOMAIN} api.measureland.org plausible.io *.openstreetmap.org geocode-api.arcgis.com api.waqi.info en.wikipedia.org;
-        default-src 'self';
-        font-src 'self' data:;
-        img-src 'self' *.openstreetmap.org data:;
-        media-src 'self';
-        script-src 'self' 'unsafe-inline' plausible.io;
-        style-src 'self' 'unsafe-inline';
-    "/>
+<!--    <meta http-equiv="Content-Security-Policy" content="-->
+<!--        base-uri 'self';-->
+<!--        connect-src 'self' {API_DOMAIN} api.measureland.org plausible.io *.openstreetmap.org geocode-api.arcgis.com api.waqi.info en.wikipedia.org;-->
+<!--        default-src 'self';-->
+<!--        font-src 'self' data:;-->
+<!--        img-src 'self' *.openstreetmap.org data:;-->
+<!--        media-src 'self';-->
+<!--        script-src 'self' 'unsafe-inline' plausible.io;-->
+<!--        style-src 'self' 'unsafe-inline';-->
+<!--    "/>-->
 
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
