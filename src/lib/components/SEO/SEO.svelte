@@ -39,7 +39,7 @@
 
     <meta http-equiv="Content-Security-Policy" content="
         base-uri 'self';
-        connect-src 'self' {API_DOMAIN} plausible.io *.openstreetmap.org geocode-api.arcgis.com api.waqi.info en.wikipedia.org;
+        connect-src 'self' {API_DOMAIN} api.measureland.org plausible.io *.openstreetmap.org geocode-api.arcgis.com api.waqi.info en.wikipedia.org;
         default-src 'self';
         font-src 'self' data:;
         img-src 'self' *.openstreetmap.org data:;
